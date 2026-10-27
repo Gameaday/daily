@@ -1,5 +1,5 @@
 [Unit]
-Description=Warmup team board (in-memory daily scores)
+Description=Warmup team curve (in-memory consolidated daily stats)
 After=network.target
 
 [Service]
@@ -11,6 +11,16 @@ NoNewPrivileges=yes
 ProtectSystem=strict
 ProtectHome=yes
 PrivateTmp=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=
 
 [Install]
 WantedBy=multi-user.target

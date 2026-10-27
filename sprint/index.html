@@ -75,9 +75,6 @@
   .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
   .cbar.you{background:var(--accent);}
   .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
-  .curve-top{font-size:12px; color:var(--muted); margin-top:2px;}
-  .curve-name{margin-top:8px;}
-  .curve-name input{background:var(--card); border:1.5px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; width:100%; color:var(--ink);}
   footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
   .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
   .overlay.show{display:flex;}
@@ -369,53 +366,45 @@ function toastMsg(msg){
   setTimeout(() => t.classList.remove('show'), 1600);
 }
 
-/* ---------------- team board (optional; talks to the tiny scores service) ---------------- */
+/* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'sprint';
 const SYNC_BETTER = 'high';
 const SYNC_UNIT = 'words';
-let lastSyncVal = null;
 function syncBoard(value){
-  lastSyncVal = value;
   const box = $('curve');
   if (!box) return;
-  box.innerHTML = '<div class="curve-note">checking the team board\u2026</div>';
-  let id = '', name = '';
+  box.innerHTML = '<div class="curve-note">checking the team curve\u2026</div>';
+  let id = '';
   try {
     id = localStorage.getItem('warmup.id');
     if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
-    name = (localStorage.getItem('warmup.name') || '').slice(0, 20);
-  } catch(e){ id = 'anon-' + Math.random().toString(36).slice(2, 8); }
-  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, name, id });
+  } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
+  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, id });
   const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
     .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
   post('/api')
     .catch(() => post('http://localhost:8787'))
     .catch(() => post('http://127.0.0.1:8787'))
     .then(d => renderBoard(d))
-    .catch(() => { box.innerHTML = '<div class="curve-note">team board offline \u2014 playing solo today</div>'; });
+    .catch(() => { box.innerHTML = '<div class="curve-note">team curve offline \u2014 playing solo today</div>'; });
 }
 function renderBoard(d){
   const box = $('curve');
   if (!box) return;
-  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the board today</div>'; return; }
+  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
   const maxBar = Math.max(...d.bins.map(b => b.count), 1);
-  const bars = d.bins.map(b => `<div class="cbar${b.you ? ' you' : ''}" style="height:${Math.max(10, Math.round(b.count / maxBar * 60))}px"></div>`).join('');
-  const you = d.beat == null ? '' : (d.beat === d.count - 1 ? 'top of today\u2019s board' : 'better than ' + d.beat + ' of ' + d.count);
-  const top = (d.top || []).slice(0, 5).map((t, i) => `${i + 1}. ${t.name} (${t.value})`).join(' \u00b7 ');
-  box.innerHTML =
-    `<div class="curve-head">team board \u00b7 ${d.count} today</div>` +
-    `<div class="curve-bars">${bars}</div>` +
-    (you ? `<div class="curve-note">you: ${you} by ${SYNC_UNIT}</div>` : '') +
-    (top ? `<div class="curve-top">${top}</div>` : '') +
-    `<div class="curve-name"><input id="curveName" maxlength="20" placeholder="name for the board (optional)"/></div>`;
-  const inp = $('curveName');
-  if (inp){
-    try { inp.value = localStorage.getItem('warmup.name') || ''; } catch(e){}
-    inp.addEventListener('change', () => {
-      try { localStorage.setItem('warmup.name', inp.value.trim().slice(0, 20)); } catch(e){}
-      if (lastSyncVal != null) syncBoard(lastSyncVal);
-    });
+  const bars = d.bins.map(b => '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>').join('');
+  let you = '';
+  if (d.beat != null){
+    you = d.beat === d.count - 1 ? 'top of today\u2019s curve' : 'better than ' + d.beat + ' of ' + d.count;
   }
+  box.innerHTML =
+    '<div class="curve-head">team curve \u00b7 ' + d.count + ' today</div>' +
+    '<div class="curve-bars">' + bars + '</div>' +
+    ((you || d.mean != null) ? '<div class="curve-note">' +
+      (you ? 'you: ' + you + ' by ' + SYNC_UNIT : '') +
+      (d.mean != null ? (you ? ' \u00b7 ' : '') + 'team avg ' + d.mean : '') +
+      '</div>' : '');
 }
 
 /* ---------------- help / countdown / clock ---------------- */

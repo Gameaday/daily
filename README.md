@@ -3,6 +3,9 @@
 Morning warmup games for the History Labs team — one new puzzle per game per day,
 self-hosted on a Raspberry Pi as dumb static files. No database, no accounts, no ads.
 
+Everything is relative-pathed: the site works at warmup.historylabs.dev,
+daily.historylabs.dev, an IP, or a LAN hostname — nothing is hardcoded.
+
 ## Games
 
 | Path | Game | Idea |
@@ -43,21 +46,32 @@ So the Pi only ever serves bytes. Deploy with Caddy:
 Caddy handles TLS automatically. Point DNS at the Pi (or use a tunnel if you are
 behind CGNAT) and forward ports 80/443.
 
-## The team board (optional, ~150 lines of stdlib Python)
+## The team curve (optional, ~200 lines of stdlib Python)
 
-Every game can show how you did against everyone else: a bell curve of today's
-results, your place in it, and a top five. It is entirely optional — with the
-board off, each game quietly notes "team board offline — playing solo today."
+Every game can show how you fared relative to the team today: a distribution of
+results with your bar highlighted, roughly how many you beat, and the team
+average. No names, no high-score table — just the shape of the day.
 
-How it fits "no backend":
+Design constraints, on purpose:
 
-- scores/server.py is stdlib-only Python (http.server) listening on 127.0.0.1:8787
-- scores live in RAM only: nothing is written to disk, nothing survives a restart,
-  and boards older than 3 days are pruned
-- no accounts: the browser generates a random id in localStorage and stores an
-  optional display name; names are sanitized to 20 safe characters
-- every game already contains the same small client: on finish it POSTs the result
-  to /api/submit and renders the histogram it gets back
+- scores/server.py is stdlib-only Python (http.server) on 127.0.0.1:8787
+- nothing is ever written to disk — no score logs, no database, no files; a
+  restart forgets everything, and boards older than 3 days are pruned from RAM
+- the server keeps ONLY consolidated numbers per (game, day): count, sum,
+  sum of squares, min, max, and a small fixed histogram. There are no
+  per-player records at all
+- the client id is hashed to 8 bytes and kept only in a transient dedupe set:
+  the first submission of the day stands, and reloads get a personalized reply
+  without retallying. The raw id never leaves the digest set
+- no user text is accepted or stored anywhere: the only inputs are the game
+  slug (checked against a fixed allowlist), a bounded day number, a bounded
+  numeric score, and the hashed id. Request bodies are capped at 2 KB
+- which direction is "better" is defined server-side per game (rings: lower
+  seconds; sprint: more words) — the client never decides it
+- total RAM for a team of ~40 across ten games and 3 retained days is a few
+  dozen kilobytes
+- if the service is off, each game quietly notes "team curve offline —
+  playing solo today" and everything else works
 
 Install on the Pi:
 
@@ -66,10 +80,11 @@ Install on the Pi:
     sudo systemctl daemon-reload
     sudo systemctl enable --now warmup-scores
 
-The service uses DynamicUser (no persistent system user) and binds to localhost,
-so the board is only reachable through the Caddyfile's handle_path /api/* block
-above. The games also try localhost directly as a fallback, so a browser on the
-Pi itself still gets the board even without the proxy.
+The service uses DynamicUser (no persistent system user), binds to localhost
+only, and runs with a hardened systemd sandbox (no capabilities, no writes
+anywhere, memory cannot become executable). The games also try localhost
+directly as a fallback, so a browser on the Pi itself still gets the curve
+even without the Caddy proxy.
 
 ## The recycle rule
 
@@ -83,11 +98,12 @@ timestamp in state).
 ## Adding a game
 
 1. Copy an existing game folder — they all share the same shell
-   (header, daily selection, localStorage state, reveal + share, countdown, team-board client).
+   (header, daily selection, localStorage state, reveal + share, countdown, curve client).
 2. Swap in your puzzle bank or seeded generator and the round logic.
 3. Add a card to the landing page index.html and a row in this table.
-4. If the game has a score, call syncBoard(value) on reveal — with "better" set to
-   "high" or "low" — and the bell curve appears for free.
+4. If the game has a score, call syncBoard(value) on reveal — the value is the
+   metric — and add the game to SPECS in scores/server.py with its "better"
+   direction and histogram edges. The curve appears for free.
 
 ## Content rules (worth keeping)
 
@@ -104,9 +120,10 @@ timestamp in state).
 ## Roadmap
 
 - [x] Batch 2 games: Rounds, Trace, Lightbox, Sprint
+- [x] Team curve: consolidated in-memory daily stats, zero disk, zero accounts
 - [ ] Batch 3 candidates: Cipher (decode a daily substitution), Timeline (put the
       day's events in order), Museum (identify the day's artifact or artwork)
-- [ ] Extract the shared shell (CSS + daily selection + stats + team board) into
+- [ ] Extract the shared shell (CSS + daily selection + stats + curve) into
       common.js so new games are ~100 lines each
 - [ ] Archive pages for past puzzles
 - [ ] Unified nav across games

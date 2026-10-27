@@ -5,6 +5,7 @@ self-hosted on a Raspberry Pi as dumb static files. No database, no accounts, no
 
 Everything is relative-pathed: the site works at warmup.historylabs.dev,
 daily.historylabs.dev, an IP, or a LAN hostname — nothing is hardcoded.
+Design notes and future ideas live in NOTES.md.
 
 ## Games
 
@@ -21,6 +22,9 @@ daily.historylabs.dev, an IP, or a LAN hostname — nothing is hardcoded.
 | /trace/ | Trace | A daily word ladder — change one letter at a time from start to target, par five rungs |
 | /lightbox/ | Lightbox | A 7×7 nonogram; reason from the clues and develop a picture from history — four bad developments fog the film |
 | /sprint/ | Sprint | Five anagrams against one 90-second clock that starts on your first keystroke and never restarts |
+| /cipher/ | Cipher | A daily substitution cipher hiding a line of history — decode it; hints count against you |
+| /timeline/ | Timeline | Five events with no dates; each check locks correct placements in place |
+| /museum/ | Museum | Name the day's artifact from five clues, obscure to obvious |
 
 ## How "daily" works
 
@@ -56,7 +60,8 @@ Design constraints, on purpose:
 
 - scores/server.py is stdlib-only Python (http.server) on 127.0.0.1:8787
 - nothing is ever written to disk — no score logs, no database, no files; a
-  restart forgets everything, and boards older than 3 days are pruned from RAM
+  restart forgets everything, and boards are pruned after 1 day (see NOTES.md
+  for the archive idea)
 - the server keeps ONLY consolidated numbers per (game, day): count, sum,
   sum of squares, min, max, and a small fixed histogram. There are no
   per-player records at all
@@ -67,9 +72,8 @@ Design constraints, on purpose:
   slug (checked against a fixed allowlist), a bounded day number, a bounded
   numeric score, and the hashed id. Request bodies are capped at 2 KB
 - which direction is "better" is defined server-side per game (rings: lower
-  seconds; sprint: more words) — the client never decides it
-- total RAM for a team of ~40 across ten games and 3 retained days is a few
-  dozen kilobytes
+  seconds; sprint: more words; cipher: fewer hints) — the client never decides it
+- total RAM for a team of ~40 across thirteen games is a few dozen kilobytes
 - if the service is off, each game quietly notes "team curve offline —
   playing solo today" and everything else works
 
@@ -115,14 +119,19 @@ timestamp in state).
   generous ratio buckets (3x / 10x / 100x) absorb honest disagreement.
 - Sift: four groups of exactly three per board, no tile in two groups on the same
   board, and at least one tile that plausibly belongs elsewhere — that is the fun.
-- Verify facts before committing — the whole team will fact-check you every morning.
+- Cipher: only well-attributed quotes; the author is the crib, so the attribution
+  must be solid. Verify facts before committing — the whole team will fact-check
+  you every morning.
 
 ## Roadmap
 
 - [x] Batch 2 games: Rounds, Trace, Lightbox, Sprint
 - [x] Team curve: consolidated in-memory daily stats, zero disk, zero accounts
-- [ ] Batch 3 candidates: Cipher (decode a daily substitution), Timeline (put the
-      day's events in order), Museum (identify the day's artifact or artwork)
+- [x] Batch 3 games: Cipher, Timeline, Museum
+- [ ] Curve representation cleanup: drop the "better than N of M" prose for a
+      pure distribution chart with a you-marker (see NOTES.md)
+- [ ] Archived days: freeze finished days' distributions; archive replays score
+      against the frozen curve without changing totals (see NOTES.md)
 - [ ] Extract the shared shell (CSS + daily selection + stats + curve) into
       common.js so new games are ~100 lines each
 - [ ] Archive pages for past puzzles

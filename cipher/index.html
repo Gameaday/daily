@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A daily mono-alphabetic cipher hiding a line of history. Decode it — hints cost." />
+<title>Cipher · a line of history, encrypted</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 8px;}
+  .lead b{color:var(--ink);}
+  .authorbox{display:flex; justify-content:space-between; align-items:center;
+    background:var(--card); border:1.5px solid var(--line); border-radius:10px;
+    padding:8px 14px; margin-top:12px; font-size:14px;}
+  .authorbox .who{font-family:Georgia,serif; font-size:16px;}
+  .authorbox .selinfo{font-size:12px; color:var(--muted);}
+  #quotebox{margin-top:14px; background:var(--card); border:1.5px solid var(--line);
+    border-radius:14px; padding:20px 16px;}
+  .wline{display:flex; flex-wrap:wrap; gap:6px; justify-content:center; row-gap:14px;}
+  .word{display:inline-flex; gap:2px;}
+  .slot{display:inline-flex; flex-direction:column; align-items:center; min-width:20px;
+    padding:2px 1px; cursor:pointer; border-radius:5px;}
+  .slot .cl{font-size:10px; font-weight:700; color:var(--muted); letter-spacing:0;
+    font-family:ui-monospace,Menlo,Consolas,monospace; text-transform:uppercase;}
+  .slot .pl{font-size:19px; min-height:23px; min-width:16px; border-bottom:2px solid var(--line);
+    font-family:ui-monospace,Menlo,Consolas,monospace; text-align:center;}
+  .slot.sel{background:var(--accent-soft);}
+  .slot.sel .pl{border-color:var(--accent);}
+  .slot.done .pl{color:var(--green); border-color:var(--green-soft);}
+  .punc{display:inline-flex; flex-direction:column; align-items:center; min-width:10px; padding:2px 1px;}
+  .punc .pl{font-size:19px; min-height:23px; border-bottom:2px solid transparent;
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
+  .keynote{text-align:center; font-size:12px; color:var(--muted); margin:10px 0 0;}
+  .actions{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+  .btn:hover{filter:brightness(.94);}
+  .btn:disabled{opacity:.45; cursor:default; filter:none;}
+  .reveal{margin-top:16px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; text-align:center; color:var(--green);}
+  .verdict.lost{color:var(--accent);}
+  .plainq{margin:8px 0 4px; text-align:center; font-size:15px; color:var(--muted); font-style:italic;}
+  .plainq b{color:var(--ink); font-style:normal;}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+  .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
+  .countdown{font-size:13px; color:var(--muted);}
+  #curve{margin-top:14px;}
+  .curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+  .curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
+  .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
+  .cbar.you{background:var(--accent);}
+  .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  @media (max-width:480px){
+    h1{font-size:28px;}
+    .slot .pl{font-size:16px;} .slot{min-width:17px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Cipher<span class="dot">.</span></h1>
+      <p class="sub">one quote · one substitution · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead"><b>A line of history, encrypted letter by letter.</b> The cipher is a simple substitution — every letter always stands for the same letter. Tap any encrypted letter, then type your guess. Frequency is your friend; hints cost.</p>
+
+  <div class="authorbox">
+    <span class="who" id="author">—</span>
+    <span class="selinfo" id="selinfo">tap a letter to select it</span>
+  </div>
+
+  <div id="quotebox"><div class="wline" id="quote"></div></div>
+  <p class="keynote">A–Z to fill the selected letter · backspace clears it</p>
+
+  <div class="actions">
+    <button class="btn ghost" id="btnHint">Hint (0/5)</button>
+    <button class="btn ghost" id="btnGiveUp">Reveal the codebook</button>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <p class="plainq" id="plainq"></p>
+    <div class="sharebox" id="sharetext"></div>
+    <div id="curve"></div>
+    <div class="actionsrow">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next cipher in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Every letter of the quote has been swapped for another letter, consistently. The small letter on top is the <b>cipher</b>; your decode goes underneath.</p>
+    <p><b>Tap</b> an encrypted letter to select it (every copy of it highlights), then <b>type</b> your guess for it. Backspace clears it. The author is shown in the clear — use the spelling as a crib.</p>
+    <p>There is no penalty for wrong guesses — a wrong decode just looks wrong. The puzzle solves itself the moment your decode is complete and correct.</p>
+    <p>Stuck? A <b>hint</b> reveals one letter (the most common one you are missing or have wrong) — the day's score is how many hints you needed. <b>Reveal the codebook</b> ends the day.</p>
+    <button class="close" data-close>To the code</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- quote bank ---------------- */
+const QUOTES = [
+  { q:'THE ONLY THING WE HAVE TO FEAR IS FEAR ITSELF.', a:'Franklin D. Roosevelt' },
+  { q:'ASK NOT WHAT YOUR COUNTRY CAN DO FOR YOU. ASK WHAT YOU CAN DO FOR YOUR COUNTRY.', a:'John F. Kennedy' },
+  { q:'NEVER IN THE FIELD OF HUMAN CONFLICT WAS SO MUCH OWED BY SO MANY TO SO FEW.', a:'Winston Churchill' },
+  { q:'WE SHALL DEFEND OUR ISLAND, WHATEVER THE COST MAY BE.', a:'Winston Churchill' },
+  { q:'GIVE ME LIBERTY, OR GIVE ME DEATH.', a:'Patrick Henry' },
+  { q:'THE HISTORY OF ALL HITHERTO EXISTING SOCIETY IS THE HISTORY OF CLASS STRUGGLES.', a:'Karl Marx' },
+  { q:'IT IS NOT FROM THE BENEVOLENCE OF THE BUTCHER, THE BREWER, OR THE BAKER THAT WE EXPECT OUR DINNER, BUT FROM THEIR REGARD TO THEIR OWN INTEREST.', a:'Adam Smith' },
+  { q:'IF I HAVE SEEN FURTHER, IT IS BY STANDING ON THE SHOULDERS OF GIANTS.', a:'Isaac Newton' },
+  { q:'INJUSTICE ANYWHERE IS A THREAT TO JUSTICE EVERYWHERE.', a:'Martin Luther King Jr.' },
+  { q:'THE ARC OF THE MORAL UNIVERSE IS LONG, BUT IT BENDS TOWARD JUSTICE.', a:'Theodore Parker' },
+  { q:'IN THIS WORLD NOTHING CAN BE SAID TO BE CERTAIN, EXCEPT DEATH AND TAXES.', a:'Benjamin Franklin' },
+  { q:'I NEVER EXPECT TO SEE A PERFECT WORK FROM AN IMPERFECT MAN.', a:'Alexander Hamilton' },
+  { q:'THESE ARE THE TIMES THAT TRY MEN\u2019S SOULS.', a:'Thomas Paine' },
+  { q:'IF MEN WERE ANGELS, NO GOVERNMENT WOULD BE NECESSARY.', a:'James Madison' },
+  { q:'AMBITION MUST BE MADE TO COUNTERACT AMBITION.', a:'James Madison' },
+  { q:'MAN IS BORN FREE, AND EVERYWHERE HE IS IN CHAINS.', a:'Jean-Jacques Rousseau' },
+  { q:'EVERYONE SEES WHAT YOU APPEAR TO BE; FEW EXPERIENCE WHAT YOU REALLY ARE.', a:'Niccolo Machiavelli' },
+  { q:'THE STRONG DO WHAT THEY CAN AND THE WEAK SUFFER WHAT THEY MUST.', a:'Thucydides' },
+  { q:'A HOUSE DIVIDED AGAINST ITSELF CANNOT STAND.', a:'Abraham Lincoln' },
+  { q:'FOUR SCORE AND SEVEN YEARS AGO OUR FATHERS BROUGHT FORTH UPON THIS CONTINENT A NEW NATION.', a:'Abraham Lincoln' },
+  { q:'IF THERE IS NO STRUGGLE THERE IS NO PROGRESS.', a:'Frederick Douglass' },
+  { q:'THE PROBLEM OF THE TWENTIETH CENTURY IS THE PROBLEM OF THE COLOR LINE.', a:'W.E.B. Du Bois' },
+  { q:'THE UNEXAMINED LIFE IS NOT WORTH LIVING.', a:'Socrates' },
+  { q:'EVERY GUN THAT IS MADE, EVERY WARSHIP LAUNCHED, SIGNIFIES A THEFT FROM THOSE WHO HUNGER.', a:'Dwight D. Eisenhower' },
+  { q:'MR. GORBACHEV, TEAR DOWN THIS WALL.', a:'Ronald Reagan' },
+  { q:'I THINK, THEREFORE I AM.', a:'Rene Descartes' },
+  { q:'ALL WARFARE IS BASED ON DECEPTION.', a:'Sun Tzu' },
+  { q:'GOVERNMENT OF THE PEOPLE, BY THE PEOPLE, FOR THE PEOPLE, SHALL NOT PERISH FROM THE EARTH.', a:'Abraham Lincoln' }
+];
+
+/* ---------------- daily selection ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+const Q = QUOTES[dayIndex % QUOTES.length];
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* substitution: seeded, never maps a letter to itself */
+const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function buildSub(rnd){
+  let perm;
+  do {
+    perm = [...ALPHA];
+    for (let i = perm.length - 1; i > 0; i--){
+      const j = Math.floor(rnd() * (i + 1));
+      [perm[i], perm[j]] = [perm[j], perm[i]];
+    }
+  } while (perm.some((p, i) => p === ALPHA[i]));
+  const enc = {}, dec = {};
+  perm.forEach((p, i) => { enc[ALPHA[i]] = p; dec[p] = ALPHA[i]; });
+  return { enc, dec };
+}
+const SUB = buildSub(mulberry32(dayIndex * 668265263 % 4294967296 + 29));
+const CIPHER = [...Q.q].map(ch => /[A-Z]/.test(ch) ? SUB.enc[ch] : ch);
+
+/* frequency order of cipher letters in today's quote */
+const freq = {};
+[...Q.q].forEach(ch => { if (/[A-Z]/.test(ch)) freq[SUB.enc[ch]] = (freq[SUB.enc[ch]] || 0) + 1; });
+const FREQ_ORDER = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.cipher.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
+  if (S && S.day !== dayIndex && S.status === 'playing' && S.started) stats.streak = 0;
+  S = { day: dayIndex, map:{}, sel:null, hints:0, started:false, status:'playing', stats };
+}
+saveState();
+
+/* ---------------- dom ---------------- */
+const $ = id => document.getElementById(id);
+
+function decodedChar(i){
+  const ch = Q.q[i];
+  if (!/[A-Z]/.test(ch)) return ch;
+  const c = CIPHER[i];
+  return S.map[c] || '';
+}
+function solvedP(){
+  for (let i = 0; i < Q.q.length; i++){
+    if (/[A-Z]/.test(Q.q[i]) && decodedChar(i) !== Q.q[i]) return false;
+  }
+  return true;
+}
+function render(){
+  let html = '', word = '';
+  const flush = () => { if (word){ html += '<span class="word">' + word + '</span>'; word = ''; } };
+  for (let i = 0; i < Q.q.length; i++){
+    const ch = Q.q[i];
+    if (/[A-Z]/.test(ch)){
+      const c = CIPHER[i];
+      const d = S.map[c] || '';
+      const cls = 'slot' + (S.sel === c ? ' sel' : '') + (d && d === SUB.dec[c] ? ' done' : '');
+      word += '<span class="' + cls + '" data-c="' + c + '"><i class="cl">' + c + '</i><b class="pl">' + d + '</b></span>';
+    } else if (ch === ' '){
+      flush(); html += ' ';
+    } else {
+      flush(); html += '<span class="punc"><b class="pl">' + ch + '</b></span>';
+    }
+  }
+  flush();
+  $('quote').innerHTML = html;
+  $('selinfo').textContent = S.sel
+    ? 'selected: ' + S.sel + ' \u2192 ?'
+    : 'tap a letter to select it';
+  $('btnHint').textContent = 'Hint (' + S.hints + '/5)';
+  $('btnHint').disabled = S.hints >= 5 || S.status !== 'playing';
+  $('btnGiveUp').disabled = S.status !== 'playing';
+}
+$('quote').addEventListener('click', e => {
+  const slot = e.target.closest('.slot');
+  if (!slot || S.status !== 'playing') return;
+  S.sel = slot.dataset.c;
+  saveState(); render();
+});
+document.addEventListener('keydown', e => {
+  if (S.status !== 'playing' || !S.sel) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (/^[a-zA-Z]$/.test(e.key)){
+    e.preventDefault();
+    S.started = true;
+    const p = e.key.toUpperCase();
+    for (const k in S.map){ if (S.map[k] === p) delete S.map[k]; }  /* keep it a bijection */
+    S.map[S.sel] = p;
+    const next = FREQ_ORDER.find(c => !S.map[c]);
+    S.sel = next || null;
+    saveState(); render();
+    if (solvedP()) finish('won');
+  } else if (e.key === 'Backspace' || e.key === 'Delete'){
+    e.preventDefault();
+    delete S.map[S.sel];
+    saveState(); render();
+  }
+});
+$('btnHint').addEventListener('click', () => {
+  if (S.status !== 'playing' || S.hints >= 5) return;
+  S.started = true;
+  const cand = FREQ_ORDER.find(c => !S.map[c] || S.map[c] !== SUB.dec[c]);
+  if (!cand) return;
+  for (const k in S.map){ if (S.map[k] === SUB.dec[cand]) delete S.map[k]; }
+  S.map[cand] = SUB.dec[cand];
+  S.hints++;
+  S.sel = FREQ_ORDER.find(c => !S.map[c]) || null;
+  saveState(); render();
+  if (solvedP()) finish('won');
+});
+$('btnGiveUp').addEventListener('click', () => {
+  if (S.status !== 'playing') return;
+  finish('gaveup');
+});
+function finish(status){
+  S.status = status;
+  for (const k in S.map){ if (S.map[k] !== SUB.dec[k]) delete S.map[k]; }
+  const st = S.stats;
+  st.played++;
+  if (status === 'won'){
+    st.solved++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+  } else {
+    st.streak = 0;
+  }
+  saveState();
+  showReveal();
+}
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  if (S.status === 'won'){
+    const h = S.hints === 0 ? 'no hints' : S.hints + (S.hints === 1 ? ' hint' : ' hints');
+    return 'Cipher No. ' + num + ' \u00b7 decoded with ' + h + ' \uD83D\uDD0D';
+  }
+  return 'Cipher No. ' + num + ' \u00b7 revealed the codebook \uD83D\uDD0D';
+}
+function showReveal(){
+  const st = S.stats;
+  const won = S.status === 'won';
+  $('verdict').textContent = won
+    ? (S.hints === 0 ? 'Cracked it cold.' : 'Cracked it, with a little help.')
+    : 'The codebook, opened.';
+  if (!won) $('verdict').classList.add('lost');
+  for (const c in SUB.dec){ S.map[c] = SUB.dec[c]; }
+  render();
+  $('plainq').innerHTML = '<b>' + Q.a + '</b> \u2014 ' + Q.q;
+  $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 decoded ' + st.solved + '/' + st.played;
+  $('reveal').classList.add('show');
+  $('btnHint').disabled = true;
+  $('btnGiveUp').disabled = true;
+  syncBoard(won ? S.hints : 7);
+}
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+/* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'cipher';
+const SYNC_BETTER = 'low';
+const SYNC_UNIT = 'hints';
+function syncBoard(value){
+  const box = $('curve');
+  if (!box) return;
+  box.innerHTML = '<div class="curve-note">checking the team curve\u2026</div>';
+  let id = '';
+  try {
+    id = localStorage.getItem('warmup.id');
+    if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
+  } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
+  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, id });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => renderBoard(d))
+    .catch(() => { box.innerHTML = '<div class="curve-note">team curve offline \u2014 playing solo today</div>'; });
+}
+function renderBoard(d){
+  const box = $('curve');
+  if (!box) return;
+  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
+  const maxBar = Math.max(...d.bins.map(b => b.count), 1);
+  const bars = d.bins.map(b => '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>').join('');
+  let you = '';
+  if (d.beat != null){
+    you = d.beat === d.count - 1 ? 'top of today\u2019s curve' : 'better than ' + d.beat + ' of ' + d.count;
+  }
+  box.innerHTML =
+    '<div class="curve-head">team curve \u00b7 ' + d.count + ' today</div>' +
+    '<div class="curve-bars">' + bars + '</div>' +
+    ((you || d.mean != null) ? '<div class="curve-note">' +
+      (you ? 'you: ' + you + ' by ' + SYNC_UNIT : '') +
+      (d.mean != null ? (you ? ' \u00b7 ' : '') + 'team avg ' + d.mean : '') +
+      '</div>' : '');
+}
+
+/* ---------------- help / countdown ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('countdown').textContent = h + 'h ' + String(m).padStart(2,'0') + 'm ' + String(s).padStart(2,'0') + 's';
+}
+setInterval(tick, 500);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+$('author').textContent = '\u2014 ' + Q.a;
+render();
+if (S.status !== 'playing'){
+  showReveal();
+} else if (solvedP()){
+  finish('won');
+}
+tick();
+</script>
+</body>
+</html>

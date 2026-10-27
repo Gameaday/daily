@@ -8,7 +8,8 @@ Design rules (deliberate):
 - client ids are hashed to 8 bytes and kept only in a transient dedupe set:
   the first submission of the day stands; reloads get a personalized reply
   but do not retally
-- boards older than 3 days are pruned from RAM; a restart forgets everything
+- boards are pruned after 1 day - yesterday's curve vanishes deliberately
+  (see NOTES.md for the archive idea); a restart forgets everything
 - input is strictly validated: game must be in the fixed allowlist below,
   day/value are bounded numbers, bodies are capped at 2 KB, and no user
   text is accepted or stored anywhere
@@ -26,7 +27,7 @@ import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
-PRUNE_DAYS = 3
+PRUNE_DAYS = 1
 MAX_BODY = 2048
 MAX_ABS_VALUE = 1e6
 DAY_MIN, DAY_MAX = -1000, 100000
@@ -46,6 +47,9 @@ SPECS = {
     "trace":         {"better": "low",  "edges": [0, 5, 6, 7, 8, 9, 10, 11, 12]},
     "lightbox":      {"better": "low",  "edges": [0, 1, 2, 3, 4, 5]},
     "sprint":        {"better": "high", "edges": [0, 1, 2, 3, 4, 5, 6]},
+    "cipher":        {"better": "low",  "edges": [0, 1, 2, 3, 4, 5, 6, 7]},
+    "timeline":      {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},
+    "museum":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7]},
 }
 
 STATS = {}   # (game, day) -> {"n", "sum", "sumsq", "min", "max", "bins": [ints]}
@@ -141,7 +145,7 @@ def snapshot(game, day, value=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/2.0"
+    server_version = "warmup-curve/3.0"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -248,7 +252,7 @@ def main():
     ap.add_argument("--port", type=int, default=8787)
     args = ap.parse_args()
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
-    print("warmup team curve on %s:%d (consolidated stats only, prunes after %d days)"
+    print("warmup team curve on %s:%d (consolidated stats only, prunes after %d day)"
           % (args.host, args.port, PRUNE_DAYS))
     try:
         srv.serve_forever()

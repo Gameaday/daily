@@ -256,6 +256,12 @@ to commits where they passed.
 - Cipher: only well-attributed quotes; the author is the crib, so the attribution
   must be solid. Verify facts before committing — the whole team will fact-check
   you every morning.
+- Word games: `assets/words-en.js` is the shared bank — common English words
+  only, no proper nouns, no obscure Scrabble dumps. It is one ~12KB file
+  (2230 words: 378 three-, 1052 four-, 800 five-letter), loaded once and
+  cached across games. Sprint's anagram banks stay separate (they are
+  per-length and typo-cleaned); the test suite asserts the shape of both so
+  they cannot rot silently.
 
 ## Roadmap
 
@@ -273,6 +279,9 @@ to commits where they passed.
 - [x] Shared shell + word bank: `shell/common.js` + `shell/common.css` +
       `assets/words-en.js`, solo/offline mode over `file://`; games are now
       puzzle-only (~150-400 lines each, trace is half its former size)
+- [x] Word bank expansion: shared bank 1353→2230 common words (still one
+      12KB file), sprint anagram banks typo-cleaned, bank hygiene guards in
+      tests + checks (304 assertions)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score

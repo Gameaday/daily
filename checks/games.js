@@ -34,6 +34,13 @@ if (fs.existsSync('shell/common.js')) {
 if (fs.existsSync('assets/words-en.js')) {
   try { new Function(fs.readFileSync('assets/words-en.js', 'utf8')); }
   catch (e) { fail('assets/words-en.js does not compile: ' + e.message); }
+  const m = fs.readFileSync('assets/words-en.js', 'utf8').match(/const WORDS_EN = "([^"]*)"/);
+  if (!m) fail('assets/words-en.js: WORDS_EN string not found');
+  else {
+    const list = m[1].split(',');
+    if (list.some(w => !/^[A-Z]{3,5}$/.test(w))) fail('words-en.js: entries must be uppercase A-Z, 3-5 letters');
+    if (new Set(list).size !== list.length) fail('words-en.js: duplicate entries');
+  }
 }
 
 for (const g of games) {

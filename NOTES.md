@@ -59,6 +59,20 @@ Solo/offline mode came along for free: file:// or ?solo switches the curve
 off and never posts, which is also the air-gapped bundle story - the repo
 minus deploy/ is the bundle. Next: game 14 can be puzzle-only.
 
+## Word bank expansion (done 2026-10-27)
+
+assets/words-en.js grew 1353 -> 2230 words (378 three-, 1052 four-, 800
+five-letter), still one 12KB file loaded once and cached. Curation rule:
+common English words only - no proper nouns, no obscure Scrabble dumps.
+Trace and Recycle Grid puzzles are derived from the bank, so the day's
+puzzle changes when the bank does (streaks and stats are untouched - anyone
+mid-streak just gets the new puzzle). Sprint's inline anagram banks got a
+hygiene pass at the same time: non-words (BASON, YOUK, WRAY, GLANE, TICKY,
+WRITH...), wrong-length strays and duplicates removed or relocated; the
+real-but-obscure words stay (ROUE, WOLD, QUOD - they are the fun ones).
+tests/run.js and checks/games.js now assert both banks' shape (A-Z 3-5,
+sorted, no duplicates, known typos stay gone), 304 assertions total.
+
 ## Mobile UX pass
 
 Cipher now types through a hidden off-screen input (tap a slot, the soft

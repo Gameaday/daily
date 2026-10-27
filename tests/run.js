@@ -420,6 +420,39 @@ async function main(createHarness, readGame, readServer, readLanding, readShared
     }
     h.ok(readGame('sprint').indexOf('DICT5_SRC') >= 0,
       'sprint: keeps its own anagram lists (different bank, by design)');
+
+    /* the shared bank stays clean: uppercase 3-5 letter words, no dups */
+    {
+      const wm = words.match(/const WORDS_EN = "([^"]*)"/);
+      h.ok(!!wm, 'words: bank string parses');
+      if (wm){
+        const list = wm[1].split(',');
+        const bad = list.filter(w => !/^[A-Z]{3,5}$/.test(w));
+        h.eq(bad.length, 0, 'words: every entry is A-Z, 3-5 letters' +
+          (bad.length ? ' (e.g. ' + bad[0] + ')' : ''));
+        h.eq(new Set(list).size, list.length, 'words: no duplicate entries');
+      }
+    }
+
+    /* sprint's inline anagram banks stay clean: no typos, no wrong-length
+       strays — junk entries could accept non-words as valid answers */
+    {
+      const html = readGame('sprint');
+      const d4 = html.match(/const DICT_SRC = '([^']*)'/);
+      const d5 = html.match(/const DICT5_SRC = '([^']*)'/);
+      h.ok(!!d4 && !!d5, 'sprint: anagram banks parse');
+      if (d4 && d5){
+        const bad4 = d4[1].split(',').filter(w => !/^[A-Z]{4}$/.test(w));
+        h.eq(bad4.length, 0, 'sprint: 4-letter bank is clean A-Z' +
+          (bad4.length ? ' (e.g. ' + bad4[0] + ')' : ''));
+        const bad5 = d5[1].split(',').filter(w => !/^[A-Z]{5}$/.test(w));
+        h.eq(bad5.length, 0, 'sprint: 5-letter bank is clean A-Z' +
+          (bad5.length ? ' (e.g. ' + bad5[0] + ')' : ''));
+        const junk = ['BASON', 'YOUK', 'WRAY', 'TASS', 'GLANE', 'TICKY', 'WRITH', 'FATCH'];
+        h.ok(junk.every(w => d4[1].indexOf(w) === -1 && d5[1].indexOf(w) === -1),
+          'sprint: known typos stay gone (regression)');
+      }
+    }
   }
 
   const scenarios = [

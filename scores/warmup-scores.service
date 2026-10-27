@@ -1,0 +1,16 @@
+[Unit]
+Description=Warmup team board (in-memory daily scores)
+After=network.target
+
+[Service]
+DynamicUser=yes
+ExecStart=/usr/bin/python3 /srv/daily/scores/server.py --port 8787 --host 127.0.0.1
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

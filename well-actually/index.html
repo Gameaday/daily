@@ -129,6 +129,15 @@
     opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;
   }
   .toast.show{opacity:1;}
+  #curve{margin-top:14px;}
+  .curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+  .curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
+  .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
+  .cbar.you{background:var(--accent);}
+  .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
+  .curve-top{font-size:12px; color:var(--muted); margin-top:2px;}
+  .curve-name{margin-top:8px;}
+  .curve-name input{background:var(--card); border:1.5px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; width:100%; color:var(--ink);}
   @media (max-width:480px){
     h1{font-size:32px;}
     .statement{font-size:17px; padding:18px 16px;}
@@ -171,6 +180,7 @@
     <p class="verdict" id="verdict"></p>
     <div class="why"><span class="label">Um, actually…</span><span id="why"></span></div>
     <div class="sharebox" id="sharetext"></div>
+    <div id="curve"></div>
     <div class="actions">
       <button class="btn" id="btnShare">Share result</button>
       <span class="countdown">next puzzle in <span id="count">–</span></span>
@@ -485,6 +495,7 @@ function finish(){
   }
   statementEl.classList.add('done');
   showReveal();
+  syncBoard(score());
   saveState();
 }
 
@@ -526,6 +537,55 @@ function submitBonus(){
 }
 $('bgo').addEventListener('click', submitBonus);
 $('binput').addEventListener('keydown', e => { if (e.key === 'Enter') submitBonus(); });
+
+/* ---------------- team board (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'well-actually';
+const SYNC_BETTER = 'high';
+const SYNC_UNIT = 'points';
+let lastSyncVal = null;
+function syncBoard(value){
+  lastSyncVal = value;
+  const box = $('curve');
+  if (!box) return;
+  box.innerHTML = '<div class="curve-note">checking the team board\u2026</div>';
+  let id = '', name = '';
+  try {
+    id = localStorage.getItem('warmup.id');
+    if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
+    name = (localStorage.getItem('warmup.name') || '').slice(0, 20);
+  } catch(e){ id = 'anon-' + Math.random().toString(36).slice(2, 8); }
+  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, name, id });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => renderBoard(d))
+    .catch(() => { box.innerHTML = '<div class="curve-note">team board offline \u2014 playing solo today</div>'; });
+}
+function renderBoard(d){
+  const box = $('curve');
+  if (!box) return;
+  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the board today</div>'; return; }
+  const maxBar = Math.max(...d.bins.map(b => b.count), 1);
+  const bars = d.bins.map(b => `<div class="cbar${b.you ? ' you' : ''}" style="height:${Math.max(10, Math.round(b.count / maxBar * 60))}px"></div>`).join('');
+  const you = d.beat == null ? '' : (d.beat === d.count - 1 ? 'top of today\u2019s board' : 'better than ' + d.beat + ' of ' + d.count);
+  const top = (d.top || []).slice(0, 5).map((t, i) => `${i + 1}. ${t.name} (${t.value})`).join(' \u00b7 ');
+  box.innerHTML =
+    `<div class="curve-head">team board \u00b7 ${d.count} today</div>` +
+    `<div class="curve-bars">${bars}</div>` +
+    (you ? `<div class="curve-note">you: ${you} by ${SYNC_UNIT}</div>` : '') +
+    (top ? `<div class="curve-top">${top}</div>` : '') +
+    `<div class="curve-name"><input id="curveName" maxlength="20" placeholder="name for the board (optional)"/></div>`;
+  const inp = $('curveName');
+  if (inp){
+    try { inp.value = localStorage.getItem('warmup.name') || ''; } catch(e){}
+    inp.addEventListener('change', () => {
+      try { localStorage.setItem('warmup.name', inp.value.trim().slice(0, 20)); } catch(e){}
+      if (lastSyncVal != null) syncBoard(lastSyncVal);
+    });
+  }
+}
 
 /* ---------------- stats & help modals ---------------- */
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => {
@@ -596,7 +656,7 @@ $('tag').textContent = puzzle.t;
 renderStatement();
 applyMarks(true);
 renderPicks();
-if (S.status === 'found') $('bonus').classList.add('show');
+if (S.status === 'found'){ $('bonus').classList.add('show'); $('binput').value = S.typed || ''; }
 if (S.status === 'won' || S.status === 'lost') showReveal();
 tick();
 </script>

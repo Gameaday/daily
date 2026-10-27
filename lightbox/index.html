@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A tiny daily nonogram. Use the row and column clues to develop today's picture from history — four mistakes and the film is fogged." />
+<title>Lightbox · the daily mini nonogram</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --red:#b3402e; --red-soft:#f7e0da;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+  .lead b{color:var(--ink);}
+  .boardbox{display:flex; justify-content:center;}
+  .ngrid{
+    display:grid;
+    grid-template-columns: 44px repeat(7, 42px);
+    grid-auto-rows: 42px;
+    gap:4px;
+  }
+  .clue{display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;
+    color:var(--muted); text-align:center; line-height:1.15; flex-direction:column;}
+  .cell{
+    background:var(--card); border:1.5px solid var(--line); border-radius:6px;
+    cursor:pointer; user-select:none;
+  }
+  .cell:hover{border-color:#c9bda2;}
+  .cell.on{background:var(--ink); border-color:var(--ink);}
+  .cell.x{color:var(--muted); font-size:13px; display:flex; align-items:center; justify-content:center;}
+  .cell.x::after{content:'\00d7';}
+  .cell.bad{background:var(--red); border-color:var(--red);}
+  .cell.miss{border:2px dashed var(--accent);}
+  .solvedpix{display:flex; justify-content:center; margin-top:4px;}
+  .pixgrid{display:grid; grid-template-columns:repeat(7, 18px); grid-auto-rows:18px; gap:2px;}
+  .px{background:#efe7d3; border-radius:2px;}
+  .px.f{background:var(--ink);}
+  .mistakes{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
+  .pip{width:10px; height:10px; border-radius:50%; background:var(--accent); display:inline-block;}
+  .pip.gone{background:#ddd2ba;}
+  .actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+  .btn:hover{filter:brightness(.94);}
+  .clock{font-size:12px; color:var(--muted); text-align:center; margin-top:8px;}
+  .reveal{margin-top:16px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green); text-align:center;}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+  .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
+  .countdown{font-size:13px; color:var(--muted);}
+  #curve{margin-top:14px;}
+  .curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+  .curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
+  .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
+  .cbar.you{background:var(--accent);}
+  .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
+  .curve-top{font-size:12px; color:var(--muted); margin-top:2px;}
+  .curve-name{margin-top:8px;}
+  .curve-name input{background:var(--card); border:1.5px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; width:100%; color:var(--ink);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  @media (max-width:480px){
+    h1{font-size:28px;}
+    .ngrid{grid-template-columns: 34px repeat(7, minmax(34px, 1fr)); grid-auto-rows:38px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Lightbox<span class="dot">.</span></h1>
+      <p class="sub">the daily mini nonogram · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead">Every row and column tells you how many cells to fill — the <b>numbers are runs of consecutive filled cells</b>, in order. Reason it out, tap to fill, tap again to mark ✕. When the picture feels right, <b>develop</b> it. Four bad developments and the film is fogged.</p>
+
+  <div class="boardbox"><div class="ngrid" id="grid"></div></div>
+
+  <div class="mistakes" id="mistakes"></div>
+
+  <div class="actions">
+    <button class="btn" id="btnDevelop">Develop 📷</button>
+    <button class="btn ghost" id="btnClear">Clear board</button>
+  </div>
+
+  <p class="clock" id="clocknote">the clock starts on your first tap</p>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="solvedpix" id="solvedpix"></div>
+    <div class="sharebox" id="sharetext" style="margin-top:12px;"></div>
+    <div id="curve"></div>
+    <div class="actionsrow">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next picture in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Each clue is the list of <b>runs</b> of filled cells in that line, in order. A clue of <b>3 1</b> means three filled, a gap, then one filled — somewhere in the seven cells. A clue of <b>0</b> means the whole line is empty.</p>
+    <p><b>Tap</b> a cell to fill it, tap again to mark it ✕ (known-empty), once more to clear. When your grid matches the clues, hit <b>Develop</b>.</p>
+    <p>If the picture is wrong, that costs one of your <b>four</b> developments: wrongly-filled cells flash red, and cells you left blank flash dashed. Fix and develop again. Four misses and the picture is revealed — fogged.</p>
+    <p>Every day develops into a little piece of history. The clock starts on your first tap and never restarts — it's for bragging, not scoring.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- picture bank (7x7, '#' = filled) ---------------- */
+const DESIGNS = [
+  { n:'The Pyramid', g:['...#...','..###..','.#####.','#######','#######','#######','#######'] },
+  { n:'The Hourglass', g:['#######','.#####.','..###..','...#...','..###..','.#####.','#######'] },
+  { n:'The Sword', g:['...#...','...#...','...#...','.#####.','...#...','...#...','..###..'] },
+  { n:'The Longship', g:['...#...','..###..','..###..','.#####.','...#...','.#####.','#######'] },
+  { n:'The Crown', g:['.#.#.#.','.#.#.#.','.#####.','#######','#######','#######','#######'] },
+  { n:'The Skull', g:['.#####.','#######','##.#.##','#######','###.###','#.#.#.#','.#####.'] },
+  { n:'The Shield', g:['#######','#######','.#####.','.#####.','..###..','..###..','...#...'] },
+  { n:'The Torch', g:['...#...','..###..','..###..','.#####.','...#...','...#...','..###..'] },
+  { n:'The Bell', g:['...#...','..###..','.#####.','.#####.','.#####.','#######','...#...'] },
+  { n:'The Anchor', g:['...#...','.#####.','...#...','...#...','.#...#.','.#...#.','..###..'] },
+  { n:'The Ankh', g:['..###..','.#...#.','.#...#.','.#####.','...#...','...#...','...#...'] },
+  { n:'The Castle', g:['#.#.#.#','#######','#.....#','#.....#','#.....#','#.....#','#######'] }
+];
+
+/* ---------------- deterministic daily pick ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+const DESIGN = DESIGNS[((dayIndex % DESIGNS.length) + DESIGNS.length) % DESIGNS.length];
+const SOL = DESIGN.g.map(row => [...row].map(c => c === '#' ? 1 : 0));
+
+function runs(line){
+  const out = []; let c = 0;
+  for (const v of line){ if (v) c++; else if (c){ out.push(c); c = 0; } }
+  if (c) out.push(c);
+  return out.length ? out : [0];
+}
+const ROWCLUES = SOL.map(runs);
+const COLCLUES = [0,1,2,3,4,5,6].map(c => runs(SOL.map(r => r[c])));
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.lightbox.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex || !Array.isArray(S.marks) || S.marks.length !== 7){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (S.status !== 'won') S.stats.streak = 0;
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
+  S = { day: dayIndex, marks: Array.from({length:7}, () => [0,0,0,0,0,0,0]), mistakes:0, startAt:null, timeMs:0, status:'playing', stats };
+}
+saveState();
+
+/* ---------------- dom ---------------- */
+const $ = id => document.getElementById(id);
+
+function fmtTime(ms){
+  const s = Math.floor(ms / 1000);
+  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
+}
+function elapsed(){
+  if (S.status !== 'playing') return S.timeMs;
+  if (!S.startAt) return 0;
+  return Date.now() - S.startAt;
+}
+
+function renderGrid(){
+  const cells = [];
+  cells.push('<div class="clue"></div>');
+  for (let c = 0; c < 7; c++) cells.push(`<div class="clue">${COLCLUES[c].join('<br/>')}</div>`);
+  for (let r = 0; r < 7; r++){
+    cells.push(`<div class="clue">${ROWCLUES[r].join('&nbsp;')}</div>`);
+    for (let c = 0; c < 7; c++){
+      const m = S.marks[r][c];
+      cells.push(`<div class="cell${m === 1 ? ' on' : (m === 2 ? ' x' : '')}" data-r="${r}" data-c="${c}"></div>`);
+    }
+  }
+  $('grid').innerHTML = cells.join('');
+}
+
+function renderMistakes(){
+  let pips = '';
+  for (let i = 0; i < 4; i++) pips += `<span class="pip${i < S.mistakes ? ' gone' : ''}"></span>`;
+  $('mistakes').innerHTML = `developments left: ${pips}<span style="margin-left:6px;">${4 - S.mistakes}</span>`;
+}
+
+function renderAll(){ renderGrid(); renderMistakes(); }
+
+/* ---------------- play ---------------- */
+$('grid').addEventListener('click', e => {
+  const el = e.target.closest('.cell');
+  if (!el || S.status !== 'playing') return;
+  const r = +el.dataset.r, c = +el.dataset.c;
+  if (!S.startAt) S.startAt = Date.now();
+  S.marks[r][c] = (S.marks[r][c] + 1) % 3;
+  saveState();
+  renderGrid();
+});
+
+$('btnClear').addEventListener('click', () => {
+  if (S.status !== 'playing') return;
+  S.marks = Array.from({length:7}, () => [0,0,0,0,0,0,0]);
+  saveState();
+  renderGrid();
+  toastMsg('Board cleared \u2014 the clock keeps running');
+});
+
+function currentMatches(){
+  for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++){
+    if ((S.marks[r][c] === 1 ? 1 : 0) !== SOL[r][c]) return false;
+  }
+  return true;
+}
+
+$('btnDevelop').addEventListener('click', () => {
+  if (S.status !== 'playing') return;
+  if (currentMatches()){
+    S.status = 'won';
+    S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
+    const st = S.stats;
+    st.played++; st.solved++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+    saveState();
+    showReveal();
+    return;
+  }
+  // wrong development: flash the contradictions
+  const bad = [], miss = [];
+  for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++){
+    if (S.marks[r][c] === 1 && !SOL[r][c]) bad.push([r,c]);
+    if (S.marks[r][c] !== 1 && SOL[r][c]) miss.push([r,c]);
+  }
+  bad.forEach(([r,c]) => { const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`); if (el) el.classList.add('bad'); });
+  miss.forEach(([r,c]) => { const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`); if (el) el.classList.add('miss'); });
+  S.mistakes++;
+  if (S.mistakes >= 4){
+    S.status = 'lost';
+    S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
+    S.stats.played++; S.stats.streak = 0;
+    saveState();
+    showReveal();
+  } else {
+    saveState();
+    renderMistakes();
+    setTimeout(() => document.querySelectorAll('.cell.bad,.cell.miss').forEach(el => el.classList.remove('bad','miss')), 1400);
+    toastMsg(['Not quite \u2014 study the flashes.','The film fogged a little \u2014 look again.','One more bad development and it\u2019s ruined.'][Math.min(S.mistakes - 1, 2)]);
+  }
+});
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  if (S.status === 'won'){
+    const sq = ['\u2B50','\u2705','\uD83D\uDFE9','\uD83D\uDFE8'][Math.min(S.mistakes, 3)];
+    return `Lightbox No. ${num} \u00b7 developed with ${S.mistakes} mistake${S.mistakes === 1 ? '' : 's'} ${sq} \uD83D\uDCF8`;
+  }
+  return `Lightbox No. ${num} \u00b7 fogged the film \u2014 4 bad developments \uD83D\uDCF8`;
+}
+function showReveal(){
+  const st = S.stats;
+  const pix = SOL.map(row => row.map(v => `<div class="px${v ? ' f' : ''}"></div>`).join('')).join('');
+  if (S.status === 'won'){
+    $('verdict').textContent = S.mistakes === 0 ? 'Developed clean — not one bad exposure.' : 'Developed — today was ' + DESIGN.n + '.';
+  } else {
+    $('verdict').textContent = 'Fogged — the picture was ' + DESIGN.n + '.';
+    $('verdict').style.color = 'var(--accent)';
+  }
+  $('solvedpix').innerHTML = `<div class="pixgrid">${pix}</div>`;
+  $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 developed ${st.solved}/${st.played}`;
+  $('reveal').classList.add('show');
+  $('grid').style.pointerEvents = 'none';
+  $('grid').style.opacity = '.55';
+  $('btnDevelop').disabled = true;
+  $('btnClear').disabled = true;
+  syncBoard(S.status === 'won' ? S.mistakes : 4);
+}
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------------- team board (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'lightbox';
+const SYNC_BETTER = 'low';
+const SYNC_UNIT = 'mistakes';
+let lastSyncVal = null;
+function syncBoard(value){
+  lastSyncVal = value;
+  const box = $('curve');
+  if (!box) return;
+  box.innerHTML = '<div class="curve-note">checking the team board\u2026</div>';
+  let id = '', name = '';
+  try {
+    id = localStorage.getItem('warmup.id');
+    if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
+    name = (localStorage.getItem('warmup.name') || '').slice(0, 20);
+  } catch(e){ id = 'anon-' + Math.random().toString(36).slice(2, 8); }
+  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, name, id });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => renderBoard(d))
+    .catch(() => { box.innerHTML = '<div class="curve-note">team board offline \u2014 playing solo today</div>'; });
+}
+function renderBoard(d){
+  const box = $('curve');
+  if (!box) return;
+  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the board today</div>'; return; }
+  const maxBar = Math.max(...d.bins.map(b => b.count), 1);
+  const bars = d.bins.map(b => `<div class="cbar${b.you ? ' you' : ''}" style="height:${Math.max(10, Math.round(b.count / maxBar * 60))}px"></div>`).join('');
+  const you = d.beat == null ? '' : (d.beat === d.count - 1 ? 'top of today\u2019s board' : 'better than ' + d.beat + ' of ' + d.count);
+  const top = (d.top || []).slice(0, 5).map((t, i) => `${i + 1}. ${t.name} (${t.value})`).join(' \u00b7 ');
+  box.innerHTML =
+    `<div class="curve-head">team board \u00b7 ${d.count} today</div>` +
+    `<div class="curve-bars">${bars}</div>` +
+    (you ? `<div class="curve-note">you: ${you} by ${SYNC_UNIT}</div>` : '') +
+    (top ? `<div class="curve-top">${top}</div>` : '') +
+    `<div class="curve-name"><input id="curveName" maxlength="20" placeholder="name for the board (optional)"/></div>`;
+  const inp = $('curveName');
+  if (inp){
+    try { inp.value = localStorage.getItem('warmup.name') || ''; } catch(e){}
+    inp.addEventListener('change', () => {
+      try { localStorage.setItem('warmup.name', inp.value.trim().slice(0, 20)); } catch(e){}
+      if (lastSyncVal != null) syncBoard(lastSyncVal);
+    });
+  }
+}
+
+/* ---------------- help / countdown ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('countdown').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  if (S.status === 'playing'){
+    $('clocknote').textContent = S.startAt
+      ? `the clock is running — ${fmtTime(elapsed())} — it does not restart`
+      : 'the clock starts on your first tap';
+  }
+}
+setInterval(tick, 500);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+renderAll();
+if (S.status !== 'playing') showReveal();
+tick();
+</script>
+</body>
+</html>

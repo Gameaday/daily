@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Five anagrams. One ninety-second clock that never restarts. How many can you unscramble before it runs out?" />
+<title>Sprint · five anagrams, one clock</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 8px;}
+  .lead b{color:var(--ink);}
+  .track{display:flex; gap:8px; justify-content:center; margin:14px 0;}
+  .pip{width:12px; height:12px; border-radius:50%; background:#ddd2ba; border:1.5px solid #c9bda2;}
+  .pip.done{background:var(--green); border-color:var(--green);}
+  .wordbox{background:var(--card); border:1.5px solid var(--line); border-radius:14px;
+    padding:26px 16px; margin-top:10px; text-align:center;}
+  .scramble{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:40px; font-weight:700;
+    letter-spacing:.18em; margin:0 0 6px;}
+  .scramble.done{color:var(--green); text-decoration:line-through; text-decoration-thickness:3px;}
+  .acceptnote{font-size:12px; color:var(--muted); margin:0;}
+  .typed{margin:14px 0 4px;}
+  .typed input{
+    width:100%; max-width:320px; text-align:center; text-transform:uppercase;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:24px; letter-spacing:.12em;
+    background:var(--paper); border:2px solid var(--line); border-radius:10px; padding:10px 14px; color:var(--ink);
+  }
+  .typed input:focus{outline:none; border-color:var(--accent);}
+  .typed input.shake{border-color:var(--red,#b3402e); animation:shake .3s;}
+  @keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .wordactions{display:flex; gap:10px; justify-content:center; margin-top:10px;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+  .btn:hover{filter:brightness(.94);}
+  .bigclock{font-family:Georgia,serif; font-size:26px; text-align:center; margin:14px 0 0;}
+  .bigclock.warn{color:var(--accent);}
+  .clocknote{font-size:12px; color:var(--muted); text-align:center; margin-top:2px;}
+  .donelist{margin:16px 0 0; padding:0; list-style:none; text-align:center;}
+  .donelist li{display:inline-block; margin:3px; padding:5px 12px; border-radius:16px;
+    background:var(--green-soft); color:var(--green); font-weight:700; font-size:14px;}
+  .reveal{margin-top:16px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; text-align:center; color:var(--green);}
+  .verdict.lost{color:var(--accent);}
+  .answers{margin:8px 0 12px; text-align:center; font-size:14px; color:var(--muted);}
+  .answers b{color:var(--ink);}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+  .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
+  .countdown{font-size:13px; color:var(--muted);}
+  #curve{margin-top:14px;}
+  .curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+  .curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
+  .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
+  .cbar.you{background:var(--accent);}
+  .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
+  .curve-top{font-size:12px; color:var(--muted); margin-top:2px;}
+  .curve-name{margin-top:8px;}
+  .curve-name input{background:var(--card); border:1.5px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; width:100%; color:var(--ink);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  @media (max-width:480px){
+    h1{font-size:28px;}
+    .scramble{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Sprint<span class="dot">.</span></h1>
+      <p class="sub">five anagrams · one clock · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead"><b>Five scrambled words. Ninety seconds. One clock.</b> Type an anagram of the letters on screen — <b>any real word counts</b>, not just the one we picked. Skip what stalls you; the clock does not wait, and it never restarts.</p>
+
+  <div class="track" id="track"></div>
+  <div class="wordbox" id="wordbox">
+    <p class="scramble" id="scramble"></p>
+    <p class="acceptnote" id="acceptnote"></p>
+    <div class="typed"><input id="guess" maxlength="5" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="type a word"/></div>
+    <div class="wordactions">
+      <button class="btn ghost" id="btnSkip">Skip ▷</button>
+    </div>
+  </div>
+
+  <p class="bigclock" id="bigclock">1:30</p>
+  <p class="clocknote" id="clocknote">the clock starts on your first keystroke — and never restarts</p>
+
+  <ul class="donelist" id="donelist"></ul>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <p class="answers" id="answers"></p>
+    <div class="sharebox" id="sharetext"></div>
+    <div id="curve"></div>
+    <div class="actionsrow">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next sprint in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Each round shows <b>five scrambled words</b> — one 4-letter, then four 5-letter. Type an anagram and hit enter: <b>any dictionary word using exactly those letters scores</b>, so if we scrambled STONE and you spot TONES first, take it.</p>
+    <p><b>Skip</b> parks a word and moves on. Circle back? Only if you clear the rest with time to spare. (You won't. You never do.)</p>
+    <p>The <b>90-second clock starts on your first keystroke</b>. Reload the page, switch tabs, close your laptop — the clock keeps running. That's the sprint.</p>
+    <p>Beat 3 of 5 to keep your streak.</p>
+    <button class="close" data-close>On your marks</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- word bank (embedded, ~safe) ---------------- */
+const DICT_SRC = 'ABLE,ACED,ACES,ACTS,AIDE,AREA,AUTO,AWAY,BABE,BACK,BAIL,BAIT,BAKE,BALD,BALE,BALL,BAND,BANE,BANG,BANK,BARE,BARK,BARN,BASE,BASH,BASK,BASS,BATH,BATS,BEAM,BEAN,BEAR,BEAT,BEDS,BEEF,BEEN,BEEP,BEET,BELL,BELT,BEND,BENT,BEST,BETS,BIAS,BIKE,BILE,BIND,BIRD,BITE,BITS,BLUE,BLUR,BOAR,BOAT,BODE,BOLD,BONE,BOOK,BOOM,BOON,BOOT,BORE,BORN,BOTH,BOUGH,BOWL,BRIM,BUDS,BUFF,BULK,BULL,BUNK,BURN,BUSH,BUSY,CAFE,CAGE,CAKE,CALL,CAME,CAMP,CANE,CANO,CARD,CARE,CARP,CASE,CASH,CAST,CAVE,CEDE,CELL,CENT,CHAP,CHAR,CHAT,CHIP,CHOP,CITY,CLAD,CLAM,CLAY,CLEF,CLIP,CLOD,CLOP,CLOT,CLUB,CLUE,COAL,COAT,CODE,COIL,COIN,COLD,COLT,COMB,COME,CONe,CORE,CORK,CORN,COST,COTS,COUP,Cove,CRAB,CRAG,CRAM,CRATE,CREW,CROP,CROW,CURB,CURD,CURE,CURL,DABS,DAMP,DARE,DARK,DART,DASH,DATA,DATE,DAWN,DAYS,DEAD,DEAF,DEAL,DEAN,DEAR,DEBT,DECK,DEED,DEEM,DEEP,DEER,DEFY,DELL,DENT,DESC,DIAL,DICE,DIED,DIET,DIMS,DINE,DING,DINT,DIPT,DIRE,DIRT,DISH,DISK,DIVE,DOCK,DOCS,DOES,DOLE,DOLL,DOLT,DOME,DONE,DONS,DOOM,DOOR,DOSE,DOTE,DOTS,DOWN,DRAB,DRAG,DRAW,DREW,DROP,DRUM,DUCK,DUCT,DUDE,DUDS,DUEL,DUET,DUKE,DULL,DULY,DUMP,DUNE,DUNK,DUOS,DUSK,DUST,DUTY,EACH,EARN,EASE,EAST,EASY,EATS,EBBS,ECHO,EDGE,EDGY,EDIT,EELS,EGGS,ELKS,ELLS,ELSE,EMIT,ENDS,ENVY,EPOCH,EQUAL,EQUIP,ERAS,EVER,EVIL,EXAM,EXES,EXIT,EYED,EYES,FACE,FACT,FADE,FAIL,FAIR,FAKE,FALL,FAME,FANG,FARM,FAST,FATE,FAXE,FEAT,FEDS,FEED,FEEL,FEET,FELL,FELT,FEND,FERN,FEUD,FIEF,FIFE,FILE,FILL,FILM,FIND,FINE,FINK,FIRE,FIRM,FISC,FIST,FITS,FIVE,FIZE,FLAG,FLAK,FLAP,FLAT,FLAW,FLAX,FLEA,FLED,FLEE,FLEW,FLIP,FLIT,FLOG,FLOP,FLUE,FLUX,FOAL,FOAM,FOES,FOLD,FOLK,FOND,FONT,FOOD,FOOL,FOOT,FORD,FORE,FORK,FORM,FORT,FOUL,FOUR,FOWL,FOXES,FRAY,FREE,FRET,FROG,FROM,FUEL,FULL,FUME,FUND,FUNK,FURL,FURY,FUSE,FUSS,GADS,GAIN,GAIT,GALE,GALL,GALT,GAME,GANG,GAPE,GAPS,GASH,GASP,GATE,GAUD,GAVE,GAWK,GELS,GEMS,GENE,GENT,GERM,GETS,GIFT,GILD,GILL,GILT,GINS,GIRD,GIRL,GIST,GIVE,GLAD,GLANe,GLEAM,GLEN,GLIB,GLOB,GLOW,GNAT,GNAW,GOAD,GOAL,GOAT,GOES,GOLD,GOLF,GONE, GONG,GOOD,GOOF,GORE,GORY,GOSH,GOWN,GRAB,GRAD,GRAM,GRAY,GREW,GRID,GRIM,GRIN,GRIP,GRIT,GROW,GULF,GULL,GUNK,GURU,GUSH,GUST,HACK,HAIL,HAIR,HALE,HALL,HALO,HALT,HAND,HANG,HARD,HARE,HARK,HARM,HARP,HASH,HATE,HAVE,HAWK,HAYS,HAZE,HAZY,HEAD,HEAL,HEAP,HEAR,HEAT,HEED,HEEL,HEFT,HEIR,HELD,HELL,HELM,HELP,HENS,HERB,HERD,HERE,HERO,HERS,HIDE,HIGH,HIKE,HILL,HILT,HIND,HINT,HIRE,HISS,HITS,HIVE,HOAX,HOBO,HODS,HOLD,HOLE,HOLY,HOME,HONE,HONK,HOOD,HOOF,HOOK,HOOP,HOOT,HOPE,HOPS,HORN,Hose,HOST,HOUR,HOWL,HULK,HULL,HUMP,HUNG,HUNT,HURL,HURT,HUSH,HUSK,HYMN,IAMB,ICED,ICES,ICON,IDEA,IDLE,IDLY,ILKS,ILLS,IMPS,INCH,INKS,INLY,INTO,IONS,IOTA,IRIS,IRKS,IRON,ISLE,ITCH,ITEM,JABS,JACK,JAIL,JAMs,JARs,JAWs,JAZZ,JEEP,JEER,JELL,JERK,JEST,JETS,JIBE,JIGS,JILT,JINX,JIVE,JOBS,JOCK,JOGS,JOIN,JOKE,JOLT,JOTS,JOWL,JOYS,JUDO,JUGS,JUST,JUTE,KEEL,KEEN,KEEP,KELP,KEPT,KICK,KIDS,KILL,KILN,KILO,KILT,KIND,KING,KINK,KIPS,KISS,KITE,KITS,KNEE,KNEW,KNIT,KNOB,KNOT,KNOW,LACE,LACK,LACY,LADS,LAID,LAIN,LAIR,LAKE,LAMB,LAME,LAMP,LAND,LANE,LAPS,LARD,LARK,LASH,LASS,LAST,LATE,LAVA,LAWN,LAWS,LAYS,LEAD,LEAF,LEAK,LEAN,LEAP,LEAS,Leds,LEEK,LEEK,LEFT,LEND,LENS,LENT,LESS,LEST,LETS,LIAR,LICE,LICK,LIDS,LIEN,LIES,LIEU,LIFE,LIFT,LIKE,LILY,LIMB,LIME,LIMP,LINE,LINK,LINT,LION,LIPS,LISP,LIST,LIVE,LOAD,LOAF,LOAM,LOAN,LOBE,LOCK,LODE,LOFT,LOGE,LOIN,LOLL,LONE,LONG,LOOK,LOOM,LOON,LOOP,LOOT,LORD,LORE,LOSE,LOSS,LOST,LOTS,LOUD,LOUT,LOVE,LOWS,LUCK,LUGS,LULL,LUMP,LUNG,LURE,LURK,LUSH,LUST,LYRE,MACE,MADE,MAID,MAIL,MAIM,MAIN,MAKE,MALL,MALT,MANE,MANY,MARE,MARK,MASH,MASK,MASS,MATE,MATH,MAUL,MAWS,MAZE,MEAD,MEAL,MEAN,MEAT,MEEK,MEET,MELD,MELT,MEND,MENU,MERE,MERT,MESH,MESS,MICE,MILD,MILE,MILK,MILL,MIME,MIND,MINE,MINK,MINT,MIPS,MIRE,MIRS,MISE,MISS,MIST,MITE,MITT,MOAN,MOAT,MOCK,MODE,MOLD,MOLE,MOLT,MONK,MOOD,MOON,MOOR,MOOT,MOPE,MOPS,MORE,MORN,MOSS,MOST,MOTH,MOVE,MUCH,MUCK,MUDS,MULE,MULL,MUSE,MUST,MUTE,MUTT,MYTH,NAGS,NAIL,NAME,NAPE,NAPS,NAVEL,NEAR,NEAT,NECK,NEED,NEON,NERD,NEST,NEWS,NEWTS,NIBS,NICE,NICK,NINE,NODE,NODS,NOES,NOISE,NONE,NOOK,NOON,NORM,NOSE,NOSH,NOTE,NOUN,NUBS,NUMB,OARS,OBEY, OBOE,ODDS,ODES,ODOR,OGRE,OILS,OLDY,OMEN,OMIT,ONCE,ONES,ONLY,ONTO,ONUS,OOZE,OPAL,OPEN,OPTS,ORAL,ORBS,ORES,OUCH,OUST,OUTS,OVAL,OVEN,OVER,OWED,OWLS,OWNs,PACK,PACT,PADE,PAGE,PAID,PAIL,PAIN,PAIR,PALE,PALL,PALM,PANE,PANG,PANS,PANT,PARK,PART,PASS,PAST,PATH,PATS,PAVE,PAWN,PAWS,PAYS,PEAK,PEAL,PEAR,PEAT,PECK,PEEL,PEEP,PEER,PEGs,PEND,PENS,PENT,PERK,PEST,PETS,PEWS,PICK,PIER,PIES,PIGS,PILE,PILL,PINE,PINK,PINT,PIPE,PITS,PITY,PLAN,PLAY,PLEA,PLIP,PLOD,PLOP,PLOT,PLUG,PLUM,PLUS,PODS,POEM,POET,POKE,POLL,POLO,POMP,POND,PONY,POOL,POOR,POPE,PORE,PORK,PORT,POSE,POSH,POST,POTS,POUR,POUT,PRAM,PRAY,PREP,PREX,PROP,PROS,Prow,PSST,PULL,PULP,PUNK,PUNS,PUNT,PUNY,PUPS,PURE,PURL,PUSH,PUTS,PUTT,QUAY,QUIP,QUIT,QUIZ,QUOD,RACE,RACK,RAFT,RAGE,RAGS,RAID,RAIL,RAIN,Rake,RAMP,RANG,RANK,RANT,RAPS,RAPT,RARE,RASH,RATE,RATS,RAVE,RAYS,READ,REAL,REAM,REAP,REAR,REDD,REED,REEK,REEL,REFT,REIN,RELY,REND,RENT,REST,RIBS,RICE,RICH,RIDE,RIFT,RIGS,RIMS,RIND,RING,RINS,RIOT,RIPS,RISE,RISK,RITE,ROAD,ROAM,ROAR,ROBE,ROCK,RODE,RODS,ROEe,ROLL,ROMP,ROOD,ROOF,ROOK,ROOT,ROPE,ROSE,ROTS,ROUE,ROUX,ROVE,ROWS,RUBS,RUBY,RUDE,RUED,RUES,RUFF,RUGS,RUIN,RULE,RUMP,RUNG,RUNS,RUSH,RUST,RUTS,SACK,SAFE,SAGS,SAIL,SAKE,SALE,SALT,SAME,SAND,SANE,SANG,SANK,SAPS,SARI,SASH,SATE,SAVE,SAWS,SAYS,SCAN,SCAR,SEAL,SEAM,SEAR,SEAT,SECT,SEED,SEEK,SEEM,SEEN,SEEP,SEER,SEES,SELF,SELL,SEMI,SEND,SENT,SETS,SEWN,SHAG,SHAM,SHED,SHIN,SHIP,SHOD,SHOE,SHOP,SHOT,SHOW,SHUN,SHUT,SICK,SIDE,SIFS,SIFT,SIGH,SIGN,SILK,SILL,SILO,SILT,SINE,SING,SINK,SIPS,SIRE,SISS,SITE,SITS,SIZE,SKEW,SKID,SKIM,SKIN,SKIP,SKIS,SLAB,SLAM,SLAP,SLAT,SLAY,SLED,SLEW,SLID,SLIM,SLIP,SLIT,SLOG,SLOP,SLOT,SLOW,SLUG,SLUM,SLUR,SNOT,SNOW,SOAP,SOAR,SOBS,SOCK,SODA,SODS,SOFA,SOFT,SOIL,SOLD,SOLE,SOLO,SOLO,SONG,SONS,SOON,SOOT,SORE,SORT,SOUL,SOUR,SOWN,SPAS,SPAY,SPED,SPIN,SPIT,SPOT,SPRY,SPUD,SPUN,SPUR,STAB,STAG,STAR,STAY,STEM,STEP,STIR,STOP,STOW,STUB,STUN,SUCH,SUCK,SUDS,SUED,SUER,SUIT,SULK,SUMS,SUNG,SUNK,SUNS,SURE,SURF,SWAB,SWAG,SWAM,SWAN,SWAP,SWAT,SWAY,SWIG,SWIM,SWUM,TABS,TACK,TACT,TAGS,TAIL,TAKE,TALE,TALK,TALL,TAME,TAMP,TANG,TANK,TANS,TAPE,TAPS,TARE,TARP,TARS,TART,TASK,TASS,TEAK,TEAL,TEAM,TEAR,TEEM,TEEN,TEES,TELL,TEND,TENS,TENT,TERM,TERN,TEST,TEXT,THAN,THAT,THEE,THEM,THEN,THEY,THIN,THIS,THUD,THUG,THUS,TICK,TIDE,TIDY,TIED,TIER,TIES,TILE,TILL,TILT,TIME,TINE,TINS,TINT,TINY,TIPS,TIRE,TOAD,TOES,TOFU,TOIL,TOLD,TOLL,TOMB,TONE,TONS,TOOT,Tops,TORN,TOTE,TOTS,TOUR,TOUT,TOWN,TOWS,TOYS,TRAM,TRAP,TRAY,TREE,TRIM,TRIO,TRIP,TROD,TROT,TRUE,TUBA,TUBS,TUCK,TUFT,TUNS,TURF,TURN,TUSK,TWIG,ULNA,UNDO,UNIT,UPON,URGE,USER,USES,VALE,VANE,VANS,VASE,VAST,VATS,VEAL,VEER,VEIL,VEIN,VEND,VENT,VERB,VERY,VETO,VIAL,VIBE,VIED,VIES,VIEW,VINE,VISA,VISE,VOID,VOLT,VOTE,VOWS,WACK,WADE,WADS,WAFT,WAGE,WAGS,WAIL,WAIT,WAKE,WALK,WALL,WAND,WANE,WANT,WARD,WARE,WARM,WARN,WARP,WARS,WART,WARY,WASH,WASP,WAVE,WAVY,WAXY,WAYS,WEAK,WEAN,WEAR,WEBS,WEDS,WEED,WEEK,WEEP,WELD,WELL,WELT,WENT,WEPT,WERE,WEST,WHAT,WHEY,WHIM,WHIP,WHIR,WHIT,WHOA,WHOM,WICK,WIDE,WIFE,WIGS,WILD,WILL,WILT,WIND,WINE,WING,WINK,WINO,WINS,WIPE,WIRE,WISE,WISH,WISP,WITH,WITS,WOES,WOKe,WOLD,WOLF,WOMB,WONK,WONT,WOOD,WOOL,WORD,WORE,WORK,WORM,WORN,Wove,WRAP,WRAY,WREN,YACK,YAMS,YANG,YANK,YAPS,YARD,YARN,YAWL,YAWN,YAWS,YEAR,YEAS,YELL,YELP,YETI,YEWS,YOGA,YOGI,YOLK,YORE,YOUK,YOWL,YOYO,ZEAL,ZEBU,ZERO,ZEST,ZINC,ZONE,ZOOM';
+/* (4-letter words are the acceptance set for the one 4-letter round; 5-letter set below) */
+const DICT5_SRC = 'ABOUT,ABOVE,ACTOR,ADAPT,ADMIT,ADOPT,AFTER,AGAIN,AGENT,AGREE,AHEAD,ALARM,ALBUM,ALERT,ALIAS,ALIEN,ALIGN,ALIKE,ALIVE,ALLOW,ALONE,ALONG,ALTER,AMONG,ANGER,ANGLE,ANGRY,ANKLE,APART,APPLE,APPLY,ARENA,ARGUE,ARISE,ARMOR,AROMA,AROSE,ARRAY,ARROW,ASIDE,ASSET,ATLAS,AUDIO,AUGUR,AVAIL,AXIOM,BACON,BADGE,BAKER,BANJO,BASIC,BASIL,BASON,BATCH,BEACH,BEARD,BEAST,BEGIN,BEGUN,BEING,BELLY,BELOW,BENCH,BERRY,BIRTH,BISON,BLAME,BLAND,BLANK,BLAST,BLEAK,BLEND,BlESS,BLIND,BLINK,BLITZ,BLOAT,BLOCK,BLOOM,BLUND,BOARD,BOAST,BOOTH,BOOST,BOUND,BOXER,BRACE,BRAID,BRAIN,BRAKE,BRAND,BRAVE,BREAD,BREAK,BREED,BRIEF,BRING,BRINK,BRISK,BROAD,BROKE,BROOK,BROOM,BROWN,BRUSH,BUILD,BUILT,BUNCH,BURST,CABIN,CABLE,CAMEL,CANDY,CANOE,CARGO,CARRY,CASTE,CATCH,CAUSE,CEASE,CEDAR,CELLAR,CHAIN,CHAIR,CHAOS,CHARM,CHART,CHASE,CHASM,CHEAP,CHECK,CHEEK,CHEER,CHEST,CHIEF,CHILD,CHILL,CHIME,CHOIR,CHOSE,CHUNK,CIVIC,CIVIL,CLAIM,CLAMP,CLASH,CLASP,CLASS,CLEAN,CLEAR,CLERK,CLICK,CLIFF,CLIMB,CLING,CLINK,CLOCK,CLOTH,CLOVE,CLOWN,CLUMP,COLOR,COMET,COMIC,CORAL,CORER,COUCH,COUGH,COULD,COUNT,COURT,CRAFT,CRANE,CRASH,CRAVE,CRAZY,CREAK,CREAM,CREEK,CREST,CREW? ,CRIME,CRISP,CROOK,CROSS,CROWD,CROWN,CRUMB,CRUSH,CRUST,CURVE,CYCLE,DAILY,DAIRY,DAISY,DEALT,DEATH,DEBIT,DEBUT,DECAL,DECAY,DELTA,DENIM,DENSE,DEPOT,DEPTH,DERBY,DEVIL,DIARY,DIGIT,DIRTY,DOING,DONOR,DOUGH,DOUBT,DOZEN,DRAFT,DRAIN,DRAKE,DRANK,DRAPE,DRAWN,DREAD,DREAM,DRESS,DRIED,DRIFT,DRILL,DRINK,DRIVE,DROVE,DROWN,DRUMS,DUSTY,DWARF,Dwell,EAGER,EAGLE,EARLY,EARTH,EASEL,EIGHT,ELECT,ELITE,EMAIL,EMBER,EMPTY,ENEMY,ENJOY,ENTER,ENTRY,ENVOY,EPOCH,EQUIP,ERASE,ERROR,ESSAY,ETHIC,EVICT,EXACT,EXALT,EXCEL,EXERT,EXILE,EXIST,EXTRA,FABLE,FAINT,FAIRY,Faith,FANCY,FARCE,FATAL,FATCH,FAULT,FAVOR,FEAST,FENCE,FERRY,FETAL,FEUDS,FIEND,FIERY,FINAL,FIRST,FLAME,FLANK,FLASH,FLASK,FLEET,FLESH,FLOAT,FLOCK,FLOOD,FLOOR,FLOUR,FLUTE,FOAMY,FOCAL,FOCUS,FOGgY,FOLIO,FORCE,FORGE,FORTH,FORTY,FORUM,FOUND,FRAME,FRAUD,FRESH,FRONT,FROST,FROWN,FROZE,FUDGE,FULLY,FUNGI,FUROR,GAZED,GAYER,GEESE,GENIE,GENRE,GHOST,GIANT,GIVEN,GLARE,GLASS,GLAZE,GLEAM,GLIDE,GLOBE, GLOOM,GLOSS,GNOME,GODLY,GOING,GOOSE,GORGE,GOTCHA,GOURD,GRADE,GRAIN,GRAND,GRANT,GRAPH,GRASP,GRASS,GRAVY,GREAT,GREEN,GREET,GRIEF,GRILL,GRIME,GROAN,GROOM,GROVE,GROWL,GROWN,GRUFF,GRUNT,GUARD,GUAVA,GUESS,GUEST,GUIDE,GUILT,HABIT,HANDY,HAPPY,HARSH,HASTE,HATCH,HATER,HAVEN,HAVOC,HAZEL,HEARD,HEART,HEAVY,HEIGH,HELLO,HELMET,HENCE,HERON,HIKED,HIRed,HITCH,HONOR,HORSE,HOSTEL,HOUND,HOUSE,HUMAN,HUMID,HUNCH,HURRY,HUSKY,ICING,IDEAL,IMAGE,IMPLY,INCH? ,INDEX,INDIGO,INGOT,INLET,INNER,INPUT,IRONY,ISSUE,IVORY,JELLY, JEWEL,JOKER,JOUST,JUDGE,JUICE,JUICY,KNELT,KNOCK,KNOWN,KUDZU,LABEL,LABOR,LANCE,LARGE,LARVA,LASER,LATCH,LAUGH,LAYER,LEARN,LEASE,LEASH,LEAST,LEAVE,LEDGE,LEGAL,LEMON,LEVEL,LEVER,LIGHT,LILAC,LIMBO,LINEN,LLAMA,LOBBY,LOCAL,LODGE,LOGIC,LOOSE,LORRY,LOTUS,LOUSY,LOVER,LOWER,LUMPY,LUNAR,LUNCH,LUNGE,LUCKY,LYING,MAGIC,MAGMA,MAJOR,MANGO,MANGY,MANOR,MAPLE,MARCH,MATCH,MAUVE,MAXIM,MAYBE,MAYOR,MEDAL,MEDIA,MELON,MERCY,MERGE,MERIT,METAL,METER,MIDST,MINOR,MINUS,MIRTH,MIXER,MODEL,MODEM,MOIST,MOLAR,MOUNT,MOURN,MOUSE,MOUTH,MOVER,MOVIE,MURAL,MUSIC,MUTED,NANNY,NASAL,NAVAL,NAVY? ,NEARLY,NEATH,NEEDLE,NERVE,NEWER,NEWLY,NICER,NIGHT,NINJA,NINTH,NOBLE,NOISE,NOMAD,NOTCH,NOTED,NOVEL,NURSE,OASIS,OBEIS,OCCUR,OCEAN,ODDER,OFFAL,OFFER,OLIVE,ONION,ONSET,OPERA,ORBIT,ORDER,ORGAN,OTHER,OTTER,OUNCE,OUTER,OVERT,OZONE,PACED? ,PADDY,PAGAN,PAINT,PALMS,PANEL,PANIC,PAPER,PARCH,PARKA,PARTY,PASTA,PASTE,PATCH,PATIO,PAUSE,PAYEE,PEACE,PEACH,PEARL,PEDAL,PENNY,PERCH,PERIL,PERKY,PESTO,PHONE,PHOTO,PIANO,PIECE,PILOT,PIVOT,PIXEL,PLACE,PLAID,PLAIN,PLANK,PLANT,PLATE,PLAYS,PLEAD,PLEAT,PLIERS,PLUME,PLUMP,PLUSH,POEMS,POINT,POLAR,POUCH,POUND,POWER,PRANK,PRAWN,PRESS,PRICE,PRIDE,PRIME,PRINT,PRIZE,PROBE,PRONE,PROOF,PROSE,PROUD,PROVE,PRUNE,PULPY,PUNCH,PUPIL,PUPPY,PURSE,PUSHY,QUAIL,QUART,QUEST,QUICK,QUIET,QUOTA,QUOTE,RABBI,RABID,RACED,RAISIN,RALLY,RANCH,RANGE,RAPI D, RATIO,RATTY,RAYON,RHYME,RIDER,RIDGE,RIFLE,RIGHT,RIGID,RINSE,RISEN,RISKY,ROAST,ROBIN,ROBOT,ROCKY,ROGUE,ROMAN,ROOST,ROUGH,ROUND,ROUSE,ROUTE,ROYAL,RUDER,RUGBY,RULER,RUMOR,RUSTY,SADLY,SAGAS,SALAD,SALON,SALSA,SALTY,SANDY,SASSY,SAUCE,SAUNA,SCALE,SCALP,SCANT,SCARE,SCARF,SCARY,SCENE,SCENT,SCOLD,SCONE,SCOOP,SCOOT,SCOPE,SCORE,SCORN,SCOUT,SCOWL,SCRAM,SCRAP,SCREE,SCREW,SCUBA,SEDAN,SEIZE,SENSE,SEPIA,SERUM,SHACK,SHADE,SHADY,SHAFT,SHAKE,SHALL,SHAME,SHANK,SHAPE,SHARD,SHARE,SHARK,SHARP,SHAVE,SHAWL,SHEAR,SHEEN,SHEEP,SHEER,SHEET,SHELF,SHELL,SHINE,SHINY,SHIRT,SHOAL,SHOCK,SHONE,SHOOK,SHOOT,SHORE,SHORT,SHOUT,SHOVE,SHOWN,SHOWY,SHRUB,SHRUG,SHUTT,SISSY,SIXTH,SIXTY,SKILL,SKIMP,SKIRT,SKULL,SKUNK,SLACK,SLAIN,SLANG,SLANT,SLASH,SLEEK,SLEEP,SLICE,SLICK,SLIDE,SLOPE,SLOSH,SLOTH,SMALL,SMART,SMASH,SMELL,SMILE,SMIRK,SMOKE,SMOKY,SNACK,SNAIL,SNAKE,SNAP? ,SNARE,SNEAK,SNIFF,SNORE,SNOUT,SNOWY,SNUCK,SOAPY,SOBER,SOGGY,SONIC,SOOTH,SORRY,SOUND,SOUTH,SPACE,SPADE,SPANK,SPARK,SPAWN,SPEAK,SPEAR,SPECK,SPELL,SPEND,SPENT,SPICE,SPICY,SPINE,SPITE,SPLIT,SPOIL,SPOKE,SPOON,SPORT,SPRAY,SPREE,SPRIG,SPURN,SPURT,SQUAD,SQUAL,SQUAT,SQUID,STACK,STAFF,STAGE,STAIN,STAIR,STAKE,STALK,STALL,STAMP,STAND,STARE,STARK,START,STASH,STATE,STEAK,STEAL,STEAM,STEED,STEEL,STEEP,STEER,STERN,STICK,STIFF,STILL,STILT,STING,STINT,STOCK,STOIC,STONE,STONY,STOOD,STOOL,STOOP,STORE,STORK,STORM,STORY,STOUT,STOVE,STRAP,STRAW,STRAY,STRIP,STRUM,STUCK,STUDY,STUFF,STUMP,STUNG,STUNK,STUNT,STYLE,SUAVE,SUGAR,SUING,SUITE,SULKY,SUMAC,SUNNY,SUPER,SURGE,SURLY,SWAMP,SWARM,SWASH,SWATH,SWELL,SWEPT,SWIFT,SWING,SWIRL,SWORD,SWORE,SWORN,SYRUP,TABLE,TABOO,TAKEN,TALON,TANGO,TANGY,TAPER,TAPIR,TARDY,TEACH,TEARY,TEASE,TEETH,TEMPO,TENSE,TENTH,TEPID,THEFT,THEIR,THERE,THESE,THICK,THIEF,THIGH,THING,THINK,THIRD,THORN,THOSE,THREE,THREW,THROB,THROW,TICKY,TIDAL,TIGHT,TIMBER,TIMID,TITLE,TOAST,TODAY,TONAL,TOKEN,TOPAZ,TOPIC,TORCH,TORUS,TOUCH,TOUGH,TOWEL,TRACE,TRACK,TRACT,TRAIL,TRAIN,TRAIT,TREAT,TREND,TRIAD,TRIBE,TRICK,TRIPE,TROPE,TROUT,TRUCE,TRUCK,TRUCE,TRULY,TRUNK,TRUST,TRUTH,TULIP,TUMOR,TUNIC,TURBO,TUTOR,TWANG,TWEAK,TWEED,TWIST,ULCER,UNCLE,UNDER,UNFED,UNITE,UNLIT,UNMET,UNWED,UPPER,UPSET,UPTOWN,URBAN,URGED,USHER,USING,USUAL,UTTER,VAGUE,VAULT,VEGAN,VENOM,VENUE,VERGE,VERSE,VIDEO,VIGIL,VILLA,VINYL,VIRAL,VIOLA,VIPER,VIRAL,VOCAL,VODKA,Vogue,VOTER,VOWEL,WAGON,Waist,WALTZ,WANDER,WARTY,WASHY,WASTE,WATCH,WAVER,WAXEN,WEALTH,WEIRD,WENCH,WHACK,WHALE,WHARF,WHEAT,WHEEL,WHELP,WHERE,WHICH,WHIFF,WHILE,WHIRL,WHISK,WHITE,WHOLE,WIDOW,WIDTH,WINDY,WISER,WITCH,WOKE? ,WOODS,WORDY,WORLD,WORTH,WOULD,WOUND,WOVEN,WRACK,WREAK,WRECK,WREST,WRIth,XENON,YACHT,YEARS,YEAST,YOUNG,YOURS,YOUTH,ZEBRA,ZESTY,ZONAL';
+function parseWords(src){
+  const s = new Set();
+  src.split(',').forEach(w => { const t = w.trim().toUpperCase().replace(/[^A-Z]/g, ''); if (t.length) s.add(t); });
+  return s;
+}
+const DICT4 = parseWords(DICT_SRC);
+const DICT5 = parseWords(DICT5_SRC);
+/* sorted-letters -> set of real words (for anagram acceptance) */
+function buildAnagramMap(dict){
+  const m = new Map();
+  for (const w of dict){
+    const k = [...w].sort().join('');
+    if (!m.has(k)) m.set(k, new Set());
+    m.get(k).add(w);
+  }
+  return m;
+}
+const ANA4 = buildAnagramMap(DICT4);
+const ANA5 = buildAnagramMap(DICT5);
+
+/* ---------------- deterministic daily puzzles ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+/* pick one 4-letter and four 5-letter words with multiple anagrams (so acceptance matters) */
+const R4 = [...ANA4.keys()].filter(k => ANA4.get(k).size >= 2 && k.length === 4);
+const R5 = [...ANA5.keys()].filter(k => ANA5.get(k).size >= 2 && k.length === 5);
+function scrambleWord(w, rnd){
+  const a = [...w];
+  for (let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  if (a.join('') === w) [a[0], a[1]] = [a[1], a[0]];
+  return a.join('');
+}
+const rnd = mulberry32(dayIndex * 2654435761 % 4294967296 + 17);
+const targets = [];
+const used = new Set();
+const t4 = R4[Math.floor(rnd() * R4.length)];
+targets.push(t4); used.add(t4);
+while (targets.length < 5){
+  const k = R5[Math.floor(rnd() * R5.length)];
+  if (!used.has(k)){ targets.push(k); used.add(k); }
+}
+const scrambles = targets.map(k => scrambleWord(k, rnd));
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.sprint.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
+  if (S && S.day !== dayIndex && S.status !== 'won'){
+    if (!(S.solvedCount >= 3)) stats.streak = 0;
+  }
+  S = { day: dayIndex, startAt:null, timeMs:0, idx:0, solved:[], skips:0, solvedCount:0, status:'playing', stats };
+}
+saveState();
+
+/* ---------------- dom ---------------- */
+const $ = id => document.getElementById(id);
+const TOTAL_MS = 90 * 1000;
+
+function fmtClock(ms){
+  const s = Math.max(0, Math.ceil(ms / 1000));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
+}
+function timeLeft(){
+  if (!S.startAt) return TOTAL_MS;
+  return Math.max(0, TOTAL_MS - (Date.now() - S.startAt));
+}
+
+function renderTrack(){
+  let h = '';
+  for (let i = 0; i < 5; i++) h += `<span class="pip${S.solved.includes(i) ? ' done' : ''}"></span>`;
+  $('track').innerHTML = h;
+}
+function renderWord(){
+  if (S.status !== 'playing'){ return; }
+  const k = targets[S.idx];
+  $('scramble').textContent = scrambles[S.idx];
+  $('scramble').classList.remove('done');
+  $('acceptnote').textContent = `${S.idx + 1} of 5 · any real word from these ${k.length} letters counts`;
+  $('guess').value = '';
+  $('guess').focus();
+}
+function renderDoneList(){
+  $('donelist').innerHTML = S.solved.map(i => `<li>${[...(scrambles[i])].sort().join('')}</li>`).join('');
+}
+
+/* ---------------- play ---------------- */
+$('guess').addEventListener('keydown', e => {
+  if (e.key === 'Enter'){
+    if (!S.startAt) S.startAt = Date.now();
+    const val = e.target.value.trim().toUpperCase();
+    if (!val) return;
+    if (S.status !== 'playing' || S.solved.includes(S.idx)) return;
+    const k = targets[S.idx];
+    const sorted = [...val].sort().join('');
+    if (sorted === k && (k.length === 4 ? DICT4.has(val) : DICT5.has(val))){
+      S.solved.push(S.idx);
+      S.solvedCount = S.solved.length;
+      saveState();
+      renderTrack(); renderDoneList();
+      toastMsg('\uD83C\uDF89 ' + val + '!');
+      advance();
+    } else {
+      e.target.classList.remove('shake');
+      void e.target.offsetWidth;
+      e.target.classList.add('shake');
+    }
+  } else if (e.key.length === 1 && !S.startAt){
+    S.startAt = Date.now();
+  }
+});
+$('btnSkip').addEventListener('click', () => {
+  if (S.status !== 'playing') return;
+  if (!S.solved.includes(S.idx)){
+    S.skips++;
+    advance();
+  }
+});
+function advance(){
+  if (S.solvedCount >= 5){ finish('won'); return; }
+  let n = S.idx + 1;
+  while (n < 5 && S.solved.includes(n)) n++;
+  if (n >= 5){
+    // wrap to any remaining unsolved slot (shouldn't happen until finish)
+    const rem = [0,1,2,3,4].filter(i => !S.solved.includes(i));
+    if (!rem.length){ finish('won'); return; }
+    n = rem[0];
+  }
+  S.idx = n;
+  saveState();
+  renderWord();
+}
+function finish(status){
+  S.status = status;
+  S.timeMs = S.startAt ? (status === 'won' ? TOTAL_MS - timeLeft() : Date.now() - S.startAt) : 0;
+  const st = S.stats;
+  st.played++;
+  if (S.solvedCount >= 3){
+    st.streak++; st.solved++;
+    st.max = Math.max(st.max, st.streak);
+  } else {
+    st.streak = 0;
+  }
+  saveState();
+  showReveal();
+}
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  if (S.status === 'won'){
+    const spare = S.startAt ? Math.max(0, Math.round(timeLeft() / 1000)) : 0;
+    return `Sprint No. ${num} \u00b7 ${S.solvedCount}/5 words \u00b7 ${spare}s to spare \uD83C\u3FC`;
+  }
+  return `Sprint No. ${num} \u00b7 ${S.solvedCount}/5 words \u00b7 out of time \u23F1`;
+}
+function showReveal(){
+  const st = S.stats;
+  $('verdict').textContent = S.status === 'won' ? 'All five — and the clock remembers.' : 'Time.';
+  if (S.status !== 'won') $('verdict').classList.add('lost');
+  $('answers').innerHTML = targets.map(k => {
+    const list = [...(k.length === 4 ? ANA4 : ANA5).get(k)];
+    return `<b>${list[0]}</b>`;
+  }).slice(0, 5).join(' \u00b7 ');
+  $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}`;
+  $('reveal').classList.add('show');
+  $('wordbox').style.opacity = '.55';
+  $('wordbox').style.pointerEvents = 'none';
+  $('btnSkip').disabled = true;
+  $('bigclock').textContent = S.status === 'won' ? fmtClock(TOTAL_MS - timeLeft()) : '0:00';
+  syncBoard(S.solvedCount);
+}
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+/* ---------------- team board (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'sprint';
+const SYNC_BETTER = 'high';
+const SYNC_UNIT = 'words';
+let lastSyncVal = null;
+function syncBoard(value){
+  lastSyncVal = value;
+  const box = $('curve');
+  if (!box) return;
+  box.innerHTML = '<div class="curve-note">checking the team board\u2026</div>';
+  let id = '', name = '';
+  try {
+    id = localStorage.getItem('warmup.id');
+    if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
+    name = (localStorage.getItem('warmup.name') || '').slice(0, 20);
+  } catch(e){ id = 'anon-' + Math.random().toString(36).slice(2, 8); }
+  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, name, id });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => renderBoard(d))
+    .catch(() => { box.innerHTML = '<div class="curve-note">team board offline \u2014 playing solo today</div>'; });
+}
+function renderBoard(d){
+  const box = $('curve');
+  if (!box) return;
+  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the board today</div>'; return; }
+  const maxBar = Math.max(...d.bins.map(b => b.count), 1);
+  const bars = d.bins.map(b => `<div class="cbar${b.you ? ' you' : ''}" style="height:${Math.max(10, Math.round(b.count / maxBar * 60))}px"></div>`).join('');
+  const you = d.beat == null ? '' : (d.beat === d.count - 1 ? 'top of today\u2019s board' : 'better than ' + d.beat + ' of ' + d.count);
+  const top = (d.top || []).slice(0, 5).map((t, i) => `${i + 1}. ${t.name} (${t.value})`).join(' \u00b7 ');
+  box.innerHTML =
+    `<div class="curve-head">team board \u00b7 ${d.count} today</div>` +
+    `<div class="curve-bars">${bars}</div>` +
+    (you ? `<div class="curve-note">you: ${you} by ${SYNC_UNIT}</div>` : '') +
+    (top ? `<div class="curve-top">${top}</div>` : '') +
+    `<div class="curve-name"><input id="curveName" maxlength="20" placeholder="name for the board (optional)"/></div>`;
+  const inp = $('curveName');
+  if (inp){
+    try { inp.value = localStorage.getItem('warmup.name') || ''; } catch(e){}
+    inp.addEventListener('change', () => {
+      try { localStorage.setItem('warmup.name', inp.value.trim().slice(0, 20)); } catch(e){}
+      if (lastSyncVal != null) syncBoard(lastSyncVal);
+    });
+  }
+}
+
+/* ---------------- help / countdown / clock ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('countdown').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  if (S.status === 'playing' && S.startAt){
+    const tl = timeLeft();
+    $('bigclock').textContent = fmtClock(tl);
+    $('bigclock').classList.toggle('warn', tl < 20000);
+    if (tl <= 0) finish('lost');
+  } else if (S.status === 'playing'){
+    $('bigclock').textContent = '1:30';
+  }
+}
+setInterval(tick, 250);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+renderTrack();
+renderDoneList();
+if (S.status === 'playing'){
+  renderWord();
+  if (S.startAt && timeLeft() <= 0) finish('lost');
+} else {
+  showReveal();
+}
+tick();
+</script>
+</body>
+</html>

@@ -6,10 +6,11 @@ shell is extracted (see common.js below).
 ## Curve representation cleanup
 
 Today every game renders the histogram plus a sentence: "you: better than N
-of M by X" and the team average. Opportunity: drop the prose entirely and let
-the chart do the talking, the way racing-style puzzle games do - the
-distribution itself with an unmistakable you-marker (accent bar, tick, and a
-tiny "you" label under your bin). One glance, zero words.
+of M" (the "by X" unit tail was dropped in the fix pass) and the team average.
+Opportunity: drop the prose entirely and let the chart do the talking, the way
+racing-style puzzle games do - the distribution itself with an unmistakable
+you-marker (accent bar, tick, and a tiny "you" label under your bin). One
+glance, zero words.
 
 The server already returns everything needed (bins with a you-flag, mean,
 count). It is a pure client-side change to the shared renderBoard block - do
@@ -39,6 +40,16 @@ The shared shell - palette CSS, EPOCH_KEY/etKey, nextETMidnight/tick, toast,
 help modal, curve client, share-to-clipboard - is more than half of every
 game. Extracting it makes new games ~100-150 lines each and makes the curve
 representation change above a one-file edit. Do this before adding game 14.
+
+## Mobile UX pass
+
+Cipher now types through a hidden off-screen input (tap a slot, the soft
+keyboard opens; a sentinel space turns backspace into an input event) - copy
+that trick into any future keyboard-driven game. The rest of the fleet is
+still desktop-first in small ways: Sprint only accepts a word on Enter, which
+costs an extra tap on a phone, and nothing has been trialed on a real small
+screen. Worth one deliberate pass on a phone before the team finds what we
+missed.
 
 ## Metrics ledger (single source of truth: SPECS in scores/server.py)
 

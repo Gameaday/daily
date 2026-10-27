@@ -362,7 +362,6 @@ function showReveal(words){
 /* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'grid';
 const SYNC_BETTER = 'high';
-const SYNC_UNIT = 'words';
 function syncBoard(value){
   const box = $('curve');
   if (!box) return;
@@ -395,7 +394,7 @@ function renderBoard(d){
     '<div class="curve-head">team curve \u00b7 ' + d.count + ' today</div>' +
     '<div class="curve-bars">' + bars + '</div>' +
     ((you || d.mean != null) ? '<div class="curve-note">' +
-      (you ? 'you: ' + you + ' by ' + SYNC_UNIT : '') +
+      (you ? 'you: ' + you : '') +
       (d.mean != null ? (you ? ' \u00b7 ' : '') + 'team avg ' + d.mean : '') +
       '</div>' : '');
 }

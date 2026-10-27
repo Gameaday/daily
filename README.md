@@ -108,6 +108,18 @@ timestamp in state).
 4. If the game has a score, call syncBoard(value) on reveal — the value is the
    metric — and add the game to SPECS in scores/server.py with its "better"
    direction and histogram edges. The curve appears for free.
+5. Run node checks/games.js before you push — it compiles the new game and
+   checks the shell wiring.
+
+## Validation
+
+checks/games.js compiles every game's script with new Function — the fastest
+way to catch the fatal kind of typo (a single stray emoji escape once made
+Sprint a dead page for everyone) — and verifies the shared shell pieces, every
+element id the script touches, and the landing links. Run it with
+node checks/games.js. GitHub Actions runs it, plus a byte-compile of
+scores/server.py, on every push and pull request
+(.github/workflows/validate.yml). It needs no dependencies and takes seconds.
 
 ## Content rules (worth keeping)
 
@@ -128,6 +140,9 @@ timestamp in state).
 - [x] Batch 2 games: Rounds, Trace, Lightbox, Sprint
 - [x] Team curve: consolidated in-memory daily stats, zero disk, zero accounts
 - [x] Batch 3 games: Cipher, Timeline, Museum
+- [x] Fix pass: Sprint syntax error + solved-word chips, Fermi friendly() display,
+      Well, Actually curve on reload, Cipher soft-keyboard input, curve copy
+- [x] CI: every push compiles all 13 games + the server (validate.yml)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score
@@ -136,3 +151,4 @@ timestamp in state).
       common.js so new games are ~100 lines each
 - [ ] Archive pages for past puzzles
 - [ ] Unified nav across games
+- [ ] Mobile UX pass on a real phone (see NOTES.md)

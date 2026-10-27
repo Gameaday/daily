@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="One statement a day. One word in it is wrong. Find the error, then name the correction for a bonus point. No ads, no accounts." />
+<title>Well, Actually… · the daily correction game</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --red:#b3402e; --red-soft:#f7e0da;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:6px;}
+  h1{
+    font-family:Georgia,"Times New Roman",serif; font-size:38px; margin:0;
+    letter-spacing:-1px; line-height:1.05;
+  }
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;
+  }
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .tag{
+    display:inline-block; margin:18px 0 4px; background:var(--accent-soft);
+    color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; padding:4px 10px; border-radius:999px;
+  }
+  .lead{color:var(--muted); font-size:14px; margin:10px 0 18px;}
+  .lead b{color:var(--ink);}
+  .statement{
+    background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+    padding:22px 24px; font-family:Georgia,serif; font-size:19px; line-height:2;
+    box-shadow:0 2px 10px rgba(60,45,20,.06);
+  }
+  .statement.done{border-color:var(--ink);}
+  .seg{
+    cursor:pointer; border-radius:4px; padding:1px 2px; margin:0 -1px;
+    border-bottom:2px dotted #cbbfa5; transition:background .12s;
+  }
+  .statement:not(.done) .seg:hover{background:#f2e8d2;}
+  .seg.wrong{background:var(--red-soft); color:#7c2317; border-bottom-color:transparent; font-weight:600;}
+  .seg.lie{background:var(--green-soft); color:#1d5a35; border-bottom-color:transparent; font-weight:600;}
+  .seg.win{animation:pop .35s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.06);}100%{transform:scale(1);}}
+  .statement.done .seg{cursor:default;}
+  .picks{display:flex; gap:6px; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
+  .picks .pip{width:10px; height:10px; border-radius:50%; background:#d9cdb2; display:inline-block;}
+  .picks .pip.used{background:var(--red);}
+  /* bonus round */
+  .bonus{
+    margin-top:18px; background:var(--card); border:1.5px solid var(--accent);
+    border-radius:12px; padding:18px 18px 16px; display:none;
+  }
+  .bonus.show{display:block; animation:rise .3s ease;}
+  .bonus .bq{margin:0 0 12px; font-size:16px;}
+  .bonus .bq b{color:var(--accent);}
+  .brow{display:flex; gap:8px; flex-wrap:wrap;}
+  .brow input{
+    flex:1; min-width:180px; font-family:Georgia,serif; font-size:17px;
+    padding:10px 12px; border:1.5px solid var(--line); border-radius:8px;
+    background:#fffefa; color:var(--ink); outline:none;
+  }
+  .brow input:focus{border-color:var(--accent);}
+  .btn{
+    background:var(--accent); color:#fff; border:none; border-radius:8px;
+    padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;
+  }
+  .btn:hover{filter:brightness(.92);}
+  .reveal{margin-top:18px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px;}
+  .reveal .verdict.won{color:var(--green);}
+  .reveal .verdict.lost{color:var(--red);}
+  .why{
+    background:var(--card); border-left:4px solid var(--accent); border-radius:0 10px 10px 0;
+    padding:14px 16px; font-size:15px; margin:0 0 14px;
+  }
+  .why .label{font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; display:block; margin-bottom:4px;}
+  .why b{font-family:Georgia,serif;}
+  .sharebox{
+    background:var(--card); border:1.5px solid var(--line); border-radius:10px;
+    padding:12px 14px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+    white-space:pre-wrap; margin:0 0 12px; color:var(--ink);
+  }
+  .actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  .countdown{font-size:13px; color:var(--muted);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{
+    position:fixed; inset:0; background:rgba(30,20,8,.45); display:none;
+    align-items:center; justify-content:center; padding:20px; z-index:50;
+  }
+  .overlay.show{display:flex;}
+  .modal{
+    background:var(--paper); border-radius:14px; max-width:440px; width:100%;
+    padding:26px; max-height:85vh; overflow:auto;
+  }
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none;
+    border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .statgrid{display:flex; gap:8px; margin:14px 0;}
+  .stat{flex:1; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:10px; text-align:center;}
+  .stat .v{font-family:Georgia,serif; font-size:22px; display:block;}
+  .stat .k{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
+  .distrow{display:flex; align-items:center; gap:8px; font-size:13px; margin:5px 0;}
+  .distrow .n{width:52px; color:var(--muted);}
+  .distrow .bar{height:18px; background:var(--accent); border-radius:4px; min-width:2px;}
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; font-size:14px;
+    opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;
+  }
+  .toast.show{opacity:1;}
+  @media (max-width:480px){
+    h1{font-size:32px;}
+    .statement{font-size:17px; padding:18px 16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Well, Actually<span class="dot">…</span></h1>
+      <p class="sub">the daily correction game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" title="How to play" aria-label="How to play">?</button>
+      <button class="iconbtn" id="btnStats" title="Stats" aria-label="Stats">▤</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <span class="tag" id="tag"></span>
+  <p class="lead">Everything below is <b>true — except one word or phrase</b>. Click the phrase you think is wrong. <b>3 picks.</b> Find it, and you get one shot at naming the correction for a <b>bonus point</b>.</p>
+
+  <div class="statement" id="statement"></div>
+  <div class="picks" id="picks"></div>
+
+  <div class="bonus" id="bonus">
+    <p class="bq">You found it — the lie is green. Now: <b>what should it say instead?</b> One attempt, one bonus point.</p>
+    <div class="brow">
+      <input id="binput" placeholder="type the correction…" autocomplete="off" spellcheck="false" />
+      <button class="btn" id="bgo">Claim the point</button>
+    </div>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="why"><span class="label">Um, actually…</span><span id="why"></span></div>
+    <div class="sharebox" id="sharetext"></div>
+    <div class="actions">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next puzzle in <span id="count">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<!-- help modal -->
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Every morning you get one statement. <b>One word or phrase in it is wrong</b> — the rest is true.</p>
+    <p><b>Click the phrase you think is the error.</b> A wrong pick turns red and costs one of your three picks.</p>
+    <p>Find the error and it turns green — then you get <b>one attempt to type what it should say instead</b>. Nail the correction for a bonus point. 2 points a day is a perfect morning.</p>
+    <p>Everyone in the world gets the same puzzle, so compare scores at standup — argue before you click.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<!-- stats modal -->
+<div class="overlay" id="statsOverlay">
+  <div class="modal">
+    <h2>Stats</h2>
+    <div class="statgrid" id="statgrid"></div>
+    <p style="font-weight:700; font-size:13px; margin-bottom:6px;">Points per day</p>
+    <div id="dist"></div>
+    <button class="close" data-close>Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- puzzle bank ----------------
+   t = tag, s = clickable phrases (one is wrong), l = index of the wrong phrase,
+   a = accepted corrections (typed), c = canonical correction, w = the explanation.
+   Content rules: exactly one wrong phrase; everything else stays true AFTER the
+   correction is applied; vary the lie position. */
+const PUZZLES = [
+ {t:'Art · Renaissance', l:1, c:'Leonardo da Vinci',
+  a:['Leonardo da Vinci','Leonardo','da Vinci','Leonardo DaVinci','Leonardo di ser Piero da Vinci'],
+  s:['The Mona Lisa was painted by','Michelangelo','in the early 1500s,','and it now hangs in the Louvre.'],
+  w:'It\u2019s Leonardo da Vinci \u2014 Michelangelo was across town sculpting David, but he never painted her.'},
+
+ {t:'Ancient Egypt', l:2, c:'the Egyptians',
+  a:['Egyptians','the Egyptians','ancient Egyptians'],
+  s:['Built around 2560 BCE as a tomb for the pharaoh Khufu,','the Great Pyramid of Giza is the work of','the Romans.'],
+  w:'Egyptians built it \u2014 Rome wouldn\u2019t be founded for another two thousand years.'},
+
+ {t:'Geography', l:1, c:'Nepal and China',
+  a:['Nepal and China','Nepal and China (Tibet)','Nepal and Tibet','China','Tibet'],
+  s:['Mount Everest sits on the border between','Nepal and India,','and its summit is about 8,849 meters above sea level.'],
+  w:'Nepal and China \u2014 the Tibetan side. India borders Nepal, but nowhere near Everest.'},
+
+ {t:'US History', l:0, c:'George Washington',
+  a:['George Washington','Washington'],
+  s:['Thomas Jefferson','was the first President of the United States,','inaugurated in New York City in 1789.'],
+  w:'Washington took the oath in April 1789, in New York \u2014 then the capital. Jefferson was the third president.'},
+
+ {t:'Modern History', l:1, c:'Germany and Japan',
+  a:['Germany and Japan','Japan','Japan and Germany'],
+  s:['World War II ended in 1945 with the surrenders of','Germany and Italy,','followed by years of rebuilding.'],
+  w:'Germany surrendered in May 1945, Japan that September. Italy had switched sides and surrendered back in 1943.'},
+
+ {t:'Chemistry', l:2, c:'Au',
+  a:['Au','AU','au'],
+  s:['Named for the Latin aurum,','the chemical symbol for gold','is Go.'],
+  w:'Au, from aurum. \u201cGo\u201d is not on the periodic table \u2014 however excellent a board game it is.'},
+
+ {t:'Geography', l:0, c:'the Pacific',
+  a:['Pacific','the Pacific','Pacific Ocean','the Pacific Ocean'],
+  s:['The Atlantic Ocean','is the largest ocean on Earth,','covering roughly a third of the planet\u2019s surface.'],
+  w:'The Pacific is the largest \u2014 about 165 million square kilometers, more than double the Atlantic.'},
+
+ {t:'Physics', l:2, c:'per second',
+  a:['second','seconds','sec','s','per second'],
+  s:['Nothing is faster than light,','which travels at roughly 300,000 kilometers','per hour.'],
+  w:'About 300,000 km per second. At 300,000 km per hour, sunlight would take roughly three weeks to reach Earth.'},
+
+ {t:'Music', l:2, c:'Liverpool',
+  a:['Liverpool'],
+  s:['Before conquering recorded music,','the Beatles formed in 1960 in','London.'],
+  w:'Liverpool. The Fab Four were Merseyside lads \u2014 London came later, once the records sold.'},
+
+ {t:'US History', l:1, c:'France',
+  a:['France','the French','french'],
+  s:['Dedicated in 1886, the Statue of Liberty was a gift from','Britain','to the United States.'],
+  w:'A gift from France \u2014 sculpted by Bartholdi, with the iron frame engineered by a young Gustave Eiffel.'},
+
+ {t:'Biology', l:0, c:'chimpanzees',
+  a:['chimpanzees','chimps','bonobos','chimpanzees and bonobos','the chimpanzees'],
+  s:['Bananas','are our closest living relatives,','sharing about 98.8% of human DNA.'],
+  w:'Chimpanzees (and bonobos), at about 98.8%. Bananas share roughly 40\u201360% of our gene families \u2014 oddly high, but no relative.'},
+
+ {t:'Geography', l:2, c:'the Atlantic',
+  a:['Atlantic','the Atlantic','Atlantic Ocean','the Atlantic Ocean'],
+  s:['Flowing from the Andes across South America,','the Amazon \u2014 Earth\u2019s largest river by volume \u2014 empties into the','Pacific Ocean.'],
+  w:'The Atlantic \u2014 east of the Andes there\u2019s a continent in the way. The Pacific is the far side.'},
+
+ {t:'Space', l:0, c:'Yuri Gagarin',
+  a:['Yuri Gagarin','Gagarin'],
+  s:['Neil Armstrong','was the first human in space,','launched by the Soviet Union in April 1961.'],
+  w:'Yuri Gagarin, aboard Vostok 1, April 12, 1961. Armstrong\u2019s big first came eight years later, on the Moon.'},
+
+ {t:'Tech', l:1, c:'CERN',
+  a:['CERN','cern'],
+  s:['In 1989, Tim Berners-Lee invented the World Wide Web','while working at MIT,','and later gave it away royalty-free.'],
+  w:'CERN, the particle physics lab in Geneva \u2014 a good reminder that the Web\u2019s birthplace was a physics lab, not a university.'},
+
+ {t:'World', l:0, c:'the yen',
+  a:['yen','the yen'],
+  s:['The yuan','is the official currency of Japan,','divided into 100 sen.'],
+  w:'The yen (\u00a5). The yuan is China\u2019s currency \u2014 close neighbors, very different bank accounts.'},
+
+ {t:'Biology', l:2, c:'oxygen',
+  a:['oxygen','O2','the oxygen'],
+  s:['Photosynthesis lets plants turn water and carbon dioxide into sugar,','a process that releases','carbon dioxide.'],
+  w:'Oxygen \u2014 the waste product of photosynthesis, and the reason you\u2019re alive to click this.'},
+
+ {t:'Modern History', l:2, c:'1989',
+  a:['1989','in 1989','November 1989'],
+  s:['After dividing East from West Berlin for 28 years,','the Berlin Wall came down in','1961.'],
+  w:'November 9, 1989. It was built in 1961 \u2014 that year was its birthday, not its funeral.'},
+
+ {t:'History', l:1, c:'New Zealand',
+  a:['New Zealand','NZ','Aotearoa'],
+  s:['The first country to give women the vote in national elections, back in 1893, was','Australia.'],
+  w:'New Zealand, 1893. Australia followed in 1902 \u2014 though Aboriginal women there waited until 1962.'},
+
+ {t:'Space', l:0, c:'Jupiter',
+  a:['Jupiter','jupiter'],
+  s:['Saturn','is the largest planet in our solar system,','easily visible to the naked eye.'],
+  w:'Jupiter \u2014 more than twice the mass of every other planet combined. Saturn\u2019s rings get the attention; Jupiter gets the crown.'},
+
+ {t:'Sports', l:1, c:'the National Football League',
+  a:['NFL','the NFL','National Football League','the National Football League','NFL (the National Football League)'],
+  s:['First played in 1967, the Super Bowl is the annual championship game of the','National Basketball Association.'],
+  w:'The NFL \u2014 the NBA\u2019s big night is called the Finals. Super Bowl I was played in January 1967.'},
+
+ {t:'Nature', l:1, c:'the Antarctic',
+  a:['Antarctic','the Antarctic','Antarctica','Southern Hemisphere','the Southern Hemisphere'],
+  s:['Penguins are native to the','Arctic,','where their predators include leopard seals and orcas.'],
+  w:'The Southern Hemisphere \u2014 mostly Antarctica. A penguin and a polar bear have never met in the wild.'},
+
+ {t:'US History', l:0, c:'four',
+  a:['four','4'],
+  s:['Five US presidents','have their faces carved into Mount Rushmore,','in South Dakota.'],
+  w:'Four: Washington, Jefferson, Theodore Roosevelt, and Lincoln.'},
+
+ {t:'Medieval', l:1, c:'France',
+  a:['France','the French'],
+  s:['The Hundred Years\u2019 War, fought on and off from 1337 to 1453, pitted England against','Spain.'],
+  w:'France \u2014 for 116 years, give or take, which is why the name undersells it slightly.'},
+
+ {t:'British History', l:2, c:'1666',
+  a:['1666'],
+  s:['The Great Fire of London raged for four days in September,','destroying much of the medieval city in','1665.'],
+  w:'September 1666. The year 1665 belonged to the Great Plague \u2014 a truly terrible decade for London.'},
+
+ {t:'Science', l:0, c:'Alexander Fleming',
+  a:['Alexander Fleming','Fleming'],
+  s:['Jonas Salk','discovered penicillin, the world\u2019s first antibiotic,','in 1928.'],
+  w:'Alexander Fleming noticed the mold in 1928. Salk\u2019s masterpiece came in 1955: the polio vaccine.'},
+
+ {t:'Space', l:2, c:'27 days',
+  a:['27 days','27.3 days','a month','month','27','about 27 days','29 days','29.5 days'],
+  s:['At an average distance of 384,400 km,','the Moon completes one orbit of Earth roughly every','24 hours.'],
+  w:'About 27.3 days per orbit \u2014 and about 29.5 days between full moons. We see it nightly because Earth spins, not because the Moon races.'},
+
+ {t:'Food', l:1, c:'beans',
+  a:['beans','seeds','coffee beans','the beans','pits'],
+  s:['Coffee is brewed from the roasted','leaves','of the Coffea plant, native to Ethiopia.'],
+  w:'The roasted seeds \u2014 \u201cbeans\u201d \u2014 of the coffee cherry. Leaves get you tea.'},
+
+ {t:'Geography', l:0, c:'Ottawa',
+  a:['Ottawa'],
+  s:['Toronto','is the capital of Canada,','chosen by Queen Victoria in 1857.'],
+  w:'Ottawa, picked in 1857 as a compromise between the big rivals. Toronto is the largest city, but size doesn\u2019t win you the capital.'},
+
+ {t:'US Geography', l:1, c:'Juneau',
+  a:['Juneau'],
+  s:['Alaska, the largest US state by area, keeps its capital in','Anchorage.'],
+  w:'Juneau \u2014 the only US state capital you can\u2019t drive to, reachable only by boat or plane. Anchorage is the biggest city, not the boss.'},
+
+ {t:'Literature', l:0, c:'Baker Street',
+  a:['Baker Street','Baker'],
+  s:['221B Oxford Street','is the famous London home of the fictional detective Sherlock Holmes.'],
+  w:'221B Baker Street \u2014 today the Sherlock Holmes Museum. Oxford Street is the one with the shops.'},
+
+ {t:'Nature', l:1, c:'crows',
+  a:['crows','crow'],
+  s:['A group of','lions','is called a murder.'],
+  w:'Crows \u2014 a murder of crows. Lions gather in prides.'},
+
+ {t:'Geography', l:2, c:'the Mediterranean',
+  a:['Mediterranean','the Mediterranean','Mediterranean Sea','the Mediterranean Sea'],
+  s:['After flowing north for over 6,600 km,','the Nile \u2014 the longest river in Africa \u2014 empties into the','Red Sea.'],
+  w:'The Mediterranean, via the famous delta. The Red Sea is the one Moses is famous for.'}
+];
+
+/* ---------------- daily selection (ET rollover, deterministic) ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27'; // launch date — puzzle No. 1
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+const puzzle = PUZZLES[((dayIndex % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.actually.v1';
+function loadState(){
+  try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; }
+}
+function saveState(){
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ /* private mode / sandbox: play in memory */ }
+}
+let S = loadState();
+if (!S || typeof S.stats !== 'object') {
+  S = { day: dayIndex, picked: [], status: 'playing', bonus: null,
+        stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0]} };
+} else if (S.day !== dayIndex) {
+  if (S.status !== 'won') S.stats.streak = 0; // missed (or lost) the previous day
+  S.day = dayIndex; S.picked = []; S.status = 'playing'; S.bonus = null;
+}
+
+/* ---------------- helpers ---------------- */
+const $ = id => document.getElementById(id);
+const statementEl = $('statement'), picksEl = $('picks');
+
+function norm(s){
+  return s.toLowerCase()
+    .replace(/[.,!?;:'\u2019\u201c\u201d"]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^the /, '');
+}
+const ACCEPTED = puzzle.a.map(norm);
+
+function renderStatement(){
+  statementEl.innerHTML = puzzle.s.map((t,i)=>`<span class="seg" data-i="${i}">${t}</span>`).join(' ');
+}
+function applyMarks(animateWin){
+  S.picked.forEach(i => {
+    if (i === puzzle.lie) return;
+    const el = statementEl.querySelector(`[data-i="${i}"]`);
+    if (el) el.classList.add('wrong');
+  });
+  if (S.status !== 'playing'){
+    statementEl.classList.add('done');
+    const el = statementEl.querySelector(`[data-i="${puzzle.lie}"]`);
+    if (el){ el.classList.add('lie'); if (animateWin && S.status==='won') el.classList.add('win'); }
+  }
+}
+function renderPicks(){
+  let html = 'picks&nbsp;&nbsp;';
+  for (let i=0;i<3;i++) html += `<span class="pip${i < S.picked.length ? ' used' : ''}"></span>`;
+  picksEl.innerHTML = html + `&nbsp;&nbsp;<span>${3 - S.picked.length} left</span>`;
+}
+
+function score(){
+  if (S.status !== 'won') return 0;
+  return S.bonus === 'correct' ? 2 : 1;
+}
+function shareText(){
+  const sc = S.status === 'won' ? `${score()}/2` : '0/2';
+  const emo = S.status !== 'won' ? '\uD83D\uDFE5' :
+    (S.bonus === 'correct' ? '\uD83D\uDFE9\uD83D\uDFE9' : '\uD83D\uDFE9\uD83D\uDFE5');
+  return `Well, Actually No. ${num} \u00b7 ${sc} ${emo}\nOne word in this statement is wrong \u2014 can you fix it?`;
+}
+
+function showReveal(){
+  const v = $('verdict');
+  if (S.status === 'won' && S.bonus === 'correct'){
+    v.textContent = 'Nailed it — both points.'; v.className = 'verdict won';
+  } else if (S.status === 'won'){
+    v.textContent = 'Found the lie — the correction got away.'; v.className = 'verdict won';
+  } else {
+    v.textContent = 'Three strikes — the error got past you.'; v.className = 'verdict lost';
+  }
+  $('why').innerHTML = `It should be <b>\u201c${puzzle.c}.\u201d</b> ${puzzle.w}`;
+  $('sharetext').textContent = shareText();
+  $('reveal').classList.add('show');
+  renderPicks();
+}
+
+function finish(){
+  const st = S.stats;
+  st.played++;
+  if (S.status === 'won'){
+    st.wins++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+    st.dist[score()]++;
+  } else {
+    st.streak = 0;
+    st.dist[0]++;
+  }
+  statementEl.classList.add('done');
+  showReveal();
+  saveState();
+}
+
+function pick(i){
+  if (S.status !== 'playing' || S.picked.includes(i)) return;
+  S.picked.push(i);
+  const el = statementEl.querySelector(`[data-i="${i}"]`);
+  if (i === puzzle.lie){
+    S.status = 'found';
+    if (el) el.classList.add('lie','win');
+    statementEl.classList.add('done');
+    $('bonus').classList.add('show');
+    setTimeout(() => $('binput').focus(), 100);
+  } else {
+    if (el) el.classList.add('wrong');
+    if (S.picked.length >= 3){
+      S.status = 'lost';
+      finish();
+    }
+  }
+  if (S.status !== 'lost') renderPicks();
+  saveState();
+}
+
+statementEl.addEventListener('click', e => {
+  const seg = e.target.closest('.seg');
+  if (seg) pick(+seg.dataset.i);
+});
+
+/* ---------------- bonus round ---------------- */
+function submitBonus(){
+  if (S.status !== 'found') return;
+  const val = $('binput').value || '';
+  S.bonus = ACCEPTED.includes(norm(val)) ? 'correct' : 'wrong';
+  S.status = 'won';
+  $('bonus').classList.remove('show');
+  finish();
+}
+$('bgo').addEventListener('click', submitBonus);
+$('binput').addEventListener('keydown', e => { if (e.key === 'Enter') submitBonus(); });
+
+/* ---------------- stats & help modals ---------------- */
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('show'));
+}));
+document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => {
+  if (e.target === o) o.classList.remove('show');
+}));
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+$('btnStats').addEventListener('click', () => { renderStats(); $('statsOverlay').classList.add('show'); });
+
+function renderStats(){
+  const st = S.stats;
+  const pct = st.played ? Math.round(100 * st.wins / st.played) : 0;
+  const pts = st.dist[1] + 2 * st.dist[2];
+  $('statgrid').innerHTML =
+    `<div class="stat"><span class="v">${st.played}</span><span class="k">played</span></div>` +
+    `<div class="stat"><span class="v">${pct}%</span><span class="k">found</span></div>` +
+    `<div class="stat"><span class="v">${pts}</span><span class="k">points</span></div>` +
+    `<div class="stat"><span class="v">${st.streak}</span><span class="k">streak</span></div>` +
+    `<div class="stat"><span class="v">${st.max}</span><span class="k">max streak</span></div>`;
+  const maxd = Math.max(1, ...st.dist);
+  const labels = ['0 points','1 point','2 points'];
+  $('dist').innerHTML = [0,1,2].map(i =>
+    `<div class="distrow"><span class="n">${labels[i]}</span><span class="bar" style="width:${Math.max(Math.round(100*st.dist[i]/maxd),4)}%"></span><span>${st.dist[i]}</span></div>`
+  ).join('');
+}
+
+/* ---------------- share ---------------- */
+function toast(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+$('btnShare').addEventListener('click', async () => {
+  const text = shareText();
+  try {
+    await navigator.clipboard.writeText(text);
+    toast('Copied \u2014 paste it in the team channel');
+  } catch(e) {
+    const r = document.createRange();
+    r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toast('Copy blocked \u2014 the text is selected for you');
+  }
+});
+
+/* ---------------- countdown to next puzzle (next ET midnight) ---------------- */
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000; // assume EST, then correct for DST
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('count').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
+setInterval(tick, 1000);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+$('tag').textContent = puzzle.t;
+renderStatement();
+applyMarks(true);
+renderPicks();
+if (S.status === 'found') $('bonus').classList.add('show');
+if (S.status === 'won' || S.status === 'lost') showReveal();
+tick();
+</script>
+</body>
+</html>

@@ -28,12 +28,15 @@ Design notes and future ideas live in NOTES.md.
 
 ## How "daily" works
 
-Each game is a single self-contained index.html. The puzzle is derived from the date, not stored:
+Each game is a single self-contained index.html — but the parts every game
+shares (day math, palette, countdown, curve client, help, share) live in
+`shell/common.js` and `shell/common.css`, so the game file is mostly puzzle.
+The puzzle is derived from the date, not stored:
 
 - puzzle number = days since the launch date, rolling over at midnight America/New_York
 - puzzle content is picked from an in-file bank or generated from a seeded RNG — same for every player worldwide
 - streaks and progress live in each player's localStorage (keys of the form warmup.GAME.v1; bogus and well-actually are on v2)
-- change EPOCH_KEY in a game to reset its day numbering
+- change EPOCH_KEY in `shell/common.js` to reset the day numbering
 
 So the Pi only ever serves bytes. Deploy with Caddy:
 
@@ -190,15 +193,33 @@ timestamp in state).
 
 ## Adding a game
 
-1. Copy an existing game folder — they all share the same shell
-   (header, daily selection, localStorage state, reveal + share, countdown, curve client).
-2. Swap in your puzzle bank or seeded generator and the round logic.
+1. Copy an existing game folder — the shared shell lives in `shell/common.js`
+   and `shell/common.css`: include both with a `<script>`/`<link>` tag, then
+   destructure what the game needs from `SHELL` (day math, store, countdown,
+   help, share, curve client). What's left in the game folder is the puzzle:
+   bank or seeded generator, round logic, and a few lines of game CSS.
+2. Swap in your puzzle bank or seeded generator and the round logic. Word
+   puzzles can share `assets/words-en.js` (load it before the game script and
+   use `WORDS_EN`) instead of inlining a list.
 3. Add a card to the landing page index.html and a row in this table.
 4. If the game has a score, call syncBoard(value) on reveal — the value is the
    metric — and add the game to SPECS in scores/server.py with its "better"
    direction and histogram edges. The curve appears for free.
 5. Run node checks/games.js before you push — it compiles the new game and
-   checks the shell wiring.
+   checks the shell script/link tags are present and the shared blocks aren't
+   accidentally re-inlined.
+
+## Offline / air-gapped play
+
+The repo *is* the offline bundle: copy the whole tree (minus `deploy/` if you
+like) to an air-gapped machine and open a game straight off the filesystem.
+Over `file://` — or any URL with `?solo` appended — games run in solo mode:
+nothing is submitted, no stats are fetched, and the curve area reads
+"solo mode — the team curve is switched off". Everything else works,
+including the daily puzzle, state, and streaks, because each game only needs
+the files next to it. If the scores service is simply unreachable, games have
+always fallen back to playing solo ("team curve offline — playing solo
+today") — the site keeps playing through server downtime either way.
 
 ## Validation
 
@@ -249,12 +270,14 @@ to commits where they passed.
 - [x] Docker deploy: Caddy + scores as compose services, hardened, read-only
 - [x] CD: pull-based, test-gated self-updating Pi (deploy/pull.py + systemd
       timer; no SSH keys, no inbound access)
+- [x] Shared shell + word bank: `shell/common.js` + `shell/common.css` +
+      `assets/words-en.js`, solo/offline mode over `file://`; games are now
+      puzzle-only (~150-400 lines each, trace is half its former size)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score
       against the frozen curve without changing totals (see NOTES.md)
-- [ ] Extract the shared shell (CSS + daily selection + stats + curve) into
-      common.js so new games are ~100 lines each
 - [ ] Archive pages for past puzzles
 - [ ] Unified nav across games
 - [ ] Mobile UX pass on a real phone (see NOTES.md)
+

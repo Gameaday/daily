@@ -68,7 +68,7 @@ class El {
   closest(){ return null; }
 }
 
-function createHarness(readGame){
+function createHarness(readGame, readShared){
   let activeNow = Date.now();
   const timers = [];
 
@@ -124,7 +124,11 @@ function createHarness(readGame){
     const html = readGame(game);
     const m = html.match(/<script>([\s\S]*?)<\/script>/);
     if (!m) throw new Error(game + ': no script block found');
-    const src = m[1] + '\n;__export({' + expose.join(',') + '});';
+    /* Since the shell extraction a game runs on top of shell/common.js
+       (plus assets/words-en.js for the word-bank games) - prepended here
+       the same way the page loads its <script src> tags. */
+    const prelude = readShared ? readShared(game) : '';
+    const src = (prelude ? prelude + '\n;\n' : '') + m[1] + '\n;__export({' + expose.join(',') + '});';
     const fn = new Function(
       'document', 'localStorage', 'navigator', 'getSelection', 'fetch',
       'location', 'setInterval', 'setTimeout', 'Date', '__export', src);
@@ -181,3 +185,4 @@ function createHarness(readGame){
 }
 
 module.exports = { createHarness };
+

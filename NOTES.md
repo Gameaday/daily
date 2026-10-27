@@ -26,8 +26,8 @@ you-marker (accent bar, tick, and a tiny "you" label under your bin). One
 glance, zero words.
 
 The server already returns everything needed (bins with a you-flag, mean,
-count). It is a pure client-side change to the shared renderBoard block - do
-all 13 games at once, ideally right after the common.js extraction.
+count). It is a pure client-side change - and now that the shell extraction
+is done, it is a single edit to renderBoard in shell/common.js.
 
 ## Archive mode (frozen distributions)
 
@@ -47,12 +47,17 @@ Retention is now 1 day (PRUNE_DAYS in server.py). If the team wants
 "yesterday's curve" visible live, bump it to 2 - memory is not the
 constraint, tidiness is.
 
-## common.js shell extraction
+## common.js shell extraction (done 2026-10)
 
-The shared shell - palette CSS, EPOCH_KEY/etKey, nextETMidnight/tick, toast,
-help modal, curve client, share-to-clipboard - is more than half of every
-game. Extracting it makes new games ~100-150 lines each and makes the curve
-representation change above a one-file edit. Do this before adding game 14.
+Done - see README. The shared shell - palette CSS, EPOCH_KEY/etKey,
+nextETMidnight/tick, toast, help modal, curve client, share-to-clipboard -
+now lives in shell/common.js + shell/common.css, and the word banks of
+Trace/Recycle Grid/Sprint were deduplicated into assets/words-en.js. Games
+destructure what they need from SHELL, so the curve representation change
+above is now a one-file edit in shell/common.js (renderBoard moved there).
+Solo/offline mode came along for free: file:// or ?solo switches the curve
+off and never posts, which is also the air-gapped bundle story - the repo
+minus deploy/ is the bundle. Next: game 14 can be puzzle-only.
 
 ## Mobile UX pass
 
@@ -85,3 +90,4 @@ missed.
 - Dig: a daily excavation grid - probe cells, read stratigraphy, date the layer
 - Almanac: today-in-history trivia with a twist (multiple choice, escalating)
 - Follow: a daily six-degrees chain between two historical figures
+

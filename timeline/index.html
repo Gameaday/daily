@@ -5,84 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Five events from history, no dates given. Put them back in order — correct placements lock, every check counts." />
 <title>Timeline · put the day back in order</title>
-<style>
-  :root{
-    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
-    --accent:#b3541e; --accent-soft:#f4e3d4;
-    --green:#2e7d4f; --green-soft:#ddefe0;
-    --line:#e5dbc8;
-  }
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  body{margin:0; background:var(--paper); color:var(--ink);
-    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
-  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
-  header{display:flex; align-items:flex-end; justify-content:space-between;}
-  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
-  h1 .dot{color:var(--accent);}
-  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
-  .icons{display:flex; gap:8px;}
-  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
-    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
-  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
-  .metaline{display:flex; justify-content:space-between; align-items:center;
-    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
-  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
-  .metaline .pno b{font-size:19px;}
-  .lead{color:var(--muted); font-size:14px; margin:16px 0 8px;}
-  .lead b{color:var(--ink);}
-  .lane{margin-top:12px; position:relative;}
-  .lane::before{content:''; position:absolute; left:17px; top:0; bottom:0; width:2px; background:var(--line);}
-  .trow{display:flex; align-items:stretch; gap:10px; margin:10px 0; position:relative;}
-  .trow .pos{flex:0 0 26px; display:flex; align-items:center; justify-content:center;
+<link rel="stylesheet" href="../shell/common.css"/>
+<style>header{display:flex; align-items:flex-end; justify-content:space-between;}
+h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+.lead{color:var(--muted); font-size:14px; margin:16px 0 8px;}
+.lane{margin-top:12px; position:relative;}
+.lane::before{content:''; position:absolute; left:17px; top:0; bottom:0; width:2px; background:var(--line);}
+.trow{display:flex; align-items:stretch; gap:10px; margin:10px 0; position:relative;}
+.trow .pos{flex:0 0 26px; display:flex; align-items:center; justify-content:center;
     font-family:Georgia,serif; font-size:15px; color:var(--muted); background:var(--paper); z-index:1;}
-  .ecard{flex:1; background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+.ecard{flex:1; background:var(--card); border:1.5px solid var(--line); border-radius:12px;
     padding:12px 16px; cursor:pointer; transition:border-color .12s, transform .12s;}
-  .ecard:hover{border-color:var(--accent);}
-  .ecard.sel{border-color:var(--accent); background:var(--accent-soft);}
-  .ecard.locked{border-color:var(--green); background:var(--green-soft); cursor:default;}
-  .ecard .top{display:flex; justify-content:space-between; align-items:center; gap:8px;}
-  .ecard .tag{font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+.ecard:hover{border-color:var(--accent);}
+.ecard.sel{border-color:var(--accent); background:var(--accent-soft);}
+.ecard.locked{border-color:var(--green); background:var(--green-soft); cursor:default;}
+.ecard .top{display:flex; justify-content:space-between; align-items:center; gap:8px;}
+.ecard .tag{font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
     color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
-  .ecard.locked .tag{color:var(--green); background:var(--green-soft);}
-  .ecard .yr{font-family:Georgia,serif; font-size:16px; color:var(--muted);}
-  .ecard.locked .yr{color:var(--green);}
-  .ecard .fact{margin:6px 0 0; font-size:14px;}
-  .checknote{text-align:center; font-size:12px; color:var(--muted); margin:8px 0 0;}
-  .actions{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
-  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
-  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
-  .btn:hover{filter:brightness(.94);}
-  .btn:disabled{opacity:.45; cursor:default; filter:none;}
-  .reveal{margin-top:16px; display:none;}
-  .reveal.show{display:block; animation:rise .3s ease;}
-  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
-  .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; text-align:center; color:var(--green);}
-  .verdict.lost{color:var(--accent);}
-  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+.ecard.locked .tag{color:var(--green); background:var(--green-soft);}
+.ecard .yr{font-family:Georgia,serif; font-size:16px; color:var(--muted);}
+.ecard.locked .yr{color:var(--green);}
+.ecard .fact{margin:6px 0 0; font-size:14px;}
+.checknote{text-align:center; font-size:12px; color:var(--muted); margin:8px 0 0;}
+.actions{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+.btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+.btn:hover{filter:brightness(.94);}
+.btn:disabled{opacity:.45; cursor:default; filter:none;}
+.reveal{margin-top:16px; display:none;}
+@keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+.verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; text-align:center; color:var(--green);}
+.verdict.lost{color:var(--accent);}
+.sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
-  .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
-  .countdown{font-size:13px; color:var(--muted);}
-  #curve{margin-top:14px;}
-  .curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
-  .curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
-  .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
-  .cbar.you{background:var(--accent);}
-  .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
-  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
-  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
-  .overlay.show{display:flex;}
-  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
-  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
-  .modal p{font-size:14px; margin:0 0 10px;}
-  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
-  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
-    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
-  .toast.show{opacity:1;}
-  @media (max-width:480px){
+.actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
+@media (max-width:480px){
     h1{font-size:28px;}
     .ecard .fact{font-size:13px;}
-  }
-</style>
+  }</style>
 </head>
 <body>
 <div class="wrap">
@@ -140,6 +99,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="../shell/common.js"></script>
 <script>
 'use strict';
 
@@ -196,14 +156,9 @@ const EVENTS = [
 ];
 
 /* ---------------- daily selection ---------------- */
-const TZ = 'America/New_York';
-const EPOCH_KEY = '2026-10-27';
-function etKey(ms){
-  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
-}
-const todayKey = etKey(Date.now());
-const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
-const num = dayIndex + 1;
+/* day math, storage, toast, countdown, help/share wiring and the team-curve
+   client all live in ../shell/common.js — destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 
 function mulberry32(a){
   return function(){
@@ -245,8 +200,9 @@ const SHUFFLED = displayOrder();
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.timeline.v1';
-function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
-function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
 let S = loadState();
 if (!S || S.day !== dayIndex){
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
@@ -257,7 +213,6 @@ if (!S || S.day !== dayIndex){
 saveState();
 
 /* ---------------- dom ---------------- */
-const $ = id => document.getElementById(id);
 function evAt(i){ return EVENTS[PICK[S.order[i]]]; }
 function allLocked(){ return S.locked.every(Boolean); }
 
@@ -345,86 +300,25 @@ function showReveal(){
   $('reveal').classList.add('show');
   syncBoard(won ? S.checks : 9);
 }
-$('btnShare').addEventListener('click', async () => {
-  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
-  catch(e){
-    const r = document.createRange(); r.selectNode($('sharetext'));
-    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
-    toastMsg('Copy blocked \u2014 the text is selected for you');
-  }
-});
-function toastMsg(msg){
-  const t = $('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 1600);
-}
+SHELL.wireShare(shareText);
+const toastMsg = m => SHELL.toast(m, 1600);
 
 /* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'timeline';
 const SYNC_BETTER = 'low';
-function syncBoard(value){
-  const box = $('curve');
-  if (!box) return;
-  box.innerHTML = '<div class="curve-note">checking the team curve\u2026</div>';
-  let id = '';
-  try {
-    id = localStorage.getItem('warmup.id');
-    if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
-  } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
-  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, id });
-  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
-    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
-  post('/api')
-    .catch(() => post('http://localhost:8787'))
-    .catch(() => post('http://127.0.0.1:8787'))
-    .then(d => renderBoard(d))
-    .catch(() => { box.innerHTML = '<div class="curve-note">team curve offline \u2014 playing solo today</div>'; });
-}
-function renderBoard(d){
-  const box = $('curve');
-  if (!box) return;
-  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
-  const maxBar = Math.max(...d.bins.map(b => b.count), 1);
-  const bars = d.bins.map(b => '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>').join('');
-  let you = '';
-  if (d.beat != null){
-    you = d.beat === d.count - 1 ? 'top of today\u2019s curve' : 'better than ' + d.beat + ' of ' + d.count;
-  }
-  box.innerHTML =
-    '<div class="curve-head">team curve \u00b7 ' + d.count + ' today</div>' +
-    '<div class="curve-bars">' + bars + '</div>' +
-    ((you || d.mean != null) ? '<div class="curve-note">' +
-      (you ? 'you: ' + you : '') +
-      (d.mean != null ? (you ? ' \u00b7 ' : '') + 'team avg ' + d.mean : '') +
-      '</div>' : '');
-}
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 
 /* ---------------- help / countdown ---------------- */
-$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
-document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
 
-function nextETMidnight(){
-  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
-  let target = Date.parse(tomorrowKey) - 5 * 3600000;
-  while (etKey(target) !== tomorrowKey) target += 3600000;
-  return target;
-}
-function tick(){
-  const left = nextETMidnight() - Date.now();
-  if (left <= 0){ location.reload(); return; }
-  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
-  $('countdown').textContent = h + 'h ' + String(m).padStart(2,'0') + 'm ' + String(s).padStart(2,'0') + 's';
-}
-setInterval(tick, 500);
 
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
-$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
-  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+$('pdate').textContent = SHELL.pdateText();
 render();
 if (S.status !== 'playing') showReveal();
-tick();
+SHELL.startCountdown('countdown', 500);
 </script>
 </body>
 </html>

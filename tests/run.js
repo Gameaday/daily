@@ -18,8 +18,8 @@ const T0 = Date.parse('2026-10-27T12:00:00Z');
 const T1 = T0 + 86400000;
 const T10 = T0 + 10 * 86400000;
 
-async function main(createHarness, readGame, readServer, readLanding){
-  const h = createHarness(readGame);
+async function main(createHarness, readGame, readServer, readLanding, readShared){
+  const h = createHarness(readGame, readShared);
   const serverPy = readServer();
   const landing = readLanding();
 
@@ -372,19 +372,54 @@ async function main(createHarness, readGame, readServer, readLanding){
     while ((m = specRe.exec(serverPy)) !== null) specs[m[1]] = { better: m[2] };
     const serverKey = g => (g === 'recycle-rings' ? 'rings' : (g === 'recycle-grid' ? 'grid' : g));
     for (const g of GAMES){
-      const js = readGame(g);
+      const html = readGame(g);
+      const js = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
       const gName = (js.match(/const SYNC_GAME = '([^']+)'/) || [])[1];
       const gBetter = (js.match(/const SYNC_BETTER = '([^']+)'/) || [])[1];
       h.ok(!!gName && gName === serverKey(g), g + ': SYNC_GAME matches server key');
       h.ok(!!specs[gName], g + ': server has a SPECS entry');
       if (specs[gName]) h.ok(specs[gName].better === gBetter, g + ': client better direction matches server');
-      h.ok(js.indexOf('SYNC_UNIT') === -1, g + ': no leftover SYNC_UNIT');
-      h.ok(js.indexOf('team avg') >= 0, g + ': curve note shows team avg');
-      h.ok(js.indexOf('curve offline') >= 0, g + ': offline grace present');
+      /* shell wiring: every page loads the shell before its inline script */
+      h.ok(html.indexOf('<script src="../shell/common.js"></script>') >= 0,
+        g + ': loads shell/common.js');
+      h.ok(html.indexOf('href="../shell/common.css"') >= 0, g + ': links shell/common.css');
+      /* extraction completeness: the shared pieces must live in the shell now */
+      h.ok(js.indexOf('America/New_York') === -1, g + ': day math extracted to shell');
+      h.ok(js.indexOf('function renderBoard') === -1, g + ': renderBoard extracted to shell');
+      h.ok(js.indexOf('JSON.parse(localStorage.getItem(KEY))') === -1, g + ': loadState extracted to shell');
+      h.ok(js.indexOf('function toastMsg(') === -1 && js.indexOf('function toast(') === -1,
+        g + ': toast extracted to shell');
+      h.ok(js.indexOf('function syncBoard(value)') === -1, g + ': curve client extracted to shell');
+      h.ok(js.indexOf('nextETMidnight() - Date.now()') === -1, g + ': countdown extracted to shell');
     }
     h.ok(Object.keys(specs).length >= GAMES.length,
       'server: SPECS parsed for all games (got ' + Object.keys(specs).length + ')');
     for (const g of GAMES) h.ok(landing.indexOf(g + '/') >= 0, 'landing: links to ' + g);
+
+    /* the shell itself: the curve strings moved here from every game */
+    const shell = readShared('bogus');
+    h.ok(shell.indexOf('SYNC_UNIT') === -1, 'shell: no leftover SYNC_UNIT');
+    h.ok(shell.indexOf('team avg') >= 0, 'shell: curve note shows team avg');
+    h.ok(shell.indexOf('curve offline') >= 0, 'shell: offline grace present');
+    h.ok(shell.indexOf('const SHELL') >= 0, 'shell: defines the SHELL module');
+    h.ok(shell.indexOf('solo mode') >= 0, 'shell: air-gapped solo mode present');
+    try { new Function(shell); h.ok(true, 'shell: compiles standalone'); }
+    catch (e){ h.ok(false, 'shell: compiles standalone: ' + e.message); }
+
+    /* the shared word bank: one copy on disk, referenced not inlined */
+    const words = readShared('trace');
+    h.ok(words.indexOf('const WORDS_EN = ') >= 0, 'words: bank defines WORDS_EN');
+    h.ok(words.indexOf('ABOUT') >= 0 && words.indexOf('YOUTH') >= 0, 'words: bank populated');
+    for (const g of ['trace', 'recycle-grid']){
+      const html = readGame(g);
+      const js = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
+      h.ok(html.indexOf('<script src="../assets/words-en.js"></script>') >= 0,
+        g + ': loads the shared word bank');
+      h.ok(js.indexOf('WORDS_EN') >= 0, g + ': references WORDS_EN');
+      h.ok(js.indexOf('const DICT_SRC = "') === -1, g + ': word list no longer inlined');
+    }
+    h.ok(readGame('sprint').indexOf('DICT5_SRC') >= 0,
+      'sprint: keeps its own anagram lists (different bank, by design)');
   }
 
   const scenarios = [
@@ -425,13 +460,17 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
   const path = require('path');
   const { createHarness } = require('./harness');
   const ROOT = path.join(__dirname, '..');
+  const SHELL_JS = fs.readFileSync(path.join(ROOT, 'shell', 'common.js'), 'utf8');
+  const WORDS_JS = fs.readFileSync(path.join(ROOT, 'assets', 'words-en.js'), 'utf8');
   main(
     createHarness,
     g => fs.readFileSync(path.join(ROOT, g, 'index.html'), 'utf8'),
     () => fs.readFileSync(path.join(ROOT, 'scores', 'server.py'), 'utf8'),
-    () => fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')
+    () => fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'),
+    g => SHELL_JS + (g === 'trace' || g === 'recycle-grid' ? '\n' + WORDS_JS : '')
   ).then(out => {
     console.log(out.summary);
     process.exit(out.fail ? 1 : 0);
   }).catch(e => { console.error(e); process.exit(1); });
 }
+

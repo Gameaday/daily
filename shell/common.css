@@ -1,0 +1,37 @@
+/* common.css — the shared shell stylesheet, loaded by every game.
+   A game page links this first, then adds its own <style> with only its
+   puzzle-specific rules and any one-off tweaks. Everything here is
+   byte-identical across all 13 games (tests/run.js enforces that).
+   Games that need extra palette slots (e.g. --red, --c0..c3, --gold)
+   define them in their own <style>; later rules win. */
+:root{ --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d; --accent:#b3541e; --accent-soft:#f4e3d4; --green:#2e7d4f; --green-soft:#ddefe0; --line:#e5dbc8; }
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+.wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+h1 .dot{color:var(--accent);}
+.icons{display:flex; gap:8px;}
+.iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line); background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+.iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+.sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+.lead b{color:var(--ink);}
+.btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+.countdown{font-size:13px; color:var(--muted);}
+.metaline{display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+.metaline .pno{font-family:Georgia,serif; font-size:15px;}
+.metaline .pno b{font-size:19px;}
+.reveal.show{display:block; animation:rise .3s ease;}
+.overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+.overlay.show{display:flex;}
+.modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+.modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+.modal p{font-size:14px; margin:0 0 10px;}
+.modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+.toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+.toast.show{opacity:1;}
+#curve{margin-top:14px;}
+.curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
+.curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
+.cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
+.cbar.you{background:var(--accent);}
+.curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
+footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}

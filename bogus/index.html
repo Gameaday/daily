@@ -5,127 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="One short passage from history each morning. Everything in it is true — except one phrase. Can you spot the lie? No ads, no accounts." />
 <title>Bogus! · the daily history fact-check</title>
-<style>
-  :root{
-    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
-    --accent:#b3541e; --accent-soft:#f4e3d4;
-    --green:#2e7d4f; --green-soft:#ddefe0;
-    --red:#b3402e; --red-soft:#f7e0da;
-    --line:#e5dbc8;
-  }
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  body{
-    margin:0; background:var(--paper); color:var(--ink);
-    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
-    line-height:1.6;
-  }
-  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
-  header{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:6px;}
-  h1{
+<link rel="stylesheet" href="../shell/common.css"/>
+<style>:root{ --red:#b3402e; --red-soft:#f7e0da; }
+header{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:6px;}
+h1{
     font-family:Georgia,"Times New Roman",serif; font-size:44px; margin:0;
     letter-spacing:-1px; line-height:1;
   }
-  h1 .dot{color:var(--accent);}
-  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
-  .icons{display:flex; gap:8px;}
-  .iconbtn{
-    width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
-    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;
-  }
-  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
-  .metaline{display:flex; justify-content:space-between; align-items:center;
-    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
-  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
-  .metaline .pno b{font-size:19px;}
-  .tag{
+.tag{
     display:inline-block; margin:18px 0 4px; background:var(--accent-soft);
     color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.08em;
     text-transform:uppercase; padding:4px 10px; border-radius:999px;
   }
-  .lead{color:var(--muted); font-size:14px; margin:10px 0 18px;}
-  .lead b{color:var(--ink);}
-  .passage{
+.lead{color:var(--muted); font-size:14px; margin:10px 0 18px;}
+.passage{
     background:var(--card); border:1.5px solid var(--line); border-radius:12px;
     padding:22px 24px; font-family:Georgia,serif; font-size:19px; line-height:2;
     box-shadow:0 2px 10px rgba(60,45,20,.06);
   }
-  .passage.done{border-color:var(--ink);}
-  .seg{
+.passage.done{border-color:var(--ink);}
+.seg{
     cursor:pointer; border-radius:4px; padding:1px 2px; margin:0 -1px;
     border-bottom:2px dotted #cbbfa5; transition:background .12s;
   }
-  .passage:not(.done) .seg:hover{background:#f2e8d2;}
-  .seg.wrong{background:var(--red-soft); color:#7c2317; border-bottom-color:transparent; font-weight:600;}
-  .seg.lie{background:var(--green-soft); color:#1d5a35; border-bottom-color:transparent; font-weight:600;}
-  .seg.win{animation:pop .35s ease;}
-  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.06);}100%{transform:scale(1);}}
-  .passage.done .seg{cursor:default;}
-  .picks{display:flex; gap:6px; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
-  .picks .pip{width:10px; height:10px; border-radius:50%; background:#d9cdb2; display:inline-block;}
-  .picks .pip.used{background:var(--red);}
-  .reveal{margin-top:18px; display:none;}
-  .reveal.show{display:block; animation:rise .3s ease;}
-  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
-  .reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px;}
-  .reveal .verdict.won{color:var(--green);}
-  .reveal .verdict.lost{color:var(--red);}
-  .why{
+.passage:not(.done) .seg:hover{background:#f2e8d2;}
+.seg.wrong{background:var(--red-soft); color:#7c2317; border-bottom-color:transparent; font-weight:600;}
+.seg.lie{background:var(--green-soft); color:#1d5a35; border-bottom-color:transparent; font-weight:600;}
+.seg.win{animation:pop .35s ease;}
+@keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.06);}100%{transform:scale(1);}}
+.passage.done .seg{cursor:default;}
+.picks{display:flex; gap:6px; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
+.picks .pip{width:10px; height:10px; border-radius:50%; background:#d9cdb2; display:inline-block;}
+.picks .pip.used{background:var(--red);}
+.reveal{margin-top:18px; display:none;}
+@keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+.reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px;}
+.reveal .verdict.won{color:var(--green);}
+.reveal .verdict.lost{color:var(--red);}
+.why{
     background:var(--card); border-left:4px solid var(--accent); border-radius:0 10px 10px 0;
     padding:14px 16px; font-size:15px; margin:0 0 14px;
   }
-  .why .label{font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; display:block; margin-bottom:4px;}
-  .sharebox{
+.why .label{font-size:11px; font-weight:800; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; display:block; margin-bottom:4px;}
+.sharebox{
     background:var(--card); border:1.5px solid var(--line); border-radius:10px;
     padding:12px 14px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
     white-space:pre-wrap; margin:0 0 12px; color:var(--ink);
   }
-  .actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-  .btn{
-    background:var(--accent); color:#fff; border:none; border-radius:8px;
-    padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;
-  }
-  .btn:hover{filter:brightness(.92);}
-  .countdown{font-size:13px; color:var(--muted);}
-  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
-  /* modals */
-  .overlay{
-    position:fixed; inset:0; background:rgba(30,20,8,.45); display:none;
-    align-items:center; justify-content:center; padding:20px; z-index:50;
-  }
-  .overlay.show{display:flex;}
-  .modal{
-    background:var(--paper); border-radius:14px; max-width:440px; width:100%;
-    padding:26px; max-height:85vh; overflow:auto;
-  }
-  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
-  .modal p{font-size:14px; margin:0 0 10px;}
-  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none;
-    border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
-  .statgrid{display:flex; gap:8px; margin:14px 0;}
-  .stat{flex:1; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:10px; text-align:center;}
-  .stat .v{font-family:Georgia,serif; font-size:24px; display:block;}
-  .stat .k{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
-  .distrow{display:flex; align-items:center; gap:8px; font-size:13px; margin:5px 0;}
-  .distrow .n{width:34px; color:var(--muted);}
-  .distrow .bar{height:18px; background:var(--accent); border-radius:4px; min-width:2px;}
-  .distrow.lost .bar{background:var(--muted);}
-  .toast{
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-    background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; font-size:14px;
-    opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;
-  }
-  .toast.show{opacity:1;}
-  #curve{margin-top:14px;}
-  .curve-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:6px;}
-  .curve-bars{display:flex; align-items:flex-end; gap:5px; height:76px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:8px 10px;}
-  .cbar{flex:1; background:#d8cdb6; border-radius:4px 4px 0 0; min-height:10px;}
-  .cbar.you{background:var(--accent);}
-  .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
-  @media (max-width:480px){
+.actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+.btn:hover{filter:brightness(.92);}
+.statgrid{display:flex; gap:8px; margin:14px 0;}
+.stat{flex:1; background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:10px; text-align:center;}
+.stat .v{font-family:Georgia,serif; font-size:24px; display:block;}
+.stat .k{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;}
+.distrow{display:flex; align-items:center; gap:8px; font-size:13px; margin:5px 0;}
+.distrow .n{width:34px; color:var(--muted);}
+.distrow .bar{height:18px; background:var(--accent); border-radius:4px; min-width:2px;}
+.distrow.lost .bar{background:var(--muted);}
+@media (max-width:480px){
     h1{font-size:36px;}
     .passage{font-size:17px; padding:18px 16px;}
-  }
-</style>
+  }</style>
 </head>
 <body>
 <div class="wrap">
@@ -193,6 +133,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="../shell/common.js"></script>
 <script>
 'use strict';
 
@@ -460,24 +401,16 @@ const PUZZLES = [
 ];
 
 /* ---------------- daily selection (ET-rollover, deterministic) ---------------- */
-const TZ = 'America/New_York';
-const EPOCH_KEY = '2026-10-27'; // launch date — puzzle No. 1
-function etKey(ms){
-  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
-}
-const todayKey = etKey(Date.now());
-const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
-const num = dayIndex + 1;
+/* day math, storage, toast, countdown, help/share wiring and the team-curve
+   client all live in ../shell/common.js — destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 const puzzle = PUZZLES[((dayIndex % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
 
 /* ---------------- state (browser-only persistence) ---------------- */
 const KEY = 'warmup.bogus.v2';
-function loadState(){
-  try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; }
-}
-function saveState(){
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ /* private mode / sandbox: play in memory */ }
-}
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
 let S = loadState();
 if (!S || typeof S.stats !== 'object') {
   S = { day: dayIndex, picked: [], status: 'playing', stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0,0]} };
@@ -487,7 +420,6 @@ if (!S || typeof S.stats !== 'object') {
 }
 
 /* ---------------- dom ---------------- */
-const $ = id => document.getElementById(id);
 const passageEl = $('passage'), picksEl = $('picks');
 
 function renderPassage(){
@@ -570,42 +502,7 @@ passageEl.addEventListener('click', e => {
 /* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'bogus';
 const SYNC_BETTER = 'high';
-function syncBoard(value){
-  const box = $('curve');
-  if (!box) return;
-  box.innerHTML = '<div class="curve-note">checking the team curve\u2026</div>';
-  let id = '';
-  try {
-    id = localStorage.getItem('warmup.id');
-    if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
-  } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
-  const payload = JSON.stringify({ game: SYNC_GAME, day: dayIndex, value, better: SYNC_BETTER, id });
-  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
-    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
-  post('/api')
-    .catch(() => post('http://localhost:8787'))
-    .catch(() => post('http://127.0.0.1:8787'))
-    .then(d => renderBoard(d))
-    .catch(() => { box.innerHTML = '<div class="curve-note">team curve offline \u2014 playing solo today</div>'; });
-}
-function renderBoard(d){
-  const box = $('curve');
-  if (!box) return;
-  if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
-  const maxBar = Math.max(...d.bins.map(b => b.count), 1);
-  const bars = d.bins.map(b => '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>').join('');
-  let you = '';
-  if (d.beat != null){
-    you = d.beat === d.count - 1 ? 'top of today\u2019s curve' : 'better than ' + d.beat + ' of ' + d.count;
-  }
-  box.innerHTML =
-    '<div class="curve-head">team curve \u00b7 ' + d.count + ' today</div>' +
-    '<div class="curve-bars">' + bars + '</div>' +
-    ((you || d.mean != null) ? '<div class="curve-note">' +
-      (you ? 'you: ' + you : '') +
-      (d.mean != null ? (you ? ' \u00b7 ' : '') + 'team avg ' + d.mean : '') +
-      '</div>' : '');
-}
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 
 /* ---------------- stats & help modals ---------------- */
 function openOverlay(id){ $(id).classList.add('show'); }
@@ -633,49 +530,20 @@ function renderStats(){
 }
 
 /* ---------------- share ---------------- */
-function toast(msg){
-  const t = $('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 1800);
-}
-$('btnShare').addEventListener('click', async () => {
-  const text = shareText();
-  try {
-    await navigator.clipboard.writeText(text);
-    toast('Copied \u2014 paste it in the team channel');
-  } catch(e) {
-    const r = document.createRange();
-    r.selectNode($('sharetext'));
-    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
-    toast('Copy blocked \u2014 the text is selected for you');
-  }
-});
+const toast = SHELL.toast;
+SHELL.wireShare(shareText);
 
 /* ---------------- countdown to next puzzle (next ET midnight) ---------------- */
-function nextETMidnight(){
-  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
-  let target = Date.parse(tomorrowKey) - 5 * 3600000; // assume EST, then correct for DST
-  while (etKey(target) !== tomorrowKey) target += 3600000;
-  return target;
-}
-function tick(){
-  const left = nextETMidnight() - Date.now();
-  if (left <= 0){ location.reload(); return; }
-  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
-  $('count').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
-}
-setInterval(tick, 1000);
 
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
-$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
-  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+$('pdate').textContent = SHELL.pdateText();
 $('tag').textContent = puzzle.t;
 renderPassage();
 applyMarks(true);
 renderPicks();
 if (S.status !== 'playing') showReveal();
-tick();
+SHELL.startCountdown('count', 1000);
 </script>
 </body>
 </html>

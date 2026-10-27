@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Twelve tiles, four hidden groups of three, four mistakes allowed. Sift the daily dozen into their categories." />
+<title>Sift · the daily sorting game</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --line:#e5dbc8;
+    --c0:#2e7d4f; --c1:#b3541e; --c2:#1f6f8b; --c3:#7a5aa0;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+  .lead b{color:var(--ink);}
+  .tiles{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:6px;}
+  .tile{
+    background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+    min-height:64px; padding:10px 10px; cursor:pointer; user-select:none;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:14px; font-weight:600; line-height:1.3;
+    transition:transform .12s ease, border-color .12s ease;
+  }
+  .tile:hover{border-color:#c9bda2;}
+  .tile.sel{background:var(--accent-soft); border-color:var(--accent); transform:translateY(-2px);}
+  .tile.solved{color:#fff; cursor:default; font-size:15px;}
+  .tile.dim{color:#fff; opacity:.55; cursor:default;}
+  .tile.shake{animation:shake .4s ease;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-5px);} 40%{transform:translateX(5px);}
+    60%{transform:translateX(-3px);} 80%{transform:translateX(3px);}
+  }
+  .mistakes{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
+  .pip{width:10px; height:10px; border-radius:50%; background:var(--accent); display:inline-block;}
+  .pip.gone{background:#ddd2ba;}
+  .submitrow{display:flex; gap:10px; justify-content:center; margin-top:12px;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+  .btn:disabled{opacity:.45; cursor:default;}
+  .btn:not(:disabled):hover{filter:brightness(.94);}
+  .found{margin-top:16px; display:flex; flex-direction:column; gap:8px;}
+  .grp{border-radius:10px; padding:10px 14px; color:#fff; animation:rise .3s ease;}
+  .grp .gname{font-family:Georgia,serif; font-size:16px; font-weight:700;}
+  .grp .gitems{font-size:13px; opacity:.92;}
+  .grp.dim{opacity:.6;}
+  @keyframes rise{from{opacity:0; transform:translateY(6px);}to{opacity:1; transform:none;}}
+  .reveal{margin-top:16px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+  .countdown{font-size:13px; color:var(--muted);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  @media (max-width:480px){
+    h1{font-size:28px;}
+    .tiles{grid-template-columns:repeat(2, 1fr);}
+    .tile{min-height:56px; font-size:13px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Sift<span class="dot">.</span></h1>
+      <p class="sub">the daily sorting game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead">Twelve tiles, four hidden groups of three. Some tiles <b>want to fool you</b> — they could belong to several categories. Pick a trio, test it, and sift the day into place. <b>Four mistakes</b> and the day sifts you.</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="mistakes" id="mistakes"></div>
+
+  <div class="submitrow">
+    <button class="btn" id="btnSubmit" disabled>Test selection</button>
+    <button class="btn ghost" id="btnClear">Clear</button>
+  </div>
+
+  <div class="found" id="found"></div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="sharebox" id="sharetext"></div>
+    <div class="submitrow" style="justify-content:flex-start;">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next puzzle in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Tap tiles to select up to <b>three</b>, then hit <b>Test selection</b>. A correct trio locks in, reveals its category name, and gets out of your way.</p>
+    <p>A wrong trio costs a mistake. You can afford <b>four</b>; a fifth… you can't. If you run out, the remaining groups are revealed and the day is over.</p>
+    <p>The categories are easier than they look — but at least one tile in every puzzle is a <b>triple threat</b>: it plausibly belongs in two or three groups. Trust the grouping that's exactly three tiles, not the one that's "mostly right."</p>
+    <p>Everyone plays the same board, same order, every day. Compare miss counts at standup.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- boards (4 groups of 3, 12 tiles each) ---------------- */
+const BOARDS = [
+  { t:'The Ancient World', cats:[
+    { n:'Roman emperors', i:['Nero','Trajan','Commodus'] },
+    { n:'Greek philosophers', i:['Socrates','Plato','Aristotle'] },
+    { n:'Wonders of the ancient world', i:['Lighthouse of Alexandria','Hanging Gardens of Babylon','Colossus of Rhodes'] },
+    { n:'Egyptian pharaohs', i:['Tutankhamun','Ramses II','Cleopatra VII'] } ]},
+  { t:'The Space Race', cats:[
+    { n:'Apollo missions', i:['Apollo 11','Apollo 13','Apollo 8'] },
+    { n:'First animals in space', i:['Laika','Ham','Félicette'] },
+    { n:'Soviet space firsts', i:['Sputnik 1','Vostok 1','Luna 2'] },
+    { n:'Space shuttles', i:['Discovery','Endeavour','Atlantis'] } ]},
+  { t:'The 1990s Internet', cats:[
+    { n:'Early web browsers', i:['Mosaic','Netscape Navigator','Internet Explorer'] },
+    { n:'Dot-com flameouts', i:['Pets.com','Webvan','Boo.com'] },
+    { n:'Ways we talked online', i:['ICQ','IRC','AIM'] },
+    { n:'Founders', i:['Larry Page','Jerry Yang','Marc Andreessen'] } ]},
+  { t:'World War II', cats:[
+    { n:'Codebreaking', i:['Enigma','Bletchley Park','Purple'] },
+    { n:'Turning-point battles', i:['Midway','Stalingrad','Kursk'] },
+    { n:'Operation code names', i:['Barbarossa','Overlord','Market Garden'] },
+    { n:'Manhattan Project sites', i:['Los Alamos','Oak Ridge','Hanford'] } ]},
+  { t:'The Renaissance', cats:[
+    { n:'Works by Leonardo da Vinci', i:['Mona Lisa','The Last Supper','Vitruvian Man'] },
+    { n:'The Medici family', i:['Lorenzo de\u2019 Medici','Cosimo de\u2019 Medici','Catherine de\u2019 Medici'] },
+    { n:'Florentine masters', i:['Botticelli','Michelangelo','Donatello'] },
+    { n:'Age-of-exploration navigators', i:['Columbus','Vasco da Gama','Amerigo Vespucci'] } ]},
+  { t:'Ancient Egypt', cats:[
+    { n:'Pharaohs who built pyramids', i:['Khufu','Sneferu','Djoser'] },
+    { n:'Gods of the pantheon', i:['Ra','Anubis','Osiris'] },
+    { n:'Found in Tutankhamun\u2019s tomb', i:['Golden Mask','Iron Dagger','Chariot'] },
+    { n:'Towns on the Nile', i:['Aswan','Rosetta','Luxor'] } ]},
+  { t:'US Presidents', cats:[
+    { n:'Assassinated in office', i:['Lincoln','Garfield','McKinley'] },
+    { n:'Nobel Peace Prize winners', i:['Woodrow Wilson','Jimmy Carter','Barack Obama'] },
+    { n:'Faces on Mount Rushmore', i:['Washington','Jefferson','Theodore Roosevelt'] },
+    { n:'Won the presidency while losing the popular vote', i:['John Quincy Adams','Rutherford Hayes','Benjamin Harrison'] } ]},
+  { t:'Physics & Computing', cats:[
+    { n:'Units of electrical measurement', i:['Volt','Ampere','Ohm'] },
+    { n:'Scientists with elements named for them', i:['Curie','Einstein','Rutherford'] },
+    { n:'Names attached to laws of physics', i:['Newton','Hooke','Bernoulli'] },
+    { n:'Pioneers of computing', i:['Lovelace','Turing','Babbage'] } ]},
+  { t:'Where Words Come From', cats:[
+    { n:'From Nahuatl (Aztec)', i:['chocolate','tomato','avocado'] },
+    { n:'From Arabic', i:['algebra','alcohol','algorithm'] },
+    { n:'From Japanese', i:['tsunami','karaoke','emoji'] },
+    { n:'From Norman French', i:['beef','mutton','venison'] } ]},
+  { t:'The Reformation', cats:[
+    { n:'Reformers', i:['Luther','Calvin','Zwingli'] },
+    { n:'Printing centers c. 1500', i:['Venice','Mainz','Antwerp'] },
+    { n:'Henry VIII\u2019s queens', i:['Anne Boleyn','Jane Seymour','Catherine Parr'] },
+    { n:'Early English Bible translators', i:['Tyndale','Wycliffe','Coverdale'] } ]},
+  { t:'The Age of Sail', cats:[
+    { n:'Famous pirates', i:['Blackbeard','Anne Bonny','Captain Kidd'] },
+    { n:'Pirate havens', i:['Port Royal','Tortuga','Nassau'] },
+    { n:'Famous ships', i:['Santa María','Mayflower','Victory'] },
+    { n:'Parts of a ship', i:['keel','starboard','bow'] } ]},
+  { t:'The Cold War', cats:[
+    { n:'Flashpoints', i:['Berlin','Cuba','Korea'] },
+    { n:'Soviet leaders', i:['Khrushchev','Brezhnev','Gorbachev'] },
+    { n:'The Cambridge Five', i:['Kim Philby','Guy Burgess','Donald Maclean'] },
+    { n:'Pacts & treaties', i:['Warsaw Pact','SALT I','Helsinki Accords'] } ]}
+];
+
+const COLORS = ['#2e7d4f', '#b3541e', '#1f6f8b', '#7a5aa0'];
+
+/* ---------------- deterministic daily pick & shuffle ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+const BOARD = BOARDS[dayIndex % BOARDS.length];
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+// tile list: {text, cat}
+const TILES = [];
+BOARD.cats.forEach((cat, ci) => cat.i.forEach(text => TILES.push({ text, cat: ci })));
+// deterministic shuffle of the display order
+(function shuffle(){
+  const rng = mulberry32(dayIndex * 6151 + 42);
+  for (let i = TILES.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [TILES[i], TILES[j]] = [TILES[j], TILES[i]];
+  }
+})();
+/* ---------------- state ---------------- */
+const KEY = 'warmup.sift.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!S.solvedAll) S.stats.streak = 0;
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0, dist:[0,0,0,0,0]};
+  S = { day: dayIndex, solvedCats:[], mistakes:0, status:'playing', stats };
+}
+saveState();
+
+/* ---------------- dom & render ---------------- */
+const $ = id => document.getElementById(id);
+let sel = new Set(); // indices into TILES
+
+function renderTiles(){
+  $('tiles').innerHTML = TILES.map((t, i) => {
+    const inSolved = S.solvedCats.includes(t.cat);
+    const revealAll = S.status === 'lost';
+    let cls = 'tile';
+    if (inSolved) cls += ' solved';
+    if (revealAll && !inSolved) cls += ' dim';
+    if (sel.has(i)) cls += ' sel';
+    const color = (inSolved || revealAll) ? COLORS[t.cat] : '';
+    return `<div class="${cls}" data-i="${i}" ${color ? `style="background:${color};border-color:${color}"` : ''}>${t.text}</div>`;
+  }).join('');
+}
+
+function renderMistakes(){
+  let pips = '';
+  for (let i = 0; i < 4; i++) pips += `<span class="pip${i < S.mistakes ? ' gone' : ''}"></span>`;
+  $('mistakes').innerHTML = `mistakes: ${pips}<span style="margin-left:6px;">${4 - S.mistakes} left</span>`;
+}
+
+function renderFound(){
+  $('found').innerHTML = S.solvedCats.map(ci => {
+    const c = BOARD.cats[ci];
+    return `<div class="grp" style="background:${COLORS[ci]}">
+      <div class="gname">${c.n}</div>
+      <div class="gitems">${c.i.join(' \u00b7 ')}</div></div>`;
+  }).join('');
+}
+
+function renderAll(){ renderTiles(); renderMistakes(); renderFound(); updateSubmit(); }
+
+function updateSubmit(){
+  $('btnSubmit').disabled = !(sel.size === 3 && S.status === 'playing');
+}
+
+$('tiles').addEventListener('click', e => {
+  const el = e.target.closest('.tile');
+  if (!el) return;
+  const i = +el.dataset.i;
+  if (S.status !== 'playing') return;
+  if (S.solvedCats.includes(TILES[i].cat)) return; // locked tile
+  if (sel.has(i)) sel.delete(i);
+  else if (sel.size < 3) sel.add(i);
+  else toastMsg('Three at a time — deselect one first');
+  renderTiles(); updateSubmit();
+});
+
+$('btnClear').addEventListener('click', () => { sel.clear(); renderTiles(); updateSubmit(); });
+
+$('btnSubmit').addEventListener('click', () => {
+  if (sel.size !== 3 || S.status !== 'playing') return;
+  const selTexts = new Set([...sel].map(i => TILES[i].text));
+  const hit = BOARD.cats.findIndex((c, ci) => !S.solvedCats.includes(ci) && c.i.length === 3 && c.i.every(x => selTexts.has(x)));
+  if (hit >= 0){
+    S.solvedCats.push(hit);
+    sel.clear();
+    if (S.solvedCats.length === 4){
+      S.status = 'won';
+      const st = S.stats;
+      st.played++; st.solved++; st.streak++;
+      st.max = Math.max(st.max, st.streak);
+      st.dist[S.mistakes]++;
+      showReveal();
+    }
+  } else {
+    S.mistakes++;
+    if (S.mistakes >= 4){
+      S.status = 'lost';
+      const st = S.stats;
+      st.played++;
+      st.dist[4]++;
+      showReveal();
+    } else {
+      // shake the selected tiles
+      [...sel].forEach(i => {
+        const el = document.querySelector(`.tile[data-i="${i}"]`);
+        if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
+      });
+      toastMsg(['Not a trio.','Close, maybe?','The tiles are judging you.','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
+    }
+  }
+  saveState();
+  renderAll();
+});
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  const marks = BOARD.cats.map((c, ci) => S.solvedCats.includes(ci) ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
+  if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}`;
+  return `Sift No. ${num} \u00b7 sifted, ${S.mistakes} misses deep \u2014 ${marks}`;
+}
+function showReveal(){
+  const st = S.stats;
+  if (S.status === 'won'){
+    $('verdict').textContent = S.mistakes === 0 ? 'Flawless sift — not one wasted test.' : 'Sifted clean. The day is in order.';
+    $('verdict').style.color = 'var(--green)';
+  } else {
+    $('verdict').textContent = 'Sifted out — the groups you missed are below, dimmed.';
+    $('verdict').style.color = 'var(--accent)';
+  }
+  $('sharetext').textContent =
+    shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}`;
+  $('reveal').classList.add('show');
+  renderTiles(); // to apply reveal dimming
+}
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel2 = getSelection(); sel2.removeAllRanges(); sel2.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------------- help / countdown ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('countdown').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
+setInterval(tick, 500);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+renderAll();
+if (S.status !== 'playing') showReveal();
+tick();
+</script>
+</body>
+</html>

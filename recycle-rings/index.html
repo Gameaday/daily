@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Three letter wheels, one target word. The clock starts on your first spin and never restarts. How fast can you align the rings?" />
+<title>Recycle: Rings · the daily wheel game</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+  .lead b{color:var(--ink);}
+  .targetrow{display:flex; gap:10px; align-items:center; justify-content:center; margin:6px 0 10px; flex-wrap:wrap;}
+  .targetrow .lbl{font-size:13px; color:var(--muted); font-weight:700; letter-spacing:.05em; text-transform:uppercase;}
+  .slots{display:flex; gap:8px;}
+  .slot{
+    width:46px; height:52px; background:var(--card); border:1.5px solid var(--line); border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:Georgia,serif; font-size:28px; font-weight:700;
+  }
+  .slot.ok{background:var(--green-soft); border-color:var(--green); color:var(--green); animation:pop .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.12);}100%{transform:scale(1);}}
+  .wheelbox{display:flex; justify-content:center;}
+  .wheel{width:100%; max-width:420px; height:auto;}
+  .ringctl{display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;}
+  .ringbtn{display:flex; align-items:center; gap:8px; background:var(--card); border:1.5px solid var(--line);
+    border-radius:999px; padding:6px 12px;}
+  .ringbtn .rname{font-size:12px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
+  .ringbtn button{
+    width:36px; height:36px; border-radius:50%; border:1.5px solid var(--line); background:var(--paper);
+    font-size:15px; cursor:pointer; color:var(--ink);
+  }
+  .ringbtn button:hover{border-color:var(--accent); color:var(--accent);}
+  .metarow{display:flex; gap:14px; justify-content:center; margin-top:14px; font-size:13px; color:var(--muted); flex-wrap:wrap;}
+  .clock{font-family:Georgia,serif; font-size:30px; text-align:center; margin:10px 0 0;}
+  .clock .u{font-size:13px; color:var(--muted); font-family:inherit; display:block;}
+  .actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+  .btn:hover{filter:brightness(.94);}
+  .reveal{margin-top:18px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+  .countdown{font-size:13px; color:var(--muted);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  .lt{ font-family:Georgia,serif; font-size:26px; font-weight:700; fill:#272117; text-anchor:middle; dominant-baseline:middle; }
+  .lt.ok{ fill:#2e7d4f; font-size:30px; }
+  @media (max-width:480px){ h1{font-size:28px;} .slot{width:40px; height:46px; font-size:24px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Recycle: <span class="dot">Rings</span></h1>
+      <p class="sub">the daily wheel game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead">Spin the three wheels until the marked ray at the top spells today's word. The clock starts on your <b>first spin</b> — and it <b>never restarts</b>. Recycle the wheels as often as you like; only the word and the clock matter.</p>
+
+  <div class="targetrow">
+    <span class="lbl">Spell</span>
+    <div class="slots" id="slots"></div>
+  </div>
+
+  <div class="wheelbox"><svg class="wheel" viewBox="0 0 400 400" id="wheel"></svg></div>
+
+  <div class="ringctl" id="ringctl"></div>
+
+  <div class="metarow">
+    <span>spins <b id="spins">0</b></span>
+    <span>par <b id="par">–</b></span>
+    <span>recycles <b id="recycles">0</b></span>
+  </div>
+
+  <p class="clock"><span id="clock">00:00</span><span class="u" id="clocknote">starts on your first spin</span></p>
+
+  <div class="actions">
+    <button class="btn ghost" id="btnRecycle">↻ Recycle wheels</button>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="sharebox" id="sharetext"></div>
+    <div class="actions">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next puzzle in <span id="count">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Three wheels of letters, one marked ray at the top. <b>Spin any wheel</b> with its ◀ ▶ buttons to bring the right letters up to the ray.</p>
+    <p>When all three slots spell today's word, you win — the clock stops.</p>
+    <p><b>The recycle rule:</b> the clock starts on your first spin and never restarts — not for retries, not for reloading the page, not for the Recycle button. Your time is your score, so think before you spin. <b>Par</b> is the theoretical minimum number of spins; chase it if you dare.</p>
+    <p>Everyone in the world gets the same wheels, so compare times at standup.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- deterministic daily generation ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+const WORDS = ['OAK','ELM','IVY','SKY','SEA','SUN','FOX','OWL','BEE','ANT','ELK','RAM','DOE','HEN','PIG','COW','DOG','CAT','BAT','RAT','EGG','JAM','TEA','PIE','ICE','RYE','OAT','NUT','FIG','GEM','ORE','INK','PEN','KEY','MAP','NET','BED','CUP','JAR','MUG','LID','TOY','WIG','HAT','CAP','RUG','MAT','APE','GNU','YAK','EMU'];
+const SIZES = [8, 7, 6];
+const FILLER = 'AAEEIIOOUUBCDGLMNPRST';
+
+function gen(day){
+  for (let salt = 0; salt < 200; salt++){
+    const rng = mulberry32(day * 1013904223 + salt * 7919 + 7);
+    const word = WORDS[Math.floor(rng() * WORDS.length)];
+    const rings = [];
+    let par = 0;
+    for (let i = 0; i < 3; i++){
+      const n = SIZES[i];
+      const pos = 1 + Math.floor(rng() * (n - 2)); // never pre-solved at top
+      par += Math.min(pos, n - pos);
+      const letters = [];
+      for (let j = 0; j < n; j++){
+        letters.push(j === pos ? word[i] : FILLER[Math.floor(rng() * FILLER.length)]);
+      }
+      rings.push({ n, letters });
+    }
+    const top = rings.map(r => r.letters[0]).join('');
+    if (par >= 4 && top !== word) return { word, rings, par };
+  }
+  return null; // unreachable in practice
+}
+const PUZZLE = gen(dayIndex);
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.rings.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex || !PUZZLE){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!S.won) S.stats.streak = 0; // missed the previous day
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, best:null};
+  S = { day: dayIndex, offsets:[0,0,0], startAt:null, spins:0, recycles:0, won:false, timeMs:0, stats };
+}
+saveState();
+
+/* ---------------- dom ---------------- */
+const $ = id => document.getElementById(id);
+const RADII = [172, 136, 100];
+
+function topIndex(i){
+  const n = SIZES[i], o = S.offsets[i];
+  return ((-o) % n + n) % n;
+}
+function topLetter(i){ return PUZZLE.rings[i].letters[topIndex(i)]; }
+function elapsed(){
+  if (S.won) return S.timeMs;
+  if (!S.startAt) return 0;
+  return Date.now() - S.startAt;
+}
+function fmtTime(ms){
+  const s = Math.floor(ms / 1000);
+  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
+}
+
+function renderSlots(){
+  const slots = PUZZLE.word.split('').map((ch, i) => {
+    const cur = topLetter(i);
+    const ok = cur === ch;
+    return `<div class="slot${ok ? ' ok' : ''}">${cur}</div>`;
+  }).join('');
+  $('slots').innerHTML = slots;
+}
+
+function renderWheel(){
+  let svg = `<circle cx="200" cy="200" r="192" fill="#fffdf7" stroke="#e5dbc8" stroke-width="1.5"/>`;
+  RADII.forEach(r => { svg += `<circle cx="200" cy="200" r="${r}" fill="none" stroke="#d9cdb2" stroke-width="1.5"/>`; });
+  // marked ray
+  svg += `<path d="M200 30 l-10 17 h20 z" fill="#b3541e"/>`;
+  svg += `<line x1="200" y1="47" x2="200" y2="353" stroke="#b3541e" stroke-width="1" stroke-dasharray="4 7" opacity="0.4"/>`;
+  PUZZLE.rings.forEach((ring, i) => {
+    const r = RADII[i], step = 360 / ring.n;
+    ring.letters.forEach((ch, j) => {
+      const a = (((j + S.offsets[i]) % ring.n) + ring.n) % ring.n * step;
+      const cls = (a === 0 && ch === PUZZLE.word[i]) ? 'lt ok' : (a === 0 ? 'lt' : 'lt');
+      svg += `<text class="${cls}" x="200" y="${200 - r}" transform="rotate(${a} 200 200)">${ch}</text>`;
+    });
+  });
+  $('wheel').innerHTML = svg;
+}
+
+function renderMeta(){
+  $('spins').textContent = S.spins;
+  $('par').textContent = PUZZLE.par;
+  $('recycles').textContent = S.recycles;
+}
+
+function renderClock(){
+  const e = elapsed();
+  $('clock').textContent = fmtTime(e);
+  if (S.won) $('clocknote').textContent = 'final time';
+  else if (S.startAt) $('clocknote').textContent = 'the clock is running — it does not restart';
+  else $('clocknote').textContent = 'starts on your first spin';
+}
+
+function renderCtl(){
+  const names = ['outer','middle','inner'];
+  $('ringctl').innerHTML = SIZES.map((n, i) =>
+    `<div class="ringbtn"><span class="rname">${names[i]}</span>` +
+    `<button data-i="${i}" data-d="-1" aria-label="spin ${names[i]} left">\u25C0</button>` +
+    `<button data-i="${i}" data-d="1" aria-label="spin ${names[i]} right">\u25B6</button></div>`
+  ).join('');
+}
+
+function renderAll(){ renderSlots(); renderWheel(); renderMeta(); renderClock(); }
+
+/* ---------------- play ---------------- */
+function spin(i, d){
+  if (S.won || !PUZZLE) return;
+  if (!S.startAt) S.startAt = Date.now();
+  S.offsets[i] += d;
+  S.spins++;
+  if ([0,1,2].every(k => topLetter(k) === PUZZLE.word[k])){
+    S.won = true;
+    S.timeMs = Date.now() - S.startAt;
+    const st = S.stats;
+    st.played++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+    st.best = (st.best == null) ? S.timeMs : Math.min(st.best, S.timeMs);
+    showReveal();
+  }
+  saveState();
+  renderAll();
+}
+
+$('ringctl').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) spin(+b.dataset.i, +b.dataset.d);
+});
+
+$('btnRecycle').addEventListener('click', () => {
+  if (S.won) return;
+  S.offsets = [0, 0, 0]; // back to the day's scramble
+  S.recycles++;
+  saveState();
+  renderAll();
+});
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  const over = S.spins - PUZZLE.par;
+  const note = over <= 0 ? 'on par' : `+${over} spins`;
+  return `Recycle: Rings No. ${num} \u00b7 ${fmtTime(S.timeMs)} \u00b7 ${S.spins} spins (${note}) \uD83C\uDF00`;
+}
+function showReveal(){
+  const st = S.stats;
+  $('verdict').textContent = (S.spins === PUZZLE.par)
+    ? 'On par — the perfect line.'
+    : (S.spins <= PUZZLE.par + 3 ? 'Aligned — smooth spinning.' : 'Aligned — the scenic route.');
+  $('sharetext').textContent =
+    shareText() + `\nstreak ${st.streak} \u00b7 best ${fmtTime(st.best)}`;
+  $('reveal').classList.add('show');
+  renderClock();
+}
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------------- help / countdown ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('count').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  renderClock();
+}
+setInterval(tick, 500);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+renderCtl();
+renderAll();
+if (S.won) showReveal();
+tick();
+</script>
+</body>
+</html>

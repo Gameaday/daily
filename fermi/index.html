@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="One estimation question a day. How close can you get without looking it up? One guess, everyone gets the same question." />
+<title>Fermi · the daily estimation game</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --gold:#c99a2e; --gold-soft:#f6eccf;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+  .lead b{color:var(--ink);}
+  .qcard{
+    background:var(--card); border:1.5px solid var(--line); border-radius:14px;
+    padding:20px 22px; margin-top:6px;
+  }
+  .qtag{display:inline-block; background:var(--accent-soft); color:var(--accent);
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    border-radius:999px; padding:3px 12px; margin-bottom:10px;}
+  .qtext{font-family:Georgia,serif; font-size:22px; margin:0; line-height:1.35;}
+  .guessrow{display:flex; gap:10px; margin-top:18px;}
+  .guessrow input{
+    flex:1; min-width:0; background:var(--paper); border:1.5px solid var(--line); border-radius:10px;
+    font-size:19px; font-family:ui-monospace,Menlo,Consolas,monospace; padding:10px 14px; color:var(--ink);
+  }
+  .guessrow input:focus{outline:none; border-color:var(--accent);}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn:hover{filter:brightness(.94);}
+  .hint{font-size:12px; color:var(--muted); margin-top:8px;}
+  .reveal{margin-top:16px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .verdict{font-family:Georgia,serif; font-size:24px; margin:0 0 4px;}
+  .stars{font-size:20px; letter-spacing:2px; margin-bottom:14px;}
+  .cmp{display:flex; flex-direction:column; gap:8px;}
+  .cmp .row{display:flex; justify-content:space-between; gap:10px; background:var(--card);
+    border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; font-size:15px;}
+  .cmp .row .k{color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; align-self:center;}
+  .cmp .row .v{font-family:ui-monospace,Menlo,Consolas,monospace; font-weight:700; text-align:right;}
+  .why{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:10px; padding:12px 14px; font-size:14px; margin-top:10px;}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:14px 0 12px;}
+  .actions{display:flex; gap:10px; align-items:center; margin-top:4px; flex-wrap:wrap;}
+  .countdown{font-size:13px; color:var(--muted);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal table{width:100%; border-collapse:collapse; font-size:13px; margin:8px 0 12px;}
+  .modal td{padding:5px 8px; border-bottom:1px solid var(--line);}
+  .modal td:first-child{font-weight:700;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  @media (max-width:480px){ h1{font-size:28px;} .qtext{font-size:19px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Fermi<span class="dot">.</span></h1>
+      <p class="sub">the daily gut-check estimation game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead">Named for Enrico Fermi, who estimated the yield of the Trinity test from scraps of paper blown by the blast. <b>No looking it up.</b> Reason it out, trust your gut, take your one shot.</p>
+
+  <div class="qcard">
+    <span class="qtag" id="qtag"></span>
+    <p class="qtext" id="qtext"></p>
+
+    <div class="guessrow" id="guessrow">
+      <input id="guess" inputmode="decimal" autocomplete="off" spellcheck="false"
+        placeholder="your estimate…" aria-label="Your estimate" />
+      <button class="btn" id="btnGuess">Lock it in</button>
+    </div>
+    <p class="hint" id="hint">Formats: 2500000000 · 2.5b · 2.5e9 · "2.5 billion" — one guess per day.</p>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <p class="stars" id="stars"></p>
+    <div class="cmp">
+      <div class="row"><span class="k">your estimate</span><span class="v" id="vyou"></span></div>
+      <div class="row"><span class="k">commonly cited</span><span class="v" id="vact"></span></div>
+      <div class="row"><span class="k">you were off by</span><span class="v" id="voff"></span></div>
+    </div>
+    <div class="why" id="why"></div>
+    <div class="sharebox" id="sharetext"></div>
+    <div class="actions">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next question in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>One estimation question a day, <b>one guess</b>. Type your estimate in whatever format is comfortable — raw digits, 2.5b, 3e8, or "2.5 billion".</p>
+    <p>You are scored by how close you land, on a ratio scale:</p>
+    <table>
+      <tr><td>3 / 3</td><td>within 3× of the cited value</td></tr>
+      <tr><td>2 / 3</td><td>within 10×</td></tr>
+      <tr><td>1 / 3</td><td>within 100×</td></tr>
+      <tr><td>0 / 3</td><td>beyond that — the gut needs calibration</td></tr>
+    </table>
+    <p>"Within an order of magnitude" (2/3 or better) keeps your streak alive. The trick is not precision — it's getting the <b>size</b> of the thing right. Everyone gets the same question, so compare gut checks at standup.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- questions ---------------- */
+const QS = [
+  { t:'The Human Body', q:'Over an average lifetime, roughly how many times does a human heart beat?', a:2500000000,
+    w:'~70 beats per minute × ~79 years ≈ 2.9 billion; the commonly cited figure is 2.5–3 billion. Your heart is startlingly industrious.' },
+  { t:'Fermi Classic', q:'Roughly how many piano tuners work in New York City?', a:160,
+    w:'The original Fermi estimate: NYC has ~8M people, maybe 100k pianos, tuned ~1–2× a year, each tuner doing 4–6 a day — you land around 100–200.' },
+  { t:'Monuments', q:'Counting all its branches, roughly how long is the Great Wall of China in kilometers?', a:21000,
+    w:'A 2008 government survey of all dynasties\u2019 sections put it at 21,196 km. The Ming-era stonework most people picture is about 8,850 km.' },
+  { t:'The Human Body', q:'Roughly how many hairs grow on the average human head?', a:100000,
+    w:'About 100,000, with blondes averaging more (~140k) and redheads fewer (~90k). Each lasts ~3 years before falling out.' },
+  { t:'Daily Grind', q:'Roughly how many cups of coffee are drunk worldwide on an average day?', a:2250000000,
+    w:'~2.25 billion cups a day — roughly one cup for every 3–4 humans alive, before breakfast even ends.' },
+  { t:'America', q:'Roughly how many registered motor vehicles are there in the United States?', a:280000000,
+    w:'About 280 million registered vehicles — comfortably more than one per American adult. The US has been a carapaced nation since the 1970s.' },
+  { t:'Libraries', q:'Roughly how many books are held in the US Library of Congress?', a:25000000,
+    w:'~25 million books (cataloged) out of ~170 million total items including maps, films, and recordings. The largest library on Earth.' },
+  { t:'Monuments', q:'What is the total weight of the Eiffel Tower, in metric tonnes?', a:10100,
+    w:'About 10,100 tonnes of wrought iron — 7,300 t of it in the lattice structure alone, plus paint, elevators, and restaurants.' },
+  { t:'Spaceflight', q:'What is the mass of the International Space Station, in kilograms?', a:420000,
+    w:'~420,000 kg — a football-field-sized outpost assembled over 40+ missions and continuously crewed since November 2000.' },
+  { t:'Ancient Rome', q:'At its peak around 100 CE, roughly how many people lived in the city of Rome itself?', a:1000000,
+    w:'Around one million — the first city in history to reach that mark. Estimates range from 800k to over a million depending on who counts as a resident.' },
+  { t:'Long Walks', q:'Roughly how many steps would it take to walk around the Earth at the equator?', a:53000000,
+    w:'40,075 km at ~0.75 m per stride ≈ 53 million steps. Water walking not included.' },
+  { t:'Sports', q:'How many liters of water does an Olympic swimming pool hold?', a:2500000,
+    w:'2,500 m³ = 2.5 million liters (2.5 megaliters). The standard spec: 50 m × 25 m × ~2 m deep on average.' },
+  { t:'The Internet', q:'Roughly how many Google searches are performed worldwide each day?', a:8500000000,
+    w:'Commonly cited at ~8.5 billion a day — nearly one per person alive, daily. (Search is the water we swim in.)' },
+  { t:'Barnyard', q:'Roughly how many chickens are alive on Earth at any given moment?', a:25000000000,
+    w:'~25 billion. Chickens are the most numerous bird in history by a wild margin — there are roughly 3 chickens per human.' },
+  { t:'Treasure', q:'Roughly how much gold has been mined in all of human history, in metric tonnes?', a:210000,
+    w:'About 210,000 t — which would fit in a cube ~22 meters on a side. Nearly all of it mined in the last century and a half.' },
+  { t:'Literature', q:'Roughly how many total words did William Shakespeare write across all his works?', a:884000,
+    w:'~884,000 words across 37+ plays and 154 sonnets — and he introduced or popularized hundreds of words still in daily use.' },
+  { t:'The Internet', q:'Roughly how many photographs are taken worldwide each year?', a:1900000000000,
+    w:'Estimates run to ~2 trillion a year — about half of them by smartphones, and overwhelmingly selfies adjacent to food.' },
+  { t:'The World', q:'Roughly how many babies are born worldwide on an average day?', a:365000,
+    w:'~365,000 per day — about 4 every second, which works out to ~132 million a year.' },
+  { t:'Spaceflight', q:'The Moon\u2019s distance from Earth is about how many Earth diameters?', a:30,
+    w:'~30 Earths would fit side by side between us and the Moon (384,400 km ÷ 12,742 km ≈ 30). It\u2019s much farther than most diagrams suggest.' },
+  { t:'The Sky', q:'Roughly how many solar eclipses (total or partial) occur somewhere on Earth per century?', a:240,
+    w:'About 240 per century — roughly 2–5 per year somewhere on the planet, though any single spot waits ~375 years for a total eclipse.' },
+  { t:'America', q:'Roughly how many pizzas are sold in the United States per year?', a:3000000000,
+    w:'~3 billion a year — about 350 slices per second. Americans eat roughly 23 pounds of pizza per person annually.' },
+  { t:'Big Water', q:'Roughly how many liters of water does Lake Superior contain?', a:12000000000000000,
+    w:'~12,100 km³ = about 1.2 × 10¹⁶ liters — enough to cover North and South America in a foot of water. It holds 10% of the world\u2019s surface freshwater.' }
+];
+
+/* ---------------- deterministic daily pick ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+// spread days deterministically through the deck (repeats after 22 days, fine for now)
+const Q = QS[dayIndex % QS.length];
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.fermi.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!S.scored || S.score < 2) S.stats.streak = 0; // missed day or below 2/3 breaks streak
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, total:0, dist:[0,0,0,0]};
+  S = { day: dayIndex, scored:false, guess:0, score:0, stats };
+}
+saveState();
+
+/* ---------------- parsing & formatting ---------------- */
+function parseNum(input){
+  let s = String(input).toLowerCase().replace(/[\s,_]/g, '');
+  const m = s.match(/^([\d.]+)(?:e(\d+))?(.*)$/);
+  if (!m) return NaN;
+  let v = parseFloat(m[1]);
+  if (!isFinite(v)) return NaN;
+  if (m[2]) v *= Math.pow(10, +m[2]);
+  const suf = m[3] || '';
+  if (/^trillion|^tn$|^t$/.test(suf)) v *= 1e12;
+  else if (/^billion|^bn$|^bil$|^b$/.test(suf)) v *= 1e9;
+  else if (/^million|^mn$|^mil$|^m$/.test(suf)) v *= 1e6;
+  else if (/^thousand|^k$/.test(suf)) v *= 1e3;
+  return v;
+}
+function fmt(n){
+  return n.toLocaleString('en-US', {maximumFractionDigits: n < 100 ? 1 : 0});
+}
+function friendly(n){
+  const units = [[1e12,'trillion'],[1e9,'billion'],[1e6,'million'],[1e3,'thousand']];
+  for (const [f, name] of units){
+    if (n >= f){
+      const v = n / f;
+      return (v >= 100 ? Math.round(v) : v.toPrecision(2).replace(/\.?0+$/,'')) + ' ' + name;
+    }
+  }
+  return fmt(n);
+}
+function scoreFor(guess, actual){
+  if (!(guess > 0)) return 0;
+  const ratio = Math.max(guess / actual, actual / guess);
+  if (ratio <= 3) return 3;
+  if (ratio <= 10) return 2;
+  if (ratio <= 100) return 1;
+  return 0;
+}
+function ratioFor(guess, actual){
+  if (!(guess > 0)) return Infinity;
+  return Math.max(guess / actual, actual / guess);
+}
+
+/* ---------------- dom ---------------- */
+const $ = id => document.getElementById(id);
+
+function starsFor(score){
+  return '\uD83D\uDFE9'.repeat(score) + '\u2B1C'.repeat(3 - score);
+}
+function verdictFor(score){
+  if (score === 3) return 'Nailed it — the gut is calibrated.';
+  if (score === 2) return 'Right neighborhood — an honest order of magnitude.';
+  if (score === 1) return 'You could see it from there, in clear weather.';
+  return 'The gut boldly went where the number was not.';
+}
+
+function showReveal(){
+  const score = S.score;
+  $('verdict').textContent = verdictFor(score);
+  $('verdict').style.color = score >= 2 ? 'var(--green)' : (score === 1 ? 'var(--gold)' : 'var(--accent)');
+  $('stars').textContent = starsFor(score);
+  $('vyou').textContent = fmt(S.guess) + '  (' + friendly(S.guess) + ')';
+  $('vact').textContent = fmt(Q.a) + '  (' + friendly(Q.a) + ')';
+  const r = ratioFor(S.guess, Q.a);
+  $('voff').textContent = isFinite(r) ? (r < 1.05 ? 'spot on' : r.toFixed(r < 10 ? 1 : 0) + '\u00d7') : '—';
+  $('why').textContent = Q.w;
+  const st = S.stats;
+  const avg = st.played ? (st.total / st.played).toFixed(1) : '0';
+  $('sharetext').textContent =
+    shareText() + `\nstreak ${st.streak} \u00b7 avg ${avg}/3 \u00b7 played ${st.played}`;
+  $('reveal').classList.add('show');
+  $('guessrow').style.display = 'none';
+  $('hint').style.display = 'none';
+}
+function shareText(){
+  const r = ratioFor(S.guess, Q.a);
+  const off = isFinite(r) ? '— off by ' + (r < 1.05 ? '<5%' : r.toFixed(r < 10 ? 1 : 0) + '\u00d7') : '';
+  return `Fermi No. ${num} \u00b7 ${S.score}/3 ${starsFor(S.score)} ${off}`;
+}
+
+$('btnGuess').addEventListener('click', () => {
+  if (S.scored) return;
+  const v = parseNum($('guess').value);
+  if (!(v > 0)){ toastMsg('Give me a positive number — any format works'); return; }
+  S.guess = v;
+  S.score = scoreFor(v, Q.a);
+  S.scored = true;
+  const st = S.stats;
+  st.played++; st.total += S.score;
+  if (S.score >= 2){ st.streak++; st.max = Math.max(st.max, st.streak); }
+  else st.streak = 0;
+  st.dist[S.score]++;
+  saveState();
+  showReveal();
+});
+$('guess').addEventListener('keydown', e => { if (e.key === 'Enter') $('btnGuess').click(); });
+
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------------- help / countdown ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('countdown').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
+setInterval(tick, 500);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+$('qtag').textContent = Q.t;
+$('qtext').textContent = Q.q;
+if (S.scored) showReveal();
+tick();
+</script>
+</body>
+</html>

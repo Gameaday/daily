@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="A 5×5 grid of letters. Shift rows and columns to build as many real words as you can, then bank them before your nerve runs out." />
+<title>Recycle: Grid · the daily shifting letters game</title>
+<style>
+  :root{
+    --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d;
+    --accent:#b3541e; --accent-soft:#f4e3d4;
+    --green:#2e7d4f; --green-soft:#ddefe0;
+    --line:#e5dbc8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.6;}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 60px;}
+  header{display:flex; align-items:flex-end; justify-content:space-between;}
+  h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+  h1 .dot{color:var(--accent);}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px;}
+  .icons{display:flex; gap:8px;}
+  .iconbtn{width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+    background:var(--card); color:var(--ink); font-size:16px; cursor:pointer;}
+  .iconbtn:hover{border-color:var(--accent); color:var(--accent);}
+  .metaline{display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
+  .metaline .pno{font-family:Georgia,serif; font-size:15px;}
+  .metaline .pno b{font-size:19px;}
+  .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+  .lead b{color:var(--ink);}
+  .boardbox{display:flex; justify-content:center; margin-top:6px;}
+  .ggrid{
+    display:grid;
+    grid-template-columns: 36px repeat(5, 56px) 36px;
+    grid-auto-rows: 56px;
+    gap:6px;
+  }
+  .shifth{width:36px; height:56px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--card); color:var(--muted); font-size:13px; cursor:pointer; align-self:center; height:36px;}
+  .shiftv{width:56px; height:36px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--card); color:var(--muted); font-size:13px; cursor:pointer; justify-self:center; width:36px;}
+  .shifth:hover,.shiftv:hover{border-color:var(--accent); color:var(--accent);}
+  .cell{
+    display:flex; align-items:center; justify-content:center;
+    background:var(--card); border:1.5px solid var(--line); border-radius:10px;
+    font-family:Georgia,serif; font-size:26px; font-weight:700;
+  }
+  .spacer{width:36px; height:36px;}
+  .scoreline{display:flex; gap:16px; justify-content:center; align-items:baseline; margin-top:14px; flex-wrap:wrap;}
+  .bignum{font-family:Georgia,serif; font-size:34px;}
+  .bignum .u{font-size:13px; color:var(--muted); font-family:inherit;}
+  .clock{font-family:Georgia,serif; font-size:20px; color:var(--muted);}
+  .clock .u{font-size:11px; display:block; text-align:center;}
+  .words{margin-top:14px; min-height:44px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;}
+  .wchip{background:var(--green-soft); color:var(--green); border:1px solid #bcdcc5;
+    border-radius:999px; padding:3px 12px; font-size:14px; font-weight:700; letter-spacing:.04em;
+    font-family:ui-monospace,Menlo,Consolas,monospace; animation:pop .25s ease;}
+  @keyframes pop{0%{transform:scale(.6);}60%{transform:scale(1.08);}100%{transform:scale(1);}}
+  .words .none{color:var(--muted); font-size:13px;}
+  .actions{display:flex; gap:10px; justify-content:center; margin-top:16px;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
+  .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+  .btn:hover{filter:brightness(.94);}
+  .reveal{margin-top:18px; display:none;}
+  .reveal.show{display:block; animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+  .reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
+  .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+  .countdown{font-size:13px; color:var(--muted);}
+  footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+  .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--paper); border-radius:14px; max-width:440px; width:100%; padding:26px; max-height:85vh; overflow:auto;}
+  .modal h2{font-family:Georgia,serif; margin:0 0 12px; font-size:24px;}
+  .modal p{font-size:14px; margin:0 0 10px;}
+  .modal .close{margin-top:8px; background:var(--ink); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-size:14px; cursor:pointer;}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60;}
+  .toast.show{opacity:1;}
+  @media (max-width:480px){
+    h1{font-size:28px;}
+    .ggrid{grid-template-columns: 28px repeat(5, minmax(44px, 1fr)) 28px; grid-auto-rows: 48px;}
+    .shifth,.shiftv{height:28px; width:28px; font-size:11px;}
+    .cell{font-size:20px;}
+    .spacer{width:28px; height:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Recycle: <span class="dot">Grid</span></h1>
+      <p class="sub">the daily shifting letters game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead">Shift the grid's rows and columns to build as many real words as you can. The clock starts on your <b>first shift</b> and never restarts — so shift fast, and <b>Bank It</b> when the words look fat. You only get one bank per day.</p>
+
+  <div class="boardbox"><div class="ggrid" id="grid"></div></div>
+
+  <div class="scoreline">
+    <span class="bignum"><span id="count">0</span> <span class="u">words on board</span></span>
+    <span class="clock"><span id="clock">00:00</span><span class="u" id="clocknote">starts on your first shift</span></span>
+    <span class="clock" style="color:var(--ink);"><span id="shifts">0</span><span class="u">shifts</span></span>
+  </div>
+
+  <div class="words" id="words"><span class="none">no words yet — start shifting</span></div>
+
+  <div class="actions">
+    <button class="btn" id="btnBank">Bank It</button>
+    <button class="btn ghost" id="btnRecycle">↻ Recycle grid</button>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="sharebox" id="sharetext"></div>
+    <div class="actions">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next puzzle in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Use the arrow buttons around the grid to <b>shift any row or column</b> one step. Letters wrap around the edge.</p>
+    <p>Every <b>real word of 3 or more letters</b> that appears reading left-to-right in a row, or top-to-bottom in a column, counts. The chips below the grid show everything currently on the board.</p>
+    <p><b>The recycle rule:</b> the clock starts on your first shift and never restarts — not for the Recycle button, not for reloading. The Recycle button returns the grid to its original layout (clock keeps running) so you can try a totally different plan.</p>
+    <p><b>Bank It</b> locks in your score: the number of words on the board at that moment. More words = better. One bank per day, so don't get greedy forever — but every extra shift costs time, and your time is the tiebreaker.</p>
+    <p>Same letters for everyone, so compare banks at standup.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ---------------- embedded dictionary (common words, 3–5 letters) ---------------- */
+const DICT_SRC = "ACE,ACT,ADD,AID,AIR,ANT,ANY,APT,ARC,ARM,ART,ASH,ASK,AWE,AXE,BAD,BAG,BAN,BAR,BAT,BAY,BED,BEE,BEG,BET,BID,BIG,BIN,BIT,BOA,BOG,BOW,BOX,BOY,BUD,BUG,BUS,BUT,BUY,CAB,CAN,CAP,CAR,CAT,COB,COG,CON,COP,COT,COW,COY,CRY,CUB,CUE,CUP,CUT,DAD,DAY,DEW,DID,DIE,DIG,DIM,DIP,DOE,DOG,DOT,DRY,DUE,DUG,DYE,EAR,EAT,EGG,EGO,ELF,ELK,ELM,END,ERA,ERR,EWE,EYE,FAN,FAR,FAT,FAX,FEE,FEW,FIB,FIG,FIN,FIR,FIT,FIX,FLY,FOE,FOG,FOR,FOX,FUN,FUR,GAP,GAS,GEM,GET,GIN,GNU,GOT,GUM,GUN,GUY,GYM,HAD,HAM,HAS,HAT,HAY,HEM,HEN,HER,HID,HIM,HIP,HIS,HIT,HOG,HOP,HOT,HOW,HUB,HUE,HUG,HUT,ICE,ICY,ILL,IMP,INK,INN,ION,ITS,IVY,JAB,JAM,JAR,JAW,JAY,JET,JOB,JOG,JOY,JUG,KEY,KID,KIT,LAB,LAD,LAG,LAP,LAW,LAX,LAY,LED,LEG,LET,LID,LIE,LIP,LIT,LOG,LOT,LOW,MAD,MAN,MAP,MAT,MAY,MET,MID,MOP,MUD,MUG,NAP,NET,NEW,NIB,NIP,NOD,NOT,NOW,NUN,NUT,OAK,OAR,OAT,ODD,ODE,OFT,OLD,ONE,OPT,ORB,ORE,OUR,OUT,OVA,OWE,OWL,OWN,PAD,PAL,PAN,PAT,PAW,PAY,PEA,PEG,PEN,PET,PIE,PIG,PIN,PIT,PLY,POP,POT,PRO,PUB,PUG,PUP,PUT,RAG,RAM,RAN,RAP,RAT,RAW,RAY,RED,RIB,RID,RIG,RIM,RIP,ROB,ROD,ROT,ROW,RUB,RUG,RUN,RUT,RYE,SAD,SAT,SAW,SAY,SEA,SEE,SET,SEW,SHE,SIN,SIP,SIR,SIT,SIX,SKI,SKY,SOY,SPA,SPY,SUB,SUM,SUN,TAB,TAG,TAN,TAP,TAR,TEA,TEN,THE,TIE,TIN,TIP,TOE,TON,TOP,TOY,TWO,URN,USE,VAN,VAT,VET,VIA,VOW,WAR,WAX,WAY,WEB,WED,WET,WHO,WHY,WIG,WIN,WIT,WOK,WON,YAK,YAM,YET,YES,YOU,ZIP,ZOO,ABLE,ACID,AGED,AREA,ARMY,AWAY,BABY,BACK,BAKE,BALL,BAND,BANK,BARE,BARK,BARN,BASE,BATH,BEAM,BEAN,BEAR,BEAT,BEEN,BELL,BELT,BEND,BENT,BEST,BIKE,BILL,BIND,BIRD,BITE,BOAT,BODY,BOIL,BOLD,BOLT,BOMB,BOND,BONE,BOOK,BOOT,BORE,BORN,BOTH,BOWL,BULK,BURN,BUSH,BUSY,CAKE,CALL,CAME,CAMP,CARD,CARE,CART,CASE,CASH,CAST,CAVE,CHAT,CHIP,CITY,CLAP,CLAW,CLAY,CLIP,COAL,COAT,CODE,COIN,COLD,COMB,COME,COOK,COOL,CORE,CORN,COST,CREW,CROP,CROW,CUBE,CURE,CURL,DARE,DARK,DART,DASH,DATA,DATE,DAWN,DEAD,DEAL,DEAR,DEBT,DECK,DEED,DEEP,DEER,DESK,DIAL,DICE,DIME,DISH,DISK,DIVE,DOCK,DOME,DONE,DOOR,DOSE,DOWN,DOZE,DRAW,DRIP,DROP,DRUM,DUCK,DUCT,DUNE,DUST,DUTY,EACH,EARN,EASE,EAST,EASY,ECHO,EDGE,EDIT,ELSE,ENVY,EVEN,EVER,EVIL,EXAM,EXIT,FACE,FACT,FADE,FAIL,FAIR,FAKE,FALL,FAME,FANG,FARM,FAST,FATE,FEAR,FEED,FELL,FELT,FIND,FINE,FIRE,FIRM,FISH,FIST,FIVE,FLAG,FLAP,FLAT,FLEW,FLEX,FLIP,FLOW,FOAM,FOIL,FOLD,FOLK,FONT,FOOD,FOOL,FOOT,FORK,FORM,FORT,FOUR,FREE,FROG,FUEL,FULL,FUND,GALE,GAME,GANG,GATE,GAVE,GEAR,GIFT,GIRL,GIVE,GLAD,GLOW,GOAL,GOAT,GOLD,GOLF,GONE,GONG,GOOD,GOWN,GRAB,GRAM,GREW,GRID,GRIM,GRIN,GRIP,GRIT,GROW,GULF,GULL,GUST,HALF,HALL,HALT,HAND,HANG,HARD,HARM,HARP,HATE,HAUL,HAVE,HAWK,HEAD,HEAL,HEAP,HEAR,HEAT,HELD,HELP,HIDE,HIGH,HIKE,HILL,HINT,HIRE,HIVE,HOLD,HOLE,HOLY,HOME,HOPE,HORN,HOST,HOUR,HOWL,HUGE,HUNT,HURT,ICON,IDEA,IDLE,INCH,INTO,IRON,ITEM,JACK,JAIL,JAZZ,JOIN,JOKE,JUMP,JUNK,JURY,KEEP,KICK,KILL,KIND,KING,KISS,KITE,KNEE,KNOB,KNOT,KNOW,LACE,LACK,LAKE,LAMP,LAND,LANE,LAST,LATE,LAVA,LAWN,LEAD,LEAF,LEAN,LEAP,LEND,LESS,LIFT,LIME,LINE,LINK,LION,LIST,LIVE,LOAD,LOAN,LOCK,LOFT,LOGO,LOOP,LOSE,LOSS,LOST,LOUD,LUNG,MAIL,MAIN,MAKE,MALL,MARK,MASK,MASS,MATE,MATH,MEAL,MEAN,MEAT,MEET,MELT,MEND,MENU,MILD,MILE,MILK,MILL,MIND,MINE,MISS,MIST,MOOD,MOON,MOVE,MUCH,MUST,NAME,NEAR,NEAT,NECK,NEED,NEST,NEWS,NINE,NONE,NOON,NOSE,NOTE,NOUN,ONCE,ONLY,ONTO,OPEN,OVAL,OVEN,OVER,PACE,PACK,PAGE,PAIN,PAIR,PALM,PARK,PART,PASS,PAST,PATH,PEAK,PEAR,PEEK,PEST,PICK,PILE,PILL,PIPE,PLAN,PLAY,PLUG,PLUS,POEM,POET,POKE,POLL,POOL,POOR,POND,PONY,PORT,POSE,POUR,PUMP,PURE,QUIT,QUIZ,RACE,RACK,RAGE,RAID,RAIL,RAIN,RANK,RARE,RATE,READ,REAL,RENT,REST,RICE,RICH,RIDE,RING,RISK,ROAD,ROCK,ROLE,ROLL,ROOF,ROOM,ROOT,ROPE,ROSE,RULE,RUSH,RUST,SACK,SAFE,SAIL,SALE,SALT,SAME,SAND,SAVE,SCAN,SCAR,SEAL,SEAT,SEED,SEEK,SEEM,SEEN,SELF,SELL,SEND,SENT,SHIP,SHOE,SHOP,SHOT,SHOW,SICK,SIDE,SIFT,SIGN,SILK,SING,SINK,SITE,SIZE,SKIN,SKIP,SLIP,SLOT,SNOW,SOAP,SOCK,SODA,SOFA,SOFT,SOIL,SOLD,SOLO,SONG,SOON,SORE,SORT,SOUL,SOUR,SPAN,SPIN,SPIT,SPOT,STAR,STAY,STEM,STEP,STOP,SUCH,SUIT,SURE,SURF,SWIM,TACK,TACO,TAIL,TAKE,TALE,TALK,TALL,TANK,TASK,TAXI,TEAM,TEAR,TELL,TENT,TEST,TEXT,THAN,THAT,THEM,THEN,THEY,THIN,THIS,THUS,TIDE,TILE,TIME,TINY,TOLD,TONE,TOOK,TOOL,TORN,TOUR,TOWN,TRAP,TRAY,TRIM,TRIP,TRUE,TUBE,TUNE,TURN,TYPE,UNIT,UPON,VAST,VERY,VIEW,VOTE,WAIT,WAKE,WALK,WALL,WANT,WARN,WASH,WASP,WAVE,WEEK,WELL,WENT,WEST,WHAT,WHEN,WIDE,WIFE,WILD,WILL,WINE,WING,WIPE,WIRE,WISE,WISH,WOOD,WOOL,WORD,WORK,WORM,WORN,WRAP,YARD,YARN,YEAR,ZONE,ABOUT,ABOVE,ACORN,ACTOR,ADAPT,AFTER,AGAIN,ALARM,ALBUM,ALERT,ALIVE,ALLOW,ALONE,ANGRY,APPLE,APPLY,ARENA,ARGUE,ARISE,ARMOR,ARROW,AUDIO,AVOID,AWARD,BASIC,BASIN,BEACH,BEGIN,BEING,BELOW,BENCH,BERRY,BIRTH,BLACK,BLADE,BLANK,BLAST,BLIND,BLOCK,BLOOM,BOARD,BOUND,BRAIN,BRAKE,BRAVE,BREAD,BREAK,BRICK,BRIEF,BRING,BROAD,BROWN,BRUSH,BUILD,BUILT,CABIN,CABLE,CAMEL,CANDY,CARRY,CHAIR,CHALK,CHAOS,CHARM,CHART,CHASE,CHEAP,CHECK,CHEER,CHEST,CHIEF,CHILD,CHOSE,CLAIM,CLASS,CLEAN,CLEAR,CLERK,CLICK,CLIFF,CLIMB,CLOCK,CLOSE,CLOTH,CLOUD,CLOWN,COACH,COAST,COUNT,COURT,COVER,CRACK,CRAFT,CRANE,CRASH,CREAM,CRIME,CROSS,CROWD,CROWN,CRUST,CURVE,CYCLE,DAILY,DANCE,DEATH,DELAY,DIARY,DIGIT,DIRTY,DRAFT,DRAIN,DRAMA,DREAM,DRESS,DROWN,EMPTY,ENEMY,ENJOY,ENTER,ENTRY,EPOCH,EQUAL,EQUIP,EVENT,FAITH,FANCY,FAULT,FAVOR,FENCE,FIELD,FIFTH,FIFTY,FINAL,FLASH,FLEET,FLESH,FLOAT,FLOOD,FLOOR,FLOUR,FLUID,FOCUS,FORCE,FORTH,FOUND,FRAME,FRESH,FRONT,FROST,FRUIT,GHOST,GIANT,GLASS,GLOBE,GRACE,GRADE,GRAIN,GRAND,GRANT,GRAPE,GRAPH,GRASP,GRASS,GRAVE,GREAT,GREEN,GREET,GROUP,GROWN,GUARD,GUESS,GUEST,GUIDE,HAPPY,HEART,HEAVY,HONEY,HORSE,HOUSE,HUMAN,IDEAL,IMAGE,INDEX,INNER,INPUT,ISSUE,JOINT,JUICE,KNIFE,KNOCK,LABEL,LABOR,LARGE,LASER,LATER,LAUGH,LAYER,LEARN,LEAST,LEAVE,LEVEL,LIGHT,LIVER,LOCAL,LOGIC,LOOSE,LOWER,LOYAL,LUNAR,LUNCH,MAGIC,MAJOR,MAPLE,MARCH,MATCH,MAYOR,MEDAL,MELON,METAL,METER,MIGHT,MINOR,MINUS,MODEL,MONEY,MONTH,MORAL,MOTOR,MOUNT,MOUSE,MOUTH,MOVIE,MUSIC,NERVE,NEVER,NIGHT,NOBLE,NOISE,NORTH,OCEAN,OFFER,OFTEN,ONION,ORBIT,ORDER,ORGAN,OTHER,OUTER,PAPER,PARTY,PATCH,PAUSE,PEACE,PIANO,PIECE,PILOT,PITCH,PLACE,PLAIN,PLANE,PLANT,PLATE,POINT,PRIDE,PRIME,PRINT,PRIZE,PROOF,PROUD,PROVE,QUICK,QUIET,RADAR,RADIO,RAISE,RANGE,RAPID,RATIO,REACH,RIDGE,RIGHT,ROBOT,ROUGH,ROUND,ROYAL,SCALE,SCENE,SCOPE,SCORE,SCOUT,SERVE,SEVEN,SHADE,SHAKE,SHALL,SHAPE,SHARE,SHARK,SHARP,SHEEP,SHEET,SHIFT,SHINE,SHIRT,SHOCK,SHOOT,SHORE,SHORT,SHOUT,SIGHT,SINCE,SIXTY,SKILL,SKIRT,SLEEP,SLICE,SLIDE,SMALL,SMART,SMELL,SMILE,SMOKE,SNACK,SNAKE,SOLID,SOLVE,SORRY,SOUND,SOUTH,SPACE,SPARE,SPARK,SPEAK,SPEED,SPELL,SPEND,SPICE,SPLIT,SPOKE,SPOON,SPORT,STACK,STAFF,STAGE,STAMP,STAND,STARE,START,STATE,STEAK,STEAM,STEEL,STEER,STICK,STILL,STOCK,STONE,STORE,STORM,STORY,STRAW,STUCK,STUDY,STUFF,STYLE,SUGAR,SUITE,SUPER,SWEET,SWIFT,SWING,TABLE,TAKEN,TASTE,TEACH,TEETH,THANK,THEIR,THEME,THERE,THESE,THICK,THIEF,THING,THINK,THIRD,THOSE,THREE,THREW,THROW,TIGER,TIGHT,TITLE,TODAY,TOPIC,TORCH,TOTAL,TOUCH,TOUGH,TOWER,TRACE,TRACK,TRAIL,TRAIN,TREAT,TRIAL,TRICK,TRUCK,TRUST,TRUTH,TWICE,UNCLE,UNDER,UNION,UNTIL,UPPER,UPSET,URBAN,USUAL,VALID,VALUE,VIDEO,VIRUS,VISIT,VITAL,VOICE,VOTER,WAGON,WASTE,WATCH,WATER,WHALE,WHEAT,WHEEL,WHERE,WHICH,WHILE,WORLD,WORRY,WORSE,WORTH,WOUND,WRITE,WRONG,WROTE,YIELD,YOUNG,YOUTH";
+const DICT = new Set(DICT_SRC.split(','));
+
+/* ---------------- deterministic daily generation ---------------- */
+const TZ = 'America/New_York';
+const EPOCH_KEY = '2026-10-27';
+function etKey(ms){
+  return new Intl.DateTimeFormat('en-CA', {timeZone:TZ, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date(ms));
+}
+const todayKey = etKey(Date.now());
+const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
+const num = dayIndex + 1;
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+const VOWELS = 'AEIOU', CONS = 'BCDFGHJKLMNPQRSTVWXY';
+function genBoard(day){
+  for (let salt = 0; salt < 120; salt++){
+    const rng = mulberry32(day * 777829 + salt * 104729 + 5);
+    const b = [];
+    for (let i = 0; i < 25; i++){
+      const pool = rng() < 0.38 ? VOWELS : CONS;
+      b.push(pool[Math.floor(rng() * pool.length)]);
+    }
+    if (findWords(b).length >= 3) return b;
+  }
+  return b; // unreachable in practice
+}
+
+function findWords(letters){
+  const found = new Set();
+  const lines = [];
+  for (let r = 0; r < 5; r++) lines.push(letters.slice(r*5, r*5+5).join(''));
+  for (let c = 0; c < 5; c++){
+    let s = '';
+    for (let r = 0; r < 5; r++) s += letters[r*5+c];
+    lines.push(s);
+  }
+  for (const s of lines){
+    for (let i = 0; i < 5; i++){
+      for (let l = 3; l <= 5 && i + l <= 5; l++){
+        const w = s.slice(i, i+l);
+        if (DICT.has(w)) found.add(w);
+      }
+    }
+  }
+  return [...found].sort();
+}
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.grid.v1';
+function loadState(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!S.banked) S.stats.streak = 0;
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, bestWords:0, totalWords:0};
+  S = { day: dayIndex, letters: genBoard(dayIndex), shifts:0, startAt:null, banked:false, timeMs:0, stats };
+}
+if (!S.start){ S.start = S.letters.slice(); saveState(); }
+if (typeof S.stats.totalWords !== 'number'){ S.stats.totalWords = 0; }
+if (typeof S.stats.bestWords !== 'number'){ S.stats.bestWords = 0; }
+saveState();
+
+/* ---------------- dom ---------------- */
+const $ = id => document.getElementById(id);
+
+function elapsed(){
+  if (S.banked) return S.timeMs;
+  if (!S.startAt) return 0;
+  return Date.now() - S.startAt;
+}
+function fmtTime(ms){
+  const s = Math.floor(ms / 1000);
+  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
+}
+
+function shiftRow(r, d){
+  const row = S.letters.slice(r*5, r*5+5);
+  if (d < 0) row.push(row.shift()); else row.unshift(row.pop());
+  for (let c = 0; c < 5; c++) S.letters[r*5+c] = row[c];
+}
+function shiftCol(c, d){
+  const col = [];
+  for (let r = 0; r < 5; r++) col.push(S.letters[r*5+c]);
+  if (d < 0) col.push(col.shift()); else col.unshift(col.pop());
+  for (let r = 0; r < 5; r++) S.letters[r*5+c] = col[r];
+}
+
+function renderGrid(){
+  const cells = [];
+  // top row: corner, 5 col-up buttons, corner
+  cells.push('<div class="spacer"></div>');
+  for (let c = 0; c < 5; c++) cells.push(`<button class="shiftv" data-axis="col" data-i="${c}" data-d="-1">\u25B2</button>`);
+  cells.push('<div class="spacer"></div>');
+  // middle: row-left, 5 cells, row-right
+  for (let r = 0; r < 5; r++){
+    cells.push(`<button class="shifth" data-axis="row" data-i="${r}" data-d="-1">\u25C0</button>`);
+    for (let c = 0; c < 5; c++) cells.push(`<div class="cell">${S.letters[r*5+c]}</div>`);
+    cells.push(`<button class="shifth" data-axis="row" data-i="${r}" data-d="1">\u25B6</button>`);
+  }
+  // bottom row: corner, 5 col-down buttons, corner
+  cells.push('<div class="spacer"></div>');
+  for (let c = 0; c < 5; c++) cells.push(`<button class="shiftv" data-axis="col" data-i="${c}" data-d="1">\u25BC</button>`);
+  cells.push('<div class="spacer"></div>');
+  $('grid').innerHTML = cells.join('');
+}
+
+function renderWords(){
+  const words = findWords(S.letters);
+  $('count').textContent = words.length;
+  $('words').innerHTML = words.length
+    ? words.map(w => `<span class="wchip">${w}</span>`).join('')
+    : '<span class="none">no words on the board right now</span>';
+  return words.length;
+}
+
+function renderMeta(){
+  $('shifts').textContent = S.shifts;
+  $('clock').textContent = fmtTime(elapsed());
+  if (S.banked) $('clocknote').textContent = 'banked';
+  else if (S.startAt) $('clocknote').textContent = 'running — it does not restart';
+  else $('clocknote').textContent = 'starts on your first shift';
+}
+
+function renderAll(){ renderGrid(); renderWords(); renderMeta(); }
+
+/* ---------------- play ---------------- */
+function doShift(axis, i, d){
+  if (S.banked) return;
+  if (!S.startAt) S.startAt = Date.now();
+  if (axis === 'row') shiftRow(i, d); else shiftCol(i, d);
+  S.shifts++;
+  saveState();
+  renderAll();
+}
+
+$('grid').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) doShift(b.dataset.axis, +b.dataset.i, +b.dataset.d);
+});
+
+$('btnRecycle').addEventListener('click', () => {
+  if (S.banked) return;
+  S.letters = S.start.slice();
+  saveState();
+  renderAll();
+  toastMsg('Grid recycled \u2014 the clock keeps running');
+});
+
+$('btnBank').addEventListener('click', () => {
+  if (S.banked) return;
+  const words = findWords(S.letters).length;
+  S.banked = true;
+  S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
+  const st = S.stats;
+  st.played++; st.streak++;
+  st.max = Math.max(st.max, st.streak);
+  st.bestWords = Math.max(st.bestWords, words);
+  st.totalWords += words;
+  saveState();
+  showReveal(words);
+  renderMeta();
+});
+
+/* ---------------- reveal / share ---------------- */
+let lastWords = 0;
+function shareText(){
+  return `Recycle: Grid No. ${num} \u00b7 ${lastWords} words \u00b7 ${fmtTime(S.timeMs)} \u267B`;
+}
+function showReveal(words){
+  lastWords = words;
+  const st = S.stats;
+  const avg = st.played ? (st.totalWords / st.played).toFixed(1) : '0';
+  $('verdict').textContent =
+    words >= 10 ? 'A fat bank — the grid is humming.' :
+    words >= 7  ? 'Solid harvest — respectable banking.' :
+    words >= 4  ? 'Banked with something to show for it.' :
+                  'A lean bank — but the clock was kind.';
+  $('sharetext').textContent =
+    shareText() + `\nstreak ${st.streak} \u00b7 best ${st.bestWords} \u00b7 avg ${avg} words`;
+  $('reveal').classList.add('show');
+}
+$('btnShare').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(shareText()); toastMsg('Copied \u2014 paste it in the team channel'); }
+  catch(e){
+    const r = document.createRange(); r.selectNode($('sharetext'));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    toastMsg('Copy blocked \u2014 the text is selected for you');
+  }
+});
+function toastMsg(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------------- help / countdown ---------------- */
+$('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+function nextETMidnight(){
+  const tomorrowKey = etKey(Date.now() + 30 * 3600000);
+  let target = Date.parse(tomorrowKey) - 5 * 3600000;
+  while (etKey(target) !== tomorrowKey) target += 3600000;
+  return target;
+}
+function tick(){
+  const left = nextETMidnight() - Date.now();
+  if (left <= 0){ location.reload(); return; }
+  const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+  $('countdown').textContent = `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  if (!S.banked) renderMeta();
+}
+setInterval(tick, 500);
+
+/* ---------------- boot ---------------- */
+$('pno').textContent = num;
+$('pdate').textContent = new Date(Date.parse(todayKey) + 43200000).toLocaleDateString('en-US',
+  { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+renderAll();
+if (S.banked){
+  lastWords = findWords(S.letters).length;
+  showReveal(lastWords);
+}
+tick();
+</script>
+</body>
+</html>

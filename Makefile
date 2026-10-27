@@ -21,9 +21,8 @@ restart:
 logs:
 	docker compose logs -f --tail=100
 
-# Run ON THE PI: pull the latest main and rebuild/restart both containers.
-# Same command the GitHub Actions deploy workflow runs over SSH.
+# Run anywhere with the repo (the same thing the systemd timer runs):
+# fetch, verify CI is green on origin/main, fast-forward, rebuild containers.
+# No SSH, no secrets - the machine running it only makes outbound connections.
 deploy:
-	git pull --ff-only
-	docker compose up -d --build
-	docker image prune -f
+	python3 deploy/pull.py

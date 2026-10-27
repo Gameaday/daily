@@ -6,12 +6,15 @@ shell is extracted (see common.js below).
 ## Deploy state (2026-10)
 
 The repo now ships a Docker compose stack (Caddy web + scores, hardened) and
-test-gated CD via GitHub Actions (see README). Nothing in the notes below
-changes because of that - the scores service stays in-memory and consolidated
-only, whether it runs under systemd or in a container. When the archive idea
-below lands, note that the scores container is read_only: frozen snapshots
-would need a small writable volume mounted at scores/archive/ - the one
-deliberate disk write in the whole system, gated behind count >= 3.
+pull-based, test-gated CD: the Pi itself polls GitHub for a green main and
+fast-forwards (deploy/pull.py + a systemd timer; see README). There is no
+inbound access to the Pi and no SSH key stored anywhere - deliberately.
+Nothing in the notes below changes because of that - the scores service stays
+in-memory and consolidated only, whether it runs under systemd or in a
+container. When the archive idea below lands, note that the scores container
+is read_only: frozen snapshots would need a small writable volume mounted at
+scores/archive/ - the one deliberate disk write in the whole system, gated
+behind count >= 3.
 
 ## Curve representation cleanup
 

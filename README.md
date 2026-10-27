@@ -126,17 +126,18 @@ What you get:
   published to the host or the internet. A restart forgets all scores by
   design (only consolidated per-day numbers are kept, pruned after 1 day)
 
-Updating after pushing to GitHub — on the Pi:
+Updating after pushing to GitHub:
 
-    make deploy        # = git pull --ff-only && docker compose up -d --build && docker image prune -f
-    # or by hand:
-    git pull --ff-only && docker compose up -d --build
+    make deploy        # = python3 deploy/pull.py (fetch, CI-green check, ff-only pull, rebuild)
+
+Better: install the update timer (next section) and the Pi does this itself
+every five minutes, only for commits whose CI run passed.
 
 (Static-only changes don't even need the rebuild: `docker compose restart web`
 picks them up because the site is bind-mounted. The rebuild matters when the
 Caddyfile or server.py changed.)
 
-## CI/CD with GitHub Actions
+## CI and self-updating deploys
 
 Three test layers run on every push and pull request (`.github/workflows/validate.yml`):
 
@@ -148,20 +149,31 @@ Three test layers run on every push and pull request (`.github/workflows/validat
 3. `python3 tests/server_test.py` — spawns the real scores service on a scratch
    port and exercises health, submit/dedupe, dist, validation, and pruning
 
-Automatic deploys: `.github/workflows/deploy.yml` runs the same tests, then —
-only if the repo **variable** `DEPLOY_HOST` is set — SSHes into the Pi and
-runs `git pull --ff-only && docker compose up -d --build`. To enable:
+Keeping the Pi in sync is **pull-based**: nothing can reach into the Pi —
+no SSH keys stored in GitHub, no inbound deploy access of any kind. The Pi
+only ever makes outbound `git fetch` plus one GitHub API read.
 
-1. Generate a keypair on the Pi: `ssh-keygen -t ed25519 -f ~/.ssh/daily_deploy -N ""`,
-   append the public half to `~/.ssh/authorized_keys` (deploy user), and copy
-   the private half
-2. GitHub repo → Settings → Secrets and variables → Actions:
-   - Secrets: `DEPLOY_USER` (e.g. `pi`), `DEPLOY_SSH_KEY` (the private key)
-   - Variables: `DEPLOY_HOST` (the Pi's hostname or IP), `DEPLOY_PATH`
-     (repo path on the Pi, e.g. `/home/pi/daily`)
+`deploy/pull.py` (run by hand, or by the timer below) fetches `main` and only
+updates when GitHub Actions finished **green on that exact commit**: ff-only
+pull, `docker compose up -d --build`, image prune. A red or still-running CI
+run means the site keeps serving the last known-good version and tries again
+next cycle. A failed rebuild also can't take the site down — the old
+containers keep running.
 
-Until those are set, deploys stay manual (`make deploy` on the Pi) and pushes
-just run the tests. Leave `DEPLOY_HOST` empty to keep it that way permanently.
+Install the timer on the Pi (one time):
+
+    sudo cp deploy/daily-update.service deploy/daily-update.timer /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now daily-update.timer
+    journalctl -u daily-update.service -f        # watch it work
+
+The service file assumes the clone lives at /home/pi/daily — edit its two
+paths if not. If the repo is private, add `Environment=GITHUB_TOKEN=...`
+(a read-only token) to the service file; a public repo needs no token.
+
+So the full loop is: push to GitHub → Actions runs all three test layers →
+the Pi notices the green commit within ~5 minutes and rebuilds. If tests fail,
+the site never moves.
 
 Local pre-push: `npm test` (or `make test`) runs all three layers in seconds —
 Node 20+ and Python 3 are the only requirements, and neither needs any
@@ -207,8 +219,8 @@ Three layers, all dependency-free:
   1-day pruning horizon.
 
 Run everything: `npm test` or `make test`. GitHub Actions runs all three
-layers on every push and pull request, plus the same tests gate the
-Docker deploy (.github/workflows/deploy.yml).
+layers on every push and pull request, and the Pi only ever updates itself
+to commits where they passed.
 
 ## Content rules (worth keeping)
 
@@ -235,7 +247,8 @@ Docker deploy (.github/workflows/deploy.yml).
 - [x] Test pass: headless playthroughs of all 13 games (win/loss/rollover),
       Sift streak-reset fix, Trace "on par" fix, Museum iceman alias
 - [x] Docker deploy: Caddy + scores as compose services, hardened, read-only
-- [x] CD: test-gated SSH deploy from GitHub Actions (opt-in via DEPLOY_HOST)
+- [x] CD: pull-based, test-gated self-updating Pi (deploy/pull.py + systemd
+      timer; no SSH keys, no inbound access)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score

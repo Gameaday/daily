@@ -3,12 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="A 5×5 grid of letters. Shift rows and columns to build as many real words as you can, then bank them before your nerve runs out." />
+<meta name="description" content="A 5×5 grid of letters. Normal mode gives you five shifts in two phases — rows, then columns — to build words before you Bank It. Practice with four, go hard with six (online only). The best possible board is always exact." />
 <title>Recycle: Grid · the daily shifting letters game</title>
 <link rel="stylesheet" href="../shell/common.css"/>
 <style>header{display:flex; align-items:flex-end; justify-content:space-between;}
 h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
 .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+.modrow{display:flex; gap:8px; justify-content:center; margin:0 0 12px; flex-wrap:wrap;}
+.modebtn{
+    background:var(--card); border:1.5px solid var(--line); border-radius:999px; color:var(--muted);
+    font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    padding:6px 14px; cursor:pointer;
+  }
+.modebtn.on{border-color:var(--accent); color:var(--accent);}
+.modebtn:hover{filter:brightness(.96);}
 .boardbox{display:flex; justify-content:center; margin-top:6px;}
 .ggrid{
     display:grid;
@@ -18,6 +26,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   }
 .shifth{width:36px; height:56px; border-radius:10px; border:1.5px solid var(--line);
     background:var(--card); color:var(--muted); font-size:13px; cursor:pointer; align-self:center; height:36px;}
+.shifth:disabled,.shiftv:disabled{opacity:.35; cursor:default;}
 .shiftv{width:56px; height:36px; border-radius:10px; border:1.5px solid var(--line);
     background:var(--card); color:var(--muted); font-size:13px; cursor:pointer; justify-self:center; width:36px;}
 .shifth:hover,.shiftv:hover{border-color:var(--accent); color:var(--accent);}
@@ -27,11 +36,12 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     font-family:Georgia,serif; font-size:26px; font-weight:700;
   }
 .spacer{width:36px; height:36px;}
-.scoreline{display:flex; gap:16px; justify-content:center; align-items:baseline; margin-top:14px; flex-wrap:wrap;}
+.scoreline{display:flex; gap:18px; justify-content:center; align-items:baseline; margin-top:14px; flex-wrap:wrap;}
 .bignum{font-family:Georgia,serif; font-size:34px;}
 .bignum .u{font-size:13px; color:var(--muted); font-family:inherit;}
-.clock{font-family:Georgia,serif; font-size:20px; color:var(--muted);}
-.clock .u{font-size:11px; display:block; text-align:center;}
+.midnum{font-family:Georgia,serif; font-size:22px; color:var(--ink);}
+.midnum .u{font-size:12px; color:var(--muted); font-family:inherit; display:block; text-align:center;}
+.phasenote{margin-top:8px; text-align:center; font-size:13px; color:var(--muted);}
 .words{margin-top:14px; min-height:44px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;}
 .wchip{background:var(--green-soft); color:var(--green); border:1px solid #bcdcc5;
     border-radius:999px; padding:3px 12px; font-size:14px; font-weight:700; letter-spacing:.04em;
@@ -71,21 +81,27 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="lead">Shift the grid's rows and columns to build as many real words as you can. The clock starts on your <b>first shift</b> and never restarts — so shift fast, and <b>Bank It</b> when the words look fat. You only get one bank per day.</p>
+  <p class="lead">A limited budget of shifts, in two phases: <b>rows first, then columns</b>. Undo and restart are free while you explore — each shift spends the budget, rows lock when you move on, and <b>Bank It</b> scores the words on the board. The <b>best possible board is exact</b> — hit it for a perfect bank.</p>
+
+  <div class="modrow" id="modes"></div>
 
   <div class="boardbox"><div class="ggrid" id="grid"></div></div>
 
   <div class="scoreline">
     <span class="bignum"><span id="count">0</span> <span class="u">words on board</span></span>
-    <span class="clock"><span id="clock">00:00</span><span class="u" id="clocknote">starts on your first shift</span></span>
-    <span class="clock" style="color:var(--ink);"><span id="shifts">0</span><span class="u">shifts</span></span>
+    <span class="bignum"><span id="shifts">0</span><span class="u" id="shiftcap">of 5 shifts</span></span>
+    <span class="midnum"><span id="best">–</span><span class="u">best possible</span></span>
   </div>
+
+  <p class="phasenote" id="phasenote">Phase 1 — rows. Columns unlock when you lock the rows.</p>
 
   <div class="words" id="words"><span class="none">no words yet — start shifting</span></div>
 
   <div class="actions">
     <button class="btn" id="btnBank">Bank It</button>
-    <button class="btn ghost" id="btnRecycle">↻ Recycle grid</button>
+    <button class="btn ghost" id="btnLock">Lock rows →</button>
+    <button class="btn ghost" id="btnUndo">↩ Undo</button>
+    <button class="btn ghost" id="btnRestart">↻ Restart</button>
   </div>
 
   <div class="reveal" id="reveal">
@@ -107,11 +123,13 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 <div class="overlay" id="helpOverlay">
   <div class="modal">
     <h2>How to play</h2>
-    <p>Use the arrow buttons around the grid to <b>shift any row or column</b> one step. Letters wrap around the edge.</p>
-    <p>Every <b>real word of 3 or more letters</b> that appears reading left-to-right in a row, or top-to-bottom in a column, counts. The chips below the grid show everything currently on the board.</p>
-    <p><b>The recycle rule:</b> the clock starts on your first shift and never restarts — not for the Recycle button, not for reloading. The Recycle button returns the grid to its original layout (clock keeps running) so you can try a totally different plan.</p>
-    <p><b>Bank It</b> locks in your score: the number of words on the board at that moment. More words = better. One bank per day, so don't get greedy forever — but every extra shift costs time, and your time is the tiebreaker.</p>
-    <p>Same letters for everyone, so compare banks at standup.</p>
+    <p>Use the arrow buttons around the grid to <b>shift a row or a column</b> one step. Letters wrap around the edge. Every real word of 3+ letters reading left-to-right in a row or top-to-bottom in a column counts.</p>
+    <p><b>Three modes, three budgets:</b> <b>Practice · 4</b> — a fresh random board every time, validated instantly, nothing recorded. <b>Normal · 5</b> — the daily board; your one bank counts for your streak and the team curve. <b>Hard · 6</b> — the same daily board with one more shift, online only (the exact search is the heavy one), posting to its own bonus curve.</p>
+    <p><b>Two phases:</b> first you may only shift <b>rows</b>. Press <b>Lock rows</b> when you're happy with them (free) and the <b>columns</b> unlock — one-way, no going back to rows.</p>
+    <p><b>Undo</b> takes back your last shift and refunds its cost. <b>Restart</b> returns the board to its start with the budget untouched. Both are free — explore!</p>
+    <p><b>Best possible is exact:</b> before you play, the page has already tried every shift plan within your budget, so the "best possible" number is a fact. Match it and Bank It for a <b>perfect</b> bank.</p>
+    <p><b>Bank It</b> locks in the words currently on the board. In Normal the first bank of the day counts; Hard banks its own bonus curve; Practice records nothing.</p>
+    <p>Same letters for everyone in Normal and Hard, so compare banks at standup.</p>
     <button class="close" data-close>Got it</button>
   </div>
 </div>
@@ -123,9 +141,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 <script>
 'use strict';
 
-/* ---------------- embedded dictionary (common words, 3–5 letters) ---------------- */
+/* ---------------- shared dictionary ---------------- */
 const DICT_SRC = WORDS_EN;
 const DICT = new Set(DICT_SRC.split(','));
+const WORDS_BY_LEN = { 3: [], 4: [], 5: [] };
+for (const w of DICT_SRC.split(',')) WORDS_BY_LEN[w.length].push(w);
 
 /* ---------------- deterministic daily generation ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the team-curve
@@ -141,18 +161,27 @@ function mulberry32(a){
   };
 }
 const VOWELS = 'AEIOU', CONS = 'BCDFGHJKLMNPQRSTVWXY';
-function genBoard(day){
-  for (let salt = 0; salt < 120; salt++){
-    const rng = mulberry32(day * 777829 + salt * 104729 + 5);
-    const b = [];
-    for (let i = 0; i < 25; i++){
-      const pool = rng() < 0.38 ? VOWELS : CONS;
-      b.push(pool[Math.floor(rng() * pool.length)]);
-    }
-    if (findWords(b).length >= 3) return b;
-  }
-  return b; // unreachable in practice
+
+/* three modes: practice (random board, nothing counts), normal (the daily
+   game), hard (the daily board + 1 shift, online only, bonus curve) */
+const MODES = { practice: 4, normal: 5, hard: 6 };
+const DEFAULT_MODE = 'normal';
+const BUDGET_MAX = 6;
+
+function rotRow(b, r, d){
+  const row = b.slice(r*5, r*5+5);
+  if (d < 0) row.push(row.shift()); else row.unshift(row.pop());
+  for (let c = 0; c < 5; c++) b[r*5+c] = row[c];
 }
+function rotCol(b, c, d){
+  const col = [];
+  for (let r = 0; r < 5; r++) col.push(b[r*5+c]);
+  if (d < 0) col.push(col.shift()); else col.unshift(col.pop());
+  for (let r = 0; r < 5; r++) b[r*5+c] = col[r];
+}
+/* apply a per-row (or per-column) offset vector in Z5: positive = right/down */
+function applyRows(b, v){ for (let r = 0; r < 5; r++) for (let k = 0; k < v[r]; k++) rotRow(b, r, 1); }
+function applyCols(b, v){ for (let c = 0; c < 5; c++) for (let k = 0; k < v[c]; k++) rotCol(b, c, 1); }
 
 function findWords(letters){
   const found = new Set();
@@ -174,63 +203,191 @@ function findWords(letters){
   return [...found].sort();
 }
 
+/* Every per-line offset vector in Z5^5, grouped by its cost in ±1 shifts.
+   cost(v) = sum over lines of min(offset, 5-offset) — walking the short way. */
+const VEC_BY_COST = (() => {
+  const by = [];
+  for (let c = 0; c <= BUDGET_MAX; c++) by.push([]);
+  for (let v = 0; v < 3125; v++){
+    const a = [0,0,0,0,0];
+    let t = v, cost = 0;
+    for (let i = 4; i >= 0; i--){
+      a[i] = t % 5;
+      t = (t - a[i]) / 5;
+      cost += Math.min(a[i], 5 - a[i]);
+    }
+    if (cost <= BUDGET_MAX) by[cost].push(a);
+  }
+  return by;
+})();
+
+/* The exact maximum word count over every board the rules can reach at this
+   budget: any row offsets (cost a), then any column offsets (cost b),
+   a+b <= budget. The two phases are what makes this exhaustive tractable —
+   ~10k sims at practice, ~25k at normal, ~62k at hard, each well under a
+   second, and "best possible" is a fact, not an estimate. */
+function bestPossible(start, budget){
+  const B = (typeof budget === 'number') ? budget : MODES[S.mode];
+  let best = 0;
+  for (let ca = 0; ca <= B; ca++){
+    for (const ra of VEC_BY_COST[ca]){
+      const t = start.slice();
+      applyRows(t, ra);
+      let w = findWords(t).length;
+      if (w > best) best = w;
+      for (let cb = 1; cb <= B - ca; cb++){
+        for (const rc of VEC_BY_COST[cb]){
+          const u = t.slice();
+          applyCols(u, rc);
+          w = findWords(u).length;
+          if (w > best) best = w;
+        }
+      }
+    }
+  }
+  return best;
+}
+
+/* Fat board: real words planted into random letters, then a greedy hill
+   climb over single ±1 shifts so the day's optimum is worth chasing. */
+function fatBoard(rng){
+  const b = [];
+  for (let i = 0; i < 25; i++){
+    const pool = rng() < 0.38 ? VOWELS : CONS;
+    b.push(pool[Math.floor(rng() * pool.length)]);
+  }
+  const plants = 7 + Math.floor(rng() * 4);
+  for (let k = 0; k < plants; k++){
+    const horiz = rng() < 0.5;
+    const line = Math.floor(rng() * 5);
+    const len = 3 + Math.floor(rng() * 3);
+    const at = Math.floor(rng() * (6 - len));
+    const w = WORDS_BY_LEN[len][Math.floor(rng() * WORDS_BY_LEN[len].length)];
+    for (let j = 0; j < len; j++){
+      b[horiz ? line * 5 + at + j : (at + j) * 5 + line] = w[j];
+    }
+  }
+  let best = findWords(b).length;
+  for (let it = 0; it < 40; it++){
+    let bm = null, bc = best;
+    for (let r = 0; r < 5; r++) for (const d of [-1, 1]){
+      const t = b.slice(); rotRow(t, r, d);
+      const w = findWords(t).length;
+      if (w > bc){ bc = w; bm = () => rotRow(b, r, d); }
+    }
+    for (let c = 0; c < 5; c++) for (const d of [-1, 1]){
+      const t = b.slice(); rotCol(t, c, d);
+      const w = findWords(t).length;
+      if (w > bc){ bc = w; bm = () => rotCol(b, c, d); }
+    }
+    if (!bm) break;
+    bm();
+    best = bc;
+  }
+  return { b, count: best };
+}
+
+/* The board is a fat board scrambled by offsets (a, o) with combined cost
+   budget-1 or budget: start = R(-a) then C(-o) applied to the fat board,
+   so the player — who applies R then C — can always walk it back inside
+   the budget. One generator for the daily board and for practice boards. */
+function genBoard(budget, seed){
+  let fallback = null, any = null;
+  for (let salt = 0; salt < 8; salt++){
+    const rng = mulberry32(seed + salt * 104729 + 5);
+    const { b: F, count } = fatBoard(rng);
+    const fatMin = salt >= 4 ? 8 : 9;
+    if (count < fatMin) continue;
+    const T = budget - Math.floor(rng() * 2);
+    const ca = 2 + Math.floor(rng() * Math.max(1, T - 3));
+    const cb = T - ca;
+    const a = [0,0,0,0,0], o = [0,0,0,0,0];
+    let na = 0, nb = 0;
+    while (na < ca){ const r = Math.floor(rng() * 5); if (a[r] < 2){ a[r]++; na++; } }
+    while (nb < cb){ const c = Math.floor(rng() * 5); if (o[c] < 2){ o[c]++; nb++; } }
+    for (let i = 0; i < 5; i++){
+      if (a[i]) a[i] = rng() < 0.5 ? a[i] : 5 - a[i];
+      if (o[i]) o[i] = rng() < 0.5 ? o[i] : 5 - o[i];
+    }
+    const B = F.slice();
+    applyCols(B, o.map(x => (5 - x) % 5));
+    applyRows(B, a.map(x => (5 - x) % 5));
+    const w0 = findWords(B).length;
+    const M = bestPossible(B, budget);
+    if (!any) any = { start: B, best: M };
+    if (!fallback && M >= 7) fallback = { start: B, best: M };
+    const gap = salt >= 4 ? 2 : 3;
+    if (M >= Math.max(fatMin, 8) && M - w0 >= gap) return { start: B, best: M };
+  }
+  return fallback || any;
+}
+
+/* the daily board: normal's budget sizes the scramble (cost 4-5), so both
+   normal (5) and hard (6) can always walk it back. */
+const PUZZLE = genBoard(MODES.normal, dayIndex * 777829);
+
 /* ---------------- state ---------------- */
-const KEY = 'warmup.grid.v1';
+const KEY = 'warmup.grid.v2';
 const store = SHELL.makeStore(KEY);
 function loadState(){ return store.load(); }
 function saveState(){ store.save(S); }
 let S = loadState();
-if (!S || S.day !== dayIndex){
+if (!S || typeof S.mode !== 'string' || !MODES[S.mode]) S = (S && typeof S.stats === 'object') ? { stats: S.stats, mode: DEFAULT_MODE } : { mode: DEFAULT_MODE };
+if (!S || S.day !== dayIndex || !PUZZLE){
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
-    if (!S.banked) S.stats.streak = 0;
+    if (!S.counted) S.stats.streak = 0; /* missed the previous day */
   }
-  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, bestWords:0, totalWords:0};
-  S = { day: dayIndex, letters: genBoard(dayIndex), shifts:0, startAt:null, banked:false, timeMs:0, stats };
+  /* stats carry over from the clock-era grid (v1) */
+  if (S && !S.stats && typeof localStorage !== 'undefined'){
+    try {
+      const old = JSON.parse(localStorage.getItem('warmup.grid.v1'));
+      if (old && typeof old.stats === 'object') S.stats = old.stats;
+    } catch (e) { /* fresh start */ }
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats
+    : {played:0, streak:0, max:0, bestWords:0, totalWords:0, perfect:0};
+  S = { day: dayIndex, mode: DEFAULT_MODE,
+        letters: PUZZLE.start.slice(), start: PUZZLE.start.slice(),
+        used:0, phase:'rows', moves:[], banked:false, counted:false, hardCounted:false,
+        normalWords:0, hardWords:0, bestHard:null, practice:null, stats };
 }
-if (!S.start){ S.start = S.letters.slice(); saveState(); }
+if (!S.start) S.start = PUZZLE.start.slice();
 if (typeof S.stats.totalWords !== 'number'){ S.stats.totalWords = 0; }
 if (typeof S.stats.bestWords !== 'number'){ S.stats.bestWords = 0; }
+if (typeof S.stats.perfect !== 'number'){ S.stats.perfect = 0; }
+/* coming back to a hard-mode session: the heavy best-possible for six is
+   cached in state after the first time it is computed */
+if (S.mode === 'hard' && typeof S.bestHard !== 'number'){ S.bestHard = bestPossible(PUZZLE.start, MODES.hard); }
 saveState();
+
+function getPuzzle(){ return PUZZLE; }
+function getPractice(){ return S.practice; }
+function getMode(){ return S.mode; }
+function getBudget(){ return MODES[S.mode]; }
+function curPuzzle(){ return S.mode === 'practice' ? (S.practice || PUZZLE) : PUZZLE; }
+function curBest(){
+  if (S.mode === 'practice') return (S.practice && typeof S.practice.best === 'number') ? S.practice.best : 0;
+  if (S.mode === 'hard') return (typeof S.bestHard === 'number') ? S.bestHard : PUZZLE.best;
+  return PUZZLE.best;
+}
 
 /* ---------------- dom ---------------- */
 
-function elapsed(){
-  if (S.banked) return S.timeMs;
-  if (!S.startAt) return 0;
-  return Date.now() - S.startAt;
-}
-function fmtTime(ms){
-  const s = Math.floor(ms / 1000);
-  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
-}
-
-function shiftRow(r, d){
-  const row = S.letters.slice(r*5, r*5+5);
-  if (d < 0) row.push(row.shift()); else row.unshift(row.pop());
-  for (let c = 0; c < 5; c++) S.letters[r*5+c] = row[c];
-}
-function shiftCol(c, d){
-  const col = [];
-  for (let r = 0; r < 5; r++) col.push(S.letters[r*5+c]);
-  if (d < 0) col.push(col.shift()); else col.unshift(col.pop());
-  for (let r = 0; r < 5; r++) S.letters[r*5+c] = col[r];
-}
+function rowActive(){ return !S.banked && S.phase === 'rows' && S.used < MODES[S.mode]; }
+function colActive(){ return !S.banked && S.phase === 'cols' && S.used < MODES[S.mode]; }
 
 function renderGrid(){
   const cells = [];
-  // top row: corner, 5 col-up buttons, corner
   cells.push('<div class="spacer"></div>');
-  for (let c = 0; c < 5; c++) cells.push(`<button class="shiftv" data-axis="col" data-i="${c}" data-d="-1">\u25B2</button>`);
+  for (let c = 0; c < 5; c++) cells.push(`<button class="shiftv" data-axis="col" data-i="${c}" data-d="-1" ${colActive() ? '' : 'disabled'}>\u25B2</button>`);
   cells.push('<div class="spacer"></div>');
-  // middle: row-left, 5 cells, row-right
   for (let r = 0; r < 5; r++){
-    cells.push(`<button class="shifth" data-axis="row" data-i="${r}" data-d="-1">\u25C0</button>`);
+    cells.push(`<button class="shifth" data-axis="row" data-i="${r}" data-d="-1" ${rowActive() ? '' : 'disabled'}>\u25C0</button>`);
     for (let c = 0; c < 5; c++) cells.push(`<div class="cell">${S.letters[r*5+c]}</div>`);
-    cells.push(`<button class="shifth" data-axis="row" data-i="${r}" data-d="1">\u25B6</button>`);
+    cells.push(`<button class="shifth" data-axis="row" data-i="${r}" data-d="1" ${rowActive() ? '' : 'disabled'}>\u25B6</button>`);
   }
-  // bottom row: corner, 5 col-down buttons, corner
   cells.push('<div class="spacer"></div>');
-  for (let c = 0; c < 5; c++) cells.push(`<button class="shiftv" data-axis="col" data-i="${c}" data-d="1">\u25BC</button>`);
+  for (let c = 0; c < 5; c++) cells.push(`<button class="shiftv" data-axis="col" data-i="${c}" data-d="1" ${colActive() ? '' : 'disabled'}>\u25BC</button>`);
   cells.push('<div class="spacer"></div>');
   $('grid').innerHTML = cells.join('');
 }
@@ -245,99 +402,204 @@ function renderWords(){
 }
 
 function renderMeta(){
-  $('shifts').textContent = S.shifts;
-  $('clock').textContent = fmtTime(elapsed());
-  if (S.banked) $('clocknote').textContent = 'banked';
-  else if (S.startAt) $('clocknote').textContent = 'running — it does not restart';
-  else $('clocknote').textContent = 'starts on your first shift';
+  const B = MODES[S.mode];
+  $('shifts').textContent = S.used;
+  $('shiftcap').textContent = 'of ' + B + ' shifts';
+  $('best').textContent = curBest() || '\u2013';
+  $('phasenote').textContent = S.banked ? 'banked — see you tomorrow'
+    : (S.phase === 'rows'
+      ? 'Phase 1 — rows (' + (B - S.used) + ' left). Columns unlock when you lock the rows.'
+      : 'Phase 2 — columns (' + (B - S.used) + ' left). Rows are locked.');
+  $('btnLock').disabled = S.banked || S.phase !== 'rows';
+  $('btnUndo').disabled = S.banked || S.moves.length === 0;
+  $('btnRestart').disabled = S.banked;
+  $('btnBank').disabled = S.banked;
 }
 
-function renderAll(){ renderGrid(); renderWords(); renderMeta(); }
+function renderModes(){
+  $('modes').innerHTML = Object.keys(MODES).map(m =>
+    `<button class="modebtn${m === S.mode ? ' on' : ''}" data-m="${m}">${m} \u00b7 ${MODES[m]}</button>`
+  ).join('');
+}
+
+function renderAll(){ renderGrid(); renderWords(); renderMeta(); renderModes(); }
 
 /* ---------------- play ---------------- */
 function doShift(axis, i, d){
   if (S.banked) return;
-  if (!S.startAt) S.startAt = Date.now();
-  if (axis === 'row') shiftRow(i, d); else shiftCol(i, d);
-  S.shifts++;
+  const B = MODES[S.mode];
+  if (axis === 'row' && S.phase !== 'rows'){ SHELL.toast('Rows are locked \u2014 you are in the columns phase'); return; }
+  if (axis === 'col' && S.phase !== 'cols'){ SHELL.toast('Lock the rows first \u2014 columns unlock in phase 2'); return; }
+  if (S.used >= B) return;
+  if (axis === 'row') rotRow(S.letters, i, d); else rotCol(S.letters, i, d);
+  S.used++;
+  S.moves.push({ axis, i, d });
   saveState();
   renderAll();
+}
+
+function undo(){
+  if (S.banked || S.moves.length === 0) return;
+  const m = S.moves.pop();
+  if (m.axis === 'row') rotRow(S.letters, m.i, -m.d); else rotCol(S.letters, m.i, -m.d);
+  S.used--;
+  saveState();
+  renderAll();
+}
+
+function restart(){
+  if (S.banked) return;
+  S.letters = S.start.slice();
+  S.used = 0;
+  S.moves = [];
+  saveState();
+  renderAll();
+  SHELL.toast('Board reset \u2014 the budget is untouched');
+}
+
+function lockRows(){
+  if (S.banked || S.phase !== 'rows') return;
+  S.phase = 'cols';
+  saveState();
+  renderAll();
+  SHELL.toast('Rows locked \u2014 columns unlocked');
+}
+
+/* practice rerolls on every entry; normal/hard share the day's board.
+   hard is gated online: the six-shift exhaustive search is the heavy one,
+   and the bonus curve only exists when the team service is there to record
+   it. Day stats and the normal curve count the normal bank only. */
+let hardUnlocked = false;
+function setMode(m){
+  if (!MODES[m] || m === S.mode) return;
+  if (m === 'hard' && !hardUnlocked){
+    SHELL.toast('checking the team curve\u2026');
+    SHELL.probeCurve().then(ok => {
+      if (!ok){ SHELL.toast('hard mode needs the team curve online'); return; }
+      hardUnlocked = true;
+      setMode('hard');
+    });
+    return;
+  }
+  const prevMode = S.mode;
+  S.mode = m;
+  if (m === 'practice'){
+    S.practice = genBoard(MODES.practice, Math.floor(Math.random() * 2147483647));
+  }
+  if (m === 'hard' && typeof S.bestHard !== 'number'){
+    S.bestHard = bestPossible(PUZZLE.start, MODES.hard);
+  }
+  const pz = curPuzzle();
+  S.letters = pz.start.slice();
+  S.start = pz.start.slice();
+  S.used = 0;
+  S.phase = 'rows';
+  S.moves = [];
+  const done = (m === 'normal' && S.counted) || (m === 'hard' && S.hardCounted);
+  S.banked = done;
+  saveState();
+  renderAll();
+  SHELL.toast(
+    m === 'practice' ? 'practice \u2014 a fresh random board, nothing counts' :
+    m === 'hard' ? 'hard \u2014 six shifts, bonus curve, nothing to lose' :
+    'normal \u2014 the daily five');
+  if (done) showReveal(m === 'hard' ? S.hardWords : S.normalWords, false);
 }
 
 $('grid').addEventListener('click', e => {
   const b = e.target.closest('button');
-  if (b) doShift(b.dataset.axis, +b.dataset.i, +b.dataset.d);
+  if (b && !b.disabled) doShift(b.dataset.axis, +b.dataset.i, +b.dataset.d);
 });
 
-$('btnRecycle').addEventListener('click', () => {
-  if (S.banked) return;
-  S.letters = S.start.slice();
-  saveState();
-  renderAll();
-  toastMsg('Grid recycled \u2014 the clock keeps running');
+$('modes').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) setMode(b.dataset.m);
 });
+
+$('btnUndo').addEventListener('click', undo);
+$('btnRestart').addEventListener('click', restart);
+$('btnLock').addEventListener('click', lockRows);
 
 $('btnBank').addEventListener('click', () => {
   if (S.banked) return;
   const words = findWords(S.letters).length;
+  const perfect = words >= curBest();
   S.banked = true;
-  S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
-  const st = S.stats;
-  st.played++; st.streak++;
-  st.max = Math.max(st.max, st.streak);
-  st.bestWords = Math.max(st.bestWords, words);
-  st.totalWords += words;
+  if (S.mode === 'normal'){
+    S.normalWords = words;
+    if (!S.counted){
+      const st = S.stats;
+      st.played++; st.streak++;
+      st.max = Math.max(st.max, st.streak);
+      st.bestWords = Math.max(st.bestWords, words);
+      st.totalWords += words;
+      if (perfect) st.perfect++;
+      S.counted = true;
+    }
+  } else if (S.mode === 'hard'){
+    S.hardWords = words;
+    S.hardCounted = true;
+  } else {
+    S.practiceWords = words;
+  }
   saveState();
-  showReveal(words);
+  showReveal(words, perfect);
   renderMeta();
 });
 
 /* ---------------- reveal / share ---------------- */
-let lastWords = 0;
+let lastWords = 0, lastPerfect = false;
 function shareText(){
-  return `Recycle: Grid No. ${num} \u00b7 ${lastWords} words \u00b7 ${fmtTime(S.timeMs)} \u267B`;
+  if (S.mode === 'practice'){
+    return `Recycle: Grid practice \u00b7 ${lastWords} words \u00b7 ${MODES.practice} shifts \u267B`;
+  }
+  return `Recycle: Grid No. ${num} \u00b7 ${lastWords} words \u00b7 ${S.mode}` +
+    (lastPerfect ? ' \u00b7 perfect' : '') + ` \u267B`;
 }
-function showReveal(words){
+function showReveal(words, perfect){
   lastWords = words;
+  lastPerfect = !!perfect;
   const st = S.stats;
   const avg = st.played ? (st.totalWords / st.played).toFixed(1) : '0';
   $('verdict').textContent =
+    lastPerfect ? 'A perfect bank — the best possible board.' :
+    S.mode === 'practice' ? 'Practice banked — nothing recorded, try again.' :
     words >= 10 ? 'A fat bank — the grid is humming.' :
     words >= 7  ? 'Solid harvest — respectable banking.' :
     words >= 4  ? 'Banked with something to show for it.' :
-                  'A lean bank — but the clock was kind.';
+                  'A lean bank — the budget got away.';
   $('sharetext').textContent =
-    shareText() + `\nstreak ${st.streak} \u00b7 best ${st.bestWords} \u00b7 avg ${avg} words`;
+    shareText() + (S.mode === 'practice' ? '' :
+      `\nstreak ${st.streak} \u00b7 best ${st.bestWords} \u00b7 avg ${avg} words \u00b7 ${st.perfect} perfect`);
   $('reveal').classList.add('show');
   $('grid').style.pointerEvents = 'none';
   $('grid').style.opacity = '.55';
-  $('btnBank').disabled = true;
-  $('btnRecycle').disabled = true;
-  syncBoard(words);
+  if (S.mode === 'practice'){
+    $('curve').innerHTML = '<div class="curve-note">practice — nothing is recorded</div>';
+  } else {
+    syncBoard(words);
+  }
 }
 /* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'grid';
+const SYNC_GAME_HARD = 'grid-hard';
 const SYNC_BETTER = 'high';
-function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+function syncBoard(v){ return SHELL.syncBoardFor(S.mode === 'hard' ? SYNC_GAME_HARD : SYNC_GAME, SYNC_BETTER)(v); }
 SHELL.wireShare(shareText);
-const toastMsg = SHELL.toast;
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
-
-function onTick(){  if (!S.banked) renderMeta();
-}
 
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();
 if (S.banked){
-  lastWords = findWords(S.letters).length;
-  showReveal(lastWords);
+  const words = S.mode === 'hard' ? S.hardWords : (S.mode === 'practice' ? (S.practiceWords || 0) : S.normalWords);
+  showReveal(words, words >= curBest());
 }
-SHELL.startCountdown('countdown', 500, onTick);
+SHELL.startCountdown('countdown', 500);
 </script>
 </body>
 </html>

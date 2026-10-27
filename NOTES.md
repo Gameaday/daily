@@ -73,6 +73,79 @@ real-but-obscure words stay (ROUE, WOLD, QUOD - they are the fun ones).
 tests/run.js and checks/games.js now assert both banks' shape (A-Z 3-5,
 sorted, no duplicates, known typos stay gone), 304 assertions total.
 
+## Recycle redesign (done 2026-10-27)
+
+Grid is now two-phase with three modes instead of a free difficulty dial:
+**Practice · 4** — a fresh random board generated on every entry (seeded by
+Math.random, persisted in S.practice for reload continuity), nothing
+recorded, no stats, no curve post; it's the "validate instantly, play
+forever" sandbox. **Normal · 5** — the daily game: rows first, then
+columns (one-way lock), undo/restart free, no clock, first bank counts for
+streak + the 'grid' curve (S.counted). **Hard · 6** — the same daily board
+with one more shift, unlocked only when the team curve service answers:
+probeCurve() POSTs {} to /health with the same base fallback chain as the
+submit path and treats ANY http answer as online (network error = offline,
+solo = offline by design). Hard banks to its own 'grid-hard' bonus curve
+once/day (S.hardCounted) and never touches normal stats — a hard-only day
+does not preserve the streak (rollover checks !S.counted, not !S.banked).
+The online gate exists because the six-shift exhaustive search is the heavy
+one: interleaved row/column shifts at depth 6 explode past 5M states, but
+every (row-offset, col-offset) pair with total cost <= 6 is only ~62k board
+sims (<1s client-side, computed lazily at first hard entry and cached in
+S.bestHard). Practice/normal are ~10k/25k sims. The two-phase structure is
+what makes the "best possible board" exact rather than estimated. One daily
+board is shared by normal+hard (scramble cost 4-5 sized by the normal
+budget, seed does not include the budget) so both modes can always walk it
+back. No server precalc - the scores service stays pure.
+
+Generation lesson: the first cut filled the fat board with random letters
+plus a hill climb, which topped out at ~7 words and failed the >= 8-9
+acceptance floor on real days (day 0 and day 1 both generated NOTHING).
+Fix: plant 7-10 real dictionary words into the random board before the
+climb (monotone - the climb only accepts strict improvements), then scramble
+by offsets costing budget-1 or budget so the rows-then-columns language can
+always walk the fat board back. Accept when the exact optimum clears
+max(fatMin, 8) and beats the start by >= 2-3 words.
+
+Rings: four wheels (10/9/9/8 letters), a 4-letter target with distinct
+letters from WORDS_EN, ops are per-position rotate +-1 plus adjacent-ring
+swap. Metric is moves, low; par is an exact BFS over the full state space
+(order x offsets, <= 155k states) to ANY state spelling the target, so par
+is a true minimum. The clock is gone - being conservative is the game.
+Note: the BFS is the one client-side cost that spikes memory (~155k-state
+Map on first load); fine on desktop/CI, worth watching on old phones.
+
+Ledger change: rings now counts moves, not seconds (SPECS edges
+0/5/7/9/11/13/15/17/20, low; old seconds snapshots age out after a day).
+Grid's ledger is unchanged (words, high) but adds a local "perfect" counter
+when a bank matches the exact best possible, plus a new 'grid-hard' bonus
+ledger (words, high, edges to 18 — one more shift can reach one more bin).
+State keys bumped to
+warmup.grid.v2 / warmup.rings.v2 with v1 stat migration. Only Sprint keeps a
+clock now.
+
+Natural next steps, in rough order: (1) land assets/valid-en.js via
+tools/make-valid-en.mjs so guess-validating games get the wide bank;
+(2) watch CI + real phone timing for the hard-mode lazy search — if any
+device struggles, the precalc moves server-side (calculated once at
+midnight, served with the puzzle) without touching the game logic;
+(3) rings could get the same mode treatment (practice rerolls, hard =
+larger wheels or two targets) once the grid modes have soaked;
+(4) the curve-representation cleanup and archive mode already on the
+roadmap.
+
+## Valid-guesses bank (Wordnik, decided 2026-10-27)
+
+Decision: future guess-validating games get a wider "we'll accept it" bank
+built from the MIT-licensed Wordnik wordlist (wordnik/wordlist). Answers
+always come from curated WORDS_EN; VALID_EN only widens what a player may
+guess. The 2.3MB source file can't be fetched through the bot's tooling, so
+tools/make-valid-en.mjs (zero-dep) ships instead: run `curl -O
+https://raw.githubusercontent.com/wordnik/wordlist/main/wordlist-20210729.txt
+&& node tools/make-valid-en.mjs` locally (or drop the txt into the chat) and
+assets/valid-en.js lands with its MIT header; bank-shape guards follow in
+the same commit as the asset.
+
 ## Mobile UX pass
 
 Cipher now types through a hidden off-screen input (tap a slot, the soft
@@ -87,8 +160,9 @@ missed.
 
 - bogus: points 0-3, high (0 on a miss)
 - well-actually: points 0-4, high
-- rings: seconds, low (120+ clamps into the last bin)
+- rings: moves, low (exact BFS par; edges 0/5/7/9/11/13/15/17/20)
 - grid: words banked, high (0-16 in twos)
+- grid-hard: words banked, high (bonus curve, online-only mode)
 - fermi: points 0-3, high
 - sift: mistakes 0-4, low (4 on a loss)
 - rounds: guesses 1-7, low (7 on a loss)

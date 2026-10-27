@@ -14,8 +14,8 @@ Design notes and future ideas live in NOTES.md.
 | / | Warmup | Landing page linking all games |
 | /bogus/ | Bogus! | A history passage where one phrase is a lie — spot it in 3 picks |
 | /well-actually/ | Well, Actually… | A statement with one wrong phrase — find it, then type the correction for a bonus point |
-| /recycle-rings/ | Recycle: Rings | Three letter wheels and one target word on the marked ray — clock starts on your first spin and never restarts |
-| /recycle-grid/ | Recycle: Grid | Shift rows and columns of a 5×5 letter grid to build words, then Bank It — the clock never restarts |
+| /recycle-rings/ | Recycle: Rings | Four letter wheels, one target word, one exact par — spin and swap to spell it, every move counts against the par |
+| /recycle-grid/ | Recycle: Grid | Three modes, three budgets — Practice · 4 (fresh random board, nothing counts), Normal · 5 (the daily game), Hard · 6 (same board, one more shift, online-only bonus): nudge rows then columns in two phases, undo is free until you Bank It, and the best possible board is exact |
 | /fermi/ | Fermi | One order-of-magnitude estimation question per day, one guess, scored by how close you land |
 | /sift/ | Sift | Twelve tiles, four hidden groups of three, four mistakes allowed |
 | /rounds/ | Rounds | Slide toward the year of a hidden event — hot, warm, or cold, in six guesses |
@@ -74,8 +74,8 @@ Design constraints, on purpose:
 - no user text is accepted or stored anywhere: the only inputs are the game
   slug (checked against a fixed allowlist), a bounded day number, a bounded
   numeric score, and the hashed id. Request bodies are capped at 2 KB
-- which direction is "better" is defined server-side per game (rings: lower
-  seconds; sprint: more words; cipher: fewer hints) — the client never decides it
+- which direction is "better" is defined server-side per game (rings: fewer
+  moves; sprint: more words; cipher: fewer hints) — the client never decides it
 - total RAM for a team of ~40 across thirteen games is a few dozen kilobytes
 - if the service is off, each game quietly notes "team curve offline —
   playing solo today" and everything else works
@@ -184,12 +184,25 @@ installed packages.
 
 ## The recycle rule
 
-Rings, Grid, and Sprint share a mechanic worth keeping consistent in future games:
-the clock starts on your first move and never restarts — not for retries, not
-for reloading the page, not for the Recycle button. The score is what you bank
-(time in Rings, words in Grid, words saved in Sprint), so recycling your position
-is free but dithering is not. The clock even survives closing the tab (startAt
-timestamp in state).
+Sprint is the only game still on the clock: it starts on your first move and
+never restarts — not for retries, not for reloading the page. Words saved are
+what you bank, so dithering is not free.
+
+Rings and Grid traded the clock for a budget. Grid has three modes:
+**Practice · 4** generates a fresh random board every time — small enough
+to validate instantly in the browser, and nothing it does is recorded.
+**Normal · 5** is the daily game: two phases (rows first, then columns,
+one-way lock), undo and restart free, each shift spending the budget, and
+the first bank of the day counts for your streak and the team curve.
+**Hard · 6** replays the same daily board with one more shift — the
+six-shift exhaustive search is the heavy one, so hard is unlocked only
+when the team curve service answers (solo/offline play can't reach it)
+and banks to its own `grid-hard` bonus curve without touching streaks.
+The best possible board is computed exactly for each mode and shown
+upfront, so a "perfect" bank is a real achievement.
+Rings counts every spin and swap against an exact par (BFS over the full
+state space), so the game is about being conservative, not fast. Neither
+game has a timer anymore: pressure comes from scarcity of moves.
 
 ## Adding a game
 
@@ -262,6 +275,11 @@ to commits where they passed.
   cached across games. Sprint's anagram banks stay separate (they are
   per-length and typo-cleaned); the test suite asserts the shape of both so
   they cannot rot silently.
+- Valid guesses: future guess-validating games can also load a wider
+  `assets/valid-en.js` "we'll accept it" bank built from the MIT-licensed
+  Wordnik wordlist by `tools/make-valid-en.mjs` (zero-dep; the answers still
+  come only from the curated `words-en.js`). Not shipped yet — run the script
+  once (see its header) to generate the asset; guards land with it.
 
 ## Roadmap
 
@@ -282,6 +300,12 @@ to commits where they passed.
 - [x] Word bank expansion: shared bank 1353→2230 common words (still one
       12KB file), sprint anagram banks typo-cleaned, bank hygiene guards in
       tests + checks (304 assertions)
+- [x] Recycle redesign: grid modes (practice 4 random / normal 5 daily /
+      hard 6 online-gated bonus curve, two-phase, exact best-possible
+      client-side), rings move-count + exact BFS par — the clock survives
+      only in Sprint
+- [x] Valid-guesses bank decision (Wordnik, MIT) + zero-dep build script
+      (`tools/make-valid-en.mjs`; the asset itself lands on first local run)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score

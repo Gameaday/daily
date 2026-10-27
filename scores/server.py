@@ -39,8 +39,9 @@ DAY_MIN, DAY_MAX = -1000, 100000
 SPECS = {
     "bogus":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
     "well-actually": {"better": "high", "edges": [0, 1, 2, 3, 4, 5]},
-    "rings":         {"better": "low",  "edges": [0, 15, 30, 45, 60, 75, 90, 105, 120]},
+    "rings":         {"better": "low",  "edges": [0, 5, 7, 9, 11, 13, 15, 17, 20]},
     "grid":          {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16]},
+    "grid-hard":     {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]},
     "fermi":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
     "sift":          {"better": "low",  "edges": [0, 1, 2, 3, 4, 5]},
     "rounds":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},

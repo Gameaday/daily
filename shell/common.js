@@ -145,6 +145,19 @@ const SHELL = (() => {
         '</div>' : '');
   }
 
+  /* ---- is the team curve service reachable? ---- */
+  /* Used by games that gate a heavy or bonus mode on being online (grid
+     hard mode). Any HTTP answer - even a 404 - proves the service is up;
+     only a network error counts as offline. Solo mode is offline by design. */
+  function probeCurve(){
+    if (isSolo()) return Promise.resolve(false);
+    const go = (base) => fetch(base + '/health', { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' })
+      .then(() => true, () => false);
+    return go('/api')
+      .then(ok => ok || go('http://localhost:8787'))
+      .then(ok => ok || go('http://127.0.0.1:8787'));
+  }
+
   /* ---- the "No. N · date" line ---- */
   function pdateText(){
     return new Date(Date.parse(todayKey) + 43200000)
@@ -153,5 +166,5 @@ const SHELL = (() => {
 
   return { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, pdateText };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText };
 })();

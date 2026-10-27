@@ -13,7 +13,7 @@ const path = require('path');
 
 const games = ['bogus', 'cipher', 'fermi', 'lightbox', 'museum', 'recycle-grid',
   'recycle-rings', 'rounds', 'sift', 'sprint', 'timeline', 'trace', 'well-actually'];
-const wordBankGames = ['recycle-grid', 'trace'];
+const wordBankGames = ['recycle-grid', 'recycle-rings', 'trace'];
 const SHELL = ['SHELL', 'EPOCH_KEY', 'syncBoard'];
 const NOT_IN_GAMES = ['America/New_York', 'function renderBoard', 'function nextETMidnight',
   'const $ = id =>', 'JSON.parse(localStorage.getItem(KEY))',

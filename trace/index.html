@@ -274,7 +274,7 @@ function renderChain(){
 function shareText(){
   if (S.status === 'won'){
     const over = steps() - LADDER.par;
-    const note = over <= 0 ? 'under par!' : (over === 0 ? 'on par' : '+' + over);
+    const note = over < 0 ? 'under par!' : (over === 0 ? 'on par' : '+' + over);
     return `Trace No. ${num} \u00b7 ${steps()} rungs (par ${LADDER.par}) \u2014 ${note} \uD83E\uDE9C`;
   }
   return `Trace No. ${num} \u00b7 gave up after ${steps()} rungs \uD83E\uDE9C`;

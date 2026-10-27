@@ -1,0 +1,44 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Compile + shell checks
+        run: node checks/games.js
+      - name: Headless playthrough of every game
+        run: node tests/run.js
+      - name: Scores service API test
+        run: python3 tests/server_test.py
+
+  # Runs only if the repo variable DEPLOY_HOST is set
+  # (Settings -> Secrets and variables -> Actions -> Variables).
+  # Secrets needed: DEPLOY_USER, DEPLOY_SSH_KEY (private key).
+  # Variable needed: DEPLOY_PATH (repo path on the Pi, e.g. /home/pi/daily).
+  deploy:
+    needs: test
+    if: vars.DEPLOY_HOST != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and restart on the Pi over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ vars.DEPLOY_PATH }}
+            git pull --ff-only
+            docker compose up -d --build
+            docker image prune -f
+            docker compose ps

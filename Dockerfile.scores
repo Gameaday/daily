@@ -1,0 +1,9 @@
+# Team-curve container: the stdlib-only Python service.
+# In-memory by design - NO volumes, nothing is ever written to disk.
+# Binds 0.0.0.0 *inside* the container so Caddy can reach it over the
+# compose network; the port is never published to the host (see compose).
+FROM python:3.12-slim
+WORKDIR /app
+COPY scores/server.py server.py
+EXPOSE 8787
+CMD ["python3", "-u", "server.py", "--host", "0.0.0.0", "--port", "8787"]

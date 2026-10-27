@@ -1,0 +1,21 @@
+# Caddy config for the Docker deploy.
+# The domain comes from the environment (.env): DAILY_DOMAIN=daily.historylabs.dev
+# Everything else is relative, so an IP or LAN hostname works identically.
+{$DAILY_DOMAIN} {
+    # team-curve API -> the scores container (never exposed to the host)
+    handle_path /api/* {
+        reverse_proxy {$SCORES_UPSTREAM}
+    }
+
+    handle {
+        root * /srv/daily
+        file_server
+    }
+
+    header {
+        # static files only; nothing to cache aggressively except assets
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+        X-Frame-Options SAMEORIGIN
+    }
+}

@@ -1,0 +1,6 @@
+# Static site container: Caddy with the repo's Caddyfile baked in.
+# The site itself is bind-mounted read-only at runtime (see docker-compose.yml),
+# so a plain `git pull` + `docker compose restart web` picks up game changes
+# with no rebuild; rebuild only matters when the Caddyfile changes.
+FROM caddy:2.8-alpine
+COPY Caddyfile /etc/caddy/Caddyfile

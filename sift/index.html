@@ -257,7 +257,7 @@ function saveState(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catc
 let S = loadState();
 if (!S || S.day !== dayIndex){
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
-    if (!S.solvedAll) S.stats.streak = 0;
+    if (S.status !== 'won') S.stats.streak = 0;
   }
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0, dist:[0,0,0,0,0]};
   S = { day: dayIndex, solvedCats:[], mistakes:0, status:'playing', stats };

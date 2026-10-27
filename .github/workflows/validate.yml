@@ -5,14 +5,16 @@ on:
   pull_request:
 
 jobs:
-  games:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Compile every game and check the shared shell
+      - name: Layer 1 - compile every game + shell/id/landing checks
         run: node checks/games.js
-      - name: Byte-compile the scores server
-        run: python3 -m py_compile scores/server.py && echo "server.py ok"
+      - name: Layer 2 - play every game headless to a win/loss + rollover
+        run: node tests/run.js
+      - name: Layer 3 - scores service API test (spawn + urllib)
+        run: python3 tests/server_test.py

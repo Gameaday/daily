@@ -1,0 +1,6 @@
+# keep the build context small; the site itself is bind-mounted, not copied
+.git
+.github
+.env
+node_modules
+__pycache__

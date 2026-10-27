@@ -77,7 +77,8 @@ Design constraints, on purpose:
 - if the service is off, each game quietly notes "team curve offline —
   playing solo today" and everything else works
 
-Install on the Pi:
+Install on the Pi without Docker (systemd alternative — the Docker route
+above is now the recommended one):
 
     sudo cp -r scores /srv/daily/scores
     sudo cp scores/warmup-scores.service /etc/systemd/system/
@@ -89,6 +90,82 @@ only, and runs with a hardened systemd sandbox (no capabilities, no writes
 anywhere, memory cannot become executable). The games also try localhost
 directly as a fallback, so a browser on the Pi itself still gets the curve
 even without the Caddy proxy.
+
+## Deploy on the Pi with Docker (recommended)
+
+The whole stack — static site + Caddy + the scores service — runs as two
+containers with `docker compose`. The repo *is* the site: it's bind-mounted
+read-only into Caddy, so `git pull` + restart is the entire deploy.
+
+One-time setup on the Pi:
+
+    # 1. Docker + compose (Raspberry Pi OS / Debian)
+    curl -fsSL https://get.docker.com | sh
+    sudo usermod -aG docker $USER   # log out/in after this
+
+    # 2. Clone the repo where it will live, e.g. /home/pi/daily
+    git clone https://github.com/Gameaday/daily.git ~/daily
+    cd ~/daily
+
+    # 3. Configure the domain (games themselves are domain-agnostic)
+    cp .env.example .env            # edit DAILY_DOMAIN if needed
+
+    # 4. Build and start
+    docker compose up -d --build
+    docker compose ps              # web + scores should be Up
+
+    # 5. Point DNS at the Pi, forward 80/443 - Caddy handles TLS automatically
+
+What you get:
+
+- `web` — Caddy 2.8 serving the repo read-only from `/srv/daily`, proxying
+  `/api/*` to the scores container, automatic HTTPS
+- `scores` — the stdlib Python service, hardened: `read_only` filesystem,
+  `cap_drop: ALL`, `no-new-privileges`, a 64 MB memory cap, and **no volumes**.
+  It is reachable only on the internal compose network — the port is never
+  published to the host or the internet. A restart forgets all scores by
+  design (only consolidated per-day numbers are kept, pruned after 1 day)
+
+Updating after pushing to GitHub — on the Pi:
+
+    make deploy        # = git pull --ff-only && docker compose up -d --build && docker image prune -f
+    # or by hand:
+    git pull --ff-only && docker compose up -d --build
+
+(Static-only changes don't even need the rebuild: `docker compose restart web`
+picks them up because the site is bind-mounted. The rebuild matters when the
+Caddyfile or server.py changed.)
+
+## CI/CD with GitHub Actions
+
+Three test layers run on every push and pull request (`.github/workflows/validate.yml`):
+
+1. `node checks/games.js` — compiles every game script, checks shell pieces,
+   element ids, landing links
+2. `node tests/run.js` — boots each game headless in a stubbed DOM with a
+   pinned clock, plays it to a win/loss, verifies the value posted to the team
+   curve, then rolls the clock a day forward and proves streaks survive
+3. `python3 tests/server_test.py` — spawns the real scores service on a scratch
+   port and exercises health, submit/dedupe, dist, validation, and pruning
+
+Automatic deploys: `.github/workflows/deploy.yml` runs the same tests, then —
+only if the repo **variable** `DEPLOY_HOST` is set — SSHes into the Pi and
+runs `git pull --ff-only && docker compose up -d --build`. To enable:
+
+1. Generate a keypair on the Pi: `ssh-keygen -t ed25519 -f ~/.ssh/daily_deploy -N ""`,
+   append the public half to `~/.ssh/authorized_keys` (deploy user), and copy
+   the private half
+2. GitHub repo → Settings → Secrets and variables → Actions:
+   - Secrets: `DEPLOY_USER` (e.g. `pi`), `DEPLOY_SSH_KEY` (the private key)
+   - Variables: `DEPLOY_HOST` (the Pi's hostname or IP), `DEPLOY_PATH`
+     (repo path on the Pi, e.g. `/home/pi/daily`)
+
+Until those are set, deploys stay manual (`make deploy` on the Pi) and pushes
+just run the tests. Leave `DEPLOY_HOST` empty to keep it that way permanently.
+
+Local pre-push: `npm test` (or `make test`) runs all three layers in seconds —
+Node 20+ and Python 3 are the only requirements, and neither needs any
+installed packages.
 
 ## The recycle rule
 
@@ -113,13 +190,25 @@ timestamp in state).
 
 ## Validation
 
-checks/games.js compiles every game's script with new Function — the fastest
-way to catch the fatal kind of typo (a single stray emoji escape once made
-Sprint a dead page for everyone) — and verifies the shared shell pieces, every
-element id the script touches, and the landing links. Run it with
-node checks/games.js. GitHub Actions runs it, plus a byte-compile of
-scores/server.py, on every push and pull request
-(.github/workflows/validate.yml). It needs no dependencies and takes seconds.
+Three layers, all dependency-free:
+
+- `checks/games.js` compiles every game's script with new Function — the
+  fastest way to catch the fatal kind of typo (a single stray emoji escape
+  once made Sprint a dead page for everyone) — and verifies the shared shell
+  pieces, every element id the script touches, and the landing links.
+- `tests/run.js` goes further: it boots each game's real script in a stubbed
+  DOM with an injectable clock, plays every game to a win and a loss, checks
+  the exact value posted to the team curve, and rolls to the next day to
+  prove streaks survive (this is how the Sift streak-reset and Trace
+  "on par" bugs were caught). It also cross-checks every game's curve client
+  against SPECS in scores/server.py — the server owns the metric direction.
+- `tests/server_test.py` spawns the real scores service and tests the API:
+  health, submit + dedupe, snapshots, strict input validation, and the
+  1-day pruning horizon.
+
+Run everything: `npm test` or `make test`. GitHub Actions runs all three
+layers on every push and pull request, plus the same tests gate the
+Docker deploy (.github/workflows/deploy.yml).
 
 ## Content rules (worth keeping)
 
@@ -143,6 +232,10 @@ scores/server.py, on every push and pull request
 - [x] Fix pass: Sprint syntax error + solved-word chips, Fermi friendly() display,
       Well, Actually curve on reload, Cipher soft-keyboard input, curve copy
 - [x] CI: every push compiles all 13 games + the server (validate.yml)
+- [x] Test pass: headless playthroughs of all 13 games (win/loss/rollover),
+      Sift streak-reset fix, Trace "on par" fix, Museum iceman alias
+- [x] Docker deploy: Caddy + scores as compose services, hardened, read-only
+- [x] CD: test-gated SSH deploy from GitHub Actions (opt-in via DEPLOY_HOST)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score

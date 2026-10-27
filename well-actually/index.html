@@ -189,7 +189,7 @@
     <h2>How to play</h2>
     <p>Every morning you get one statement. <b>One word or phrase in it is wrong</b> — the rest is true.</p>
     <p><b>Click the phrase you think is the error.</b> A wrong pick turns red and costs one of your three picks.</p>
-    <p>Find the error and it turns green — then you get <b>one attempt to type what it should say instead</b>. Nail the correction for a bonus point. 2 points a day is a perfect morning.</p>
+    <p>Find the error and it turns green — then you get <b>one attempt to type what it should say instead</b>. Score is 3 minus your wrong picks, plus 1 for a correct correction — a first-pick find with the bonus nailed is a perfect 4-point morning.</p>
     <p>Everyone in the world gets the same puzzle, so compare scores at standup — argue before you click.</p>
     <button class="close" data-close>Got it</button>
   </div>
@@ -390,7 +390,7 @@ const num = dayIndex + 1;
 const puzzle = PUZZLES[((dayIndex % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
 
 /* ---------------- state ---------------- */
-const KEY = 'warmup.actually.v1';
+const KEY = 'warmup.actually.v2';
 function loadState(){
   try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; }
 }
@@ -399,8 +399,8 @@ function saveState(){
 }
 let S = loadState();
 if (!S || typeof S.stats !== 'object') {
-  S = { day: dayIndex, picked: [], status: 'playing', bonus: null,
-        stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0]} };
+  S = { day: dayIndex, picked: [], status: 'playing', bonus: null, typed: '',
+        stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0,0,0]} };
 } else if (S.day !== dayIndex) {
   if (S.status !== 'won') S.stats.streak = 0; // missed (or lost) the previous day
   S.day = dayIndex; S.picked = []; S.status = 'playing'; S.bonus = null;
@@ -424,13 +424,13 @@ function renderStatement(){
 }
 function applyMarks(animateWin){
   S.picked.forEach(i => {
-    if (i === puzzle.lie) return;
+    if (i === puzzle.l) return;
     const el = statementEl.querySelector(`[data-i="${i}"]`);
     if (el) el.classList.add('wrong');
   });
   if (S.status !== 'playing'){
     statementEl.classList.add('done');
-    const el = statementEl.querySelector(`[data-i="${puzzle.lie}"]`);
+    const el = statementEl.querySelector(`[data-i="${puzzle.l}"]`);
     if (el){ el.classList.add('lie'); if (animateWin && S.status==='won') el.classList.add('win'); }
   }
 }
@@ -440,27 +440,33 @@ function renderPicks(){
   picksEl.innerHTML = html + `&nbsp;&nbsp;<span>${3 - S.picked.length} left</span>`;
 }
 
+function wrongPicks(){ return S.picked.filter(i => i !== puzzle.l).length; }
+function baseScore(){ return Math.max(0, 3 - wrongPicks()); }
 function score(){
   if (S.status !== 'won') return 0;
-  return S.bonus === 'correct' ? 2 : 1;
+  return baseScore() + (S.bonus === 'correct' ? 1 : 0);
 }
 function shareText(){
-  const sc = S.status === 'won' ? `${score()}/2` : '0/2';
-  const emo = S.status !== 'won' ? '\uD83D\uDFE5' :
-    (S.bonus === 'correct' ? '\uD83D\uDFE9\uD83D\uDFE9' : '\uD83D\uDFE9\uD83D\uDFE5');
-  return `Well, Actually No. ${num} \u00b7 ${sc} ${emo}\nOne word in this statement is wrong \u2014 can you fix it?`;
+  if (S.status !== 'won'){
+    return `Well, Actually No. ${num} \u00b7 0/3 \uD83D\uDFE5\nOne word in this statement is wrong \u2014 can you fix it?`;
+  }
+  const bonus = S.bonus === 'correct' ? '+\u2B50' : '+\uD83D\uDFE5';
+  return `Well, Actually No. ${num} \u00b7 ${baseScore()}/3 ${bonus} = ${score()} pts\nOne word in this statement is wrong \u2014 can you fix it?`;
 }
 
 function showReveal(){
   const v = $('verdict');
-  if (S.status === 'won' && S.bonus === 'correct'){
-    v.textContent = 'Nailed it — both points.'; v.className = 'verdict won';
+  if (S.status === 'won' && S.bonus === 'correct' && baseScore() === 3){
+    v.textContent = 'Perfect morning — first pick, correction nailed.'; v.className = 'verdict won';
+  } else if (S.status === 'won' && S.bonus === 'correct'){
+    v.textContent = 'Found it — and nailed the correction.'; v.className = 'verdict won';
   } else if (S.status === 'won'){
     v.textContent = 'Found the lie — the correction got away.'; v.className = 'verdict won';
   } else {
     v.textContent = 'Three strikes — the error got past you.'; v.className = 'verdict lost';
   }
-  $('why').innerHTML = `It should be <b>\u201c${puzzle.c}.\u201d</b> ${puzzle.w}`;
+  $('why').innerHTML = `It should be <b>\u201c${puzzle.c}.\u201d</b> ${puzzle.w}` +
+    (S.bonus === 'wrong' && S.typed ? `<br/><span style="color:var(--muted);">You typed \u201c${S.typed.trim()}.\u201d — good instincts, wrong word.</span>` : '');
   $('sharetext').textContent = shareText();
   $('reveal').classList.add('show');
   renderPicks();
@@ -486,7 +492,7 @@ function pick(i){
   if (S.status !== 'playing' || S.picked.includes(i)) return;
   S.picked.push(i);
   const el = statementEl.querySelector(`[data-i="${i}"]`);
-  if (i === puzzle.lie){
+  if (i === puzzle.l){
     S.status = 'found';
     if (el) el.classList.add('lie','win');
     statementEl.classList.add('done');
@@ -512,6 +518,7 @@ statementEl.addEventListener('click', e => {
 function submitBonus(){
   if (S.status !== 'found') return;
   const val = $('binput').value || '';
+  S.typed = val;
   S.bonus = ACCEPTED.includes(norm(val)) ? 'correct' : 'wrong';
   S.status = 'won';
   $('bonus').classList.remove('show');
@@ -533,7 +540,7 @@ $('btnStats').addEventListener('click', () => { renderStats(); $('statsOverlay')
 function renderStats(){
   const st = S.stats;
   const pct = st.played ? Math.round(100 * st.wins / st.played) : 0;
-  const pts = st.dist[1] + 2 * st.dist[2];
+  const pts = st.dist.reduce((a,n,i) => a + i * n, 0);
   $('statgrid').innerHTML =
     `<div class="stat"><span class="v">${st.played}</span><span class="k">played</span></div>` +
     `<div class="stat"><span class="v">${pct}%</span><span class="k">found</span></div>` +
@@ -541,8 +548,8 @@ function renderStats(){
     `<div class="stat"><span class="v">${st.streak}</span><span class="k">streak</span></div>` +
     `<div class="stat"><span class="v">${st.max}</span><span class="k">max streak</span></div>`;
   const maxd = Math.max(1, ...st.dist);
-  const labels = ['0 points','1 point','2 points'];
-  $('dist').innerHTML = [0,1,2].map(i =>
+  const labels = ['0 pts','1 pt','2 pts','3 pts','4 pts \u2B50'];
+  $('dist').innerHTML = [0,1,2,3,4].map(i =>
     `<div class="distrow"><span class="n">${labels[i]}</span><span class="bar" style="width:${Math.max(Math.round(100*st.dist[i]/maxd),4)}%"></span><span>${st.dist[i]}</span></div>`
   ).join('');
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Warmup team curve - consolidated daily stats for the warmup games.
+"""Warmup global curve - consolidated daily stats for the warmup games.
 
 Design rules (deliberate):
 - stdlib only; binds to 127.0.0.1; zero disk writes of any kind
@@ -248,12 +248,12 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Warmup team curve")
+    ap = argparse.ArgumentParser(description="Warmup global curve")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8787)
     args = ap.parse_args()
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
-    print("warmup team curve on %s:%d (consolidated stats only, prunes after %d day)"
+    print("warmup global curve on %s:%d (consolidated stats only, prunes after %d day)"
           % (args.host, args.port, PRUNE_DAYS))
     try:
         srv.serve_forever()

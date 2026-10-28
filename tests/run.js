@@ -2,7 +2,7 @@
    between the games' curve clients and scores/server.py.
 
    Every scenario boots the real game script (no browser), plays it to a
-   win or loss, checks the value posted to the team curve, then "reboots"
+   win or loss, checks the value posted to the global curve, then "reboots"
    the next day with the same localStorage to prove streaks survive
    rollover. Regression tests for the fixed bugs are marked inline.
 
@@ -225,7 +225,7 @@ async function main(createHarness, readGame, readServer, readLanding, readShared
     h.ok(rm.x.getPractice().start.join('') !== PR.start.join(''),
       'grid: re-entering practice rerolls the board');
 
-    /* hard: same daily board, budget 6, gated on the team curve being online */
+    /* hard: same daily board, budget 6, gated on the global curve being online */
     const rh = h.boot('recycle-grid', EXP, { now: T0, store: {} });
     rh.x.setMode('hard');
     h.eq(rh.x.getMode(), 'normal', 'grid: hard waits for the probe');
@@ -563,7 +563,7 @@ async function main(createHarness, readGame, readServer, readLanding, readShared
     /* the shell itself: the curve strings moved here from every game */
     const shell = readShared('bogus');
     h.ok(shell.indexOf('SYNC_UNIT') === -1, 'shell: no leftover SYNC_UNIT');
-    h.ok(shell.indexOf('team avg') >= 0, 'shell: curve note shows team avg');
+    h.ok(shell.indexOf('you-mark') >= 0, 'shell: curve you-mark present');
     h.ok(shell.indexOf('curve offline') >= 0, 'shell: offline grace present');
     h.ok(shell.indexOf('const SHELL') >= 0, 'shell: defines the SHELL module');
     h.ok(shell.indexOf('solo mode') >= 0, 'shell: air-gapped solo mode present');

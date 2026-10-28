@@ -171,7 +171,7 @@ const QS = [
 ];
 
 /* ---------------- deterministic daily pick ---------------- */
-/* day math, storage, toast, countdown, help/share wiring and the team-curve
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 // spread days deterministically through the deck (repeats after 22 days, fine for now)
@@ -185,7 +185,7 @@ function saveState(){ store.save(S); }
 let S = loadState();
 if (!S || S.day !== dayIndex){
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
-    if (!S.scored || S.score < 2) S.stats.streak = 0; // missed day or below 2/3 breaks streak
+    if (!(S.scored && S.score >= 2 && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day or below 2/3 since last score */
   }
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, total:0, dist:[0,0,0,0]};
   S = { day: dayIndex, scored:false, guess:0, score:0, stats };
@@ -291,7 +291,7 @@ $('btnGuess').addEventListener('click', () => {
 });
 $('guess').addEventListener('keydown', e => { if (e.key === 'Enter') $('btnGuess').click(); });
 
-/* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'fermi';
 const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }

@@ -1,4 +1,4 @@
-# Team-curve container: the stdlib-only Python service.
+﻿# Global-curve container: the stdlib-only Python service.
 # In-memory by design - NO volumes, nothing is ever written to disk.
 # Binds 0.0.0.0 *inside* the container so Caddy can reach it over the
 # compose network; the port is never published to the host (see compose).

@@ -328,7 +328,7 @@ const PUZZLES = [
 ];
 
 /* ---------------- daily selection (ET rollover, deterministic) ---------------- */
-/* day math, storage, toast, countdown, help/share wiring and the team-curve
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 const puzzle = PUZZLES[((dayIndex % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
@@ -468,7 +468,7 @@ function submitBonus(){
 $('bgo').addEventListener('click', submitBonus);
 $('binput').addEventListener('keydown', e => { if (e.key === 'Enter') submitBonus(); });
 
-/* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'well-actually';
 const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }

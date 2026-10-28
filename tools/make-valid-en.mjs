@@ -21,15 +21,15 @@ const WORDS_EN_PATH = path.join(ROOT, 'assets', 'words-en.js');
 const OUT = path.join(ROOT, 'assets', 'valid-en.js');
 
 const raw = fs.readFileSync(SRC, 'utf8');
-// One word per line; keep plain lowercase a-z, 3-7 letters (no apostrophes,
+// One word per line; keep plain lowercase a-z, 3-8 letters (no apostrophes,
 // hyphens, spaces, accents — keeps the file small and the games simple).
 const candidates = new Set(
-  raw.split(/\r?\n/).map(w => w.trim().toLowerCase()).filter(w => /^[a-z]{3,7}$/.test(w))
+  raw.split(/\r?\n/).map(w => w.trim().toLowerCase()).filter(w => /^[a-z]{3,8}$/.test(w))
 );
 
 // Answers must always be valid guesses: union with the curated bank.
 const wordsEnSrc = fs.readFileSync(WORDS_EN_PATH, 'utf8');
-const m = wordsEnSrc.match(/^const WORDS_EN = "(.*)"$/m);
+const m = wordsEnSrc.match(/^const WORDS_EN = "([^"]+)"$/m);
 if (!m) throw new Error('could not read WORDS_EN from assets/words-en.js');
 for (const w of m[1].split(',')) candidates.add(w.toLowerCase());
 
@@ -68,3 +68,4 @@ const header = `// VALID_EN — valid guesses for word games (${words.length} wo
 
 fs.writeFileSync(OUT, `${header}\nconst VALID_EN = "${words.join(',')}";\n`);
 console.log(`wrote ${OUT}: ${words.length} words (${fs.statSync(OUT).size} bytes)`);
+

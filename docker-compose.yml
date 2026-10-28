@@ -1,9 +1,9 @@
-# Docker deploy for the Pi (or any small host).
+﻿# Docker deploy for the Pi (or any small host).
 #   cp .env.example .env   # edit DAILY_DOMAIN
 #   docker compose up -d --build
 #
 # web     - Caddy serving this repo read-only from /srv/daily, TLS automatic
-# scores  - the in-memory team-curve service; internal network only,
+# scores  - the in-memory global-curve service; internal network only,
 #           read-only filesystem, no capabilities, 64 MB cap. It keeps
 #           consolidated per-day numbers only and forgets everything on
 #           restart - by design.

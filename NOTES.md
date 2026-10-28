@@ -19,7 +19,7 @@ behind count >= 3.
 ## Curve representation cleanup
 
 Today every game renders the histogram plus a sentence: "you: better than N
-of M" (the "by X" unit tail was dropped in the fix pass) and the team average.
+of M" (the "by X" unit tail was dropped in the fix pass) and the global average.
 Opportunity: drop the prose entirely and let the chart do the talking, the way
 racing-style puzzle games do - the distribution itself with an unmistakable
 you-marker (accent bar, tick, and a tiny "you" label under your bin). One
@@ -43,7 +43,7 @@ result against the frozen curve: submissions to archived days are read-only -
 Suggested guard: only archive days with count >= 3, so solo mornings do not
 get memorialized.
 
-Retention is now 1 day (PRUNE_DAYS in server.py). If the team wants
+Retention is now 1 day (PRUNE_DAYS in server.py). If operators want
 "yesterday's curve" visible live, bump it to 2 - memory is not the
 constraint, tidiness is.
 
@@ -82,7 +82,7 @@ recorded, no stats, no curve post; it's the "validate instantly, play
 forever" sandbox. **Normal · 5** — the daily game: rows first, then
 columns (one-way lock), undo/restart free, no clock, first bank counts for
 streak + the 'grid' curve (S.counted). **Hard · 6** — the same daily board
-with one more shift, unlocked only when the team curve service answers:
+with one more shift, unlocked only when the global curve service answers:
 probeCurve() POSTs {} to /health with the same base fallback chain as the
 submit path and treats ANY http answer as online (network error = offline,
 solo = offline by design). Hard banks to its own 'grid-hard' bonus curve
@@ -153,7 +153,7 @@ keyboard opens; a sentinel space turns backspace into an input event) - copy
 that trick into any future keyboard-driven game. The rest of the fleet is
 still desktop-first in small ways: Sprint only accepts a word on Enter, which
 costs an extra tap on a phone, and nothing has been trialed on a real small
-screen. Worth one deliberate pass on a phone before the team finds what we
+screen. Worth one deliberate pass on a phone before players find what we
 missed.
 
 ## Metrics ledger (single source of truth: SPECS in scores/server.py)

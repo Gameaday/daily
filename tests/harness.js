@@ -13,7 +13,7 @@
      (the games call it to restart CSS animations)
    - document.querySelectorAll returns [] (the games null-guard the few
      querySelector results they use)
-   - fetch logs every POST and resolves a canned team-curve snapshot
+   - fetch logs every POST and resolves a canned global-curve snapshot
    - localStorage is a plain object, so a "reload" is just booting again
      with the same store - which is exactly how day-rollover gets tested
    - Date is a subclass whose now() returns the harness clock, so tests are

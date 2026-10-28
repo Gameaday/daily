@@ -1,5 +1,5 @@
-[Unit]
-Description=Warmup team curve (in-memory consolidated daily stats)
+﻿[Unit]
+Description=Warmup global curve (in-memory consolidated daily stats)
 After=network.target
 
 [Service]

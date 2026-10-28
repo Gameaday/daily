@@ -116,7 +116,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 'use strict';
 
 /* ---------------- deterministic daily generation ---------------- */
-/* day math, storage, toast, countdown, help/share wiring and the team-curve
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 
@@ -233,7 +233,7 @@ function saveState(){ store.save(S); }
 let S = loadState();
 if (!S || S.day !== dayIndex || !PUZZLE){
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
-    if (!S.won) S.stats.streak = 0; /* missed the previous day */
+    if (!(S.won && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since the last win */
   }
   /* stats carry over from the clock-era rings (v1); its "best" was in
      seconds, which is always a bigger number — Math.min still works */
@@ -356,7 +356,7 @@ function showReveal(){
   syncBoard(S.moves);
   renderMeta();
 }
-/* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'rings';
 const SYNC_BETTER = 'low';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }

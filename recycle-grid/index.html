@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="A 5×5 grid of letters. Normal mode gives you five shifts in two phases — rows, then columns — to build words before you Bank It. Practice with four, go hard with six (online only). The best possible board is always exact." />
-<title>Recycle: Grid · the daily shifting letters game</title>
+<meta name="description" content="A 5Ã—5 grid of letters. Normal mode gives you five shifts in two phases â€” rows, then columns â€” to build words before you Bank It. Practice with four, go hard with six (online only). The best possible board is always exact." />
+<title>Recycle: Grid Â· the daily shifting letters game</title>
 <link rel="stylesheet" href="../shell/common.css"/>
 <style>header{display:flex; align-items:flex-end; justify-content:space-between;}
 h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
@@ -69,7 +69,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <header>
     <div>
       <h1>Recycle: <span class="dot">Grid</span></h1>
-      <p class="sub">the daily shifting letters game · a history labs warmup</p>
+      <p class="sub">the daily shifting letters game Â· a history labs warmup</p>
     </div>
     <div class="icons">
       <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
@@ -77,11 +77,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </header>
 
   <div class="metaline">
-    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno">No. <b id="pno">â€“</b> Â· <span id="pdate"></span></span>
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="lead">A limited budget of shifts, in two phases: <b>rows first, then columns</b>. Undo and restart are free while you explore — each shift spends the budget, rows lock when you move on, and <b>Bank It</b> scores the words on the board. The <b>best possible board is exact</b> — hit it for a perfect bank.</p>
+  <p class="lead">A limited budget of shifts, in two phases: <b>rows first, then columns</b>. Undo and restart are free while you explore â€” each shift spends the budget, rows lock when you move on, and <b>Bank It</b> scores the words on the board. The <b>best possible board is exact</b> â€” hit it for a perfect bank.</p>
 
   <div class="modrow" id="modes"></div>
 
@@ -90,18 +90,18 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="scoreline">
     <span class="bignum"><span id="count">0</span> <span class="u">words on board</span></span>
     <span class="bignum"><span id="shifts">0</span><span class="u" id="shiftcap">of 5 shifts</span></span>
-    <span class="midnum"><span id="best">–</span><span class="u">best possible</span></span>
+    <span class="midnum"><span id="best">â€“</span><span class="u">best possible</span></span>
   </div>
 
-  <p class="phasenote" id="phasenote">Phase 1 — rows. Columns unlock when you lock the rows.</p>
+  <p class="phasenote" id="phasenote">Phase 1 â€” rows. Columns unlock when you lock the rows.</p>
 
-  <div class="words" id="words"><span class="none">no words yet — start shifting</span></div>
+  <div class="words" id="words"><span class="none">no words yet â€” start shifting</span></div>
 
   <div class="actions">
     <button class="btn" id="btnBank">Bank It</button>
-    <button class="btn ghost" id="btnLock">Lock rows →</button>
-    <button class="btn ghost" id="btnUndo">↩ Undo</button>
-    <button class="btn ghost" id="btnRestart">↻ Restart</button>
+    <button class="btn ghost" id="btnLock">Lock rows â†’</button>
+    <button class="btn ghost" id="btnUndo">â†© Undo</button>
+    <button class="btn ghost" id="btnRestart">â†» Restart</button>
   </div>
 
   <div class="reveal" id="reveal">
@@ -110,12 +110,12 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <div id="curve"></div>
     <div class="actions">
       <button class="btn" id="btnShare">Share result</button>
-      <span class="countdown">next puzzle in <span id="countdown">–</span></span>
+      <span class="countdown">next puzzle in <span id="countdown">â€“</span></span>
     </div>
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser Â· no accounts, no ads, no tracking<br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -124,9 +124,9 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="modal">
     <h2>How to play</h2>
     <p>Use the arrow buttons around the grid to <b>shift a row or a column</b> one step. Letters wrap around the edge. Every real word of 3+ letters reading left-to-right in a row or top-to-bottom in a column counts.</p>
-    <p><b>Three modes, three budgets:</b> <b>Practice · 4</b> — a fresh random board every time, validated instantly, nothing recorded. <b>Normal · 5</b> — the daily board; your one bank counts for your streak and the team curve. <b>Hard · 6</b> — the same daily board with one more shift, online only (the exact search is the heavy one), posting to its own bonus curve.</p>
-    <p><b>Two phases:</b> first you may only shift <b>rows</b>. Press <b>Lock rows</b> when you're happy with them (free) and the <b>columns</b> unlock — one-way, no going back to rows.</p>
-    <p><b>Undo</b> takes back your last shift and refunds its cost. <b>Restart</b> returns the board to its start with the budget untouched. Both are free — explore!</p>
+    <p><b>Three modes, three budgets:</b> <b>Practice Â· 4</b> â€” a fresh random board every time, validated instantly, nothing recorded. <b>Normal Â· 5</b> â€” the daily board; your one bank counts for your streak and the global curve. <b>Hard Â· 6</b> â€” the same daily board with one more shift, online only (the exact search is the heavy one), posting to its own bonus curve.</p>
+    <p><b>Two phases:</b> first you may only shift <b>rows</b>. Press <b>Lock rows</b> when you're happy with them (free) and the <b>columns</b> unlock â€” one-way, no going back to rows.</p>
+    <p><b>Undo</b> takes back your last shift and refunds its cost. <b>Restart</b> returns the board to its start with the budget untouched. Both are free â€” explore!</p>
     <p><b>Best possible is exact:</b> before you play, the page has already tried every shift plan within your budget, so the "best possible" number is a fact. Match it and Bank It for a <b>perfect</b> bank.</p>
     <p><b>Bank It</b> locks in the words currently on the board. In Normal the first bank of the day counts; Hard banks its own bonus curve; Practice records nothing.</p>
     <p>Same letters for everyone in Normal and Hard, so compare banks at standup.</p>
@@ -148,8 +148,8 @@ const WORDS_BY_LEN = { 3: [], 4: [], 5: [] };
 for (const w of DICT_SRC.split(',')) WORDS_BY_LEN[w.length].push(w);
 
 /* ---------------- deterministic daily generation ---------------- */
-/* day math, storage, toast, countdown, help/share wiring and the team-curve
-   client all live in ../shell/common.js — destructured once here */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js â€” destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 
 function mulberry32(a){
@@ -203,8 +203,8 @@ function findWords(letters){
   return [...found].sort();
 }
 
-/* Every per-line offset vector in Z5^5, grouped by its cost in ±1 shifts.
-   cost(v) = sum over lines of min(offset, 5-offset) — walking the short way. */
+/* Every per-line offset vector in Z5^5, grouped by its cost in Â±1 shifts.
+   cost(v) = sum over lines of min(offset, 5-offset) â€” walking the short way. */
 const VEC_BY_COST = (() => {
   const by = [];
   for (let c = 0; c <= BUDGET_MAX; c++) by.push([]);
@@ -223,7 +223,7 @@ const VEC_BY_COST = (() => {
 
 /* The exact maximum word count over every board the rules can reach at this
    budget: any row offsets (cost a), then any column offsets (cost b),
-   a+b <= budget. The two phases are what makes this exhaustive tractable —
+   a+b <= budget. The two phases are what makes this exhaustive tractable â€”
    ~10k sims at practice, ~25k at normal, ~62k at hard, each well under a
    second, and "best possible" is a fact, not an estimate. */
 function bestPossible(start, budget){
@@ -249,7 +249,7 @@ function bestPossible(start, budget){
 }
 
 /* Fat board: real words planted into random letters, then a greedy hill
-   climb over single ±1 shifts so the day's optimum is worth chasing. */
+   climb over single Â±1 shifts so the day's optimum is worth chasing. */
 function fatBoard(rng){
   const b = [];
   for (let i = 0; i < 25; i++){
@@ -289,7 +289,7 @@ function fatBoard(rng){
 
 /* The board is a fat board scrambled by offsets (a, o) with combined cost
    budget-1 or budget: start = R(-a) then C(-o) applied to the fat board,
-   so the player — who applies R then C — can always walk it back inside
+   so the player â€” who applies R then C â€” can always walk it back inside
    the budget. One generator for the daily board and for practice boards. */
 function genBoard(budget, seed){
   let fallback = null, any = null;
@@ -335,7 +335,7 @@ let S = loadState();
 if (!S || typeof S.mode !== 'string' || !MODES[S.mode]) S = (S && typeof S.stats === 'object') ? { stats: S.stats, mode: DEFAULT_MODE } : { mode: DEFAULT_MODE };
 if (!S || S.day !== dayIndex || !PUZZLE){
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
-    if (!S.counted) S.stats.streak = 0; /* missed the previous day */
+    if (!(S.counted && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since the last bank */
   }
   /* stats carry over from the clock-era grid (v1) */
   if (S && !S.stats && typeof localStorage !== 'undefined'){
@@ -406,10 +406,10 @@ function renderMeta(){
   $('shifts').textContent = S.used;
   $('shiftcap').textContent = 'of ' + B + ' shifts';
   $('best').textContent = curBest() || '\u2013';
-  $('phasenote').textContent = S.banked ? 'banked — see you tomorrow'
+  $('phasenote').textContent = S.banked ? 'banked â€” see you tomorrow'
     : (S.phase === 'rows'
-      ? 'Phase 1 — rows (' + (B - S.used) + ' left). Columns unlock when you lock the rows.'
-      : 'Phase 2 — columns (' + (B - S.used) + ' left). Rows are locked.');
+      ? 'Phase 1 â€” rows (' + (B - S.used) + ' left). Columns unlock when you lock the rows.'
+      : 'Phase 2 â€” columns (' + (B - S.used) + ' left). Rows are locked.');
   $('btnLock').disabled = S.banked || S.phase !== 'rows';
   $('btnUndo').disabled = S.banked || S.moves.length === 0;
   $('btnRestart').disabled = S.banked;
@@ -467,15 +467,15 @@ function lockRows(){
 
 /* practice rerolls on every entry; normal/hard share the day's board.
    hard is gated online: the six-shift exhaustive search is the heavy one,
-   and the bonus curve only exists when the team service is there to record
+   and the bonus curve only exists when the global service is there to record
    it. Day stats and the normal curve count the normal bank only. */
 let hardUnlocked = false;
 function setMode(m){
   if (!MODES[m] || m === S.mode) return;
   if (m === 'hard' && !hardUnlocked){
-    SHELL.toast('checking the team curve\u2026');
+    SHELL.toast('checking the global curve\u2026');
     SHELL.probeCurve().then(ok => {
-      if (!ok){ SHELL.toast('hard mode needs the team curve online'); return; }
+      if (!ok){ SHELL.toast('hard mode needs the global curve online'); return; }
       hardUnlocked = true;
       setMode('hard');
     });
@@ -562,12 +562,12 @@ function showReveal(words, perfect){
   const st = S.stats;
   const avg = st.played ? (st.totalWords / st.played).toFixed(1) : '0';
   $('verdict').textContent =
-    lastPerfect ? 'A perfect bank — the best possible board.' :
-    S.mode === 'practice' ? 'Practice banked — nothing recorded, try again.' :
-    words >= 10 ? 'A fat bank — the grid is humming.' :
-    words >= 7  ? 'Solid harvest — respectable banking.' :
+    lastPerfect ? 'A perfect bank â€” the best possible board.' :
+    S.mode === 'practice' ? 'Practice banked â€” nothing recorded, try again.' :
+    words >= 10 ? 'A fat bank â€” the grid is humming.' :
+    words >= 7  ? 'Solid harvest â€” respectable banking.' :
     words >= 4  ? 'Banked with something to show for it.' :
-                  'A lean bank — the budget got away.';
+                  'A lean bank â€” the budget got away.';
   $('sharetext').textContent =
     shareText() + (S.mode === 'practice' ? '' :
       `\nstreak ${st.streak} \u00b7 best ${st.bestWords} \u00b7 avg ${avg} words \u00b7 ${st.perfect} perfect`);
@@ -575,12 +575,12 @@ function showReveal(words, perfect){
   $('grid').style.pointerEvents = 'none';
   $('grid').style.opacity = '.55';
   if (S.mode === 'practice'){
-    $('curve').innerHTML = '<div class="curve-note">practice — nothing is recorded</div>';
+    $('curve').innerHTML = '<div class="curve-note">practice â€” nothing is recorded</div>';
   } else {
     syncBoard(words);
   }
 }
-/* ---------------- team curve (optional; talks to the tiny scores service) ---------------- */
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'grid';
 const SYNC_GAME_HARD = 'grid-hard';
 const SYNC_BETTER = 'high';

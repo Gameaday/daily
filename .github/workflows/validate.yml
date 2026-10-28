@@ -12,6 +12,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Guard - no "team" wording outside dictionaries
+        run: |
+          matches=$(grep -RInE '\bteam\b' . \
+            --exclude-dir=.git \
+            --exclude='wordlist-20210729.txt' \
+            --exclude='wordlist-clean.txt' \
+            --exclude='words-en.js' \
+            --exclude='valid-en.js' | grep -v 'sprint/index.html' || true)
+          if [ -n "$matches" ]; then
+            echo "::error::'team' found outside allowed dictionary/wordlist files"
+            echo "$matches"
+            exit 1
+          fi
       - name: Layer 1 - compile every game + shell/id/landing checks
         run: node checks/games.js
       - name: Layer 2 - play every game headless to a win/loss + rollover

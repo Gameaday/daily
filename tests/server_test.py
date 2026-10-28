@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Integration test for scores/server.py - the team-curve service.
+"""Integration test for scores/server.py - the global-curve service.
 
 Spawns the real server on a scratch port and exercises the API with urllib:
 health (bare and /api-prefixed), submit + dedupe (first submission of the day

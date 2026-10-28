@@ -1,4 +1,4 @@
-/* common.js — the shared shell for every warmup game, loaded once per page
+﻿/* common.js â€” the shared shell for every warmup game, loaded once per page
    via <script src="../shell/common.js"></script> and destructured at the top
    of each game's script:
 
@@ -6,7 +6,7 @@
 
    Everything that is not the puzzle lives here: day math (midnight ET
    rollover), localStorage persistence, toast, the countdown timer, the
-   help modal, share-to-clipboard and the team-curve client. That is more
+   help modal, share-to-clipboard and the global-curve client. That is more
    than half of every game file, so a new game is now just its puzzle.
 
    A game keeps its own tiny adapters so call sites never change:
@@ -24,7 +24,7 @@ const SHELL = (() => {
 
   /* ---- the daily puzzle: days since launch, rolling at midnight ET ---- */
   const TZ = 'America/New_York';
-  const EPOCH_KEY = '2026-10-27'; // launch date — puzzle No. 1
+  const EPOCH_KEY = '2026-10-27'; // launch date â€” puzzle No. 1
   function etKey(ms){
     return new Intl.DateTimeFormat('en-CA', {timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(ms));
   }
@@ -83,7 +83,7 @@ const SHELL = (() => {
     $('btnShare').addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(getText());
-        toast('Copied \u2014 paste it in the team channel');
+        toast('Copied \u2014 paste it anywhere');
       } catch (e){
         const r = document.createRange();
         r.selectNode($('sharetext'));
@@ -94,7 +94,7 @@ const SHELL = (() => {
     });
   }
 
-  /* ---- team curve client: the server owns the metric direction ---- */
+  /* ---- global curve client: the server owns the metric direction ---- */
   /* Solo mode: the whole site is static files, so an air-gapped copy (or
      any file:// download, or ?solo=1) plays exactly the same game with the
      curve switched off - nothing is submitted, no stats are fetched, and
@@ -107,10 +107,10 @@ const SHELL = (() => {
       const box = $('curve');
       if (!box) return;
       if (isSolo()){
-        box.innerHTML = '<div class="curve-note">solo mode \u2014 the team curve is switched off</div>';
+        box.innerHTML = '<div class="curve-note">solo mode \u2014 the global curve is switched off</div>';
         return;
       }
-      box.innerHTML = '<div class="curve-note">checking the team curve\u2026</div>';
+      box.innerHTML = '<div class="curve-note">checking the global curve\u2026</div>';
       let id = '';
       try {
         id = localStorage.getItem('warmup.id');
@@ -123,7 +123,7 @@ const SHELL = (() => {
         .catch(() => post('http://localhost:8787'))
         .catch(() => post('http://127.0.0.1:8787'))
         .then(d => renderBoard(d))
-        .catch(() => { box.innerHTML = '<div class="curve-note">team curve offline \u2014 playing solo today</div>'; });
+        .catch(() => { box.innerHTML = '<div class="curve-note">global curve offline \u2014 playing solo today</div>'; });
     };
   }
   function renderBoard(d){
@@ -131,21 +131,16 @@ const SHELL = (() => {
     if (!box) return;
     if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
     const maxBar = Math.max(...d.bins.map(b => b.count), 1);
-    const bars = d.bins.map(b => '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>').join('');
-    let you = '';
-    if (d.beat != null){
-      you = d.beat === d.count - 1 ? 'top of today\u2019s curve' : 'better than ' + d.beat + ' of ' + d.count;
-    }
+    const bars = d.bins.map(b =>
+      '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>' +
+      (b.you ? '<div class="you-mark">you</div>' : '')
+    ).join('');
     box.innerHTML =
-      '<div class="curve-head">team curve \u00b7 ' + d.count + ' today</div>' +
-      '<div class="curve-bars">' + bars + '</div>' +
-      ((you || d.mean != null) ? '<div class="curve-note">' +
-        (you ? 'you: ' + you : '') +
-        (d.mean != null ? (you ? ' \u00b7 ' : '') + 'team avg ' + d.mean : '') +
-        '</div>' : '');
+      '<div class="curve-head">global curve</div>' +
+      '<div class="curve-bars">' + bars + '</div>';
   }
 
-  /* ---- is the team curve service reachable? ---- */
+  /* ---- is the global curve service reachable? ---- */
   /* Used by games that gate a heavy or bonus mode on being online (grid
      hard mode). Any HTTP answer - even a 404 - proves the service is up;
      only a network error counts as offline. Solo mode is offline by design. */
@@ -158,11 +153,25 @@ const SHELL = (() => {
       .then(ok => ok || go('http://127.0.0.1:8787'));
   }
 
-  /* ---- the "No. N · date" line ---- */
+  /* ---- the "No. N Â· date" line ---- */
   function pdateText(){
     return new Date(Date.parse(todayKey) + 43200000)
       .toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
   }
+
+  /* ---- auto-inject a "home" link into every page's .icons header ---- */
+  try {
+    const icons = document.querySelector('.icons');
+    if (icons && !icons.querySelector('.home-link')){
+      const a = document.createElement('a');
+      a.className = 'iconbtn home-link';
+      a.href = '../';
+      a.textContent = '\u2302';
+      a.setAttribute('aria-label', 'All games');
+      a.style.textDecoration = 'none';
+      icons.insertBefore(a, icons.firstChild);
+    }
+  } catch(e){}
 
   return { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $,
            makeStore, toast, nextETMidnight, startCountdown,

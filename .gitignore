@@ -2,3 +2,8 @@
 wordlist-20210729.txt
 wordlist-clean.txt
 assets/valid-en.js
+scores/__pycache__/
+*scores/err.txt
+scores/puzzles.json
+
+dist/

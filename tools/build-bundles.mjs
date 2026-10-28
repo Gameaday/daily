@@ -1,48 +1,112 @@
+/* Builds two site-only bundles into dist/:
+   - dist/offline : everything a browser needs to play over file:// - the
+     site files with inline banks intact, plus the generated puzzle store.
+     Open dist/offline/index.html straight off the filesystem.
+   - dist/online  : the site with every gated bank stripped to `undefined`
+     - the puzzles come from the scores service's /puzzle route. This is
+     what the web container bakes in.
+   Both bundles are site-only: no tooling, tests, or deploy files, and a
+   verification pass fails the build if any relative src/href does not
+   resolve inside the bundle or a game's shell wiring went missing. */
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ROOT = process.cwd();
-const DIST = path.join(ROOT, 'dist');
-const OFFLINE = path.join(DIST, 'offline');
-const ONLINE = path.join(DIST, 'online');
+const GATED = {
+  bogus: 'PUZZLES',
+  'well-actually': 'PUZZLES',
+  rounds: 'EVENTS',
+  fermi: 'QS',
+  cipher: 'QUOTES',
+  museum: 'MUSEUM',
+  lightbox: 'DESIGNS',
+  sift: 'BOARDS',
+  timeline: 'EVENTS'
+};
+const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'dist', '__pycache__',
+  'deploy', 'tests', 'tools', 'checks', 'scores']);
+const SKIP_FILES = new Set(['.gitignore', '.dockerignore', '.env', '.env.example',
+  'Makefile', 'NOTES.md', 'README.md', 'package.json', 'package-lock.json',
+  'docker-compose.yml', 'Dockerfile.web', 'Dockerfile.scores', 'Caddyfile']);
 
-const SKIP = new Set(['.git', 'node_modules', 'dist', '__pycache__', 'scores/puzzles.json'.replace(/\//g, path.sep)]);
-
-function copyDir(src, dst) {
-  fs.mkdirSync(dst, { recursive: true });
-  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
-    const s = path.join(src, entry.name);
-    const d = path.join(dst, entry.name);
-    const rel = path.relative(ROOT, s);
-    if (SKIP.has(rel) || SKIP.has(entry.name)) continue;
-    if (entry.isDirectory()) copyDir(s, d);
-    else fs.copyFileSync(s, d);
+function copyDir(src, dest){
+  fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })){
+    if (entry.isDirectory()){
+      if (SKIP_DIRS.has(entry.name)) continue;
+      copyDir(path.join(src, entry.name), path.join(dest, entry.name));
+    } else if (!SKIP_FILES.has(entry.name)){
+      fs.copyFileSync(path.join(src, entry.name), path.join(dest, entry.name));
+    }
   }
 }
 
-function stripPuzzles(file) {
-  const src = fs.readFileSync(file, 'utf8');
-  const out = src.replace(/const PUZZLES = \[[\s\S]*?\];/, 'const PUZZLES = undefined;');
-  fs.writeFileSync(file, out);
+function stripBanks(html){
+  let out = html;
+  for (const v of Object.values(GATED)){
+    out = out.replace(new RegExp('const ' + v + ' = \\[([\\s\\S]*?)\\];'),
+      'const ' + v + ' = undefined;');
+  }
+  return out;
 }
 
-// fresh dist
-fs.rmSync(DIST, { recursive: true, force: true });
-copyDir(ROOT, OFFLINE);
-copyDir(ROOT, ONLINE);
-
-// online bundle must not ship puzzle data or the server-side puzzle store
-for (const g of ['bogus', 'well-actually']) {
-  stripPuzzles(path.join(ONLINE, g, 'index.html'));
+/* verification: every game keeps its shell wiring, every relative
+   reference resolves, banks present offline / stripped online */
+function checkHtml(file, rootDir, online){
+  const problems = [];
+  const html = fs.readFileSync(file, 'utf8');
+  const rel = path.relative(rootDir, file);
+  const isGame = rel.split(path.sep).length === 2 && rel.indexOf(path.sep) >= 0;
+  if (isGame){
+    if (html.indexOf('<script src="../shell/common.js"></script>') === -1)
+      problems.push(file + ': missing ../shell/common.js tag');
+    if (html.indexOf('href="../shell/common.css"') === -1)
+      problems.push(file + ': missing ../shell/common.css link');
+    const game = path.dirname(rel);
+    if (GATED[game]){
+      const has = new RegExp('const ' + GATED[game] + ' = \\[.').test(html);
+      if (online && has) problems.push(file + ': bank ' + GATED[game] + ' not stripped');
+      if (!online && !has) problems.push(file + ': inline bank ' + GATED[game] + ' missing');
+    }
+  }
+  const dir = path.dirname(file);
+  for (const m of html.matchAll(/(?:src|href)="([^"]+)"/g)){
+    const ref = m[1];
+    if (/^(https?:)?\/\//.test(ref) || ref.startsWith('#') || ref.startsWith('data:')) continue;
+    const target = path.resolve(dir, ref.split('#')[0]);
+    if (!fs.existsSync(target)) problems.push(file + ': broken reference ' + ref);
+  }
+  return problems;
 }
-const onlinePuzzles = path.join(ONLINE, 'scores', 'puzzles.json');
-if (fs.existsSync(onlinePuzzles)) fs.rmSync(onlinePuzzles);
 
-// offline bundle keeps (and may need) the generated puzzle store; generate if present
-const offlineStore = path.join(OFFLINE, 'scores', 'puzzles.json');
-if (!fs.existsSync(offlineStore)) {
-  const srcStore = path.join(ROOT, 'scores', 'puzzles.json');
-  if (fs.existsSync(srcStore)) fs.copyFileSync(srcStore, offlineStore);
+fs.rmSync('dist', { recursive: true, force: true });
+copyDir('.', 'dist/offline');
+if (fs.existsSync('scores/puzzles.json')){
+  fs.mkdirSync('dist/offline/scores', { recursive: true });
+  fs.copyFileSync('scores/puzzles.json', 'dist/offline/scores/puzzles.json');
+}
+copyDir('.', 'dist/online');
+for (const g of Object.keys(GATED)){
+  const p = path.join('dist/online', g, 'index.html');
+  if (fs.existsSync(p)) fs.writeFileSync(p, stripBanks(fs.readFileSync(p, 'utf8')));
 }
 
-console.log('built dist/offline and dist/online');
+const problems = [];
+for (const bundle of ['offline', 'online']){
+  const rootDir = path.join('dist', bundle);
+  for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js'])
+    if (!fs.existsSync(path.join(rootDir, f))) problems.push(bundle + ': missing ' + f);
+  const stack = [rootDir];
+  while (stack.length){
+    const dir = stack.pop();
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })){
+      const p = path.join(dir, entry.name);
+      if (entry.isDirectory()) stack.push(p);
+      else if (entry.name === 'index.html') problems.push(...checkHtml(p, rootDir, bundle === 'online'));
+    }
+  }
+}
+if (problems.length){
+  for (const p of problems) console.error('FAIL ' + p);
+  process.exit(1);
+}
+console.log('bundles built: dist/offline (banks intact, plays over file://) + dist/online (banks stripped, puzzles served)');

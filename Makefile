@@ -2,12 +2,20 @@
 # Everything here is a convenience; the underlying commands are plain
 # git + docker compose, safe to run by hand.
 
-.PHONY: test up down restart logs deploy
+.PHONY: test build up down restart logs deploy
 
+# full local gate: same three layers CI runs, with the puzzle store
+# regenerated first (run.js checks the exported picks against the games)
 test:
+	node tools/export-puzzles.mjs
 	node checks/games.js
 	node tests/run.js
 	python3 tests/server_test.py
+
+# build the offline + online site bundles into dist/
+build:
+	node tools/export-puzzles.mjs
+	node tools/build-bundles.mjs
 
 up:
 	docker compose up -d --build
@@ -23,6 +31,8 @@ logs:
 
 # Run anywhere with the repo (the same thing the systemd timer runs):
 # fetch, verify CI is green on origin/main, fast-forward, rebuild containers.
+# The rebuild is what ships new site content - the site is baked into the
+# images, and a failed rebuild leaves the old containers running.
 # No SSH, no secrets - the machine running it only makes outbound connections.
 deploy:
 	python3 deploy/pull.py

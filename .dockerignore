@@ -1,6 +1,20 @@
-# keep the build context small; the site itself is bind-mounted, not copied
+# keep the build context small; the node build stages regenerate the
+# puzzle store themselves, so the generated file never enters the context
 .git
 .github
 .env
 node_modules
+dist
 __pycache__
+deploy
+tests
+checks
+NOTES.md
+README.md
+Makefile
+package.json
+package-lock.json
+.gitignore
+.dockerignore
+.env.example
+scores/puzzles.json

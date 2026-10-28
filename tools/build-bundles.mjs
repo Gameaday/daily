@@ -1,4 +1,3 @@
-=====FILE tools/build-bundles.mjs
 /* Builds two site-only bundles into dist/:
    - dist/offline : everything a browser needs to play over file:// - the
      site files with inline banks intact, plus the generated puzzle store.

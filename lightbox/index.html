@@ -134,9 +134,24 @@ const DESIGNS = [
 /* ---------------- deterministic daily pick ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
-const DESIGN = DESIGNS[((dayIndex % DESIGNS.length) + DESIGNS.length) % DESIGNS.length];
-const SOL = DESIGN.g.map(row => [...row].map(c => c === '#' ? 1 : 0));
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let DESIGN = null;
+let SOL = null;
+let ROWCLUES = null;
+let COLCLUES = null;
+function applyDesign(d){
+  DESIGN = d;
+  SOL = d.g.map(row => [...row].map(c => c === '#' ? 1 : 0));
+  ROWCLUES = SOL.map(runs);
+  COLCLUES = [0,1,2,3,4,5,6].map(c => runs(SOL.map(r => r[c])));
+}
+async function loadPuzzle(){
+  const L = typeof DESIGNS !== 'undefined' ? DESIGNS.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof DESIGNS !== 'undefined') applyDesign(DESIGNS[idx]);
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('lightbox', dayIndex); if (d && d.puzzle) applyDesign(d.puzzle); } catch (e) {}
+}
 
 function runs(line){
   const out = []; let c = 0;
@@ -144,8 +159,7 @@ function runs(line){
   if (c) out.push(c);
   return out.length ? out : [0];
 }
-const ROWCLUES = SOL.map(runs);
-const COLCLUES = [0,1,2,3,4,5,6].map(c => runs(SOL.map(r => r[c])));
+
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.lightbox.v1';
@@ -194,10 +208,11 @@ function renderMistakes(){
   $('mistakes').innerHTML = `developments left: ${pips}<span style="margin-left:6px;">${4 - S.mistakes}</span>`;
 }
 
-function renderAll(){ renderGrid(); renderMistakes(); }
+function renderAll(){ if (!SOL) return; renderGrid(); renderMistakes(); }
 
 /* ---------------- play ---------------- */
 $('grid').addEventListener('click', e => {
+  if (!SOL) return;
   const el = e.target.closest('.cell');
   if (!el || S.status !== 'playing') return;
   const r = +el.dataset.r, c = +el.dataset.c;
@@ -223,6 +238,7 @@ function currentMatches(){
 }
 
 $('btnDevelop').addEventListener('click', () => {
+  if (!SOL) return;
   if (S.status !== 'playing') return;
   if (currentMatches()){
     S.status = 'won';
@@ -303,11 +319,13 @@ function onTick(){  if (S.status === 'playing'){
 }
 
 /* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500, onTick);
+});
 </script>
 </body>
 </html>

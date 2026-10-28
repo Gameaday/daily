@@ -1,15 +1,18 @@
-﻿# Docker deploy for the Pi (or any small host).
-#   cp .env.example .env   # edit DAILY_DOMAIN
+# Docker deploy for the Pi (or any small host) - self-contained by design.
 #   docker compose up -d --build
 #
-# web     - Caddy serving this repo read-only from /srv/daily, TLS automatic
-# scores  - the in-memory global-curve service; internal network only,
-#           read-only filesystem, no capabilities, 64 MB cap. It keeps
-#           consolidated per-day numbers only and forgets everything on
-#           restart - by design.
+# web     - Caddy serving the online bundle baked into the image (no puzzle
+#           banks inside; puzzles are served by the scores service). Plain
+#           HTTP on host port 8080: point your edge proxy (Traefik, nginx,
+#           ...) at it for TLS/domains. The repo needs no domain config.
+# scores  - the in-memory global-curve + puzzle-delivery service; internal
+#           network only, read-only filesystem, no capabilities, 64 MB cap.
+#           It keeps consolidated per-day numbers and the generated puzzle
+#           store, and forgets player data on restart - by design.
 #
-# Updating after a git push: `make deploy` (or the GitHub Actions SSH deploy)
-# pulls main and recreates the containers.
+# Updating after a git push: `make deploy` (or the update timer) pulls
+# main when CI is green on that exact commit and rebuilds the containers -
+# a rebuild is what ships new site content now that the site is baked in.
 
 services:
   web:
@@ -18,16 +21,10 @@ services:
       dockerfile: Dockerfile.web
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      # plain HTTP entry point - the edge proxy terminates TLS elsewhere
+      - "8080:80"
     environment:
-      DAILY_DOMAIN: ${DAILY_DOMAIN:-daily.historylabs.dev}
-      SCORES_UPSTREAM: scores:8787
-    volumes:
-      # the whole site, read-only - Caddy can never write into the repo
-      - ./:/srv/daily:ro
-      - caddy_data:/data
-      - caddy_config:/config
+      SCORES_UPSTREAM: ${SCORES_UPSTREAM:-scores:8787}
     depends_on:
       - scores
 
@@ -45,7 +42,3 @@ services:
     mem_limit: 64m
     expose:
       - "8787"
-
-volumes:
-  caddy_data:
-  caddy_config:

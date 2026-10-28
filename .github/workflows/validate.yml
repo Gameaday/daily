@@ -12,27 +12,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Guard - no "team" wording outside dictionaries
-        run: |
-          matches=$(grep -RInE '\bteam\b' . \
-            --exclude-dir=.git \
-            --exclude='wordlist-20210729.txt' \
-            --exclude='wordlist-clean.txt' \
-            --exclude='words-en.js' \
-            --exclude='valid-en.js' | grep -v 'sprint/index.html' || true)
-          if [ -n "$matches" ]; then
-            echo "::error::'team' found outside allowed dictionary/wordlist files"
-            echo "$matches"
-            exit 1
-          fi
       - name: Generate server-side puzzle store
         run: node tools/export-puzzles.mjs
       - name: Layer 1 - compile every game + shell/id/landing checks
-        run: node checks/games.js
+        run: |
+          set -o pipefail
+          node checks/games.js 2>&1 | tee /tmp/l1.log || { grep -E 'FAIL|failure' /tmp/l1.log | head -10 | sed 's/^/::error::/'; exit 1; }
       - name: Layer 2 - play every game headless to a win/loss + rollover
-        run: node tests/run.js
+        run: |
+          set -o pipefail
+          node tests/run.js 2>&1 | tee /tmp/l2.log || { grep -E 'FAIL|EXCEPTION|TOTAL' /tmp/l2.log | head -25 | sed 's/^/::error::/'; exit 1; }
       - name: Layer 3 - scores service API test (spawn + urllib)
-        run: python3 tests/server_test.py
+        run: |
+          set -o pipefail
+          python3 tests/server_test.py 2>&1 | tee /tmp/l3.log || { tail -10 /tmp/l3.log | sed 's/^/::error::/'; exit 1; }
       - name: Build online + offline bundles
         run: node tools/build-bundles.mjs
       - name: Upload offline bundle

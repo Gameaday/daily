@@ -241,12 +241,22 @@ class Handler(BaseHTTPRequestHandler):
             if day > today:
                 self._json({"error": "future day not available"}, 403)
                 return
-            items = PUZZLES[game]
-            if not items:
-                self._json({"error": "no puzzles"}, 404)
-                return
-            idx = day % len(items)
-            self._json({"game": game, "day": day, "puzzle": items[idx], "today": today})
+            entry = PUZZLES[game]
+            if isinstance(entry, dict) and "picks" in entry:
+                # windowed game: precomputed picks into the bank (timeline)
+                picks = entry["picks"]
+                if day < 0 or day >= len(picks):
+                    self._json({"error": "no puzzles"}, 404)
+                    return
+                bank = entry["bank"]
+                events = [bank[i] for i in picks[day]]
+                self._json({"game": game, "day": day, "puzzle": {"events": events}, "today": today})
+            else:
+                if not entry:
+                    self._json({"error": "no puzzles"}, 404)
+                    return
+                idx = day % len(entry)
+                self._json({"game": game, "day": day, "puzzle": entry[idx], "today": today})
         else:
             self._json({"error": "not found"}, 404)
 

@@ -1,6 +1,13 @@
-# Static site container: Caddy with the repo's Caddyfile baked in.
-# The site itself is bind-mounted read-only at runtime (see docker-compose.yml),
-# so a plain `git pull` + `docker compose restart web` picks up game changes
-# with no rebuild; rebuild only matters when the Caddyfile changes.
+# Static site container: the ONLINE bundle is baked in at build time.
+# The bundle ships with every puzzle bank stripped - puzzles arrive at
+# runtime from the scores service - so a rebuild is what ships new site
+# content (the pull-based updater already rebuilds on green CI).
+FROM node:20-alpine AS build
+WORKDIR /repo
+COPY . .
+RUN node tools/export-puzzles.mjs && node tools/build-bundles.mjs
+
 FROM caddy:2.8-alpine
 COPY Caddyfile /etc/caddy/Caddyfile
+COPY --from=build /repo/dist/online /srv/daily
+EXPOSE 80

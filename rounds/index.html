@@ -168,8 +168,15 @@ const EVENTS = [
 /* ---------------- deterministic daily pick ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
-const EV = EVENTS[((dayIndex % EVENTS.length) + EVENTS.length) % EVENTS.length];
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let EV = null;
+async function loadPuzzle(){
+  const L = typeof EVENTS !== 'undefined' ? EVENTS.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof EVENTS !== 'undefined') EV = EVENTS[idx];
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('rounds', dayIndex); if (d && d.puzzle) EV = d.puzzle; } catch (e) {}
+}
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.rounds.v1';
@@ -232,6 +239,7 @@ function showReveal(){
 /* ---------------- play ---------------- */
 $('slider').addEventListener('input', () => { $('yearbox').textContent = $('slider').value; });
 $('btnLock').addEventListener('click', () => {
+  if (!EV) return;
   if (S.status !== 'playing') return;
   const y = +$('slider').value;
   const off = Math.abs(y - EV.y);
@@ -272,6 +280,7 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 
 /* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 $('qtag').textContent = EV.t;
@@ -279,6 +288,7 @@ $('qtext').textContent = EV.q + ' When?';
 renderGuesses();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500);
+});
 </script>
 </body>
 </html>

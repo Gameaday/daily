@@ -82,7 +82,7 @@ function createHarness(readGame, readShared){
     static now(){ return activeNow; }
   }
 
-  function makeEnv(store){
+  function makeEnv(store, servePuzzle){
     const els = {};
     const fetchLog = [];
     const el = id => els[id] || (els[id] = new El(id));
@@ -105,7 +105,12 @@ function createHarness(readGame, readShared){
       navigator: { clipboard: { writeText: () => Promise.resolve() } },
       getSelection: () => ({ removeAllRanges(){}, addRange(){} }),
       fetch: (url, opts) => {
-        fetchLog.push({ url, body: JSON.parse(opts.body) });
+        const body = opts && opts.body ? JSON.parse(opts.body) : null;
+        if (body !== null) fetchLog.push({ url, body });
+        /* GET /puzzle answers with the canned puzzle when the test supplies
+           one, mirroring the scores service's server-gated delivery */
+        if (body === null && servePuzzle && String(url).indexOf('/puzzle') >= 0)
+          return Promise.resolve({ ok: true, json: async () => servePuzzle });
         return Promise.resolve({ ok: true, json: async () => SNAPSHOT });
       },
       location: { reload(){} },
@@ -120,8 +125,8 @@ function createHarness(readGame, readShared){
      A missing name throws a ReferenceError - loud by design. */
   function boot(game, expose, opts){
     activeNow = opts.now;
-    const env = makeEnv(opts.store);
-    const html = readGame(game);
+    const env = makeEnv(opts.store, opts.servePuzzle);
+    const html = opts.html !== undefined ? opts.html : readGame(game);
     const m = html.match(/<script>([\s\S]*?)<\/script>/);
     if (!m) throw new Error(game + ': no script block found');
     /* Since the shell extraction a game runs on top of shell/common.js

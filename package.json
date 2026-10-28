@@ -3,7 +3,9 @@
   "private": true,
   "description": "Daily history warmup games - static files + a tiny stdlib scores service. Zero npm dependencies.",
   "scripts": {
-    "test": "node checks/games.js && node tests/run.js && python3 tests/server_test.py",
+    "export": "node tools/export-puzzles.mjs",
+    "build": "node tools/export-puzzles.mjs && node tools/build-bundles.mjs",
+    "test": "node tools/export-puzzles.mjs && node checks/games.js && node tests/run.js && python3 tests/server_test.py",
     "test:games": "node checks/games.js && node tests/run.js",
     "test:server": "python3 tests/server_test.py"
   }

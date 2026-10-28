@@ -158,7 +158,7 @@ const EVENTS = [
 /* ---------------- daily selection ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
 
 function mulberry32(a){
   return function(){
@@ -169,21 +169,11 @@ function mulberry32(a){
   };
 }
 
-/* pick five events with distinct years, then shuffle the display order */
-const rng = mulberry32(dayIndex * 2357 + 71);
-const idxs = [];
-for (let i = 0; i < EVENTS.length; i++) idxs.push(i);
-for (let i = idxs.length - 1; i > 0; i--){
-  const j = Math.floor(rng() * (i + 1));
-  [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
-}
-const PICK = [];
-const seenYears = new Set();
-for (const i of idxs){
-  if (!seenYears.has(EVENTS[i].y)){ PICK.push(i); seenYears.add(EVENTS[i].y); }
-  if (PICK.length === 5) break;
-}
-const SORTED = [...PICK].sort((a, b) => EVENTS[a].y - EVENTS[b].y);
+let EVO = null;
+let PICK = [];
+let SORTED = [];
+let SHUFFLED = [];
+let rng = null;
 
 function displayOrder(){
   const arr = [...PICK];
@@ -191,12 +181,51 @@ function displayOrder(){
     const j = Math.floor(rng() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  if (arr.every((v, i) => EVENTS[v].y === EVENTS[SORTED[i]].y) && arr.length > 1){
+  if (arr.every((v, i) => EVO[v].y === EVO[SORTED[i]].y) && arr.length > 1){
     [arr[0], arr[1]] = [arr[1], arr[0]];
   }
   return arr;
 }
-const SHUFFLED = displayOrder();
+
+function applyPuzzle(events){
+  EVO = events;
+  /* identity pick: EVO holds the day's five events in pick order */
+  PICK = events.map((e, i) => i);
+  SORTED = [...PICK].sort((a, b) => EVO[a].y - EVO[b].y);
+  SHUFFLED = displayOrder();
+}
+
+async function loadPuzzle(){
+  if (typeof EVENTS !== 'undefined' && EVENTS && EVENTS.length){
+    /* pick five events with distinct years, then shuffle the display order */
+    rng = mulberry32(dayIndex * 2357 + 71);
+    const idxs = [];
+    for (let i = 0; i < EVENTS.length; i++) idxs.push(i);
+    for (let i = idxs.length - 1; i > 0; i--){
+      const j = Math.floor(rng() * (i + 1));
+      [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+    }
+    const picked = [];
+    const seenYears = new Set();
+    for (const i of idxs){
+      if (!seenYears.has(EVENTS[i].y)){ picked.push(i); seenYears.add(EVENTS[i].y); }
+      if (picked.length === 5) break;
+    }
+    applyPuzzle(picked.map(i => EVENTS[i]));
+  }
+  initDay();
+  if (isSolo()) return;
+  try {
+    const d = await fetchPuzzle('timeline', dayIndex);
+    if (d && d.puzzle && d.puzzle.events){
+      /* fresh display shuffle for the served events (cosmetic-only
+         difference from the offline pick) */
+      rng = mulberry32(dayIndex * 9109 + 13);
+      applyPuzzle(d.puzzle.events);
+      initDay();
+    }
+  } catch (e) {}
+}
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.timeline.v1';
@@ -204,19 +233,23 @@ const store = SHELL.makeStore(KEY);
 function loadState(){ return store.load(); }
 function saveState(){ store.save(S); }
 let S = loadState();
+function initDay(){
+  if (!EVO) return; /* wait for the day's events */
 if (!S || S.day !== dayIndex){
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
   if (S && S.day !== dayIndex && S.status === 'playing' && S.started) stats.streak = 0;
   S = { day: dayIndex, order: SHUFFLED.map(i => PICK.indexOf(i)), locked: [false,false,false,false,false],
         checks: 0, sel: null, started: false, status:'playing', stats };
 }
-saveState();
+  saveState();
+}
 
 /* ---------------- dom ---------------- */
-function evAt(i){ return EVENTS[PICK[S.order[i]]]; }
+function evAt(i){ return EVO[PICK[S.order[i]]]; }
 function allLocked(){ return S.locked.every(Boolean); }
 
 function render(){
+  if (!EVO || !S) return;
   let html = '';
   for (let i = 0; i < 5; i++){
     const e = evAt(i);
@@ -235,6 +268,7 @@ function render(){
   $('btnGiveUp').disabled = S.status !== 'playing';
 }
 $('lane').addEventListener('click', e => {
+  if (!EVO || !S) return;
   const card = e.target.closest('.ecard');
   if (!card || S.status !== 'playing') return;
   const i = +card.dataset.i;
@@ -249,18 +283,20 @@ $('lane').addEventListener('click', e => {
   saveState(); render();
 });
 $('btnCheck').addEventListener('click', () => {
+  if (!EVO || !S) return;
   if (S.status !== 'playing') return;
   S.started = true;
   S.checks++;
   let right = 0;
   for (let i = 0; i < 5; i++){
-    if (evAt(i).y === EVENTS[SORTED[i]].y){ S.locked[i] = true; right++; }
+    if (evAt(i).y === EVO[SORTED[i]].y){ S.locked[i] = true; right++; }
   }
   saveState(); render();
   if (allLocked()) finish('won');
   else toastMsg(right + (right === 1 ? ' card is' : ' cards are') + ' in the right place');
 });
 $('btnGiveUp').addEventListener('click', () => {
+  if (!EVO || !S) return;
   if (S.status !== 'playing') return;
   finish('gaveup');
 });
@@ -314,11 +350,13 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 
 /* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500);
+});
 </script>
 </body>
 </html>

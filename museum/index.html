@@ -279,8 +279,15 @@ const MUSEUM = [
 /* ---------------- daily selection ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js â€” destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
-const EXHIBIT = MUSEUM[dayIndex % MUSEUM.length];
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let EXHIBIT = null;
+async function loadPuzzle(){
+  const L = typeof MUSEUM !== 'undefined' ? MUSEUM.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof MUSEUM !== 'undefined') EXHIBIT = MUSEUM[idx];
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('museum', dayIndex); if (d && d.puzzle) EXHIBIT = d.puzzle; } catch (e) {}
+}
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.museum.v1';
@@ -320,6 +327,7 @@ function render(){
 $('btnGuess').addEventListener('click', submitGuess);
 $('guess').addEventListener('keydown', e => { if (e.key === 'Enter') submitGuess(); });
 function submitGuess(){
+  if (!EXHIBIT) return;
   if (S.status !== 'playing') return;
   const inp = $('guess');
   if (!inp.value.trim()) return;
@@ -341,6 +349,7 @@ function submitGuess(){
   }
 }
 $('btnClue').addEventListener('click', () => {
+  if (!EXHIBIT) return;
   if (S.status !== 'playing' || S.clueIdx >= 4) return;
   S.started = true;
   S.clueIdx++;
@@ -402,11 +411,13 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 
 /* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500);
+});
 </script>
 </body>
 </html>

@@ -153,9 +153,10 @@ const QUOTES = [
 /* ---------------- daily selection ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
-const Q = QUOTES[dayIndex % QUOTES.length];
-
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let Q = null;
+let CIPHER = null;
+let FREQ_ORDER = null;
 function mulberry32(a){
   return function(){
     a |= 0; a = a + 0x6D2B79F5 | 0;
@@ -181,12 +182,21 @@ function buildSub(rnd){
   return { enc, dec };
 }
 const SUB = buildSub(mulberry32(dayIndex * 668265263 % 4294967296 + 29));
-const CIPHER = [...Q.q].map(ch => /[A-Z]/.test(ch) ? SUB.enc[ch] : ch);
-
-/* frequency order of cipher letters in today's quote */
-const freq = {};
-[...Q.q].forEach(ch => { if (/[A-Z]/.test(ch)) freq[SUB.enc[ch]] = (freq[SUB.enc[ch]] || 0) + 1; });
-const FREQ_ORDER = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+function applyQuote(q){
+  Q = q;
+  CIPHER = [...q.q].map(ch => /[A-Z]/.test(ch) ? SUB.enc[ch] : ch);
+  /* frequency order of cipher letters in today's quote */
+  const freq = {};
+  [...q.q].forEach(ch => { if (/[A-Z]/.test(ch)) freq[SUB.enc[ch]] = (freq[SUB.enc[ch]] || 0) + 1; });
+  FREQ_ORDER = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+}
+async function loadPuzzle(){
+  const L = typeof QUOTES !== 'undefined' ? QUOTES.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof QUOTES !== 'undefined') applyQuote(QUOTES[idx]);
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('cipher', dayIndex); if (d && d.puzzle) applyQuote(d.puzzle); } catch (e) {}
+}
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.cipher.v1';
@@ -241,6 +251,7 @@ function render(){
   $('btnGiveUp').disabled = S.status !== 'playing';
 }
 $('quote').addEventListener('click', e => {
+  if (!Q) return;
   const slot = e.target.closest('.slot');
   if (!slot || S.status !== 'playing') return;
   S.sel = slot.dataset.c;
@@ -262,6 +273,7 @@ function unassign(){
   saveState(); render();
 }
 document.addEventListener('keydown', e => {
+  if (!Q) return;
   if (S.status !== 'playing' || !S.sel) return;
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   if (/^[a-zA-Z]$/.test(e.key)){
@@ -277,6 +289,7 @@ document.addEventListener('keydown', e => {
 const kbd = $('kbd');
 kbd.value = ' ';
 kbd.addEventListener('input', () => {
+  if (!Q) return;
   const v = kbd.value;
   kbd.value = ' ';
   if (S.status !== 'playing' || !S.sel) return;
@@ -285,6 +298,7 @@ kbd.addEventListener('input', () => {
   if (/^[A-Z]$/.test(p)) assign(p);
 });
 $('btnHint').addEventListener('click', () => {
+  if (!Q) return;
   if (S.status !== 'playing' || S.hints >= 5) return;
   S.started = true;
   const cand = FREQ_ORDER.find(c => !S.map[c] || S.map[c] !== SUB.dec[c]);
@@ -298,6 +312,7 @@ $('btnHint').addEventListener('click', () => {
   if (solvedP()) finish('won');
 });
 $('btnGiveUp').addEventListener('click', () => {
+  if (!Q) return;
   if (S.status !== 'playing') return;
   finish('gaveup');
 });
@@ -355,6 +370,7 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 
 /* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 $('author').textContent = '\u2014 ' + Q.a;
@@ -365,6 +381,7 @@ if (S.status !== 'playing'){
   finish('won');
 }
 SHELL.startCountdown('countdown', 500);
+});
 </script>
 </body>
 </html>

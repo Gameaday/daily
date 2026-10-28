@@ -183,8 +183,28 @@ const COLORS = ['#2e7d4f', '#b3541e', '#1f6f8b', '#7a5aa0'];
 /* ---------------- deterministic daily pick & shuffle ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
-const BOARD = BOARDS[dayIndex % BOARDS.length];
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let BOARD = null;
+let TILES = [];
+function applyBoard(b){
+  BOARD = b;
+  /* tile list: {text, cat} */
+  TILES.length = 0;
+  BOARD.cats.forEach((cat, ci) => cat.i.forEach(text => TILES.push({ text, cat: ci })));
+  /* deterministic shuffle of the display order */
+  const rng = mulberry32(dayIndex * 6151 + 42);
+  for (let i = TILES.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [TILES[i], TILES[j]] = [TILES[j], TILES[i]];
+  }
+}
+async function loadPuzzle(){
+  const L = typeof BOARDS !== 'undefined' ? BOARDS.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof BOARDS !== 'undefined') applyBoard(BOARDS[idx]);
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('sift', dayIndex); if (d && d.puzzle) applyBoard(d.puzzle); } catch (e) {}
+}
 
 function mulberry32(a){
   return function(){
@@ -194,17 +214,7 @@ function mulberry32(a){
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   };
 }
-// tile list: {text, cat}
-const TILES = [];
-BOARD.cats.forEach((cat, ci) => cat.i.forEach(text => TILES.push({ text, cat: ci })));
-// deterministic shuffle of the display order
-(function shuffle(){
-  const rng = mulberry32(dayIndex * 6151 + 42);
-  for (let i = TILES.length - 1; i > 0; i--){
-    const j = Math.floor(rng() * (i + 1));
-    [TILES[i], TILES[j]] = [TILES[j], TILES[i]];
-  }
-})();
+
 /* ---------------- state ---------------- */
 const KEY = 'warmup.sift.v1';
 const store = SHELL.makeStore(KEY);
@@ -272,6 +282,7 @@ $('tiles').addEventListener('click', e => {
 $('btnClear').addEventListener('click', () => { sel.clear(); renderTiles(); updateSubmit(); });
 
 $('btnSubmit').addEventListener('click', () => {
+  if (!BOARD) return;
   if (sel.size !== 3 || S.status !== 'playing') return;
   const selTexts = new Set([...sel].map(i => TILES[i].text));
   const hit = BOARD.cats.findIndex((c, ci) => !S.solvedCats.includes(ci) && c.i.length === 3 && c.i.every(x => selTexts.has(x)));
@@ -341,11 +352,13 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 
 /* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500);
+});
 </script>
 </body>
 </html>

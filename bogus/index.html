@@ -407,17 +407,12 @@ const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } 
 let puzzle = null;
 async function loadPuzzle(){
   const idx = ((dayIndex % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) + (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1);
-  if (isSolo() || typeof PUZZLES === 'undefined') {
-    if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
-    return;
-  }
+  if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
+  if (isSolo()) return;
   try {
     const d = await fetchPuzzle('bogus', dayIndex);
-    puzzle = d.puzzle;
-  } catch (e) {
-    // graceful degradation: fall back to local copy if service unreachable
-    if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
-  }
+    if (d && d.puzzle) puzzle = d.puzzle;
+  } catch (e) {}
 }
 
 /* ---------------- state (browser-only persistence) ---------------- */

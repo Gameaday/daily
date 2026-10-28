@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const games = ['bogus'];
+const games = ['bogus', 'well-actually'];
 const out = {};
 for (const g of games) {
   const src = fs.readFileSync(`${g}/index.html`, 'utf8');

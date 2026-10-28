@@ -25,9 +25,23 @@ jobs:
             echo "$matches"
             exit 1
           fi
+      - name: Generate server-side puzzle store
+        run: node tools/export-puzzles.mjs
       - name: Layer 1 - compile every game + shell/id/landing checks
         run: node checks/games.js
       - name: Layer 2 - play every game headless to a win/loss + rollover
         run: node tests/run.js
       - name: Layer 3 - scores service API test (spawn + urllib)
         run: python3 tests/server_test.py
+      - name: Build online + offline bundles
+        run: node tools/build-bundles.mjs
+      - name: Upload offline bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-bundle
+          path: dist/offline
+      - name: Upload online bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: online-bundle
+          path: dist/online

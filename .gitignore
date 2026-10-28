@@ -5,3 +5,5 @@ assets/valid-en.js
 scores/__pycache__/
 *scores/err.txt
 scores/puzzles.json
+
+dist/

@@ -24,8 +24,24 @@ import hashlib
 import json
 import math
 import threading
+from datetime import date, datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+try:
+    from zoneinfo import ZoneInfo
+except Exception:  # pragma: no cover
+    ZoneInfo = None
+
+TZ_NAME = 'America/New_York'
+EPOCH_KEY = '2026-10-27'
+PUZZLES_PATH = Path(__file__).with_name('puzzles.json')
+PUZZLES = {}
+try:
+    with PUZZLES_PATH.open(encoding='utf-8') as f:
+        PUZZLES = json.load(f)
+except FileNotFoundError:
+    PUZZLES = {}
 
 PRUNE_DAYS = 1
 MAX_BODY = 2048
@@ -68,6 +84,15 @@ def bin_index(value, edges):
             return i
     return n - 1
 
+
+def current_day_index():
+    try:
+        tz = ZoneInfo(TZ_NAME) if ZoneInfo else None
+    except Exception:
+        tz = None
+    today = datetime.now(tz).date() if tz else date.today()
+    epoch = date.fromisoformat(EPOCH_KEY)
+    return (today - epoch).days
 
 def prune(game):
     newest = NEWEST.get(game)
@@ -198,6 +223,30 @@ class Handler(BaseHTTPRequestHandler):
             with LOCK:
                 payload = snapshot(game, day)
             self._json(payload)
+        elif path == "/puzzle":
+            qs = parse_qs(urlparse(self.path).query)
+            game = (qs.get("game") or [""])[0]
+            if game not in PUZZLES:
+                self._json({"error": "unknown game"}, 400)
+                return
+            try:
+                day = int((qs.get("day") or ["0"])[0])
+            except ValueError:
+                self._json({"error": "bad day"}, 400)
+                return
+            if not (DAY_MIN <= day <= DAY_MAX):
+                self._json({"error": "bad day"}, 400)
+                return
+            today = current_day_index()
+            if day > today:
+                self._json({"error": "future day not available"}, 403)
+                return
+            items = PUZZLES[game]
+            if not items:
+                self._json({"error": "no puzzles"}, 404)
+                return
+            idx = day % len(items)
+            self._json({"game": game, "day": day, "puzzle": items[idx], "today": today})
         else:
             self._json({"error": "not found"}, 404)
 

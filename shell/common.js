@@ -159,7 +159,21 @@ const SHELL = (() => {
       .toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
   }
 
-  /* ---- auto-inject a "home" link into every page's .icons header ---- */
+  /* ---- fetch today's (or an older) puzzle from the scores service ---- */
+  /* Online mode only: the server refuses future days, so the client never
+     receives puzzles it is not allowed to see. Solo mode callers should use
+     their local PUZZLES array instead. */
+  function fetchPuzzle(game, day){
+    const qs = '?game=' + encodeURIComponent(game) + '&day=' + encodeURIComponent(day);
+    const bases = ['/api', 'http://localhost:8787', 'http://127.0.0.1:8787'];
+    const tryBase = (i) => {
+      if (i >= bases.length) throw new Error('puzzle service unreachable');
+      return fetch(bases[i] + '/puzzle' + qs)
+        .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+        .catch(() => tryBase(i + 1));
+    };
+    return tryBase(0);
+  }
   try {
     const icons = document.querySelector('.icons');
     if (icons && !icons.querySelector('.home-link')){
@@ -175,5 +189,5 @@ const SHELL = (() => {
 
   return { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle };
 })();

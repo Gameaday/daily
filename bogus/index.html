@@ -403,8 +403,22 @@ const PUZZLES = [
 /* ---------------- daily selection (ET-rollover, deterministic) ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
-const puzzle = PUZZLES[((dayIndex % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let puzzle = null;
+async function loadPuzzle(){
+  const idx = ((dayIndex % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) + (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1);
+  if (isSolo() || typeof PUZZLES === 'undefined') {
+    if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
+    return;
+  }
+  try {
+    const d = await fetchPuzzle('bogus', dayIndex);
+    puzzle = d.puzzle;
+  } catch (e) {
+    // graceful degradation: fall back to local copy if service unreachable
+    if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
+  }
+}
 
 /* ---------------- state (browser-only persistence) ---------------- */
 const KEY = 'warmup.bogus.v2';
@@ -536,14 +550,16 @@ SHELL.wireShare(shareText);
 /* ---------------- countdown to next puzzle (next ET midnight) ---------------- */
 
 /* ---------------- boot ---------------- */
-$('pno').textContent = num;
-$('pdate').textContent = SHELL.pdateText();
-$('tag').textContent = puzzle.t;
-renderPassage();
-applyMarks(true);
-renderPicks();
-if (S.status !== 'playing') showReveal();
-SHELL.startCountdown('count', 1000);
+loadPuzzle().then(() => {
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  $('tag').textContent = puzzle.t;
+  renderPassage();
+  applyMarks(true);
+  renderPicks();
+  if (S.status !== 'playing') showReveal();
+  SHELL.startCountdown('count', 1000);
+});
 </script>
 </body>
 </html>

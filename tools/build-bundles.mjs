@@ -1,3 +1,4 @@
+=====FILE tools/build-bundles.mjs
 /* Builds two site-only bundles into dist/:
    - dist/offline : everything a browser needs to play over file:// - the
      site files with inline banks intact, plus the generated puzzle store.
@@ -63,7 +64,7 @@ function checkHtml(file, rootDir, online){
       problems.push(file + ': missing ../shell/common.css link');
     const game = path.dirname(rel);
     if (GATED[game]){
-      const has = new RegExp('const ' + GATED[game] + ' = \\[.').test(html);
+      const has = new RegExp('const ' + GATED[game] + ' = \\[').test(html);
       if (online && has) problems.push(file + ': bank ' + GATED[game] + ' not stripped');
       if (!online && !has) problems.push(file + ': inline bank ' + GATED[game] + ' missing');
     }
@@ -71,7 +72,7 @@ function checkHtml(file, rootDir, online){
   const dir = path.dirname(file);
   for (const m of html.matchAll(/(?:src|href)="([^"]+)"/g)){
     const ref = m[1];
-    if (/^(https?:)?\/\//.test(ref) || ref.startsWith('#') || ref.startsWith('data:')) continue;
+    if (/^(https?:)?\/\//.test(ref) || /^[a-z][a-z0-9+.-]*:/i.test(ref) || ref.startsWith('#')) continue;
     const target = path.resolve(dir, ref.split('#')[0]);
     if (!fs.existsSync(target)) problems.push(file + ': broken reference ' + ref);
   }

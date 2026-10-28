@@ -179,3 +179,52 @@ missed.
 - Almanac: today-in-history trivia with a twist (multiple choice, escalating)
 - Follow: a daily six-degrees chain between two historical figures
 
+
+## Server-gated puzzle delivery (2026-10-28)
+
+Every bank-driven game now ships its bank inline AND defers to the scores
+service: over file:// or ?solo the inline bank plays (offline stays
+self-contained); online the page asks GET /api/puzzle?game=...&day=... and
+the served puzzle replaces the inline pick, so the shipped site no longer
+contains tomorrow's answers. bogus + well-actually piloted the pattern;
+this batch converts rounds, fermi, cipher, museum, lightbox, sift,
+timeline.
+
+Boundary: sprint, trace, recycle-grid and recycle-rings stay client-only -
+their banks are generators the game needs at play time (word validation,
+board checking), not answer keys, so serving them buys nothing.
+
+Timeline is the one windowed game: the whole bank is too big to ship
+wholesale in a daily answer, so the store carries {bank, picks} with 1000
+precomputed days (same seed, same shuffle, same distinct-years walk as
+the page). Direct games ship their bank whole; the server serves
+bank[day % len]. One cosmetic difference online: the served path
+reshuffles the display lane with a fresh rng, so the lane order can
+differ from the offline pick for the same day - the events and the
+answer are identical.
+
+The store (scores/puzzles.json) is generated, never committed: CI, the
+Docker builds, and make test/npm test all run tools/export-puzzles.mjs
+first; scores/server.py loads it from next to itself, so the scores
+container bakes it in via a throwaway node stage. tests/run.js deep-checks
+the exported timeline picks against the page's own offline day-0 pick,
+and server_test.py does the same against the served JSON.
+
+## Docker refine (2026-10-28)
+
+The web image no longer bind-mounts the repo: it bakes in the ONLINE
+bundle (banks stripped) built by a throwaway node stage, so a rebuild is
+what ships site content - the pull-based timer already runs compose up
+--build. Plain HTTP on host port 8080, auto_https off, no domain config:
+TLS/domains belong to the edge proxy in front of it (the standalone
+Traefik on the other Pi). This keeps the repo self-contained - no edge
+config lives here on purpose.
+
+The wording guard moved local: checks/wording.js runs as part of
+checks/games.js (same rule, same exemptions); the old CI grep matched its
+own workflow file and kept main red, so the CI copy is gone - too specific
+for CI, right at home in make test.
+
+## Batch 5 candidates
+
+- (none yet - see Batch 4 candidates above)

@@ -38,11 +38,13 @@ The puzzle is derived from the date, not stored:
 - streaks and progress live in each player's localStorage (keys of the form warmup.GAME.v1; bogus and well-actually are on v2)
 - change EPOCH_KEY in `shell/common.js` to reset the day numbering
 
-So the Pi only ever serves bytes. Deploy with Caddy:
+So the Pi only ever serves bytes (and, for the bank games, the day's
+puzzle). Plain HTTP on the published port - TLS belongs to the edge proxy
+in front of it:
 
-    warmup.historylabs.dev {
+    :80 {
         handle_path /api/* {
-            reverse_proxy 127.0.0.1:8787
+            reverse_proxy scores:8787
         }
         handle {
             root * /srv/daily
@@ -50,10 +52,40 @@ So the Pi only ever serves bytes. Deploy with Caddy:
         }
     }
 
-Caddy handles TLS automatically. Point DNS at the Pi (or use a tunnel if you are
-behind CGNAT) and forward ports 80/443.
+Point your edge proxy (Traefik, nginx, ...) at the published port -
+`docker compose` maps it to host port 8080 - and let it terminate TLS.
+Nothing in this repo needs to know the domain.
 
-## The global curve (optional, ~200 lines of stdlib Python)
+## Server-gated puzzle delivery
+
+The bank games (bogus, well-actually, rounds, fermi, cipher, museum,
+lightbox, sift, timeline) ship their puzzle bank inline in the page - so
+solo/offline play works with zero infrastructure - and, when online, each
+page asks the scores service for the day's puzzle:
+
+    GET /api/puzzle?game=rounds&day=12   ->   { game, day, puzzle, today }
+
+The served puzzle replaces the inline pick, so the published site no
+longer contains tomorrow's answers: the online bundle ships with every
+bank stripped (`tools/build-bundles.mjs`), and the answers live only in
+the scores container, generated at build time from the game files
+(`tools/export-puzzles.mjs` -> `scores/puzzles.json`, gitignored).
+
+- over `file://` or `?solo`, or whenever the service is unreachable, the
+  inline bank plays and nothing is asked of anyone - offline stays
+  self-contained
+- windowed game: timeline's pick (five events, distinct years, the same
+  seeded shuffle the page would run) is precomputed for 1000 days, so the
+  server just indexes `{bank, picks}`; every other game ships its bank
+  whole and the server serves `bank[day % len]`
+- sprint, trace, recycle-grid and recycle-rings stay client-generated on
+  purpose: their banks are generators the game needs during play (word
+  validation, board checking), not answer keys
+- `npm test` regenerates the store first, so the drift check in
+  `tests/run.js` proves the served timeline day-0 matches the offline
+  pick
+
+## The global curve## The global curve (optional, ~200 lines of stdlib Python)
 
 Every game can show how you fared relative to everyone today: a distribution of
 results with your bar highlighted, roughly how many you beat, and the global
@@ -96,9 +128,11 @@ even without the Caddy proxy.
 
 ## Deploy on the Pi with Docker (recommended)
 
-The whole stack â€” static site + Caddy + the scores service â€” runs as two
-containers with `docker compose`. The repo *is* the site: it's bind-mounted
-read-only into Caddy, so `git pull` + restart is the entire deploy.
+The whole stack - online site + Caddy + the scores/puzzle service - runs
+as two containers with `docker compose`. The site is baked into the web
+image at build time (banks stripped, puzzles served at runtime), so a
+rebuild is what ships new site content; the pull-based updater (next
+section) already does `docker compose up -d --build`.
 
 One-time setup on the Pi:
 
@@ -110,49 +144,58 @@ One-time setup on the Pi:
     git clone https://github.com/Gameaday/daily.git ~/daily
     cd ~/daily
 
-    # 3. Configure the domain (games themselves are domain-agnostic)
-    cp .env.example .env            # edit DAILY_DOMAIN if needed
-
-    # 4. Build and start
+    # 3. Build and start
     docker compose up -d --build
     docker compose ps              # web + scores should be Up
 
-    # 5. Point DNS at the Pi, forward 80/443 - Caddy handles TLS automatically
+    # 4. Point your edge proxy at the published port
+    #    e.g. Traefik: a router for your domain -> http://<pi-host>:8080
 
 What you get:
 
-- `web` â€” Caddy 2.8 serving the repo read-only from `/srv/daily`, proxying
-  `/api/*` to the scores container, automatic HTTPS
-- `scores` â€” the stdlib Python service, hardened: `read_only` filesystem,
-  `cap_drop: ALL`, `no-new-privileges`, a 64 MB memory cap, and **no volumes**.
-  It is reachable only on the internal compose network â€” the port is never
-  published to the host or the internet. A restart forgets all scores by
-  design (only consolidated per-day numbers are kept, pruned after 1 day)
+- `web` - Caddy 2.8 serving the online bundle (no puzzle banks inside)
+  from `/srv/daily`, proxying `/api/*` to the scores container. Plain
+  HTTP on host port **8080** - the repo deliberately ships no domain or
+  TLS config. Terminate TLS at your edge proxy (the Traefik/nginx/caddy
+  box in front) and forward to `8080`; nothing here needs the domain.
+- `scores` - the stdlib Python service (curve + puzzle delivery),
+  hardened: `read_only` filesystem, `cap_drop: ALL`,
+  `no-new-privileges`, a 64 MB memory cap, and **no volumes**. It is
+  reachable only on the internal compose network - the port is never
+  published to the host. The puzzle store is generated during the image
+  build by a throwaway node stage, so the container is self-contained. A
+  restart forgets all scores by design (only consolidated per-day
+  numbers are kept, pruned after 1 day).
 
 Updating after pushing to GitHub:
 
     make deploy        # = python3 deploy/pull.py (fetch, CI-green check, ff-only pull, rebuild)
 
-Better: install the update timer (next section) and the Pi does this itself
-every five minutes, only for commits whose CI run passed.
+Better: install the update timer (next section) and the Pi does this
+itself every five minutes, only for commits whose CI run passed. The
+rebuild is how new site content ships now that the site is baked into the
+image - and a failed rebuild can't take the site down: the old containers
+keep running.
 
-(Static-only changes don't even need the rebuild: `docker compose restart web`
-picks them up because the site is bind-mounted. The rebuild matters when the
-Caddyfile or server.py changed.)
+## CI and self-updating deploys## CI and self-updating deploys
 
-## CI and self-updating deploys
+Four layers run on every push and pull request (`.github/workflows/validate.yml`):
 
-Three test layers run on every push and pull request (`.github/workflows/validate.yml`):
+0. `node tools/export-puzzles.mjs` - regenerates the server-side puzzle
+   store from the game files (the same thing the Docker builds bake in)
+1. `node checks/games.js` - compiles every game script, checks shell
+   pieces, element ids, landing links, server-gating wiring (inline bank +
+   fetch fallback) and the local wording rule
+2. `node tests/run.js` - boots each game headless in a stubbed DOM with a
+   pinned clock, plays it to a win/loss, verifies the value posted to the
+   global curve, rolls the clock a day forward to prove streaks survive,
+   then re-boots every bank game with its bank stripped to prove the
+   scores-served puzzle drives it
+3. `python3 tests/server_test.py` - spawns the real scores service on a
+   scratch port and exercises health, submit/dedupe, dist, puzzle
+   delivery, validation, and pruning
 
-1. `node checks/games.js` â€” compiles every game script, checks shell pieces,
-   element ids, landing links
-2. `node tests/run.js` â€” boots each game headless in a stubbed DOM with a
-   pinned clock, plays it to a win/loss, verifies the value posted to the global
-   curve, then rolls the clock a day forward and proves streaks survive
-3. `python3 tests/server_test.py` â€” spawns the real scores service on a scratch
-   port and exercises health, submit/dedupe, dist, validation, and pruning
-
-Keeping the Pi in sync is **pull-based**: nothing can reach into the Pi â€”
+Keeping the Pi in sync isKeeping the Pi in sync is **pull-based**: nothing can reach into the Pi â€”
 no SSH keys stored in GitHub, no inbound deploy access of any kind. The Pi
 only ever makes outbound `git fetch` plus one GitHub API read.
 
@@ -224,35 +267,49 @@ game has a timer anymore: pressure comes from scarcity of moves.
 
 ## Offline / air-gapped play
 
-The repo *is* the offline bundle: copy the whole tree (minus `deploy/` if you
-like) to an air-gapped machine and open a game straight off the filesystem.
-Over `file://` â€” or any URL with `?solo` appended â€” games run in solo mode:
-nothing is submitted, no stats are fetched, and the curve area reads
-"solo mode â€” the global curve is switched off". Everything else works,
-including the daily puzzle, state, and streaks, because each game only needs
-the files next to it. If the scores service is simply unreachable, games have
-always fallen back to playing solo ("global curve offline â€” playing solo
-today") â€” the site keeps playing through server downtime either way.
+    make build         # -> dist/offline (banks intact) + dist/online (banks stripped)
 
-## Validation
+`dist/offline` is the whole site - and nothing else: no tooling, tests or
+deploy files - with every inline bank intact, so it plays straight off
+the filesystem. Open `dist/offline/index.html` over `file://` (or copy
+the folder to an air-gapped machine) and everything works: the daily
+puzzle, state, streaks. Games run in solo mode (`file://` or any URL with
+`?solo`): nothing is submitted, no stats are fetched, and the curve area
+reads "solo mode - the global curve is switched off". The build verifies
+every relative reference resolves inside the bundle, so the shell wiring
+can't silently rot. If the scores service is merely unreachable, online
+games have always fallen back to playing solo - the site keeps playing
+through server downtime either way.
 
-Three layers, all dependency-free:
+## Validation## Validation
 
-- `checks/games.js` compiles every game's script with new Function â€” the
+Four layers, all dependency-free:
+
+- `checks/games.js` compiles every game's script with new Function - the
   fastest way to catch the fatal kind of typo (a single stray emoji escape
-  once made Sprint a dead page for everyone) â€” and verifies the shared shell
-  pieces, every element id the script touches, and the landing links.
-- `tests/run.js` goes further: it boots each game's real script in a stubbed
-  DOM with an injectable clock, plays every game to a win and a loss, checks
-  the exact value posted to the global curve, and rolls to the next day to
-  prove streaks survive (this is how the Sift streak-reset and Trace
-  "on par" bugs were caught). It also cross-checks every game's curve client
-  against SPECS in scores/server.py â€” the server owns the metric direction.
-- `tests/server_test.py` spawns the real scores service and tests the API:
-  health, submit + dedupe, snapshots, strict input validation, and the
-  1-day pruning horizon.
+  once made Sprint a dead page for everyone) - and verifies the shared
+  shell pieces, every element id the script touches, the landing links,
+  the server-gating wiring on every bank game, and the local wording rule
+  (one convention-banned word that kept creeping into copy; the
+  dictionaries that legitimately contain it are exempt).
+- `tests/run.js` goes further: it boots each game's real script in a
+  stubbed DOM with an injectable clock, plays every game to a win and a
+  loss, checks the exact value posted to the global curve, rolls to the
+  next day to prove streaks survive (this is how the Sift streak-reset
+  and Trace "on par" bugs were caught), re-boots every bank game with
+  the bank stripped to prove the scores-served puzzle drives it, and
+  cross-checks every game's curve client against SPECS in
+  scores/server.py - the server owns the metric direction.
+- `tests/server_test.py` spawns the real scores service and tests the
+  API: health, submit + dedupe, snapshots, puzzle delivery (direct and
+  windowed games), strict input validation, and the 1-day pruning
+  horizon.
+- `tools/export-puzzles.mjs` + `tools/build-bundles.mjs` regenerate the
+  puzzle store and the offline/online bundles; the bundle build verifies
+  its own output (every relative reference resolves, banks present
+  offline / stripped online).
 
-Run everything: `npm test` or `make test`. GitHub Actions runs all three
+Run everything: `npm test` or `make test`.Run everything: `npm test` or `make test`. GitHub Actions runs all three
 layers on every push and pull request, and the Pi only ever updates itself
 to commits where they passed.
 
@@ -306,6 +363,16 @@ to commits where they passed.
       only in Sprint
 - [x] Valid-guesses bank decision (Wordnik, MIT) + zero-dep build script
       (`tools/make-valid-en.mjs`; the asset itself lands on first local run)
+- [x] Server-gated puzzle delivery: every bank game keeps its inline bank
+      for solo/offline play and defers to the scores service online
+      (bogus + well-actually piloted, then rounds/fermi/cipher/museum/
+      lightbox/sift/timeline); the store is generated, never committed;
+      the online bundle ships bank-free
+- [x] Docker refine: site baked into the web image (node build stage +
+      bundles), puzzles baked into the scores image, plain HTTP on 8080
+      for the edge proxy, no domain/TLS config in-repo
+- [x] Wording rule moved local: checks/wording.js runs with make test
+      (the one-off CI grep kept matching its own workflow file)
 - [ ] Curve representation cleanup: drop the "better than N of M" prose for a
       pure distribution chart with a you-marker (see NOTES.md)
 - [ ] Archived days: freeze finished days' distributions; archive replays score

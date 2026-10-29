@@ -990,5 +990,151 @@
       "until the black rock turns to crystal."
     ],
     "w": "Diamonds grow from carbon in the mantle, but not from coal: most diamonds are far older than every land plant, and coal seams simply cannot sink a hundred kilometers down. The coal-to-diamond recipe is a cartoon version of geology."
+  },
+  {
+    "t": "Invention · The Steam Engine",
+    "l": 1,
+    "c": "Thomas Newcomen",
+    "a": [
+      "Thomas Newcomen",
+      "Newcomen",
+      "Newcomen’s engine",
+      "Thomas Newcomen’s engine"
+    ],
+    "s": [
+      "The first practical steam engine, built to drain deep mines,",
+      "was invented by James Watt in the 1760s,",
+      "a Scottish instrument maker whose insight made it efficient,",
+      "and it went on to power the first factories of the Industrial Revolution."
+    ],
+    "w": "Thomas Newcomen’s atmospheric engine was pumping mines from 1712, two generations before Watt rebuilt it with a separate condenser in the 1760s. Watt made the steam engine efficient; Newcomen made it work."
+  },
+  {
+    "t": "Printing · Movable Type",
+    "l": 1,
+    "c": "the Chinese",
+    "a": [
+      "the Chinese",
+      "China",
+      "Chinese",
+      "Bi Sheng",
+      "Pi Sheng"
+    ],
+    "s": [
+      "Movable type, printing from cast and arranged letters,",
+      "was invented in Germany in the 1450s,",
+      "perfected by Johannes Gutenberg at Mainz,",
+      "and spread from there to remake the world."
+    ],
+    "w": "Bi Sheng carved ceramic movable type in China in the 1040s, four centuries before Mainz; Korea was casting it in metal and printing books with it a century before Gutenberg. Europe’s press was revolutionary, but the idea had long since existed in East Asia."
+  },
+  {
+    "t": "Egypt · Cleopatra",
+    "l": 0,
+    "c": "Greek",
+    "a": [
+      "Greek",
+      "a Greek",
+      "Macedonian",
+      "a Macedonian",
+      "Greek Macedonian"
+    ],
+    "s": [
+      "An Egyptian by blood and by upbringing,",
+      "Cleopatra VII was the last pharaoh of Egypt,",
+      "enthroned in Alexandria above a Greek-speaking court,",
+      "until Rome absorbed her kingdom in 30 BCE."
+    ],
+    "w": "The Ptolemies were Macedonian Greeks descended from Alexander’s general Ptolemy, and they kept the bloodline in the family for ten generations. Cleopatra was the first of her line to bother learning Egyptian; her court spoke Greek."
+  },
+  {
+    "t": "Space · The Hottest Planet",
+    "l": 2,
+    "c": "Venus",
+    "a": [
+      "Venus",
+      "the planet Venus",
+      "the second planet"
+    ],
+    "s": [
+      "Venus hides beneath a shroud of pale cloud,",
+      "orbiting second from the Sun,",
+      "yet stays cooler than scorched Mercury,",
+      "which shines bright enough to be mistaken for a star."
+    ],
+    "w": "Venus is the hottest planet, around 465 degrees Celsius day and night, pole to pole. Its carbon dioxide atmosphere holds the heat, while Mercury, with no air worth the name, swings from roasting to freezing every two months."
+  },
+  {
+    "t": "Nature · The Tallest Mountain",
+    "l": 3,
+    "c": "Mauna Kea",
+    "a": [
+      "Mauna Kea",
+      "Mauna Kea in Hawaii",
+      "Hawaii’s Mauna Kea"
+    ],
+    "s": [
+      "Measured from base to peak rather than from sea level,",
+      "the tallest mountain on Earth",
+      "rises more than ten kilometers of continuous slope,",
+      "and it is Mount Everest."
+    ],
+    "w": "Mauna Kea rises over 10,000 meters from the Pacific floor, most of it underwater; Everest, measured above the waves, is 8,849. Everest is the highest mountain on Earth; Mauna Kea is the tallest."
+  },
+  {
+    "t": "Sports · The Marathon",
+    "l": 1,
+    "c": "1908",
+    "a": [
+      "1908",
+      "the 1908 London Olympics",
+      "London 1908",
+      "the 1908 Games"
+    ],
+    "s": [
+      "The marathon’s odd distance of 26 miles and 385 yards",
+      "was fixed by the ancient Greeks,",
+      "measuring the road from Marathon to Athens,",
+      "for the messenger’s famous run."
+    ],
+    "w": "The antique run was about 25 miles, and the story attached to it was written up centuries later. The extra 385 yards were added at the 1908 London Olympics so the race could finish in front of the royal box; the distance became official only in 1921."
+  },
+  {
+    "t": "Literature · Frankenstein",
+    "l": 1,
+    "c": "the scientist",
+    "a": [
+      "the scientist",
+      "the doctor",
+      "the creator",
+      "Victor Frankenstein",
+      "Victor",
+      "the maker"
+    ],
+    "s": [
+      "In Mary Shelley’s 1818 novel,",
+      "the stitched and lumbering creature is named Frankenstein,",
+      "haunted by its maker’s rejection,",
+      "and remembered to history by the name on its brow."
+    ],
+    "w": "Frankenstein is Victor Frankenstein, the student who assembles the creature; the creature itself has no name at all. The mix-up was already old when the book’s first reviewers made it."
+  },
+  {
+    "t": "Food · Fortune Cookies",
+    "l": 0,
+    "c": "Japan",
+    "a": [
+      "Japan",
+      "Japanese immigrants",
+      "California",
+      "Japanese bakers in California"
+    ],
+    "s": [
+      "Invented in ancient China,",
+      "the folded fortune cookie carried proverbs and luck",
+      "to every imperial banquet,",
+      "long before the West had ever tasted one."
+    ],
+    "w": "The folded cookie descends from a Kyoto cracker with a fortune tucked inside, and the modern version was popularized by Japanese immigrant bakeries in California in the early 1900s. Chinese restaurants adopted it decades later; in China it is known, when it is known at all, as an American cookie."
   }
 ]

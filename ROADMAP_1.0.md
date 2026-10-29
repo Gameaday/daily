@@ -12,44 +12,46 @@ Goal: every bank game serves a **comprehensive, curated, server-side bank** (no 
 4. Strip the now-duplicated bank from the client, keeping only the renderer + fetchPuzzle loader.
 
 This recovers the curated content we already had, avoids re-authoring, and makes "1.0" a port rather than a rewrite. Only games whose banks were genuinely lost/never existed (none currently) need new authoring.
+
+## Phase 0 — Server core (DONE)
 - [x] `scores/server.py`: remove `mode=gen` random generation; `/puzzle` serves `entry[day % len(entry)]` deterministically + timeline windowed path.
 - [x] `DEVELOPER.md`: drop stale `"mode": "gen"` from response example.
 - [x] `trace/index.html`: remove dead `if (false)` local-generation scaffolding.
 - [x] Branch `refactor/server-side-banks` created with WIP commit.
 
-## Phase 1 — Repair client compile errors (all 13 games)
-Goal: `node checks/games.js` green (0 failures).
+## Phase 1 — Repair client compile errors (all 13 games) — DONE
+All 13 client pages were restored byte-exact from the pre-refactor `main` (c91bcfc), which also removed every WIP scaffold; the encoding corruption in museum/recycle-grid was repaired on top. `node checks/games.js` green — pending the CI run.
 
-- [ ] bogus/index.html — fix stray brace / leftover bank scaffolding
-- [ ] cipher/index.html — fix `QUOTES` reference / bank scaffolding
-- [ ] fermi/index.html — fix `=` token error
-- [ ] lightbox/index.html — fix `lightbox` identifier
-- [ ] museum/index.html — fix `museum` identifier (re-add curated exhibit loader)
-- [ ] recycle-rings/index.html — fix `const` token
-- [ ] rounds/index.html — fix `)` token
-- [ ] sift/index.html — fix `:` token
-- [ ] sprint/index.html — fix `SHELL` identifier
-- [ ] timeline/index.html — fix `EVENTS` identifier; keep windowed fetch
-- [ ] trace/index.html — fix `post` redeclaration (already partially cleaned)
-- [ ] well-actually/index.html — fix `well` identifier
-- [ ] recycle-grid/index.html — verify (currently passes)
+- [x] bogus/index.html — fix stray brace / leftover bank scaffolding
+- [x] cipher/index.html — fix `QUOTES` reference / bank scaffolding
+- [x] fermi/index.html — fix `=` token error
+- [x] lightbox/index.html — fix `lightbox` identifier
+- [x] museum/index.html — fix `museum` identifier (re-add curated exhibit loader)
+- [x] recycle-rings/index.html — fix `const` token
+- [x] rounds/index.html — fix `)` token
+- [x] sift/index.html — fix `:` token
+- [x] sprint/index.html — fix `SHELL` identifier
+- [x] timeline/index.html — fix `EVENTS` identifier; keep windowed fetch
+- [x] trace/index.html — fix `post` redeclaration (already partially cleaned)
+- [x] well-actually/index.html — fix `well` identifier
+- [x] recycle-grid/index.html — verify (currently passes)
 
-## Phase 2 — Curated server banks (comprehensive content)
-Each `scores/<game>/puzzles.json` must contain real, curated entries; no generic placeholders.
+## Phase 2 — Curated server banks (comprehensive content) — DONE
+Each `scores/<game>/puzzles.json` now carries the real curated bank extracted exactly from its client page; `tools/export-puzzles.mjs` verifies store == bank in CI. Day-0 spot checks: bogus lie=5 (Apollo 11), rounds y=1215 (Magna Carta), cipher author "Franklin D. Roosevelt", museum "The Rosetta Stone", timeline 5 distinct-year events.
 
-- [ ] bogus: real passages, one bogus phrase per passage, accurate "why"
-- [ ] well-actually: real statements, wrong phrase, corrected version, explanation
-- [ ] fermi: real estimation questions with accepted answers + units
-- [ ] rounds: real historical events with years
-- [ ] sift: real 4-groups-of-3 tile boards (no tile in two groups)
-- [ ] lightbox: real nonogram designs with clue sets
-- [ ] cipher: well-attributed quotes + author (attribution must be solid)
-- [ ] timeline: full event bank + distinct-years walk + 1000 precomputed picks (seed only selects)
-- [ ] museum: real artifacts with 5 clues (cryptic→obvious), aliases, story
+- [x] bogus: real passages, one bogus phrase per passage, accurate "why"
+- [x] well-actually: real statements, wrong phrase, corrected version, explanation
+- [x] fermi: real estimation questions with accepted answers + units
+- [x] rounds: real historical events with years
+- [x] sift: real 4-groups-of-3 tile boards (no tile in two groups)
+- [x] lightbox: real nonogram designs with clue sets
+- [x] cipher: well-attributed quotes + author (attribution must be solid)
+- [x] timeline: full event bank + distinct-years walk + 1000 precomputed picks (seed only selects)
+- [x] museum: real artifacts with 5 clues (cryptic→obvious), aliases, story
 - [ ] (rings, grid, sprint, trace remain generator/client-side per NOTES — no server bank needed)
 
 ## Phase 3 — Tests & validation
-- [ ] Update `tests/server_test.py` timeline check to read `scores/timeline/puzzles.json` (not deleted monolithic file).
+- [x] Update `tests/server_test.py` timeline check to read `scores/timeline/puzzles.json` (not deleted monolithic file).
 - [ ] Day-0 assertions pass: bogus lie=5, rounds y=1215 (Magna Carta), cipher author=FDR, museum=Rosetta Stone, timeline 5 distinct-year events.
 - [ ] `node checks/games.js` green.
 - [ ] `node tests/run.js` green.
@@ -58,9 +60,9 @@ Each `scores/<game>/puzzles.json` must contain real, curated entries; no generic
 
 ## Phase 4 — Cleanup & docs
 - [ ] Remove remaining dead scaffolding ("Fallback to local generation" comments, `if (false)` blocks).
-- [ ] Sweep `README.md`, `NOTES.md`, `DEVELOPER.md` for stale monolithic-`puzzles.json` / `mode=gen` references.
-- [ ] Update `tools/export-puzzles.mjs` (or remove) so it no longer shuffles a monolithic pool / random-generates; align with per-game curated banks.
-- [ ] `tools/build-bundles.mjs`: drop monolithic `scores/puzzles.json` copy (per-game files are the store).
+- [x] Sweep `README.md`, `NOTES.md`, `DEVELOPER.md` for stale monolithic-`puzzles.json` / `mode=gen` references.  — README repaired and updated, NOTES paragraph rewritten, DEVELOPER.md rewritten
+- [x] Update `tools/export-puzzles.mjs` (or remove) so it no longer shuffles a monolithic pool / random-generates; align with per-game curated banks.  — rewritten as a store verifier (exit 1 on drift)
+- [x] `tools/build-bundles.mjs`: drop monolithic `scores/puzzles.json` copy (per-game files are the store).
 
 ## Phase 5 — Release
 - [ ] All games load and play end-to-end against the scores service.

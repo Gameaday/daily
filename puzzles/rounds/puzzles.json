@@ -430,5 +430,53 @@
     "q": "The IBM Personal Computer goes on sale.",
     "y": 1981,
     "w": "August 1981: IBM built its PC from off-the-shelf parts and licensed the operating system from a young company called Microsoft. The clones that followed made the architecture universal, and the licensing made Microsoft rich."
+  },
+  {
+    "t": "The Crusades",
+    "q": "The First Crusade captures Jerusalem.",
+    "y": 1099,
+    "w": "July 1099: after a five-week siege the crusaders took the city, and an armed pilgrimage had become a conquest. The Latin Kingdom of Jerusalem lasted less than a century before Saladin took it back."
+  },
+  {
+    "t": "Exploration",
+    "q": "Magellan’s expedition sets out to circle the globe.",
+    "y": 1519,
+    "w": "September 1519: five ships and about 270 men left Spain. One ship and 18 men returned three years later, without Magellan, who died in the Philippines, and the voyage proved the globe could be sailed around."
+  },
+  {
+    "t": "Revolution",
+    "q": "The Haitian Revolution begins with an uprising of the enslaved.",
+    "y": 1791,
+    "w": "August 1791: the richest colony in the Americas rose against slavery itself. Thirteen years of war ended with Haiti, the first Black republic, independent in 1804."
+  },
+  {
+    "t": "Ireland",
+    "q": "The Great Famine begins as potato blight destroys the crop.",
+    "y": 1845,
+    "w": "Autumn 1845: a fungus reached Ireland and the food of millions rotted in the fields. In seven years about a million people died and two million emigrated, and the island never regained its population."
+  },
+  {
+    "t": "America",
+    "q": "The Civil War ends and Abraham Lincoln is assassinated.",
+    "y": 1865,
+    "w": "April 1865: Lee surrendered at Appomattox on the 9th, and Lincoln was shot on the 14th. The war ended and the fight over its meaning began."
+  },
+  {
+    "t": "Science",
+    "q": "Einstein publishes his miracle year papers, including special relativity.",
+    "y": 1905,
+    "w": "1905: a patent clerk in Bern published four papers that remade physics, covering light, atoms, time, and mass. Any one of them would have made a career; together they redirected the century’s science."
+  },
+  {
+    "t": "Invention",
+    "q": "John Logie Baird demonstrates the first working television.",
+    "y": 1926,
+    "w": "January 1926: in a London attic, Baird showed a flickering human face to a Royal Institution audience. A decade later the world was watching broadcasts, and the flicker never stopped."
+  },
+  {
+    "t": "Sports",
+    "q": "Roger Bannister runs the first four minute mile.",
+    "y": 1954,
+    "w": "May 6, 1954: on a windy Oxford track, Bannister ran a mile in 3:59.4 with two pacemakers. Doctors had called the barrier impossible; within weeks it was merely difficult."
   }
 ]

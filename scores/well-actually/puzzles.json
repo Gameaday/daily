@@ -16,11 +16,11 @@
       "in the early 1500s,",
       "and it now hangs in the Louvre."
     ],
-    "w": "It’s Leonardo da Vinci — Michelangelo was across town sculpting David, but he never painted her."
+    "w": "It’s Leonardo da Vinci. Michelangelo was across town sculpting David, but he never painted her."
   },
   {
     "t": "Ancient Egypt",
-    "l": 2,
+    "l": 3,
     "c": "the Egyptians",
     "a": [
       "Egyptians",
@@ -28,11 +28,12 @@
       "ancient Egyptians"
     ],
     "s": [
-      "Built around 2560 BCE as a tomb for the pharaoh Khufu,",
-      "the Great Pyramid of Giza is the work of",
-      "the Romans."
+      "Built around 2560 BCE",
+      "as a tomb for the pharaoh Khufu,",
+      "the Great Pyramid of Giza",
+      "is the work of the Romans."
     ],
-    "w": "Egyptians built it — Rome wouldn’t be founded for another two thousand years."
+    "w": "Egyptians built it. Rome would not be founded for another two thousand years."
   },
   {
     "t": "Geography",
@@ -48,9 +49,10 @@
     "s": [
       "Mount Everest sits on the border between",
       "Nepal and India,",
-      "and its summit is about 8,849 meters above sea level."
+      "and its summit rises",
+      "about 8,849 meters above sea level."
     ],
-    "w": "Nepal and China — the Tibetan side. India borders Nepal, but nowhere near Everest."
+    "w": "Nepal and China, on the Tibetan side. India borders Nepal, but nowhere near Everest."
   },
   {
     "t": "US History",
@@ -63,13 +65,14 @@
     "s": [
       "Thomas Jefferson",
       "was the first President of the United States,",
-      "inaugurated in New York City in 1789."
+      "taking the oath of office",
+      "in New York City in 1789."
     ],
-    "w": "Washington took the oath in April 1789, in New York — then the capital. Jefferson was the third president."
+    "w": "Washington took the oath in April 1789, in New York, then the capital. Jefferson was the third president."
   },
   {
     "t": "Modern History",
-    "l": 1,
+    "l": 2,
     "c": "Germany and Japan",
     "a": [
       "Germany and Japan",
@@ -77,7 +80,8 @@
       "Japan and Germany"
     ],
     "s": [
-      "World War II ended in 1945 with the surrenders of",
+      "World War II ended in 1945",
+      "with the surrenders of",
       "Germany and Italy,",
       "followed by years of rebuilding."
     ],
@@ -85,7 +89,7 @@
   },
   {
     "t": "Chemistry",
-    "l": 2,
+    "l": 3,
     "c": "Au",
     "a": [
       "Au",
@@ -93,11 +97,12 @@
       "au"
     ],
     "s": [
-      "Named for the Latin aurum,",
-      "the chemical symbol for gold",
-      "is Go."
+      "Named for its Latin name, aurum,",
+      "gold",
+      "carries the chemical symbol",
+      "Go."
     ],
-    "w": "Au, from aurum. “Go” is not on the periodic table — however excellent a board game it is."
+    "w": "Au, from the Latin aurum. “Go” is not on the periodic table, however excellent a board game it is."
   },
   {
     "t": "Geography",
@@ -112,13 +117,14 @@
     "s": [
       "The Atlantic Ocean",
       "is the largest ocean on Earth,",
-      "covering roughly a third of the planet’s surface."
+      "covering roughly a third",
+      "of the planet’s surface."
     ],
-    "w": "The Pacific is the largest — about 165 million square kilometers, more than double the Atlantic."
+    "w": "The Pacific is the largest, about 165 million square kilometers, more than double the Atlantic."
   },
   {
     "t": "Physics",
-    "l": 2,
+    "l": 3,
     "c": "per second",
     "a": [
       "second",
@@ -129,24 +135,26 @@
     ],
     "s": [
       "Nothing is faster than light,",
-      "which travels at roughly 300,000 kilometers",
+      "which races through empty space",
+      "at roughly 300,000 kilometers",
       "per hour."
     ],
     "w": "About 300,000 km per second. At 300,000 km per hour, sunlight would take roughly three weeks to reach Earth."
   },
   {
     "t": "Music",
-    "l": 2,
+    "l": 3,
     "c": "Liverpool",
     "a": [
       "Liverpool"
     ],
     "s": [
       "Before conquering recorded music,",
-      "the Beatles formed in 1960 in",
+      "the Beatles",
+      "got their start in 1960 in",
       "London."
     ],
-    "w": "Liverpool. The Fab Four were Merseyside lads — London came later, once the records sold."
+    "w": "Liverpool. The Fab Four were Merseyside lads; London came later, once the records sold."
   },
   {
     "t": "US History",
@@ -158,11 +166,12 @@
       "french"
     ],
     "s": [
-      "Dedicated in 1886, the Statue of Liberty was a gift from",
+      "Dedicated in 1886,",
+      "the Statue of Liberty was a gift from",
       "Britain",
       "to the United States."
     ],
-    "w": "A gift from France — sculpted by Bartholdi, with the iron frame engineered by a young Gustave Eiffel."
+    "w": "A gift from France, sculpted by Bartholdi, with the iron frame engineered by a young Gustave Eiffel."
   },
   {
     "t": "Biology",
@@ -178,13 +187,14 @@
     "s": [
       "Bananas",
       "are our closest living relatives,",
-      "sharing about 98.8% of human DNA."
+      "sharing about 98.8%",
+      "of human DNA."
     ],
-    "w": "Chimpanzees (and bonobos), at about 98.8%. Bananas share roughly 40–60% of our gene families — oddly high, but no relative."
+    "w": "Chimpanzees (and bonobos), at about 98.8%. Bananas share roughly 40–60% of our gene families, oddly high, but no relative."
   },
   {
     "t": "Geography",
-    "l": 2,
+    "l": 3,
     "c": "the Atlantic",
     "a": [
       "Atlantic",
@@ -194,10 +204,11 @@
     ],
     "s": [
       "Flowing from the Andes across South America,",
-      "the Amazon — Earth’s largest river by volume — empties into the",
-      "Pacific Ocean."
+      "Earth’s largest river by volume,",
+      "the Amazon",
+      "empties into the Pacific Ocean."
     ],
-    "w": "The Atlantic — east of the Andes there’s a continent in the way. The Pacific is the far side."
+    "w": "The Atlantic. East of the Andes there is a continent in the way; the Pacific is the far side."
   },
   {
     "t": "Space",
@@ -210,7 +221,8 @@
     "s": [
       "Neil Armstrong",
       "was the first human in space,",
-      "launched by the Soviet Union in April 1961."
+      "launched by the Soviet Union",
+      "in April 1961."
     ],
     "w": "Yuri Gagarin, aboard Vostok 1, April 12, 1961. Armstrong’s big first came eight years later, on the Moon."
   },
@@ -225,9 +237,10 @@
     "s": [
       "In 1989, Tim Berners-Lee invented the World Wide Web",
       "while working at MIT,",
-      "and later gave it away royalty-free."
+      "and later gave it away",
+      "royalty-free."
     ],
-    "w": "CERN, the particle physics lab in Geneva — a good reminder that the Web’s birthplace was a physics lab, not a university."
+    "w": "CERN, the particle physics lab in Geneva. A good reminder that the Web’s birthplace was a physics lab, not a university."
   },
   {
     "t": "World",
@@ -240,13 +253,14 @@
     "s": [
       "The yuan",
       "is the official currency of Japan,",
-      "divided into 100 sen."
+      "divided into 100 sen,",
+      "and anchored by the Bank of Japan."
     ],
-    "w": "The yen (¥). The yuan is China’s currency — close neighbors, very different bank accounts."
+    "w": "The yen (¥). The yuan is China’s currency; close neighbors, very different bank accounts."
   },
   {
     "t": "Biology",
-    "l": 2,
+    "l": 3,
     "c": "oxygen",
     "a": [
       "oxygen",
@@ -254,15 +268,16 @@
       "the oxygen"
     ],
     "s": [
-      "Photosynthesis lets plants turn water and carbon dioxide into sugar,",
+      "Photosynthesis lets plants",
+      "turn water and carbon dioxide into sugar,",
       "a process that releases",
       "carbon dioxide."
     ],
-    "w": "Oxygen — the waste product of photosynthesis, and the reason you’re alive to click this."
+    "w": "Oxygen, the waste product of photosynthesis, and the reason you’re alive to click this."
   },
   {
     "t": "Modern History",
-    "l": 2,
+    "l": 3,
     "c": "1989",
     "a": [
       "1989",
@@ -271,14 +286,15 @@
     ],
     "s": [
       "After dividing East from West Berlin for 28 years,",
-      "the Berlin Wall came down in",
-      "1961."
+      "the Berlin Wall finally came down",
+      "in November",
+      "of 1961."
     ],
-    "w": "November 9, 1989. It was built in 1961 — that year was its birthday, not its funeral."
+    "w": "November 9, 1989. It was built in 1961; that year was its birthday, not its funeral."
   },
   {
     "t": "History",
-    "l": 1,
+    "l": 3,
     "c": "New Zealand",
     "a": [
       "New Zealand",
@@ -286,10 +302,12 @@
       "Aotearoa"
     ],
     "s": [
-      "The first country to give women the vote in national elections, back in 1893, was",
-      "Australia."
+      "The first country to give women the vote",
+      "in national elections,",
+      "back in 1893,",
+      "was Australia."
     ],
-    "w": "New Zealand, 1893. Australia followed in 1902 — though Aboriginal women there waited until 1962."
+    "w": "New Zealand, 1893. Australia followed in 1902, though Aboriginal women there waited until 1962."
   },
   {
     "t": "Space",
@@ -302,13 +320,14 @@
     "s": [
       "Saturn",
       "is the largest planet in our solar system,",
-      "easily visible to the naked eye."
+      "more than twice the mass",
+      "of every other planet combined."
     ],
-    "w": "Jupiter — more than twice the mass of every other planet combined. Saturn’s rings get the attention; Jupiter gets the crown."
+    "w": "Jupiter. Saturn’s rings get the attention; Jupiter gets the crown."
   },
   {
     "t": "Sports",
-    "l": 1,
+    "l": 3,
     "c": "the National Football League",
     "a": [
       "NFL",
@@ -318,10 +337,12 @@
       "NFL (the National Football League)"
     ],
     "s": [
-      "First played in 1967, the Super Bowl is the annual championship game of the",
+      "First played in 1967,",
+      "the Super Bowl is the annual championship game",
+      "of the",
       "National Basketball Association."
     ],
-    "w": "The NFL — the NBA’s big night is called the Finals. Super Bowl I was played in January 1967."
+    "w": "The NFL. The NBA’s big night is called the Finals. Super Bowl I was played in January 1967."
   },
   {
     "t": "Nature",
@@ -337,9 +358,10 @@
     "s": [
       "Penguins are native to the",
       "Arctic,",
-      "where their predators include leopard seals and orcas."
+      "where their predators include",
+      "leopard seals and orcas."
     ],
-    "w": "The Southern Hemisphere — mostly Antarctica. A penguin and a polar bear have never met in the wild."
+    "w": "The Southern Hemisphere, mostly Antarctica. A penguin and a polar bear have never met in the wild."
   },
   {
     "t": "US History",
@@ -352,37 +374,41 @@
     "s": [
       "Five US presidents",
       "have their faces carved into Mount Rushmore,",
-      "in South Dakota."
+      "in the Black Hills",
+      "of South Dakota."
     ],
     "w": "Four: Washington, Jefferson, Theodore Roosevelt, and Lincoln."
   },
   {
     "t": "Medieval",
-    "l": 1,
+    "l": 3,
     "c": "France",
     "a": [
       "France",
       "the French"
     ],
     "s": [
-      "The Hundred Years’ War, fought on and off from 1337 to 1453, pitted England against",
+      "The Hundred Years’ War,",
+      "fought on and off from 1337 to 1453,",
+      "pitted England against",
       "Spain."
     ],
-    "w": "France — for 116 years, give or take, which is why the name undersells it slightly."
+    "w": "France, for 116 years give or take, which is why the name undersells it slightly."
   },
   {
     "t": "British History",
-    "l": 2,
+    "l": 3,
     "c": "1666",
     "a": [
       "1666"
     ],
     "s": [
-      "The Great Fire of London raged for four days in September,",
-      "destroying much of the medieval city in",
-      "1665."
+      "The Great Fire of London raged for four days",
+      "in September,",
+      "destroying much of the medieval city",
+      "in 1665."
     ],
-    "w": "September 1666. The year 1665 belonged to the Great Plague — a truly terrible decade for London."
+    "w": "September 1666. The year 1665 belonged to the Great Plague, a truly terrible decade for London."
   },
   {
     "t": "Science",
@@ -394,14 +420,15 @@
     ],
     "s": [
       "Jonas Salk",
-      "discovered penicillin, the world’s first antibiotic,",
-      "in 1928."
+      "discovered penicillin,",
+      "the world’s first antibiotic,",
+      "back in 1928."
     ],
     "w": "Alexander Fleming noticed the mold in 1928. Salk’s masterpiece came in 1955: the polio vaccine."
   },
   {
     "t": "Space",
-    "l": 2,
+    "l": 3,
     "c": "27 days",
     "a": [
       "27 days",
@@ -415,10 +442,11 @@
     ],
     "s": [
       "At an average distance of 384,400 km,",
-      "the Moon completes one orbit of Earth roughly every",
+      "the Moon completes one orbit of Earth",
+      "roughly every",
       "24 hours."
     ],
-    "w": "About 27.3 days per orbit — and about 29.5 days between full moons. We see it nightly because Earth spins, not because the Moon races."
+    "w": "About 27.3 days per orbit, and about 29.5 days between full moons. We see it nightly because Earth spins, not because the Moon races."
   },
   {
     "t": "Food",
@@ -434,9 +462,10 @@
     "s": [
       "Coffee is brewed from the roasted",
       "leaves",
-      "of the Coffea plant, native to Ethiopia."
+      "of the Coffea plant,",
+      "native to Ethiopia."
     ],
-    "w": "The roasted seeds — “beans” — of the coffee cherry. Leaves get you tea."
+    "w": "The roasted seeds, or “beans,” of the coffee cherry. Leaves get you tea."
   },
   {
     "t": "Geography",
@@ -448,22 +477,25 @@
     "s": [
       "Toronto",
       "is the capital of Canada,",
-      "chosen by Queen Victoria in 1857."
+      "a city chosen by Queen Victoria",
+      "in 1857."
     ],
-    "w": "Ottawa, picked in 1857 as a compromise between the big rivals. Toronto is the largest city, but size doesn’t win you the capital."
+    "w": "Ottawa, picked in 1857 as a compromise between the big rivals. Toronto is the largest city, but size does not win you the capital."
   },
   {
     "t": "US Geography",
-    "l": 1,
+    "l": 2,
     "c": "Juneau",
     "a": [
       "Juneau"
     ],
     "s": [
-      "Alaska, the largest US state by area, keeps its capital in",
-      "Anchorage."
+      "Alaska, the largest US state by area,",
+      "keeps its capital in",
+      "Anchorage,",
+      "which travelers reach only by boat or plane."
     ],
-    "w": "Juneau — the only US state capital you can’t drive to, reachable only by boat or plane. Anchorage is the biggest city, not the boss."
+    "w": "Juneau, the only US state capital you cannot drive to. Anchorage is the biggest city, not the boss."
   },
   {
     "t": "Literature",
@@ -475,9 +507,11 @@
     ],
     "s": [
       "221B Oxford Street",
-      "is the famous London home of the fictional detective Sherlock Holmes."
+      "is the famous London home",
+      "of the fictional detective",
+      "Sherlock Holmes."
     ],
-    "w": "221B Baker Street — today the Sherlock Holmes Museum. Oxford Street is the one with the shops."
+    "w": "221B Baker Street, today the Sherlock Holmes Museum. Oxford Street is the one with the shops."
   },
   {
     "t": "Nature",
@@ -490,13 +524,14 @@
     "s": [
       "A group of",
       "lions",
-      "is called a murder."
+      "is called",
+      "a murder."
     ],
-    "w": "Crows — a murder of crows. Lions gather in prides."
+    "w": "Crows: a murder of crows. Lions gather in prides."
   },
   {
     "t": "Geography",
-    "l": 2,
+    "l": 3,
     "c": "the Mediterranean",
     "a": [
       "Mediterranean",
@@ -506,7 +541,8 @@
     ],
     "s": [
       "After flowing north for over 6,600 km,",
-      "the Nile — the longest river in Africa — empties into the",
+      "the Nile, the longest river in Africa,",
+      "empties into the",
       "Red Sea."
     ],
     "w": "The Mediterranean, via the famous delta. The Red Sea is the one Moses is famous for."

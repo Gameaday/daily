@@ -87,7 +87,7 @@ for (const g of games) {
   if (landing.indexOf(g + '/') === -1) fail('landing: no card for ' + g);
 }
 
-   server-gated delivery: every gated game loads its generated bank file for
+/* server-gated delivery: every gated game loads its generated bank file for
    solo/offline play AND defers to the scores service when online */
 const GATED = LIST.gated;
 for (const g of Object.keys(GATED)) {

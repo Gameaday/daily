@@ -1,0 +1,71 @@
+/* Layer 2 orchestrator. Each game's tests live in their own module:
+
+     tests/games/<game>.js        the game's headless playthrough (win,
+                                  loss, day rollover; regression notes
+                                  inline, unchanged from the old
+                                  monolithic tests/run.js)
+     tests/games/server-gated.js  online delivery with the banks stripped
+     tests/games/cross-checks.js  shell <-> manifest <-> landing agreement
+     tests/games/_lib.js          the shared game list + pinned days
+
+   This file only wires them together, so dropping a game later means
+   deleting its folder and its module - nothing here changes. Same CLI
+   as ever: node tests/run.js (exit 1 on any failure). */
+'use strict';
+
+const { GAMES } = require('./games/_lib');
+
+const MODULES = [
+  'bogus', 'well-actually', 'recycle-rings', 'recycle-grid', 'fermi',
+  'sift', 'rounds', 'trace', 'lightbox', 'sprint', 'cipher', 'timeline',
+  'museum', 'server-gated'
+].map(file => require('./games/' + file + '.js'));
+
+async function main(h, ctx){
+  for (const mod of MODULES){
+    h.group(mod.name);
+    try { await mod.run(h, ctx); }
+    catch (e){
+      const c = h.results[h.results.length - 1];
+      c.fail++;
+      c.failures.push('EXCEPTION: ' + (e && e.message ? e.message : String(e)));
+    }
+  }
+  require('./games/cross-checks').run(h, ctx);
+
+  const s = h.summary();
+  return { summary: s.lines, pass: s.pass, fail: s.fail };
+}
+
+module.exports = { main, GAMES, MODULES };
+
+/* CLI entry: read the repo files with fs, run, exit nonzero on failure. */
+if (typeof require === 'function' && typeof module !== 'undefined' && require.main === module) {
+  const fs = require('fs');
+  const path = require('path');
+  const { createHarness } = require('./harness');
+  const ROOT = path.join(__dirname, '..');
+  const SHELL_JS = fs.readFileSync(path.join(ROOT, 'shell', 'common.js'), 'utf8');
+  const WORDS_JS = fs.readFileSync(path.join(ROOT, 'assets', 'words-en.js'), 'utf8');
+  const ctx = {
+    GAMES,
+    readGame: g => fs.readFileSync(path.join(ROOT, g, 'index.html'), 'utf8'),
+    serverPy: fs.readFileSync(path.join(ROOT, 'scores', 'server.py'), 'utf8'),
+    landing: fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'),
+    readShared: g => SHELL_JS + (g === 'trace' || g === 'recycle-grid' || g === 'recycle-rings' ? '\n' + WORDS_JS : ''),
+    manifest: JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'manifest.json'), 'utf8')),
+    readStore: () => {
+      try {
+        const timeline = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'timeline', 'puzzles.json'), 'utf8'));
+        const rounds = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'rounds', 'puzzles.json'), 'utf8'));
+        return JSON.stringify({ timeline, rounds });
+      } catch (e){ return null; }
+    }
+  };
+  main(createHarness(ctx.readGame, ctx.readShared), ctx)
+    .then(out => {
+      console.log(out.summary);
+      process.exit(out.fail ? 1 : 0);
+    })
+    .catch(e => { console.error(e); process.exit(1); });
+}

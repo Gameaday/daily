@@ -36,8 +36,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .mistakes{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
 .pip{width:10px; height:10px; border-radius:50%; background:var(--accent); display:inline-block;}
 .pip.gone{background:#ddd2ba;}
-.
-actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
+.actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
 .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
 .btn:hover{filter:brightness(.94);}
 .clock{font-size:12px; color:var(--muted); text-align:center; margin-top:8px;}
@@ -77,8 +76,7 @@ actions{display:flex; gap:10px; justify-content:center; margin-top:14px;}
 
   <div class="actions">
     <button class="btn" id="btnDevelop">Develop 📷</button>
-    <b
-utton class="btn ghost" id="btnClear">Clear board</button>
+    <button class="btn ghost" id="btnClear">Clear board</button>
   </div>
 
   <p class="clock" id="clocknote">the clock starts on your first tap</p>
@@ -120,8 +118,7 @@ utton class="btn ghost" id="btnClear">Clear board</button>
 /* ---------------- picture bank (7x7, '#' = filled) ---------------- */
 const DESIGNS = [
   { n:'The Pyramid', g:['...#...','..###..','.#####.','#######','#######','#######','#######'] },
-  { n:'The Hourglass', g:['#######','.#####.','..###..','...#...','..###..'
-,'.#####.','#######'] },
+  { n:'The Hourglass', g:['#######','.#####.','..###..','...#...','..###..','.#####.','#######'] },
   { n:'The Sword', g:['...#...','...#...','...#...','.#####.','...#...','...#...','..###..'] },
   { n:'The Longship', g:['...#...','..###..','..###..','.#####.','...#...','.#####.','#######'] },
   { n:'The Crown', g:['.#.#.#.','.#.#.#.','.#####.','#######','#######','#######','#######'] },
@@ -158,8 +155,7 @@ async function loadPuzzle(){
 
 function runs(line){
   const out = []; let c = 0;
-  for (const v of line){ if (v) c++; else
- if (c){ out.push(c); c = 0; } }
+  for (const v of line){ if (v) c++; else if (c){ out.push(c); c = 0; } }
   if (c) out.push(c);
   return out.length ? out : [0];
 }
@@ -215,8 +211,7 @@ function renderMistakes(){
 function renderAll(){ if (!SOL) return; renderGrid(); renderMistakes(); }
 
 /* ---------------- play ---------------- */
-$('grid'
-).addEventListener('click', e => {
+$('grid').addEventListener('click', e => {
   if (!SOL) return;
   const el = e.target.closest('.cell');
   if (!el || S.status !== 'playing') return;
@@ -273,8 +268,7 @@ $('btnDevelop').addEventListener('click', () => {
   } else {
     saveState();
     renderMistakes();
-    setTimeout(() => document.querySelectorAll('.cell.bad,.cell.miss').forEach(el => el.classList.remove('bad','miss')), 14
-00);
+    setTimeout(() => document.querySelectorAll('.cell.bad,.cell.miss').forEach(el => el.classList.remove('bad','miss')), 1400);
     toastMsg(['Not quite \u2014 study the flashes.','The film fogged a little \u2014 look again.','One more bad development and it\u2019s ruined.'][Math.min(S.mistakes - 1, 2)]);
   }
 });
@@ -317,8 +311,7 @@ function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
 
-function onTick()
-{  if (S.status === 'playing'){
+function onTick(){  if (S.status === 'playing'){
     $('clocknote').textContent = S.startAt
       ? `the clock is running — ${fmtTime(elapsed())} — it does not restart`
       : 'the clock starts on your first tap';

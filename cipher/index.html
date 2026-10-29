@@ -29,8 +29,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .slot.done .pl{color:var(--green); border-color:var(--green-soft);}
 .punc{display:inline-flex; flex-direction:column; align-items:center; min-width:10px; padding:2px 1px;}
 .punc .pl{font-size:19px; min-height:23px; border-bottom:2px solid transparent;
-    f
-ont-family:ui-monospace,Menlo,Consolas,monospace;}
+    font-family:ui-monospace,Menlo,Consolas,monospace;}
 .keynote{text-align:center; font-size:12px; color:var(--muted); margin:10px 0 0;}
 .actions{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
 .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
@@ -69,8 +68,7 @@ ont-family:ui-monospace,Menlo,Consolas,monospace;}
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="le
-ad"><b>A line of history, encrypted letter by letter.</b> The cipher is a simple substitution — every letter always stands for the same letter. Tap any encrypted letter, then type your guess. Frequency is your friend; hints cost.</p>
+  <p class="lead"><b>A line of history, encrypted letter by letter.</b> The cipher is a simple substitution — every letter always stands for the same letter. Tap any encrypted letter, then type your guess. Frequency is your friend; hints cost.</p>
 
   <div class="authorbox">
     <span class="who" id="author">—</span>
@@ -109,8 +107,7 @@ ad"><b>A line of history, encrypted letter by letter.</b> The cipher is a simple
     <p>Every letter of the quote has been swapped for another letter, consistently. The small letter on top is the <b>cipher</b>; your decode goes underneath.</p>
     <p><b>Tap</b> an encrypted letter to select it (every copy of it highlights), then <b>type</b> your guess for it. Backspace clears it. The author is shown in the clear — use the spelling as a crib.</p>
     <p>There is no penalty for wrong guesses — a wrong decode just looks wrong. The puzzle solves itself the moment your decode is complete and correct.</p>
-    <p>S
-tuck? A <b>hint</b> reveals one letter (the most common one you are missing or have wrong) — the day's score is how many hints you needed. <b>Reveal the codebook</b> ends the day.</p>
+    <p>Stuck? A <b>hint</b> reveals one letter (the most common one you are missing or have wrong) — the day's score is how many hints you needed. <b>Reveal the codebook</b> ends the day.</p>
     <button class="close" data-close>To the code</button>
   </div>
 </div>
@@ -139,8 +136,7 @@ const QUOTES = [
   { q:'IF MEN WERE ANGELS, NO GOVERNMENT WOULD BE NECESSARY.', a:'James Madison' },
   { q:'AMBITION MUST BE MADE TO COUNTERACT AMBITION.', a:'James Madison' },
   { q:'MAN IS BORN FREE, AND EVERYWHERE HE IS IN CHAINS.', a:'Jean-Jacques Rousseau' },
-  { q:'EVERYO
-NE SEES WHAT YOU APPEAR TO BE; FEW EXPERIENCE WHAT YOU REALLY ARE.', a:'Niccolo Machiavelli' },
+  { q:'EVERYONE SEES WHAT YOU APPEAR TO BE; FEW EXPERIENCE WHAT YOU REALLY ARE.', a:'Niccolo Machiavelli' },
   { q:'THE STRONG DO WHAT THEY CAN AND THE WEAK SUFFER WHAT THEY MUST.', a:'Thucydides' },
   { q:'A HOUSE DIVIDED AGAINST ITSELF CANNOT STAND.', a:'Abraham Lincoln' },
   { q:'FOUR SCORE AND SEVEN YEARS AGO OUR FATHERS BROUGHT FORTH UPON THIS CONTINENT A NEW NATION.', a:'Abraham Lincoln' },
@@ -180,8 +176,7 @@ function buildSub(rnd){
       const j = Math.floor(rnd() * (i + 1));
       [perm[i], perm[j]] = [perm[j], perm[i]];
     }
-  } while (perm.some((p, i) => p === ALPH
-A[i]));
+  } while (perm.some((p, i) => p === ALPHA[i]));
   const enc = {}, dec = {};
   perm.forEach((p, i) => { enc[ALPHA[i]] = p; dec[p] = ALPHA[i]; });
   return { enc, dec };
@@ -235,7 +230,6 @@ function render(){
   const flush = () => { if (word){ html += '<span class="word">' + word + '</span>'; word = ''; } };
   for (let i = 0; i < Q.q.length; i++){
     const ch = Q.q[i];
-
     if (/[A-Z]/.test(ch)){
       const c = CIPHER[i];
       const d = S.map[c] || '';
@@ -294,8 +288,7 @@ document.addEventListener('keydown', e => {
    the soft keyboard; the sentinel space turns backspace into an input event */
 const kbd = $('kbd');
 kbd.value = ' ';
-kbd.addEventListene
-r('input', () => {
+kbd.addEventListener('input', () => {
   if (!Q) return;
   const v = kbd.value;
   kbd.value = ' ';
@@ -356,8 +349,7 @@ function showReveal(){
   for (const c in SUB.dec){ S.map[c] = SUB.dec[c]; }
   render();
   $('plainq').innerHTML = '<b>' + Q.a + '</b> \u2014 ' + Q.q;
-  $('sharetext').textContent = shareText() + '\nstreak ' + st
-.streak + ' \u00b7 decoded ' + st.solved + '/' + st.played;
+  $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 decoded ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
   $('btnHint').disabled = true;
   $('btnGiveUp').disabled = true;

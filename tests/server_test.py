@@ -47,8 +47,8 @@ def today_day():
     return (today - date.fromisoformat(MANIFEST["epoch"])).days
 
 
-def req(method, path, body=None):
-    url = "http://127.0.0.1:%d%s" % (PORT, path)
+def req(method, path, body=None, port=PORT):
+    url = "http://127.0.0.1:%d%s" % (port, path)
     data = json.dumps(body).encode() if body is not None else None
     r = urllib.request.Request(url, data=data, method=method)
     if data:
@@ -62,14 +62,17 @@ def req(method, path, body=None):
         return e.code, (json.loads(raw) if raw else {})
 
 
-def post(path, body):
-    return req("POST", path, body)
+def post(path, body, port=PORT):
+    return req("POST", path, body, port)
 
 
 def main():
+    # both instances archive into a scratch dir: the test must never write
+    # snapshots into the repo's scores/archive
+    scratch = tempfile.mkdtemp()
     proc = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
-         "--port", str(PORT), "--host", "127.0.0.1"],
+         "--port", str(PORT), "--host", "127.0.0.1", "--archive-dir", scratch],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     fails = []
 
@@ -244,6 +247,45 @@ def main():
             proc.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc.kill()
+
+    # --- rate limiting: a second instance with tiny caps; /health exempt ---
+    PORT2 = PORT + 1
+    proc2 = subprocess.Popen(
+        [sys.executable, str(ROOT / "scores" / "server.py"),
+         "--port", str(PORT2), "--host", "127.0.0.1", "--archive-dir", scratch,
+         "--max-gets-per-ip", "3", "--max-posts-per-ip", "2"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        up = False
+        for _ in range(50):
+            try:
+                s, _b = req("GET", "/health", port=PORT2)
+                if s == 200:
+                    up = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.1)
+        if not up:
+            check(False, "rate-limit instance never came up on port %d" % PORT2)
+        else:
+            g = [req("GET", "/api/manifest", port=PORT2)[0] for _ in range(4)]
+            check(g[:3] == [200, 200, 200] and g[3] == 429,
+                  "GET cap: 3 per IP allowed, the 4th is 429")
+            p = [post("/api/submit",
+                      {"game": "fermi", "day": TODAY, "value": 3,
+                       "better": "high", "id": "r%d" % i}, port=PORT2)[0]
+                 for i in range(3)]
+            check(p[:2] == [200, 200] and p[2] == 429,
+                  "submit cap: 2 per IP allowed, the 3rd is 429")
+            s, _b = req("GET", "/health", port=PORT2)
+            check(s == 200, "/health is exempt from the per-IP caps")
+    finally:
+        proc2.terminate()
+        try:
+            proc2.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc2.kill()
 
     # --- archive handoff (unit): a finished day collapses into a static,
     #     read-only snapshot and leaves the live state ---

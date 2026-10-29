@@ -18,6 +18,9 @@ Design rules (deliberate):
 - client ids are hashed to 8 bytes and kept only in a transient dedupe set:
   the first submission of the day stands; reloads get a personalized reply
   but do not retally
+- per-IP daily request caps keep scripted flooding from doing damage:
+  /health is exempt (the container healthcheck must never trip them) and
+  the caps sit orders of magnitude above human play
 - input is strictly validated: game must be in the fixed allowlist below,
   day/value are bounded numbers, bodies are capped at 2 KB, and no user
   text is accepted or stored anywhere
@@ -52,6 +55,14 @@ MAX_BODY = 2048
 MAX_ABS_VALUE = 1e6
 DAY_MIN, DAY_MAX = -1000, 100000
 ARCHIVE_DIR = Path(__file__).parent / 'archive'
+
+# Per-IP daily caps (DoS damping). Human play is a few dozen requests a
+# day even across every game; these sit far above that and exist only to
+# stop scripted flooding. Counts reset with the ET day and the map is
+# pruned if it ever grows past a fixed bound.
+MAX_GETS_PER_IP = 10000
+MAX_POSTS_PER_IP = 300
+IP_HITS = {}   # ip -> [day, gets, posts]
 
 # Per-game truth: which direction is better, and the fixed histogram edges.
 # Bin i covers [edges[i], edges[i+1]); values beyond the last edge clamp into
@@ -290,6 +301,23 @@ class Handler(BaseHTTPRequestHandler):
             p = p.rstrip("/")
         return p or "/"
 
+    def _rate_ok(self, kind):
+        """Count one request per client IP for the ET day; True if under cap."""
+        ip = self.client_address[0]
+        today = current_day_index()
+        with LOCK:
+            rec = IP_HITS.get(ip)
+            if rec is None or rec[0] != today:
+                if len(IP_HITS) > 100000:
+                    for k in [k for k, v in IP_HITS.items() if v[0] != today]:
+                        IP_HITS.pop(k, None)
+                rec = [today, 0, 0]
+                IP_HITS[ip] = rec
+            idx = 1 if kind == "get" else 2
+            rec[idx] += 1
+            cap = MAX_GETS_PER_IP if kind == "get" else MAX_POSTS_PER_IP
+            return rec[idx] <= cap
+
     def do_OPTIONS(self):
         self.send_response(204)
         self._cors()
@@ -297,6 +325,9 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = self._path()
+        if path != "/health" and not self._rate_ok("get"):
+            self._json({"error": "too many requests"}, 429)
+            return
         if path == "/health":
             with LOCK:
                 payload = {"ok": True, "boards": len(STATS)}
@@ -370,6 +401,9 @@ class Handler(BaseHTTPRequestHandler):
         if self._path() != "/submit":
             self._json({"error": "not found"}, 404)
             return
+        if not self._rate_ok("post"):
+            self._json({"error": "too many requests"}, 429)
+            return
         try:
             length = int(self.headers.get("Content-Length") or 0)
         except ValueError:
@@ -422,14 +456,20 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
-    global ARCHIVE_DIR
+    global ARCHIVE_DIR, MAX_GETS_PER_IP, MAX_POSTS_PER_IP
     ap = argparse.ArgumentParser(description="Warmup global curve")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8787)
     ap.add_argument("--archive-dir", default=str(ARCHIVE_DIR),
                     help="where finished days collapse into static snapshots")
+    ap.add_argument("--max-gets-per-ip", type=int, default=MAX_GETS_PER_IP,
+                    help="per-IP daily cap for GET endpoints")
+    ap.add_argument("--max-posts-per-ip", type=int, default=MAX_POSTS_PER_IP,
+                    help="per-IP daily cap for POST /submit")
     args = ap.parse_args()
     ARCHIVE_DIR = Path(args.archive_dir)
+    MAX_GETS_PER_IP = args.max_gets_per_ip
+    MAX_POSTS_PER_IP = args.max_posts_per_ip
 
     def _stop(signum, frame):
         raise KeyboardInterrupt()

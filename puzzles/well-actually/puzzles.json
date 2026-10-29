@@ -1136,5 +1136,139 @@
       "long before the West had ever tasted one."
     ],
     "w": "The folded cookie descends from a Kyoto cracker with a fortune tucked inside, and the modern version was popularized by Japanese immigrant bakeries in California in the early 1900s. Chinese restaurants adopted it decades later; in China it is known, when it is known at all, as an American cookie."
+  },
+  {
+    "t": "Geography · The Capital of Australia",
+    "l": 1,
+    "c": "Canberra",
+    "a": [
+      "Canberra"
+    ],
+    "s": [
+      "Home of the Opera House and the Harbour Bridge,",
+      "Sydney was chosen as the capital when the colonies federated,",
+      "taking the parliament, the courts, and the embassies",
+      "from rival Melbourne without a fight."
+    ],
+    "w": "The constitution required a capital in New South Wales but at least a hundred miles from Sydney, so neither Sydney nor Melbourne could win. Canberra, surveyed out of sheep country, received the parliament in 1927."
+  },
+  {
+    "t": "Geography · The Largest Desert",
+    "l": 0,
+    "c": "Antarctica",
+    "a": [
+      "Antarctica",
+      "the Antarctic"
+    ],
+    "s": [
+      "The largest desert on Earth is the Sahara,",
+      "a sea of dunes the size of a continent,",
+      "stretching from the Atlantic to the Red Sea,",
+      "the emptiest place people know."
+    ],
+    "w": "A desert is measured by rainfall, not sand; Antarctica’s interior receives under 200 millimeters a year and covers about 14 million square kilometers, roughly half again the Sahara. The Sahara is merely the largest hot desert."
+  },
+  {
+    "t": "Food · Chop Suey",
+    "l": 0,
+    "c": "the United States",
+    "a": [
+      "the United States",
+      "America",
+      "California",
+      "New York",
+      "American Chinese cooks"
+    ],
+    "s": [
+      "Born in the kitchens of imperial China,",
+      "chop suey crossed the ocean with the emigrants",
+      "and became the most famous Chinese dish in America,",
+      "a taste of home for every Cantonese cook."
+    ],
+    "w": "Chop suey, odds and ends in Cantonese, is an American invention of the late 1800s; the dish is unknown in China, and it became known there mostly through tourists asking for it. The stories about it charming a visiting diplomat are themselves tall tales."
+  },
+  {
+    "t": "Space · The North Star",
+    "l": 0,
+    "c": "Sirius",
+    "a": [
+      "Sirius",
+      "the Dog Star"
+    ],
+    "s": [
+      "The brightest star in the night sky,",
+      "Polaris, the North Star,",
+      "has steered sailors and runaways north for centuries,",
+      "outshining everything around it."
+    ],
+    "w": "Polaris ranks around the fiftieth-brightest star in the night sky; Sirius, the Dog Star, is the brightest by far. The North Star is famous for holding nearly still, not for shining hardest."
+  },
+  {
+    "t": "Invention · The Flush Toilet",
+    "l": 0,
+    "c": "Sir John Harington",
+    "a": [
+      "Sir John Harington",
+      "John Harington",
+      "Harington"
+    ],
+    "s": [
+      "Invented by Thomas Crapper,",
+      "the flush toilet arrived in Victorian England",
+      "with the plumber’s name cast proudly on its cisterns",
+      "and royal warrants on his letterhead."
+    ],
+    "w": "Crapper was a real master plumber who held royal warrants and popularized good fittings, but the flush water closet dates to Harington’s Ajax of 1596, built for Queen Elizabeth I. The word crap was English slang long before either man."
+  },
+  {
+    "t": "Literature · The Deerstalker",
+    "l": 3,
+    "c": "Sidney Paget",
+    "a": [
+      "Sidney Paget",
+      "Paget",
+      "the illustrator",
+      "the illustrations"
+    ],
+    "s": [
+      "Wearing his deerstalker and cape in the fog,",
+      "Sherlock Holmes stalked through every story",
+      "from the very first case in 1887,",
+      "exactly as Arthur Conan Doyle dressed him."
+    ],
+    "w": "Doyle never puts a deerstalker on Holmes anywhere in the canon; the hat and the curved pipe entered the world in Sidney Paget’s drawings for The Strand Magazine and simply never left."
+  },
+  {
+    "t": "Medicine · The Spanish Flu",
+    "l": 2,
+    "c": "Kansas",
+    "a": [
+      "Kansas",
+      "the United States",
+      "Camp Funston",
+      "Haskell County"
+    ],
+    "s": [
+      "Named for the country that first reported it,",
+      "the Spanish flu of 1918",
+      "swept out of Spain across a world at war,",
+      "killing more people than the trenches ever did."
+    ],
+    "w": "Spain was neutral and uncensored, so its newspapers simply told the truth first. The first documented waves came out of Kansas and the American army camps in the spring of 1918, and wartime censorship elsewhere kept the Spanish name."
+  },
+  {
+    "t": "Nature · The Camel",
+    "l": 1,
+    "c": "North America",
+    "a": [
+      "North America"
+    ],
+    "s": [
+      "Ship of the desert for five thousand years,",
+      "the camel evolved in the Sahara",
+      "and spread with the caravans to every desert,",
+      "from Arabia to the Gobi."
+    ],
+    "w": "Camels evolved in North America and walked into Asia across the Bering land bridge; the American camels went extinct roughly ten thousand years ago. Australia’s wild dromedaries are feral imports, and the Sahara’s ships are returned immigrants."
   }
 ]

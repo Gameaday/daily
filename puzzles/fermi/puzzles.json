@@ -370,5 +370,53 @@
     "q": "Roughly how many people are alive on Earth right now?",
     "a": 8000000000,
     "w": "The count passed eight billion in November 2022, having crossed four billion only in 1974. Net growth now runs about 70 million a year, or roughly nine thousand more people every hour."
+  },
+  {
+    "t": "Speed of Light",
+    "q": "Roughly how fast does light travel in a vacuum, in kilometers per second?",
+    "a": 300000,
+    "w": "Light moves at 299,792 kilometers per second, almost always rounded to 300,000. Sunlight covers the 150 million kilometers from the Sun in about eight minutes and twenty seconds."
+  },
+  {
+    "t": "Rivers",
+    "q": "Roughly how many kilometers long is the Amazon River?",
+    "a": 6400,
+    "w": "Most measures put the Amazon between 6,400 and 6,900 kilometers, and several recent studies make it longer than the Nile, which held the title for centuries. Where you start counting decides who wins."
+  },
+  {
+    "t": "Deep Time",
+    "q": "Roughly how many years ago did the last of the dinosaurs die out?",
+    "a": 66000000,
+    "w": "The Chicxulub asteroid closed the Cretaceous about 66 million years ago. The dinosaurs had already ruled the Earth for some 165 million years, about eighty times longer than our own genus has existed."
+  },
+  {
+    "t": "The Heart",
+    "q": "Roughly how many liters of blood does a resting adult heart pump in a day?",
+    "a": 7000,
+    "w": "The heart moves about five liters a minute at rest, which comes to roughly seven thousand liters a day, a tanker truck’s worth. Over an average lifetime that is better than two hundred million liters."
+  },
+  {
+    "t": "The Internet",
+    "q": "Roughly how many hours of video are uploaded to YouTube every minute?",
+    "a": 500,
+    "w": "Public figures put it above 500 hours per minute in the 2020s, up from about 100 hours a decade earlier. A single day now adds about three quarters of a year of new footage."
+  },
+  {
+    "t": "Spaceflight",
+    "q": "Roughly how many people have walked on the Moon?",
+    "a": 12,
+    "w": "Twelve, all American, all between July 1969 and December 1972. Each Apollo landing put two men on the surface while a third kept the orbit, and no one has been back since."
+  },
+  {
+    "t": "The Olympics",
+    "q": "Roughly how many athletes competed at the Tokyo 2020 Olympics?",
+    "a": 11000,
+    "w": "About eleven thousand athletes from over two hundred teams took part, spread across 33 sports and a year’s delay. Paris 2024 fielded a similar number."
+  },
+  {
+    "t": "Trees",
+    "q": "Roughly how old is the oldest known living tree, in years?",
+    "a": 5000,
+    "w": "A Great Basin bristlecone pine in California’s White Mountains, nicknamed Methuselah, is about 4,900 years old, and a nearby tree ring-dated in 2022 pushes the record past five thousand. It sprouted before the first pyramids."
   }
 ]

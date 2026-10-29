@@ -2,7 +2,16 @@
 
 Goal: every bank game serves a **comprehensive, curated, server-side bank** (no client bank, no random generation, no mock state). Client files are puzzle-only renderers; seeds may only *select* among curated entries (e.g. picking 5 events for timeline), never generate puzzle content.
 
-## Phase 0 — Server core (DONE)
+## Key strategy note (added)
+
+**Don't throw away the old client banks — recover and port them.** The pre-refactor `index.html` files (still reachable via git history, e.g. `git show c91bcfc:<game>/index.html`) contain the original curated banks (PUZZLES, QUOTES, EVENTS, EXHIBITS, etc.). Rather than authoring from scratch or leaving placeholders:
+
+1. `git show <pre-refactor-commit>:<game>/index.html` to retrieve the original inline bank.
+2. Extract the bank array/object and validate its shape.
+3. Move it into `scores/<game>/puzzles.json` (transforming field names to the server's `{t,l,s,w}` / game-specific shape as needed).
+4. Strip the now-duplicated bank from the client, keeping only the renderer + fetchPuzzle loader.
+
+This recovers the curated content we already had, avoids re-authoring, and makes "1.0" a port rather than a rewrite. Only games whose banks were genuinely lost/never existed (none currently) need new authoring.
 - [x] `scores/server.py`: remove `mode=gen` random generation; `/puzzle` serves `entry[day % len(entry)]` deterministically + timeline windowed path.
 - [x] `DEVELOPER.md`: drop stale `"mode": "gen"` from response example.
 - [x] `trace/index.html`: remove dead `if (false)` local-generation scaffolding.

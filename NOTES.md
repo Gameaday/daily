@@ -70,8 +70,8 @@ mid-streak just gets the new puzzle). Sprint's inline anagram banks got a
 hygiene pass at the same time: non-words (BASON, YOUK, WRAY, GLANE, TICKY,
 WRITH...), wrong-length strays and duplicates removed or relocated; the
 real-but-obscure words stay (ROUE, WOLD, QUOD - they are the fun ones).
-tests/run.js and checks/games.js now assert both banks' shape (A-Z 3-5,
-sorted, no duplicates, known typos stay gone), 304 assertions total.
+The per-game tests (tests/games/) and checks/games.js assert both banks'
+shape (A-Z 3-5, sorted, no duplicates, known typos stay gone).
 
 ## Recycle redesign (done 2026-10-27)
 
@@ -156,7 +156,7 @@ costs an extra tap on a phone, and nothing has been trialed on a real small
 screen. Worth one deliberate pass on a phone before players find what we
 missed.
 
-## Metrics ledger (single source of truth: SPECS in scores/server.py)
+## Metrics ledger (single source of truth: scores/manifest.json)
 
 - bogus: points 0-3, high (0 on a miss)
 - well-actually: points 0-4, high
@@ -172,6 +172,13 @@ missed.
 - cipher: hints 0-5, low (7 on a revealed codebook)
 - timeline: checks 1+, low (9 on a reveal)
 - museum: clues 1-5, low (6 on a stumped visit)
+
+Since 2026-10-29 the single source is `scores/manifest.json` (epoch, tz,
+per-game better + histogram edges). scores/server.py loads it at boot, the
+client pages carry the same constants inline for offline play, and
+tests/games/cross-checks.js fails CI if the shell, the landing page or the
+server disagree with the manifest. SPECS in server.py is gone; the list above
+is documentation only.
 
 ## Batch 4 candidates
 
@@ -208,9 +215,9 @@ verified against the client banks by tools/export-puzzles.mjs: CI, make
 test and npm test all run the verifier first, so a bank edited without
 re-exporting its store fails the build. scores/server.py loads each
 store from next to itself, so the scores container just COPYs scores/
-in. tests/run.js deep-checks the committed timeline picks against the
-page's own offline day-0 pick, and server_test.py does the same against
-the served JSON.
+in. tests/games/timeline.js deep-checks the committed timeline picks
+against the page's own offline day-0 pick, and server_test.py does the
+same against the served JSON.
 
 ## Docker refine (2026-10-28)
 
@@ -226,6 +233,16 @@ The wording guard moved local: checks/wording.js runs as part of
 checks/games.js (same rule, same exemptions); the old CI grep matched its
 own workflow file and kept main red, so the CI copy is gone - too specific
 for CI, right at home in make test.
+
+## Test split + manifest single source (done 2026-10-29)
+
+tests/run.js is now a thin orchestrator over per-game modules in tests/games/
+(each game's playthrough, server-gated.js for online delivery,
+cross-checks.js for the shell/manifest/landing agreement, _lib.js for the
+shared game list). Dropping a game later means deleting its module and its
+entry in the MODULES list, nothing else. A suite-guard group fails the run
+if the orchestrator ever loads no modules or runs zero assertions (an empty
+file exits 0 in Node, so a silent pass must be impossible).
 
 ## Batch 5 candidates
 

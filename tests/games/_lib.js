@@ -7,8 +7,9 @@
    together (CI cross-checks them) and the days here with it. */
 'use strict';
 
-const GAMES = ['bogus', 'well-actually', 'recycle-rings', 'recycle-grid', 'fermi',
-  'sift', 'rounds', 'trace', 'lightbox', 'sprint', 'cipher', 'timeline', 'museum'];
+/* one source of truth for the game list and its play order: games.json
+   at the repo root (CI cross-checks it against scores/manifest.json). */
+const GAMES = require('../../games.json').order;
 
 const T0 = Date.parse('2026-10-27T12:00:00Z');
 const T1 = T0 + 86400000;

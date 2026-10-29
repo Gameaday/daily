@@ -1,0 +1,21 @@
+{
+  "order": ["bogus", "well-actually", "recycle-rings", "recycle-grid", "fermi",
+            "sift", "rounds", "trace", "lightbox", "sprint", "cipher",
+            "timeline", "museum"],
+  "gated": {
+    "bogus": "PUZZLES",
+    "well-actually": "PUZZLES",
+    "rounds": "EVENTS",
+    "fermi": "QS",
+    "cipher": "QUOTES",
+    "museum": "MUSEUM",
+    "lightbox": "DESIGNS",
+    "sift": "BOARDS",
+    "timeline": "EVENTS"
+  },
+  "generator": ["sprint", "trace", "recycle-grid", "recycle-rings"],
+  "wordBank": ["recycle-grid", "recycle-rings", "trace"],
+  "minBank": 15,
+  "minTimelineBank": 40,
+  "timelineDays": 1000
+}

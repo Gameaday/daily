@@ -11,23 +11,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const GATED = {
-  bogus: 'PUZZLES',
-  'well-actually': 'PUZZLES',
-  rounds: 'EVENTS',
-  fermi: 'QS',
-  cipher: 'QUOTES',
-  museum: 'MUSEUM',
-  lightbox: 'DESIGNS',
-  sift: 'BOARDS',
-  timeline: 'EVENTS'
-};
+/* the gated-game map has one source of truth: games.json at the repo root */
+const GATED = JSON.parse(fs.readFileSync('games.json', 'utf8')).gated;
 const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'dist', '__pycache__',
   'deploy', 'tests', 'tools', 'checks', 'scores']);
 const SKIP_FILES = new Set(['.gitignore', '.dockerignore', '.env', '.env.example',
   'Makefile', 'NOTES.md', 'README.md', 'DEVELOPER.md', 'ROADMAP_1.0.md',
   'package.json', 'package-lock.json', 'docker-compose.yml',
-  'Dockerfile.web', 'Dockerfile.scores', 'Caddyfile']);
+  'Dockerfile.web', 'Dockerfile.scores', 'Caddyfile', 'games.json']);
 
 function copyDir(src, dest){
   fs.mkdirSync(dest, { recursive: true });

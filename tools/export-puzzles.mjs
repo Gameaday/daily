@@ -14,23 +14,18 @@
 import fs from 'node:fs';
 
 const WRITE = process.argv.includes('--write');
-const DIRECT = {
-  bogus: 'PUZZLES',
-  'well-actually': 'PUZZLES',
-  rounds: 'EVENTS',
-  fermi: 'QS',
-  cipher: 'QUOTES',
-  museum: 'MUSEUM',
-  lightbox: 'DESIGNS',
-  sift: 'BOARDS'
-};
-const EMPTY = ['sprint', 'trace', 'recycle-grid', 'recycle-rings'];
-const TIMELINE_DAYS = 1000;
+/* the game list, bank floors, and window size have one source of truth:
+   games.json at the repo root */
+const LIST = JSON.parse(fs.readFileSync('games.json', 'utf8'));
+const DIRECT = Object.fromEntries(
+  Object.entries(LIST.gated).filter(([g]) => g !== 'timeline'));
+const EMPTY = LIST.generator;
+const TIMELINE_DAYS = LIST.timelineDays;
 /* minimum bank sizes: CI fails if a bank ever drops below this floor.
    Growing the banks is 1.0.x work; this lint only keeps the floor from
    quietly eroding under an edit. */
-const MIN_BANK = 15;
-const MIN_TIMELINE_BANK = 40;
+const MIN_BANK = LIST.minBank;
+const MIN_TIMELINE_BANK = LIST.minTimelineBank;
 
 function mulberry32(a){
   return function(){
@@ -78,6 +73,15 @@ function pickForDay(bank, day){
 
 let fails = 0;
 const fail = msg => { console.error('FAIL ' + msg); fails++; };
+
+/* games.json and the manifest must agree on which games exist */
+{
+  const manifest = JSON.parse(fs.readFileSync('scores/manifest.json', 'utf8'));
+  const a = Object.keys(manifest.games).sort();
+  const b = [...LIST.order].sort();
+  if (JSON.stringify(a) !== JSON.stringify(b))
+    fail('games.json order does not match the manifest games ledger');
+}
 
 /* direct games: committed store must equal the inline bank */
 for (const [game, name] of Object.entries(DIRECT)){

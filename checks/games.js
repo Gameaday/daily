@@ -11,9 +11,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const games = ['bogus', 'cipher', 'fermi', 'lightbox', 'museum', 'recycle-grid',
-  'recycle-rings', 'rounds', 'sift', 'sprint', 'timeline', 'trace', 'well-actually'];
-const wordBankGames = ['recycle-grid', 'recycle-rings', 'trace'];
+/* the game list has one source of truth: games.json at the repo root
+   (export-puzzles cross-checks it against scores/manifest.json in CI).
+   Output order here is alphabetical; the play order lives in games.json. */
+const LIST = require('../games.json');
+const games = [...LIST.order].sort();
+const wordBankGames = LIST.wordBank;
 const SHELL = ['SHELL', 'EPOCH_KEY', 'syncBoard'];
 const NOT_IN_GAMES = ['America/New_York', 'function renderBoard', 'function nextETMidnight',
   'const $ = id =>', 'JSON.parse(localStorage.getItem(KEY))',
@@ -86,11 +89,7 @@ for (const g of games) {
 
 /* server-gated delivery: every gated game keeps its inline bank for
    solo/offline play AND defers to the scores service when online */
-const GATED = {
-  bogus: 'PUZZLES', 'well-actually': 'PUZZLES', rounds: 'EVENTS', fermi: 'QS',
-  cipher: 'QUOTES', museum: 'MUSEUM', lightbox: 'DESIGNS', sift: 'BOARDS',
-  timeline: 'EVENTS'
-};
+const GATED = LIST.gated;
 for (const g of Object.keys(GATED)) {
   const bank = GATED[g];
   const file = path.join(g, 'index.html');
@@ -101,6 +100,9 @@ for (const g of Object.keys(GATED)) {
   if (js.indexOf('fetchPuzzle') === -1) fail(g + ': does not fetch its puzzle from the scores service');
   if (js.indexOf('isSolo()') === -1) fail(g + ': does not keep the solo/offline path');
 }
+for (const g of Object.keys(GATED))
+  if (!LIST.order.includes(g)) fail('games.json: gated game ' + g + ' missing from order');
+
 /* wording: one word is banned by convention here; it must stay out of
    tracked text (the dictionaries that legitimately contain it are exempt) */
 for (const hit of require('./wording').runWordingCheck()) fail('wording: ' + hit);

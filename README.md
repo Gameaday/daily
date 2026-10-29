@@ -26,10 +26,6 @@ Design notes and future ideas live in NOTES.md.
 | /cipher/ | Cipher | A daily substitution cipher hiding a line of history — decode it; hints count against you |
 | /timeline/ | Timeline | Five events with no dates; each check locks correct placements in place |
 | /museum/ | Museum | Name the day's artifact from five clues, obscure to obvious |
-# daily · daily.historylabs.dev
-
-Morning warmup games for the History Labs — one new puzzle per game per day,
-self-hosted on a Raspberry Pi as dumb static files. No database, no accounts, no ads.
 
 
 Each game is a single self-contained index.html — but the parts every game

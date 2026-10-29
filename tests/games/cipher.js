@@ -22,7 +22,7 @@ async function run(h){
     h.ok(r.x.shareText().indexOf('no hints') >= 0, 'cipher: share "no hints"');
     r.env.els.btnCodebook.click();
     h.ok(r.env.els.codebook.style.display !== 'none', 'cipher: codebook opens after the win');
-    h.ok(r.env.els.codebook.textContent.indexOf('\u2192') >= 0, 'cipher: codebook lists the substitutions');
+    h.ok(r.env.els.codebook.innerHTML.indexOf('\u2192') >= 0, 'cipher: codebook lists the substitutions');
     r = h.boot('cipher', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'cipher: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'cipher: streak preserved');

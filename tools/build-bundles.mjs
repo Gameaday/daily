@@ -20,11 +20,7 @@ const GATED = {
   museum: 'MUSEUM',
   lightbox: 'DESIGNS',
   sift: 'BOARDS',
-  timeline: 'EVENTS',
-  'recycle-grid': 'BANKS',
-  'recycle-rings': 'BANKS',
-  sprint: 'BANKS',
-  trace: 'BANKS'
+  timeline: 'EVENTS'
 };
 const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'dist', '__pycache__',
   'deploy', 'tests', 'tools', 'checks', 'scores']);

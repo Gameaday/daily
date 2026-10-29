@@ -35,7 +35,9 @@ The puzzle is derived from the date, not stored per player:
 - puzzle number = days since the launch date, rolling over at midnight America/New_York
 - puzzle content comes from an in-file bank or a seeded RNG: same for every player
 - streaks and progress live in each player's localStorage
-- change EPOCH_KEY in `shell/common.js` to reset the day numbering
+- the day-numbering epoch lives in `scores/manifest.json` and, inline for
+  offline play, in `shell/common.js`; CI cross-checks the two, so change
+  both together to reset the numbering
 
 ## Puzzle delivery (server-side banks)
 
@@ -192,7 +194,7 @@ scarcity of moves, not time.
    games can share `assets/words-en.js`.
 3. Add a card to the landing page and a row in the games table above.
 4. If it has a score: call `syncBoard(value)` on reveal, add the game to
-   `SPECS` in `scores/server.py`, and (bank game) run
+   `scores/manifest.json`, and (bank game) run
    `node tools/export-puzzles.mjs --write` and commit the store.
 5. Run `node checks/games.js` before you push.
 

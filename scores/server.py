@@ -43,9 +43,6 @@ try:
 except Exception:  # pragma: no cover
     ZoneInfo = None
 
-TZ_NAME = 'America/New_York'
-EPOCH_KEY = '2026-10-27'
-
 MAX_BODY = 2048
 MAX_ABS_VALUE = 1e6
 DAY_MIN, DAY_MAX = -1000, 100000
@@ -55,23 +52,15 @@ ARCHIVE_DIR = Path(__file__).parent / 'archive'
 # Bin i covers [edges[i], edges[i+1]); values beyond the last edge clamp into
 # the final bin, values below the first edge clamp into bin 0.
 # "better" lives here, server-side - the client never decides it.
-SPECS = {
-    "bogus":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
-    "well-actually": {"better": "high", "edges": [0, 1, 2, 3, 4, 5]},
-    "rings":         {"better": "low",  "edges": [0, 5, 7, 9, 11, 13, 15, 17, 20]},
-    "grid":          {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16]},
-    "grid-hard":     {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]},
-    "fermi":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
-    "sift":          {"better": "low",  "edges": [0, 1, 2, 3, 4, 5]},
-    "rounds":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},
-    "trace":         {"better": "low",  "edges": [0, 5, 6, 7, 8, 9, 10, 11, 12]},
-    "lightbox":      {"better": "low",  "edges": [0, 1, 2, 3, 4, 5]},
-    "sprint":        {"better": "high", "edges": [0, 1, 2, 3, 4, 5, 6]},
-    "cipher":        {"better": "low",  "edges": [0, 1, 2, 3, 4, 5, 6, 7]},
-    "timeline":      {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},
-    "museum":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7]},
-}
-
+# The truth itself lives in manifest.json (timezone, epoch, and one spec per
+# game). server.py loads it at boot, the client pages carry the same
+# timezone/epoch inline for offline play, and CI cross-checks both sides
+# against the manifest so neither can drift.
+with open(Path(__file__).parent / 'manifest.json', encoding='utf-8') as _mf:
+    _MANIFEST = json.load(_mf)
+TZ_NAME = _MANIFEST['tz']
+EPOCH_KEY = _MANIFEST['epoch']
+SPECS = _MANIFEST['games']
 # Per-game puzzle stores: scores/<game>/puzzles.json, committed and verified
 # against the client banks by tools/export-puzzles.mjs in CI. Generator games
 # keep an empty store (their puzzles are derived, not curated).

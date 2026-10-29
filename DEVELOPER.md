@@ -73,8 +73,11 @@ unit wants one ReadWritePaths entry).
 
 Endpoints (with or without the `/api` prefix): `POST /submit`,
 `GET /dist?game=&day=`, `GET /puzzle?game=&day=`, `GET /health`.
-Metric directions ("better": high/low) and histogram edges are owned by the
-`SPECS` table in server.py; the client never decides them.
+Metric directions ("better": high/low), histogram edges, the epoch, and
+the timezone are owned by `scores/manifest.json`; server.py loads it at
+boot, the client pages carry the same constants inline for offline play,
+and CI cross-checks both sides against the manifest so neither can drift.
+The client never decides them.
 
 ## Tests (all dependency-free)
 
@@ -83,6 +86,12 @@ Metric directions ("better": high/low) and histogram edges are owned by the
     node checks/games.js               # compile every game + shell/id/landing wiring
     node tests/run.js                  # headless playthroughs + server-gated delivery
     python3 tests/server_test.py      # scores service API test (fresh-day + archive)
+
+The Node layer is split per game: `tests/games/<game>.js` holds each
+game's playthrough, `server-gated.js` the online-delivery tests,
+`cross-checks.js` the shell/manifest/landing agreement checks, and
+`tests/run.js` is only the orchestrator - dropping a game later means
+deleting its folder and its module, nothing else.
 
 CI (`.github/workflows/validate.yml`) runs the same layers on every push;
 the Pi only deploys commits whose CI run is green.
@@ -94,7 +103,7 @@ the Pi only deploys commits whose CI run is green.
 2. Add the puzzle: an inline bank (bank game) or a seeded generator.
 3. Add a card to the landing `index.html` and a row in README's games table.
 4. If it has a score: call `syncBoard(value)` on reveal, add the game to
-   `SPECS` in `scores/server.py`, and for a bank game run
+   `scores/manifest.json`, and for a bank game run
    `node tools/export-puzzles.mjs --write` and commit the store.
 5. Run `node checks/games.js` before you push.
 

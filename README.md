@@ -1,4 +1,61 @@
-﻿# daily Â· daily.historylabs.dev
+# daily · daily.historylabs.dev
+
+Morning warmup games for the History Labs — one new puzzle per game per day,
+self-hosted on a Raspberry Pi as dumb static files. No database, no accounts, no ads.
+
+Everything is relative-pathed: the site works at warmup.historylabs.dev,
+daily.historylabs.dev, an IP, or a LAN hostname — nothing is hardcoded.
+
+Design notes and future ideas live in NOTES.md.
+
+## Games
+
+| Path | Game | Idea |
+|---|---|---|
+| / | Warmup | Landing page linking all games |
+| /bogus/ | Bogus! | A history passage where one phrase is a lie — spot it in 3 picks |
+| /well-actually/ | Well, Actually↵ | A statement with one wrong phrase — find it, then type the correction for a bonus point |
+| /recycle-rings/ | Recycle: Rings | Four letter wheels, one target word, one exact par — spin and swap to spell it, every move counts against the par |
+| /recycle-grid/ | Recycle: Grid | Three modes, three budgets — Practice (fresh random board, nothing counts), Normal (5, the daily game), Hard (same board, one more shift, online-only bonus): nudge rows then columns in two phases, undo is free until you Bank It, and the best possible board is exact |
+| /fermi/ | Fermi | One order-of-magnitude estimation question per day, one guess, scored by how close you land |
+| /sift/ | Sift | Twelve tiles, four hidden groups of three, four mistakes allowed |
+| /rounds/ | Rounds | Slide toward the year of a hidden event — hot, warm, or cold, in six guesses |
+| /trace/ | Trace | A daily word ladder — change one letter at a time from start to target, par five rungs |
+| /lightbox/ | Lightbox | A 7×7 nonogram; reason from the clues and develop a picture from history — four bad developments fog the film |
+| /sprint/ | Sprint | Five anagrams against one 90-second clock that starts on your first keystroke and never restarts |
+| /cipher/ | Cipher | A daily substitution cipher hiding a line of history — decode it; hints count against you |
+| /timeline/ | Timeline | Five events with no dates; each check locks correct placements in place |
+| /museum/ | Museum | Name the day's artifact from five clues, obscure to obvious |
+# daily · daily.historylabs.dev
+
+Morning warmup games for the History Labs — one new puzzle per game per day,
+self-hosted on a Raspberry Pi as dumb static files. No database, no accounts, no ads.
+
+Everything is relative-pathed: the site works at warmup.historylabs.dev,
+daily.historylabs.dev, an IP, or a LAN hostname — nothing is hardcoded.
+
+Design notes and future ideas live in NOTES.md.
+
+## Games
+
+| Path | Game | Idea |
+|---|---|---|
+| / | Warmup | Landing page linking all games |
+| /bogus/ | Bogus! | A history passage where one phrase is a lie — spot it in 3 picks |
+| /well-actually/ | Well, Actually↵ | A statement with one wrong phrase — find it, then type the correction for a bonus point |
+| /recycle-rings/ | Recycle: Rings | Four letter wheels, one target word, one exact par — spin and swap to spell it, every move counts against the par |
+| /recycle-grid/ | Recycle: Grid | Three modes, three budgets — Practice (fresh random board, nothing counts), Normal (5, the daily game), Hard (same board, one more shift, online-only bonus): nudge rows then columns in two phases, undo is free until you Bank It, and the best possible board is exact |
+| /fermi/ | Fermi | One order-of-magnitude estimation question per day, one guess, scored by how close you land |
+| /sift/ | Sift | Twelve tiles, four hidden groups of three, four mistakes allowed |
+| /rounds/ | Rounds | Slide toward the year of a hidden event — hot, warm, or cold, in six guesses |
+| /trace/ | Trace | A daily word ladder — change one letter at a time from start to target, par five rungs |
+| /lightbox/ | Lightbox | A 7×7 nonogram; reason from the clues and develop a picture from history — four bad developments fog the film |
+| /sprint/ | Sprint | Five anagrams against one 90-second clock that starts on your first keystroke and never restarts |
+| /cipher/ | Cipher | A daily substitution cipher hiding a line of history — decode it; hints count against you |
+| /timeline/ | Timeline | Five events with no dates; each check locks correct placements in place |
+| /museum/ | Museum | Name the day's artifact from five clues, obscure to obvious |
+
+test Â· daily.historylabs.dev
 
 Morning warmup games for the History Labs â€” one new puzzle per game per day,
 self-hosted on a Raspberry Pi as dumb static files. No database, no accounts, no ads.
@@ -26,7 +83,7 @@ Design notes and future ideas live in NOTES.md.
 | /timeline/ | Timeline | Five events with no dates; each check locks correct placements in place |
 | /museum/ | Museum | Name the day's artifact from five clues, obscure to obvious |
 
-## How "daily" works
+
 
 Each game is a single self-contained index.html â€” but the parts every game
 shares (day math, palette, countdown, curve client, help, share) live in
@@ -52,11 +109,11 @@ in front of it:
         }
     }
 
-Point your edge proxy (Traefik, nginx, ...) at the published port -
+
 `docker compose` maps it to host port 8080 - and let it terminate TLS.
 Nothing in this repo needs to know the domain.
 
-## Server-gated puzzle delivery
+
 
 The bank games (bogus, well-actually, rounds, fermi, cipher, museum,
 lightbox, sift, timeline) ship their puzzle bank inline in the page - so
@@ -338,9 +395,9 @@ to commits where they passed.
   come only from the curated `words-en.js`). Not shipped yet â€” run the script
   once (see its header) to generate the asset; guards land with it.
 
-## Roadmap
 
-- [x] Batch 2 games: Rounds, Trace, Lightbox, Sprint
+
+
 - [x] Global curve: consolidated in-memory daily stats, zero disk, zero accounts
 - [x] Batch 3 games: Cipher, Timeline, Museum
 - [x] Fix pass: Sprint syntax error + solved-word chips, Fermi friendly() display,
@@ -348,8 +405,8 @@ to commits where they passed.
 - [x] CI: every push compiles all 13 games + the server (validate.yml)
 - [x] Test pass: headless playthroughs of all 13 games (win/loss/rollover),
       Sift streak-reset fix, Trace "on par" fix, Museum iceman alias
-- [x] Docker deploy: Caddy + scores as compose services, hardened, read-only
-- [x] CD: pull-based, test-gated self-updating Pi (deploy/pull.py + systemd
+
+
       timer; no SSH keys, no inbound access)
 - [x] Shared shell + word bank: `shell/common.js` + `shell/common.css` +
       `assets/words-en.js`, solo/offline mode over `file://`; games are now
@@ -373,11 +430,11 @@ to commits where they passed.
       for the edge proxy, no domain/TLS config in-repo
 - [x] Wording rule moved local: checks/wording.js runs with make test
       (the one-off CI grep kept matching its own workflow file)
-- [ ] Curve representation cleanup: drop the "better than N of M" prose for a
+: drop the "" 
       pure distribution chart with a you-marker (see NOTES.md)
-- [ ] Archived days: freeze finished days' distributions; archive replays score
+: freeze finished days' distributions; archive replays score
       against the frozen curve without changing totals (see NOTES.md)
-- [ ] Archive pages for past puzzles
-- [ ] Unified nav across games
-- [ ] Mobile UX pass on a real phone (see NOTES.md)
+
+
+
 

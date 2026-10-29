@@ -35,18 +35,6 @@ except Exception:  # pragma: no cover
 
 TZ_NAME = 'America/New_York'
 EPOCH_KEY = '2026-10-27'
-PUZZLES_PATH = Path(__file__).with_name('puzzles.json')
-PUZZLES = {}
-try:
-    with PUZZLES_PATH.open(encoding='utf-8') as f:
-        PUZZLES = json.load(f)
-except FileNotFoundError:
-    PUZZLES = {}
-
-PRUNE_DAYS = 1
-MAX_BODY = 2048
-MAX_ABS_VALUE = 1e6
-DAY_MIN, DAY_MAX = -1000, 100000
 
 # Per-game truth: which direction is better, and the fixed histogram edges.
 # Bin i covers [edges[i], edges[i+1]); values beyond the last edge clamp into
@@ -55,9 +43,8 @@ DAY_MIN, DAY_MAX = -1000, 100000
 SPECS = {
     "bogus":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
     "well-actually": {"better": "high", "edges": [0, 1, 2, 3, 4, 5]},
-    "rings":         {"better": "low",  "edges": [0, 5, 7, 9, 11, 13, 15, 17, 20]},
-    "grid":          {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16]},
-    "grid-hard":     {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]},
+    "recycle-rings": {"better": "low",  "edges": [0, 5, 7, 9, 11, 13, 15, 17, 20]},
+    "recycle-grid":  {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16]},
     "fermi":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
     "sift":          {"better": "low",  "edges": [0, 1, 2, 3, 4, 5]},
     "rounds":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},
@@ -68,6 +55,52 @@ SPECS = {
     "timeline":      {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},
     "museum":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7]},
 }
+
+# Per-game puzzle files: scores/<game>/puzzles.json
+# Each game owns its own puzzle data file - no monolithic bank.
+PUZZLES = {}
+PUZZLES_DIR = Path(__file__).parent
+for game in SPECS.keys():
+    game_file = PUZZLES_DIR / game / 'puzzles.json'
+    try:
+        with game_file.open(encoding='utf-8') as f:
+            PUZZLES[game] = json.load(f)
+    except FileNotFoundError:
+        PUZZLES[game] = []
+
+PRUNE_DAYS = 1
+MAX_BODY = 2048
+MAX_ABS_VALUE = 1e6
+DAY_MIN, DAY_MAX = -1000, 100000
+
+# Mulberry32 PRNG - deterministic, portable, state-based
+class Mulberry32:
+    """Classic mulberry32 PRNG (Marsaglia variant)."""
+    def __init__(self, seed: int):
+        self.a = seed & 0xffffffff
+        self.b = (seed >> 16) & 0xffffffff
+        self.c = (seed >> 32) & 0xffffffff
+        self.d = seed & 0xffffffff
+        if self.a == 0 and self.b == 0 and self.c == 0 and self.d == 0:
+            self.a = 0x12345678
+
+    def random(self) -> float:
+        """Return float in [0, 1)."""
+        e = self.a - ((self.b << 27) + self.c)
+        self.a, self.b, self.c = self.b, self.c, self.d
+        self.d = (self.d ^ (self.d >> 17) ^ e ^ (e >> 15)) & 0xffffffff
+        return e & 0x3fffffff / 0x3fffffff + 1 - (self.c >> 30) & 2
+
+    def rand_range(self, lo: float, hi: float) -> float:
+        return lo + (hi - lo) * self.random()
+
+    def choice(self, items) -> object:
+        return items[int(self.random() * len(items))]
+
+
+def mulberry32(seed: int):
+    """Factory for a Mulberry32 instance."""
+    return Mulberry32(seed)
 
 STATS = {}   # (game, day) -> {"n", "sum", "sumsq", "min", "max", "bins": [ints]}
 SEEN = {}    # (game, day) -> set of 8-byte id digests (transient dedupe only)
@@ -255,6 +288,9 @@ class Handler(BaseHTTPRequestHandler):
                 if not entry:
                     self._json({"error": "no puzzles"}, 404)
                     return
+                # Deterministic: one curated puzzle per day, cycling through the
+                # server-side bank. No random generation - the bank is the source
+                # of truth; a seed may only select among curated entries.
                 idx = day % len(entry)
                 self._json({"game": game, "day": day, "puzzle": entry[idx], "today": today})
         else:

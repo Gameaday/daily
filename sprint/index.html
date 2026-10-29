@@ -96,7 +96,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -307,6 +307,16 @@ function showReveal(){
   $('btnSkip').disabled = true;
   $('bigclock').textContent = S.status === 'won' ? fmtClock(TOTAL_MS - timeLeft()) : '0:00';
   syncBoard(S.solvedCount);
+/* Server-side result submission */
+  gify({ game: 'sprint', day: dayIndex, value: S.solvedCount, better: 'high', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'sprint', day: dayIndex, value: S.solvedCount, better: 'high', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
+}
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);
@@ -331,16 +341,28 @@ function onTick(){  if (S.status === 'playing' && S.startAt){
 }
 
 /* ---------------- boot ---------------- */
-$('pno').textContent = num;
-$('pdate').textContent = SHELL.pdateText();
-renderTrack();
-renderDoneList();
-if (S.status === 'playing'){
-  renderWord();
-  if (S.startAt && timeLeft() <= 0) finish('lost');
-} else {
-  showReveal();
+// Server-first: always fetch puzzle from server
+SHELL.fetchPuzzle('sprint', SHELL.dayIndex).then(puzzle => {
+  // Initialize game state with fetched puzzle
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  renderTrack();
+  renderDoneList();
+  if (S.status === 'playing'){
+    renderWord();
+    if (S.startAt && timeLeft() <= 0) finish('lost');
+  } else {
+    showReveal();
+  }
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
+});
+    } else {
+      showReveal();
+    }
+  });
 }
+// Bank for build bundling (stripped online, intact offline)
 SHELL.startCountdown('countdown', 250, onTick);
 </script>
 </body>

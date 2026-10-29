@@ -81,7 +81,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -104,7 +104,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 'use strict';
 
 /* ---------------- event bank (shared with Rounds; verified facts) ---------------- */
-const EVENTS = [
+onst EVENTS = [
   {t:'England', q:'King John seals the Magna Carta at Runnymede.', y:1215, w:'Runnymede, June 1215 — the king first put his seal under the law. He ignored it within weeks.'},
   {t:'The Plague', q:'The Black Death reaches Europe aboard Genoese merchant ships.', y:1347, w:'Autumn 1347, at Messina — within five years perhaps a third of the continent was gone.'},
   {t:'Printing', q:'Gutenberg prints his 42-line Bible, the first major book made with movable type.', y:1455, w:'Mainz, around 1455 — about 180 copies, and Europe was never private again.'},
@@ -158,7 +158,7 @@ const EVENTS = [
 /* ---------------- daily selection ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
 
 function mulberry32(a){
   return function(){
@@ -214,7 +214,7 @@ async function loadPuzzle(){
     applyPuzzle(picked.map(i => EVENTS[i]));
   }
   initDay();
-  if (isSolo()) return;
+  if () return;
   try {
     const d = await fetchPuzzle('timeline', dayIndex);
     if (d && d.puzzle && d.puzzle.events){
@@ -335,6 +335,15 @@ function showReveal(){
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
   syncBoard(won ? S.checks : 9);
+  /* Server-side result submission */
+  gify({ game: 'timeline', day: dayIndex, value: S.checks, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/jsonf body: JSON.stringify({game: 'timeline', day: dayIndex, value: S.checks, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);
@@ -348,14 +357,224 @@ function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
 
-
 /* ---------------- boot ---------------- */
-loadPuzzle().then(() => {
+SHELL.fetchPuzzle('timeline', SHELL.dayIndex).then(puzzle => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500);
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
+});
+</script>
+<script>
+'use strict';
+
+/* ---------------- event bank (shared with Rounds; verified facts) ---------------- */
+
+
+/* ---------------- daily selection ---------------- */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js — destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+let EVO = null;
+let PICK = [];
+let SORTED = [];
+let SHUFFLED = [];
+let rng = null;
+
+function displayOrder(){
+  const arr = [...PICK];
+  for (let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  if (arr.every((v, i) => EVO[v].y === EVO[SORTED[i]].y) && arr.length > 1){
+    [arr[0], arr[1]] = [arr[1], arr[0]];
+  }
+  return arr;
+}
+
+function applyPuzzle(events){
+  EVO = events;
+  /* identity pick: EVO holds the day's five events in pick order */
+  PICK = events.map((e, i) => i);
+  SORTED = [...PICK].sort((a, b) => EVO[a].y - EVO[b].y);
+  SHUFFLED = displayOrder();
+}
+
+async function loadPuzzle(){
+  if (typeof EVENTS !== 'undefined' && EVENTS && EVENTS.length){
+    /* pick five events with distinct years, then shuffle the display order */
+    rng = mulberry32(dayIndex * 2357 + 71);
+    const idxs = [];
+    for (let i = 0; i < EVENTS.length; i++) idxs.push(i);
+    for (let i = idxs.length - 1; i > 0; i--){
+      const j = Math.floor(rng() * (i + 1));
+      [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+    }
+    const picked = [];
+    const seenYears = new Set();
+    for (const i of idxs){
+      if (!seenYears.has(EVENTS[i].y)){ picked.push(i); seenYears.add(EVENTS[i].y); }
+      if (picked.length === 5) break;
+    }
+    applyPuzzle(picked.map(i => EVENTS[i]));
+  }
+  initDay();
+   {}
+}
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.timeline.v1';
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
+let S = loadState();
+function initDay(){
+  if (!EVO) return; /* wait for the day's events */
+if (!S || S.day !== dayIndex){
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
+  if (S && S.day !== dayIndex && S.status === 'playing' && S.started) stats.streak = 0;
+  S = { day: dayIndex, order: SHUFFLED.map(i => PICK.indexOf(i)), locked: [false,false,false,false,false],
+        checks: 0, sel: null, started: false, status:'playing', stats };
+}
+  saveState();
+}
+
+/* ---------------- dom ---------------- */
+function evAt(i){ return EVO[PICK[S.order[i]]]; }
+function allLocked(){ return S.locked.every(Boolean); }
+
+function render(){
+  if (!EVO || !S) return;
+  let html = '';
+  for (let i = 0; i < 5; i++){
+    const e = evAt(i);
+    const cls = 'ecard' + (S.locked[i] ? ' locked' : S.sel === i ? ' sel' : '');
+    const yr = (S.locked[i] || S.status !== 'playing') ? e.y : '????';
+    html += '<div class="trow"><span class="pos">' + (i + 1) + '</span>' +
+      '<div class="' + cls + '" data-i="' + i + '">' +
+      '<div class="top"><span class="tag">' + e.t + '</span><span class="yr">' + yr + '</span></div>' +
+      '<p class="fact">' + e.q + '</p></div></div>';
+  }
+  $('lane').innerHTML = html;
+  $('checknote').textContent = S.status !== 'playing'
+    ? 'the day, in order'
+    : (S.sel != null ? 'now tap another card to swap' : 'checks used: ' + S.checks);
+  $('btnCheck').disabled = S.status !== 'playing';
+  $('btnGiveUp').disabled = S.status !== 'playing';
+}
+$('lane').addEventListener('click', e => {
+  if (!EVO || !S) return;
+  const card = e.target.closest('.ecard');
+  if (!card || S.status !== 'playing') return;
+  const i = +card.dataset.i;
+  if (S.locked[i]) return;
+  if (S.sel == null){ S.sel = i; }
+  else if (S.sel === i){ S.sel = null; }
+  else {
+    S.started = true;
+    [S.order[S.sel], S.order[i]] = [S.order[i], S.order[S.sel]];
+    S.sel = null;
+  }
+  saveState(); render();
+});
+$('btnCheck').addEventListener('click', () => {
+  if (!EVO || !S) return;
+  if (S.status !== 'playing') return;
+  S.started = true;
+  S.checks++;
+  let right = 0;
+  for (let i = 0; i < 5; i++){
+    if (evAt(i).y === EVO[SORTED[i]].y){ S.locked[i] = true; right++; }
+  }
+  saveState(); render();
+  if (allLocked()) finish('won');
+  else toastMsg(right + (right === 1 ? ' card is' : ' cards are') + ' in the right place');
+});
+$('btnGiveUp').addEventListener('click', () => {
+  if (!EVO || !S) return;
+  if (S.status !== 'playing') return;
+  finish('gaveup');
+});
+function finish(status){
+  S.status = status;
+  S.sel = null;
+  const st = S.stats;
+  st.played++;
+  if (status === 'won'){
+    st.solved++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+  } else {
+    st.streak = 0;
+    S.order = SORTED.map(idx => PICK.indexOf(idx));
+    S.locked = [true,true,true,true,true];
+  }
+  saveState();
+  showReveal();
+}
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  if (S.status === 'won'){
+    return 'Timeline No. ' + num + ' \u00b7 ordered in ' + S.checks + (S.checks === 1 ? ' check' : ' checks') + ' \uD83D\uDCC5';
+  }
+  return 'Timeline No. ' + num + ' \u00b7 gave up on the order \uD83D\uDCC5';
+}
+function showReveal(){
+  const st = S.stats;
+  const won = S.status === 'won';
+  $('verdict').textContent = won
+    ? (S.checks === 1 ? 'Read it like a chronicle.' : 'Order restored.')
+    : 'The centuries, rearranged by hand.';
+  if (!won) $('verdict').classList.add('lost');
+  render();
+  $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
+  $('reveal').classList.add('show');
+  syncBoard(won ? S.checks : 9);
+  /* Server-side result submission */
+  gify({ game: 'timeline', day: dayIndex, value: S.checks, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/jsonf body: JSON.stringify({game: 'timeline', day: dayIndex, value: S.checks, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
+}
+SHELL.wireShare(shareText);
+const toastMsg = m => SHELL.toast(m, 1600);
+
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'timeline';
+const SYNC_BETTER = 'low';
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* ---------------- help / countdown ---------------- */
+SHELL.wireHelp();
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+/* ---------------- boot ---------------- */
+SHELL.fetchPuzzle('timeline', SHELL.dayIndex).then(puzzle => {
+$('pno').textContent = num;
+$('pdate').textContent = SHELL.pdateText();
+render();
+if (S.status !== 'playing') showReveal();
+SHELL.startCountdown('countdown', 500);
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
 });
 </script>
 </body>

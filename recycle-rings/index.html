@@ -91,7 +91,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -355,6 +355,16 @@ function showReveal(){
   $('reveal').classList.add('show');
   syncBoard(S.moves);
   renderMeta();
+/* Server-side result submission */
+  gify({ game: 'recycle-rings', day: dayIndex, value: S.moves, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'recycle-rings', day: dayIndex, value: S.moves, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
+}
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'rings';
@@ -369,9 +379,16 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
-renderCtl();
-renderAll();
-if (S.won) showReveal();
+
+SHELL.fetchPuzzle('recycle-rings', SHELL.dayIndex).then(puzzle => {
+  // Initialize game state with fetched puzzle
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  renderCtl();
+  renderAll();
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
+});
 SHELL.startCountdown('count', 500);
 </script>
 </body>

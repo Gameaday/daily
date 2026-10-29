@@ -186,7 +186,7 @@ const QS = [
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
-// spread days deterministically through the deck (repeats after 22 days, fine for now)
+// spread days deterministically through the deck (repeats after 28 days, fine for now)
 let Q = null;
 async function loadPuzzle(){
   const L = typeof QS !== 'undefined' ? QS.length : 1;

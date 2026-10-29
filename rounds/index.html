@@ -24,8 +24,7 @@ input[type=range]{flex:1; min-width:200px; accent-color:var(--accent); cursor:po
 .btn:disabled{opacity:.45; cursor:default;}
 .guesses{margin-top:14px; display:flex; flex-direction:column; gap:6px;}
 .grow{display:flex; justify-content:space-between; gap:10px; align-items:center; background:var(--paper);
-    border:1.5px solid var(--line); border-radius:10px; padding:8px 14px; font-size:15px; animatio
-n:rise .25s ease;}
+    border:1.5px solid var(--line); border-radius:10px; padding:8px 14px; font-size:15px; animation:rise .25s ease;}
 .grow .gy{font-family:Georgia,serif; font-weight:700; font-size:18px;}
 .grow .hd{font-size:13px; color:var(--muted);}
 .grow.hot{border-color:var(--green); background:var(--green-soft);}
@@ -67,8 +66,7 @@ n:rise .25s ease;}
   <p class="lead">One event from history. <b>Six rounds</b> to pin the exact year — slide, lock, and read the heat.</p>
 
   <div class="qcard">
-    <span class="qtag" id="qta
-g"></span>
+    <span class="qtag" id="qtag"></span>
     <p class="qtext" id="qtext"></p>
     <div class="sliderrow" id="sliderrow">
       <div class="yearbox" id="yearbox">1750</div>
@@ -117,8 +115,7 @@ g"></span>
 
 /* ---------------- event bank (one per day, deterministic order) ---------------- */
 const EVENTS = [
-  {t:'England', q:'King John seals the Magna Carta at Runnymede.', y:1215, w:'Runnymede, June 1215 — the king first put his seal under the law. 
-He ignored it within weeks.'},
+  {t:'England', q:'King John seals the Magna Carta at Runnymede.', y:1215, w:'Runnymede, June 1215 — the king first put his seal under the law. He ignored it within weeks.'},
   {t:'The Plague', q:'The Black Death reaches Europe aboard Genoese merchant ships.', y:1347, w:'Autumn 1347, at Messina — within five years perhaps a third of the continent was gone.'},
   {t:'Printing', q:'Gutenberg prints his 42-line Bible, the first major book made with movable type.', y:1455, w:'Mainz, around 1455 — about 180 copies, and Europe was never private again.'},
   {t:'The Americas', q:'Columbus makes landfall in the Americas.', y:1492, w:'October 12, 1492 — an island in the Bahamas he insisted on calling the Indies.'},
@@ -130,8 +127,7 @@ He ignored it within weeks.'},
   {t:'Russia', q:'Peter the Great founds St. Petersburg.', y:1703, w:'May 1703 — a new capital raised from a swamp, by imperial decree.'},
   {t:'America', q:'The Continental Congress adopts the Declaration of Independence.', y:1776, w:'Philadelphia, July 4, 1776 — news crossed the Atlantic by sailing ship, weeks later.'},
   {t:'France', q:'Parisians storm the Bastille.', y:1789, w:'July 14, 1789 — seven prisoners freed, one revolution begun.'},
-  {t:'America', q:'The United States concludes the Louisiana Purchase.', y:1803, w:'1803 — 828,000 square miles from Napoleon for about four c
-ents an acre.'},
+  {t:'America', q:'The United States concludes the Louisiana Purchase.', y:1803, w:'1803 — 828,000 square miles from Napoleon for about four cents an acre.'},
   {t:'France', q:'Napoleon is defeated at Waterloo.', y:1815, w:'June 18, 1815 — four days later he abdicated; the exile to Saint Helena followed.'},
   {t:'Railways', q:'The Stockton & Darlington opens as the first public steam railway.', y:1825, w:'September 1825 — Locomotion No. 1 pulled the first fare-paying passengers.'},
   {t:'Science', q:'Darwin publishes On the Origin of Species.', y:1859, w:'November 1859 — the first printing of 1,250 copies sold out to booksellers on day one.'},
@@ -143,8 +139,7 @@ ents an acre.'},
   {t:'Aviation', q:'The Wright brothers make the first powered airplane flight.', y:1903, w:'December 17, 1903 — four flights at Kitty Hawk; the longest lasted 59 seconds.'},
   {t:'Industry', q:'Ford introduces the Model T.', y:1908, w:'October 1908 — "any color so long as it is black" came later; the price kept falling instead.'},
   {t:'Disaster', q:'The RMS Titanic sinks on her maiden voyage.', y:1912, w:'April 15, 1912 — over 1,500 died in water just below freezing. The Californian never answered.'},
-  {t:'War', q:'The First World War begins.', y:1914, w:'July–August 1914 — a Sarajevo assassination lit a fuse
- the whole alliance system had laid.'},
+  {t:'War', q:'The First World War begins.', y:1914, w:'July–August 1914 — a Sarajevo assassination lit a fuse the whole alliance system had laid.'},
   {t:'America', q:'The 19th Amendment is ratified, giving American women the vote.', y:1920, w:'August 1920 — 72 years after Seneca Falls, decided by one state legislator\u2019s mother\u2019s advice.'},
   {t:'Archaeology', q:'Howard Carter opens Tutankhamun\u2019s tomb.', y:1922, w:'November 1922 — "wonderful things" glimpsed through a small breach by candlelight.'},
   {t:'Aviation', q:'Lindbergh flies solo from New York to Paris.', y:1927, w:'May 1927 — 33 and a half hours, dead reckoning, and a periscope because he couldn\u2019t see past the fuel tank.'},
@@ -156,8 +151,7 @@ ents an acre.'},
   {t:'Science', q:'The first atomic bomb is tested at Trinity.', y:1945, w:'July 16, 1945 — "Now I am become Death, the destroyer of worlds." Oppenheimer said he thought of it later.'},
   {t:'Ufology', q:'The Roswell incident makes UFOs a household word.', y:1947, w:'July 1947 — a press release about a "flying disc," then a weather balloon, then fifty years of argument.'},
   {t:'Space', q:'The Soviet Union launches Sputnik 1, the first artificial satellite.', y:1957, w:'October 4, 1957 — a polished 58cm sphere that beeped at the whole world at once.'},
-  {t:'America', q:'P
-resident John F. Kennedy is assassinated in Dallas.', y:1963, w:'November 22, 1963 — the Zapruder film exists because a dressmaker brought his camera to Dealey Plaza.'},
+  {t:'America', q:'President John F. Kennedy is assassinated in Dallas.', y:1963, w:'November 22, 1963 — the Zapruder film exists because a dressmaker brought his camera to Dealey Plaza.'},
   {t:'Space', q:'Apollo 11 lands on the Moon.', y:1969, w:'July 20, 1969 — Armstrong\u2019s boot, a camera left behind to watch, and 600 million viewers.'},
   {t:'Computing', q:'ARPANET sends its first message between two computers.', y:1969, w:'October 29, 1969 — "LO." The intended "LOGIN" crashed the system after two letters.'},
   {t:'War', q:'Saigon falls and the Vietnam War ends.', y:1975, w:'April 30, 1975 — helicopters lifting off rooftops, the war\u2019s most famous photograph taken from below.'},
@@ -171,8 +165,7 @@ resident John F. Kennedy is assassinated in Dallas.', y:1963, w:'November 22, 19
   {t:'Space', q:'The Curiosity rover lands on Mars.', y:2012, w:'August 6, 2012 — the seven minutes of terror, a sky-crane hover, and it stuck the landing.'}
 ];
 
-/* ---------------- deterministic daily pick ---------------- 
-*/
+/* ---------------- deterministic daily pick ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
@@ -215,8 +208,7 @@ function renderGuesses(){
     const dir = g.off === 0 ? 'exactly right' : (g.y > EV.y ? 'go earlier' : 'go later');
     const offTxt = g.off === 0 ? 'the year!' : (g.off === 1 ? '1 year off' : g.off + ' years off');
     return `<div class="grow ${g.off === 0 ? 'win' : h.cls}">
-      <span><span class="gy">${g.y}</span> <span class="hd">· ${offTxt} · ${dir}</span></sp
-an>
+      <span><span class="gy">${g.y}</span> <span class="hd">· ${offTxt} · ${dir}</span></span>
       <span>${g.off === 0 ? '\uD83C\uDFC6' : h.sq}</span></div>`;
   }).join('');
 }
@@ -273,8 +265,7 @@ $('btnLock').addEventListener('click', () => {
   }
 });
 
-/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- *
-/
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'rounds';
 const SYNC_BETTER = 'low';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }

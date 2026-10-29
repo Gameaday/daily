@@ -37,8 +37,7 @@ if (fs.existsSync('assets/words-en.js')) {
   const m = fs.readFileSync('assets/words-en.js', 'utf8').match(/const WORDS_EN = "([^"]*)"/);
   if (!m) fail('assets/words-en.js: WORDS_EN string not found');
   else {
-    const list = m[1
-].split(',');
+    const list = m[1].split(',');
     if (list.some(w => !/^[A-Z]{3,5}$/.test(w))) fail('words-en.js: entries must be uppercase A-Z, 3-5 letters');
     if (new Set(list).size !== list.length) fail('words-en.js: duplicate entries');
   }
@@ -88,8 +87,7 @@ for (const g of games) {
 /* server-gated delivery: every gated game keeps its inline bank for
    solo/offline play AND defers to the scores service when online */
 const GATED = {
-  bog
-us: 'PUZZLES', 'well-actually': 'PUZZLES', rounds: 'EVENTS', fermi: 'QS',
+  bogus: 'PUZZLES', 'well-actually': 'PUZZLES', rounds: 'EVENTS', fermi: 'QS',
   cipher: 'QUOTES', museum: 'MUSEUM', lightbox: 'DESIGNS', sift: 'BOARDS',
   timeline: 'EVENTS'
 };

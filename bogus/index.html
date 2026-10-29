@@ -35,8 +35,7 @@ h1{
 @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.06);}100%{transform:scale(1);}}
 .passage.done .seg{cursor:default;}
 .picks{display:flex; gap:6px; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
-.picks .pip{width:10px; height:10px; border-radius:50%; background:#d9cdb2; displa
-y:inline-block;}
+.picks .pip{width:10px; height:10px; border-radius:50%; background:#d9cdb2; display:inline-block;}
 .picks .pip.used{background:var(--red);}
 .reveal{margin-top:18px; display:none;}
 @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
@@ -76,8 +75,7 @@ y:inline-block;}
       <p class="sub">the daily history fact-check · a history labs warmup</p>
     </div>
     <div class="icons">
-      <button class="iconbtn" id="btnHelp" title="How to play" aria-l
-abel="How to play">?</button>
+      <button class="iconbtn" id="btnHelp" title="How to play" aria-label="How to play">?</button>
       <button class="iconbtn" id="btnStats" title="Stats" aria-label="Stats">▤</button>
     </div>
   </header>
@@ -117,8 +115,7 @@ abel="How to play">?</button>
     <p>Every morning you get a short passage from history. Every phrase in it is <b>true — except one</b>, which is bogus: an anachronism, an invented detail, or a plain mistake.</p>
     <p><b>Click the phrase you think is the lie.</b> A wrong pick turns red and costs one point. Score is 3 minus your wrong picks — a first-pick find is a perfect 3/3. Find the lie and it turns green, with the real story behind the fib.</p>
     <p>Three wrong picks and the day is lost (you still get the reveal — it's the best part). Win and your streak grows. Miss a day and the streak resets.</p>
-    <p>Everyone in the world gets the same puzzle, so compare picks
- at standup — argue before you click.</p>
+    <p>Everyone in the world gets the same puzzle, so compare picks at standup — argue before you click.</p>
     <button class="close" data-close>Got it</button>
   </div>
 </div>
@@ -162,8 +159,7 @@ const PUZZLES = [
   w:'The electric telegraph wasn\u2019t invented until the 1830s\u201340s. News of the Declaration took weeks to reach England \u2014 carried, like everything else, by sailing ship.'},
 
  {t:'Great Fire of London · 1666', l:4, s:[
-  'The Great Fire of London broke out in
- a bakery on Pudding Lane in September 1666.',
+  'The Great Fire of London broke out in a bakery on Pudding Lane in September 1666.',
   'It raged for four days and destroyed much of the medieval City of London.',
   'Tens of thousands of Londoners fled with whatever they could carry.',
   'Firefighters fought the blaze with buckets, axes, and firehooks.',
@@ -191,8 +187,7 @@ const PUZZLES = [
   'The RMS Titanic sank on her maiden voyage in April 1912 after striking an iceberg.',
   'Her wireless operators sent distress calls by radio to nearby ships.',
   'They also emailed the White Star Line\u2019s New York office for help.',
-  'More than 2,200 people
- were aboard, and over 1,500 died.',
+  'More than 2,200 people were aboard, and over 1,500 died.',
   'The Carpathia answered the call and rescued over 700 survivors.'],
   w:'Email didn\u2019t exist in 1912. Wireless (radio) telegraphy was the only instant long-distance link a ship had \u2014 which is exactly why Titanic\u2019s operators used it.'},
 
@@ -218,8 +213,7 @@ const PUZZLES = [
   'Around 180 copies were produced.',
   'Most were printed on paper made from linen rags.',
   'Gutenberg\u2019s press transformed Europe within decades.'],
-  w:'Nothing was shipped from the Americas in the 1450s \u2014 Europeans didn\u2019t know the continent existed until 1492. The Bible\u2019s paper came from Italian and German mills; some copies are on vellum, but
- European vellum.'},
+  w:'Nothing was shipped from the Americas in the 1450s \u2014 Europeans didn\u2019t know the continent existed until 1492. The Bible\u2019s paper came from Italian and German mills; some copies are on vellum, but European vellum.'},
 
  {t:'Waterloo · 1815', l:2, s:[
   'Napoleon was defeated at Waterloo in June 1815.',
@@ -250,8 +244,7 @@ const PUZZLES = [
   'The charter limited royal power over the church, the barons, and free men.',
   'Scribes wrote each copy out by hand, in ink on parchment.',
   'Copies were run off on a printing press and sent to every English county.',
-  'About a dozen originals stil
-l survive today.'],
+  'About a dozen originals still survive today.'],
   w:'The printing press didn\u2019t reach Europe until the 1440s. Every Magna Carta copy was written by hand \u2014 which is why only about a dozen survive.'},
 
  {t:'Fall of the Berlin Wall · 1989', l:3, s:[
@@ -279,8 +272,7 @@ l survive today.'],
   w:'Television broadcasting didn\u2019t begin until the 1920s\u201330s. In 1914 the news moved by telegraph wire and morning newspapers.'},
 
  {t:'D-Day · 1944', l:1, s:[
- 
- 'On June 6, 1944, Allied forces landed on five beaches in Normandy.',
+  'On June 6, 1944, Allied forces landed on five beaches in Normandy.',
   'General Eisenhower coordinated the operation from Portsmouth by satellite phone.',
   'It was the largest seaborne invasion in history.',
   'Paratroopers dropped behind enemy lines before dawn.',
@@ -307,8 +299,7 @@ l survive today.'],
   'Queen Victoria reigned from 1837 to 1901 \u2014 63 years and 216 days.',
   'For her Diamond Jubilee in 1897, troops from across the Empire paraded through London.',
   'The jubilee procession was broadcast live on television to celebrating crowds.',
-  'Her reign had spanned the rise of 
-railways, telegraph, and photography.',
+  'Her reign had spanned the rise of railways, telegraph, and photography.',
   'It was the first Diamond Jubilee ever celebrated by a British monarch.'],
   w:'Regular television broadcasting began in 1936, long after Victoria\u2019s death in 1901. The 1897 crowds watched the procession in person; everyone else read about it.'},
 
@@ -334,8 +325,7 @@ railways, telegraph, and photography.',
   'It is the only surviving wonder of the ancient world.',
   'Its blocks were cut with copper and stone tools and hauled on wooden sledges.',
   'The builders also used iron chisels and camel-drawn carts.'],
-  w:'The Iron Age hadn\u2019t reached Egypt, and camels weren\u2019t pack animals there until many centuries later. Copper tools, 
-sledges, ramps, and human muscle built it.'},
+  w:'The Iron Age hadn\u2019t reached Egypt, and camels weren\u2019t pack animals there until many centuries later. Copper tools, sledges, ramps, and human muscle built it.'},
 
  {t:'Lindbergh\u2019s Flight · 1927', l:2, s:[
   'Charles Lindbergh flew solo from New York to Paris in May 1927 aboard the Spirit of St. Louis.',
@@ -362,8 +352,7 @@ sledges, ramps, and human muscle built it.'},
   w:'Bletchley stayed secret until the 1970s \u2014 veterans couldn\u2019t even tell their families what they\u2019d done. The story only broke with F. W. Winterbotham\u2019s The Ultra Secret in 1974.'},
 
  {t:'The Original iPhone · 2007', l:2, s:[
-  'Steve Jobs unveiled the iPhone in January 2007, and it went on s
-ale that June.',
+  'Steve Jobs unveiled the iPhone in January 2007, and it went on sale that June.',
   'It combined a phone, an iPod, and an internet communicator in one device.',
   'Its 5-megapixel camera could record video.',
   'It was controlled entirely with finger touches on a glass screen \u2014 no stylus.',
@@ -391,8 +380,7 @@ ale that June.',
   'It capped a 72-year campaign that began at Seneca Falls in 1848.',
   'Susan B. Anthony lived to cast a legal ballot under the new amendment.',
   'She had been arrested for voting illegally back in 1872.',
-  'The amendment is often called the \
-u201cAnthony Amendment\u201d in her honor.'],
+  'The amendment is often called the \u201cAnthony Amendment\u201d in her honor.'],
   w:'Anthony died in 1906 \u2014 fourteen years before ratification. Her 1872 ballot was illegal; she never got to vote legally.'},
 
  {t:'The Mona Lisa Theft · 1911', l:4, s:[
@@ -421,8 +409,7 @@ async function loadPuzzle(){
   const idx = ((dayIndex % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) + (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1);
   if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
   if (isSolo()) return;
-  
-try {
+  try {
     const d = await fetchPuzzle('bogus', dayIndex);
     if (d && d.puzzle) puzzle = d.puzzle;
   } catch (e) {}
@@ -470,8 +457,7 @@ function baseScore(){ return Math.max(0, 3 - wrongPicks()); }
 function shareText(){
   const emojis = S.picked.map(i => i === puzzle.l ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
   const score = S.status === 'won' ? `${baseScore()}/3` : '0/3';
-  return `Bogus! No. ${num} \u00b7 ${score} ${emojis}\nOne phrase in thi
-s history is a lie \u2014 can you spot it?`;
+  return `Bogus! No. ${num} \u00b7 ${score} ${emojis}\nOne phrase in this history is a lie \u2014 can you spot it?`;
 }
 
 function showReveal(){
@@ -532,8 +518,7 @@ function openOverlay(id){ $(id).classList.add('show'); }
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('.overlay').forEach(o => o.classList.remove('show'));
 }));
-document.querySelectorAll('.overlay').forEach(o
- => o.addEventListener('click', e => {
+document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => {
   if (e.target === o) o.classList.remove('show');
 }));
 $('btnHelp').addEventListener('click', () => openOverlay('helpOverlay'));

@@ -31,8 +31,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 @keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
 .verdict{font-family:Georgia,serif; font-size:24px; margin:0 0 4px;}
 .stars{font-size:20px; letter-spacing:2px; margin-bottom:14px;}
-.cmp{display:flex; flex-
-direction:column; gap:8px;}
+.cmp{display:flex; flex-direction:column; gap:8px;}
 .cmp .row{display:flex; justify-content:space-between; gap:10px; background:var(--card);
     border:1.5px solid var(--line); border-radius:10px; padding:10px 14px; font-size:15px;}
 .cmp .row .k{color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; align-self:center;}
@@ -67,8 +66,7 @@ direction:column; gap:8px;}
   <p class="lead">Named for Enrico Fermi, who estimated the yield of the Trinity test from scraps of paper blown by the blast. <b>No looking it up.</b> Reason it out, trust your gut, take your one shot.</p>
 
   <div class="qcard">
-    <span class="qtag" id="qtag"></spa
-n>
+    <span class="qtag" id="qtag"></span>
     <p class="qtext" id="qtext"></p>
 
     <div class="guessrow" id="guessrow">
@@ -113,8 +111,7 @@ n>
       <tr><td>1 / 3</td><td>within 100×</td></tr>
       <tr><td>0 / 3</td><td>beyond that — the gut needs calibration</td></tr>
     </table>
-    <p>"Within an order of magnitude" (2/3 or better) keeps your streak alive. The trick is not precision —
- it's getting the <b>size</b> of the thing right. Everyone gets the same question, so compare gut checks at standup.</p>
+    <p>"Within an order of magnitude" (2/3 or better) keeps your streak alive. The trick is not precision — it's getting the <b>size</b> of the thing right. Everyone gets the same question, so compare gut checks at standup.</p>
     <button class="close" data-close>Got it</button>
   </div>
 </div>
@@ -140,8 +137,7 @@ const QS = [
   { t:'America', q:'Roughly how many registered motor vehicles are there in the United States?', a:280000000,
     w:'About 280 million registered vehicles — comfortably more than one per American adult. The US has been a carapaced nation since the 1970s.' },
   { t:'Libraries', q:'Roughly how many books are held in the US Library of Congress?', a:25000000,
-    w:'~25 million books (cataloged) out of ~170 million total items 
-including maps, films, and recordings. The largest library on Earth.' },
+    w:'~25 million books (cataloged) out of ~170 million total items including maps, films, and recordings. The largest library on Earth.' },
   { t:'Monuments', q:'What is the total weight of the Eiffel Tower, in metric tonnes?', a:10100,
     w:'About 10,100 tonnes of wrought iron — 7,300 t of it in the lattice structure alone, plus paint, elevators, and restaurants.' },
   { t:'Spaceflight', q:'What is the mass of the International Space Station, in kilograms?', a:420000,
@@ -158,8 +154,7 @@ including maps, films, and recordings. The largest library on Earth.' },
     w:'~25 billion. Chickens are the most numerous bird in history by a wild margin — there are roughly 3 chickens per human.' },
   { t:'Treasure', q:'Roughly how much gold has been mined in all of human history, in metric tonnes?', a:210000,
     w:'About 210,000 t — which would fit in a cube ~22 meters on a side. Nearly all of it mined in the last century and a half.' },
-  { t:'Literature', q:'Roughly how many total words did Wil
-liam Shakespeare write across all his works?', a:884000,
+  { t:'Literature', q:'Roughly how many total words did William Shakespeare write across all his works?', a:884000,
     w:'~884,000 words across 37+ plays and 154 sonnets — and he introduced or popularized hundreds of words still in daily use.' },
   { t:'The Internet', q:'Roughly how many photographs are taken worldwide each year?', a:1900000000000,
     w:'Estimates run to ~2 trillion a year — about half of them by smartphones, and overwhelmingly selfies adjacent to food.' },
@@ -179,8 +174,7 @@ liam Shakespeare write across all his works?', a:884000,
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
-// spread days deterministically through the deck (repeats after 22 days, fine 
-for now)
+// spread days deterministically through the deck (repeats after 22 days, fine for now)
 let Q = null;
 async function loadPuzzle(){
   const L = typeof QS !== 'undefined' ? QS.length : 1;
@@ -232,8 +226,7 @@ function friendly(n){
   for (const [f, name] of units){
     if (n >= f){
       const v = n / f;
-      return (v >= 100 ? Math.round(v) : v.toPrecisi
-on(2).replace(/(\.\d*?)0+$/,'$1').replace(/\.$/,'')) + ' ' + name;
+      return (v >= 100 ? Math.round(v) : v.toPrecision(2).replace(/(\.\d*?)0+$/,'$1').replace(/\.$/,'')) + ' ' + name;
     }
   }
   return fmt(n);
@@ -285,8 +278,7 @@ function showReveal(){
 function shareText(){
   const r = ratioFor(S.guess, Q.a);
   const off = isFinite(r) ? '— off by ' + (r < 1.05 ? '<5%' : r.toFixed(r < 10 ? 1 : 0) + '\u00d7') : '';
-  return `Fermi No. ${num} \u00b
-7 ${S.score}/3 ${starsFor(S.score)} ${off}`;
+  return `Fermi No. ${num} \u00b7 ${S.score}/3 ${starsFor(S.score)} ${off}`;
 }
 
 $('btnGuess').addEventListener('click', () => {

@@ -1,10 +1,11 @@
-﻿[Unit]
-Description=Warmup global curve (in-memory consolidated daily stats)
+[Unit]
+Description=Warmup global curve (fresh-day stats + read-only day archive)
 After=network.target
 
 [Service]
 DynamicUser=yes
-ExecStart=/usr/bin/python3 /srv/daily/scores/server.py --port 8787 --host 127.0.0.1
+StateDirectory=warmup-scores
+ExecStart=/usr/bin/python3 /srv/daily/scores/server.py --port 8787 --host 127.0.0.1 --archive-dir /var/lib/warmup-scores
 Restart=on-failure
 RestartSec=3
 NoNewPrivileges=yes

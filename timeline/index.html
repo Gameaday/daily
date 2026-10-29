@@ -351,6 +351,7 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
+if (!EVO){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();

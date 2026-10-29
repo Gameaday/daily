@@ -328,6 +328,7 @@ function onTick(){  if (S.status === 'playing'){
 
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
+if (!SOL){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();

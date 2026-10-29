@@ -519,6 +519,7 @@ SHELL.wireShare(shareText);
 
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
+  if (!puzzle){ SHELL.showUnavailable(); return; }
   $('pno').textContent = num;
   $('pdate').textContent = SHELL.pdateText();
   $('tag').textContent = puzzle.t;

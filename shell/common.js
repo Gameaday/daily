@@ -187,7 +187,25 @@ const SHELL = (() => {
     }
   } catch(e){}
 
+  /* ---- graceful "service unreachable" note for the online bundle ---- */
+  /* The online bundle ships without local puzzle banks, so if the puzzle
+     service cannot be reached there is nothing to render. Online games
+     call this from a boot guard instead of crashing on an empty puzzle. */
+  function showUnavailable(){
+    const w = document.querySelector('.wrap');
+    const head = w ? w.querySelector('header') : null;
+    if (w){
+      w.innerHTML = '';
+      if (head) w.appendChild(head);
+      const note = document.createElement('p');
+      note.className = 'lead';
+      note.setAttribute('style', 'text-align:center; padding:80px 0; font-size:16px;');
+      note.innerHTML = 'The puzzle service is unreachable right now.<br/>Check back in a minute; your streak and stats are safe.';
+      w.appendChild(note);
+    }
+  }
+
   return { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, showUnavailable };
 })();

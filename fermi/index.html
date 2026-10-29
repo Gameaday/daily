@@ -325,6 +325,7 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
+if (!Q){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 $('qtag').textContent = Q.t;

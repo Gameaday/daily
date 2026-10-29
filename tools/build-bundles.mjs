@@ -1,6 +1,6 @@
 /* Builds two site-only bundles into dist/:
    - dist/offline : everything a browser needs to play over file:// - the
-     site files with inline banks intact, plus the generated puzzle store.
+     site files with inline banks intact.
      Open dist/offline/index.html straight off the filesystem.
    - dist/online  : the site with every gated bank stripped to `undefined`
      - the puzzles come from the scores service's /puzzle route. This is
@@ -84,10 +84,6 @@ function checkHtml(file, rootDir, online){
 
 fs.rmSync('dist', { recursive: true, force: true });
 copyDir('.', 'dist/offline');
-if (fs.existsSync('scores/puzzles.json')){
-  fs.mkdirSync('dist/offline/scores', { recursive: true });
-  fs.copyFileSync('scores/puzzles.json', 'dist/offline/scores/puzzles.json');
-}
 copyDir('.', 'dist/online');
 for (const g of Object.keys(GATED)){
   const p = path.join('dist/online', g, 'index.html');

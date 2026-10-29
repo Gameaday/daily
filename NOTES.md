@@ -203,12 +203,14 @@ reshuffles the display lane with a fresh rng, so the lane order can
 differ from the offline pick for the same day - the events and the
 answer are identical.
 
-The store (scores/puzzles.json) is generated, never committed: CI, the
-Docker builds, and make test/npm test all run tools/export-puzzles.mjs
-first; scores/server.py loads it from next to itself, so the scores
-container bakes it in via a throwaway node stage. tests/run.js deep-checks
-the exported timeline picks against the page's own offline day-0 pick,
-and server_test.py does the same against the served JSON.
+The stores are committed per game (scores/<game>/puzzles.json) and
+verified against the client banks by tools/export-puzzles.mjs: CI, make
+test and npm test all run the verifier first, so a bank edited without
+re-exporting its store fails the build. scores/server.py loads each
+store from next to itself, so the scores container just COPYs scores/
+in. tests/run.js deep-checks the committed timeline picks against the
+page's own offline day-0 pick, and server_test.py does the same against
+the served JSON.
 
 ## Docker refine (2026-10-28)
 

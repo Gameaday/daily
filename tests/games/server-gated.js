@@ -41,11 +41,12 @@ async function run(h, ctx){
     await h.flush();
     h.ok(r.env.els.author.textContent.indexOf(served.puzzle.a) >= 0, 'gated: cipher served author rendered');
     for (const c of Object.keys(r.x.SUB.dec)){
-      if (r.x.S.status !== 'playing') break;
       r.x.S.sel = c;
       r.x.assign(r.x.SUB.dec[c]);
     }
-    h.eq(r.x.S.status, 'won', 'gated: cipher auto-won on the served quote');
+    h.eq(r.x.S.status, 'playing', 'gated: cipher does not auto-win while typing');
+    r.env.els.btnCheck.click();
+    h.eq(r.x.S.status, 'won', 'gated: cipher won on Check over the served quote');
   }
   /* museum: the served exhibit matches its alias */
   {

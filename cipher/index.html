@@ -46,6 +46,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .plainq b{color:var(--ink); font-style:normal;}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+.codebook{margin-top:10px; background:var(--card); border:1.5px solid var(--line); border-radius:10px;
+    padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+    line-height:2; text-align:center;}
+.codebook .cp{white-space:nowrap; display:inline-block; margin:0 7px;}
+.codebook .ccl{color:var(--muted);}
 .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
 @media (max-width:480px){
     h1{font-size:28px;}
@@ -80,9 +85,10 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div id="quotebox"><div class="wline" id="quote"></div></div>
   <input id="kbd" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" tabindex="-1" aria-hidden="true"/>
-  <p class="keynote">A–Z to fill the selected letter · backspace clears it</p>
+  <p class="keynote">A–Z to fill the selected letter · backspace clears it · press Check when it reads right</p>
 
   <div class="actions">
+    <button class="btn" id="btnCheck">Check</button>
     <button class="btn ghost" id="btnHint">Hint (0/5)</button>
     <button class="btn ghost" id="btnGiveUp">Reveal the codebook</button>
   </div>
@@ -90,6 +96,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="reveal" id="reveal">
     <p class="verdict" id="verdict"></p>
     <p class="plainq" id="plainq"></p>
+    <div style="text-align:center; margin:8px 0 0;"><button class="btn ghost" id="btnCodebook">Show the codebook</button></div>
+    <div class="codebook" id="codebook" style="display:none;"></div>
     <div class="sharebox" id="sharetext"></div>
     <div id="curve"></div>
     <div class="actionsrow">
@@ -109,7 +117,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <h2>How to play</h2>
     <p>Every letter of the quote has been swapped for another letter, consistently. The small letter on top is the <b>cipher</b>; your decode goes underneath.</p>
     <p><b>Tap</b> an encrypted letter to select it (every copy of it highlights), then <b>type</b> your guess for it. Backspace clears it. The author is shown in the clear — use the spelling as a crib.</p>
-    <p>There is no penalty for wrong guesses — a wrong decode just looks wrong. The puzzle solves itself the moment your decode is complete and correct.</p>
+    <p>Nothing is marked while you type, and a wrong decode just looks wrong. Press <b>Check</b> when you think you have it: it tells you how many letters are right (never which ones), and solves the day the moment your decode is complete and correct.</p>
     <p>Stuck? A <b>hint</b> reveals one letter (the most common one you are missing or have wrong) — the day's score is how many hints you needed. <b>Reveal the codebook</b> ends the day.</p>
     <button class="close" data-close>To the code</button>
   </div>
@@ -207,7 +215,7 @@ function render(){
     if (/[A-Z]/.test(ch)){
       const c = CIPHER[i];
       const d = S.map[c] || '';
-      const cls = 'slot' + (S.sel === c ? ' sel' : '') + (d && d === SUB.dec[c] ? ' done' : '');
+      const cls = 'slot' + (S.sel === c ? ' sel' : '') + (S.status !== 'playing' && d ? ' done' : '');
       word += '<span class="' + cls + '" data-c="' + c + '"><i class="cl">' + c + '</i><b class="pl">' + d + '</b></span>';
     } else if (ch === ' '){
       flush(); html += '<span class="gap"></span>';
@@ -220,6 +228,7 @@ function render(){
   $('selinfo').textContent = S.sel
     ? 'selected: ' + S.sel + ' \u2192 ?'
     : 'tap a letter to select it';
+  $('btnCheck').disabled = S.status !== 'playing';
   $('btnHint').textContent = 'Hint (' + S.hints + '/5)';
   $('btnHint').disabled = S.hints >= 5 || S.status !== 'playing';
   $('btnGiveUp').disabled = S.status !== 'playing';
@@ -236,11 +245,13 @@ function assign(p){
   S.started = true;
   for (const k in S.map){ if (S.map[k] === p) delete S.map[k]; }  /* keep it a bijection */
   S.map[S.sel] = p;
-  const next = FREQ_ORDER.find(c => !S.map[c]);
+  /* advance to the next unfilled letter; once every letter holds a guess,
+     advance to the next wrong one instead of dropping the selection, so
+     typing keeps flowing until the board is actually solved */
+  const next = FREQ_ORDER.find(c => !S.map[c]) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]);
   S.sel = next || null;
   if (!S.sel) kbd.blur();
   saveState(); render();
-  if (solvedP()) finish('won');
 }
 function unassign(){
   delete S.map[S.sel];
@@ -280,15 +291,24 @@ $('btnHint').addEventListener('click', () => {
   for (const k in S.map){ if (S.map[k] === SUB.dec[cand]) delete S.map[k]; }
   S.map[cand] = SUB.dec[cand];
   S.hints++;
-  S.sel = FREQ_ORDER.find(c => !S.map[c]) || null;
+  S.sel = FREQ_ORDER.find(c => !S.map[c]) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]) || null;
   saveState(); render();
   if (S.sel) kbd.focus();
-  if (solvedP()) finish('won');
 });
 $('btnGiveUp').addEventListener('click', () => {
   if (!Q) return;
   if (S.status !== 'playing') return;
   finish('gaveup');
+});
+$('btnCheck').addEventListener('click', () => {
+  if (!Q) return;
+  if (S.status !== 'playing') return;
+  S.started = true;
+  if (solvedP()){ finish('won'); return; }
+  /* honest but unfarmable feedback: how many letters are right, never
+     which ones, so the check cannot be brute-forced letter by letter */
+  const right = FREQ_ORDER.filter(c => S.map[c] === SUB.dec[c]).length;
+  toastMsg(right + ' of ' + FREQ_ORDER.length + ' letters right');
 });
 function finish(status){
   S.status = status;
@@ -331,6 +351,21 @@ function showReveal(){
   syncBoard(won ? S.hints : 7);
 }
 SHELL.wireShare(shareText);
+/* the codebook toggle in the end panel: a player who cracked it cold can
+   still see every substitution, including the letters hints would have
+   revealed */
+$('btnCodebook').addEventListener('click', () => {
+  if (!Q) return;
+  const box = $('codebook');
+  const open = box.style.display === 'none';
+  box.style.display = open ? 'block' : 'none';
+  $('btnCodebook').textContent = open ? 'Hide the codebook' : 'Show the codebook';
+  if (!open) return;
+  const pairs = [...new Set([...Q.q].filter(ch => /[A-Z]/.test(ch)).map(ch => SUB.enc[ch]))]
+    .sort((a, b) => SUB.dec[a] < SUB.dec[b] ? -1 : 1)
+    .map(c => '<span class="cp"><span class="ccl">' + c + '</span> \u2192 ' + SUB.dec[c] + '</span>');
+  box.innerHTML = pairs.join(' ');
+});
 const toastMsg = m => SHELL.toast(m, 1600);
 
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */

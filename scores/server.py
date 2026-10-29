@@ -382,7 +382,29 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"error": "future day not available"}, 403)
                 return
             entry = PUZZLES[game]
-            if isinstance(entry, dict) and "picks" in entry:
+            if game == "thread":
+                # thread: picks index the graph bank; the served puzzle carries
+                # the start, the end, the chain, the decoys, and the links
+                picks = entry["picks"]
+                if day < 0 or day >= len(picks):
+                    self._json({"error": "no puzzles"}, 404)
+                    return
+                bank = entry["bank"]
+                nodes = {nd["id"]: nd for nd in bank["nodes"]}
+                emap = {}
+                for ed in bank["edges"]:
+                    emap.setdefault(ed["a"], {})[ed["b"]] = ed
+                    emap.setdefault(ed["b"], {})[ed["a"]] = ed
+                pk = picks[day]
+                seq = [pk["s"]] + list(pk["m"]) + [pk["e"]]
+                links = [emap[a][b] for a, b in zip(seq, seq[1:])]
+                self._json({"game": game, "day": day, "today": today,
+                            "puzzle": {"s": nodes[pk["s"]], "e": nodes[pk["e"]],
+                                       "m": [nodes[i] for i in pk["m"]],
+                                       "d": [nodes[i] for i in pk["d"]],
+                                       "links": links}},
+                           cache="public, max-age=%d" % seconds_to_midnight())
+            elif isinstance(entry, dict) and "picks" in entry:
                 # windowed game: precomputed picks into the bank (timeline)
                 picks = entry["picks"]
                 if day < 0 or day >= len(picks):

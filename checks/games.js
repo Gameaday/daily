@@ -101,7 +101,9 @@ for (const g of Object.keys(GATED)) {
   if (!fs.existsSync(bankFile)) { fail(g + ': missing ' + bankFile); }
   else {
     const bsrc = fs.readFileSync(bankFile, 'utf8');
-    if (bsrc.indexOf('const ' + bank + ' = [') !== 0) fail(g + ': generated bank must start with const ' + bank + ' = [');
+    if (bsrc.indexOf('const ' + bank + ' = [') !== 0 &&
+        bsrc.indexOf('const ' + bank + ' = {') !== 0)
+      fail(g + ': generated bank must start with const ' + bank + ' = [ or {');
     try { new Function(bsrc); } catch (e) { fail(g + ': bank file does not compile: ' + e.message); }
   }
   const js = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';

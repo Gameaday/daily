@@ -56,7 +56,8 @@ function checkHtml(file, rootDir, online){
         const bsrc = fs.readFileSync(bankFile, 'utf8');
         if (online && bsrc !== 'const ' + GATED[game] + ' = undefined;\n')
           problems.push(bankFile + ': online bank not stubbed');
-        if (!online && bsrc.indexOf('const ' + GATED[game] + ' = [') !== 0)
+        if (!online && bsrc.indexOf('const ' + GATED[game] + ' = [') !== 0 &&
+            bsrc.indexOf('const ' + GATED[game] + ' = {') !== 0)
           problems.push(bankFile + ': offline bank missing');
       }
     }

@@ -11,7 +11,7 @@
       "Leonardo di ser Piero da Vinci"
     ],
     "s": [
-      "The Mona Lisa w\nas painted by",
+      "The Mona Lisa was painted by",
       "Michelangelo",
       "in the early 1500s,",
       "and it now hangs in the Louvre."
@@ -220,7 +220,7 @@
     "c": "CERN",
     "a": [
       "CERN",
-      "cer\nn"
+      "cern"
     ],
     "s": [
       "In 1989, Tim Berners-Lee invented the World Wide Web",
@@ -321,7 +321,7 @@
       "First played in 1967, the Super Bowl is the annual championship game of the",
       "National Basketball Association."
     ],
-    "w": "The NFL — the NBA 9s big night is called the Finals. Super Bowl I was played in January 1967."
+    "w": "The NFL — the NBA’s big night is called the Finals. Super Bowl I was played in January 1967."
   },
   {
     "t": "Nature",
@@ -434,7 +434,7 @@
     "s": [
       "Coffee is brewed from the roasted",
       "leaves",
-      "of t\nhe Coffea plant, native to Ethiopia."
+      "of the Coffea plant, native to Ethiopia."
     ],
     "w": "The roasted seeds — “beans” — of the coffee cherry. Leaves get you tea."
   },

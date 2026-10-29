@@ -39,7 +39,7 @@
     "t": "Libraries",
     "q": "Roughly how many books are held in the US Library of Congress?",
     "a": 25000000,
-    "w": "~25 million books (cataloged) out of ~170 million total items \nincluding maps, films, and recordings. The largest library on Earth."
+    "w": "~25 million books (cataloged) out of ~170 million total items including maps, films, and recordings. The largest library on Earth."
   },
   {
     "t": "Monuments",
@@ -91,7 +91,7 @@
   },
   {
     "t": "Literature",
-    "q": "Roughly how many total words did Wil\nliam Shakespeare write across all his works?",
+    "q": "Roughly how many total words did William Shakespeare write across all his works?",
     "a": 884000,
     "w": "~884,000 words across 37+ plays and 154 sonnets — and he introduced or popularized hundreds of words still in daily use."
   },

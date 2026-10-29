@@ -796,8 +796,13 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
     () => fs.readFileSync(path.join(ROOT, 'scores', 'server.py'), 'utf8'),
     () => fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'),
     g => SHELL_JS + (g === 'trace' || g === 'recycle-grid' || g === 'recycle-rings' ? '\n' + WORDS_JS : ''),
-    () => fs.existsSync(path.join(ROOT, 'scores', 'puzzles.json'))
-      ? fs.readFileSync(path.join(ROOT, 'scores', 'puzzles.json'), 'utf8') : null
+    () => {
+      try {
+        const tl = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'timeline', 'puzzles.json'), 'utf8'));
+        tl.rounds = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'rounds', 'puzzles.json'), 'utf8'));
+        return JSON.stringify(tl);
+      } catch (e){ return null; }
+    }
   ).then(out => {
     console.log(out.summary);
     process.exit(out.fail ? 1 : 0);

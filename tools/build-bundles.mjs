@@ -2,9 +2,10 @@
    - dist/offline : everything a browser needs to play over file:// - the
      site files with inline banks intact.
      Open dist/offline/index.html straight off the filesystem.
-   - dist/online  : the site with every gated bank stripped to `undefined`
-     - the puzzles come from the scores service's /puzzle route. This is
-     what the web container bakes in.
+   - dist/online  : identical HTML, but every generated bank file
+     (assets/banks/<game>.js) is stubbed to `undefined` - the puzzles come
+     from the scores service's /puzzle route. This is what the web
+     container bakes in. No regex ever touches a page.
    Both bundles are site-only: no tooling, tests, or deploy files, and a
    verification pass fails the build if any relative src/href does not
    resolve inside the bundle or a game's shell wiring went missing. */
@@ -32,17 +33,8 @@ function copyDir(src, dest){
   }
 }
 
-function stripBanks(html){
-  let out = html;
-  for (const v of Object.values(GATED)){
-    out = out.replace(new RegExp('const ' + v + ' = \\[([\\s\\S]*?)\\];'),
-      'const ' + v + ' = undefined;');
-  }
-  return out;
-}
-
 /* verification: every game keeps its shell wiring, every relative
-   reference resolves, banks present offline / stripped online */
+   reference resolves, banks present offline / stubbed online */
 function checkHtml(file, rootDir, online){
   const problems = [];
   const html = fs.readFileSync(file, 'utf8');
@@ -55,9 +47,18 @@ function checkHtml(file, rootDir, online){
       problems.push(file + ': missing ../shell/common.css link');
     const game = path.dirname(rel);
     if (GATED[game]){
-      const has = new RegExp('const ' + GATED[game] + ' = \\[').test(html);
-      if (online && has) problems.push(file + ': bank ' + GATED[game] + ' not stripped');
-      if (!online && !has) problems.push(file + ': inline bank ' + GATED[game] + ' missing');
+      if (html.indexOf('<script src="../assets/banks/' + game + '.js"></script>') === -1)
+        problems.push(file + ': missing ../assets/banks/' + game + '.js tag');
+      const bankFile = path.join(rootDir, 'assets', 'banks', game + '.js');
+      if (!fs.existsSync(bankFile))
+        problems.push((online ? 'online' : 'offline') + ': missing ' + path.relative(rootDir, bankFile));
+      else {
+        const bsrc = fs.readFileSync(bankFile, 'utf8');
+        if (online && bsrc !== 'const ' + GATED[game] + ' = undefined;\n')
+          problems.push(bankFile + ': online bank not stubbed');
+        if (!online && bsrc.indexOf('const ' + GATED[game] + ' = [') !== 0)
+          problems.push(bankFile + ': offline bank missing');
+      }
     }
   }
   const dir = path.dirname(file);
@@ -73,10 +74,11 @@ function checkHtml(file, rootDir, online){
 fs.rmSync('dist', { recursive: true, force: true });
 copyDir('.', 'dist/offline');
 copyDir('.', 'dist/online');
-for (const g of Object.keys(GATED)){
-  const p = path.join('dist/online', g, 'index.html');
-  if (fs.existsSync(p)) fs.writeFileSync(p, stripBanks(fs.readFileSync(p, 'utf8')));
-}
+/* the online bundle never edits HTML: it stubs the generated bank
+   files instead, so no regex ever touches a page */
+for (const [g, name] of Object.entries(GATED))
+  fs.writeFileSync(path.join('dist/online/assets/banks', g + '.js'),
+    'const ' + name + ' = undefined;\n');
 
 const problems = [];
 for (const bundle of ['offline', 'online']){
@@ -97,4 +99,4 @@ if (problems.length){
   for (const p of problems) console.error('FAIL ' + p);
   process.exit(1);
 }
-console.log('bundles built: dist/offline (banks intact, plays over file://) + dist/online (banks stripped, puzzles served)');
+console.log('bundles built: dist/offline (banks intact, plays over file://) + dist/online (banks stubbed, puzzles served)');

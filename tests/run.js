@@ -55,12 +55,16 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
   const ROOT = path.join(__dirname, '..');
   const SHELL_JS = fs.readFileSync(path.join(ROOT, 'shell', 'common.js'), 'utf8');
   const WORDS_JS = fs.readFileSync(path.join(ROOT, 'assets', 'words-en.js'), 'utf8');
+  const BANKS = JSON.parse(fs.readFileSync(path.join(ROOT, 'games.json'), 'utf8')).gated;
+  const readBank = g => fs.readFileSync(path.join(ROOT, 'assets', 'banks', g + '.js'), 'utf8');
   const ctx = {
     GAMES,
     readGame: g => fs.readFileSync(path.join(ROOT, g, 'index.html'), 'utf8'),
     serverPy: fs.readFileSync(path.join(ROOT, 'scores', 'server.py'), 'utf8'),
     landing: fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'),
-    readShared: g => SHELL_JS + (g === 'trace' || g === 'recycle-grid' || g === 'recycle-rings' ? '\n' + WORDS_JS : ''),
+    readShared: (g, stubBanks) => SHELL_JS +
+      (g === 'trace' || g === 'recycle-grid' || g === 'recycle-rings' ? '\n' + WORDS_JS : '') +
+      (BANKS[g] ? '\n' + (stubBanks ? 'const ' + BANKS[g] + ' = undefined;' : readBank(g)) : ''),
     manifest: JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'manifest.json'), 'utf8')),
     readStore: () => {
       try {

@@ -87,7 +87,7 @@ for (const g of games) {
   if (landing.indexOf(g + '/') === -1) fail('landing: no card for ' + g);
 }
 
-/* server-gated delivery: every gated game keeps its inline bank for
+   server-gated delivery: every gated game loads its generated bank file for
    solo/offline play AND defers to the scores service when online */
 const GATED = LIST.gated;
 for (const g of Object.keys(GATED)) {
@@ -95,7 +95,15 @@ for (const g of Object.keys(GATED)) {
   const file = path.join(g, 'index.html');
   if (!fs.existsSync(file)) { fail(g + ': missing ' + file); continue; }
   const html = fs.readFileSync(file, 'utf8');
-  if (!new RegExp('const ' + bank + ' = \\[').test(html)) fail(g + ': inline bank ' + bank + ' missing');
+  if (html.indexOf('<script src="../assets/banks/' + g + '.js"></script>') === -1)
+    fail(g + ': does not load assets/banks/' + g + '.js');
+  const bankFile = path.join('assets', 'banks', g + '.js');
+  if (!fs.existsSync(bankFile)) { fail(g + ': missing ' + bankFile); }
+  else {
+    const bsrc = fs.readFileSync(bankFile, 'utf8');
+    if (bsrc.indexOf('const ' + bank + ' = [') !== 0) fail(g + ': generated bank must start with const ' + bank + ' = [');
+    try { new Function(bsrc); } catch (e) { fail(g + ': bank file does not compile: ' + e.message); }
+  }
   const js = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
   if (js.indexOf('fetchPuzzle') === -1) fail(g + ': does not fetch its puzzle from the scores service');
   if (js.indexOf('isSolo()') === -1) fail(g + ': does not keep the solo/offline path');

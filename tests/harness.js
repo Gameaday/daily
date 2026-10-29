@@ -132,7 +132,9 @@ function createHarness(readGame, readShared){
     /* Since the shell extraction a game runs on top of shell/common.js
        (plus assets/words-en.js for the word-bank games) - prepended here
        the same way the page loads its <script src> tags. */
-    const prelude = readShared ? readShared(game) : '';
+    /* stubBanks boots the online-bundle shape: the generated bank file
+       is stubbed to undefined, exactly what build-bundles ships online. */
+    const prelude = readShared ? readShared(game, opts.stubBanks) : '';
     const src = (prelude ? prelude + '\n;\n' : '') + m[1] + '\n;__export({' + expose.join(',') + '});';
     const fn = new Function(
       'document', 'localStorage', 'navigator', 'getSelection', 'fetch',

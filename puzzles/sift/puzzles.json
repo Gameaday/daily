@@ -1478,5 +1478,375 @@
         ]
       }
     ]
+  },
+  {
+    "t": "Codes and Ciphers",
+    "cats": [
+      {
+        "n": "Historic ciphers",
+        "i": [
+          "The Caesar cipher",
+          "The Vigenère cipher",
+          "The Playfair cipher"
+        ]
+      },
+      {
+        "n": "Codebreakers",
+        "i": [
+          "Al-Kindi",
+          "Elizebeth Friedman",
+          "Marian Rejewski"
+        ]
+      },
+      {
+        "n": "Unsolved ciphers",
+        "i": [
+          "The Voynich Manuscript",
+          "The Beale ciphers",
+          "The Kryptos sculpture"
+        ]
+      },
+      {
+        "n": "Spies",
+        "i": [
+          "Mata Hari",
+          "Virginia Hall",
+          "Noor Inayat Khan"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Days of Disaster",
+    "cats": [
+      {
+        "n": "Volcanoes",
+        "i": [
+          "Mount Vesuvius",
+          "Krakatoa",
+          "Mount St. Helens"
+        ]
+      },
+      {
+        "n": "Earthquakes",
+        "i": [
+          "The Lisbon Earthquake",
+          "The San Francisco Earthquake",
+          "The Great Kanto Earthquake"
+        ]
+      },
+      {
+        "n": "Storms",
+        "i": [
+          "The Galveston Hurricane",
+          "Hurricane Katrina",
+          "The Great Blizzard of 1888"
+        ]
+      },
+      {
+        "n": "Fires",
+        "i": [
+          "The Great Fire of London",
+          "The Great Chicago Fire",
+          "The Triangle Shirtwaist Fire"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Court of Versailles",
+    "cats": [
+      {
+        "n": "Kings of France",
+        "i": [
+          "Louis XIV",
+          "Louis XV",
+          "Louis XVI"
+        ]
+      },
+      {
+        "n": "Queens and favorites",
+        "i": [
+          "Marie Antoinette",
+          "Madame de Pompadour",
+          "Anne of Austria"
+        ]
+      },
+      {
+        "n": "The palace",
+        "i": [
+          "The Hall of Mirrors",
+          "The Grand Trianon",
+          "The Gardens of Versailles"
+        ]
+      },
+      {
+        "n": "Chief ministers",
+        "i": [
+          "Cardinal Richelieu",
+          "Cardinal Mazarin",
+          "Jacques Necker"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Norman Conquest",
+    "cats": [
+      {
+        "n": "Claimants of 1066",
+        "i": [
+          "Harold Godwinson",
+          "Harald Hardrada",
+          "Edgar Ætheling"
+        ]
+      },
+      {
+        "n": "Battles",
+        "i": [
+          "The Battle of Hastings",
+          "The Battle of Stamford Bridge",
+          "The Battle of Fulford"
+        ]
+      },
+      {
+        "n": "Norman changes",
+        "i": [
+          "The Domesday Book",
+          "The White Tower",
+          "The harrying of the North"
+        ]
+      },
+      {
+        "n": "Faces of the conquest",
+        "i": [
+          "Odo of Bayeux",
+          "Matilda of Flanders",
+          "Lanfranc"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Rivers of the World",
+    "cats": [
+      {
+        "n": "Rivers of Africa",
+        "i": [
+          "The Congo",
+          "The Zambezi",
+          "The Niger"
+        ]
+      },
+      {
+        "n": "Rivers of Asia",
+        "i": [
+          "The Mekong",
+          "The Ganges",
+          "The Indus"
+        ]
+      },
+      {
+        "n": "Rivers of Europe",
+        "i": [
+          "The Danube",
+          "The Rhine",
+          "The Volga"
+        ]
+      },
+      {
+        "n": "Rivers of the Americas",
+        "i": [
+          "The Mississippi",
+          "The Rio Grande",
+          "The Orinoco"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Orchestra",
+    "cats": [
+      {
+        "n": "Strings",
+        "i": [
+          "The violin",
+          "The cello",
+          "The double bass"
+        ]
+      },
+      {
+        "n": "Woodwinds",
+        "i": [
+          "The oboe",
+          "The bassoon",
+          "The clarinet"
+        ]
+      },
+      {
+        "n": "Brass",
+        "i": [
+          "The trumpet",
+          "The trombone",
+          "The French horn"
+        ]
+      },
+      {
+        "n": "Percussion",
+        "i": [
+          "The timpani",
+          "The snare drum",
+          "The xylophone"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Empires of West Africa",
+    "cats": [
+      {
+        "n": "The empires",
+        "i": [
+          "The Ghana Empire",
+          "The Mali Empire",
+          "The Songhai Empire"
+        ]
+      },
+      {
+        "n": "Cities",
+        "i": [
+          "Timbuktu",
+          "Gao",
+          "Djenné"
+        ]
+      },
+      {
+        "n": "Rulers",
+        "i": [
+          "Mansa Musa",
+          "Sonni Ali",
+          "Askia the Great"
+        ]
+      },
+      {
+        "n": "Goods that built them",
+        "i": [
+          "Gold",
+          "Salt",
+          "Camel caravans"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The American Civil War",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "Ulysses S. Grant",
+          "Robert E. Lee",
+          "Jefferson Davis"
+        ]
+      },
+      {
+        "n": "Battles",
+        "i": [
+          "The Battle of Gettysburg",
+          "The Battle of Antietam",
+          "The Siege of Vicksburg"
+        ]
+      },
+      {
+        "n": "The war at home",
+        "i": [
+          "The Emancipation Proclamation",
+          "The draft riots",
+          "Sherman’s March to the Sea"
+        ]
+      },
+      {
+        "n": "After the guns",
+        "i": [
+          "Reconstruction",
+          "The 13th Amendment",
+          "The Transcontinental Railroad"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The First World War",
+    "cats": [
+      {
+        "n": "How it began",
+        "i": [
+          "The assassination at Sarajevo",
+          "The Schlieffen Plan",
+          "The July Crisis"
+        ]
+      },
+      {
+        "n": "The battlefields",
+        "i": [
+          "The Somme",
+          "Verdun",
+          "Gallipoli"
+        ]
+      },
+      {
+        "n": "New weapons",
+        "i": [
+          "The tank",
+          "Poison gas",
+          "The machine gun"
+        ]
+      },
+      {
+        "n": "The eleventh hour",
+        "i": [
+          "The Armistice",
+          "The Treaty of Versailles",
+          "The League of Nations"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Islands of the Pacific",
+    "cats": [
+      {
+        "n": "Polynesia",
+        "i": [
+          "Hawaii",
+          "Samoa",
+          "Tonga"
+        ]
+      },
+      {
+        "n": "Melanesia",
+        "i": [
+          "Fiji",
+          "Vanuatu",
+          "New Caledonia"
+        ]
+      },
+      {
+        "n": "Micronesia",
+        "i": [
+          "Guam",
+          "Palau",
+          "Kiribati"
+        ]
+      },
+      {
+        "n": "Explorers of the Pacific",
+        "i": [
+          "Captain James Cook",
+          "Abel Tasman",
+          "Captain Bligh"
+        ]
+      }
+    ]
   }
 ]

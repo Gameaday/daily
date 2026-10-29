@@ -30,6 +30,9 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .punc{display:inline-flex; flex-direction:column; align-items:center; min-width:10px; padding:2px 1px;}
 .punc .pl{font-size:19px; min-height:23px; border-bottom:2px solid transparent;
     font-family:ui-monospace,Menlo,Consolas,monospace;}
+/* a real flex item for the space between words: .wline is display:flex, so a raw
+   text space is silently discarded and word boundaries were invisible */
+.wline .gap{width:18px; flex:0 0 auto;}
 .keynote{text-align:center; font-size:12px; color:var(--muted); margin:10px 0 0;}
 .actions{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
 .btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
@@ -46,7 +49,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
 @media (max-width:480px){
     h1{font-size:28px;}
-    .slot .pl{font-size:16px;} .slot{min-width:17px;}
+    .slot .pl{font-size:16px;} .slot{min-width:17px;} .wline .gap{width:14px;}
   }
 /* hidden input: lets soft keyboards type into the puzzle (tap a slot, then type) */
   #kbd{position:fixed; top:-80px; left:0; width:1px; height:1px; opacity:0; border:0; padding:0; font-size:16px;}</style>
@@ -207,7 +210,7 @@ function render(){
       const cls = 'slot' + (S.sel === c ? ' sel' : '') + (d && d === SUB.dec[c] ? ' done' : '');
       word += '<span class="' + cls + '" data-c="' + c + '"><i class="cl">' + c + '</i><b class="pl">' + d + '</b></span>';
     } else if (ch === ' '){
-      flush(); html += ' ';
+      flush(); html += '<span class="gap"></span>';
     } else {
       flush(); html += '<span class="punc"><b class="pl">' + ch + '</b></span>';
     }

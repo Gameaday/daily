@@ -26,6 +26,9 @@ jobs:
           cd dist/offline && zip -rq ../../offline-bundle.zip .
           cd ../online && zip -rq ../../online-bundle.zip .
       - name: create release
-        run: gh release create "$GITHUB_REF_NAME" --generate-notes --title "$GITHUB_REF_NAME" offline-bundle.zip online-bundle.zip
+        run: |
+          FLAGS="--generate-notes"
+          case "$GITHUB_REF_NAME" in *-rc*|*-beta*) FLAGS="$FLAGS --prerelease" ;; esac
+          gh release create "$GITHUB_REF_NAME" $FLAGS --title "$GITHUB_REF_NAME" offline-bundle.zip online-bundle.zip
         env:
           GH_TOKEN: ${{ github.token }}

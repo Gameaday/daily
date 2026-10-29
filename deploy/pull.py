@@ -58,7 +58,11 @@ def run(*args):
 
 def latest_tag():
     """The newest v* tag and its commit, or (None, None) when none exist."""
-    tags = sh("git", "tag", "--list", "v*", "--sort=-v:refname").split()
+    # Prerelease tags (v1.0.0-rc.1: anything with a hyphen) cut dogfood
+    # bundles for local testing but never auto-deploy. Only stable releases
+    # go live on the Pi.
+    tags = [t for t in sh("git", "tag", "--list", "v*",
+                         "--sort=-v:refname").split() if "-" not in t]
     if not tags:
         return None, None
     tag = tags[0]

@@ -25,6 +25,16 @@ async function run(h){
     h.eq(r.x.S.stats.streak, 1, 'trace: streak preserved');
     const s2 = {};
     r = h.boot('trace', EXP, { now: T0, store: s2 });
+    r.env.els.next.value = r.x.LADDER.path[1];
+    r.x.climb();
+    h.eq(r.x.S.chain.length, 2, 'trace: climbed to the first rung');
+    r.env.els.next.value = r.x.LADDER.start;
+    r.x.climb();
+    h.eq(r.x.S.chain.length, 1, 'trace: typing a ladder word climbs back down');
+    h.eq(r.x.S.chain[r.x.S.chain.length - 1], r.x.LADDER.start, 'trace: back at the start word');
+    r.env.els.next.value = r.x.LADDER.path[1];
+    r.x.climb();
+    h.eq(r.x.S.chain.length, 2, 'trace: the dropped rung is climbable again');
     r.env.els.btnGive.click();
     h.eq(r.x.S.status, 'lost', 'trace: give-up loses');
     await h.flush();

@@ -112,7 +112,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 <div class="overlay" id="helpOverlay">
   <div class="modal">
     <h2>How to play</h2>
-    <p>Type a word that differs from your current word by <b>exactly one letter</b> (like COLD → CORD). Every rung must be a real word — the game knows the dictionary, so guess in good faith. You can’t reuse words you’ve already climbed.</p>
+    <p>Type a word that differs from your current word by <b>exactly one letter</b> (like COLD → CORD). Every rung must be a real word — the game knows the dictionary, so guess in good faith. You can’t reuse a word going up, but type one already on your ladder and you climb <b>back down</b> to it: the rungs above drop away, and the clock keeps running.</p>
     <p>Reach the target word and the ladder is solved. Your score is the number of <b>rungs</b> you used — the fewer the better. <b>Par</b> is the shortest ladder that exists (the game checked, so you don’t have to wonder).</p>
     <p>Stuck? <b>Reveal a path</b> ends the climb and shows one shortest solution.</p>
     <p>There\u2019s no mistake limit — the score is efficiency, not survival. The clock starts on your first climb and never restarts; it\u2019s just for bragging.</p>
@@ -273,7 +273,15 @@ function climb(){
   if (!S.startAt) S.startAt = Date.now();
   const cur = S.chain[S.chain.length - 1];
   if (val === cur){ fail('That\u2019s where you already are'); saveState(); return; }
-  if (S.chain.includes(val)){ fail('Already on your ladder'); saveState(); return; }
+  if (S.chain.includes(val)){
+    /* climbing back down: a dead end is escapable, the clock keeps running */
+    S.chain.length = S.chain.indexOf(val) + 1;
+    $('next').value = '';
+    saveState();
+    renderChain();
+    toastMsg('back at ' + val + ' \u00b7 the rungs above dropped away');
+    return;
+  }
   if (!DICT.has(val)){ fail('Not in the word list'); saveState(); return; }
   if (diffCount(val, cur) !== 1){ fail('Exactly one letter must change'); saveState(); return; }
   S.chain.push(val);

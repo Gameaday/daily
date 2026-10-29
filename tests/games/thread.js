@@ -15,6 +15,7 @@ async function run(h){
     const ids = [r.x.PZ.s.id, r.x.PZ.e.id]
       .concat(r.x.PZ.m.map(x => x.id), r.x.PZ.d.map(x => x.id));
     h.eq(new Set(ids).size, ids.length, 'thread: offered ids are distinct');
+    const day0 = JSON.stringify(r.x.PZ);
     r.x.S.slots = r.x.PZ.m.map(x => x.id);
     r.env.els.btnCheck.click();
     h.eq(r.x.S.status, 'won', 'thread: won in one check');
@@ -34,6 +35,11 @@ async function run(h){
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, 9, 'thread: curve value 9 on give-up');
     h.ok(String(r.env.els.chainbox.innerHTML).length > 0, 'thread: reveal renders the chain');
+    const TPRE = T0 - 3 * 86400000;
+    r = h.boot('thread', EXP, { now: TPRE, store: {} });
+    h.ok(!!r.x.PZ.s, 'thread: pre-launch day boots a chain');
+    h.eq(r.x.S.day, 0, 'thread: pre-launch day clamps to day 0');
+    h.eq(JSON.stringify(r.x.PZ), day0, 'thread: pre-launch plays the No. 1 chain');
 }
 
 module.exports = { name: 'thread', run };

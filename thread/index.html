@@ -52,6 +52,14 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .clink{font-size:13px; color:var(--accent); padding:6px 0 6px 14px; border-left:2px solid var(--line); margin:4px 0 4px 8px;}
 .aside{font-size:12px; color:var(--muted); margin:10px 0 0;}
 .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
+.slot, .tcard{touch-action:none;}
+.drag-ghost{position:fixed; z-index:60; pointer-events:none; width:230px; max-width:72vw;
+    background:var(--card); border:1.5px solid var(--accent); border-radius:12px;
+    padding:10px 14px; box-shadow:0 10px 26px rgba(0,0,0,.2); opacity:.96;
+    transform:translate(-50%, -60%);}
+.drag-ghost b{font-size:14px;}
+.drag-ghost .cd{display:block; font-size:12px; color:var(--muted); margin-top:2px;}
+.slot.drop{border-style:solid; border-color:var(--accent); background:var(--accent-soft);}
 @media (max-width:480px){
     h1{font-size:28px;}
     .slot .cd, .fixed .cd{font-size:12px;}
@@ -74,15 +82,15 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="lead"><b>Two ends of history, one thread between.</b> The start and the end are fixed. Place every figure from the tray into the chain, set the two decoys aside, then check. Correct places lock. Every check counts.</p>
+  <p class="lead"><b>Two ends of history, one thread between.</b> The start and the end are fixed. Drag a figure from the tray into the chain, or tap a card and then a slot; set the two decoys aside, then check. Correct places lock. Every check counts.</p>
 
   <div class="lane" id="lane"></div>
   <div class="tray" id="tray"></div>
-  <p class="checknote" id="checknote">tap a card to start weaving</p>
+  <p class="checknote" id="checknote">drag or tap a card to start weaving</p>
 
   <div class="actions">
     <button class="btn" id="btnCheck">Check the chain</button>
-    <button class="btn ghost" id="btnGiveUp">Reveal the thread</button>
+    <button class="btn ghost" id="btnGiveUp">Give up</button>
   </div>
 
   <div class="reveal" id="reveal">
@@ -106,10 +114,10 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="modal">
     <h2>How to play</h2>
     <p>A <b>start</b> and an <b>end</b> stand fixed at the top and bottom. The tray holds every figure on the one true chain between them, plus <b>two decoys</b> that belong nowhere on it.</p>
-    <p>Tap a tray card to pick it up, then tap a slot to place it. Tap a placed card to send it back; placing over a filled slot swaps the two.</p>
+    <p>Drag a card from the tray into any slot, or tap a card and then a slot. Drag a placed card back to the tray, or onto another slot to swap the two.</p>
     <p><b>Check the chain</b> counts as one check and locks every figure that sits in its true place, so each check shrinks the puzzle.</p>
     <p>The score is how few checks you needed. A perfect read of history is <b>one</b>.</p>
-    <p><b>Reveal the thread</b> ends the day and lays the chain out properly.</p>
+    <p><b>Give up</b> ends the day and lays the chain out properly.</p>
     <button class="close" data-close>Onward</button>
   </div>
 </div>
@@ -127,6 +135,10 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js - destructured once here */
 const { EPOCH_KEY, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+/* the walk builds the schedule one day at a time from day 0, so before
+   launch every day plays the No. 1 chain; the shell already clamps the
+   display number the same way */
+const pzDay = Math.max(0, dayIndex);
 
 function mulberry32(a){
   return function(){
@@ -264,13 +276,13 @@ function applyPuzzle(pz){
 
 async function loadPuzzle(){
   if (typeof THREAD !== 'undefined' && THREAD && THREAD.nodes){
-    const picks = threadWalk(THREAD, dayIndex + 1);
+    const picks = threadWalk(THREAD, pzDay + 1);
     applyPuzzle(puzzleFromPick(THREAD, picks[picks.length - 1]));
   }
   initDay();
   if (isSolo()) return;
   try {
-    const d = await fetchPuzzle('thread', dayIndex);
+    const d = await fetchPuzzle('thread', pzDay);
     if (d && d.puzzle && d.puzzle.s && d.puzzle.m){
       applyPuzzle(d.puzzle);
       initDay();
@@ -289,18 +301,18 @@ let S = loadState() || { day: -1, slots: [], locked: [], tray: [], checks: 0, se
   started: false, status: 'playing', stats: { played: 0, solved: 0, streak: 0, max: 0 } };
 function initDay(){
   if (!PZ.s) return; /* wait for the day's puzzle */
-  if (S.day !== dayIndex){
+  if (S.day !== pzDay){
     const stats = (S && typeof S.stats === 'object') ? S.stats : { played: 0, solved: 0, streak: 0, max: 0 };
-    if (S.day !== dayIndex && S.status === 'playing' && S.started) stats.streak = 0;
+    if (S.day !== pzDay && S.status === 'playing' && S.started) stats.streak = 0;
     const k = PZ.m.length;
     /* cosmetic-only display shuffle of the offered set */
-    const trng = mulberry32(dayIndex * 9109 + 13);
+    const trng = mulberry32(pzDay * 9109 + 13);
     const offered = PZ.m.map(x => x.id).concat(PZ.d.map(x => x.id));
     for (let i = offered.length - 1; i > 0; i--){
       const j = Math.floor(trng() * (i + 1));
       [offered[i], offered[j]] = [offered[j], offered[i]];
     }
-    S.day = dayIndex; S.slots = new Array(k).fill(null); S.locked = new Array(k).fill(false);
+    S.day = pzDay; S.slots = new Array(k).fill(null); S.locked = new Array(k).fill(false);
     S.tray = offered; S.checks = 0; S.sel = null; S.started = false; S.status = 'playing'; S.stats = stats;
   }
   saveState();
@@ -358,18 +370,111 @@ function place(i){
   saveState(); render();
 }
 $('lane').addEventListener('click', e => {
+  if (SUPPRESS_CLICK){ SUPPRESS_CLICK = false; return; }
   if (!PZ.s || !S) return;
   const card = e.target.closest('.slot');
   if (!card) return;
   place(+card.dataset.i);
 });
 $('tray').addEventListener('click', e => {
+  if (SUPPRESS_CLICK){ SUPPRESS_CLICK = false; return; }
   if (!PZ.s || !S || S.status !== 'playing') return;
   const card = e.target.closest('.tcard');
   if (!card) return;
   const id = card.dataset.id;
   S.sel = (S.sel === id) ? null : id;
   saveState(); render();
+});
+/* ---------------- drag and drop (pointers; a plain tap still works) ---------------- */
+let DRAG = null;
+let SUPPRESS_CLICK = false;
+function dragGhost(nd){
+  const g = document.createElement('div');
+  g.className = 'drag-ghost';
+  g.innerHTML = '<b>' + nd.n + '</b><span class="cd">' + nd.d + '</span>';
+  document.body.appendChild(g);
+  return g;
+}
+function dragClearMarks(){
+  document.querySelectorAll('.slot.drop').forEach(el => el.classList.remove('drop'));
+}
+function dragDrop(x, y){
+  if (DRAG.ghost) DRAG.ghost.remove();
+  dragClearMarks();
+  SUPPRESS_CLICK = true;
+  if (S.status !== 'playing'){ DRAG = null; return; }
+  const el = document.elementFromPoint(x, y);
+  const slot = el ? el.closest('.slot') : null;
+  const overTray = !!(el && (el.closest('#tray') || el.closest('.trow')));
+  if (DRAG.from === null){
+    if (slot){
+      const i = +slot.dataset.i;
+      if (!S.locked[i]){
+        S.started = true;
+        const ti = S.tray.indexOf(DRAG.id);
+        if (ti !== -1) S.tray.splice(ti, 1);
+        const prev = S.slots[i];
+        S.slots[i] = DRAG.id;
+        if (prev) S.tray.push(prev);
+        S.sel = null;
+      }
+    }
+  } else {
+    const j = DRAG.from;
+    if (slot && +slot.dataset.i !== j && !S.locked[+slot.dataset.i]){
+      S.started = true;
+      const i = +slot.dataset.i;
+      const prev = S.slots[i];
+      S.slots[i] = S.slots[j];
+      S.slots[j] = prev;
+      if (S.sel === prev) S.sel = null;
+    } else if (overTray){
+      S.started = true;
+      S.tray.push(S.slots[j]);
+      S.slots[j] = null;
+      S.sel = null;
+    }
+  }
+  DRAG = null;
+  saveState(); render();
+}
+$('lane').addEventListener('pointerdown', e => {
+  if (!PZ.s || !S || S.status !== 'playing') return;
+  SUPPRESS_CLICK = false;
+  const card = e.target.closest('.slot');
+  if (!card) return;
+  const i = +card.dataset.i;
+  if (S.locked[i] || !S.slots[i]) return;
+  DRAG = { id: S.slots[i], from: i, moved: false, ghost: null, x: e.clientX, y: e.clientY };
+});
+$('tray').addEventListener('pointerdown', e => {
+  if (!PZ.s || !S || S.status !== 'playing') return;
+  SUPPRESS_CLICK = false;
+  const card = e.target.closest('.tcard');
+  if (!card) return;
+  DRAG = { id: card.dataset.id, from: null, moved: false, ghost: null, x: e.clientX, y: e.clientY };
+});
+document.addEventListener('pointermove', e => {
+  if (!DRAG) return;
+  if (!DRAG.moved && Math.abs(e.clientX - DRAG.x) + Math.abs(e.clientY - DRAG.y) > 6) DRAG.moved = true;
+  if (!DRAG.moved) return;
+  if (!DRAG.ghost){ DRAG.ghost = dragGhost(NODES_BY[DRAG.id]); }
+  DRAG.ghost.style.left = e.clientX + 'px';
+  DRAG.ghost.style.top = e.clientY + 'px';
+  dragClearMarks();
+  const t = document.elementFromPoint(e.clientX, e.clientY);
+  const slot = t ? t.closest('.slot') : null;
+  if (slot && !S.locked[+slot.dataset.i]) slot.classList.add('drop');
+});
+document.addEventListener('pointerup', e => {
+  if (!DRAG) return;
+  if (DRAG.moved) dragDrop(e.clientX, e.clientY);
+  else DRAG = null;
+});
+document.addEventListener('pointercancel', () => {
+  if (DRAG && DRAG.ghost) DRAG.ghost.remove();
+  dragClearMarks();
+  DRAG = null;
 });
 $('btnCheck').addEventListener('click', () => {
   if (!PZ.s || !S || S.status !== 'playing') return;

@@ -103,6 +103,19 @@ async function run(h, ctx){
       String(r.env.els[k].textContent || '').indexOf(needle) >= 0);
     h.ok(found, 'gated: timeline served events rendered');
   }
+  /* thread: the served chain plays through */
+  {
+    const live = h.boot('thread', ['PZ'], { now: T0, store: {} });
+    const served = serve('thread', live.x.PZ);
+    const r = h.boot('thread', ['S', 'PZ', 'THREAD'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    h.ok(r.x.THREAD === undefined, 'gated: thread online boot has no bank');
+    await h.flush();
+    h.ok(JSON.stringify(r.x.PZ) === JSON.stringify(live.x.PZ),
+      'gated: thread served puzzle matches the offline one');
+    r.x.S.slots = r.x.PZ.m.map(x => x.id);
+    r.env.els.btnCheck.click();
+    h.eq(r.x.S.status, 'won', 'gated: thread won on the served chain');
+  }
   /* the exported store must agree with each game's own offline pick */
   if (readStore){
     const store = JSON.parse(readStore());
@@ -113,6 +126,13 @@ async function run(h, ctx){
     const rEv = h.boot('rounds', ['EV'], { now: T0, store: {} });
     h.ok(JSON.stringify(rEv.x.EV) === JSON.stringify(store.rounds[0]),
       'gated: exported rounds bank matches the generated bank');
+    const th = store.thread;
+    const tlive = h.boot('thread', ['PZ'], { now: T0, store: {} });
+    const tp = th.picks[0];
+    h.ok(tlive.x.PZ.s.id === tp.s && tlive.x.PZ.e.id === tp.e &&
+      JSON.stringify(tlive.x.PZ.m.map(x => x.id)) === JSON.stringify(tp.m) &&
+      JSON.stringify(tlive.x.PZ.d.map(x => x.id)) === JSON.stringify(tp.d),
+      'gated: exported thread picks[0] match the offline day-0 chain');
   }
 }
 

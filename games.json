@@ -1,7 +1,7 @@
 {
   "order": ["bogus", "well-actually", "recycle-rings", "recycle-grid", "fermi",
             "sift", "rounds", "trace", "lightbox", "sprint", "cipher",
-            "timeline", "museum"],
+            "timeline", "museum", "thread"],
   "gated": {
     "bogus": "PUZZLES",
     "well-actually": "PUZZLES",
@@ -11,7 +11,8 @@
     "museum": "MUSEUM",
     "lightbox": "DESIGNS",
     "sift": "BOARDS",
-    "timeline": "EVENTS"
+    "timeline": "EVENTS",
+    "thread": "THREAD"
   },
   "generator": ["sprint", "trace", "recycle-grid", "recycle-rings"],
   "ledger": {
@@ -27,10 +28,13 @@
     "sprint": ["sprint"],
     "cipher": ["cipher"],
     "timeline": ["timeline"],
-    "museum": ["museum"]
+    "museum": ["museum"],
+    "thread": ["thread"]
   },
   "wordBank": ["recycle-grid", "recycle-rings", "trace"],
   "minBank": 15,
   "minTimelineBank": 40,
-  "timelineDays": 1000
+  "timelineDays": 1000,
+  "minThreadNodes": 40,
+  "threadDays": 1000
 }

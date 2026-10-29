@@ -15,6 +15,7 @@
     "sprint":        { "better": "high", "edges": [0, 1, 2, 3, 4, 5, 6] },
     "cipher":        { "better": "low",  "edges": [0, 1, 2, 3, 4, 5, 6, 7] },
     "timeline":      { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8] },
-    "museum":        { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7] }
+    "museum":        { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7] },
+    "thread":        { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8] }
   }
 }

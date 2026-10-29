@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Two figures from history stand at the ends. Build the one chain of connection between them and set the two decoys aside. Every check counts." />
+<title>Thread · connect the two ends of history</title>
+<link rel="stylesheet" href="../shell/common.css"/>
+<style>header{display:flex; align-items:flex-end; justify-content:space-between;}
+h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+.lead{color:var(--muted); font-size:14px; margin:16px 0 8px;}
+.lane{margin-top:12px;}
+.fixed{background:var(--accent-soft); border:1.5px solid var(--accent); border-radius:12px;
+    padding:12px 16px; margin:10px 0;}
+.fixed .cap{font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); display:block; margin-bottom:4px;}
+.fixed b{font-size:15px;}
+.fixed .cd{display:block; font-size:13px; color:var(--muted); margin-top:2px;}
+.slot{background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+    padding:12px 16px; margin:10px 0; cursor:pointer; transition:border-color .12s;}
+.slot:hover{border-color:var(--accent);}
+.slot.empty{border-style:dashed; color:var(--muted); text-align:center;}
+.slot.empty .posn{font-family:Georgia,serif; font-size:16px;}
+.slot.locked{border-color:var(--green); background:var(--green-soft); cursor:default;}
+.slot b{font-size:15px;}
+.slot .cd{display:block; font-size:13px; color:var(--muted); margin-top:2px;}
+.slot.locked .cd{color:var(--green);}
+.tray{margin-top:18px;}
+.traycap{font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:8px;}
+.trow{display:flex; flex-wrap:wrap; gap:10px;}
+.tcard{flex:1 1 150px; background:var(--card); border:1.5px solid var(--line); border-radius:12px;
+    padding:10px 14px; cursor:pointer; transition:border-color .12s;}
+.tcard:hover{border-color:var(--accent);}
+.tcard.sel{border-color:var(--accent); background:var(--accent-soft);}
+.tcard b{font-size:14px;}
+.tcard .cd{display:block; font-size:12px; color:var(--muted); margin-top:2px;}
+.checknote{text-align:center; font-size:12px; color:var(--muted); margin:8px 0 0;}
+.actions{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+.btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line);}
+.btn:hover{filter:brightness(.94);}
+.btn:disabled{opacity:.45; cursor:default; filter:none;}
+.reveal{margin-top:16px; display:none;}
+@keyframes rise{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:none;}}
+.verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; text-align:center; color:var(--green);}
+.verdict.lost{color:var(--accent);}
+.sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+.chainbox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:14px 16px; margin:0 0 12px;}
+.crow b{font-size:15px;}
+.crow .cd{display:block; font-size:13px; color:var(--muted); margin-top:2px;}
+.clink{font-size:13px; color:var(--accent); padding:6px 0 6px 14px; border-left:2px solid var(--line); margin:4px 0 4px 8px;}
+.aside{font-size:12px; color:var(--muted); margin:10px 0 0;}
+.actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
+@media (max-width:480px){
+    h1{font-size:28px;}
+    .slot .cd, .fixed .cd{font-size:12px;}
+  }</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Thread<span class="dot">.</span></h1>
+      <p class="sub">a start · an end · one chain between</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead"><b>Two ends of history, one thread between.</b> The start and the end are fixed. Place every figure from the tray into the chain, set the two decoys aside, then check. Correct places lock. Every check counts.</p>
+
+  <div class="lane" id="lane"></div>
+  <div class="tray" id="tray"></div>
+  <p class="checknote" id="checknote">tap a card to start weaving</p>
+
+  <div class="actions">
+    <button class="btn" id="btnCheck">Check the chain</button>
+    <button class="btn ghost" id="btnGiveUp">Reveal the thread</button>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="chainbox" id="chainbox"></div>
+    <div class="sharebox" id="sharetext"></div>
+    <div id="curve"></div>
+    <div class="actionsrow">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next thread in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>A <b>start</b> and an <b>end</b> stand fixed at the top and bottom. The tray holds every figure on the one true chain between them, plus <b>two decoys</b> that belong nowhere on it.</p>
+    <p>Tap a tray card to pick it up, then tap a slot to place it. Tap a placed card to send it back; placing over a filled slot swaps the two.</p>
+    <p><b>Check the chain</b> counts as one check and locks every figure that sits in its true place, so each check shrinks the puzzle.</p>
+    <p>The score is how few checks you needed. A perfect read of history is <b>one</b>.</p>
+    <p><b>Reveal the thread</b> ends the day and lays the chain out properly.</p>
+    <button class="close" data-close>Onward</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../shell/common.js"></script>
+<script src="../assets/banks/thread.js"></script>
+<script>
+'use strict';
+
+/* ---------------- the connection graph (shared bank; verified facts) ---------------- */
+
+/* ---------------- daily selection ---------------- */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js - destructured once here */
+const { EPOCH_KEY, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* the offline thread walk: unique-shortest-path chains, then two decoys
+   each, drawn so the offered set still admits exactly one solution */
+function threadGraph(bank){
+  const ids = bank.nodes.map(x => x.id);
+  const pos = {};
+  ids.forEach((id, i) => { pos[id] = i; });
+  const n = ids.length;
+  const adj = [];
+  for (let i = 0; i < n; i++) adj.push([]);
+  const pairSet = new Set();
+  for (const e of bank.edges){
+    const ia = pos[e.a], ib = pos[e.b];
+    const key = ia < ib ? ia + ':' + ib : ib + ':' + ia;
+    if (pairSet.has(key)) continue;
+    pairSet.add(key);
+    adj[ia].push(ib);
+    adj[ib].push(ia);
+  }
+  const linked = (i, j) => pairSet.has(i < j ? i + ':' + j : j + ':' + i);
+  return { ids, pos, n, adj, linked };
+}
+
+function threadCandidates(bank){
+  const g = threadGraph(bank);
+  const cands = [];
+  for (let u = 0; u < g.n; u++){
+    const dist = new Array(g.n).fill(-1);
+    const cnt = new Array(g.n).fill(0);
+    dist[u] = 0; cnt[u] = 1;
+    const q = [u];
+    for (let qi = 0; qi < q.length; qi++){
+      const x = q[qi];
+      for (const w of g.adj[x]){
+        if (dist[w] === -1){ dist[w] = dist[x] + 1; q.push(w); }
+        if (dist[w] === dist[x] + 1) cnt[w] += cnt[x];
+      }
+    }
+    for (let v = u + 1; v < g.n; v++){
+      if (dist[v] < 3 || dist[v] > 5 || cnt[v] !== 1) continue;
+      const path = [v];
+      let cur = v;
+      while (cur !== u){
+        for (const w of g.adj[cur]) if (dist[w] === dist[cur] - 1){ path.push(w); cur = w; break; }
+      }
+      path.reverse();
+      cands.push({ s: u, e: v, m: path.slice(1, path.length - 1) });
+    }
+  }
+  return { g, cands };
+}
+
+function threadCountSolutions(cand, extra, linked){
+  const k = cand.m.length;
+  const offered = cand.m.concat(extra);
+  let count = 0;
+  const used = new Array(offered.length).fill(false);
+  (function rec(prev, depth){
+    if (count > 1) return;
+    if (depth === k){ if (linked(prev, cand.e)) count++; return; }
+    for (let i = 0; i < offered.length; i++){
+      if (used[i] || !linked(prev, offered[i])) continue;
+      used[i] = true;
+      rec(offered[i], depth + 1);
+      used[i] = false;
+      if (count > 1) return;
+    }
+  })(cand.s, 0);
+  return count;
+}
+
+function threadWalk(bank, days){
+  const gc = threadCandidates(bank);
+  const ids = gc.g.ids;
+  const linked = gc.g.linked;
+  const cands = gc.cands;
+  const used = new Set();
+  const picks = [];
+  for (let day = 0; day < days; day++){
+    const rng = mulberry32(day * 4517 + 303);
+    const i0 = Math.floor(rng() * cands.length);
+    let pick = null;
+    for (let t = 0; t < 100 && !pick; t++){
+      const c = cands[(i0 + t) % cands.length];
+      const key = ids[c.s] + ':' + ids[c.e];
+      if (used.has(key)) continue;
+      const mSet = new Set(c.m);
+      const decoys = [];
+      for (let tries = 0; tries < 30; tries++){
+        const di = Math.floor(rng() * ids.length);
+        if (di === c.s || di === c.e || mSet.has(di) || decoys.indexOf(di) !== -1) continue;
+        if (threadCountSolutions(c, decoys.concat([di]), linked) === 1) decoys.push(di);
+        if (decoys.length === 2) break;
+      }
+      if (decoys.length === 2)
+        pick = { s: ids[c.s], e: ids[c.e], m: c.m.map(i => ids[i]), d: decoys.map(i => ids[i]) };
+    }
+    if (!pick) throw new Error('thread walk ran dry on day ' + day);
+    used.add(pick.s + ':' + pick.e);
+    picks.push(pick);
+  }
+  return picks;
+}
+
+function puzzleFromPick(bank, pk){
+  const nodes = {};
+  for (const nd of bank.nodes) nodes[nd.id] = nd;
+  const emap = {};
+  for (const ed of bank.edges){
+    (emap[ed.a] = emap[ed.a] || {})[ed.b] = ed;
+    (emap[ed.b] = emap[ed.b] || {})[ed.a] = ed;
+  }
+  const seq = [pk.s].concat(pk.m, [pk.e]);
+  const links = [];
+  for (let i = 0; i + 1 < seq.length; i++) links.push(emap[seq[i]][seq[i + 1]]);
+  return { s: nodes[pk.s], e: nodes[pk.e], m: pk.m.map(i => nodes[i]), d: pk.d.map(i => nodes[i]), links: links };
+}
+
+let PZ = { s: null, e: null, m: [], d: [], links: [] };
+let NODES_BY = {};
+function applyPuzzle(pz){
+  PZ.s = pz.s; PZ.e = pz.e; PZ.m = pz.m; PZ.d = pz.d; PZ.links = pz.links;
+  NODES_BY = {};
+  for (const nd of [pz.s, pz.e].concat(pz.m, pz.d)) NODES_BY[nd.id] = nd;
+}
+
+async function loadPuzzle(){
+  if (typeof THREAD !== 'undefined' && THREAD && THREAD.nodes){
+    const picks = threadWalk(THREAD, dayIndex + 1);
+    applyPuzzle(puzzleFromPick(THREAD, picks[picks.length - 1]));
+  }
+  initDay();
+  if (isSolo()) return;
+  try {
+    const d = await fetchPuzzle('thread', dayIndex);
+    if (d && d.puzzle && d.puzzle.s && d.puzzle.m){
+      applyPuzzle(d.puzzle);
+      initDay();
+    }
+  } catch (e) {}
+}
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.thread.v1';
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
+/* the placeholder keeps S live across the async boot: initDay mutates it in
+   place instead of rebinding, so exported references never go stale */
+let S = loadState() || { day: -1, slots: [], locked: [], tray: [], checks: 0, sel: null,
+  started: false, status: 'playing', stats: { played: 0, solved: 0, streak: 0, max: 0 } };
+function initDay(){
+  if (!PZ.s) return; /* wait for the day's puzzle */
+  if (S.day !== dayIndex){
+    const stats = (S && typeof S.stats === 'object') ? S.stats : { played: 0, solved: 0, streak: 0, max: 0 };
+    if (S.day !== dayIndex && S.status === 'playing' && S.started) stats.streak = 0;
+    const k = PZ.m.length;
+    /* cosmetic-only display shuffle of the offered set */
+    const trng = mulberry32(dayIndex * 9109 + 13);
+    const offered = PZ.m.map(x => x.id).concat(PZ.d.map(x => x.id));
+    for (let i = offered.length - 1; i > 0; i--){
+      const j = Math.floor(trng() * (i + 1));
+      [offered[i], offered[j]] = [offered[j], offered[i]];
+    }
+    S.day = dayIndex; S.slots = new Array(k).fill(null); S.locked = new Array(k).fill(false);
+    S.tray = offered; S.checks = 0; S.sel = null; S.started = false; S.status = 'playing'; S.stats = stats;
+  }
+  saveState();
+}
+
+/* ---------------- dom ---------------- */
+function fixedCard(nd, cap){
+  return '<div class="fixed"><span class="cap">' + cap + '</span><b>' + nd.n + '</b>' +
+    '<span class="cd">' + nd.d + '</span></div>';
+}
+function render(){
+  if (!PZ.s || !S) return;
+  const k = PZ.m.length;
+  let html = fixedCard(PZ.s, 'start');
+  for (let i = 0; i < k; i++){
+    const id = S.slots[i];
+    if (id){
+      const nd = NODES_BY[id];
+      html += '<div class="slot' + (S.locked[i] ? ' locked' : '') + '" data-i="' + i + '">' +
+        '<b>' + nd.n + '</b><span class="cd">' + nd.d + '</span></div>';
+    } else {
+      html += '<div class="slot empty" data-i="' + i + '"><span class="posn">' + (i + 1) + '</span></div>';
+    }
+  }
+  html += fixedCard(PZ.e, 'end');
+  $('lane').innerHTML = html;
+  let th = '';
+  for (const id of S.tray){
+    const nd = NODES_BY[id];
+    th += '<div class="tcard' + (S.sel === id ? ' sel' : '') + '" data-id="' + id + '">' +
+      '<b>' + nd.n + '</b><span class="cd">' + nd.d + '</span></div>';
+  }
+  $('tray').innerHTML = th;
+  $('checknote').textContent = S.status !== 'playing'
+    ? 'the thread, end to end'
+    : (S.sel != null ? 'now tap a slot to place it' : 'checks used: ' + S.checks);
+  $('btnCheck').disabled = S.status !== 'playing';
+  $('btnGiveUp').disabled = S.status !== 'playing';
+}
+function place(i){
+  if (S.status !== 'playing' || S.locked[i]) return;
+  if (S.sel != null){
+    S.started = true;
+    const prev = S.slots[i];
+    const ti = S.tray.indexOf(S.sel);
+    if (ti !== -1) S.tray.splice(ti, 1);
+    S.slots[i] = S.sel;
+    if (prev) S.tray.push(prev);
+    S.sel = null;
+  } else if (S.slots[i]){
+    S.started = true;
+    S.tray.push(S.slots[i]);
+    S.slots[i] = null;
+  }
+  saveState(); render();
+}
+$('lane').addEventListener('click', e => {
+  if (!PZ.s || !S) return;
+  const card = e.target.closest('.slot');
+  if (!card) return;
+  place(+card.dataset.i);
+});
+$('tray').addEventListener('click', e => {
+  if (!PZ.s || !S || S.status !== 'playing') return;
+  const card = e.target.closest('.tcard');
+  if (!card) return;
+  const id = card.dataset.id;
+  S.sel = (S.sel === id) ? null : id;
+  saveState(); render();
+});
+$('btnCheck').addEventListener('click', () => {
+  if (!PZ.s || !S || S.status !== 'playing') return;
+  const k = PZ.m.length;
+  if (S.slots.some(x => !x)){ toastMsg('every slot needs a figure'); return; }
+  S.started = true;
+  S.checks++;
+  let right = 0;
+  for (let i = 0; i < k; i++){
+    if (S.slots[i] === PZ.m[i].id){ S.locked[i] = true; right++; }
+  }
+  saveState(); render();
+  if (right === k) finish('won');
+  else toastMsg(right + ' of ' + k + ' in place');
+});
+$('btnGiveUp').addEventListener('click', () => {
+  if (!PZ.s || !S || S.status !== 'playing') return;
+  finish('gaveup');
+});
+function finish(status){
+  S.status = status;
+  S.sel = null;
+  const st = S.stats;
+  st.played++;
+  if (status === 'won'){
+    st.solved++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+  } else {
+    st.streak = 0;
+    S.slots = PZ.m.map(x => x.id);
+    S.locked = PZ.m.map(() => true);
+  }
+  saveState();
+  showReveal();
+}
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  if (S.status === 'won'){
+    return 'Thread No. ' + num + ' \u00b7 woven in ' + S.checks + (S.checks === 1 ? ' check' : ' checks') + ' \uD83E\uDDF5';
+  }
+  return 'Thread No. ' + num + ' \u00b7 gave up on the thread \uD83E\uDDF5';
+}
+function showReveal(){
+  const st = S.stats;
+  const won = S.status === 'won';
+  $('verdict').textContent = won
+    ? (S.checks === 1 ? 'Pulled it straight through.' : 'The chain holds.')
+    : 'The thread, laid out end to end.';
+  if (!won) $('verdict').classList.add('lost');
+  render();
+  const seq = [PZ.s].concat(PZ.m, [PZ.e]);
+  let ch = '';
+  for (let i = 0; i < seq.length; i++){
+    ch += '<div class="crow"><b>' + seq[i].n + '</b><span class="cd">' + seq[i].d + '</span></div>';
+    if (i + 1 < seq.length){
+      const lk = PZ.links[i];
+      ch += '<div class="clink">' + lk.w + (lk.y ? ' (' + lk.y + ')' : '') + '</div>';
+    }
+  }
+  ch += '<p class="aside">set aside: ' + PZ.d.map(x => x.n).join(' \u00b7 ') + '</p>';
+  $('chainbox').innerHTML = ch;
+  $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
+  $('reveal').classList.add('show');
+  syncBoard(won ? S.checks : 9);
+}
+SHELL.wireShare(shareText);
+const toastMsg = m => SHELL.toast(m, 1600);
+
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'thread';
+const SYNC_BETTER = 'low';
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* ---------------- help / countdown ---------------- */
+SHELL.wireHelp();
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+/* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
+  if (!PZ.s){ SHELL.showUnavailable(); return; }
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  render();
+  if (S.status !== 'playing') showReveal();
+  SHELL.startCountdown('countdown', 500);
+});
+</script>
+</body>
+</html>

@@ -155,6 +155,20 @@ def main():
             store = json.loads((ROOT / "puzzles" / "timeline" / "puzzles.json").read_text(encoding="utf-8"))
             exp = [store["bank"][i] for i in store["picks"][0]]
             check(ev == exp, "GET /puzzle timeline matches the committed picks")
+            s, b = req("GET", "/api/puzzle?game=thread&day=0")
+            pz = b.get("puzzle", {})
+            check(s == 200 and pz.get("s", {}).get("id") and pz.get("e", {}).get("id"),
+                  "GET /puzzle thread day 0 -> start and end nodes")
+            check(2 <= len(pz.get("m", [])) <= 4, "GET /puzzle thread -> 2-4 middles")
+            check(len(pz.get("d", [])) == 2, "GET /puzzle thread -> two decoys")
+            check(len(pz.get("links", [])) == len(pz.get("m", [])) + 1,
+                  "GET /puzzle thread -> one link per hop")
+            tstore = json.loads((ROOT / "puzzles" / "thread" / "puzzles.json").read_text(encoding="utf-8"))
+            tp = tstore["picks"][0]
+            check(pz["s"]["id"] == tp["s"] and pz["e"]["id"] == tp["e"]
+                  and [n["id"] for n in pz["m"]] == tp["m"]
+                  and [n["id"] for n in pz["d"]] == tp["d"],
+                  "GET /puzzle thread matches the committed picks")
             s, b = req("GET", "/api/puzzle?game=timeline&day=-1")
             check(s == 404, "GET /puzzle windowed negative day -> 404")
             s, b = req("GET", "/api/puzzle?game=nosuchgame&day=0")

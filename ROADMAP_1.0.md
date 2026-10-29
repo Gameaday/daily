@@ -48,15 +48,15 @@ Each `scores/<game>/puzzles.json` now carries the real curated bank extracted ex
 - [x] cipher: well-attributed quotes + author (attribution must be solid)
 - [x] timeline: full event bank + distinct-years walk + 1000 precomputed picks (seed only selects)
 - [x] museum: real artifacts with 5 clues (cryptic→obvious), aliases, story
-- [ ] (rings, grid, sprint, trace remain generator/client-side per NOTES — no server bank needed)
+- [x] (rings, grid, sprint, trace remain generator/client-side per NOTES — no server bank needed)
 
 ## Phase 3 — Tests & validation
 - [x] Update `tests/server_test.py` timeline check to read `scores/timeline/puzzles.json` (not deleted monolithic file).
-- [ ] Day-0 assertions pass: bogus lie=5, rounds y=1215 (Magna Carta), cipher author=FDR, museum=Rosetta Stone, timeline 5 distinct-year events.
-- [ ] `node checks/games.js` green.
-- [ ] `node tests/run.js` green.
-- [ ] `python tests/server_test.py` green.
-- [ ] `npm test` / `make test` green end-to-end.
+- [x] Day-0 assertions pass: bogus lie=5, rounds y=1215 (Magna Carta), cipher author=FDR, museum=Rosetta Stone, timeline 5 distinct-year events.
+- [x] `node checks/games.js` green.
+- [x] `node tests/run.js` green.
+- [x] `python tests/server_test.py` green.
+- [x] `npm test` / `make test` green end-to-end. (No local interpreters in this workspace — validated by the CI validate run on 0e5d8ff: store verifier, games.js, tests/run.js, server_test.py and bundle builds all green.)
 
 ## Phase 4 — Cleanup & docs
 - [ ] Remove remaining dead scaffolding ("Fallback to local generation" comments, `if (false)` blocks).

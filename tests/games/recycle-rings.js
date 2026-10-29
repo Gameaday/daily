@@ -5,7 +5,7 @@
 const { T0, T1, T10 } = require('./_lib');
 
 async function run(h){
-    const EXP = ['S', 'PUZZLE', 'spin', 'swap', 'topLetter', 'shareText'];
+    const EXP = ['S', 'PUZZLE', 'spin', 'swap', 'shiftCol', 'topLetter', 'shareText'];
     const store = {};
     let r = h.boot('recycle-rings', EXP, { now: T0, store });
     h.ok(!!r.x.PUZZLE && /^[A-Z]{4}$/.test(r.x.PUZZLE.word), 'rings: puzzle generated, 4-letter target');
@@ -14,7 +14,11 @@ async function run(h){
       'rings: par in [5,13] (got ' + r.x.PUZZLE.par + ')');
     h.ok(r.x.PUZZLE.order.some((q, p) => q !== p), 'rings: ring order starts scrambled');
     /* replay the solver's own par line — it must win in exactly par moves */
-    for (const mv of r.x.PUZZLE.sol) mv.t === 'r' ? r.x.spin(mv.p, mv.d) : r.x.swap(mv.p);
+    for (const mv of r.x.PUZZLE.sol){
+      if (mv.t === 'r') r.x.spin(mv.p, mv.d);
+      else if (mv.t === 'c') r.x.shiftCol(mv.d);
+      else r.x.swap(mv.p);
+    }
     h.ok(r.x.S.won, 'rings: won by replaying the par line');
     h.eq(r.x.S.moves, r.x.PUZZLE.par, 'rings: replay costs exactly par moves');
     await h.flush();
@@ -28,6 +32,12 @@ async function run(h){
     r = h.boot('recycle-rings', EXP, { now: T0, store: s2 });
     r.x.spin(0, 1); r.x.spin(0, -1);
     h.eq(r.x.S.moves, 2, 'rings: reversing still costs moves');
+    const ord = r.x.S.order.slice();
+    r.x.shiftCol(1);
+    h.eq(r.x.S.moves, 3, 'rings: a column shift costs a move');
+    h.ok(r.x.S.order[0] === ord[3] && r.x.S.order[1] === ord[0], 'rings: the column rotated one seat');
+    r.x.shiftCol(-1);
+    h.ok(r.x.S.order.every((q, p) => q === ord[p]), 'rings: shifting back restores the order');
     h.ok(!r.x.S.won, 'rings: aimless spinning does not win');
 }
 

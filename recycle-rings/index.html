@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Four letter wheels, one target word, one exact par. Spin and swap to spell it in as few moves as you can — every move counts, so be conservative." />
+<meta name="description" content="Four letter wheels, one target word in plain sight, one exact par. Spin, swap, or shift the column to spell it in as few moves as you can." />
 <title>Recycle: Rings · the daily wheel game</title>
 <link rel="stylesheet" href="../shell/common.css"/>
 <style>header{display:flex; align-items:flex-end; justify-content:space-between;}
@@ -18,6 +18,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     font-family:Georgia,serif; font-size:28px; font-weight:700;
   }
 .slot.ok{background:var(--green-soft); border-color:var(--green); color:var(--green); animation:pop .3s ease;}
+.slot.tgt{border-color:var(--accent); color:var(--accent);}
 @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.12);}100%{transform:scale(1);}}
 .wheelbox{display:flex; justify-content:center;}
 .wheel{width:100%; max-width:420px; height:auto;}
@@ -64,10 +65,14 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="lead">Four wheels, one target word. <b>Spin</b> each wheel and <b>swap neighbouring wheels</b> to spell it at the top. There is no clock — every move counts against an <b>exact par</b>, so be conservative.</p>
+  <p class="lead">Four wheels, one target word, shown above the ray. <b>Spin</b> each wheel, <b>shift the column</b> a seat, or <b>swap neighbouring wheels</b> until the ray spells it. There is no clock: every move counts against an <b>exact par</b>, so be conservative.</p>
 
   <div class="targetrow">
     <span class="lbl">Spell</span>
+    <div class="slots" id="target"></div>
+  </div>
+  <div class="targetrow">
+    <span class="lbl">At the ray</span>
     <div class="slots" id="slots"></div>
   </div>
 
@@ -99,8 +104,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 <div class="overlay" id="helpOverlay">
   <div class="modal">
     <h2>How to play</h2>
-    <p>Four wheels of letters. The marked ray at the top reads one letter from each wheel — together they must spell today's <b>target word</b>.</p>
-    <p><b>Spin</b> any wheel with its ◀ ▶ buttons to rotate it. <b>Swap</b> neighbouring wheels with the ⇄ buttons to change which letter sits where.</p>
+    <p>Four wheels of letters. The marked ray at the top reads one letter from each wheel, and together they must spell today's <b>target word</b>. The word sits above the wheel, with your current letters at the ray beneath it.</p>
+    <p><b>Spin</b> any wheel with its ◀ ▶ buttons to rotate it. <b>Shift the column</b> with the ◀ ▶ buttons at the end to slide every wheel one seat over. <b>Swap</b> neighbouring wheels with the ⇄ buttons to change which letter sits where.</p>
     <p><b>Par is exact:</b> before you play, the solver has already searched every possible wheel state for the shortest line to the word. Beat par and you found a line the solver missed (you didn't — it's exact).</p>
     <p>There is no clock. Every spin and every swap costs one move, and reversing a move costs another — so plan before you spin.</p>
     <p>Same wheels for everyone, so compare move counts at standup.</p>
@@ -182,6 +187,16 @@ function solve(order, rings, word){
         if (win(o, st.f)){ return { par: depth, sol: path(prev, k) }; }
         next.push({ o, f: st.f });
       }
+      /* shift the whole column one seat over */
+      for (const d of [-1, 1]){
+        const o = st.o.slice();
+        if (d < 0) o.push(o.shift()); else o.unshift(o.pop());
+        const k = key(o, st.f);
+        if (prev.has(k)) continue;
+        prev.set(k, { pk, mv: { t: 'c', d } });
+        if (win(o, st.f)){ return { par: depth, sol: path(prev, k) }; }
+        next.push({ o, f: st.f });
+      }
     }
     frontier = next;
     if (prev.size > 160000) break; /* unreachable in practice */
@@ -256,6 +271,9 @@ function topIndex(r){ const n = SIZES[r], o = S.off[r]; return ((-o) % n + n) % 
 function topLetter(p){ const r = S.order[p]; return PUZZLE.rings[r].letters[topIndex(r)]; }
 function aligned(p){ return topLetter(p) === PUZZLE.word[p]; }
 
+function renderTarget(){
+  $('target').innerHTML = PUZZLE.word.split('').map(ch => `<div class="slot tgt">${ch}</div>`).join('');
+}
 function renderSlots(){
   $('slots').innerHTML = PUZZLE.word.split('').map((ch, p) => {
     const ok = aligned(p);
@@ -294,10 +312,13 @@ function renderCtl(){
       `<button data-p="${p}" data-d="1" aria-label="spin ${NAMES[p]} right">\u25B6</button></div>`;
     if (p < 3) html += `<button class="swapbtn" data-s="${p}" aria-label="swap ${NAMES[p]} and ${NAMES[p+1]}">\u21C4</button>`;
   }
+  html += `<div class="ringbtn"><span class="rname">column</span>` +
+    `<button data-shift="-1" aria-label="shift the column left">\u25C0</button>` +
+    `<button data-shift="1" aria-label="shift the column right">\u25B6</button></div>`;
   $('ringctl').innerHTML = html;
 }
 
-function renderAll(){ renderSlots(); renderWheel(); renderMeta(); }
+function renderAll(){ renderTarget(); renderSlots(); renderWheel(); renderMeta(); }
 
 /* ---------------- play ---------------- */
 function checkWin(){
@@ -331,11 +352,20 @@ function swap(p){
   saveState();
   renderAll();
 }
+function shiftCol(d){
+  if (S.won || !PUZZLE) return;
+  if (d < 0) S.order.push(S.order.shift()); else S.order.unshift(S.order.pop());
+  S.moves++;
+  checkWin();
+  saveState();
+  renderAll();
+}
 
 $('ringctl').addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
-  if (b.dataset.s !== undefined) swap(+b.dataset.s);
+  if (b.dataset.shift !== undefined) shiftCol(+b.dataset.shift);
+  else if (b.dataset.s !== undefined) swap(+b.dataset.s);
   else spin(+b.dataset.p, +b.dataset.d);
 });
 

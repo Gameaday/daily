@@ -955,5 +955,176 @@
       "It has been the prize of the Istanbul Archaeology Museums for over a century."
     ],
     "w": "A stone coffin that puts Alexander himself in the picture."
+  },
+  {
+    "a": "The Shroud of Turin",
+    "al": [
+      "the shroud of turin",
+      "shroud of turin",
+      "the turin shroud",
+      "turin shroud",
+      "the holy shroud"
+    ],
+    "c": [
+      "A length of linen about four and a half meters long, bearing the faint image of a bearded man.",
+      "It first surfaced in a French village church in the 1350s, already an object of pilgrimage.",
+      "The image shows a body with wounds consistent with a crucifixion, front and back.",
+      "Radiocarbon tests in 1988 dated the cloth itself to between 1260 and 1390, though the debate never closed.",
+      "It has rested in the Cathedral of Turin since 1578, and the church now calls it an icon rather than a relic."
+    ],
+    "w": "Whether devotion or medieval craft, it is the most examined textile on Earth, and every generation of science finds something new to argue about."
+  },
+  {
+    "a": "The Little Mermaid",
+    "al": [
+      "the little mermaid",
+      "little mermaid",
+      "the mermaid statue",
+      "the little mermaid statue"
+    ],
+    "c": [
+      "A bronze figure just over a meter tall, perched on a rock at the mouth of Copenhagen’s harbor.",
+      "Edvard Eriksen sculpted her in 1913, commissioned by the son of the brewer behind Carlsberg.",
+      "She was modeled on a ballerina for the face and the sculptor’s wife for the body.",
+      "Vandals have beheaded her three times and once knocked her off the rock with explosives.",
+      "She sits at Langelinie, unchanged in design, and the city keeps patching her back."
+    ],
+    "w": "A statue paid for by beer money, drawn from a Hans Christian Andersen fairy tale, and defended by a city that cannot stop repairing her."
+  },
+  {
+    "a": "The Lascaux Cave",
+    "al": [
+      "lascaux",
+      "lascaux cave",
+      "the lascaux cave",
+      "the lascaux caves",
+      "the lascaux paintings"
+    ],
+    "c": [
+      "In September 1940, four teenagers and a dog named Robot fell through a hole into a painted world.",
+      "The great hall of the bulls runs past aurochs, horses, and deer painted about seventeen thousand years ago.",
+      "Over six hundred paintings and fifteen hundred engravings cover its limestone walls.",
+      "Breath and footsteps began to destroy it, and the cave was closed to visitors in 1963.",
+      "Replicas now take the crowds, while the original stays dark and monitored."
+    ],
+    "w": "The best gallery of the Ice Age was found by accident and almost loved to death within two decades."
+  },
+  {
+    "a": "The Parthenon Marbles",
+    "al": [
+      "the parthenon marbles",
+      "parthenon marbles",
+      "the elgin marbles",
+      "elgin marbles"
+    ],
+    "c": [
+      "Between 1801 and 1812, agents of Lord Elgin stripped marbles from the Parthenon and shipped them to London.",
+      "The haul included about half of the surviving sculptures of the temple built under Pericles.",
+      "They went on show in the British Museum in 1817, in a purchase backed by Parliament.",
+      "Greece has formally demanded their return since the early 1980s, and the argument has never cooled.",
+      "A harsh cleaning in the 1930s scraped away surface detail, which both sides now regret."
+    ],
+    "w": "The world’s most famous ownership dispute: one temple’s sculptures split between a museum in Bloomsbury and an Acropolis that waits for them."
+  },
+  {
+    "a": "The Iron Crown of Lombardy",
+    "al": [
+      "the iron crown of lombardy",
+      "iron crown of lombardy",
+      "the iron crown",
+      "the crown of lombardy"
+    ],
+    "c": [
+      "A golden circlet set with jewels, its band traditionally said to be hammered from a nail of the True Cross.",
+      "It crowned kings of Italy from the early Middle Ages, though its sacred iron has never been verified.",
+      "Thirty-three thin plates of gold and enamel hold gemstones in a Byzantine style.",
+      "Napoleon took it in Milan in 1805 and crowned himself with it, then declared himself King of Italy.",
+      "It rests in the Cathedral of Monza, brought out only for rare exhibitions."
+    ],
+    "w": "A crown of legend that crowned real emperors, whose holy iron may be nothing more than a story that stuck."
+  },
+  {
+    "a": "The Quipu",
+    "al": [
+      "quipu",
+      "khipu",
+      "the quipu",
+      "an inca quipu",
+      "inca quipu"
+    ],
+    "c": [
+      "Knotted cords hanging from a top string, dyed in colors and spun with care.",
+      "The Inca used them to run an empire without writing, tracking taxes, census counts, and storehouses.",
+      "The knots record numbers in a base-ten positional system that researchers cracked in the 1920s.",
+      "Spanish officials burned them by the basketful, so only a few hundred survive.",
+      "Post-conquest scribes still read them for a generation, and then the skill was lost."
+    ],
+    "w": "The abacus of an empire, and perhaps a writing system that holds narratives no one can read anymore."
+  },
+  {
+    "a": "The Cullinan Diamond",
+    "al": [
+      "the cullinan diamond",
+      "cullinan diamond",
+      "the cullinan",
+      "the great star of africa",
+      "cullinan i"
+    ],
+    "c": [
+      "At 3,106 carats, it remains the largest gem-quality rough diamond ever found.",
+      "Fred Wells saw it glitter in the wall of a South African mine in January 1905 and first took it for crystal.",
+      "It was named for the mine’s owner and presented to King Edward VII on his birthday.",
+      "It cut into nine major stones and ninety-six brilliants, with the two biggest joining the Crown Jewels.",
+      "Cullinan I, the Great Star of Africa, rides in the Sovereign’s Sceptre at every coronation."
+    ],
+    "w": "A stone so large it was cut in Amsterdam in secret and sent to London by ordinary registered post while a decoy crossed by sea."
+  },
+  {
+    "a": "The Hoxne Hoard",
+    "al": [
+      "the hoxne hoard",
+      "hoxne hoard",
+      "the hoxne treasure"
+    ],
+    "c": [
+      "In 1992, a Suffolk farmer asked a friend with a metal detector to find his lost hammer.",
+      "Instead, the machine found a Roman hoard of nearly fifteen thousand coins.",
+      "Silver tableware, gold jewelry, and pepper shakers came up with them, buried after 407 CE.",
+      "The finders split a reward that paid off a mortgage and more.",
+      "The hoard, the hammer, and the detector are all now in the British Museum."
+    ],
+    "w": "The largest cache of late Roman gold and silver found in Britain, dug up while looking for a hand tool."
+  },
+  {
+    "a": "The Birth of Venus",
+    "al": [
+      "the birth of venus",
+      "birth of venus",
+      "botticelli’s birth of venus",
+      "the botticelli venus"
+    ],
+    "c": [
+      "Sandro Botticelli painted it around 1485 for the Medici circle in Florence.",
+      "Venus stands on a shell, blown ashore by winds and met by a maid with a cloak.",
+      "Its naked goddess was startling for its day, painted for a private villa rather than a church.",
+      "Tempera on canvas, a fragile choice that has kept the colors pale and luminous.",
+      "It has hung in the Uffizi since the 1800s, the emblem of Renaissance beauty itself."
+    ],
+    "w": "The best-loved face of the Florentine Renaissance, painted for one family’s room and now claimed by everyone."
+  },
+  {
+    "a": "The Diamond Sutra",
+    "al": [
+      "the diamond sutra",
+      "diamond sutra"
+    ],
+    "c": [
+      "A seventeen-foot paper scroll, printed in China in 868 and dated in its own colophon.",
+      "It is the world’s oldest surviving dated printed book, six centuries older than Gutenberg.",
+      "Aurel Stein carried it away from the sealed library cave at Dunhuang in 1907.",
+      "The cave held tens of thousands of manuscripts, stacked and walled up around the year 1000.",
+      "Its frontispiece shows the Buddha teaching, and the scroll is now held in the British Library."
+    ],
+    "w": "Proof that printing was ancient before Europe tried it: a Buddhist scroll that still opens cleanly after eleven centuries."
   }
 ]

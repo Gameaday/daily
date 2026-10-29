@@ -25,8 +25,9 @@ const GATED = {
 const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'dist', '__pycache__',
   'deploy', 'tests', 'tools', 'checks', 'scores']);
 const SKIP_FILES = new Set(['.gitignore', '.dockerignore', '.env', '.env.example',
-  'Makefile', 'NOTES.md', 'README.md', 'package.json', 'package-lock.json',
-  'docker-compose.yml', 'Dockerfile.web', 'Dockerfile.scores', 'Caddyfile']);
+  'Makefile', 'NOTES.md', 'README.md', 'DEVELOPER.md', 'ROADMAP_1.0.md',
+  'package.json', 'package-lock.json', 'docker-compose.yml',
+  'Dockerfile.web', 'Dockerfile.scores', 'Caddyfile']);
 
 function copyDir(src, dest){
   fs.mkdirSync(dest, { recursive: true });

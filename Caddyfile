@@ -12,15 +12,25 @@
         reverse_proxy {$SCORES_UPSTREAM}
     }
 
-    handle {
+    # cache policy: game HTML always revalidates (a rebuild is what ships
+    # new content, and the URLs are unversioned), shared assets get a
+    # modest public cache. The API sets its own Cache-Control per route.
+    @assets path *.css *.js *.svg *.png *.ico *.woff2
+    handle @assets {
+        header Cache-Control "public, max-age=3600"
+        header X-Content-Type-Options nosniff
+        header Referrer-Policy no-referrer
+        header X-Frame-Options SAMEORIGIN
         root * /srv/daily
         file_server
     }
 
-    header {
-        # static files only; nothing to cache aggressively except assets
-        X-Content-Type-Options nosniff
-        Referrer-Policy no-referrer
-        X-Frame-Options SAMEORIGIN
+    handle {
+        header Cache-Control "no-cache"
+        header X-Content-Type-Options nosniff
+        header Referrer-Policy no-referrer
+        header X-Frame-Options SAMEORIGIN
+        root * /srv/daily
+        file_server
     }
 }

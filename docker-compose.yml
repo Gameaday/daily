@@ -27,7 +27,8 @@ services:
     environment:
       SCORES_UPSTREAM: ${SCORES_UPSTREAM:-scores:8787}
     depends_on:
-      - scores
+      scores:
+        condition: service_healthy
 
   scores:
     build:
@@ -46,6 +47,14 @@ services:
       - scores-archive:/app/archive
     expose:
       - "8787"
+    healthcheck:
+      # the API answers /health; the web container waits for this before
+      # proxying to it (a slow scores boot no longer 502s the first hits)
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8787/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 
 volumes:
   scores-archive:

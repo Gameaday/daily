@@ -74,13 +74,17 @@ function pickForDay(bank, day){
 let fails = 0;
 const fail = msg => { console.error('FAIL ' + msg); fails++; };
 
-/* games.json and the manifest must agree on which games exist */
+/* games.json and the manifest must agree on which scoring ledgers
+   exist. Directory names and ledger keys differ on purpose (recycle-grid
+   plays two ledgers, grid and grid-hard), so the mapping is explicit. */
 {
   const manifest = JSON.parse(fs.readFileSync('scores/manifest.json', 'utf8'));
   const a = Object.keys(manifest.games).sort();
-  const b = [...LIST.order].sort();
+  const b = Object.values(LIST.ledger).flat().sort();
   if (JSON.stringify(a) !== JSON.stringify(b))
-    fail('games.json order does not match the manifest games ledger');
+    fail('games.json ledger does not match the manifest games ledger');
+  for (const g of LIST.order)
+    if (!LIST.ledger[g]) fail('games.json: no manifest ledger for ' + g);
 }
 
 /* direct games: committed store must equal the inline bank */

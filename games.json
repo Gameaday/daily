@@ -14,6 +14,21 @@
     "timeline": "EVENTS"
   },
   "generator": ["sprint", "trace", "recycle-grid", "recycle-rings"],
+  "ledger": {
+    "bogus": ["bogus"],
+    "well-actually": ["well-actually"],
+    "recycle-rings": ["rings"],
+    "recycle-grid": ["grid", "grid-hard"],
+    "fermi": ["fermi"],
+    "sift": ["sift"],
+    "rounds": ["rounds"],
+    "trace": ["trace"],
+    "lightbox": ["lightbox"],
+    "sprint": ["sprint"],
+    "cipher": ["cipher"],
+    "timeline": ["timeline"],
+    "museum": ["museum"]
+  },
   "wordBank": ["recycle-grid", "recycle-rings", "trace"],
   "minBank": 15,
   "minTimelineBank": 40,

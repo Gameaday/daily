@@ -72,7 +72,10 @@ archive. The archive dir defaults to `scores/archive` and can be set with
 unit wants one ReadWritePaths entry).
 
 Endpoints (with or without the `/api` prefix): `POST /submit`,
-`GET /dist?game=&day=`, `GET /puzzle?game=&day=`, `GET /health`.
+`GET /dist?game=&day=`, `GET /puzzle?game=&day=`, `GET /manifest`,
+`GET /health`. Cache policy: live endpoints are no-store; the day's
+puzzle is public and cacheable until ET midnight; the manifest is
+cacheable for an hour.
 Metric directions ("better": high/low), histogram edges, the epoch, and
 the timezone are owned by `scores/manifest.json`; server.py loads it at
 boot, the client pages carry the same constants inline for offline play,

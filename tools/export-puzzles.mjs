@@ -26,6 +26,11 @@ const DIRECT = {
 };
 const EMPTY = ['sprint', 'trace', 'recycle-grid', 'recycle-rings'];
 const TIMELINE_DAYS = 1000;
+/* minimum bank sizes: CI fails if a bank ever drops below this floor.
+   Growing the banks is 1.0.x work; this lint only keeps the floor from
+   quietly eroding under an edit. */
+const MIN_BANK = 15;
+const MIN_TIMELINE_BANK = 40;
 
 function mulberry32(a){
   return function(){
@@ -77,6 +82,8 @@ const fail = msg => { console.error('FAIL ' + msg); fails++; };
 /* direct games: committed store must equal the inline bank */
 for (const [game, name] of Object.entries(DIRECT)){
   const bank = readBank(game, name);
+  if (bank.length < MIN_BANK)
+    fail(game + ': bank below the minimum (' + bank.length + ' < ' + MIN_BANK + ' entries)');
   const store = readStore(game);
   if (JSON.stringify(store) === JSON.stringify(bank)){
     console.log('ok  ' + game + ': store matches the client bank (' + bank.length + ' entries)');
@@ -104,6 +111,8 @@ for (const game of EMPTY){
 /* timeline: windowed store - the whole bank plus precomputed picks */
 {
   const bank = readBank('timeline', 'EVENTS');
+  if (bank.length < MIN_TIMELINE_BANK)
+    fail('timeline: bank below the minimum (' + bank.length + ' < ' + MIN_TIMELINE_BANK + ' events)');
   const store = readStore('timeline');
   const bankOk = JSON.stringify(store.bank) === JSON.stringify(bank);
   const picksOk = Array.isArray(store.picks) && store.picks.length > 0 &&

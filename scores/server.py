@@ -26,7 +26,12 @@ Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
     GET  /dist?game=&day=                           -> snapshot (today live, past days from the archive)
     GET  /puzzle?game=&day=                         -> the day's puzzle
+    GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
     GET  /health                                    -> {"ok": true}
+
+Cache policy (deliberate): live numbers (/submit, /dist, /health) are
+no-store; the day's puzzle is immutable so it is public and cacheable
+until the next ET midnight; the manifest is cacheable for an hour.
 """
 import argparse
 import hashlib
@@ -97,6 +102,20 @@ def current_day_index():
     today = datetime.now(tz).date() if tz else date.today()
     epoch = date.fromisoformat(EPOCH_KEY)
     return (today - epoch).days
+
+
+def seconds_to_midnight():
+    """Seconds until the next ET midnight - the puzzle cache horizon: the
+    day's puzzle is immutable, so it can be cached right up to rollover."""
+    try:
+        tz = ZoneInfo(TZ_NAME) if ZoneInfo else None
+    except Exception:
+        tz = None
+    now = datetime.now(tz)
+    nxt = datetime.combine(now.date() + timedelta(days=1), datetime.min.time())
+    if tz:
+        nxt = nxt.replace(tzinfo=tz)
+    return int(max(60, min((nxt - now).total_seconds(), 86400)))
 
 
 def day_date(day):
@@ -253,11 +272,12 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
-    def _json(self, payload, status=200):
+    def _json(self, payload, status=200, cache="no-store"):
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self._cors()
         self.send_header("Content-Type", "application/json")
+        self.send_header("Cache-Control", cache)
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
@@ -281,6 +301,9 @@ class Handler(BaseHTTPRequestHandler):
             with LOCK:
                 payload = {"ok": True, "boards": len(STATS)}
             self._json(payload)
+        elif path == "/manifest":
+            # the scoring truth (epoch, tz, per-game ledger) as plain JSON
+            self._json(_MANIFEST, cache="public, max-age=3600")
         elif path in ("/dist", "/distribution"):
             qs = parse_qs(urlparse(self.path).query)
             game = (qs.get("game") or [""])[0]
@@ -331,13 +354,15 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 bank = entry["bank"]
                 events = [bank[i] for i in picks[day]]
-                self._json({"game": game, "day": day, "puzzle": {"events": events}, "today": today})
+                self._json({"game": game, "day": day, "puzzle": {"events": events}, "today": today},
+                           cache="public, max-age=%d" % seconds_to_midnight())
             else:
                 if not entry:
                     self._json({"error": "no puzzles"}, 404)
                     return
                 idx = day % len(entry)
-                self._json({"game": game, "day": day, "puzzle": entry[idx], "today": today})
+                self._json({"game": game, "day": day, "puzzle": entry[idx], "today": today},
+                           cache="public, max-age=%d" % seconds_to_midnight())
         else:
             self._json({"error": "not found"}, 404)
 

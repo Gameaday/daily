@@ -104,6 +104,31 @@ def main():
         s, _b = req("OPTIONS", "/api/submit")
         check(s == 204, "OPTIONS preflight -> 204")
 
+        # --- manifest endpoint + cache policy ---
+        s, b = req("GET", "/api/manifest")
+        check(s == 200 and b.get("epoch") == MANIFEST["epoch"],
+              "GET /api/manifest -> the scoring manifest (epoch matches)")
+        check(b.get("games", {}).get("fermi", {}).get("better") == "high",
+              "GET /api/manifest -> per-game ledger present")
+
+        def hdrs(method, path):
+            r = urllib.request.Request("http://127.0.0.1:%d%s" % (PORT, path), method=method)
+            try:
+                with urllib.request.urlopen(r, timeout=5) as resp:
+                    return dict(resp.headers)
+            except urllib.error.HTTPError as e:
+                return dict(e.headers)
+
+        h = hdrs("GET", "/health")
+        check("no-store" in (h.get("Cache-Control") or ""),
+              "live endpoints are Cache-Control: no-store")
+        h = hdrs("GET", "/api/puzzle?game=bogus&day=0")
+        check((h.get("Cache-Control") or "").startswith("public, max-age="),
+              "puzzle responses are publicly cacheable")
+        h = hdrs("GET", "/api/manifest")
+        check((h.get("Cache-Control") or "").startswith("public"),
+              "manifest responses are cacheable")
+
         # --- puzzle delivery (server-gated games; needs the committed
         #     per-game stores under scores/<game>/puzzles.json) ---
         if not (ROOT / "scores" / "bogus" / "puzzles.json").exists():

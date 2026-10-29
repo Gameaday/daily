@@ -93,7 +93,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -112,29 +112,15 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 <div class="toast" id="toast"></div>
 
 <script src="../shell/common.js"></script>
+
 <script>
 'use strict';
 
 /* ---------------- picture bank (7x7, '#' = filled) ---------------- */
-const DESIGNS = [
-  { n:'The Pyramid', g:['...#...','..###..','.#####.','#######','#######','#######','#######'] },
-  { n:'The Hourglass', g:['#######','.#####.','..###..','...#...','..###..','.#####.','#######'] },
-  { n:'The Sword', g:['...#...','...#...','...#...','.#####.','...#...','...#...','..###..'] },
-  { n:'The Longship', g:['...#...','..###..','..###..','.#####.','...#...','.#####.','#######'] },
-  { n:'The Crown', g:['.#.#.#.','.#.#.#.','.#####.','#######','#######','#######','#######'] },
-  { n:'The Skull', g:['.#####.','#######','##.#.##','#######','###.###','#.#.#.#','.#####.'] },
-  { n:'The Shield', g:['#######','#######','.#####.','.#####.','..###..','..###..','...#...'] },
-  { n:'The Torch', g:['...#...','..###..','..###..','.#####.','...#...','...#...','..###..'] },
-  { n:'The Bell', g:['...#...','..###..','.#####.','.#####.','.#####.','#######','...#...'] },
-  { n:'The Anchor', g:['...#...','.#####.','...#...','...#...','.#...#.','.#...#.','..###..'] },
-  { n:'The Ankh', g:['..###..','.#...#.','.#...#.','.#####.','...#...','...#...','...#...'] },
-  { n:'The Castle', g:['#.#.#.#','#######','#.....#','#.....#','#.....#','#.....#','#######'] }
-];
 
-/* ---------------- deterministic daily pick ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
 let DESIGN = null;
 let SOL = null;
 let ROWCLUES = null;
@@ -146,20 +132,14 @@ function applyDesign(d){
   COLCLUES = [0,1,2,3,4,5,6].map(c => runs(SOL.map(r => r[c])));
 }
 async function loadPuzzle(){
-  const L = typeof DESIGNS !== 'undefined' ? DESIGNS.length : 1;
-  const idx = ((dayIndex % L) + L) % L;
-  if (typeof DESIGNS !== 'undefined') applyDesign(DESIGNS[idx]);
-  if (isSolo()) return;
-  try { const d = await fetchPuzzle('lightbox', dayIndex); if (d && d.puzzle) applyDesign(d.puzzle); } catch (e) {}
-}
-
-function runs(line){
+  const d = await fetchPuzzle('lightbox', dayIndex);
+  if (d && d.puzzle) applyDesign(d.puzzle);
+  function runs(line){
   const out = []; let c = 0;
   for (const v of line){ if (v) c++; else if (c){ out.push(c); c = 0; } }
   if (c) out.push(c);
   return out.length ? out : [0];
 }
-
 
 /* ---------------- state ---------------- */
 const KEY = 'warmup.lightbox.v1';
@@ -298,6 +278,15 @@ function showReveal(){
   $('btnDevelop').disabled = true;
   $('btnClear').disabled = true;
   syncBoard(S.status === 'won' ? S.mistakes : 4);
+  /* Server-side result submission */
+  gify({ game: 'lightbox', day: dayIndex, value: S.mistakes, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/jsonf body: JSON.stringify({game: 'lightbox', day: dayIndex, value: S.mistakes, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
 }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
@@ -319,12 +308,14 @@ function onTick(){  if (S.status === 'playing'){
 }
 
 /* ---------------- boot ---------------- */
-loadPuzzle().then(() => {
+SHELL.fetchPuzzle('lightbox', SHELL.dayIndex).then(puzzle => {
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();
 if (S.status !== 'playing') showReveal();
 SHELL.startCountdown('countdown', 500, onTick);
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
 });
 </script>
 </body>

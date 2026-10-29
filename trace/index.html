@@ -104,7 +104,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -247,6 +247,16 @@ function showReveal(){
     $('verdict').textContent = 'Path revealed — tomorrow is another ladder.';
     $('verdict').style.color = 'var(--accent)';
   }
+/* Server-side result submission */
+  gify({ game: 'trace', day: dayIndex, value: S.chain.length - 1, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'trace', day: dayIndex, value: S.chain.length - 1, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
+function showReveal(){
   $('why').innerHTML = `A shortest path: <span class="path">${LADDER.path.join(' \u2192 ')}</span>`;
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best != null ? st.best + ' rungs' : '\u2014'}`;
   $('reveal').classList.add('show');
@@ -326,14 +336,53 @@ function onTick(){  if (S.status === 'playing'){
   }
 }
 
+/* Server-side result submission */
+  gify({ game: 'trace', day: dayIndex, value: S.chain.length - 1, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'trace', day: dayIndex, value: S.chain.length - 1, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
 /* ---------------- boot ---------------- */
-$('pno').textContent = num;
-$('pdate').textContent = SHELL.pdateText();
-$('startw').textContent = LADDER.start;
-$('targetw').textContent = LADDER.target;
-$('par').textContent = LADDER.par;
-renderChain();
-if (S.status !== 'playing') showReveal();
+// Server-first: always fetch puzzle from server
+SHELL.fetchPuzzle('trace', SHELL.dayIndex).then(puzzle => {
+  // Initialize game state with fetched puzzle
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  $('startw').textContent = LADDER.start;
+    $('targetw').textContent = LADDER.target;
+    $('par').textContent = LADDER.par;
+    renderChain();
+    if (S.status !== 'playing') showReveal();
+  }).catch(err => {
+    console.error('Failed to fetch puzzle:', err);
+    // Fallback to local generation on error
+    $('pno').textContent = num;
+    $('pdate').textContent = SHELL.pdateText();
+    $('startw').textContent = LADDER.start;
+    $('targetw').textContent = LADDER.target;
+    $('par').textContent = LADDER.par;
+    renderChain();
+    if (S.status !== 'playing') showReveal();
+  });
+}
+SHELL.fetchPuzzle('trace', SHELL.dayIndex).then(puzzle => {
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  $('startw').textContent = LADDER.start;
+  $('targetw').textContent = LADDER.target;
+  $('par').textContent = LADDER.par;
+  renderChain();
+  if (S.status !== 'playing') showReveal();
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
+});
+SHELL.startCountdown('countdown', 500, onTick);
+</script>
+</body>
+</html>
 SHELL.startCountdown('countdown', 500, onTick);
 </script>
 </body>

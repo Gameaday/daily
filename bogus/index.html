@@ -103,7 +103,7 @@ h1{
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -140,7 +140,7 @@ h1{
 /* ---------------- puzzle bank ----------------
    Each item: t = tag, s = segments (clickable phrases), l = index of the bogus one, w = why.
    Grow this array to grow the game — one well-chosen lie per passage. */
-const PUZZLES = [
+ PUZZLES = [
  {t:'Apollo 11 · 1969', l:5, s:[
   'On July 20, 1969, Apollo 11 landed on the Moon.',
   'Neil Armstrong and Buzz Aldrin spent about two and a half hours walking on the lunar surface.',
@@ -403,16 +403,175 @@ const PUZZLES = [
 /* ---------------- daily selection (ET-rollover, deterministic) ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
 let puzzle = null;
 async function loadPuzzle(){
   const idx = ((dayIndex % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) + (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1);
   if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
-  if (isSolo()) return;
+  if () return;
   try {
     const d = await fetchPuzzle('bogus', dayIndex);
     if (d && d.puzzle) puzzle = d.puzzle;
   } catch (e) {}
+}
+
+/* ---------------- state (browser-only persistence) ---------------- */
+const KEY = 'warmup.bogus.v2';
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
+let S = loadState();
+if (!S || typeof S.stats !== 'object') {
+  S = { day: dayIndex, picked: [], status: 'playing', stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0,0]} };
+} else if (S.day !== dayIndex) {
+  if (S.status !== 'won') S.stats.streak = 0; // missed (or lost) the previous day
+  S.day = dayIndex; S.picked = []; S.status = 'playing';
+}
+
+/* ---------------- dom ---------------- */
+const passageEl = $('passage'), picksEl = $('picks');
+
+function renderPassage(){
+  passageEl.innerHTML = puzzle.s.map((t,i)=>`<span class="seg" data-i="${i}">${t}</span>`).join(' ');
+}
+function applyMarks(animateWin){
+  S.picked.forEach(i => {
+    if (i === puzzle.l) return;
+    const el = passageEl.querySelector(`[data-i="${i}"]`);
+    if (el) el.classList.add('wrong');
+  });
+  if (S.status !== 'playing'){
+    passageEl.classList.add('done');
+    const el = passageEl.querySelector(`[data-i="${puzzle.l}"]`);
+    if (el){ el.classList.add('lie'); if (animateWin && S.status==='won') el.classList.add('win'); }
+  }
+}
+function renderPicks(){
+  let html = 'picks&nbsp;&nbsp;';
+  for (let i=0;i<3;i++) html += `<span class="pip${i < S.picked.length ? ' used' : ''}"></span>`;
+  picksEl.innerHTML = html + `&nbsp;&nbsp;<span>${3 - S.picked.length} left</span>`;
+}
+
+function wrongPicks(){ return S.picked.filter(i => i !== puzzle.l).length; }
+function baseScore(){ return Math.max(0, 3 - wrongPicks()); }
+function shareText(){
+  const emojis = S.picked.map(i => i === puzzle.l ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
+  const score = S.status === 'won' ? `${baseScore()}/3` : '0/3';
+  return `Bogus! No. ${num} \u00b7 ${score} ${emojis}\nOne phrase in this history is a lie \u2014 can you spot it?`;
+}
+
+function showReveal(){
+  const v = $('verdict');
+  if (S.status === 'won'){
+    v.textContent = ['Got there in the end.','Sharp eye \u2014 you found the lie.','Flawless \u2014 first pick.'][baseScore()-1];
+    v.className = 'verdict won';
+  } else {
+    v.textContent = 'Three strikes \u2014 the lie slipped past you.';
+    v.className = 'verdict lost';
+  }
+  $('why').textContent = puzzle.w;
+  $('sharetext').textContent = shareText();
+  $('reveal').classList.add('show');
+  syncBoard(S.status === 'won' ? baseScore() : 0);
+  renderPicks();
+}
+
+function pick(i){
+  if (S.status !== 'playing' || S.picked.includes(i)) return;
+  S.picked.push(i);
+  const el = passageEl.querySelector(`[data-i="${i}"]`);
+  if (i === puzzle.l){
+    S.status = 'won';
+    const st = S.stats;
+    st.played++; st.wins++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+    st.dist[baseScore()]++;
+    if (el) el.classList.add('lie','win');
+    passageEl.classList.add('done');
+    showReveal();
+  } else {
+    if (el) el.classList.add('wrong');
+    if (S.picked.length >= 3){
+      S.status = 'lost';
+      S.stats.played++; S.stats.streak = 0; S.stats.dist[0]++;
+      applyMarks(false);
+      showReveal();
+    } else {
+      renderPicks();
+    }
+  }
+  saveState();
+}
+
+passageEl.addEventListener('click', e => {
+  const seg = e.target.closest('.seg');
+  if (seg) pick(+seg.dataset.i);
+});
+
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'bogus';
+const SYNC_BETTER = 'high';
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* ---------------- stats & help modals ---------------- */
+function openOverlay(id){ $(id).classList.add('show'); }
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('show'));
+}));
+document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => {
+  if (e.target === o) o.classList.remove('show');
+}));
+$('btnHelp').addEventListener('click', () => openOverlay('helpOverlay'));
+$('btnStats').addEventListener('click', () => { renderStats(); openOverlay('statsOverlay'); });
+
+function renderStats(){
+  const st = S.stats;
+  const avg = st.played ? ((st.dist[1] + 2*st.dist[2] + 3*st.dist[3]) / st.played).toFixed(1) : '0.0';
+  $('statgrid').innerHTML =
+    `<div class="stat"><span class="v">${st.played}</span><span class="k">played</span></div>` +
+    `<div class="stat"><span class="v">${avg}</span><span class="k">avg score</span></div>` +
+    `<div class="stat"><span class="v">${st.streak}</span><span class="k">streak</span></div>` +
+    `<div class="stat"><span class="v">${st.max}</span><span class="k">max streak</span></div>`;
+  const maxd = Math.max(1, ...st.dist);
+  $('dist').innerHTML = ['missed','1/3','2/3','3/3'].map((lbl,i) =>
+    `<div class="distrow${i === 0 ? ' lost' : ''}"><span class="n">${lbl}</span><span class="bar" style="width:${Math.max(Math.round(100*st.dist[i]/maxd),4)}%"></span><span>${st.dist[i]}</span></div>`
+  ).join('');
+}
+
+/* ---------------- share ---------------- */
+const toast = SHELL.toast;
+SHELL.wireShare(shareText);
+
+/* ---------------- countdown to next puzzle (next ET midnight) ---------------- */
+
+/* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
+  $('pno').textContent = num;
+  $('pdate').textContent = SHELL.pdateText();
+  $('tag').textContent = puzzle.t;
+  renderPassage();
+  applyMarks(true);
+  renderPicks();
+  if (S.status !== 'playing') showReveal();
+  SHELL.startCountdown('count', 1000);
+});
+</script>
+<script>
+'use strict';
+
+/* ---------------- puzzle bank ----------------
+   Each item: t = tag, s = segments (clickable phrases), l = index of the bogus one, w = why.
+   Grow this array to grow the game — one well-chosen lie per passage. */
+
+
+/* ---------------- daily selection (ET-rollover, deterministic) ---------------- */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js — destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
+let puzzle = null;
+async function loadPuzzle(){
+  const idx = ((dayIndex % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) + (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1);
+  if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
 }
 
 /* ---------------- state (browser-only persistence) ---------------- */

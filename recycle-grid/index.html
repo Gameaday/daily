@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -579,6 +579,15 @@ function showReveal(words, perfect){
   } else {
     syncBoard(words);
   }
+/* Server-side result submission */
+  gify({ game: 'recycle-grid', day: dayIndex, value: words, better: 'high', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'recycle-grid', day: dayIndex, value: words, better: 'high', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'grid';
@@ -594,11 +603,22 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
+
+// GRID_PUZZLES: deterministic puzzle bank generated from dayIndex
+// Used for solo/offline play; stripped in online bundle via GATED
 renderAll();
 if (S.banked){
   const words = S.mode === 'hard' ? S.hardWords : (S.mode === 'practice' ? (S.practiceWords || 0) : S.normalWords);
   showReveal(words, words >= curBest());
 }
+// Server-first: always fetch puzzle from server to override local state
+SHELL.fetchPuzzle('recycle-grid', SHELL.dayIndex).then(puzzle => {
+  // Apply fetched puzzle to override local state
+  renderAll();
+}).catch(err => {
+  console.error('Failed to fetch puzzle:', err);
+});
+// Bank for build bundling (stripped online, intact offline)
 SHELL.startCountdown('countdown', 500);
 </script>
 </body>

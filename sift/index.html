@@ -92,7 +92,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -115,8 +115,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 'use strict';
 
 /* ---------------- boards (4 groups of 3, 12 tiles each) ---------------- */
-const BOARDS = [
-  { t:'The Ancient World', cats:[
+ t:'The Ancient World', cats:[
     { n:'Roman emperors', i:['Nero','Trajan','Commodus'] },
     { n:'Greek philosophers', i:['Socrates','Plato','Aristotle'] },
     { n:'Wonders of the ancient world', i:['Lighthouse of Alexandria','Hanging Gardens of Babylon','Colossus of Rhodes'] },
@@ -183,7 +182,7 @@ const COLORS = ['#2e7d4f', '#b3541e', '#1f6f8b', '#7a5aa0'];
 /* ---------------- deterministic daily pick & shuffle ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
    client all live in ../shell/common.js — destructured once here */
-const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
 let BOARD = null;
 let TILES = [];
 function applyBoard(b){
@@ -199,10 +198,10 @@ function applyBoard(b){
   }
 }
 async function loadPuzzle(){
-  const L = typeof BOARDS !== 'undefined' ? BOARDS.length : 1;
+  const _ignored = BOARDS !== 'undefined' ? BOARDS.length : 1;
   const idx = ((dayIndex % L) + L) % L;
   if (typeof BOARDS !== 'undefined') applyBoard(BOARDS[idx]);
-  if (isSolo()) return;
+  if () return;
   try { const d = await fetchPuzzle('sift', dayIndex); if (d && d.puzzle) applyBoard(d.puzzle); } catch (e) {}
 }
 
@@ -338,6 +337,16 @@ function showReveal(){
   $('reveal').classList.add('show');
   syncBoard(S.status === 'won' ? S.mistakes : 4);
   renderTiles(); // to apply reveal dimming
+/* Server-side result submission */
+  gify({ game: 'sift', day: dayIndex, value: S.mistakes, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'sift', day: dayIndex, value: S.mistakes, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'); };
+}
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'sift';
@@ -350,15 +359,251 @@ const toastMsg = SHELL.toast;
 SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
 
+/* ---------------- boot ---------------- */
+//
+  SHELL.fetchPuzzle('sift', SHELL.dayIndex).then(puzzle => {
+  loadPuzzle().then(() => {
+    $('pno').textContent = num;
+    $('pdate').textContent = SHELL.pdateText();
+    renderAll();
+    if (S.status !== 'playing') showReveal();
+    SHELL.startCountdown('countdown', 500);
+  });
+SHELL.fetchPuzzle('sift', SHELL.dayIndex).then(puzzle => {
+  // Initialize BOARD and game state with fetched puzzle
+  $('pno').textContent = num;
+    $('pdate').textContent = SHELL.pdateText();
+    renderAll();
+    if (S.status !== 'playing') showReveal();
+    SHELL.startCountdown('countdown', 500);
+  }).catch(err => {
+    console.error('Failed to fetch puzzle:', err);
+    // Fallback to local generation on error
+    loadPuzzle().then(() => {
+      $('pno').textContent = num;
+      $('pdate').textContent = SHELL.pdateText();
+      renderAll();
+      if (S.status !== 'playing') showReveal();
+      SHELL.startCountdown('countdown', 500);
+    });
+  });
+}
+// Bank for build bundling (stripped online, intact offline)
+</script>
+<script>
+'use strict';
+
+/* ---------------- boards (4 groups of 3, 12 tiles each) ---------------- */
+const COLORS = ['#2e7d4f', '#b3541e', '#1f6f8b', '#7a5aa0'];
+
+/* ---------------- deterministic daily pick & shuffle ---------------- */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js — destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, fetchPuzzle } = SHELL;
+let BOARD = null;
+let TILES = [];
+function applyBoard(b){
+  BOARD = b;
+  /* tile list: {text, cat} */
+  TILES.length = 0;
+  BOARD.cats.forEach((cat, ci) => cat.i.forEach(text => TILES.push({ text, cat: ci })));
+  /* deterministic shuffle of the display order */
+  const rng = mulberry32(dayIndex * 6151 + 42);
+  for (let i = TILES.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [TILES[i], TILES[j]] = [TILES[j], TILES[i]];
+  }
+}
+async function loadPuzzle(){
+  const L = typeof BOARDS !== 'undefined' ? BOARDS.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof BOARDS !== 'undefined') applyBoard(BOARDS[idx]);
+}
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.sift.v1';
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!(S.status === 'won' && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since last win */
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0, dist:[0,0,0,0,0]};
+  S = { day: dayIndex, solvedCats:[], mistakes:0, status:'playing', stats };
+}
+saveState();
+
+/* ---------------- dom & render ---------------- */
+let sel = new Set(); // indices into TILES
+
+function renderTiles(){
+  $('tiles').innerHTML = TILES.map((t, i) => {
+    const inSolved = S.solvedCats.includes(t.cat);
+    const revealAll = S.status === 'lost';
+    let cls = 'tile';
+    if (inSolved) cls += ' solved';
+    if (revealAll && !inSolved) cls += ' dim';
+    if (sel.has(i)) cls += ' sel';
+    const color = (inSolved || revealAll) ? COLORS[t.cat] : '';
+    return `<div class="${cls}" data-i="${i}" ${color ? `style="background:${color};border-color:${color}"` : ''}>${t.text}</div>`;
+  }).join('');
+}
+
+function renderMistakes(){
+  let pips = '';
+  for (let i = 0; i < 4; i++) pips += `<span class="pip${i < S.mistakes ? ' gone' : ''}"></span>`;
+  $('mistakes').innerHTML = `mistakes: ${pips}<span style="margin-left:6px;">${4 - S.mistakes} left</span>`;
+}
+
+function renderFound(){
+  $('found').innerHTML = S.solvedCats.map(ci => {
+    const c = BOARD.cats[ci];
+    return `<div class="grp" style="background:${COLORS[ci]}">
+      <div class="gname">${c.n}</div>
+      <div class="gitems">${c.i.join(' \u00b7 ')}</div></div>`;
+  }).join('');
+}
+
+function renderAll(){ renderTiles(); renderMistakes(); renderFound(); updateSubmit(); }
+
+function updateSubmit(){
+  $('btnSubmit').disabled = !(sel.size === 3 && S.status === 'playing');
+}
+
+$('tiles').addEventListener('click', e => {
+  const el = e.target.closest('.tile');
+  if (!el) return;
+  const i = +el.dataset.i;
+  if (S.status !== 'playing') return;
+  if (S.solvedCats.includes(TILES[i].cat)) return; // locked tile
+  if (sel.has(i)) sel.delete(i);
+  else if (sel.size < 3) sel.add(i);
+  else toastMsg('Three at a time — deselect one first');
+  renderTiles(); updateSubmit();
+});
+
+$('btnClear').addEventListener('click', () => { sel.clear(); renderTiles(); updateSubmit(); });
+
+$('btnSubmit').addEventListener('click', () => {
+  if (!BOARD) return;
+  if (sel.size !== 3 || S.status !== 'playing') return;
+  const selTexts = new Set([...sel].map(i => TILES[i].text));
+  const hit = BOARD.cats.findIndex((c, ci) => !S.solvedCats.includes(ci) && c.i.length === 3 && c.i.every(x => selTexts.has(x)));
+  if (hit >= 0){
+    S.solvedCats.push(hit);
+    sel.clear();
+    if (S.solvedCats.length === 4){
+      S.status = 'won';
+      const st = S.stats;
+      st.played++; st.solved++; st.streak++;
+      st.max = Math.max(st.max, st.streak);
+      st.dist[S.mistakes]++;
+      showReveal();
+    }
+  } else {
+    S.mistakes++;
+    if (S.mistakes >= 4){
+      S.status = 'lost';
+      const st = S.stats;
+      st.played++;
+      st.dist[4]++;
+      showReveal();
+    } else {
+      // shake the selected tiles
+      [...sel].forEach(i => {
+        const el = document.querySelector(`.tile[data-i="${i}"]`);
+        if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
+      });
+      toastMsg(['Not a trio.','Close, maybe?','The tiles are judging you.','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
+    }
+  }
+  saveState();
+  renderAll();
+});
+
+/* ---------------- reveal / share ---------------- */
+function shareText(){
+  const marks = BOARD.cats.map((c, ci) => S.solvedCats.includes(ci) ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
+  if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}`;
+  return `Sift No. ${num} \u00b7 sifted, ${S.mistakes} misses deep \u2014 ${marks}`;
+}
+function showReveal(){
+  const st = S.stats;
+  if (S.status === 'won'){
+    $('verdict').textContent = (S.mistakes === 0 ? 'Flawless sift — not one wasted test.' : 'Sifted clean. The day is in order.') + ' Today’s theme: ' + BOARD.t + '.';
+    $('verdict').style.color = 'var(--green)';
+  } else {
+    $('verdict').textContent = 'Sifted out — the groups you missed are below, dimmed.';
+    $('verdict').style.color = 'var(--accent)';
+  }
+  $('sharetext').textContent =
+    shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}`;
+  $('reveal').classList.add('show');
+  syncBoard(S.status === 'won' ? S.mistakes : 4);
+  renderTiles(); // to apply reveal dimming
+/* Server-side result submission */
+  gify({ game: 'sift', day: dayIndex, value: S.mistakes, better: 'low', id: 'player' });
+  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'sift', day: dayIndex, value: S.mistakes, better: 'low', id: 'player'}) })
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  post('/api')
+    .catch(() => post('http://localhost:8787'))
+    .catch(() => post('http://127.0.0.1:8787'))
+    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
+    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'); };
+}
+}
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'sift';
+const SYNC_BETTER = 'low';
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+SHELL.wireShare(shareText);
+const toastMsg = SHELL.toast;
+
+/* ---------------- help / countdown ---------------- */
+SHELL.wireHelp();
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
 
 /* ---------------- boot ---------------- */
-loadPuzzle().then(() => {
-$('pno').textContent = num;
-$('pdate').textContent = SHELL.pdateText();
-renderAll();
-if (S.status !== 'playing') showReveal();
-SHELL.startCountdown('countdown', 500);
-});
+//
+  SHELL.fetchPuzzle('sift', SHELL.dayIndex).then(puzzle => {
+  loadPuzzle().then(() => {
+    $('pno').textContent = num;
+    $('pdate').textContent = SHELL.pdateText();
+    renderAll();
+    if (S.status !== 'playing') showReveal();
+    SHELL.startCountdown('countdown', 500);
+  });
+SHELL.fetchPuzzle('sift', SHELL.dayIndex).then(puzzle => {
+  // Initialize BOARD and game state with fetched puzzle
+  $('pno').textContent = num;
+    $('pdate').textContent = SHELL.pdateText();
+    renderAll();
+    if (S.status !== 'playing') showReveal();
+    SHELL.startCountdown('countdown', 500);
+  }).catch(err => {
+    console.error('Failed to fetch puzzle:', err);
+    // Fallback to local generation on error
+    loadPuzzle().then(() => {
+      $('pno').textContent = num;
+      $('pdate').textContent = SHELL.pdateText();
+      renderAll();
+      if (S.status !== 'playing') showReveal();
+      SHELL.startCountdown('countdown', 500);
+    });
+  });
+}
+// Bank for build bundling (stripped online, intact offline)
 </script>
 </body>
 </html>

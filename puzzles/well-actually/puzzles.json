@@ -1270,5 +1270,136 @@
       "from Arabia to the Gobi."
     ],
     "w": "Camels evolved in North America and walked into Asia across the Bering land bridge; the American camels went extinct roughly ten thousand years ago. Australia’s wild dromedaries are feral imports, and the Sahara’s ships are returned immigrants."
+  },
+  {
+    "t": "Clothes · The Panama Hat",
+    "l": 1,
+    "c": "Ecuador",
+    "a": [
+      "Ecuador"
+    ],
+    "s": [
+      "Woven from toquilla straw in the old way,",
+      "the Panama hat was born in Panama,",
+      "the favorite of gold rush travelers",
+      "and presidents at the canal."
+    ],
+    "w": "The hats have been woven in Ecuador, around Montecristi and Cuenca, for centuries; Panama only sold them to the world. The name stuck from the 1849 gold rush, when travelers crossed the isthmus and carried the hats home, and Theodore Roosevelt wore one at the canal in 1906."
+  },
+  {
+    "t": "Food · The Caesar Salad",
+    "l": 1,
+    "c": "Mexico",
+    "a": [
+      "Mexico",
+      "Tijuana"
+    ],
+    "s": [
+      "Crisp romaine, coddled egg, and parmesan,",
+      "the Caesar salad was named for Julius Caesar,",
+      "a Roman recipe reborn",
+      "for the tables of the world."
+    ],
+    "w": "Caesar Cardini, an Italian immigrant restaurateur, tossed the first one at his restaurant in Tijuana in 1924, on a busy Fourth of July running short of supplies. The name is his, not the emperor’s; Rome never tasted it."
+  },
+  {
+    "t": "Biology · The Tongue Map",
+    "l": 2,
+    "c": "all over the tongue",
+    "a": [
+      "all over the tongue",
+      "everywhere",
+      "all over"
+    ],
+    "s": [
+      "Sweet at the tip, bitter at the back,",
+      "sour and salt along the sides,",
+      "the tongue’s tastes each live",
+      "in their own separate zone."
+    ],
+    "w": "The map came from a misread 1901 German paper and was cemented by textbook diagrams, but taste buds of every kind sit on every region of the tongue. Taste the same sugar at the tip and at the back: it registers in both, just slightly weaker."
+  },
+  {
+    "t": "Physics · The Old Window",
+    "l": 2,
+    "c": "a solid",
+    "a": [
+      "a solid",
+      "an amorphous solid",
+      "solid"
+    ],
+    "s": [
+      "Medieval panes run thicker at the bottom,",
+      "so glass, the story goes,",
+      "is a liquid creeping over the centuries,",
+      "an unbearably slow flowing thing."
+    ],
+    "w": "Glass is an amorphous solid, rigid at room temperature. Old panes are thick at the bottom because crown-glass makers left one edge heavier, and glaziers installed the heavy side down for stability. Nothing flows on the timescale of cathedrals."
+  },
+  {
+    "t": "Nature · The Ostrich",
+    "l": 1,
+    "c": "it does not",
+    "a": [
+      "it does not",
+      "a myth",
+      "it never does"
+    ],
+    "s": [
+      "The fastest bird on two legs,",
+      "the ostrich hides from danger",
+      "by burying its head in the sand,",
+      "believing itself invisible."
+    ],
+    "w": "No ostrich buries its head; the bird would suffocate, and an animal that sprints at seventy kilometers an hour has better options. The image probably comes from adults shading their ground nests, heads down over the eggs."
+  },
+  {
+    "t": "History · The First Women Voters",
+    "l": 2,
+    "c": "New Zealand",
+    "a": [
+      "New Zealand"
+    ],
+    "s": [
+      "When women finally won the vote,",
+      "Britain and America led the way,",
+      "the great democracies setting the example",
+      "for the rest of the world to follow."
+    ],
+    "w": "New Zealand granted women the vote in 1893 after the largest petition the country had seen; Australia followed in 1902, but Britain waited until 1918 and the United States until 1920. The great democracies were latecomers to their own principle."
+  },
+  {
+    "t": "Egypt · The Pyramid Builders",
+    "l": 2,
+    "c": "paid workers",
+    "a": [
+      "paid workers",
+      "paid laborers",
+      "workers"
+    ],
+    "s": [
+      "Two million blocks, twenty years of labor,",
+      "the pyramids rose under the whip,",
+      "built by slaves taken in war",
+      "for the glory of the kings."
+    ],
+    "w": "The builders were recruited Egyptian laborers paid in bread, beer, and status, housed in excavated villages near the plateau with bakeries, breweries, and medical care written in their bones. Slaves did not build the pyramids; Herodotus’s rumor and Hollywood did that stonework."
+  },
+  {
+    "t": "Biology · The Five Senses",
+    "l": 1,
+    "c": "more than five",
+    "a": [
+      "more than five",
+      "more",
+      "at least nine"
+    ],
+    "s": [
+      "Sight, hearing, taste, smell, and touch,",
+      "the five senses Aristotle counted",
+      "are the complete catalog",
+      "of how the body meets the world."
+    ],
+    "w": "Balance, temperature, pain, body position, and the sense of your own joints all report without touching anything; researchers count anywhere from nine to twenty-one senses. Aristotle’s tidy five survive because they are the ones with obvious organs."
   }
 ]

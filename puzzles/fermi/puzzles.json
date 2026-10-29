@@ -418,5 +418,53 @@
     "q": "Roughly how old is the oldest known living tree, in years?",
     "a": 5000,
     "w": "A Great Basin bristlecone pine in California’s White Mountains, nicknamed Methuselah, is about 4,900 years old, and a nearby tree ring-dated in 2022 pushes the record past five thousand. It sprouted before the first pyramids."
+  },
+  {
+    "t": "Monuments",
+    "q": "Roughly how many stone blocks make up the Great Pyramid of Giza?",
+    "a": 2300000,
+    "w": "The standard estimate is about 2.3 million blocks averaging two and a half tonnes. Herodotus’s far higher figure of 100,000 workers has also shrunk under study: the quarries and the workers’ town point to a rotating crew of some 20,000."
+  },
+  {
+    "t": "Speed",
+    "q": "Roughly how fast does sound travel through air at sea level, in kilometers per hour?",
+    "a": 1235,
+    "w": "About 343 meters per second, or 1,235 kilometers per hour, in warm sea-level air. That is why lightning’s flash arrives before its thunder: light is almost a million times faster."
+  },
+  {
+    "t": "Deserts",
+    "q": "Roughly how many square kilometers does the Sahara cover?",
+    "a": 9000000,
+    "w": "About nine million square kilometers, roughly the size of the United States, across eleven countries. It was green savanna as recently as five thousand years ago, and it will be again."
+  },
+  {
+    "t": "The Earth",
+    "q": "Roughly how many kilometers is the Earth’s circumference at the equator?",
+    "a": 40000,
+    "w": "Just over 40,000 kilometers; the precise figure is 40,075. Eratosthenes measured it within a few percent around 240 BCE using nothing but a well, a shadow, and a camel route."
+  },
+  {
+    "t": "Deep Time",
+    "q": "Roughly how old is the universe, in years?",
+    "a": 13800000000,
+    "w": "About 13.8 billion years, from the cosmic microwave background and the observed expansion. The first stars followed within a couple of hundred million years; Earth waited 9 billion."
+  },
+  {
+    "t": "Art",
+    "q": "Roughly how many works of art did Pablo Picasso create in his lifetime?",
+    "a": 50000,
+    "w": "Commonly cited tallies run to about 50,000 pieces: some 13,500 paintings, plus thousands of sculptures, ceramics, drawings, and prints across seven decades. He remains the most prolific documented artist in history."
+  },
+  {
+    "t": "Museums",
+    "q": "Roughly how many people visit the Louvre in a busy year?",
+    "a": 9000000,
+    "w": "The record year drew about 10.2 million visitors in 2018; recent years run between eight and nine million. The Mona Lisa alone draws the largest share of any single object on Earth."
+  },
+  {
+    "t": "Nature",
+    "q": "Roughly how many leaves are on a large mature oak tree?",
+    "a": 200000,
+    "w": "Estimates for a full-grown oak run around 200,000 leaves, which the tree sheds and regrows every year. Laid end to end, one tree’s summer canopy would cover a marathon."
   }
 ]

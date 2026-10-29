@@ -1,179 +1,82 @@
 # daily · Developer Documentation
 
-## Project Overview
+**daily** is 13 morning warmup games for History Labs (daily.historylabs.dev):
+one new puzzle per game per day, self-hosted as dumb static files plus a tiny
+stdlib-only Python scores service. Everything uses relative paths — the site
+works at any domain, IP, or LAN hostname.
 
-**daily** is a collection of 13 morning warmup games for History Labs (daily.historylabs.dev). Each game generates one new puzzle per day, self-hosted on a Raspberry Pi as dumb static files. The design is intentionally low-resource: stdlib-only Python server, zero disk writes, in-memory stats pruned after 1 day.
+User-facing documentation lives in README.md; design notes and future ideas in
+NOTES.md. This file is the short orientation for contributors.
 
-Everything uses relative paths — the site works at any domain, IP, or LAN hostname. Nothing is hardcoded to a specific domain.
+## Architecture
 
----
-## Running Locally
+- Each game is one self-contained `index.html` (puzzle + game logic).
+- The shared shell — day math (midnight ET rollover), localStorage, toast,
+  countdown, help, share, the global-curve client — lives in
+  `shell/common.js` / `shell/common.css`; games destructure what they
+  need from the `SHELL` module.
+- Word games share `assets/words-en.js` (`WORDS_EN`); Sprint keeps its
+  own anagram banks by design.
 
-### Prerequisites
+## Puzzle delivery
 
-- **Python 3** (stdlib only — no pip dependencies required)
-- **Node.js** (for generating puzzle banks: `npm run export`)
+Bank games (bogus, well-actually, rounds, fermi, cipher, museum, lightbox,
+sift, timeline) ship their curated bank inline — solo/offline play works
+with zero infrastructure — and, when online, ask the scores service for the
+day's puzzle:
 
-### Start the scores server
+    GET /api/puzzle?game=rounds&day=12   ->   { game, day, puzzle, today }
 
-```bash
-python3 scores/server.py
-```
+The served puzzle replaces the inline pick, so the published site carries no
+tomorrow's answers: the online bundle ships with every bank stripped
+(`tools/build-bundles.mjs`).
 
-Server binds to `127.0.0.1:8787` by default. Plain HTTP — TLS belongs to the edge proxy in front of it.
+The server reads its puzzles from the committed per-game stores:
 
-### Generate puzzle banks
+- `scores/<game>/puzzles.json` — the game's curated bank (deep-equal to
+  the inline bank; `tools/export-puzzles.mjs` verifies this in CI)
+- `scores/timeline/puzzles.json` — windowed: `{bank, picks}` with 1000
+  precomputed days (the same five distinct-year events the offline page
+  picks — same seed, same shuffle, same walk)
+- sprint, trace, recycle-grid and recycle-rings are generator games: their
+  stores are empty by design; the page generates boards at play time from
+  seeded RNGs
 
-```bash
-npm run export
-```
+To edit a bank: change the game's `index.html`, re-export its store, and
+push both — CI fails a store that drifts from its client bank.
 
-or equivalently:
+## Scores server
 
-```bash
-node tools/export-puzzles.mjs
-```
+`scores/server.py` — stdlib-only, in-memory, zero disk writes. Keeps only
+consolidated per-(game, day) numbers (count, sum, sumsq, min, max, fixed
+histogram); client ids are blake2b-hashed to 8 bytes into a transient
+dedupe set. Boards prune after 1 day. Binds to 127.0.0.1:8787 by default
+(or inside the compose network); TLS belongs to the edge proxy.
 
-This reads the game source files and generates `scores/puzzles.json` with the day's puzzle bank for each bank game.
+Endpoints (with or without the `/api` prefix): `POST /submit`,
+`GET /dist?game=&day=`, `GET /puzzle?game=&day=`, `GET /health`.
 
-## Adding a New Game
+Metric directions ("better": high/low) and histogram edges are owned by the
+`SPECS` table in server.py — the client never decides them.
 
-1. Create the game directory under the project root (e.g., `/new-game/`)
+## Tests (all dependency-free)
 
-2. Add `index.html` with the game logic. The file must:
-   - Include `../shell/common.css` for shared styling
-   - Load `../shell/common.js` for shared functionality (palette, countdown, help, curve sync, share)
-   - The puzzle is derived from the date, not stored — use the same seed-based approach as other games
+    make test                         # or npm test
+    node tools/export-puzzles.mjs     # verify committed stores vs client banks
+    node checks/games.js              # compile every game + shell/id/landing wiring
+    node tests/run.js                 # headless playthroughs + server-gated delivery
+    python3 tests/server_test.py     # scores service API test
 
-3. Add shared references in `index.html`:
-   ```html
-   <link rel="stylesheet" href="../shell/common.css"/>
-   <script src="../shell/common.js"></script>
-   ```
+CI (`.github/workflows/validate.yml`) runs the same layers on every push;
+the Pi only deploys commits whose CI run is green.
 
-4. Update `README.md` to document the new game in the games table
+## Adding a game
 
-5. If the game needs a puzzle bank (bank games only):
-   - The puzzle content is picked from an in-file bank or generated from a seeded RNG
-   - Same puzzle for every player worldwide (deterministic from game:day seed)
-   - See existing bank games for the pattern
-
-6. If the game needs generator-based puzzles (rings, grid, sprint, trace, recycle-rings):
-   - Puzzles are generated from a deterministic PRNG at play time
-   - No server interaction needed for puzzle generation
-   - Banks are client-side only
-
-7. Test the game:
-   - Run the server: `python3 scores/server.py`
-   - Visit `http://127.0.0.1:8080/new-game/`
-   - Verify the puzzle loads for the current day
-## Scores Server API
-
-The server runs on `127.0.0.1:8787` (default, configurable with `--host`/`--port`).
-
-### Endpoints (with or without `/api` prefix):
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/submit` or `/api/submit` | Submit a guess value |
-## Puzzle Uniqueness
-
-Each game has a deterministic but unique sequence of puzzles:
-
-- **Seed**: `blake2b(game:day)` produces a unique seed per game per day
-- **mulberry32 PRNG**: deterministic but cycles after ~4 billion values
-- **822 unique puzzles** per game (Oct 2026 – Dec 2028) without cycling/modulo issues
-- Each game has its own seed for a unique sequence
-| GET | `/dist?game=X&day=N` or `/api/dist?game=X&day=N` | Get consolidated stats for a game/day |
-| `GET` | `/health` or `/api/health` | Health check: `{"ok": true}` |
-## Commands Summary
-
-```bash
-# Start server
-python3 scores/server.py
-
-# Regenerate puzzle banks
-npm run export      # or: node tools/export-puzzles.mjs
-
-# Run tests (if applicable)
-make test           # or: npm test
-
-# Check project status
-git status
-git log --oneline -5
-```
-
-## Tools
-
-This directory contains scripts for managing puzzle data and project maintenance.
-
-| Script | Purpose |
-|---|---|
-| check-banks.js | Validates that each game's index.html uses etchPuzzle() to load puzzles from the scores service (no inline BANKS, no solo fallback). |
-
-### check-banks.js
-
-**Validates that each game's index.html fetches its puzzle from the scores service.**
-
-Run: 
-ode tools/check-banks.js. Reports: whether fetchPuzzle is used, whether BANKS or isSolo references remain.
-
-### Maintenance Workflow
-
-1. **Verify game files:** 
-ode tools/check-banks.js
-2. **Run game validation:** 
-ode checks/games.js
-
-### Design Notes
-
-- **Server-driven puzzles:** Each game fetches its puzzle data from the scores service via etchPuzzle(game, dayIndex) on first load. Puzzle data lives in scores/<game>/puzzles.json (one file per game, 822 puzzles each). No inline const BANKS = [...] in frontend files.
-- **Online only:** No isSolo() or offline fallback. All games require the scores service.
-- **Per-game puzzle files:** scores/<game>/puzzles.json contains 822 puzzle entries per game, loaded by the server at startup.
-
-### Design Notes
-
-- **Deterministic PRNG:** All tools use `mulberry32` for reproducible puzzle selection
-- **822-day horizon:** Banks cover Oct 2026 – Dec 2028 without repetition
-- **Shared word bank:** `assets/words-en.js` (2230 common words, ~12KB) used by word games
-- **Relative paths:** All scripts use relative paths from the project root
-- **Solo/offline play:** Banks are embedded inline in `index.html` for zero-infrastructure play
-
-```json
-{
-  "game": "bogus",
-  "day": 42,
-  "value": 2,
-  "id": "client-unique-id"
-}
-```
-
-### Response from /submit:
-
-```json
-{
-  "game": "bogus",
-  "day": 42,
-  "n": 123,
-  "sum": 247,
-  "sumsq": 621,
-  "min": 1,
-  "max": 5,
-  "histogram": [30, 45, 28, 15, 5],
-  "today": "2026-10-28"
-}
-```
-
-### GET /dist?game=X&day=N:
-
-Returns the same snapshot data as POST /submit but without tallying — reloads get a personalized reply but do not retally.
-
-### Design rules (from server.py docstring):
-
-- **stdlib only**: no external dependencies
-- **binds to 127.0.0.1**: not exposed to internet directly
-- **zero disk writes**: only in-memory stats, pruned after 1 day
-- **client IDs hashed to 8 bytes**: BLAKE2b, kept in transient dedupe set
-- **Global scores lock after 1 day**: yesterday's curve are locked deliberately
-- **input strictly validated* *: game in allowlist, day bounded, bodies capped at 2KB
-- **no user text accepted or stored**: per design
+1. Copy an existing game folder; include `../shell/common.css` and
+   `../shell/common.js`, then destructure what you need from `SHELL`.
+2. Add the puzzle: an inline bank (bank game) or a seeded generator.
+3. Add a card to the landing `index.html` and a row in README's games table.
+4. If it has a score: call `syncBoard(value)` on reveal, add the game to
+   `SPECS` in `scores/server.py`, and — for a bank game — commit a
+   `scores/<game>/puzzles.json` store.
+5. Run `node checks/games.js` before you push.

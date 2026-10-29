@@ -1,4 +1,4 @@
-﻿/* common.js â€” the shared shell for every warmup game, loaded once per page
+/* common.js — the shared shell for every warmup game, loaded once per page
    via <script src="../shell/common.js"></script> and destructured at the top
    of each game's script:
 
@@ -24,7 +24,7 @@ const SHELL = (() => {
 
   /* ---- the daily puzzle: days since launch, rolling at midnight ET ---- */
   const TZ = 'America/New_York';
-  const EPOCH_KEY = '2026-10-27'; // launch date â€” puzzle No. 1
+  const EPOCH_KEY = '2026-10-27'; // launch date — puzzle No. 1
   function etKey(ms){
     return new Intl.DateTimeFormat('en-CA', {timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(ms));
   }
@@ -137,7 +137,7 @@ const SHELL = (() => {
       .then(ok => ok || go('http://127.0.0.1:8787'));
   }
 
-  /* ---- the "No. N Â· date" line ---- */
+  /* ---- the "No. N · date" line ---- */
   function pdateText(){
     return new Date(Date.parse(todayKey) + 43200000)
       .toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });

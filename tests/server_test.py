@@ -3,21 +3,43 @@
 
 Spawns the real server on a scratch port and exercises the API with urllib:
 health (bare and /api-prefixed), submit + dedupe (first submission of the day
-stands), the /dist snapshot, strict input validation, and the 1-day pruning
-horizon. Stdlib only - no pytest, no requests, no docker needed.
+stands), the /dist snapshot, strict input validation, fresh-day counting
+(stale submits answered from the archive, future days rejected), and the
+archive handoff itself (a unit section that imports the module and walks a
+day over midnight). Stdlib only - no pytest, no requests, no docker needed.
 
 Run: python3 tests/server_test.py   (exit 0 = pass, 1 = fail)
 """
+import datetime
+import importlib.util
 import json
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.request
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PORT = 8971  # scratch port; nothing else listens here in CI or on the Pi
+
+try:
+    from zoneinfo import ZoneInfo
+except Exception:
+    ZoneInfo = None
+
+
+def today_day():
+    """The same day index server.py computes from ET and EPOCH_KEY."""
+    tz = None
+    try:
+        tz = ZoneInfo("America/New_York") if ZoneInfo else None
+    except Exception:
+        tz = None
+    today = datetime.datetime.now(tz).date() if tz else date.today()
+    return (today - date.fromisoformat("2026-10-27")).days
 
 
 def req(method, path, body=None):
@@ -67,6 +89,8 @@ def main():
             print("FAIL: server never came up on port %d" % PORT)
             return 1
 
+        TODAY = today_day()
+
         # --- health ---
         s, b = req("GET", "/health")
         check(s == 200 and b.get("ok") is True, "GET /health -> ok:true")
@@ -83,72 +107,89 @@ def main():
             s, b = req("GET", "/api/puzzle?game=bogus&day=0")
             check(s == 200 and b.get("puzzle", {}).get("l") == 5,
                   "GET /puzzle bogus day 0 -> lie is statement 5")
-            s, b = req("GET", "/puzzle?game=rounds&day=0")
+            s, b = req("GET", "/api/puzzle?game=rounds&day=0")
             check(s == 200 and b.get("puzzle", {}).get("y") == 1215,
                   "GET /puzzle rounds day 0 -> Magna Carta 1215")
-            s, b = req("GET", "/puzzle?game=timeline&day=0")
+            s, b = req("GET", "/api/puzzle?game=timeline&day=0")
             ev = b.get("puzzle", {}).get("events", [])
             check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
             check(len({e.get("y") for e in ev}) == 5, "GET /puzzle timeline -> distinct years")
             store = json.loads((ROOT / "scores" / "timeline" / "puzzles.json").read_text(encoding="utf-8"))
             exp = [store["bank"][i] for i in store["picks"][0]]
             check(ev == exp, "GET /puzzle timeline matches the committed picks")
-            s, b = req("GET", "/puzzle?game=timeline&day=-1")
+            s, b = req("GET", "/api/puzzle?game=timeline&day=-1")
             check(s == 404, "GET /puzzle windowed negative day -> 404")
-            s, b = req("GET", "/puzzle?game=nosuchgame&day=0")
+            s, b = req("GET", "/api/puzzle?game=nosuchgame&day=0")
             check(s == 400, "GET /puzzle unknown game -> 400")
-            s, b = req("GET", "/puzzle?game=bogus&day=notanumber")
+            s, b = req("GET", "/api/puzzle?game=bogus&day=notanumber")
             check(s == 400, "GET /puzzle bad day -> 400")
-            s, b = req("GET", "/puzzle?game=bogus&day=99999")
+            s, b = req("GET", "/api/puzzle?game=bogus&day=99999")
             check(s == 403, "GET /puzzle future day -> 403")
 
-        # --- submit + dedupe ---
-        s, b = post("/api/submit", {"game": "fermi", "day": 0, "value": 3,
+        # --- fresh-day submit + dedupe ---
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
                                     "better": "high", "id": "a"})
-        check(s == 200 and b.get("count") == 1, "first submit counts")
+        check(s == 200 and b.get("count") == 1, "first submit counts (today)")
         # same id, different value: deduped, first value stands
-        s, b = post("/api/submit", {"game": "fermi", "day": 0, "value": 0,
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 0,
                                     "better": "high", "id": "a"})
         check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
               "re-submit same id is deduped (first stands, mean stays 3)")
         # a second player moves the mean to 2.5
-        s, b = post("/api/submit", {"game": "fermi", "day": 0,
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
                                     "value": 2, "better": "high", "id": "b"})
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
               "second player: count 2, mean 2.5")
         check(b.get("better") == "high", "snapshot echoes server-side direction")
         check(b.get("beat") in (0, 1, 2), "snapshot includes a beat estimate")
+        check(b.get("archived") is None, "today's snapshot is live, not archived")
+
+        # --- fresh-day counting: stale and future submissions ---
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY - 1,
+                                    "value": 0, "better": "high", "id": "stale"})
+        check(s == 200 and b.get("archived") is True and b.get("count") == 0,
+              "stale submit -> archived snapshot, no live tally")
+        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
+        check(s == 200 and b.get("count") == 2, "stale submit did not touch today's curve")
+        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY - 1))
+        check(s == 200 and b.get("archived") is True and b.get("count") == 0,
+              "GET /dist for a past day -> archived snapshot")
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY + 5,
+                                    "value": 3, "better": "high", "id": "future"})
+        check(s == 403, "future day submit rejected")
+        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY + 5))
+        check(s == 403, "future day dist rejected")
 
         # --- dist endpoint ---
-        s, b = req("GET", "/api/dist?game=fermi&day=0")
+        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "GET /api/dist -> count 2")
         check(isinstance(b.get("bins"), list) and len(b["bins"]) >= 4,
               "dist returns histogram bins")
-        s, b = req("GET", "/dist?game=fermi&day=0")
+        s, b = req("GET", "/dist?game=fermi&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "GET /dist (no prefix) works")
 
         # --- validation: the server is the source of truth ---
-        s, _b = post("/api/submit", {"game": "nope", "day": 0, "value": 1,
+        s, _b = post("/api/submit", {"game": "nope", "day": TODAY, "value": 1,
                                      "better": "high", "id": "c"})
         check(s == 400, "unknown game rejected")
         s, _b = post("/api/submit", {"game": "fermi", "day": "x", "value": 3,
                                      "better": "high", "id": "d"})
         check(s == 400, "non-integer day rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": 0, "value": "3",
+        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": "3",
                                      "better": "high", "id": "e"})
         check(s == 400, "string value rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": 0, "value": 3,
+        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
                                      "better": "high", "id": ""})
         check(s == 400, "empty id rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": 0, "value": 3,
+        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
                                      "better": "high"})
         check(s == 400, "missing id rejected")
         # oversized body -> 413 (2 KB cap)
-        s, _b = post("/api/submit", {"game": "fermi", "day": 0, "value": 3,
+        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
                                      "better": "high", "id": "z" * 3000})
         check(s == 413, "oversized body rejected")
         # out-of-range values clamp into the final bin instead of corrupting bins
-        s, b = post("/api/submit", {"game": "sprint", "day": 0, "value": 99,
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 99,
                                     "better": "high", "id": "big"})
         check(s == 200 and b["bins"][-1]["count"] == 1 and b.get("count") == 1,
               "value beyond last edge clamps into the final bin")
@@ -161,27 +202,49 @@ def main():
         check(s == 400, "GET /dist unknown game rejected")
         s, _b = req("GET", "/api/dist?game=fermi&day=x")
         check(s == 400, "GET /dist bad day rejected")
-
-        # --- pruning: 1-day retention (PRUNE_DAYS = 1) ---
-        for d in (5, 6, 7):
-            s, _b = post("/api/submit", {"game": "rounds", "day": d, "value": 2,
-                                         "better": "low", "id": "p%d" % d})
-            check(s == 200, "rounds day %d accepted" % d)
-        s, b = req("GET", "/api/dist?game=rounds&day=5")
-        check(s == 200 and b.get("count") == 0, "day 5 pruned once day 7 arrived")
-        s, b = req("GET", "/api/dist?game=rounds&day=6")
-        check(s == 200 and b.get("count") == 1, "day 6 kept (newest - 1)")
-        s, b = req("GET", "/api/dist?game=rounds&day=7")
-        check(s == 200 and b.get("count") == 1, "day 7 kept (newest)")
-        # fermi day 0 is untouched: pruning is per game
-        s, b = req("GET", "/api/dist?game=fermi&day=0")
-        check(s == 200 and b.get("count") == 2, "other games are not pruned by a new day elsewhere")
+        # stale tallies live per game: another game's stale submit is archived too
+        s, b = post("/api/submit", {"game": "rounds", "day": TODAY - 1,
+                                    "value": 2, "better": "low", "id": "old"})
+        check(s == 200 and b.get("archived") is True, "stale submit in another game also archived")
+        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
+        check(s == 200 and b.get("count") == 2, "other games' stale days do not touch fermi")
     finally:
         proc.terminate()
         try:
             proc.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc.kill()
+
+    # --- archive handoff (unit): a finished day collapses into a static,
+    #     read-only snapshot and leaves the live state ---
+    spec = importlib.util.spec_from_file_location("warmup_server", ROOT / "scores" / "server.py")
+    srv = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(srv)
+    with tempfile.TemporaryDirectory() as td:
+        srv.ARCHIVE_DIR = Path(td)
+        srv.STATS.clear()
+        srv.SEEN.clear()
+        day = srv.current_day_index()
+        check(srv.tally("rounds", day, 2, "d1") and srv.tally("rounds", day, 3, "d2"),
+              "unit: two fresh-day plays tallied")
+        check(srv.write_archive("rounds", day) is True, "unit: snapshot written")
+        p = Path(td) / "rounds" / ("%d.json" % day)
+        check(p.exists(), "unit: snapshot file exists where expected")
+        rec = srv.load_archive("rounds", day)
+        check(rec and rec["n"] == 2 and rec["sum"] == 5, "unit: snapshot keeps plays + distribution")
+        check(rec.get("date") == srv.day_date(day), "unit: snapshot labels the ET date")
+        # the day rolls over: the stale board flushes to the archive and dies
+        real_today = srv.current_day_index
+        srv.current_day_index = lambda: day + 1
+        srv.flush_stale()
+        srv.current_day_index = real_today
+        check(srv.STATS.get(("rounds", day)) is None, "unit: flushed board removed from memory")
+        check(srv.load_archive("rounds", day)["n"] == 2, "unit: archive readable after the flush")
+        # write-once: a smaller tally never replaces a bigger snapshot
+        srv.STATS[("rounds", day)] = {"n": 1, "sum": 2, "sumsq": 4, "min": 2, "max": 2,
+                                      "bins": [0, 0, 1, 0, 0, 0, 0]}
+        check(srv.write_archive("rounds", day) is False, "unit: smaller tally never rewrites the archive")
+        check(srv.load_archive("rounds", day)["n"] == 2, "unit: archive stays read-only")
 
     print("server tests: %s" % ("PASS" if not fails else "FAIL"))
     return 1 if fails else 0

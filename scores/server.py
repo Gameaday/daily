@@ -2,21 +2,29 @@
 """Warmup global curve - consolidated daily stats for the warmup games.
 
 Design rules (deliberate):
-- stdlib only; binds to 127.0.0.1; zero disk writes of any kind
+- stdlib only; binds to 127.0.0.1 by default
 - keeps ONLY consolidated numbers per (game, day): n, sum, sumsq, min, max,
   and a small fixed histogram. No per-player records. No names. No text.
+- fresh-day counting: a submission only tallies the live curve when it is
+  for the current day's puzzle. Stale-day submissions are answered from
+  the frozen archive and change nothing; future days are rejected. Only the
+  people who played the puzzle while it was fresh shape the day's weights
+- the archive handoff: on the first request after midnight ET (and once
+  more on shutdown), each finished day's numbers collapse into a small
+  static snapshot at <archive-dir>/<game>/<day>.json - how many played,
+  the score distribution, and the aggregates needed to rebuild the
+  weights. Written once, read-only forever. This is the only disk write
+  anywhere in the service
 - client ids are hashed to 8 bytes and kept only in a transient dedupe set:
   the first submission of the day stands; reloads get a personalized reply
   but do not retally
-- boards are pruned after 1 day - yesterday's curve vanishes deliberately
-  (see NOTES.md for the archive idea); a restart forgets everything
 - input is strictly validated: game must be in the fixed allowlist below,
   day/value are bounded numbers, bodies are capped at 2 KB, and no user
   text is accepted or stored anywhere
 
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
-    GET  /dist?game=&day=                           -> snapshot
+    GET  /dist?game=&day=                           -> snapshot (today live, past days from the archive)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /health                                    -> {"ok": true}
 """
@@ -24,8 +32,9 @@ import argparse
 import hashlib
 import json
 import math
+import signal
 import threading
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -37,10 +46,10 @@ except Exception:  # pragma: no cover
 TZ_NAME = 'America/New_York'
 EPOCH_KEY = '2026-10-27'
 
-PRUNE_DAYS = 1
 MAX_BODY = 2048
 MAX_ABS_VALUE = 1e6
 DAY_MIN, DAY_MAX = -1000, 100000
+ARCHIVE_DIR = Path(__file__).parent / 'archive'
 
 # Per-game truth: which direction is better, and the fixed histogram edges.
 # Bin i covers [edges[i], edges[i+1]); values beyond the last edge clamp into
@@ -78,7 +87,6 @@ for game in SPECS.keys():
 
 STATS = {}   # (game, day) -> {"n", "sum", "sumsq", "min", "max", "bins": [ints]}
 SEEN = {}    # (game, day) -> set of 8-byte id digests (transient dedupe only)
-NEWEST = {}  # game -> newest day seen
 LOCK = threading.Lock()
 
 
@@ -101,15 +109,82 @@ def current_day_index():
     epoch = date.fromisoformat(EPOCH_KEY)
     return (today - epoch).days
 
-def prune(game):
-    newest = NEWEST.get(game)
-    if newest is None:
-        return
-    horizon = newest - PRUNE_DAYS
-    for key in [k for k in STATS if k[0] == game and k[1] < horizon]:
+
+def day_date(day):
+    """The ET date a day index refers to (for the archive labels)."""
+    return (date.fromisoformat(EPOCH_KEY) + timedelta(days=day)).isoformat()
+
+
+def archive_path(game, day):
+    return ARCHIVE_DIR / game / ("%d.json" % day)
+
+
+def write_archive(game, day):
+    """Collapse one finished day's live numbers into a static snapshot.
+
+    Written once and then read-only: if a snapshot already exists (a mid-day
+    restart archived a partial day), only a strictly larger tally replaces
+    it. A failed write must never take the service down.
+    """
+    st = STATS.get((game, day))
+    if not st or st["n"] == 0:
+        return False
+    p = archive_path(game, day)
+    if p.exists():
+        try:
+            with p.open(encoding='utf-8') as f:
+                old = json.load(f)
+            if old.get("n", 0) >= st["n"]:
+                return False
+        except (OSError, ValueError):
+            return False
+    payload = {
+        "game": game, "day": day, "date": day_date(day),
+        "n": st["n"], "sum": st["sum"], "sumsq": st["sumsq"],
+        "min": st["min"], "max": st["max"], "bins": st["bins"],
+        "edges": SPECS[game]["edges"], "better": SPECS[game]["better"],
+    }
+    try:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(payload, indent=2) + "\n", encoding='utf-8')
+        return True
+    except OSError:
+        return False
+
+
+def load_archive(game, day):
+    p = archive_path(game, day)
+    try:
+        with p.open(encoding='utf-8') as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
+
+
+def archived_stats(rec):
+    """An archive record reshaped into the live STATS board format."""
+    if not rec:
+        return None
+    return {"n": rec["n"], "sum": rec["sum"], "sumsq": rec["sumsq"],
+            "min": rec["min"], "max": rec["max"], "bins": rec["bins"]}
+
+
+def flush_stale(force=False):
+    """Hand finished days to the archive: snapshot once, then drop the board.
+
+    Runs lazily on every request (so the first request after midnight ET
+    settles yesterday cleanly), and forced on shutdown (so a restart does
+    not silently drop the partial day).
+    """
+    today = current_day_index()
+    for key in list(STATS.keys()):
+        game, day = key
+        if day == today and not force:
+            continue
+        if write_archive(game, day):
+            print("archived %s day %d (%d plays)" % (game, day, STATS[key]["n"]), flush=True)
         del STATS[key]
-    for key in [k for k in SEEN if k[0] == game and k[1] < horizon]:
-        del SEEN[key]
+        SEEN.pop(key, None)
 
 
 def tally(game, day, value, digest):
@@ -157,11 +232,12 @@ def beat_estimate(value, st, spec):
     return int(outside + max(0.0, min(1.0, frac)) * own)
 
 
-def snapshot(game, day, value=None):
+def snapshot(game, day, value=None, st=None):
     spec = SPECS[game]
     edges = spec["edges"]
     nbins = len(edges) - 1
-    st = STATS.get((game, day))
+    if st is None:
+        st = STATS.get((game, day))
     you_bin = bin_index(value, edges) if value is not None else None
     bins = [{"lo": edges[i], "hi": edges[i + 1], "count": 0, "you": False}
             for i in range(nbins)]
@@ -178,14 +254,14 @@ def snapshot(game, day, value=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/3.0"
+    server_version = "warmup-curve/4.0"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
 
     def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
     def _json(self, payload, status=200):
@@ -227,8 +303,17 @@ class Handler(BaseHTTPRequestHandler):
             except ValueError:
                 self._json({"error": "bad day"}, 400)
                 return
+            today = current_day_index()
             with LOCK:
-                payload = snapshot(game, day)
+                flush_stale()
+                if day > today:
+                    self._json({"error": "future day not available"}, 403)
+                    return
+                if day == today:
+                    payload = snapshot(game, day)
+                else:
+                    payload = snapshot(game, day, st=archived_stats(load_archive(game, day)))
+                    payload["archived"] = True
             self._json(payload)
         elif path == "/puzzle":
             qs = parse_qs(urlparse(self.path).query)
@@ -305,26 +390,47 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"error": "bad id"}, 400)
             return
         digest = hashlib.blake2b(pid.encode("utf-8"), digest_size=8).hexdigest()
+        today = current_day_index()
         with LOCK:
-            NEWEST[game] = max(NEWEST.get(game, day), day)
-            prune(game)
-            tally(game, day, value, digest)
-            payload = snapshot(game, day, value)
+            flush_stale()
+            if day > today:
+                self._json({"error": "future day not counted"}, 403)
+                return
+            if day == today:
+                # fresh puzzle day: this is the only thing that moves the curve
+                tally(game, day, value, digest)
+                payload = snapshot(game, day, value)
+            else:
+                # archive replay: answered from the frozen snapshot, changes nothing
+                payload = snapshot(game, day, value, st=archived_stats(load_archive(game, day)))
+                payload["archived"] = True
         self._json(payload)
 
 
 def main():
+    global ARCHIVE_DIR
     ap = argparse.ArgumentParser(description="Warmup global curve")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8787)
+    ap.add_argument("--archive-dir", default=str(ARCHIVE_DIR),
+                    help="where finished days collapse into static snapshots")
     args = ap.parse_args()
+    ARCHIVE_DIR = Path(args.archive_dir)
+
+    def _stop(signum, frame):
+        raise KeyboardInterrupt()
+    signal.signal(signal.SIGTERM, _stop)
+
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
-    print("warmup global curve on %s:%d (consolidated stats only, prunes after %d day)"
-          % (args.host, args.port, PRUNE_DAYS))
+    print("warmup global curve on %s:%d (fresh-day tallies only; archives in %s)"
+          % (args.host, args.port, ARCHIVE_DIR))
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
         pass
+    finally:
+        with LOCK:
+            flush_stale(force=True)
 
 
 if __name__ == "__main__":

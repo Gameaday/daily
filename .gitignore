@@ -7,3 +7,4 @@ scores/__pycache__/
 scores/puzzles.json
 
 dist/
+scores/archive/

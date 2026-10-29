@@ -1,11 +1,12 @@
 # Global-curve + puzzle-delivery container: the stdlib-only Python service.
 # The per-game puzzle stores are committed under scores/<game>/puzzles.json
 # and copied in next to server.py - the container is self-contained.
-# In-memory by design - NO volumes, nothing is ever written to disk.
+# Everything is read-only except /app/archive: each finished day's
+# consolidated numbers collapse into a static snapshot there (written once).
 # Binds 0.0.0.0 *inside* the container so Caddy can reach it over the
 # compose network; the port is never published to the host (see compose).
 FROM python:3.12-slim
 WORKDIR /app
 COPY scores/ ./
 EXPOSE 8787
-CMD ["python3", "-u", "server.py", "--host", "0.0.0.0", "--port", "8787"]
+CMD ["python3", "-u", "server.py", "--host", "0.0.0.0", "--port", "8787", "--archive-dir", "/app/archive"]

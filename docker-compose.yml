@@ -5,10 +5,11 @@
 #           banks inside; puzzles are served by the scores service). Plain
 #           HTTP on host port 8080: point your edge proxy (Traefik, nginx,
 #           ...) at it for TLS/domains. The repo needs no domain config.
-# scores  - the in-memory global-curve + puzzle-delivery service; internal
-#           network only, read-only filesystem, no capabilities, 64 MB cap.
-#           It keeps consolidated per-day numbers and the generated puzzle
-#           store, and forgets player data on restart - by design.
+# scores  - the global-curve + puzzle-delivery service; internal network
+#           only, no capabilities, 64 MB cap. Only fresh-day plays count
+#           toward the live curve; each finished day collapses into a
+#           static archive snapshot on the scores-archive volume (written
+#           once, then read-only).
 #
 # Updating after a git push: `make deploy` (or the update timer) pulls
 # main when CI is green on that exact commit and rebuilds the containers -
@@ -33,12 +34,18 @@ services:
       context: .
       dockerfile: Dockerfile.scores
     restart: unless-stopped
-    # hardened on purpose: no disk writes ever, no new privileges, no caps
+    # hardened on purpose: read-only except the archive volume, no caps
     read_only: true
     cap_drop:
       - ALL
     security_opt:
       - no-new-privileges:true
     mem_limit: 64m
+    volumes:
+      # the only writable path: end-of-day archive snapshots
+      - scores-archive:/app/archive
     expose:
       - "8787"
+
+volumes:
+  scores-archive:

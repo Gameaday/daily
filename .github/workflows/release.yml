@@ -1,0 +1,31 @@
+name: release
+
+# A tag push is the release act: build the two bundles, attach them to a
+# GitHub release. validate.yml also runs on tag pushes (it triggers on
+# every push), so a tag is always fully validated; the Pi deploys a tag
+# only after its validate run is green.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/build-bundles.mjs
+      - name: zip bundles
+        run: |
+          cd dist/offline && zip -rq ../../offline-bundle.zip .
+          cd ../online && zip -rq ../../online-bundle.zip .
+      - name: create release
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes --title "$GITHUB_REF_NAME" offline-bundle.zip online-bundle.zip
+        env:
+          GH_TOKEN: ${{ github.token }}

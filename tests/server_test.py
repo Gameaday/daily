@@ -25,6 +25,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PORT = 8971  # scratch port; nothing else listens here in CI or on the Pi
 
+# one source of truth: the epoch and timezone come from the manifest the
+# server itself loads, so this test can never disagree with server.py
+MANIFEST = json.loads((ROOT / "scores" / "manifest.json").read_text(encoding="utf-8"))
+
 try:
     from zoneinfo import ZoneInfo
 except Exception:
@@ -32,14 +36,15 @@ except Exception:
 
 
 def today_day():
-    """The same day index server.py computes from ET and EPOCH_KEY."""
+    """The same day index server.py computes: ET today minus the epoch in
+    scores/manifest.json (one source of truth for both sides of this test)."""
     tz = None
     try:
-        tz = ZoneInfo("America/New_York") if ZoneInfo else None
+        tz = ZoneInfo(MANIFEST["tz"]) if ZoneInfo else None
     except Exception:
         tz = None
     today = datetime.datetime.now(tz).date() if tz else date.today()
-    return (today - date.fromisoformat("2026-10-27")).days
+    return (today - date.fromisoformat(MANIFEST["epoch"])).days
 
 
 def req(method, path, body=None):

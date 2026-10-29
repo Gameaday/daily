@@ -68,8 +68,8 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
     manifest: JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'manifest.json'), 'utf8')),
     readStore: () => {
       try {
-        const timeline = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'timeline', 'puzzles.json'), 'utf8'));
-        const rounds = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'rounds', 'puzzles.json'), 'utf8'));
+        const timeline = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles', 'timeline', 'puzzles.json'), 'utf8'));
+        const rounds = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles', 'rounds', 'puzzles.json'), 'utf8'));
         return JSON.stringify({ timeline, rounds });
       } catch (e){ return null; }
     }

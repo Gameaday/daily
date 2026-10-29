@@ -77,11 +77,16 @@ with open(Path(__file__).parent / 'manifest.json', encoding='utf-8') as _mf:
 TZ_NAME = _MANIFEST['tz']
 EPOCH_KEY = _MANIFEST['epoch']
 SPECS = _MANIFEST['games']
-# Per-game puzzle stores: scores/<game>/puzzles.json, committed and verified
-# against the client banks by tools/export-puzzles.mjs in CI. Generator games
-# keep an empty store (their puzzles are derived, not curated).
+# Per-game puzzle stores: puzzles/<game>/puzzles.json at the repo root,
+# committed and verified against the client banks by tools/export-puzzles.mjs
+# in CI. Generator games keep an empty store (their puzzles are derived,
+# not curated). The container copies them to ./puzzles next to server.py;
+# a local run finds them at ../puzzles - the first existing one wins.
 PUZZLES = {}
-PUZZLES_DIR = Path(__file__).parent
+PUZZLES_DIR = next((p for p in (
+    Path(__file__).parent / 'puzzles',
+    Path(__file__).parent.parent / 'puzzles') if p.is_dir()),
+    Path(__file__).parent / 'puzzles')
 for game in SPECS.keys():
     game_file = PUZZLES_DIR / game / 'puzzles.json'
     try:

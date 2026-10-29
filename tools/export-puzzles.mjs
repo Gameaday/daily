@@ -1,6 +1,6 @@
 /* Verifies - and with --write, regenerates - the generated bank files
    (assets/banks/<game>.js) against the committed puzzle stores
-   (scores/<game>/puzzles.json).
+   (puzzles/<game>/puzzles.json).
 
    The stores are the single source of truth: banks are edited as data in
    the stores, each page loads its generated bank file, and the scores
@@ -41,7 +41,7 @@ function mulberry32(a){
 }
 
 function readStore(game){
-  return JSON.parse(fs.readFileSync('scores/' + game + '/puzzles.json', 'utf8'));
+  return JSON.parse(fs.readFileSync('puzzles/' + game + '/puzzles.json', 'utf8'));
 }
 
 function bankPath(game){

@@ -133,9 +133,9 @@ def main():
               "manifest responses are cacheable")
 
         # --- puzzle delivery (server-gated games; needs the committed
-        #     per-game stores under scores/<game>/puzzles.json) ---
-        if not (ROOT / "scores" / "bogus" / "puzzles.json").exists():
-            check(False, "scores/bogus/puzzles.json missing")
+        #     per-game stores under puzzles/<game>/puzzles.json) ---
+        if not (ROOT / "puzzles" / "bogus" / "puzzles.json").exists():
+            check(False, "puzzles/bogus/puzzles.json missing")
         else:
             s, b = req("GET", "/api/puzzle?game=bogus&day=0")
             check(s == 200 and b.get("puzzle", {}).get("l") == 5,
@@ -147,7 +147,7 @@ def main():
             ev = b.get("puzzle", {}).get("events", [])
             check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
             check(len({e.get("y") for e in ev}) == 5, "GET /puzzle timeline -> distinct years")
-            store = json.loads((ROOT / "scores" / "timeline" / "puzzles.json").read_text(encoding="utf-8"))
+            store = json.loads((ROOT / "puzzles" / "timeline" / "puzzles.json").read_text(encoding="utf-8"))
             exp = [store["bank"][i] for i in store["picks"][0]]
             check(ev == exp, "GET /puzzle timeline matches the committed picks")
             s, b = req("GET", "/api/puzzle?game=timeline&day=-1")

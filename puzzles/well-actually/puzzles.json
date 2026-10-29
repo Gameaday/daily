@@ -836,7 +836,7 @@
     "s": [
       "The geographic South Pole was first reached",
       "in December 1911,",
-      "by the British explorer",
+      "by the explorer",
       "Robert Falcon Scott."
     ],
     "w": "Roald Amundsen, who planted the Norwegian flag on December 14, 1911. Scott’s party arrived five weeks later, in January 1912, and died on the march back to the coast."
@@ -853,10 +853,10 @@
       "Chinese"
     ],
     "s": [
-      "Paper, the quiet engine of civilization,",
-      "was first made by the Egyptians,",
-      "who pressed strips of the papyrus reed",
-      "into sheets for their scribes."
+      "Paper, the quiet engine of civilization, was first made by",
+      "the Egyptians,",
+      "who pounded bark, hemp, and rags into sheets,",
+      "a craft later carried west along the Silk Road."
     ],
     "w": "Papyrus is not paper. True paper, made by pulping plant fibers and matting them into a sheet, was invented in Han dynasty China, traditionally credited to the court official Cai Lun around 105 CE, and reached Europe more than a thousand years later."
   },
@@ -911,10 +911,10 @@
       "about three months"
     ],
     "s": [
-      "A goldfish, the running joke of the aquarium,",
-      "is said to be unable to remember anything for longer than",
-      "three seconds.",
-      "Science disagrees, politely."
+      "The goldfish, forgetful star of every joke,",
+      "can hold a new memory for",
+      "three seconds,",
+      "before the tank fades to blank again."
     ],
     "w": "Goldfish learn mazes, remember feeding schedules for months, and can tell their keepers apart. Experiments reaching back decades show memories lasting at least three months, and the three-second slander has failed every test it has ever faced."
   },
@@ -984,16 +984,16 @@
       "of carbon"
     ],
     "s": [
-      "Diamonds, the hardest natural substance known,",
-      "are made of coal",
-      "squeezed by the Earth for millions of years",
-      "until the black rock turns to crystal."
+      "Diamonds, the hardest natural substance known, are made of",
+      "coal",
+      "crystallized under crushing heat and pressure",
+      "deep in the Earth’s mantle over billions of years."
     ],
     "w": "Diamonds grow from carbon in the mantle, but not from coal: most diamonds are far older than every land plant, and coal seams simply cannot sink a hundred kilometers down. The coal-to-diamond recipe is a cartoon version of geology."
   },
   {
     "t": "Invention · The Steam Engine",
-    "l": 1,
+    "l": 2,
     "c": "Thomas Newcomen",
     "a": [
       "Thomas Newcomen",
@@ -1003,28 +1003,28 @@
     ],
     "s": [
       "The first practical steam engine, built to drain deep mines,",
-      "was invented by James Watt in the 1760s,",
-      "a Scottish instrument maker whose insight made it efficient,",
-      "and it went on to power the first factories of the Industrial Revolution."
+      "appeared in 1712 as the invention of",
+      "James Watt,",
+      "an English ironmonger whose engine pumped coal mines for half a century."
     ],
     "w": "Thomas Newcomen’s atmospheric engine was pumping mines from 1712, two generations before Watt rebuilt it with a separate condenser in the 1760s. Watt made the steam engine efficient; Newcomen made it work."
   },
   {
     "t": "Printing · Movable Type",
-    "l": 1,
-    "c": "the Chinese",
+    "l": 2,
+    "c": "China",
     "a": [
-      "the Chinese",
       "China",
+      "the Chinese",
+      "eleventh-century China",
       "Chinese",
-      "Bi Sheng",
-      "Pi Sheng"
+      "in China"
     ],
     "s": [
       "Movable type, printing from cast and arranged letters,",
-      "was invented in Germany in the 1450s,",
-      "perfected by Johannes Gutenberg at Mainz,",
-      "and spread from there to remake the world."
+      "first appeared in",
+      "fifteenth-century Germany,",
+      "and was perfected by Johannes Gutenberg at Mainz."
     ],
     "w": "Bi Sheng carved ceramic movable type in China in the 1040s, four centuries before Mainz; Korea was casting it in metal and printing books with it a century before Gutenberg. Europe’s press was revolutionary, but the idea had long since existed in East Asia."
   },
@@ -1040,7 +1040,7 @@
       "Greek Macedonian"
     ],
     "s": [
-      "An Egyptian by blood and by upbringing,",
+      "Egyptian by blood,",
       "Cleopatra VII was the last pharaoh of Egypt,",
       "enthroned in Alexandria above a Greek-speaking court,",
       "until Rome absorbed her kingdom in 30 BCE."
@@ -1050,17 +1050,18 @@
   {
     "t": "Space · The Hottest Planet",
     "l": 2,
-    "c": "Venus",
+    "c": "hotter",
     "a": [
-      "Venus",
-      "the planet Venus",
-      "the second planet"
+      "hotter",
+      "hotter than Mercury",
+      "even hotter",
+      "hotter than scorched Mercury"
     ],
     "s": [
       "Venus hides beneath a shroud of pale cloud,",
-      "orbiting second from the Sun,",
-      "yet stays cooler than scorched Mercury,",
-      "which shines bright enough to be mistaken for a star."
+      "orbiting second from the Sun, yet stays",
+      "cooler",
+      "than scorched Mercury, which shines bright enough to be mistaken for a star."
     ],
     "w": "Venus is the hottest planet, around 465 degrees Celsius day and night, pole to pole. Its carbon dioxide atmosphere holds the heat, while Mercury, with no air worth the name, swings from roasting to freezing every two months."
   },
@@ -1083,7 +1084,7 @@
   },
   {
     "t": "Sports · The Marathon",
-    "l": 1,
+    "l": 3,
     "c": "1908",
     "a": [
       "1908",
@@ -1093,119 +1094,120 @@
     ],
     "s": [
       "The marathon’s odd distance of 26 miles and 385 yards",
-      "was fixed by the ancient Greeks,",
-      "measuring the road from Marathon to Athens,",
-      "for the messenger’s famous run."
+      "was fixed for the London Olympics",
+      "of",
+      "490 BCE."
     ],
     "w": "The antique run was about 25 miles, and the story attached to it was written up centuries later. The extra 385 yards were added at the 1908 London Olympics so the race could finish in front of the royal box; the distance became official only in 1921."
   },
   {
     "t": "Literature · Frankenstein",
-    "l": 1,
-    "c": "the scientist",
+    "l": 2,
+    "c": "Victor Frankenstein",
     "a": [
-      "the scientist",
-      "the doctor",
-      "the creator",
       "Victor Frankenstein",
       "Victor",
-      "the maker"
+      "the scientist",
+      "the doctor",
+      "the maker",
+      "the creator"
     ],
     "s": [
       "In Mary Shelley’s 1818 novel,",
-      "the stitched and lumbering creature is named Frankenstein,",
-      "haunted by its maker’s rejection,",
-      "and remembered to history by the name on its brow."
+      "the creature was stitched together by",
+      "Henry Clerval,",
+      "and haunted by its maker’s rejection ever after."
     ],
     "w": "Frankenstein is Victor Frankenstein, the student who assembles the creature; the creature itself has no name at all. The mix-up was already old when the book’s first reviewers made it."
   },
   {
     "t": "Food · Fortune Cookies",
-    "l": 0,
+    "l": 3,
     "c": "Japan",
     "a": [
       "Japan",
-      "Japanese immigrants",
-      "California",
-      "Japanese bakers in California"
+      "Kyoto",
+      "a Japanese bakery",
+      "Japanese bakers"
     ],
     "s": [
-      "Invented in ancient China,",
-      "the folded fortune cookie carried proverbs and luck",
-      "to every imperial banquet,",
-      "long before the West had ever tasted one."
+      "The fortune cookie,",
+      "that staple of every Chinese restaurant check,",
+      "was invented in",
+      "China."
     ],
     "w": "The folded cookie descends from a Kyoto cracker with a fortune tucked inside, and the modern version was popularized by Japanese immigrant bakeries in California in the early 1900s. Chinese restaurants adopted it decades later; in China it is known, when it is known at all, as an American cookie."
   },
   {
     "t": "Geography · The Capital of Australia",
-    "l": 1,
+    "l": 2,
     "c": "Canberra",
     "a": [
       "Canberra"
     ],
     "s": [
-      "Home of the Opera House and the Harbour Bridge,",
-      "Sydney was chosen as the capital when the colonies federated,",
-      "taking the parliament, the courts, and the embassies",
-      "from rival Melbourne without a fight."
+      "When the colonies federated in 1901,",
+      "the new national capital was",
+      "Melbourne,",
+      "and it has never moved since."
     ],
     "w": "The constitution required a capital in New South Wales but at least a hundred miles from Sydney, so neither Sydney nor Melbourne could win. Canberra, surveyed out of sheep country, received the parliament in 1927."
   },
   {
     "t": "Geography · The Largest Desert",
-    "l": 0,
+    "l": 3,
     "c": "Antarctica",
     "a": [
       "Antarctica",
-      "the Antarctic"
+      "the Antarctic",
+      "the Antarctic desert"
     ],
     "s": [
-      "The largest desert on Earth is the Sahara,",
+      "The largest hot desert on Earth is the Sahara,",
       "a sea of dunes the size of a continent,",
-      "stretching from the Atlantic to the Red Sea,",
-      "the emptiest place people know."
+      "but the largest desert of all is",
+      "the sands of the Empty Quarter."
     ],
     "w": "A desert is measured by rainfall, not sand; Antarctica’s interior receives under 200 millimeters a year and covers about 14 million square kilometers, roughly half again the Sahara. The Sahara is merely the largest hot desert."
   },
   {
     "t": "Food · Chop Suey",
-    "l": 0,
-    "c": "the United States",
+    "l": 3,
+    "c": "California",
     "a": [
-      "the United States",
-      "America",
       "California",
+      "San Francisco",
       "New York",
-      "American Chinese cooks"
+      "America",
+      "the United States"
     ],
     "s": [
-      "Born in the kitchens of imperial China,",
-      "chop suey crossed the ocean with the emigrants",
-      "and became the most famous Chinese dish in America,",
-      "a taste of home for every Cantonese cook."
+      "Chop suey,",
+      "the dish every American thinks of as Chinese,",
+      "was invented in",
+      "China."
     ],
     "w": "Chop suey, odds and ends in Cantonese, is an American invention of the late 1800s; the dish is unknown in China, and it became known there mostly through tourists asking for it. The stories about it charming a visiting diplomat are themselves tall tales."
   },
   {
     "t": "Space · The North Star",
-    "l": 0,
+    "l": 3,
     "c": "Sirius",
     "a": [
       "Sirius",
       "the Dog Star"
     ],
     "s": [
-      "The brightest star in the night sky,",
-      "Polaris, the North Star,",
-      "has steered sailors and runaways north for centuries,",
-      "outshining everything around it."
+      "Sailors have trusted the North Star for centuries,",
+      "but the brightest star in the night sky",
+      "is actually",
+      "Polaris."
     ],
     "w": "Polaris ranks around the fiftieth-brightest star in the night sky; Sirius, the Dog Star, is the brightest by far. The North Star is famous for holding nearly still, not for shining hardest."
   },
   {
     "t": "Invention · The Flush Toilet",
-    "l": 0,
+    "l": 2,
     "c": "Sir John Harington",
     "a": [
       "Sir John Harington",
@@ -1213,10 +1215,10 @@
       "Harington"
     ],
     "s": [
-      "Invented by Thomas Crapper,",
-      "the flush toilet arrived in Victorian England",
-      "with the plumber’s name cast proudly on its cisterns",
-      "and royal warrants on his letterhead."
+      "The flush toilet,",
+      "the crowning work of",
+      "Thomas Crapper,",
+      "was invented in 1596 for Queen Elizabeth I."
     ],
     "w": "Crapper was a real master plumber who held royal warrants and popularized good fittings, but the flush water closet dates to Harington’s Ajax of 1596, built for Queen Elizabeth I. The word crap was English slang long before either man."
   },
@@ -1228,13 +1230,13 @@
       "Sidney Paget",
       "Paget",
       "the illustrator",
-      "the illustrations"
+      "the illustrator Sidney Paget"
     ],
     "s": [
-      "Wearing his deerstalker and cape in the fog,",
-      "Sherlock Holmes stalked through every story",
-      "from the very first case in 1887,",
-      "exactly as Arthur Conan Doyle dressed him."
+      "The deerstalker cap and cape,",
+      "worn by Sherlock Holmes in the fog,",
+      "were put on him by",
+      "Arthur Conan Doyle."
     ],
     "w": "Doyle never puts a deerstalker on Holmes anywhere in the canon; the hat and the curved pipe entered the world in Sidney Paget’s drawings for The Strand Magazine and simply never left."
   },
@@ -1288,85 +1290,89 @@
   },
   {
     "t": "Food · The Caesar Salad",
-    "l": 1,
-    "c": "Mexico",
+    "l": 2,
+    "c": "Caesar Cardini",
     "a": [
-      "Mexico",
-      "Tijuana"
+      "Caesar Cardini",
+      "Cardini",
+      "Cesare Cardini"
     ],
     "s": [
       "Crisp romaine, coddled egg, and parmesan,",
-      "the Caesar salad was named for Julius Caesar,",
-      "a Roman recipe reborn",
-      "for the tables of the world."
+      "the Caesar salad was invented by",
+      "Julius Caesar",
+      "at a table in Tijuana."
     ],
     "w": "Caesar Cardini, an Italian immigrant restaurateur, tossed the first one at his restaurant in Tijuana in 1924, on a busy Fourth of July running short of supplies. The name is his, not the emperor’s; Rome never tasted it."
   },
   {
     "t": "Biology · The Tongue Map",
-    "l": 2,
-    "c": "all over the tongue",
+    "l": 3,
+    "c": "a mistranslation",
     "a": [
-      "all over the tongue",
-      "everywhere",
-      "all over"
+      "a mistranslation",
+      "a mistranslated paper",
+      "a misreading",
+      "a bad translation"
     ],
     "s": [
-      "Sweet at the tip, bitter at the back,",
-      "sour and salt along the sides,",
-      "the tongue’s tastes each live",
-      "in their own separate zone."
+      "The tongue map,",
+      "with sweet at the tip and bitter at the back,",
+      "was the work of",
+      "modern science."
     ],
     "w": "The map came from a misread 1901 German paper and was cemented by textbook diagrams, but taste buds of every kind sit on every region of the tongue. Taste the same sugar at the tip and at the back: it registers in both, just slightly weaker."
   },
   {
     "t": "Physics · The Old Window",
-    "l": 2,
-    "c": "a solid",
+    "l": 3,
+    "c": "wrong",
     "a": [
-      "a solid",
-      "an amorphous solid",
-      "solid"
+      "wrong",
+      "proved wrong",
+      "proved them wrong"
     ],
     "s": [
-      "Medieval panes run thicker at the bottom,",
-      "so glass, the story goes,",
-      "is a liquid creeping over the centuries,",
-      "an unbearably slow flowing thing."
+      "Medieval window panes run thicker at the bottom",
+      "because glass is a slow-flowing liquid,",
+      "say the guides on every cathedral tour, and physics has proved them",
+      "right."
     ],
     "w": "Glass is an amorphous solid, rigid at room temperature. Old panes are thick at the bottom because crown-glass makers left one edge heavier, and glaziers installed the heavy side down for stability. Nothing flows on the timescale of cathedrals."
   },
   {
     "t": "Nature · The Ostrich",
-    "l": 1,
-    "c": "it does not",
+    "l": 2,
+    "c": "runs",
     "a": [
-      "it does not",
-      "a myth",
-      "it never does"
+      "runs",
+      "runs away",
+      "sprints",
+      "flees"
     ],
     "s": [
-      "The fastest bird on two legs,",
-      "the ostrich hides from danger",
-      "by burying its head in the sand,",
-      "believing itself invisible."
+      "When a predator closes in,",
+      "the ostrich, fastest of birds on two legs,",
+      "buries its head in the sand",
+      "until the lion loses interest."
     ],
     "w": "No ostrich buries its head; the bird would suffocate, and an animal that sprints at seventy kilometers an hour has better options. The image probably comes from adults shading their ground nests, heads down over the eggs."
   },
   {
     "t": "History · The First Women Voters",
-    "l": 2,
-    "c": "New Zealand",
+    "l": 3,
+    "c": "1869",
     "a": [
-      "New Zealand"
+      "1869",
+      "eighteen sixty-nine"
     ],
     "s": [
-      "When women finally won the vote,",
-      "Britain and America led the way,",
-      "the great democracies setting the example",
-      "for the rest of the world to follow."
+      "The first American state to let women vote",
+      "was Wyoming,",
+      "back in",
+      "1920."
     ],
-    "w": "New Zealand granted women the vote in 1893 after the largest petition the country had seen; Australia followed in 1902, but Britain waited until 1918 and the United States until 1920. The great democracies were latecomers to their own principle."
+    "w": "Wyoming Territory granted women the vote in 1869, half a century before the Nineteenth Amendment made it national in 1920. A territory that wanted settlers knew a draw when it saw one."
   },
   {
     "t": "Egypt · The Pyramid Builders",
@@ -1375,30 +1381,34 @@
     "a": [
       "paid workers",
       "paid laborers",
+      "free workers",
+      "Egyptian laborers",
       "workers"
     ],
     "s": [
       "Two million blocks, twenty years of labor,",
-      "the pyramids rose under the whip,",
-      "built by slaves taken in war",
+      "and the pyramids of Giza were raised by",
+      "slaves taken in war",
       "for the glory of the kings."
     ],
     "w": "The builders were recruited Egyptian laborers paid in bread, beer, and status, housed in excavated villages near the plateau with bakeries, breweries, and medical care written in their bones. Slaves did not build the pyramids; Herodotus’s rumor and Hollywood did that stonework."
   },
   {
     "t": "Biology · The Five Senses",
-    "l": 1,
+    "l": 3,
     "c": "more than five",
     "a": [
       "more than five",
       "more",
-      "at least nine"
+      "at least nine",
+      "nine or more",
+      "many more"
     ],
     "s": [
-      "Sight, hearing, taste, smell, and touch,",
-      "the five senses Aristotle counted",
-      "are the complete catalog",
-      "of how the body meets the world."
+      "The human body meets the world",
+      "through its senses,",
+      "of which there are",
+      "five."
     ],
     "w": "Balance, temperature, pain, body position, and the sense of your own joints all report without touching anything; researchers count anywhere from nine to twenty-one senses. Aristotle’s tidy five survive because they are the ones with obvious organs."
   }

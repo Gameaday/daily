@@ -2588,5 +2588,375 @@
         ]
       }
     ]
+  },
+  {
+    "t": "The Napoleonic Era",
+    "cats": [
+      {
+        "n": "The man and his circle",
+        "i": [
+          "Napoleon Bonaparte",
+          "Josephine",
+          "Marshal Ney"
+        ]
+      },
+      {
+        "n": "The final act",
+        "i": [
+          "Elba",
+          "the Hundred Days",
+          "Saint Helena"
+        ]
+      },
+      {
+        "n": "Tools of empire",
+        "i": [
+          "the Napoleonic Code",
+          "the Continental System",
+          "the Grande Armée"
+        ]
+      },
+      {
+        "n": "Battles without end",
+        "i": [
+          "Borodino",
+          "Jena",
+          "the Battle of the Nile"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Crusades",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "Saladin",
+          "Richard the Lionheart",
+          "Godfrey of Bouillon"
+        ]
+      },
+      {
+        "n": "Campaigns",
+        "i": [
+          "the First Crusade",
+          "the Third Crusade",
+          "the Children’s Crusade"
+        ]
+      },
+      {
+        "n": "Prizes and ports",
+        "i": [
+          "Jerusalem",
+          "Antioch",
+          "Acre"
+        ]
+      },
+      {
+        "n": "The fighting orders",
+        "i": [
+          "the Knights Templar",
+          "the Hospitallers",
+          "the Teutonic Knights"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Mongol Empire",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "Genghis Khan",
+          "Kublai Khan",
+          "Ogedei Khan"
+        ]
+      },
+      {
+        "n": "Successor states",
+        "i": [
+          "the Golden Horde",
+          "the Yuan dynasty",
+          "the Ilkhanate"
+        ]
+      },
+      {
+        "n": "Campaigns",
+        "i": [
+          "the sack of Baghdad",
+          "the battle of Legnica",
+          "the invasions of Japan"
+        ]
+      },
+      {
+        "n": "Life on the steppe",
+        "i": [
+          "the ger",
+          "the composite bow",
+          "the Yam relay"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Meiji Era",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "Emperor Meiji",
+          "Ito Hirobumi",
+          "Saigo Takamori"
+        ]
+      },
+      {
+        "n": "Reforms",
+        "i": [
+          "the Meiji Constitution",
+          "compulsory schooling",
+          "the abolition of the samurai class"
+        ]
+      },
+      {
+        "n": "Wars",
+        "i": [
+          "the Satsuma Rebellion",
+          "the Sino-Japanese War",
+          "the Russo-Japanese War"
+        ]
+      },
+      {
+        "n": "Symbols of the new age",
+        "i": [
+          "the first Japanese railway",
+          "the Rokumeikan",
+          "the Bank of Japan"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Mughal Empire",
+    "cats": [
+      {
+        "n": "Emperors",
+        "i": [
+          "Babur",
+          "Akbar",
+          "Shah Jahan"
+        ]
+      },
+      {
+        "n": "Splendors",
+        "i": [
+          "the Taj Mahal",
+          "the Peacock Throne",
+          "the Red Fort"
+        ]
+      },
+      {
+        "n": "The end",
+        "i": [
+          "Aurangzeb",
+          "Nader Shah",
+          "the Battle of Plassey"
+        ]
+      },
+      {
+        "n": "Legacies",
+        "i": [
+          "Mughal gardens",
+          "Mughal miniatures",
+          "the Urdu language"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The History of Games",
+    "cats": [
+      {
+        "n": "Antiquity",
+        "i": [
+          "senet",
+          "knucklebones",
+          "the Royal Game of Ur"
+        ]
+      },
+      {
+        "n": "The classics",
+        "i": [
+          "chess",
+          "backgammon",
+          "the game of Go"
+        ]
+      },
+      {
+        "n": "The parlor age",
+        "i": [
+          "dominoes",
+          "whist",
+          "charades"
+        ]
+      },
+      {
+        "n": "The board game boom",
+        "i": [
+          "Monopoly",
+          "Scrabble",
+          "Clue"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The American Revolution",
+    "cats": [
+      {
+        "n": "Voices of the cause",
+        "i": [
+          "John Adams",
+          "Thomas Paine",
+          "Benjamin Franklin"
+        ]
+      },
+      {
+        "n": "The fight",
+        "i": [
+          "the Boston Tea Party",
+          "Lexington and Concord",
+          "Valley Forge"
+        ]
+      },
+      {
+        "n": "Allies and turncoats",
+        "i": [
+          "the Marquis de Lafayette",
+          "Baron von Steuben",
+          "Benedict Arnold"
+        ]
+      },
+      {
+        "n": "After the peace",
+        "i": [
+          "the Treaty of Paris",
+          "Shays’ Rebellion",
+          "the Constitutional Convention"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Baroque Age",
+    "cats": [
+      {
+        "n": "Composers",
+        "i": [
+          "Antonio Vivaldi",
+          "George Frideric Handel",
+          "Henry Purcell"
+        ]
+      },
+      {
+        "n": "Painters",
+        "i": [
+          "Caravaggio",
+          "Rembrandt",
+          "Vermeer"
+        ]
+      },
+      {
+        "n": "Architects and sculptors",
+        "i": [
+          "Bernini",
+          "Borromini",
+          "Christopher Wren"
+        ]
+      },
+      {
+        "n": "Wonders of the age",
+        "i": [
+          "St. Peter’s Basilica",
+          "St. Paul’s Cathedral",
+          "the Trevi Fountain"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Trojan War",
+    "cats": [
+      {
+        "n": "Warriors",
+        "i": [
+          "Achilles",
+          "Hector",
+          "Odysseus"
+        ]
+      },
+      {
+        "n": "Kings and queens",
+        "i": [
+          "Priam",
+          "Agamemnon",
+          "Helen of Troy"
+        ]
+      },
+      {
+        "n": "The poets’ tale",
+        "i": [
+          "the Iliad",
+          "the Odyssey",
+          "the Trojan Horse"
+        ]
+      },
+      {
+        "n": "The world it ended",
+        "i": [
+          "Mycenae",
+          "the fall of Troy",
+          "the Bronze Age collapse"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Victorian Age",
+    "cats": [
+      {
+        "n": "The court",
+        "i": [
+          "Queen Victoria",
+          "Prince Albert",
+          "John Brown"
+        ]
+      },
+      {
+        "n": "Marvels of the age",
+        "i": [
+          "the Crystal Palace",
+          "the Great Exhibition",
+          "the London Underground"
+        ]
+      },
+      {
+        "n": "New machines",
+        "i": [
+          "the electric telegraph",
+          "the penny post",
+          "the sewing machine"
+        ]
+      },
+      {
+        "n": "The age’s writers",
+        "i": [
+          "Charles Dickens",
+          "Anthony Trollope",
+          "Thomas Hardy"
+        ]
+      }
+    ]
   }
 ]

@@ -75,6 +75,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p class="acceptnote" id="acceptnote"></p>
     <div class="typed"><input id="guess" maxlength="5" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="type a word"/></div>
     <div class="wordactions">
+      <button class="btn ghost" id="btnShuffle" style="display:none;" title="Re-scramble the same letters">Shuffle ⟳</button>
       <button class="btn ghost" id="btnSkip">Skip ▷</button>
     </div>
   </div>
@@ -105,7 +106,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="modal">
     <h2>How to play</h2>
     <p>Each round shows <b>five scrambled words</b> — one 4-letter, then four 5-letter. Type an anagram and hit enter: <b>any dictionary word using exactly those letters scores</b>, so if we scrambled STONE and you spot TONES first, take it.</p>
-    <p><b>Skip</b> parks a word and moves on. Circle back? Only if you clear the rest with time to spare. (You won't. You never do.)</p>
+    <p><b>Skip</b> parks a word and moves on. Circle back? Only if you clear the rest with time to spare. (You won't. You never do.) Staring at the same letters for twenty seconds earns a <b>Shuffle</b>: same word, fresh arrangement, no time cost.</p>
     <p>The <b>90-second clock starts on your first keystroke</b>. Reload the page, switch tabs, close your laptop — the clock keeps running. That's the sprint.</p>
     <p>Beat 3 of 5 to keep your streak.</p>
     <button class="close" data-close>On your marks</button>
@@ -188,7 +189,7 @@ if (!S || S.day !== dayIndex){
   if (S && S.day !== dayIndex && S.status !== 'won'){
     if (!(S.solvedCount >= 3)) stats.streak = 0;
   }
-  S = { day: dayIndex, startAt:null, timeMs:0, idx:0, solved:[], skips:0, solvedCount:0, status:'playing', stats };
+  S = { day: dayIndex, startAt:null, timeMs:0, idx:0, shownAt:null, solved:[], skips:0, solvedCount:0, status:'playing', stats };
 }
 saveState();
 
@@ -202,6 +203,14 @@ function fmtClock(ms){
 function timeLeft(){
   if (!S.startAt) return TOTAL_MS;
   return Math.max(0, TOTAL_MS - (Date.now() - S.startAt));
+}
+
+/* a stuck player earns a shuffle: same letters, fresh arrangement */
+const STUCK_MS = 20000;
+const shuffleRnd = mulberry32(dayIndex * 6151 + 424243);
+function updateShuffleBtn(){
+  const show = S.status === 'playing' && S.shownAt && (Date.now() - S.shownAt) >= STUCK_MS;
+  $('btnShuffle').style.display = show ? '' : 'none';
 }
 
 function renderTrack(){
@@ -255,6 +264,14 @@ $('btnSkip').addEventListener('click', () => {
     advance();
   }
 });
+$('btnShuffle').addEventListener('click', () => {
+  if (S.status !== 'playing') return;
+  const k = targets[S.idx];
+  let s = scrambles[S.idx];
+  for (let t = 0; t < 8 && s === scrambles[S.idx]; t++) s = scrambleWord(k, shuffleRnd);
+  scrambles[S.idx] = s;
+  $('scramble').textContent = s;
+});
 function advance(){
   if (S.solvedCount >= 5){ finish('won'); return; }
   let n = S.idx + 1;
@@ -266,6 +283,7 @@ function advance(){
     n = rem[0];
   }
   S.idx = n;
+  S.shownAt = Date.now();
   saveState();
   renderWord();
 }
@@ -305,6 +323,7 @@ function showReveal(){
   $('wordbox').style.opacity = '.55';
   $('wordbox').style.pointerEvents = 'none';
   $('btnSkip').disabled = true;
+  $('btnShuffle').style.display = 'none';
   $('bigclock').textContent = S.status === 'won' ? fmtClock(TOTAL_MS - timeLeft()) : '0:00';
   syncBoard(S.solvedCount);
 }
@@ -325,8 +344,10 @@ function onTick(){  if (S.status === 'playing' && S.startAt){
     $('bigclock').textContent = fmtClock(tl);
     $('bigclock').classList.toggle('warn', tl < 20000);
     if (tl <= 0) finish('lost');
+    updateShuffleBtn();
   } else if (S.status === 'playing'){
     $('bigclock').textContent = '1:30';
+    updateShuffleBtn();
   }
 }
 
@@ -336,7 +357,9 @@ $('pdate').textContent = SHELL.pdateText();
 renderTrack();
 renderDoneList();
 if (S.status === 'playing'){
+  if (!S.shownAt){ S.shownAt = Date.now(); saveState(); }
   renderWord();
+  updateShuffleBtn();
   if (S.startAt && timeLeft() <= 0) finish('lost');
 } else {
   showReveal();

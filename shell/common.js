@@ -95,10 +95,21 @@ const SHELL = (() => {
   }
 
   /* ---- global curve client: the server owns the metric direction ---- */
+  /* Solo mode: the whole site is static files, so an air-gapped copy (or
+     any file:// download, or ?solo=1) plays exactly the same game with the
+     curve switched off - nothing is submitted, no stats are fetched, and
+     the games keep working if the scores server is down. */
+  function isSolo(){
+    return location.protocol === 'file:' || String(location.search || '').indexOf('solo') >= 0;
+  }
   function syncBoardFor(game, better){
     return function syncBoard(value){
       const box = $('curve');
       if (!box) return;
+      if (isSolo()){
+        box.innerHTML = '<div class="curve-note">solo mode \u2014 the global curve is switched off</div>';
+        return;
+      }
       box.innerHTML = '<div class="curve-note">checking the global curve\u2026</div>';
       let id = '';
       try {
@@ -129,7 +140,12 @@ const SHELL = (() => {
       '<div class="curve-bars">' + bars + '</div>';
   }
 
+  /* ---- is the global curve service reachable? ---- */
+  /* Used by games that gate a heavy or bonus mode on being online (grid
+     hard mode). Any HTTP answer - even a 404 - proves the service is up;
+     only a network error counts as offline. Solo mode is offline by design. */
   function probeCurve(){
+    if (isSolo()) return Promise.resolve(false);
     const go = (base) => fetch(base + '/health', { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' })
       .then(() => true, () => false);
     return go('/api')
@@ -144,12 +160,19 @@ const SHELL = (() => {
   }
 
   /* ---- fetch today's (or an older) puzzle from the scores service ---- */
-
-  function fetchPuzzle(game, day, baseUrl = '/api'){
+  /* Online mode only: the server refuses future days, so the client never
+     receives puzzles it is not allowed to see. Solo mode callers should use
+     their local PUZZLES array instead. */
+  function fetchPuzzle(game, day){
     const qs = '?game=' + encodeURIComponent(game) + '&day=' + encodeURIComponent(day);
-    return fetch(baseUrl + '/puzzle' + qs)
-      .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
-      .catch(() => { throw new Error('puzzle service unreachable'); });
+    const bases = ['/api', 'http://localhost:8787', 'http://127.0.0.1:8787'];
+    const tryBase = (i) => {
+      if (i >= bases.length) throw new Error('puzzle service unreachable');
+      return fetch(bases[i] + '/puzzle' + qs)
+        .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+        .catch(() => tryBase(i + 1));
+    };
+    return tryBase(0);
   }
   try {
     const icons = document.querySelector('.icons');
@@ -166,5 +189,5 @@ const SHELL = (() => {
 
   return { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, fetchPuzzle };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle };
 })();

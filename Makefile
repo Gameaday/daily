@@ -4,8 +4,9 @@
 
 .PHONY: test build up down restart logs deploy
 
-# full local gate: same three layers CI runs, with the puzzle store
-# regenerated first (run.js checks the exported picks against the games)
+# full local gate: same three layers CI runs, with the committed puzzle
+# stores verified against the client banks first (run.js checks the
+# committed picks against the games)
 test:
 	node tools/export-puzzles.mjs
 	node checks/games.js
@@ -14,7 +15,6 @@ test:
 
 # build the offline + online site bundles into dist/
 build:
-	node tools/export-puzzles.mjs
 	node tools/build-bundles.mjs
 
 up:

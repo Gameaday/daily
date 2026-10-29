@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Generate server-side puzzle store
+      - name: Verify committed puzzle stores
         run: node tools/export-puzzles.mjs
       - name: Layer 1 - compile every game + shell/id/landing checks
         run: |

@@ -1,15 +1,19 @@
-/* Verifies the committed per-game puzzle stores (scores/<game>/puzzles.json)
-   against the banks in the client pages. Every direct game's store must
-   deep-equal its inline bank, generator games ship empty stores by design,
-   and the timeline store's {bank, picks} must match the page's bank plus a
-   fresh offline pick for every day in its window (same seed, same shuffle,
-   same distinct-years walk).
+/* Verifies - and with --write, regenerates - the committed per-game puzzle
+   stores (scores/<game>/puzzles.json) against the banks in the client pages.
+   Every direct game's store must deep-equal its inline bank, generator games
+   ship empty stores by design, and the timeline store's {bank, picks} must
+   match the page's bank plus a fresh offline pick for every day in its window
+   (same seed, same shuffle, same distinct-years walk).
 
-   The stores are committed - this script never writes anything. It exits 1
-   on drift, so CI catches a bank edited without re-exporting its store.
-   Run: node tools/export-puzzles.mjs   (exit 0 = verified, 1 = drift) */
+   Default mode (what CI runs) never writes anything and exits 1 on drift.
+   Run `node tools/export-puzzles.mjs --write` after editing a bank to
+   regenerate the drifted stores, then commit both files together.
+
+   Run: node tools/export-puzzles.mjs          (verify; exit 0 = verified)
+        node tools/export-puzzles.mjs --write   (regenerate drifted stores) */
 import fs from 'node:fs';
 
+const WRITE = process.argv.includes('--write');
 const DIRECT = {
   bogus: 'PUZZLES',
   'well-actually': 'PUZZLES',
@@ -21,6 +25,7 @@ const DIRECT = {
   sift: 'BOARDS'
 };
 const EMPTY = ['sprint', 'trace', 'recycle-grid', 'recycle-rings'];
+const TIMELINE_DAYS = 1000;
 
 function mulberry32(a){
   return function(){
@@ -44,64 +49,85 @@ function readStore(game){
   return JSON.parse(fs.readFileSync('scores/' + game + '/puzzles.json', 'utf8'));
 }
 
+function storePath(game){
+  return 'scores/' + game + '/puzzles.json';
+}
+
+/* the offline timeline walk: seeded shuffle, then first five distinct years */
+function pickForDay(bank, day){
+  const rng = mulberry32(day * 2357 + 71);
+  const idxs = [];
+  for (let i = 0; i < bank.length; i++) idxs.push(i);
+  for (let i = idxs.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+  }
+  const picked = [];
+  const seenYears = new Set();
+  for (const i of idxs){
+    if (!seenYears.has(bank[i].y)){ picked.push(i); seenYears.add(bank[i].y); }
+    if (picked.length === 5) break;
+  }
+  return picked;
+}
+
 let fails = 0;
 const fail = msg => { console.error('FAIL ' + msg); fails++; };
 
 /* direct games: committed store must equal the inline bank */
-for (const [game, name] of Object.entries(DIRECT)) {
+for (const [game, name] of Object.entries(DIRECT)){
   const bank = readBank(game, name);
   const store = readStore(game);
-  if (JSON.stringify(store) !== JSON.stringify(bank))
+  if (JSON.stringify(store) === JSON.stringify(bank)){
+    console.log('ok  ' + game + ': store matches the client bank (' + bank.length + ' entries)');
+  } else if (WRITE){
+    fs.writeFileSync(storePath(game), JSON.stringify(bank, null, 2) + '\n');
+    console.log('wrote ' + storePath(game) + ' (' + bank.length + ' entries)');
+  } else {
     fail(game + ': committed store does not match the inline bank');
-  else console.log('ok  ' + game + ': store matches the client bank (' + bank.length + ' entries)');
+  }
 }
 
 /* generator games: empty stores by design */
-for (const game of EMPTY) {
+for (const game of EMPTY){
   const store = readStore(game);
-  if (!Array.isArray(store) || store.length !== 0)
+  if (Array.isArray(store) && store.length === 0){
+    console.log('ok  ' + game + ': empty store (generator game)');
+  } else if (WRITE){
+    fs.writeFileSync(storePath(game), '[]\n');
+    console.log('wrote ' + storePath(game) + ' (empty store)');
+  } else {
     fail(game + ': generator game store must be an empty array');
-  else console.log('ok  ' + game + ': empty store (generator game)');
+  }
 }
 
 /* timeline: windowed store - the whole bank plus precomputed picks */
 {
   const bank = readBank('timeline', 'EVENTS');
   const store = readStore('timeline');
-  if (JSON.stringify(store.bank) !== JSON.stringify(bank))
-    fail('timeline: committed bank does not match the inline bank');
-  else console.log('ok  timeline: bank matches the client bank (' + bank.length + ' events)');
-  if (!Array.isArray(store.picks) || store.picks.length === 0)
-    fail('timeline: no precomputed picks');
-  else {
-    let bad = 0;
-    for (let day = 0; day < store.picks.length; day++){
-      const rng = mulberry32(day * 2357 + 71);
-      const idxs = [];
-      for (let i = 0; i < bank.length; i++) idxs.push(i);
-      for (let i = idxs.length - 1; i > 0; i--){
-        const j = Math.floor(rng() * (i + 1));
-        [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
-      }
-      const picked = [];
-      const seenYears = new Set();
-      for (const i of idxs){
-        if (!seenYears.has(bank[i].y)){ picked.push(i); seenYears.add(bank[i].y); }
-        if (picked.length === 5) break;
-      }
-      if (JSON.stringify(picked) !== JSON.stringify(store.picks[day])){
-        bad++;
-        if (bad === 1) fail('timeline: picks drift from the offline walk (first bad day: ' + day + ')');
-      }
-    }
-    if (!bad) console.log('ok  timeline: ' + store.picks.length + ' precomputed picks match the offline walk');
+  const bankOk = JSON.stringify(store.bank) === JSON.stringify(bank);
+  const picksOk = Array.isArray(store.picks) && store.picks.length > 0 &&
+    store.picks.every((p, day) => JSON.stringify(p) === JSON.stringify(pickForDay(bank, day)));
+  if (bankOk && picksOk){
+    console.log('ok  timeline: bank matches (' + bank.length + ' events), ' + store.picks.length + ' precomputed picks match the offline walk');
+  } else if (WRITE){
+    const days = Array.isArray(store.picks) && store.picks.length ? store.picks.length : TIMELINE_DAYS;
+    const picks = [];
+    for (let day = 0; day < days; day++) picks.push(pickForDay(bank, day));
+    fs.writeFileSync(storePath('timeline'), JSON.stringify({ bank, picks }, null, 2) + '\n');
+    console.log('wrote ' + storePath('timeline') + ' (bank + ' + days + ' picks)');
+  } else {
+    if (!bankOk) fail('timeline: committed bank does not match the inline bank');
+    if (bankOk && !picksOk) fail('timeline: picks drift from the offline walk');
   }
 }
 
 if (fails){
   console.error('');
-  console.error(fails + ' store(s) drifted from the client banks');
+  console.error(fails + ' store(s) drifted from the client banks' +
+    (WRITE ? '' : ' (run: node tools/export-puzzles.mjs --write)'));
   process.exit(1);
 }
 console.log('');
-console.log('all committed stores verified against the client banks');
+console.log(WRITE ? 'stores regenerated from the client banks'
+                 : 'all committed stores verified against the client banks');

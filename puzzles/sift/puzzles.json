@@ -767,7 +767,7 @@
         ]
       },
       {
-        "n": "Napoleonxe2x80x99s greatest foes",
+        "n": "Napoleon’s greatest foes",
         "i": [
           "The Duke of Wellington",
           "Lord Nelson",
@@ -1105,6 +1105,376 @@
           "Sherlock Holmes",
           "Hercule Poirot",
           "Miss Marple"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Deep Ocean",
+    "cats": [
+      {
+        "n": "Famous wrecks",
+        "i": [
+          "The Titanic",
+          "The Lusitania",
+          "The Bismarck"
+        ]
+      },
+      {
+        "n": "Explorers of the deep",
+        "i": [
+          "Jacques Cousteau",
+          "Robert Ballard",
+          "James Cameron"
+        ]
+      },
+      {
+        "n": "Trenches of the Pacific",
+        "i": [
+          "The Mariana Trench",
+          "The Tonga Trench",
+          "The Java Trench"
+        ]
+      },
+      {
+        "n": "Creatures of the deep",
+        "i": [
+          "The anglerfish",
+          "The giant squid",
+          "The vampire squid"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Shakespeare’s England",
+    "cats": [
+      {
+        "n": "Plays by Shakespeare",
+        "i": [
+          "Hamlet",
+          "Macbeth",
+          "King Lear"
+        ]
+      },
+      {
+        "n": "Rulers of the era",
+        "i": [
+          "Elizabeth I",
+          "James I",
+          "Mary Queen of Scots"
+        ]
+      },
+      {
+        "n": "Figures of the age",
+        "i": [
+          "Walter Raleigh",
+          "John Donne",
+          "Francis Drake"
+        ]
+      },
+      {
+        "n": "Landmarks of the era",
+        "i": [
+          "The Globe Theatre",
+          "The Tower of London",
+          "Westminster Abbey"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Byzantine World",
+    "cats": [
+      {
+        "n": "Emperors of Byzantium",
+        "i": [
+          "Constantine",
+          "Justinian",
+          "Heraclius"
+        ]
+      },
+      {
+        "n": "Landmarks of Constantinople",
+        "i": [
+          "The Hagia Sophia",
+          "The Theodosian Walls",
+          "The Hippodrome"
+        ]
+      },
+      {
+        "n": "Legacy of Byzantium",
+        "i": [
+          "Greek fire",
+          "The Justinian Code",
+          "The Cyrillic alphabet"
+        ]
+      },
+      {
+        "n": "Enemies at the gates",
+        "i": [
+          "The Ottoman Empire",
+          "The Huns",
+          "The Seljuks"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Ice Age",
+    "cats": [
+      {
+        "n": "Human relatives",
+        "i": [
+          "Homo habilis",
+          "Homo erectus",
+          "Neanderthals"
+        ]
+      },
+      {
+        "n": "Giants of the Ice Age",
+        "i": [
+          "The woolly mammoth",
+          "The sabre-toothed cat",
+          "The woolly rhinoceros"
+        ]
+      },
+      {
+        "n": "Caves of the painters",
+        "i": [
+          "Lascaux",
+          "Chauvet",
+          "Altamira"
+        ]
+      },
+      {
+        "n": "Tools of the deep past",
+        "i": [
+          "The handaxe",
+          "The atlatl",
+          "The bone needle"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Drink Through History",
+    "cats": [
+      {
+        "n": "Brews of the morning",
+        "i": [
+          "Tea",
+          "Coffee",
+          "Cocoa"
+        ]
+      },
+      {
+        "n": "Spirits of history",
+        "i": [
+          "Whisky",
+          "Gin",
+          "Rum"
+        ]
+      },
+      {
+        "n": "Wines of legend",
+        "i": [
+          "Champagne",
+          "Port",
+          "Sherry"
+        ]
+      },
+      {
+        "n": "Inventions of the drink trade",
+        "i": [
+          "The tea bag",
+          "The espresso machine",
+          "The crown cork"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Written Word",
+    "cats": [
+      {
+        "n": "Scripts of the ancient world",
+        "i": [
+          "Cuneiform",
+          "Hieroglyphs",
+          "Linear B"
+        ]
+      },
+      {
+        "n": "Writing surfaces",
+        "i": [
+          "Papyrus",
+          "Parchment",
+          "Wax tablets"
+        ]
+      },
+      {
+        "n": "Tools of the scribe",
+        "i": [
+          "The quill",
+          "The reed pen",
+          "The stylus"
+        ]
+      },
+      {
+        "n": "Lost libraries",
+        "i": [
+          "The Library of Alexandria",
+          "The House of Wisdom",
+          "The library of Ashurbanipal"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Keeping Time",
+    "cats": [
+      {
+        "n": "Calendars",
+        "i": [
+          "The Julian calendar",
+          "The Gregorian calendar",
+          "The Mayan calendar"
+        ]
+      },
+      {
+        "n": "Timekeepers",
+        "i": [
+          "The sundial",
+          "The water clock",
+          "The hourglass"
+        ]
+      },
+      {
+        "n": "Landmarks of time",
+        "i": [
+          "Big Ben",
+          "The Greenwich Meridian",
+          "The Prague Astronomical Clock"
+        ]
+      },
+      {
+        "n": "Masters of the clock",
+        "i": [
+          "John Harrison",
+          "Christiaan Huygens",
+          "Peter Henlein"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Meeting of Two Worlds",
+    "cats": [
+      {
+        "n": "Civilizations of Mesoamerica",
+        "i": [
+          "The Olmec",
+          "The Maya",
+          "The Aztec"
+        ]
+      },
+      {
+        "n": "Cities of the Americas",
+        "i": [
+          "Tenochtitlan",
+          "Teotihuacan",
+          "Chichen Itza"
+        ]
+      },
+      {
+        "n": "Realms of the Andes",
+        "i": [
+          "Machu Picchu",
+          "Cusco",
+          "Lake Titicaca"
+        ]
+      },
+      {
+        "n": "Conquistadors",
+        "i": [
+          "Hernán Cortés",
+          "Francisco Pizarro",
+          "Hernando de Soto"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Votes for Women",
+    "cats": [
+      {
+        "n": "American leaders of suffrage",
+        "i": [
+          "Susan B. Anthony",
+          "Elizabeth Cady Stanton",
+          "Alice Paul"
+        ]
+      },
+      {
+        "n": "British leaders of suffrage",
+        "i": [
+          "Emmeline Pankhurst",
+          "Millicent Fawcett",
+          "Emily Davison"
+        ]
+      },
+      {
+        "n": "First to enfranchise women",
+        "i": [
+          "New Zealand",
+          "Australia",
+          "Finland"
+        ]
+      },
+      {
+        "n": "Battles for the ballot",
+        "i": [
+          "The Seneca Falls Convention",
+          "The women’s march of 1913",
+          "The Cat and Mouse Act"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Tower of London",
+    "cats": [
+      {
+        "n": "Kept in the Tower",
+        "i": [
+          "Guy Fawkes",
+          "The Princes in the Tower",
+          "Rudolf Hess"
+        ]
+      },
+      {
+        "n": "The Crown Jewels",
+        "i": [
+          "The Koh-i-Noor",
+          "The Imperial State Crown",
+          "The Cullinan Diamond"
+        ]
+      },
+      {
+        "n": "Things the Tower has been",
+        "i": [
+          "The Royal Mint",
+          "The menagerie",
+          "The observatory"
+        ]
+      },
+      {
+        "n": "Builders of the Tower",
+        "i": [
+          "William the Conqueror",
+          "Henry III",
+          "Edward I"
         ]
       }
     ]

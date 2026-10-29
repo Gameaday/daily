@@ -19,9 +19,18 @@ async function run(h){
     h.eq(r.x.S.stats.streak, 1, 'rounds: streak preserved');
     const s2 = {};
     r = h.boot('rounds', EXP, { now: T0, store: s2 });
+    r.env.els.slider.value = '1750';
+    r.env.els.btnUp.click();
+    h.eq(+r.env.els.slider.value, 1751, 'rounds: the + stepper moves one year');
+    r.env.els.btnDown.click();
+    r.env.els.btnDown.click();
+    h.eq(+r.env.els.slider.value, 1749, 'rounds: the - stepper moves one year');
     r.env.els.slider.value = '2020';
     for (let i = 0; i < 6; i++) r.env.els.btnLock.click();
     h.eq(r.x.S.status, 'lost', 'rounds: lost after 6 wrong');
+    h.eq(r.env.els.guesses.innerHTML.indexOf('years off') === -1, true, 'rounds: no years-off leak');
+    h.eq(r.env.els.guesses.innerHTML.indexOf('go earlier') !== -1, true, 'rounds: direction still shown');
+    h.eq(r.env.els.guesses.innerHTML.indexOf('wrong century') !== -1, true, 'rounds: century nudge shown');
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, 7, 'rounds: curve value 7 on loss');
 }

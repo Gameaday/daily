@@ -22,6 +22,12 @@ input[type=range]{flex:1; min-width:200px; accent-color:var(--accent); cursor:po
 .btn{background:var(--accent); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-size:15px; font-weight:600; cursor:pointer;}
 .btn:hover{filter:brightness(.94);}
 .btn:disabled{opacity:.45; cursor:default;}
+.step{width:34px; height:34px; padding:0; border-radius:10px; border:1.5px solid var(--line); background:var(--card);
+    color:var(--ink); font-size:18px; font-weight:700; cursor:pointer;}
+.step:hover{filter:brightness(.94);}
+.step:disabled{opacity:.45; cursor:default;}
+.steppair{display:flex; gap:4px; align-items:center;}
+input.yearbox{width:104px; color:var(--ink); font-family:Georgia,serif;}
 .guesses{margin-top:14px; display:flex; flex-direction:column; gap:6px;}
 .grow{display:flex; justify-content:space-between; gap:10px; align-items:center; background:var(--paper);
     border:1.5px solid var(--line); border-radius:10px; padding:8px 14px; font-size:15px; animation:rise .25s ease;}
@@ -63,13 +69,17 @@ input[type=range]{flex:1; min-width:200px; accent-color:var(--accent); cursor:po
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="lead">One event from history. <b>Six rounds</b> to pin the exact year — slide, lock, and read the heat.</p>
+  <p class="lead">One event from history. <b>Six rounds</b> to pin the exact year — slide, step, or type it, then lock and read the heat.</p>
 
   <div class="qcard">
     <span class="qtag" id="qtag"></span>
     <p class="qtext" id="qtext"></p>
     <div class="sliderrow" id="sliderrow">
-      <div class="yearbox" id="yearbox">1750</div>
+      <span class="steppair">
+        <button class="step" id="btnDown" aria-label="One year earlier">-</button>
+        <input class="yearbox" id="yearbox" value="1750" inputmode="numeric" maxlength="4" aria-label="Type a year" />
+        <button class="step" id="btnUp" aria-label="One year later">+</button>
+      </span>
       <input type="range" id="slider" min="1200" max="2025" value="1750" step="1" aria-label="Year guess" />
       <button class="btn" id="btnLock">Lock it in</button>
     </div>
@@ -96,12 +106,12 @@ input[type=range]{flex:1; min-width:200px; accent-color:var(--accent); cursor:po
 <div class="overlay" id="helpOverlay">
   <div class="modal">
     <h2>How to play</h2>
-    <p>Slide to the year you think it happened and <b>Lock it in</b>. You get <b>six rounds</b>. Each lock tells you how close you landed, and which direction to go:</p>
+    <p>Slide to the year you think it happened and <b>Lock it in</b>, or nudge it one year at a time with the <b>-</b> and <b>+</b> buttons, or just type the year into the box. You get <b>six rounds</b>. Each lock tells you how close you landed, and which direction to go:</p>
     <p>🟩 <b>scalding</b> — within 2 years<br/>
        🟨 <b>hot</b> — within 5<br/>
        🟧 <b>warm</b> — within 15<br/>
        🟥 <b>cold</b> — further out</p>
-    <p>The row also whispers <i>"go earlier"</i> or <i>"go later"</i>. Hit the exact year and the round is yours. Six misses and the year is revealed.</p>
+    <p>The row tells you <i>"go earlier"</i> or <i>"go later"</i>, plus a generous nudge like <i>"wrong century"</i> or <i>"right decade"</i>, but never the distance. Hit the exact year and the round is yours. Six misses and the year is revealed.</p>
     <p>Fewer rounds, more bragging rights. Everyone gets the same event, so compare rounds at standup.</p>
     <button class="close" data-close>Got it</button>
   </div>
@@ -153,13 +163,21 @@ function heatOf(off){
   return           { cls:'cold', name:'cold',      sq:'\uD83D\uDFE5' };
 }
 
+/* the hint gives direction and, generously, the century or decade, but
+   never the distance in years */
+function hintOf(g){
+  if (g.off === 0) return 'exactly right';
+  const parts = [g.y > EV.y ? 'go earlier' : 'go later'];
+  if (Math.floor(g.y / 100) !== Math.floor(EV.y / 100)) parts.push('wrong century');
+  else if (Math.floor(g.y / 10) === Math.floor(EV.y / 10)) parts.push('right decade');
+  return parts.join(' \u00b7 ');
+}
 function renderGuesses(){
   $('guesses').innerHTML = S.guesses.map(g => {
     const h = heatOf(g.off);
-    const dir = g.off === 0 ? 'exactly right' : (g.y > EV.y ? 'go earlier' : 'go later');
-    const offTxt = g.off === 0 ? 'the year!' : (g.off === 1 ? '1 year off' : g.off + ' years off');
+    const hint = hintOf(g);
     return `<div class="grow ${g.off === 0 ? 'win' : h.cls}">
-      <span><span class="gy">${g.y}</span> <span class="hd">· ${offTxt} · ${dir}</span></span>
+      <span><span class="gy">${g.y}</span> <span class="hd">· ${h.name} · ${hint}</span></span>
       <span>${g.off === 0 ? '\uD83C\uDFC6' : h.sq}</span></div>`;
   }).join('');
 }
@@ -184,11 +202,28 @@ function showReveal(){
   $('sliderrow').style.opacity = '.5';
   $('slider').disabled = true;
   $('btnLock').disabled = true;
+  $('btnDown').disabled = true;
+  $('btnUp').disabled = true;
+  $('yearbox').disabled = true;
   syncBoard(S.status === 'won' ? S.guesses.length : 7);
 }
 
 /* ---------------- play ---------------- */
-$('slider').addEventListener('input', () => { $('yearbox').textContent = $('slider').value; });
+function setYear(y){
+  y = Math.round(+y);
+  if (!isFinite(y)) return;
+  y = Math.max(1200, Math.min(2025, y));
+  $('slider').value = y;
+  $('yearbox').value = y;
+}
+$('slider').addEventListener('input', () => { $('yearbox').value = $('slider').value; });
+$('yearbox').addEventListener('input', () => {
+  const v = parseInt($('yearbox').value, 10);
+  if (!isNaN(v)) $('slider').value = Math.max(1200, Math.min(2025, v));
+});
+$('yearbox').addEventListener('change', () => setYear($('yearbox').value));
+$('btnDown').addEventListener('click', () => setYear(+$('slider').value - 1));
+$('btnUp').addEventListener('click', () => setYear(+$('slider').value + 1));
 $('btnLock').addEventListener('click', () => {
   if (!EV) return;
   if (S.status !== 'playing') return;

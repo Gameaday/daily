@@ -546,5 +546,150 @@
       "Red Sea."
     ],
     "w": "The Mediterranean, via the famous delta. The Red Sea is the one Moses is famous for."
+  },
+  {
+    "t": "Painters",
+    "l": 1,
+    "c": "Dutch",
+    "a": [
+      "Dutch",
+      "Netherlandish",
+      "from the Netherlands",
+      "a Dutchman",
+      "Holland"
+    ],
+    "s": [
+      "Vincent van Gogh was a",
+      "Spanish",
+      "painter who sold almost nothing in his lifetime,",
+      "and whose Sunflowers now hang in museums around the world."
+    ],
+    "w": "Dutch, born in Zundert in the Netherlands. He did his greatest work in the south of France, but Spain never had him."
+  },
+  {
+    "t": "First Flight",
+    "l": 3,
+    "c": "1903",
+    "a": [
+      "1903",
+      "in 1903",
+      "December 1903",
+      "in December 1903"
+    ],
+    "s": [
+      "Orville and Wilbur Wright made the first powered, controlled airplane flight",
+      "on the dunes of Kitty Hawk, North Carolina,",
+      "on a cold December morning in",
+      "1905."
+    ],
+    "w": "December 17, 1903. The brothers flew four times that morning; the longest hop lasted 59 seconds, and the century of flight started there."
+  },
+  {
+    "t": "Napoleon",
+    "l": 2,
+    "c": "Belgium",
+    "a": [
+      "Belgium",
+      "in Belgium",
+      "the Netherlands",
+      "the Low Countries"
+    ],
+    "s": [
+      "Napoleon met his final defeat at Waterloo,",
+      "a name the world now uses for any last stand,",
+      "in France,",
+      "just south of Brussels."
+    ],
+    "w": "Waterloo is in Belgium, south of Brussels. In 1815 it lay in the United Kingdom of the Netherlands; France has never owned it."
+  },
+  {
+    "t": "Invention",
+    "l": 1,
+    "c": "Alexander Graham Bell",
+    "a": [
+      "Alexander Graham Bell",
+      "Alexander Bell",
+      "Graham Bell",
+      "Bell"
+    ],
+    "s": [
+      "The telephone was patented by",
+      "Thomas Edison",
+      "in 1876,",
+      "the same year the Sioux won at the Little Bighorn."
+    ],
+    "w": "Alexander Graham Bell, whose patent was granted March 7, 1876. Edison was busy with the phonograph, which he got around to the following year."
+  },
+  {
+    "t": "England",
+    "l": 2,
+    "c": "King John",
+    "a": [
+      "King John",
+      "John",
+      "John Lackland"
+    ],
+    "s": [
+      "In the summer of 1215, on a meadow by the Thames called Runnymede, Englandxe2x80x99s barons forced a charter of rights onto the crown,",
+      "sealed under protest by",
+      "King Henry VIII,",
+      "and known to history as Magna Carta."
+    ],
+    "w": "King John put his seal to Magna Carta in June 1215. Henry VIII was born 294 years too late, and would have hated the whole idea."
+  },
+  {
+    "t": "Disasters",
+    "l": 2,
+    "c": "the Atlantic Ocean",
+    "a": [
+      "the Atlantic",
+      "the Atlantic Ocean",
+      "the North Atlantic",
+      "Atlantic"
+    ],
+    "s": [
+      "Four days out of Southampton on her maiden voyage, the RMS Titanic struck an iceberg and sank,",
+      "with more than 1,500 lives lost,",
+      "in the Pacific Ocean,",
+      "on the night of April 14, 1912."
+    ],
+    "w": "The North Atlantic, roughly 400 miles south of Newfoundland. The Pacific never entered into it; she was on the New York run."
+  },
+  {
+    "t": "Sport",
+    "l": 1,
+    "c": "Athens",
+    "a": [
+      "Athens",
+      "in Athens",
+      "Greece",
+      "in Greece"
+    ],
+    "s": [
+      "The first modern Olympic Games opened in",
+      "Rome,",
+      "in 1896,",
+      "before a crowd of tens of thousands."
+    ],
+    "w": "Athens, in the rebuilt Panathenaic Stadium, in April 1896. Rome had to wait until 1960 for its Games."
+  },
+  {
+    "t": "The Norse",
+    "l": 3,
+    "c": "Leif Erikson",
+    "a": [
+      "Leif Erikson",
+      "Leif Ericson",
+      "Leif",
+      "Leifr",
+      "Leif the Lucky"
+    ],
+    "s": [
+      "Around the year 1000, Norse voyagers crossed to North America and wintered at a shore they called Vinland,",
+      "a story the sagas tell and that a Newfoundland site confirms,",
+      "a voyage led by",
+      "Erik the Red."
+    ],
+    "w": "Leif Erikson, Erik the Redxe2x80x99s son. The father spent his years colonizing Greenland and feuding with neighbors; the son did the exploring."
   }
 ]

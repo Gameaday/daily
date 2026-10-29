@@ -166,5 +166,65 @@
     "q": "Roughly how many words are in current use in English?",
     "a": 170000,
     "w": "The OED counts ~170,000 words in current use — a fraction of the 600,000+ headwords it has catalogued. Shakespeare got by with about 30,000."
+  },
+  {
+    "t": "The Skeleton",
+    "q": "Roughly how many bones are in an adult human skeleton?",
+    "a": 206,
+    "w": "206 after growth finishes, down from about 270 at birth as plates fuse. The smallest, the stapes in the middle ear, is the size of a grain of rice."
+  },
+  {
+    "t": "Light",
+    "q": "Roughly how many seconds does sunlight take to reach Earth?",
+    "a": 500,
+    "w": "About 499 seconds on average, a shade over eight minutes. The Sun you see outside is always eight minutes out of date."
+  },
+  {
+    "t": "Everyone Ever",
+    "q": "Roughly how many humans have ever lived?",
+    "a": 117000000000,
+    "w": "About 117 billion births by the usual demographic estimate, against 8 billion alive today. For every living person, roughly fourteen have gone before."
+  },
+  {
+    "t": "Low Orbit",
+    "q": "Roughly how fast does the International Space Station travel, in kilometers per hour?",
+    "a": 28000,
+    "w": "About 28,000 km/h, or 7.7 kilometers every second. The crew watches a sunrise about every 90 minutes."
+  },
+  {
+    "t": "The Night Sky",
+    "q": "Roughly how many stars can a dark, clear night show to the naked eye, counting both hemispheres?",
+    "a": 6000,
+    "w": "A few thousand per sky at a truly dark site, around 6,000 in total across both hemispheres on a perfect night. Every single one belongs to our own galaxy."
+  },
+  {
+    "t": "Everest",
+    "q": "Roughly how many people have reached the summit of Mount Everest?",
+    "a": 6000,
+    "w": "Somewhere past 6,000 summiteers by recent counts, several of them multiple times, against a death toll in the low hundreds. The summit queue is a modern invention."
+  },
+  {
+    "t": "Oil",
+    "q": "Roughly how many barrels of oil does the world consume each day?",
+    "a": 100000000,
+    "w": "On the close order of 100 million barrels a day. Spread across humanity, that is about 12 liters each per day, a number most people prefer not to picture."
+  },
+  {
+    "t": "The Spinning Earth",
+    "q": "Roughly how fast does the ground move at the equator, in kilometers per hour?",
+    "a": 1670,
+    "w": "About 1,670 km/h, one full lap a day. You are standing on a carousel that never slows, and you have never felt a thing."
+  },
+  {
+    "t": "The Milky Way",
+    "q": "Roughly how many stars are in the Milky Way galaxy?",
+    "a": 250000000000,
+    "w": "Estimates run from 100 to 400 billion; 250 billion sits mid-field. To count them aloud at one per second would take nearly 8,000 years."
+  },
+  {
+    "t": "Blinking",
+    "q": "Roughly how many times does a person blink in a waking day?",
+    "a": 15000,
+    "w": "Around 15 blinks a minute across 16 waking hours is about 14,000 to 19,000 a day. Your eyes are closed for a cumulative hour and a half without your ever leaving the room."
   }
 ]

@@ -798,9 +798,9 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
     g => SHELL_JS + (g === 'trace' || g === 'recycle-grid' || g === 'recycle-rings' ? '\n' + WORDS_JS : ''),
     () => {
       try {
-        const tl = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'timeline', 'puzzles.json'), 'utf8'));
-        tl.rounds = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'rounds', 'puzzles.json'), 'utf8'));
-        return JSON.stringify(tl);
+        const timeline = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'timeline', 'puzzles.json'), 'utf8'));
+        const rounds = JSON.parse(fs.readFileSync(path.join(ROOT, 'scores', 'rounds', 'puzzles.json'), 'utf8'));
+        return JSON.stringify({ timeline, rounds });
       } catch (e){ return null; }
     }
   ).then(out => {

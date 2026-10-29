@@ -24,13 +24,15 @@ const SHELL = (() => {
 
   /* ---- the daily puzzle: days since launch, rolling at midnight ET ---- */
   const TZ = 'America/New_York';
-  const EPOCH_KEY = '2026-10-27'; // launch date — puzzle No. 1
+  const EPOCH_KEY = '2026-11-01'; // launch date — puzzle No. 1
   function etKey(ms){
     return new Intl.DateTimeFormat('en-CA', {timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date(ms));
   }
   const todayKey = etKey(Date.now());
   const dayIndex = Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000);
-  const num = dayIndex + 1;
+  /* Days before the epoch (pre-launch) do not exist in the numbering: the
+     site reads No. 1 until the launch date arrives, then counts for real. */
+  const num = Math.max(dayIndex + 1, 1);
 
   const $ = id => document.getElementById(id);
 

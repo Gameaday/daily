@@ -461,7 +461,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
-    global ARCHIVE_DIR, MAX_GETS_PER_IP, MAX_POSTS_PER_IP
+    global ARCHIVE_DIR, MAX_GETS_PER_IP, MAX_POSTS_PER_IP, EPOCH_KEY
     ap = argparse.ArgumentParser(description="Warmup global curve")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8787)
@@ -471,10 +471,14 @@ def main():
                     help="per-IP daily cap for GET endpoints")
     ap.add_argument("--max-posts-per-ip", type=int, default=MAX_POSTS_PER_IP,
                     help="per-IP daily cap for POST /submit")
+    ap.add_argument("--epoch", default=None,
+                    help="override the manifest epoch (the effective day 0 date); the test suite pins this so it never depends on the wall clock")
     args = ap.parse_args()
     ARCHIVE_DIR = Path(args.archive_dir)
     MAX_GETS_PER_IP = args.max_gets_per_ip
     MAX_POSTS_PER_IP = args.max_posts_per_ip
+    if args.epoch:
+        EPOCH_KEY = args.epoch
 
     def _stop(signum, frame):
         raise KeyboardInterrupt()

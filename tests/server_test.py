@@ -19,7 +19,7 @@ import tempfile
 import time
 import urllib.error
 import urllib.request
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -70,9 +70,16 @@ def main():
     # both instances archive into a scratch dir: the test must never write
     # snapshots into the repo's scores/archive
     scratch = tempfile.mkdtemp()
+    # Both instances boot with --epoch <today's ET date>: inside them the
+    # current day index is 0 no matter the real calendar and no matter whether
+    # the committed epoch lies in the past or the future, so this suite never
+    # depends on the wall clock.
+    ET_TODAY = date.fromisoformat(MANIFEST["epoch"]) + timedelta(days=today_day())
+    TODAY = 0
     proc = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
-         "--port", str(PORT), "--host", "127.0.0.1", "--archive-dir", scratch],
+         "--port", str(PORT), "--host", "127.0.0.1", "--archive-dir", scratch,
+         "--epoch", str(ET_TODAY)],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     fails = []
 
@@ -96,8 +103,6 @@ def main():
         if not up:
             print("FAIL: server never came up on port %d" % PORT)
             return 1
-
-        TODAY = today_day()
 
         # --- health ---
         s, b = req("GET", "/health")
@@ -253,6 +258,7 @@ def main():
     proc2 = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
          "--port", str(PORT2), "--host", "127.0.0.1", "--archive-dir", scratch,
+         "--epoch", str(ET_TODAY),
          "--max-gets-per-ip", "3", "--max-posts-per-ip", "2"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:

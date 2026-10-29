@@ -286,5 +286,53 @@
     "q": "The Curiosity rover lands on Mars.",
     "y": 2012,
     "w": "August 6, 2012 — the seven minutes of terror, a sky-crane hover, and it stuck the landing."
+  },
+  {
+    "t": "Byzantium",
+    "q": "The Fourth Crusade, diverted from Jerusalem, storms and sacks Constantinople.",
+    "y": 1204,
+    "w": "April 1204: a crusade that never reached the Holy Land gutted Christendom’s greatest city instead, and the Venetians sailed home with its bronze horses."
+  },
+  {
+    "t": "England",
+    "q": "The Peasants’ Revolt reaches London and burns the Savoy Palace.",
+    "y": 1381,
+    "w": "June 1381: Wat Tyler’s army camped on Blackheath, burned the duke of Lancaster’s palace, and met the boy king face to face at Mile End."
+  },
+  {
+    "t": "Printing",
+    "q": "Gutenberg is first recorded with his movable-type press at Mainz.",
+    "y": 1440,
+    "w": "A lawsuit from 1439 had already let slip the secret press; by 1440 he was back at Mainz, and fifteen years later the Bible changed everything."
+  },
+  {
+    "t": "Astronomy",
+    "q": "Galileo observes the moons of Jupiter through his telescope.",
+    "y": 1610,
+    "w": "January 1610: four little stars that shuffled around Jupiter broke the Earth-centered sky for good. Naming them the Medicean stars was politics; the orbits were physics."
+  },
+  {
+    "t": "Liberty",
+    "q": "Britain’s Slavery Abolition Act ends slavery in most of the British Empire.",
+    "y": 1833,
+    "w": "August 1833: Parliament voted freedom for the empire’s enslaved people, paying a vast fortune in compensation to former owners rather than to the freed."
+  },
+  {
+    "t": "Revolutions",
+    "q": "Revolutions sweep Europe from Paris to Vienna in the Year of Spring.",
+    "y": 1848,
+    "w": "Spring 1848: barricades rose in a dozen capitals and kings ran for the coast. By autumn nearly everywhere had been rolled back, but nothing was quite the same."
+  },
+  {
+    "t": "Empires",
+    "q": "The German Empire is proclaimed at Versailles, with Prussia’s king as emperor.",
+    "y": 1871,
+    "w": "January 18, 1871: proclaimed in the Hall of Mirrors while Paris lay under siege, chosen as the spot so France would never forget."
+  },
+  {
+    "t": "Civil Rights",
+    "q": "Rosa Parks refuses to give up her bus seat, and the Montgomery boycott begins.",
+    "y": 1955,
+    "w": "December 1, 1955: her arrest began a 381-day boycott that carried a 26-year-old pastor named Martin Luther King Jr. onto the national stage."
   }
 ]

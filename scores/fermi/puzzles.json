@@ -130,5 +130,41 @@
     "q": "Roughly how many liters of water does Lake Superior contain?",
     "a": 12000000000000000,
     "w": "~12,100 km³ = about 1.2 × 10¹⁶ liters — enough to cover North and South America in a foot of water. It holds 10% of the world’s surface freshwater."
+  },
+  {
+    "t": "The Brain",
+    "q": "Roughly how many neurons are in a human brain?",
+    "a": 86000000000,
+    "w": "The commonly cited figure is ~86 billion neurons (Azevedo et al., 2009) — about as many stars as a mid-size galaxy holds."
+  },
+  {
+    "t": "Daily Walk",
+    "q": "Roughly how many steps does the average walker cover in a mile?",
+    "a": 2000,
+    "w": "The classic planning figure is ~2,000 steps per mile — roughly 2.5 feet per stride. An active adult wanders about 5 miles a day."
+  },
+  {
+    "t": "Libraries",
+    "q": "Roughly how many items does the Library of Congress hold?",
+    "a": 170000000,
+    "w": "The commonly cited total is ~170 million items — books, maps, photographs, recordings, and everything else crammed into the stacks."
+  },
+  {
+    "t": "The Body",
+    "q": "Roughly how many living cells make up a human body?",
+    "a": 37000000000000,
+    "w": "Recent estimates put it around 37 trillion (Bianconi et al., 2013); older textbooks waved at 10–100 trillion. You are a walking census."
+  },
+  {
+    "t": "The Sky",
+    "q": "Roughly how many airline passengers flew worldwide in 2019?",
+    "a": 4500000000,
+    "w": "About 4.5 billion scheduled passengers (IATA) — more than half of humanity aloft in a single year, before the skies went quiet."
+  },
+  {
+    "t": "Language",
+    "q": "Roughly how many words are in current use in English?",
+    "a": 170000,
+    "w": "The OED counts ~170,000 words in current use — a fraction of the 600,000+ headwords it has catalogued. Shakespeare got by with about 30,000."
   }
 ]

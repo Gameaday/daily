@@ -37,7 +37,8 @@ if (fs.existsSync('assets/words-en.js')) {
   const m = fs.readFileSync('assets/words-en.js', 'utf8').match(/const WORDS_EN = "([^"]*)"/);
   if (!m) fail('assets/words-en.js: WORDS_EN string not found');
   else {
-    const list = m[1].split(',');
+    const list = m[1
+].split(',');
     if (list.some(w => !/^[A-Z]{3,5}$/.test(w))) fail('words-en.js: entries must be uppercase A-Z, 3-5 letters');
     if (new Set(list).size !== list.length) fail('words-en.js: duplicate entries');
   }
@@ -84,6 +85,24 @@ for (const g of games) {
   if (landing.indexOf(g + '/') === -1) fail('landing: no card for ' + g);
 }
 
+/* server-gated delivery: every gated game keeps its inline bank for
+   solo/offline play AND defers to the scores service when online */
+const GATED = {
+  bog
+us: 'PUZZLES', 'well-actually': 'PUZZLES', rounds: 'EVENTS', fermi: 'QS',
+  cipher: 'QUOTES', museum: 'MUSEUM', lightbox: 'DESIGNS', sift: 'BOARDS',
+  timeline: 'EVENTS'
+};
+for (const g of Object.keys(GATED)) {
+  const bank = GATED[g];
+  const file = path.join(g, 'index.html');
+  if (!fs.existsSync(file)) { fail(g + ': missing ' + file); continue; }
+  const html = fs.readFileSync(file, 'utf8');
+  if (!new RegExp('const ' + bank + ' = \\[').test(html)) fail(g + ': inline bank ' + bank + ' missing');
+  const js = (html.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
+  if (js.indexOf('fetchPuzzle') === -1) fail(g + ': does not fetch its puzzle from the scores service');
+  if (js.indexOf('isSolo()') === -1) fail(g + ': does not keep the solo/offline path');
+}
 /* wording: one word is banned by convention here; it must stay out of
    tracked text (the dictionaries that legitimately contain it are exempt) */
 for (const hit of require('./wording').runWordingCheck()) fail('wording: ' + hit);

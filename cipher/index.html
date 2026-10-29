@@ -357,7 +357,10 @@ SHELL.wireShare(shareText);
 $('btnCodebook').addEventListener('click', () => {
   if (!Q) return;
   const box = $('codebook');
-  const open = box.style.display === 'none';
+  /* 'block' is the only open state, so the first click opens the box
+     however the initial display parses (inline 'none' in the page, unset
+     before that in headless runs) */
+  const open = box.style.display !== 'block';
   box.style.display = open ? 'block' : 'none';
   $('btnCodebook').textContent = open ? 'Hide the codebook' : 'Show the codebook';
   if (!open) return;

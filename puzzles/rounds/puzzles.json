@@ -382,5 +382,53 @@
     "q": "Edmund Hillary and Tenzing Norgay reach the summit of Everest.",
     "y": 1953,
     "w": "May 29, 1953: the ninth British expedition to the mountain was the one that stood on it. They spent about fifteen minutes on top, and left a hole in the snow for someone else to find."
+  },
+  {
+    "t": "Astronomy",
+    "q": "Copernicus publishes De revolutionibus, placing the Sun at the center of the heavens.",
+    "y": 1543,
+    "w": "Nuremberg, 1543: printed as he lay dying, it argued that Earth turns around the Sun. Nearly a century passed before Kepler and Galileo settled the argument in the book’s favor."
+  },
+  {
+    "t": "America",
+    "q": "Jamestown, the first permanent English settlement in North America, is founded.",
+    "y": 1607,
+    "w": "May 1607: about a hundred colonists anchored on a marshy island in the James River and named the place for their king. The starving years that followed killed most of them, and the colony survived by learning to grow tobacco."
+  },
+  {
+    "t": "Empires",
+    "q": "Wolfe defeats Montcalm on the Plains of Abraham, and Britain takes Quebec.",
+    "y": 1759,
+    "w": "September 13, 1759: a short fight outside the city walls killed both generals within days of each other. France kept a shell of its empire in North America until 1763, when it handed nearly all of it to Britain."
+  },
+  {
+    "t": "Medicine",
+    "q": "Edward Jenner performs the first vaccination, inoculating a boy against smallpox with cowpox.",
+    "y": 1796,
+    "w": "May 1796: Jenner inoculated eight-year-old James Phipps with matter from a milkmaid’s cowpox sore, later with smallpox itself, and the boy stayed well. The word vaccine descends from vacca, the Latin for cow."
+  },
+  {
+    "t": "America",
+    "q": "The Alamo falls to Santa Anna’s army after a thirteen-day siege.",
+    "y": 1836,
+    "w": "March 6, 1836: the garrison was overrun before dawn, and Davy Crockett and Jim Bowie died with it. Remember the Alamo became the rally of the Texas Revolution, settled weeks later at San Jacinto."
+  },
+  {
+    "t": "Science",
+    "q": "Pierre and Marie Curie announce the discovery of radium.",
+    "y": 1898,
+    "w": "December 1898: the Curies named the new element for the rays it gave off on its own. Marie Curie processed tonnes of pitchblende by hand to isolate a speck of it, and the work slowly cost her her life."
+  },
+  {
+    "t": "Space",
+    "q": "Yuri Gagarin becomes the first human in space, aboard Vostok 1.",
+    "y": 1961,
+    "w": "April 12, 1961: one lap of the Earth in 108 minutes, and a 27-year-old test pilot became the most famous man alive. The flight lasted a single morning, and it gave the Space Age its first hero."
+  },
+  {
+    "t": "Computing",
+    "q": "The IBM Personal Computer goes on sale.",
+    "y": 1981,
+    "w": "August 1981: IBM built its PC from off-the-shelf parts and licensed the operating system from a young company called Microsoft. The clones that followed made the architecture universal, and the licensing made Microsoft rich."
   }
 ]

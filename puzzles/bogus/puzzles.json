@@ -621,5 +621,117 @@
       "The city rebuilt fast, and threw a world’s fair nine years later to prove it."
     ],
     "w": "The shaking did real damage, but fire took the city: more than four hundred blocks burned over three days while broken mains left the hydrants dry. Insurance clerks marked claims as fire rather than earthquake to dodge the quake clause, which is how historians caught the truth. Caruso kept his vow."
+  },
+  {
+    "t": "The Light Bulb · 1879",
+    "l": 3,
+    "s": [
+      "Thomas Edison patented his incandescent lamp in 1879, and the world moved indoors after dark.",
+      "Humphry Davy had demonstrated electric arc lamps more than seventy years earlier, in 1806.",
+      "Joseph Swan lit homes in England with carbon-filament lamps around the same time as Edison.",
+      "Edison conjured the whole idea out of nothing, in one stroke of solitary genius.",
+      "His real achievement was a durable filament and a complete system: dynamos, wiring, and metering.",
+      "In Britain, Swan and Edison ended their patent fight by merging into a single company, Ediswan.",
+      "The Menlo Park laboratory tested thousands of filament materials before bamboo settled the question."
+    ],
+    "w": "Edison’s triumph was engineering and business, not lone invention. Davy showed electric light in 1806, Swan matched him almost lamp for lamp, and Edison’s own notebooks admit how much was trial and error. The idea was in the air; Edison made it pay."
+  },
+  {
+    "t": "The Automobile · 1886",
+    "l": 4,
+    "s": [
+      "Karl Benz received the patent for a gasoline-powered automobile in January 1886, a three-wheeler he drove around Mannheim.",
+      "Gottlieb Daimler and Wilhelm Maybach had just fitted their light, fast engine to a stagecoach that same year.",
+      "Earlier inventors had been building steam road carriages since the 1770s, with mixed success.",
+      "In America, the Duryea brothers drove the first gasoline car in 1893, three years before Henry Ford built his first.",
+      "Henry Ford invented the automobile himself, single-handed and from scratch.",
+      "Ford’s actual breakthrough came in 1913, the moving assembly line, which collapsed the price of a car.",
+      "By 1918, roughly half of all the cars in America were Model Ts."
+    ],
+    "w": "Benz patented it in Germany in 1886, and Daimler, Maybach, and the Duryeas all contributed before Ford turned his first wheel. Ford’s genius was mass production: the assembly line made the automobile ordinary."
+  },
+  {
+    "t": "The Great Chicago Fire · 1871",
+    "l": 3,
+    "s": [
+      "On the night of October 8, 1871, fire broke out in southwest Chicago and raced through a city built of wood.",
+      "It burned for two days, destroying some 17,500 buildings and leaving about 100,000 people homeless.",
+      "Help poured in from across the country, and Chicago rebuilt into the skyscraper city within a generation.",
+      "It all began when Mrs. O’Leary’s cow kicked over a lantern in her barn on De Koven Street.",
+      "The cow story came from a newspaper report, and the reporter, Michael Ahern, later admitted he had invented the detail.",
+      "The invented culprit was convenient in a city where Irish immigrants were easy to blame.",
+      "In 1997 the Chicago City Council formally exonerated Catherine O’Leary and her cow of any wrongdoing."
+    ],
+    "w": "No witness ever placed the cow near the lantern. Ahern’s confession, in 1893, came too late to stop the legend, and the O’Learys bore decades of ridicule for a barn fire whose true cause was never established."
+  },
+  {
+    "t": "The Oregon Trail · 1843",
+    "l": 2,
+    "s": [
+      "Between the 1840s and the 1860s, several hundred thousand emigrants walked the trails west toward Oregon, California, and Utah.",
+      "The journey of roughly 2,000 miles took four to six months, and most travelers walked it alongside their wagons to spare the oxen.",
+      "The great killer on the trail was the ambush.",
+      "In truth, cholera and other diseases killed far more emigrants than violence of any kind.",
+      "Accidents did their share too: drownings at river crossings, wagon mishaps, and stray gunshots.",
+      "Trading and guiding along the route were everyday business, and diarists recorded attacks as rare and remarkable events.",
+      "Graves dotted the trail, but most were dug for fever, not arrows."
+    ],
+    "w": "Epidemic cholera, especially in the 1850s, was the trail’s grim reaper; historians estimate roughly one emigrant in ten died along the way, overwhelmingly of disease. The war-party image came from dime novels far more than from diaries."
+  },
+  {
+    "t": "Thermopylae · 480 BCE",
+    "l": 4,
+    "s": [
+      "In the summer of 480 BCE, a Greek force held the narrow pass at Thermopylae against the army of Xerxes.",
+      "King Leonidas of Sparta commanded the defense, posted where the mountains and the sea squeezed the road thin.",
+      "The numbers were never three hundred: several thousand Greeks from many cities stood in the pass at the start.",
+      "When a local named Ephialtes betrayed the mountain path, Leonidas dismissed most of the army and kept a rearguard.",
+      "Through it all, Leonidas and 300 Spartans alone held the line to the last man.",
+      "They died alongside about 700 Thespians and other allies who stayed to the end as well.",
+      "The Greek fleet fought in step at Artemisium offshore, and the epitaph honored the Spartans in words a stranger composed."
+    ],
+    "w": "The famous three hundred were Sparta’s full-citizen core, but ‘alone’ betrays the dead of Thespiae most of all, and the pass held several thousand at first. Herodotus, the main source, is careful about who stood; the films are not."
+  },
+  {
+    "t": "Lady Godiva · c. 1057",
+    "l": 1,
+    "s": [
+      "Lady Godiva, wife of Leofric, Earl of Mercia, was a real noblewoman of pre-Conquest England.",
+      "She rode naked through the streets of Coventry to shame her husband into lightening the people’s taxes.",
+      "The first written account appears in the chronicle of Roger of Wendover, more than 150 years after her death.",
+      "Godiva and Leofric are well documented as founders and benefactors of monasteries in the Midlands.",
+      "No contemporary record mentions a ride of any kind through Coventry.",
+      "The ‘Peeping Tom’ character was bolted on centuries later, appearing in print in the 1600s.",
+      "By then the town had a festival, a name, and a story far too good to check."
+    ],
+    "w": "Historians treat the ride as legend: a real eleventh-century countess remembered for religious endowments, wrapped two centuries later in a folk tale about taxes, a peeper, and a horse."
+  },
+  {
+    "t": "The Wall Street Crash · 1929",
+    "l": 2,
+    "s": [
+      "In late October 1929, the New York Stock Exchange collapsed across a week of panic selling.",
+      "Black Thursday and Black Tuesday saw record trades and record losses, and the market kept sliding for years.",
+      "Ruined brokers leapt to their deaths from Wall Street windows all through that autumn.",
+      "No such epidemic appears in the city’s mortality statistics for the crash months.",
+      "A joke made the rounds anyway, that you had to stand in line to get a window, usually credited to Will Rogers.",
+      "The suicide rate in New York barely moved in the weeks after the crash.",
+      "The real damage was slower and quieter: bank failures, job losses, and a depression that would last a decade."
+    ],
+    "w": "Economists hunting for the wave of jumps, John Kenneth Galbraith among them, found none; the story sold papers then and has sold movies ever since. The crash’s true toll took years, not a sidewalk."
+  },
+  {
+    "t": "Gladiators · 80 CE",
+    "l": 2,
+    "s": [
+      "The Colosseum opened in Rome around 80 CE with a hundred days of inaugural games.",
+      "Professional gladiators were expensive, trained investments owned by schools and managers.",
+      "Two gladiators entered the arena, and only one could ever leave it alive.",
+      "Most documented fights ended without a death: the loser could be spared, the missio, at the signal of the game’s sponsor.",
+      "Referees, the summa rudis, enforced the rules, and a bout could be stopped or even declared a draw.",
+      "Novices died more often than established stars, whose owners priced a death into any contract.",
+      "Some gladiators were free volunteers, drawn by prize money, fame, and the roar of the crowd."
+    ],
+    "w": "Epitaphs and arena records show careers of many fights and honorable retirements. Death was always possible and sometimes the point, but the economics of the gladiator school favored the survivor; the guaranteed duel to the death is the movies’ invention."
   }
 ]

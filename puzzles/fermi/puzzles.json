@@ -274,5 +274,53 @@
     "q": "Roughly how many people live in greater Tokyo?",
     "a": 37000000,
     "w": "The metropolitan web of commuting rails holds about 37 million people, the largest urban area on Earth. Greater Tokyo alone would out-populate most of the world’s countries."
+  },
+  {
+    "t": "The Human Body",
+    "q": "Roughly how many kilometers of blood vessels run through an average human body?",
+    "a": 100000,
+    "w": "~100,000 kilometers: arteries, veins, and capillaries laid end to end would wrap the Earth about two and a half times, and the great bulk of that length is capillaries."
+  },
+  {
+    "t": "Publishing",
+    "q": "Roughly how many distinct books have been published in all of recorded history?",
+    "a": 150000000,
+    "w": "~150 million: Google counted about 130 million distinct titles by 2010, and the presses have not slowed since. Count every copy ever printed and the number loses all meaning."
+  },
+  {
+    "t": "Sleep",
+    "q": "Roughly how many years of an average lifetime are spent asleep?",
+    "a": 25,
+    "w": "~25 years: about a third of a 75-year life, with several of those years spent dreaming. Every night is a small sabbatical the body insists on taking."
+  },
+  {
+    "t": "The Atlantic",
+    "q": "At its narrowest point, roughly how many kilometers wide is the Atlantic Ocean?",
+    "a": 2900,
+    "w": "~2,900 kilometers: the gap between the bulge of Brazil and West Africa, narrow enough that a sailing ship could cross it in about a week. Farther north the ocean opens to more than five times that width."
+  },
+  {
+    "t": "Barnyard",
+    "q": "Roughly how many bees live in a healthy honeybee hive at the height of summer?",
+    "a": 60000,
+    "w": "~60,000: a strong colony peaks between 50,000 and 80,000 bees in summer, then pares down to a tenth of that for winter, clustering around the queen and shivering to keep warm."
+  },
+  {
+    "t": "Aviation",
+    "q": "Roughly how fast does a commercial airliner cruise, in kilometers per hour?",
+    "a": 900,
+    "w": "~900 km/h: most jets cruise between 800 and 950, high enough that the jet stream can shave hours off an ocean crossing or add them back."
+  },
+  {
+    "t": "Spaceflight",
+    "q": "Roughly how far is the Earth from the Sun, in kilometers?",
+    "a": 150000000,
+    "w": "~150 million kilometers, eight light-minutes: the astronomical unit, the yardstick of the solar system. The sunlight touching you now left the surface while you read the clue before this one."
+  },
+  {
+    "t": "The Brain",
+    "q": "Roughly how much does an average adult human brain weigh, in grams?",
+    "a": 1300,
+    "w": "~1,300 grams: about 1.4 kilograms, two percent of body weight, yet it burns roughly a fifth of the body’s daily energy. The cerebellum holds most of the neurons."
   }
 ]

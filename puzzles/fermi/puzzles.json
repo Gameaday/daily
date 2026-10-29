@@ -226,5 +226,53 @@
     "q": "Roughly how many times does a person blink in a waking day?",
     "a": 15000,
     "w": "Around 15 blinks a minute across 16 waking hours is about 14,000 to 19,000 a day. Your eyes are closed for a cumulative hour and a half without your ever leaving the room."
+  },
+  {
+    "t": "Talk",
+    "q": "Roughly how many words does an average person speak in a day?",
+    "a": 16000,
+    "w": "Studies that tape whole days of talk land between 10,000 and 20,000 words, averaging near 16,000. Some days you talk like a novella and some like a telegram."
+  },
+  {
+    "t": "Lifespans",
+    "q": "Roughly how many days long is an average human lifetime?",
+    "a": 29000,
+    "w": "Seventy-nine years times 365 days is about 28,800; round it to 29,000. Put that way, a whole life is small enough to count on a calendar page."
+  },
+  {
+    "t": "The Sky Right Now",
+    "q": "Roughly how many aircraft are airborne over the Earth at this moment?",
+    "a": 10000,
+    "w": "Flight trackers watch roughly 9,000 to 11,000 planes aloft at a busy moment, day or night. A small city hangs overhead around the clock."
+  },
+  {
+    "t": "Inboxes",
+    "q": "Roughly how many emails are sent worldwide each day?",
+    "a": 350000000000,
+    "w": "The count is around 350 billion a day, and the great majority of it is spam. Nine in ten messages flying around the world right now are junk written by machines for machines."
+  },
+  {
+    "t": "Wheels",
+    "q": "Roughly how many passenger cars are there on Earth?",
+    "a": 1500000000,
+    "w": "A bit over 1.4 billion vehicles are registered worldwide, most of them cars. Parked nose to tail, they would circle the equator a hundred times over."
+  },
+  {
+    "t": "Forests",
+    "q": "Roughly how many trees are there on Earth?",
+    "a": 3000000000000,
+    "w": "A satellite-era census published in Nature put the figure near 3 trillion, roughly eight times the old textbook guess. Humanity fells some 15 billion a year, so the arithmetic is not on our side."
+  },
+  {
+    "t": "The Deep",
+    "q": "Roughly how deep is the deepest point of the ocean, in meters?",
+    "a": 11000,
+    "w": "Challenger Deep runs about 10,900 to 11,000 meters down. Drop Mount Everest into it and the summit would still sit two kilometers below the waves."
+  },
+  {
+    "t": "Cities",
+    "q": "Roughly how many people live in greater Tokyo?",
+    "a": 37000000,
+    "w": "The metropolitan web of commuting rails holds about 37 million people, the largest urban area on Earth. Greater Tokyo alone would out-populate most of the world’s countries."
   }
 ]

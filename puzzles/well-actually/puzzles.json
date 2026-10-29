@@ -630,7 +630,7 @@
       "John Lackland"
     ],
     "s": [
-      "In the summer of 1215, on a meadow by the Thames called Runnymede, Englandxe2x80x99s barons forced a charter of rights onto the crown,",
+      "In the summer of 1215, on a meadow by the Thames called Runnymede, England’s barons forced a charter of rights onto the crown,",
       "sealed under protest by",
       "King Henry VIII,",
       "and known to history as Magna Carta."
@@ -690,6 +690,155 @@
       "a voyage led by",
       "Erik the Red."
     ],
-    "w": "Leif Erikson, Erik the Redxe2x80x99s son. The father spent his years colonizing Greenland and feuding with neighbors; the son did the exploring."
+    "w": "Leif Erikson, Erik the Red’s son. The father spent his years colonizing Greenland and feuding with neighbors; the son did the exploring."
+  },
+  {
+    "t": "Architecture · Greece",
+    "l": 3,
+    "c": "Athens",
+    "a": [
+      "Athens",
+      "in Athens",
+      "Greece",
+      "in Greece",
+      "Athens, Greece"
+    ],
+    "s": [
+      "The Parthenon, built in the fifth century BCE as a temple to Athena,",
+      "has stood over the city beneath it for two and a half thousand years,",
+      "and it looks out today from the heart of",
+      "Rome."
+    ],
+    "w": "Athens. The Parthenon has crowned the Acropolis since the days of Pericles and has never moved an inch. Rome has plenty of ruins of its own; this one is Greek."
+  },
+  {
+    "t": "Medicine · 1967",
+    "l": 3,
+    "c": "Cape Town",
+    "a": [
+      "Cape Town",
+      "South Africa",
+      "in Cape Town",
+      "in South Africa",
+      "Cape Town, South Africa"
+    ],
+    "s": [
+      "The first successful human heart transplant was led by surgeon Christiaan Barnard",
+      "on December 3, 1967,",
+      "at Groote Schuur Hospital in",
+      "New York."
+    ],
+    "w": "Cape Town, South Africa. The patient, Louis Washkansky, lived eighteen days with a heart donated by a young woman killed in a car crash. American centers followed within weeks."
+  },
+  {
+    "t": "Prizes · Alfred Nobel",
+    "l": 2,
+    "c": "dynamite",
+    "a": [
+      "dynamite",
+      "of dynamite",
+      "the dynamite"
+    ],
+    "s": [
+      "The Nobel Prizes are funded by the fortune of Alfred Nobel,",
+      "the Swedish inventor",
+      "of the telegraph,",
+      "whose will set his wealth aside to reward the greatest benefit to humankind."
+    ],
+    "w": "Dynamite, patented in 1867, built the fortune. The story goes that Nobel rewrote his will after reading a prematurely published obituary that called him a merchant of death."
+  },
+  {
+    "t": "Medieval · The Bayeux Tapestry",
+    "l": 2,
+    "c": "England",
+    "a": [
+      "England",
+      "in England",
+      "Kent",
+      "in Kent",
+      "southern England"
+    ],
+    "s": [
+      "The Bayeux Tapestry, which pictures the Norman Conquest in stitched scenes,",
+      "was worked by embroiderers",
+      "in Normandy,",
+      "within a few years of the battle of 1066."
+    ],
+    "w": "England, most likely in a Kent workshop. The consensus rests on the tapestry’s English spellings and its kinship with Anglo-Saxon needlework. It is displayed in France today, but the stitching is judged English."
+  },
+  {
+    "t": "Nature · Reefs",
+    "l": 3,
+    "c": "Australia",
+    "a": [
+      "Australia",
+      "Queensland",
+      "off Australia",
+      "off Queensland",
+      "northeastern Australia"
+    ],
+    "s": [
+      "The Great Barrier Reef is the largest structure built by living things,",
+      "so huge that astronauts can see it from orbit,",
+      "and it runs for over 2,000 kilometers off the coast of",
+      "Brazil."
+    ],
+    "w": "Australia. The reef lies off Queensland in the Coral Sea and has never been anywhere near Brazil, which keeps its own reefs in the Atlantic."
+  },
+  {
+    "t": "Russia · The Last Tsar",
+    "l": 3,
+    "c": "1917",
+    "a": [
+      "1917",
+      "in 1917",
+      "March 1917",
+      "February 1917"
+    ],
+    "s": [
+      "The last Russian emperor, Nicholas II,",
+      "was swept from his throne by the revolution",
+      "of",
+      "1905."
+    ],
+    "w": "1917. The February Revolution took the throne, the October Revolution took the country, and the family paid the price the next year. The rising of 1905 only rattled the autocracy."
+  },
+  {
+    "t": "Art · The Louvre",
+    "l": 3,
+    "c": "77 centimeters",
+    "a": [
+      "77 centimeters",
+      "77cm",
+      "0.77 meters",
+      "29 inches",
+      "about 77 centimeters",
+      "30 inches"
+    ],
+    "s": [
+      "The Mona Lisa, the most famous painting on Earth,",
+      "hangs in the Louvre behind bulletproof glass,",
+      "and measures just under",
+      "four meters."
+    ],
+    "w": "Just 77 by 53 centimeters. Visitors expecting a wall-sized masterpiece find a portrait smaller than a sheet of newsprint, which is why the crowd leans in and the guards look tired."
+  },
+  {
+    "t": "Exploration · The Poles",
+    "l": 3,
+    "c": "Roald Amundsen",
+    "a": [
+      "Roald Amundsen",
+      "Amundsen",
+      "the Norwegian",
+      "Roald Amundsen, a Norwegian"
+    ],
+    "s": [
+      "The geographic South Pole was first reached",
+      "in December 1911,",
+      "by the British explorer",
+      "Robert Falcon Scott."
+    ],
+    "w": "Roald Amundsen, who planted the Norwegian flag on December 14, 1911. Scott’s party arrived five weeks later, in January 1912, and died on the march back to the coast."
   }
 ]

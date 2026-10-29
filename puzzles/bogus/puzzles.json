@@ -391,14 +391,14 @@
     "s": [
       "Every costume Viking wears horns, and the movies have taught generations to expect them.",
       "The image has roots in the real thing: horned helmets do turn up in Viking graves, just rarely.",
-      "The stage gave the idea its grip: Carl Emil Doepler drew horned helmets for Wagnerxe2x80x99s Ring at Bayreuth in 1876.",
+      "The stage gave the idea its grip: Carl Emil Doepler drew horned helmets for Wagner’s Ring at Bayreuth in 1876.",
       "Before that production, illustrated Vikings rarely wore horns at all.",
       "Bayreuth made the horns famous, and a century of cartoons has never let them go."
     ],
-    "w": "No horned Viking helmet has ever been found, rarely or otherwise. The horned look comes from Carl Emil Doeplerxe2x80x99s 1876 costume designs for Wagnerxe2x80x99s Ring cycle, and it has been stuck to Norse heads ever since."
+    "w": "No horned Viking helmet has ever been found, rarely or otherwise. The horned look comes from Carl Emil Doepler’s 1876 costume designs for Wagner’s Ring cycle, and it has been stuck to Norse heads ever since."
   },
   {
-    "t": "Napoleonxe2x80x99s Height · 1815",
+    "t": "Napoleon’s Height · 1815",
     "l": 0,
     "s": [
       "Napoleon Bonaparte was a tiny man, barely five feet tall, and the soldiers nicknamed him for it.",
@@ -407,10 +407,10 @@
       "James Gillray and other British caricaturists had spent years drawing him as a squalling dwarf, so the math landed on ready ears.",
       "Among his own officers he was middling height, short only beside the tall old guard he liked to stand beside."
     ],
-    "w": "The autopsy figure of five foot two was in French units, which makes him about five foot seven in English measure, average for his era. Gillrayxe2x80x99s caricatures did the rest."
+    "w": "The autopsy figure of five foot two was in French units, which makes him about five foot seven in English measure, average for his era. Gillray’s caricatures did the rest."
   },
   {
-    "t": "Einsteinxe2x80x99s Report Card · c. 1896",
+    "t": "Einstein’s Report Card · c. 1896",
     "l": 1,
     "s": [
       "The story says young Albert Einstein failed mathematics and then rewrote physics anyway, which is why struggling students love him.",
@@ -439,11 +439,11 @@
     "s": [
       "The Great Wall of China threads thousands of miles across the north of the country, and schoolbooks love one claim about it.",
       "The claim says it is the only human-made structure visible from space, and it predates spaceflight by decades.",
-      "A cartoonistxe2x80x99s column of the 1930s is usually credited with starting it.",
+      "A cartoonist’s column of the 1930s is usually credited with starting it.",
       "Astronauts later confirmed the schoolbook claim word for word: from the Moon, the wall is plain to the naked eye.",
       "The real reports run the other way: from orbit the wall is hard to pick out unaided, and from the Moon it is invisible."
     ],
-    "w": "No one has seen the wall from the Moon, and astronauts have struggled to spot it even from orbit without help. The claim goes back to a Ripleyxe2x80x99s Believe It or Not cartoon in the 1930s, printed years before anyone had flown anywhere."
+    "w": "No one has seen the wall from the Moon, and astronauts have struggled to spot it even from orbit without help. The claim goes back to a Ripley’s Believe It or Not cartoon in the 1930s, printed years before anyone had flown anywhere."
   },
   {
     "t": "The Salem Trials · 1692",
@@ -452,7 +452,7 @@
       "In 1692, the Massachusetts town of Salem executed twenty people for witchcraft in a summer of fear.",
       "The condemned were burned at the stake, as the old law required, and the whole town turned out to watch the fires.",
       "Nineteen were hanged on Gallows Hill, and one very stubborn man was pressed to death under stones for refusing to enter a plea.",
-      "Giles Coreyxe2x80x99s death was the only one of its kind in the whole affair.",
+      "Giles Corey’s death was the only one of its kind in the whole affair.",
       "Burnings belonged to continental Europe; English law, which Massachusetts followed, sent witches to the gallows."
     ],
     "w": "No one was burned at Salem. Nineteen were hanged, and Giles Corey was pressed to death for refusing to plead. The bonfires belong to Europe, not Massachusetts Bay."
@@ -475,10 +475,151 @@
     "s": [
       "In 1492, Columbus sailed west across the Atlantic, and the story of his voyage usually comes with a subplot.",
       "In the subplot, his own sailors feared tumbling off the edge of a flat world that only he believed was round.",
-      "His voyage is remembered as the moment Europe finally accepted the planetxe2x80x99s true shape.",
+      "His voyage is remembered as the moment Europe finally accepted the planet’s true shape.",
       "Every educated European of his day already knew the world was round; the Greeks had measured its size seventeen centuries earlier.",
       "The real argument was about distance: his critics thought Asia too far to reach westward, and they were right."
     ],
     "w": "Nobody educated in 1492 believed the Earth was flat. Eratosthenes had measured its circumference by the third century BCE. The flat-earth subplot was invented by Washington Irving in the 1820s, and textbooks have been mopping up ever since."
+  },
+  {
+    "t": "The Liberty Bell · 1752",
+    "l": 3,
+    "s": [
+      "Philadelphia ordered a bell for its State House in 1751 from the Whitechapel foundry in London.",
+      "It cracked on its first test ring, and the city had it recast twice by local founders.",
+      "The name comes not from independence but from abolitionists, who spread the bell’s inscription in the 1830s.",
+      "On July 4, 1776, its peal announced independence to the crowds gathered outside.",
+      "The famous big crack opened in 1846, while the bell tolled for George Washington’s birthday.",
+      "It was never rung again after that crack, and it later went on tour by rail to mend a divided country.",
+      "It now draws more than a million visitors a year, a short walk from Independence Hall."
+    ],
+    "w": "There is no evidence the bell rang on July 4, 1776. The story traces to an 1847 work of fiction by George Lippard, and the State House steeple was in no shape for ringing that summer. The abolitionist christening, the 1846 crack, and the rest are documented."
+  },
+  {
+    "t": "Washington’s Teeth · 1789",
+    "l": 2,
+    "s": [
+      "George Washington suffered from terrible teeth his whole adult life.",
+      "By his first inauguration in 1789, exactly one natural tooth remained.",
+      "His famous dentures were carved from wood.",
+      "One surviving set includes human teeth, which his own account book shows were bought, not given.",
+      "The plates pinched and shifted, which changed the set of his face in later portraits.",
+      "He owned several sets over the years, no two alike, as his mouth kept changing.",
+      "John Greenwood, a New York dentist, made the later sets and tended them through the presidency.",
+      "The last surviving set is displayed at his estate at Mount Vernon."
+    ],
+    "w": "Not wood. The surviving dentures are hippopotamus ivory, human teeth, and brass, mounted on lead. The wooden-teeth story was invented after his death and stuck because it made the great man sound folksy. His ledgers even record buying teeth from poor New Yorkers, a grim trade of the era."
+  },
+  {
+    "t": "Magellan’s Voyage · 1522",
+    "l": 2,
+    "s": [
+      "In September 1519, five ships and about 270 men sailed from Spain under Ferdinand Magellan.",
+      "After a winter on the South American coast, the fleet found the strait that now bears his name.",
+      "Magellan himself completed the circumnavigation and returned to Spain in triumph.",
+      "He died in April 1521 at Mactan in the Philippines, killed in a local dispute he had no business joining.",
+      "Juan Sebastián Elcano brought the last ship, the Victoria, home in September 1522.",
+      "Aboard were eighteen starving men of the roughly 270 who had set out.",
+      "The cloves in the hold sold for just enough to pay for the whole venture."
+    ],
+    "w": "Magellan never made it home. He fell at Mactan on April 27, 1521, and it was Elcano who completed the voyage with 18 men. It took three years, five ships, and nearly every life aboard; the spice cargo barely balanced the ledgers."
+  },
+  {
+    "t": "The Wild West · 1881",
+    "l": 2,
+    "s": [
+      "The gunfight at the O.K. Corral lasted about thirty seconds and left three men dead.",
+      "Dodge City at its wildest recorded a handful of killings in a bad year.",
+      "The frontier averaged a fatal shootout every week in every cow town.",
+      "Bank robbery was so rare that historians count fewer than a dozen across the whole frontier era.",
+      "What actually killed settlers was disease, drowning, and horses.",
+      "The famous Tombstone fight pitted lawmen against a cattle-rustling faction, not two lone gunslingers.",
+      "Dime novels and early Hollywood did most of the exaggerating."
+    ],
+    "w": "No cow town saw weekly shootouts. Cattle-town homicide ran lower than in Eastern cities, and bank and stagecoach robberies barely register in the records. Dime novels arrived before the historians did, and the West has been paying for it ever since."
+  },
+  {
+    "t": "Mussolini’s Trains · 1930",
+    "l": 2,
+    "s": [
+      "Mussolini’s regime is remembered around the world by one warm phrase: he made the trains run on time.",
+      "The line spread through the regime’s propaganda and through admirers abroad.",
+      "The state railways published punctuality figures that proved the miracle.",
+      "Italian railways had been overhauled during the First World War, years before the March on Rome.",
+      "No statistic from the era has ever surfaced to back the claim up.",
+      "What the trains ran on by 1943 was luck, with the fleet bombed and the rails torn up.",
+      "The phrase outlived both the regime and the man, proof that a slogan repeated often enough becomes history."
+    ],
+    "w": "The punctuality figures do not exist. No record from Mussolini’s railways shows a turnaround, and the overhaul was underway before 1922. The line was propaganda that foreign admirers repeated as fact, and it worked so well it is quoted to this day."
+  },
+  {
+    "t": "Emancipation Proclamation · 1863",
+    "l": 1,
+    "s": [
+      "On January 1, 1863, President Lincoln signed the Emancipation Proclamation.",
+      "It declared free every enslaved person in the United States, all at once.",
+      "On paper it reached some three and a half million people held in the rebelling states.",
+      "Union officers read it aloud wherever the army stood, from Virginia to the Mississippi.",
+      "Kentucky, Maryland, and Missouri stayed loyal to the Union and kept their own laws.",
+      "The proclamation also invited freedmen into uniform, and nearly 200,000 eventually served.",
+      "The Thirteenth Amendment finished the work in December 1865."
+    ],
+    "w": "The proclamation applied only to states and regions in rebellion. The enslaved people of the loyal border states were deliberately excluded, since Lincoln could not afford to lose Kentucky and Missouri, and the Thirteenth Amendment finished the job in 1865."
+  },
+  {
+    "t": "The First Thanksgiving · 1621",
+    "l": 3,
+    "s": [
+      "In the autumn of 1621, the Plymouth colonists held a harvest feast with the Wampanoag.",
+      "Massasoit arrived with some ninety men, who brought five deer with them.",
+      "Wild fowl was served, along with corn, squash, and shellfish.",
+      "Pumpkin pie and cranberry sauce rounded out the meal, just as they do today.",
+      "The party lasted three days, with shooting games, military drills, and feasting.",
+      "The colonists did not call it a thanksgiving; for them that was a solemn day of prayer.",
+      "It became a national holiday only in 1863, when Lincoln set the date in November."
+    ],
+    "w": "No pie and no cranberry sauce. Plymouth had no ovens, no butter, no flour for a crust, and the sugar sat back in England. The menu was venison, wild fowl, corn, squash, and shellfish, and the national holiday had to wait for Lincoln."
+  },
+  {
+    "t": "Newton’s Apple · 1666",
+    "l": 2,
+    "s": [
+      "During the plague years of 1665 and 1666, young Isaac Newton left Cambridge for the family garden at Woolsthorpe.",
+      "There, in eighteen months of thinking, he laid the foundations of calculus, optics, and gravitation.",
+      "An apple fell from the tree and struck him on the head.",
+      "Watching an apple fall set him asking why it must drop straight down toward the earth’s center.",
+      "From that question he stretched gravity from the orchard to the Moon and out to the planets.",
+      "Newton himself told the story late in life to William Stukeley, who wrote it down in 1726.",
+      "Descendants of the tree still grow at Woolsthorpe, raised from cuttings and given to universities."
+    ],
+    "w": "Newton never said the apple hit him on the head. In Stukeley’s memoir he describes watching an apple fall and wondering why it always drops straight down. The knock on the head was added later, to make genius look comic."
+  },
+  {
+    "t": "Paul Revere’s Ride · 1775",
+    "l": 2,
+    "s": [
+      "On the night of April 18, 1775, Paul Revere crossed to Charlestown to warn the countryside that British troops were marching.",
+      "His orders were to alert Samuel Adams and John Hancock in Lexington, whom the troops meant to arrest.",
+      "Along the road he shouted \"The British are coming!\" at every farmhouse he passed.",
+      "William Dawes rode out of Boston by a second route that same night.",
+      "Samuel Prescott was the only rider to carry the alarm all the way to Concord.",
+      "A British patrol stopped Revere himself short of Concord and took his horse.",
+      "The lone midnight rider of legend came from Longfellow’s poem of 1861, written 86 years after the fact."
+    ],
+    "w": "Revere’s own deposition says the alarm was that the Regulars were coming out; the colonists still considered themselves British, so the famous cry would have made no sense. He never finished the ride either: Dawes rode too, Prescott reached Concord, and Longfellow turned it into a solo run in 1861."
+  },
+  {
+    "t": "San Francisco · 1906",
+    "l": 2,
+    "s": [
+      "Just after five in the morning on April 18, 1906, an earthquake shook San Francisco for under a minute.",
+      "The initial shock brought down hundreds of buildings and ruptured water mains across the city.",
+      "The earthquake itself flattened the great majority of San Francisco.",
+      "It was the fires, burning for three days, that destroyed most of what was lost.",
+      "With hydrants dry, crews tried dynamiting firebreaks, which often spread the flames instead.",
+      "Enrico Caruso, in town to sing, fled in his nightshirt and vowed never to return.",
+      "The city rebuilt fast, and threw a world’s fair nine years later to prove it."
+    ],
+    "w": "The shaking did real damage, but fire took the city: more than four hundred blocks burned over three days while broken mains left the hydrants dry. Insurance clerks marked claims as fire rather than earthquake to dodge the quake clause, which is how historians caught the truth. Caruso kept his vow."
   }
 ]

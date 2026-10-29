@@ -292,12 +292,19 @@ function fatBoard(rng){
    so the player — who applies R then C — can always walk it back inside
    the budget. One generator for the daily board and for practice boards. */
 function genBoard(budget, seed){
+  /* 24 salts, not 8: a null puzzle would break the page (it boots on
+     PUZZLE.start), so the generator keeps retrying until a board clears
+     the acceptance floor instead of giving up and returning null */
   let fallback = null, any = null;
-  for (let salt = 0; salt < 8; salt++){
+  for (let salt = 0; salt < 24; salt++){
     const rng = mulberry32(seed + salt * 104729 + 5);
     const { b: F, count } = fatBoard(rng);
     const fatMin = salt >= 4 ? 8 : 9;
-    if (count < fatMin) continue;
+    if (count < fatMin){
+      /* the last salt always yields something playable, however lean, so
+         genBoard can never return null */
+      if (salt < 23) continue;
+    }
     const T = budget - Math.floor(rng() * 2);
     const ca = 2 + Math.floor(rng() * Math.max(1, T - 3));
     const cb = T - ca;

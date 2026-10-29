@@ -1848,5 +1848,375 @@
         ]
       }
     ]
+  },
+  {
+    "t": "The History of Medicine",
+    "cats": [
+      {
+        "n": "Anatomy",
+        "i": [
+          "Galen",
+          "Andreas Vesalius",
+          "William Harvey"
+        ]
+      },
+      {
+        "n": "Fever fighters",
+        "i": [
+          "Quinine",
+          "Aspirin",
+          "Penicillin"
+        ]
+      },
+      {
+        "n": "Hospital pioneers",
+        "i": [
+          "Florence Nightingale",
+          "Clara Barton",
+          "Elizabeth Blackwell"
+        ]
+      },
+      {
+        "n": "Tools of the trade",
+        "i": [
+          "The stethoscope",
+          "The lancet",
+          "The microscope"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Islamic Golden Age",
+    "cats": [
+      {
+        "n": "Mathematicians of the House of Wisdom",
+        "i": [
+          "Al-Khwarizmi",
+          "Omar Khayyam",
+          "Thabit ibn Qurra"
+        ]
+      },
+      {
+        "n": "Physicians and philosophers",
+        "i": [
+          "Ibn Sina",
+          "Ibn Rushd",
+          "Al-Razi"
+        ]
+      },
+      {
+        "n": "Cities of learning",
+        "i": [
+          "Baghdad",
+          "Cordoba",
+          "Cairo"
+        ]
+      },
+      {
+        "n": "Instruments and ideas",
+        "i": [
+          "The astrolabe",
+          "The camera obscura",
+          "Arabic numerals"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Submarine",
+    "cats": [
+      {
+        "n": "Early submersibles",
+        "i": [
+          "The Turtle",
+          "The Nautilus",
+          "The Hunley"
+        ]
+      },
+      {
+        "n": "Fathers of the deep",
+        "i": [
+          "David Bushnell",
+          "Robert Fulton",
+          "John Philip Holland"
+        ]
+      },
+      {
+        "n": "The bathyscaphe",
+        "i": [
+          "Auguste Piccard",
+          "Jacques Piccard",
+          "The Trieste"
+        ]
+      },
+      {
+        "n": "Submarine fiction",
+        "i": [
+          "Captain Nemo",
+          "Twenty Thousand Leagues Under the Sea",
+          "The Hunt for Red October"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The History of Maps",
+    "cats": [
+      {
+        "n": "Cartographers",
+        "i": [
+          "Ptolemy",
+          "Gerardus Mercator",
+          "Al-Idrisi"
+        ]
+      },
+      {
+        "n": "Milestones",
+        "i": [
+          "The Mercator projection",
+          "The portolan chart",
+          "The mappa mundi"
+        ]
+      },
+      {
+        "n": "Navigation",
+        "i": [
+          "The compass",
+          "The sextant",
+          "The kamal"
+        ]
+      },
+      {
+        "n": "Imaginary lines",
+        "i": [
+          "The equator",
+          "The Tropic of Cancer",
+          "The International Date Line"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Lost Cities",
+    "cats": [
+      {
+        "n": "Cities of the Near East",
+        "i": [
+          "Babylon",
+          "Nineveh",
+          "Persepolis"
+        ]
+      },
+      {
+        "n": "Phoenician ports",
+        "i": [
+          "Tyre",
+          "Sidon",
+          "Carthage"
+        ]
+      },
+      {
+        "n": "Maya cities",
+        "i": [
+          "Tikal",
+          "Copán",
+          "Palenque"
+        ]
+      },
+      {
+        "n": "Cities of the Indus",
+        "i": [
+          "Mohenjo-daro",
+          "Harappa",
+          "Dholavira"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Jazz Age",
+    "cats": [
+      {
+        "n": "Jazz greats",
+        "i": [
+          "Louis Armstrong",
+          "Duke Ellington",
+          "Ella Fitzgerald"
+        ]
+      },
+      {
+        "n": "Harlem",
+        "i": [
+          "The Cotton Club",
+          "The Harlem Renaissance",
+          "Langston Hughes"
+        ]
+      },
+      {
+        "n": "Instruments",
+        "i": [
+          "The saxophone",
+          "The banjo",
+          "The cornet"
+        ]
+      },
+      {
+        "n": "Dances",
+        "i": [
+          "The Charleston",
+          "The Lindy Hop",
+          "Tap dancing"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Printed Book",
+    "cats": [
+      {
+        "n": "Printers and publishers",
+        "i": [
+          "Johannes Gutenberg",
+          "William Caxton",
+          "Aldus Manutius"
+        ]
+      },
+      {
+        "n": "Famous firsts",
+        "i": [
+          "The Gutenberg Bible",
+          "The Diamond Sutra",
+          "The Nuremberg Chronicle"
+        ]
+      },
+      {
+        "n": "Craft",
+        "i": [
+          "Movable type",
+          "The printing press",
+          "The linotype machine"
+        ]
+      },
+      {
+        "n": "Cities of print",
+        "i": [
+          "Augsburg",
+          "Nuremberg",
+          "Basel"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Story of Food",
+    "cats": [
+      {
+        "n": "New World crops",
+        "i": [
+          "The potato",
+          "Maize",
+          "The chili pepper"
+        ]
+      },
+      {
+        "n": "First farms",
+        "i": [
+          "Emmer wheat",
+          "Barley",
+          "Lentils"
+        ]
+      },
+      {
+        "n": "Spices",
+        "i": [
+          "Nutmeg",
+          "Cinnamon",
+          "Cloves"
+        ]
+      },
+      {
+        "n": "Preservation",
+        "i": [
+          "The root cellar",
+          "Salting",
+          "The ice house"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Eyes on the Sky",
+    "cats": [
+      {
+        "n": "Telescopes",
+        "i": [
+          "The Hubble Space Telescope",
+          "The James Webb Space Telescope",
+          "The Spitzer Space Telescope"
+        ]
+      },
+      {
+        "n": "Pioneers",
+        "i": [
+          "Edwin Hubble",
+          "Henrietta Swan Leavitt",
+          "Vera Rubin"
+        ]
+      },
+      {
+        "n": "Orbits",
+        "i": [
+          "Low Earth orbit",
+          "Geostationary orbit",
+          "The Lagrange points"
+        ]
+      },
+      {
+        "n": "What the sky revealed",
+        "i": [
+          "Exoplanets",
+          "The expanding universe",
+          "The cosmic microwave background"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Wars of the Roses",
+    "cats": [
+      {
+        "n": "Houses",
+        "i": [
+          "The House of Lancaster",
+          "The House of York",
+          "The House of Tudor"
+        ]
+      },
+      {
+        "n": "Battles",
+        "i": [
+          "The Battle of Bosworth Field",
+          "The Battle of Towton",
+          "The Battle of St Albans"
+        ]
+      },
+      {
+        "n": "Figures",
+        "i": [
+          "Richard III",
+          "Henry VII",
+          "Edward IV"
+        ]
+      },
+      {
+        "n": "Motifs",
+        "i": [
+          "The White Boar",
+          "The Sunne in Splendour",
+          "The Tudor Rose"
+        ]
+      }
+    ]
   }
 ]

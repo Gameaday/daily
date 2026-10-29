@@ -25,10 +25,16 @@ jobs:
         run: |
           cd dist/offline && zip -rq ../../offline-bundle.zip .
           cd ../online && zip -rq ../../online-bundle.zip .
-      - name: create release
+      - name: create or update release
         run: |
           FLAGS="--generate-notes"
           case "$GITHUB_REF_NAME" in *-rc*|*-beta*) FLAGS="$FLAGS --prerelease" ;; esac
-          gh release create "$GITHUB_REF_NAME" $FLAGS --title "$GITHUB_REF_NAME" offline-bundle.zip online-bundle.zip
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            # the release already exists (hand-created, or a re-run of this
+            # workflow): converge by (re)uploading the fresh bundles
+            gh release upload "$GITHUB_REF_NAME" offline-bundle.zip online-bundle.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" $FLAGS --title "$GITHUB_REF_NAME" offline-bundle.zip online-bundle.zip
+          fi
         env:
           GH_TOKEN: ${{ github.token }}

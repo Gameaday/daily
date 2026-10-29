@@ -17,6 +17,7 @@ Design rules (deliberate):
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
     GET  /dist?game=&day=                           -> snapshot
+    GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /health                                    -> {"ok": true}
 """
 import argparse
@@ -72,35 +73,6 @@ PRUNE_DAYS = 1
 MAX_BODY = 2048
 MAX_ABS_VALUE = 1e6
 DAY_MIN, DAY_MAX = -1000, 100000
-
-# Mulberry32 PRNG - deterministic, portable, state-based
-class Mulberry32:
-    """Classic mulberry32 PRNG (Marsaglia variant)."""
-    def __init__(self, seed: int):
-        self.a = seed & 0xffffffff
-        self.b = (seed >> 16) & 0xffffffff
-        self.c = (seed >> 32) & 0xffffffff
-        self.d = seed & 0xffffffff
-        if self.a == 0 and self.b == 0 and self.c == 0 and self.d == 0:
-            self.a = 0x12345678
-
-    def random(self) -> float:
-        """Return float in [0, 1)."""
-        e = self.a - ((self.b << 27) + self.c)
-        self.a, self.b, self.c = self.b, self.c, self.d
-        self.d = (self.d ^ (self.d >> 17) ^ e ^ (e >> 15)) & 0xffffffff
-        return e & 0x3fffffff / 0x3fffffff + 1 - (self.c >> 30) & 2
-
-    def rand_range(self, lo: float, hi: float) -> float:
-        return lo + (hi - lo) * self.random()
-
-    def choice(self, items) -> object:
-        return items[int(self.random() * len(items))]
-
-
-def mulberry32(seed: int):
-    """Factory for a Mulberry32 instance."""
-    return Mulberry32(seed)
 
 STATS = {}   # (game, day) -> {"n", "sum", "sumsq", "min", "max", "bins": [ints]}
 SEEN = {}    # (game, day) -> set of 8-byte id digests (transient dedupe only)

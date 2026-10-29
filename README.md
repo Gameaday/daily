@@ -309,7 +309,7 @@ Four layers, all dependency-free:
   its own output (every relative reference resolves, banks present
   offline / stripped online).
 
-Run everything: Run everything: `npm test` or `make test`. GitHub Actions runs all three
+Run everything: `npm test` or `make test`. GitHub Actions runs all three
 layers on every push and pull request, and the Pi only ever updates itself
 to commits where they passed.
 

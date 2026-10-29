@@ -102,7 +102,10 @@ const SHELL = (() => {
   function isSolo(){
     return location.protocol === 'file:' || String(location.search || '').indexOf('solo') >= 0;
   }
-  function syncBoardFor(game, better){
+  function syncBoardFor(game){
+    /* Callers may still pass their SYNC_BETTER hint as a second argument;
+       it is deliberately ignored - the server owns the direction, and the
+       submit payload carries no better field. */
     return function syncBoard(value){
       const box = $('curve');
       if (!box) return;
@@ -116,7 +119,7 @@ const SHELL = (() => {
         id = localStorage.getItem('warmup.id');
         if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
       } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
-      const payload = JSON.stringify({ game: game, day: dayIndex, value: value, better: better, id: id });
+      const payload = JSON.stringify({ game: game, day: dayIndex, value: value, id: id });
       const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
         .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
       post('/api')

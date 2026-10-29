@@ -59,7 +59,7 @@ Each `scores/<game>/puzzles.json` now carries the real curated bank extracted ex
 - [x] `npm test` / `make test` green end-to-end. (No local interpreters in this workspace — validated by the CI validate run on 0e5d8ff: store verifier, games.js, tests/run.js, server_test.py and bundle builds all green.)
 
 ## Phase 4 — Cleanup & docs
-- [ ] Remove remaining dead scaffolding ("Fallback to local generation" comments, `if (false)` blocks).
+- [x] Remove remaining dead scaffolding ("Fallback to local generation" comments, `if (false)` blocks).  — verified absent 2026-10-29: a scan of all 13 game pages found none left
 - [x] Sweep `README.md`, `NOTES.md`, `DEVELOPER.md` for stale monolithic-`puzzles.json` / `mode=gen` references.  — README repaired and updated, NOTES paragraph rewritten, DEVELOPER.md rewritten
 - [x] Update `tools/export-puzzles.mjs` (or remove) so it no longer shuffles a monolithic pool / random-generates; align with per-game curated banks.  — rewritten as a store verifier (exit 1 on drift)
 - [x] `tools/build-bundles.mjs`: drop monolithic `scores/puzzles.json` copy (per-game files are the store).

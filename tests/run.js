@@ -33,6 +33,14 @@ async function main(h, ctx){
   }
   require('./games/cross-checks').run(h, ctx);
 
+  /* Suite-guard: Node exits 0 on an empty file, so a wiring bug must not be
+     able to pass silently. Fail unless modules are wired in AND the suite
+     actually ran at least one assertion. */
+  h.group('suite-guard');
+  const ran = h.results.slice(0, -1).reduce((n, r) => n + r.pass + r.fail, 0);
+  h.ok(MODULES.length > 0, 'test modules are wired in (MODULES is not empty)');
+  h.ok(ran > 0, 'the suite ran assertions (' + MODULES.length + ' modules loaded)');
+
   const s = h.summary();
   return { summary: s.lines, pass: s.pass, fail: s.fail };
 }

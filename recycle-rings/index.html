@@ -27,7 +27,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .ringbtn .rname{font-size:11px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
 .ringbtn button{
     width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line); background:var(--paper);
-    font-size:14px; cursor:pointer; color:var(--ink);
+    font-size:14px; c
+ursor:pointer; color:var(--ink);
   }
 .ringbtn button:hover{border-color:var(--accent); color:var(--accent);}
 .swapbtn{
@@ -64,7 +65,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
   </div>
 
-  <p class="lead">Four wheels, one target word. <b>Spin</b> each wheel and <b>swap neighbouring wheels</b> to spell it at the top. There is no clock — every move counts against an <b>exact par</b>, so be conservative.</p>
+  <p class="lead">Four wheels, one target word. <b>Spin</b> each wheel and <b>swap neighb
+ouring wheels</b> to spell it at the top. There is no clock — every move counts against an <b>exact par</b>, so be conservative.</p>
 
   <div class="targetrow">
     <span class="lbl">Spell</span>
@@ -91,7 +93,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <footer>
-    Runs entirely in your browser ·  <a href="https://ko-fi.com/historylabs" target="_blank" style="color:var(--muted); text-decoration:none; font-size:1.2em;">☕</a><br/>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
     a <b>history labs</b> morning warmup
   </footer>
 </div>
@@ -110,7 +112,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
 <div class="toast" id="toast"></div>
 
-<script src="../shell/common.js"></script>
+<script src
+="../shell/common.js"></script>
 <script src="../assets/words-en.js"></script>
 <script>
 'use strict';
@@ -164,7 +167,8 @@ function solve(order, rings, word){
         const r = st.o[p], n = SIZES[r];
         for (const d of [-1, 1]){
           const f = st.f.slice();
-          f[r] = ((f[r] + d) % n + n) % n;
+          f[r] = ((f[r] + d) % n
+ + n) % n;
           const k = key(st.o, f);
           if (prev.has(k)) continue;
           prev.set(k, { pk, mv: { t: 'r', p, d } });
@@ -219,7 +223,8 @@ function gen(day){
     }
     if (order.every((r, p) => r === p)) continue; /* guarantee at least one swap */
     const res = solve(order, rings, word);
-    if (res.par >= 5 && res.par <= 13) return { word, rings, order, par: res.par, sol: res.sol };
+    if (res.par >= 5 && res.par <= 13) return { word, rings, order, par: re
+s.par, sol: res.sol };
   }
   return null; /* unreachable in practice */
 }
@@ -267,7 +272,8 @@ function renderWheel(){
   let svg = `<circle cx="200" cy="200" r="192" fill="#fffdf7" stroke="#e5dbc8" stroke-width="1.5"/>`;
   RADII.forEach(r => { svg += `<circle cx="200" cy="200" r="${r}" fill="none" stroke="#d9cdb2" stroke-width="1.5"/>`; });
   /* marked ray */
-  svg += `<path d="M200 30 l-10 17 h20 z" fill="#b3541e"/>`;
+  svg +=
+ `<path d="M200 30 l-10 17 h20 z" fill="#b3541e"/>`;
   svg += `<line x1="200" y1="47" x2="200" y2="353" stroke="#b3541e" stroke-width="1" stroke-dasharray="4 7" opacity="0.4"/>`;
   for (let p = 0; p < 4; p++){
     const r = S.order[p], ring = PUZZLE.rings[r], rad = RADII[p];
@@ -327,6 +333,7 @@ function swap(p){
   S.order[p] = S.order[p + 1];
   S.order[p + 1] = t;
   S.moves++;
+
   checkWin();
   saveState();
   renderAll();
@@ -355,16 +362,6 @@ function showReveal(){
   $('reveal').classList.add('show');
   syncBoard(S.moves);
   renderMeta();
-/* Server-side result submission */
-  gify({ game: 'recycle-rings', day: dayIndex, value: S.moves, better: 'low', id: 'player' });
-  const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({game: 'recycle-rings', day: dayIndex, value: S.moves, better: 'low', id: 'player'}) })
-    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
-  post('/api')
-    .catch(() => post('http://localhost:8787'))
-    .catch(() => post('http://127.0.0.1:8787'))
-    .then(d => { $('curve').innerHTML = '<div class="curve-note">result recorded on the curve</div>'; })
-    .catch(() => { $('curve').innerHTML = '<div class="curve-note">curve offline – playing solo today</div>'; });
-}
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'rings';
@@ -379,16 +376,9 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
-
-SHELL.fetchPuzzle('recycle-rings', SHELL.dayIndex).then(puzzle => {
-  // Initialize game state with fetched puzzle
-  $('pno').textContent = num;
-  $('pdate').textContent = SHELL.pdateText();
-  renderCtl();
-  renderAll();
-}).catch(err => {
-  console.error('Failed to fetch puzzle:', err);
-});
+renderCtl();
+renderAll();
+if (S.won) showReveal();
 SHELL.startCountdown('count', 500);
 </script>
 </body>

@@ -184,7 +184,9 @@ const SHELL = (() => {
     if (icons && !icons.querySelector('.home-link')){
       const a = document.createElement('a');
       a.className = 'iconbtn home-link';
-      a.href = '../';
+      /* name the file: a directory link is a server habit, and file://
+         play (the offline bundle) shows a folder listing instead */
+      a.href = '../index.html';
       a.textContent = '\u2302';
       a.setAttribute('aria-label', 'All games');
       a.style.textDecoration = 'none';

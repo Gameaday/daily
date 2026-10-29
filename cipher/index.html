@@ -28,6 +28,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .slot.sel .pl{border-color:var(--accent);}
 .slot.done .pl{color:var(--green); border-color:var(--green-soft);}
 .punc{display:inline-flex; flex-direction:column; align-items:center; min-width:10px; padding:2px 1px;}
+.punc .cl{font-size:10px;} /* placeholder row: same line box as the slot labels, so the glyph lands on the letter line */
 .punc .pl{font-size:19px; min-height:23px; border-bottom:2px solid transparent;
     font-family:ui-monospace,Menlo,Consolas,monospace;}
 /* a real flex item for the space between words: .wline is display:flex, so a raw
@@ -54,7 +55,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
 @media (max-width:480px){
     h1{font-size:28px;}
-    .slot .pl{font-size:16px;} .slot{min-width:17px;} .wline .gap{width:14px;}
+    .slot .pl{font-size:16px;} .punc .pl{font-size:16px;} .slot{min-width:17px;} .wline .gap{width:14px;}
   }
 /* hidden input: lets soft keyboards type into the puzzle (tap a slot, then type) */
   #kbd{position:fixed; top:-80px; left:0; width:1px; height:1px; opacity:0; border:0; padding:0; font-size:16px;}</style>
@@ -220,7 +221,10 @@ function render(){
     } else if (ch === ' '){
       flush(); html += '<span class="gap"></span>';
     } else {
-      flush(); html += '<span class="punc"><b class="pl">' + ch + '</b></span>';
+      /* punctuation rides the same two-row stack as letter slots (empty
+         label row), so it sits on the decode line instead of floating high
+         where a comma reads as an apostrophe */
+      flush(); html += '<span class="punc"><i class="cl">\u00a0</i><b class="pl">' + ch + '</b></span>';
     }
   }
   flush();

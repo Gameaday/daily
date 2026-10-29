@@ -37,6 +37,11 @@ except Exception:  # pragma: no cover
 TZ_NAME = 'America/New_York'
 EPOCH_KEY = '2026-10-27'
 
+PRUNE_DAYS = 1
+MAX_BODY = 2048
+MAX_ABS_VALUE = 1e6
+DAY_MIN, DAY_MAX = -1000, 100000
+
 # Per-game truth: which direction is better, and the fixed histogram edges.
 # Bin i covers [edges[i], edges[i+1]); values beyond the last edge clamp into
 # the final bin, values below the first edge clamp into bin 0.
@@ -44,8 +49,9 @@ EPOCH_KEY = '2026-10-27'
 SPECS = {
     "bogus":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
     "well-actually": {"better": "high", "edges": [0, 1, 2, 3, 4, 5]},
-    "recycle-rings": {"better": "low",  "edges": [0, 5, 7, 9, 11, 13, 15, 17, 20]},
-    "recycle-grid":  {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16]},
+    "rings":         {"better": "low",  "edges": [0, 5, 7, 9, 11, 13, 15, 17, 20]},
+    "grid":          {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16]},
+    "grid-hard":     {"better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]},
     "fermi":         {"better": "high", "edges": [0, 1, 2, 3, 4]},
     "sift":          {"better": "low",  "edges": [0, 1, 2, 3, 4, 5]},
     "rounds":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8]},
@@ -57,8 +63,9 @@ SPECS = {
     "museum":        {"better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7]},
 }
 
-# Per-game puzzle files: scores/<game>/puzzles.json
-# Each game owns its own puzzle data file - no monolithic bank.
+# Per-game puzzle stores: scores/<game>/puzzles.json, committed and verified
+# against the client banks by tools/export-puzzles.mjs in CI. Generator games
+# keep an empty store (their puzzles are derived, not curated).
 PUZZLES = {}
 PUZZLES_DIR = Path(__file__).parent
 for game in SPECS.keys():
@@ -68,11 +75,6 @@ for game in SPECS.keys():
             PUZZLES[game] = json.load(f)
     except FileNotFoundError:
         PUZZLES[game] = []
-
-PRUNE_DAYS = 1
-MAX_BODY = 2048
-MAX_ABS_VALUE = 1e6
-DAY_MIN, DAY_MAX = -1000, 100000
 
 STATS = {}   # (game, day) -> {"n", "sum", "sumsq", "min", "max", "bins": [ints]}
 SEEN = {}    # (game, day) -> set of 8-byte id digests (transient dedupe only)
@@ -183,7 +185,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
     def _json(self, payload, status=200):
@@ -260,9 +262,6 @@ class Handler(BaseHTTPRequestHandler):
                 if not entry:
                     self._json({"error": "no puzzles"}, 404)
                     return
-                # Deterministic: one curated puzzle per day, cycling through the
-                # server-side bank. No random generation - the bank is the source
-                # of truth; a seed may only select among curated entries.
                 idx = day % len(entry)
                 self._json({"game": game, "day": day, "puzzle": entry[idx], "today": today})
         else:

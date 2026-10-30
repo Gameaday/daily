@@ -2743,5 +2743,70 @@
     "id": "bronze-age-collapse",
     "n": "The Bronze Age Collapse",
     "d": "The centuries when the palace world went dark"
+  },
+  {
+    "id": "the-moon",
+    "n": "The Moon",
+    "d": "The companion world of the Earth and the first shore people reached beyond it"
+  },
+  {
+    "id": "the-sun",
+    "n": "The Sun",
+    "d": "The star that anchors the solar system and lights every morning here"
+  },
+  {
+    "id": "the-earth",
+    "n": "The Earth",
+    "d": "The planet everyone has lived on so far"
+  },
+  {
+    "id": "the-eiffel-tower",
+    "n": "The Eiffel Tower",
+    "d": "The iron tower built for the Paris world fair of 1889"
+  },
+  {
+    "id": "the-louvre",
+    "n": "The Louvre",
+    "d": "The palace of kings that grew into the largest museum of art"
+  },
+  {
+    "id": "the-international-space-station",
+    "n": "The International Space Station",
+    "d": "The orbiting outpost many nations built and keep crewed together"
+  },
+  {
+    "id": "the-great-pyramid",
+    "n": "The Great Pyramid of Giza",
+    "d": "The oldest of the wonders and the only one still standing"
+  },
+  {
+    "id": "the-roman-empire",
+    "n": "The Roman Empire",
+    "d": "The empire that ringed the Mediterranean and ruled it for centuries"
+  },
+  {
+    "id": "lake-superior",
+    "n": "Lake Superior",
+    "d": "The largest of the Great Lakes by water and by area"
+  },
+  {
+    "id": "tokyo",
+    "n": "Tokyo",
+    "d": "The capital of Japan and the largest metropolis on Earth"
+  },
+  {
+    "id": "the-library-of-congress",
+    "n": "The Library of Congress",
+    "d": "The research library of the United States Congress in Washington"
+  },
+  {
+    "id": "the-milky-way",
+    "n": "The Milky Way",
+    "d": "The galaxy that holds the Sun and every star the naked eye can name"
+  },
+  {
+    "id": "the-challenger-deep",
+    "n": "The Challenger Deep",
+    "d": "The deepest known point of the ocean floor"
   }
 ]

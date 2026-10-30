@@ -4,6 +4,7 @@
     "by": "franklin-roosevelt",
     "q": "THE ONLY THING WE HAVE TO FEAR IS FEAR ITSELF.",
     "y": 1933,
+    "via": "his first inaugural address",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -11,6 +12,7 @@
     "by": "john-kennedy",
     "q": "ASK NOT WHAT YOUR COUNTRY CAN DO FOR YOU. ASK WHAT YOU CAN DO FOR YOUR COUNTRY.",
     "y": 1961,
+    "via": "his inaugural address",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -18,6 +20,7 @@
     "by": "churchill",
     "q": "NEVER IN THE FIELD OF HUMAN CONFLICT WAS SO MUCH OWED BY SO MANY TO SO FEW.",
     "y": 1940,
+    "via": "Their Finest Hour, speech to the Commons",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -25,6 +28,7 @@
     "by": "churchill",
     "q": "WE SHALL DEFEND OUR ISLAND, WHATEVER THE COST MAY BE.",
     "y": 1940,
+    "via": "Their Finest Hour, speech to the Commons",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -72,6 +76,7 @@
     "by": "theodore-parker",
     "q": "THE ARC OF THE MORAL UNIVERSE IS LONG, BUT IT BENDS TOWARD JUSTICE.",
     "y": 1853,
+    "via": "the sermon Of Justice and the Conscience",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -85,7 +90,10 @@
   {
     "id": "i-never-expect-to-see",
     "by": "hamilton",
-    "q": "I NEVER EXPECT TO SEE A PERFECT WORK FROM AN IMPERFECT MAN."
+    "q": "I NEVER EXPECT TO SEE A PERFECT WORK FROM AN IMPERFECT MAN.",
+    "y": 1788,
+    "via": "The Federalist, No. 85",
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "these-are-the-times-that",
@@ -138,6 +146,7 @@
     "by": "lincoln",
     "q": "A HOUSE DIVIDED AGAINST ITSELF CANNOT STAND.",
     "y": 1858,
+    "via": "the Springfield nomination speech",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -145,6 +154,7 @@
     "by": "lincoln",
     "q": "FOUR SCORE AND SEVEN YEARS AGO OUR FATHERS BROUGHT FORTH UPON THIS CONTINENT A NEW NATION.",
     "y": 1863,
+    "via": "Gettysburg Address",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -152,6 +162,7 @@
     "by": "douglass",
     "q": "IF THERE IS NO STRUGGLE THERE IS NO PROGRESS.",
     "y": 1857,
+    "via": "the West Indian Emancipation speech",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -182,6 +193,7 @@
     "by": "reagan",
     "q": "MR. GORBACHEV, TEAR DOWN THIS WALL.",
     "y": 1987,
+    "via": "the Brandenburg Gate speech",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -204,6 +216,7 @@
     "by": "lincoln",
     "q": "GOVERNMENT OF THE PEOPLE, BY THE PEOPLE, FOR THE PEOPLE, SHALL NOT PERISH FROM THE EARTH.",
     "y": 1863,
+    "via": "Gettysburg Address",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -211,6 +224,7 @@
     "by": "churchill",
     "q": "I HAVE NOTHING TO OFFER BUT BLOOD, TOIL, TEARS AND SWEAT.",
     "y": 1940,
+    "via": "his first speech as prime minister",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -226,6 +240,7 @@
     "by": "hale",
     "q": "I ONLY REGRET THAT I HAVE BUT ONE LIFE TO LOSE FOR MY COUNTRY.",
     "y": 1776,
+    "via": "William Hull’s account",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -301,7 +316,10 @@
   {
     "id": "no-man-is-above-the",
     "by": "theodore-roosevelt",
-    "q": "NO MAN IS ABOVE THE LAW AND NO MAN IS BELOW IT."
+    "q": "NO MAN IS ABOVE THE LAW AND NO MAN IS BELOW IT.",
+    "y": 1903,
+    "via": "his annual message to Congress",
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "the-credit-belongs-to-the",
@@ -335,7 +353,10 @@
   {
     "id": "we-are-not-makers-of",
     "by": "martin-luther-king",
-    "q": "WE ARE NOT MAKERS OF HISTORY; WE ARE MADE BY HISTORY."
+    "q": "WE ARE NOT MAKERS OF HISTORY; WE ARE MADE BY HISTORY.",
+    "y": 1963,
+    "via": "Strength to Love",
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "in-the-beginning-the-universe",
@@ -401,6 +422,7 @@
     "by": "armstrong",
     "q": "THAT’S ONE SMALL STEP FOR MAN, ONE GIANT LEAP FOR MANKIND.",
     "y": 1969,
+    "via": "the Apollo 11 broadcast",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -462,6 +484,7 @@
     "by": "ali",
     "q": "FLOAT LIKE A BUTTERFLY, STING LIKE A BEE.",
     "y": 1964,
+    "via": "before the Liston fight",
     "provenance": "reviewed 2026-10-30"
   },
   {
@@ -529,6 +552,7 @@
     "by": "anthony",
     "q": "FAILURE IS IMPOSSIBLE.",
     "y": 1906,
+    "via": "her final birthday speech",
     "provenance": "reviewed 2026-10-30"
   },
   {

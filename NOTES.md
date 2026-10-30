@@ -287,6 +287,16 @@ layer, store byte-identity, a spot-review of the newest entries, and
 per-game plays for any recipe game that has landed. After that round,
 1.0 and the privacy flip come into view.
 
+The first enrichment pass landed the same day: the fermi subjects joined
+the wider world (the Moon, the Sun, the Earth, the Eiffel Tower, the
+Louvre, the International Space Station, the Great Pyramid, the Roman
+Empire, Lake Superior, Tokyo, the Library of Congress, the Milky Way,
+the Challenger Deep), twenty more facts keyed to them, the reviewed
+quotes carried their sources and three more their years, and the kept
+things found their cities: ten new housed-at edges beside the two
+Paris residents and the three Everest and Moon participants. Person
+numbers wait for the Superlative recipe that defines them.
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

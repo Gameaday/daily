@@ -4271,5 +4271,106 @@
     "y": 1797,
     "w": "In the Louvre since the Revolution",
     "t": "housed-at"
+  },
+  {
+    "a": "venus-de-milo",
+    "b": "paris",
+    "y": 1821,
+    "w": "The Melian Aphrodite reached the Louvre in 1821, a gift the Marquis de Riviere carried to Louis XVIII",
+    "t": "housed-at"
+  },
+  {
+    "a": "winged-victory-of-samothrace",
+    "b": "paris",
+    "w": "The Nike landed at the head of the Louvre staircase and greets every visitor since",
+    "t": "housed-at"
+  },
+  {
+    "a": "nefertiti-bust",
+    "b": "berlin",
+    "y": 1920,
+    "w": "The painted queen left the Amarna dig in 1912 and has reigned in Berlin since 1920",
+    "t": "housed-at"
+  },
+  {
+    "a": "code-of-hammurabi",
+    "b": "paris",
+    "y": 1902,
+    "w": "The stele rose from Susa in 1902 and has held its wall in the Louvre since",
+    "t": "housed-at"
+  },
+  {
+    "a": "guernica",
+    "b": "madrid",
+    "y": 1992,
+    "w": "Picasso s wall of war came home from New York in 1981 and took its vigil at the Reina Sofia in 1992",
+    "t": "housed-at"
+  },
+  {
+    "a": "night-watch",
+    "b": "amsterdam",
+    "y": 1885,
+    "w": "The company of Captain Cocq marched into the Rijksmuseum at its 1885 opening and holds the place of pride still",
+    "t": "housed-at"
+  },
+  {
+    "a": "michelangelos-david",
+    "b": "florence",
+    "y": 1873,
+    "w": "The David stood three centuries in the Piazza della Signoria and moved to the Accademia in 1873",
+    "t": "housed-at"
+  },
+  {
+    "a": "liberty-bell",
+    "b": "philadelphia",
+    "w": "The cracked State House bell retired from ringing and keeps its shrine across from the hall it served",
+    "t": "housed-at"
+  },
+  {
+    "a": "birth-of-venus",
+    "b": "florence",
+    "y": 1817,
+    "w": "Botticelli s Venus left the Castello villa for the Uffizi in 1817 and never left Florence again",
+    "t": "housed-at"
+  },
+  {
+    "a": "venus-of-willendorf",
+    "b": "vienna",
+    "w": "The small pale figure left her Danube bank for the Natural History Museum of Vienna",
+    "t": "housed-at"
+  },
+  {
+    "a": "paris",
+    "b": "the-eiffel-tower",
+    "y": 1889,
+    "w": "The iron tower the fair of 1889 left behind",
+    "t": "resident"
+  },
+  {
+    "a": "paris",
+    "b": "the-louvre",
+    "w": "The fortress that became the palace that became the museum",
+    "t": "resident"
+  },
+  {
+    "a": "armstrong",
+    "b": "apollo-11-landing",
+    "y": 1969,
+    "w": "The first boot on another world",
+    "t": "participant"
+  },
+  {
+    "a": "hillary",
+    "b": "first-everest-ascent",
+    "y": 1953,
+    "w": "The beekeeper who summited with Tenzing and photographed him on top",
+    "t": "participant"
+  },
+  {
+    "a": "tenzing",
+    "b": "first-everest-ascent",
+    "y": 1953,
+    "w": "The Sherpa who pressed an offering into the highest snow",
+    "t": "participant"
   }
 ]

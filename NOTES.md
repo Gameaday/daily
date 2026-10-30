@@ -247,3 +247,27 @@ file exits 0 in Node, so a silent pass must be impossible).
 ## Batch 5 candidates
 
 - (none yet - see Batch 4 candidates above)
+
+## Knowledge layer (done 2026-10-30)
+
+Every bank game now compiles from one knowledge layer in knowledge/:
+people, events, places, artifacts, the wider world, animals and quotes
+as entities in one id namespace, relations typed nineteen ways, the
+twist tellings for bogus and well-actually, the stories the year games
+share, and each game's recipe over the whole. build-knowledge compiles
+the layer to the committed stores byte-exact (CI verifies), and
+export-puzzles re-emits the client banks from the stores: truth stored
+once, every manipulation a marked derivation. Timeline and rounds read
+events, thread walks the people graph (one connected component, no
+orphans, edges filtered to the nodes it knows), brunch seats the
+presence layer, museum shows artifacts, cipher encrypts quotes, sift
+sorts boards authored over the layer, and the twist tellings key
+themselves to the graph with about ids. fermi and lightbox stay
+hand-banked on purpose: estimation questions and picture clues are not
+shared entities. The wording guard retired with the rework it watched
+over (the module is gone); the em dash rule covers new copy only.
+SCHEMA.md in knowledge/ is the format reference.
+
+Deferred on purpose: wiki/sameAs alias matching, a sift board
+auto-generator (the boards are authored for now), and the Batch 4 games
+(Dig, Almanac, Follow) - all natural future recipes over the layer.

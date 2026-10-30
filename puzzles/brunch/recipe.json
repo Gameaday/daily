@@ -33,6 +33,14 @@
   },
   {
     "id": "florence",
+    "y": 1498
+  },
+  {
+    "id": "venice",
+    "y": 1500
+  },
+  {
+    "id": "florence",
     "y": 1504
   },
   {
@@ -42,6 +50,10 @@
   {
     "id": "florence",
     "y": 1506
+  },
+  {
+    "id": "lisbon",
+    "y": 1507
   },
   {
     "id": "rome",
@@ -72,15 +84,63 @@
     "y": 1516
   },
   {
+    "id": "lisbon",
+    "y": 1517
+  },
+  {
+    "id": "london",
+    "y": 1532
+  },
+  {
+    "id": "london",
+    "y": 1588
+  },
+  {
+    "id": "london",
+    "y": 1592
+  },
+  {
+    "id": "madrid",
+    "y": 1628
+  },
+  {
+    "id": "london",
+    "y": 1670
+  },
+  {
+    "id": "london",
+    "y": 1674
+  },
+  {
     "id": "london",
     "y": 1700
+  },
+  {
+    "id": "london",
+    "y": 1702
+  },
+  {
+    "id": "london",
+    "y": 1772
+  },
+  {
+    "id": "edinburgh",
+    "y": 1773
   },
   {
     "id": "philadelphia",
     "y": 1775
   },
   {
+    "id": "versailles",
+    "y": 1775
+  },
+  {
     "id": "philadelphia",
+    "y": 1776
+  },
+  {
+    "id": "versailles",
     "y": 1776
   },
   {
@@ -101,6 +161,10 @@
   },
   {
     "id": "vienna",
+    "y": 1814
+  },
+  {
+    "id": "vienna",
     "y": 1822
   },
   {
@@ -112,12 +176,20 @@
     "y": 1824
   },
   {
+    "id": "vienna",
+    "y": 1826
+  },
+  {
     "id": "berlin",
     "y": 1827
   },
   {
     "id": "berlin",
     "y": 1829
+  },
+  {
+    "id": "berlin",
+    "y": 1830
   },
   {
     "id": "berlin",
@@ -129,7 +201,19 @@
   },
   {
     "id": "london",
+    "y": 1833
+  },
+  {
+    "id": "london",
     "y": 1834
+  },
+  {
+    "id": "st-petersburg",
+    "y": 1835
+  },
+  {
+    "id": "st-petersburg",
+    "y": 1836
   },
   {
     "id": "london",
@@ -142,6 +226,10 @@
   {
     "id": "london",
     "y": 1846
+  },
+  {
+    "id": "paris",
+    "y": 1848
   },
   {
     "id": "paris",
@@ -162,6 +250,10 @@
   {
     "id": "paris",
     "y": 1859
+  },
+  {
+    "id": "london",
+    "y": 1860
   },
   {
     "id": "paris",
@@ -189,6 +281,10 @@
   },
   {
     "id": "paris",
+    "y": 1874
+  },
+  {
+    "id": "paris",
     "y": 1875
   },
   {
@@ -205,6 +301,18 @@
   },
   {
     "id": "paris",
+    "y": 1882
+  },
+  {
+    "id": "paris",
     "y": 1883
+  },
+  {
+    "id": "paris",
+    "y": 1891
+  },
+  {
+    "id": "paris",
+    "y": 1895
   }
 ]

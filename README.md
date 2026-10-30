@@ -26,6 +26,8 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /cipher/ | Cipher | A substitution cipher hiding a line of history; hints cost |
 | /timeline/ | Timeline | Five events, no dates; each check locks correct placements |
 | /museum/ | Museum | Name the artifact from five clues, obscure to obvious |
+| /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
+| /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |
 
 Each game is one self-contained index.html. The parts every game shares
 (day math, palette, countdown, curve client, help, share) live in
@@ -42,8 +44,8 @@ The puzzle is derived from the date, not stored per player:
 ## Puzzle delivery (server-side banks)
 
 The bank games (bogus, well-actually, rounds, fermi, cipher, museum,
-lightbox, sift, timeline) keep their curated bank inline in the page, so
-solo and offline play work with zero infrastructure. When online, each page
+lightbox, sift, timeline, thread, brunch) keep their bank inline in the
+page, so solo and offline play work with zero infrastructure. When online, each page
 also asks the scores service for the day's puzzle:
 
     GET /api/puzzle?game=rounds&day=12   ->   { game, day, puzzle, today }
@@ -52,20 +54,36 @@ The served puzzle replaces the inline pick, so the published site never
 carries tomorrow's answers: the online bundle ships with every bank stripped
 (`tools/build-bundles.mjs`), and the answers live only in the scores
 container, read from the committed per-game stores
-(`scores/<game>/puzzles.json`).
+(`puzzles/<game>/puzzles.json`).
 
 - over `file://` or `?solo`, or whenever the service is unreachable, the
   inline bank plays and nothing is asked of anyone
-- windowed game: timeline's pick (five events, distinct years) is precomputed
-  for 1000 days in `scores/timeline/puzzles.json`, so the server just
-  indexes `{bank, picks}`; every other game serves `bank[day % len]`
+- windowed games: timeline's and thread's picks are precomputed for 1000
+  days in their stores, so the server just indexes `{bank, picks}`;
+  every other game serves `bank[day % len]`
 - sprint, trace, recycle-grid and recycle-rings stay client-generated on
   purpose: their banks are generators the game needs during play, not
   answer keys
-- `node tools/export-puzzles.mjs` verifies every store against its client
-  bank in CI; after editing a bank, run
-  `node tools/export-puzzles.mjs --write` to regenerate the stores, then
-  commit page and store together
+- `node tools/build-knowledge.mjs` verifies the knowledge layer compiles
+  to the committed stores, and `node tools/export-puzzles.mjs` verifies
+  every store against its client bank; to change a history game's
+  content, edit the layer, run `node tools/build-knowledge.mjs --write`
+  then `node tools/export-puzzles.mjs --write`, and commit layer, stores
+  and banks together (see the knowledge layer section below)
+
+## The knowledge layer
+
+The history the games share is stored once, in `knowledge/`: people,
+events, places, artifacts, the wider world, animals and quotes, their
+typed relations, the twist tellings behind bogus and well-actually, the
+stories the year games tell, and each game's recipe of what it draws.
+`tools/build-knowledge.mjs` compiles the layer into the per-game stores
+and `tools/export-puzzles.mjs` emits the client banks from them: truth
+lives in one place, every game reads the same facts, and CI fails if a
+store or bank drifts from the layer. `knowledge/SCHEMA.md` documents
+every file, lint and recipe. fermi and lightbox stay hand-banked by
+design: estimation questions and picture clues are not shared entities,
+so their pages remain their own source.
 
 ## The global curve
 
@@ -129,7 +147,7 @@ terminate TLS there. The repo ships no domain or TLS config on purpose.
 - `scores`: the stdlib Python service (curve + puzzle delivery),
   read-only filesystem, no capabilities, no-new-privileges, a 64 MB memory
   cap, internal network only. The puzzle stores are committed under
-  `scores/`, so the container is self-contained. One named volume
+  `puzzles/`, so the container is self-contained. One named volume
   (`scores-archive`) is mounted at /app/archive for the end-of-day
   snapshots: the only writable path in the container
 
@@ -160,18 +178,20 @@ site never moves.
 Layers run on every push and pull request (`.github/workflows/validate.yml`),
 all dependency-free (Node 20+ and Python 3):
 
-0. `node tools/export-puzzles.mjs` verifies the committed stores against
+0. `node tools/build-knowledge.mjs` verifies the knowledge layer compiles
+   to the committed stores
+1. `node tools/export-puzzles.mjs` verifies the committed stores against
    the client banks
-1. `node checks/games.js` compiles every game script, checks shell wiring,
-   element ids, landing links, server-gating wiring and the wording rule
-2. `node tests/run.js` boots each game headless in a stubbed DOM, plays it
+2. `node checks/games.js` compiles every game script, checks shell wiring,
+   element ids, landing links and server-gating wiring
+3. `node tests/run.js` boots each game headless in a stubbed DOM, plays it
    to a win/loss, verifies the value posted to the curve, rolls the clock
    forward to prove streaks survive, then re-boots every bank game with the
    bank stripped to prove the served puzzle drives it
-3. `python3 tests/server_test.py` spawns the real scores service and
+4. `python3 tests/server_test.py` spawns the real scores service and
    exercises health, submit/dedupe, dist, puzzle delivery, validation,
    fresh-day counting and the archive handoff
-4. `node tools/build-bundles.mjs` builds and verifies the offline and
+5. `node tools/build-bundles.mjs` builds and verifies the offline and
    online bundles
 
 Local pre-push: `npm test` (or `make test`) runs the same layers in seconds.
@@ -190,12 +210,15 @@ scarcity of moves, not time.
 
 1. Copy an existing game folder; include `../shell/common.css` and
    `../shell/common.js`, then destructure what you need from `SHELL`.
-2. Swap in the puzzle bank or seeded generator and the round logic. Word
+2. Swap in the puzzle: a recipe over the knowledge layer for a history
+   game, an inline bank (fermi, lightbox) or a seeded generator. Word
    games can share `assets/words-en.js`.
 3. Add a card to the landing page and a row in the games table above.
 4. If it has a score: call `syncBoard(value)` on reveal, add the game to
-   `scores/manifest.json`, and (bank game) run
-   `node tools/export-puzzles.mjs --write` and commit the store.
+   `scores/manifest.json`, and for a layer game run
+   `node tools/build-knowledge.mjs --write` then
+   `node tools/export-puzzles.mjs --write`; for a hand-banked game just
+   re-export its store. Commit the stores either way.
 5. Run `node checks/games.js` before you push.
 
 ## Offline / air-gapped play

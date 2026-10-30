@@ -1,11 +1,13 @@
-/* The offline thread walk, shared by the store verifier
+/* The offline walks, shared by the store verifier
    (tools/export-puzzles.mjs) and the knowledge compiler
    (tools/build-knowledge.mjs). Compiled picks must be byte-identical
    wherever they are computed, so this module is the one copy the tools
-   share; the thread page keeps its own embedded copy (a page cannot
-   import), and when this walk changes, the page copy changes with it.
+   share; the pages keep their own embedded copies (a page cannot
+   import), and when a walk changes, the page copy changes with it.
 
-   - mulberry32: the seeded PRNG, also used by the timeline walk
+   - mulberry32: the seeded PRNG both walks draw from
+   - pickForDay: the timeline walk - a seeded shuffle, then the first
+     five events with distinct years
    - threadWalk: unique-shortest-path chains, then two decoys each, drawn
      so the offered set still admits exactly one solution */
 function mulberry32(a){
@@ -118,4 +120,22 @@ function threadWalk(bank, days){
   return picks;
 }
 
-export { mulberry32, threadGraph, threadCandidates, threadCountSolutions, threadWalk };
+/* the offline timeline walk: seeded shuffle, then first five distinct years */
+function pickForDay(bank, day){
+  const rng = mulberry32(day * 2357 + 71);
+  const idxs = [];
+  for (let i = 0; i < bank.length; i++) idxs.push(i);
+  for (let i = idxs.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+  }
+  const picked = [];
+  const seenYears = new Set();
+  for (const i of idxs){
+    if (!seenYears.has(bank[i].y)){ picked.push(i); seenYears.add(bank[i].y); }
+    if (picked.length === 5) break;
+  }
+  return picked;
+}
+
+export { mulberry32, pickForDay, threadGraph, threadCandidates, threadCountSolutions, threadWalk };

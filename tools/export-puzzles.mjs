@@ -19,7 +19,7 @@
    Run: node tools/export-puzzles.mjs          (verify; exit 0 = verified)
         node tools/export-puzzles.mjs --write   (regenerate drifted banks) */
 import fs from 'node:fs';
-import { mulberry32, threadWalk } from './thread-walk.mjs';
+import { threadWalk, pickForDay } from './thread-walk.mjs';
 
 const WRITE = process.argv.includes('--write');
 /* the game list, bank floors, and the dir -> ledger mapping have one
@@ -62,24 +62,6 @@ function checkBank(game, name, data){
     return;
   }
   fail(game + ': ' + bankPath(game) + ' drifted from the store (run: node tools/export-puzzles.mjs --write)');
-}
-
-/* the offline timeline walk: seeded shuffle, then first five distinct years */
-function pickForDay(bank, day){
-  const rng = mulberry32(day * 2357 + 71);
-  const idxs = [];
-  for (let i = 0; i < bank.length; i++) idxs.push(i);
-  for (let i = idxs.length - 1; i > 0; i--){
-    const j = Math.floor(rng() * (i + 1));
-    [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
-  }
-  const picked = [];
-  const seenYears = new Set();
-  for (const i of idxs){
-    if (!seenYears.has(bank[i].y)){ picked.push(i); seenYears.add(bank[i].y); }
-    if (picked.length === 5) break;
-  }
-  return picked;
 }
 
 let fails = 0;

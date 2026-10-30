@@ -14,11 +14,79 @@
     "died": 1826
   },
   {
+    "id": "aeschylus",
+    "n": "Aeschylus",
+    "d": "Tragic poet of the Persian wars, c. 525-455 BCE"
+  },
+  {
+    "id": "akbar",
+    "n": "Akbar",
+    "d": "Third Mughal emperor, 1542-1605",
+    "born": 1542,
+    "died": 1605
+  },
+  {
+    "id": "al-idrisi",
+    "n": "Al-Idrisi",
+    "d": "Geographer of the Norman court, 1100-1165",
+    "born": 1100,
+    "died": 1165
+  },
+  {
+    "id": "al-khwarizmi",
+    "n": "Al-Khwarizmi",
+    "d": "Father of algebra, 780-850",
+    "born": 780,
+    "died": 850
+  },
+  {
+    "id": "al-kindi",
+    "n": "Al-Kindi",
+    "d": "Philosopher of the Arabs, 801-873",
+    "born": 801,
+    "died": 873
+  },
+  {
+    "id": "al-razi",
+    "n": "Al-Razi",
+    "d": "Physician of Baghdad, 854-925",
+    "born": 854,
+    "died": 925
+  },
+  {
+    "id": "aldus-manutius",
+    "n": "Aldus Manutius",
+    "d": "Printer of Venice, 1450-1515",
+    "born": 1450,
+    "died": 1515
+  },
+  {
+    "id": "alfred",
+    "n": "Alfred the Great",
+    "d": "King of Wessex, 849-899",
+    "born": 849,
+    "died": 899
+  },
+  {
     "id": "ali",
     "n": "Muhammad Ali",
     "d": "Boxer, 1942-2016",
     "born": 1942,
     "died": 2016
+  },
+  {
+    "id": "alice-paul",
+    "n": "Alice Paul",
+    "d": "Suffragist of the picket line, 1885-1977",
+    "born": 1885,
+    "died": 1977
+  },
+  {
+    "id": "amelia-earhart",
+    "n": "Amelia Earhart",
+    "d": "Aviator lost over the Pacific, 1897-1937",
+    "born": 1897,
+    "died": 1937
   },
   {
     "id": "amundsen",
@@ -35,6 +103,25 @@
     "died": 1536
   },
   {
+    "id": "anne-bonny",
+    "n": "Anne Bonny",
+    "d": "Pirate of the Bahamas, c. 1720"
+  },
+  {
+    "id": "anne-bronte",
+    "n": "Anne Bronte",
+    "d": "Novelist, 1820-1849",
+    "born": 1820,
+    "died": 1849
+  },
+  {
+    "id": "anne-of-austria",
+    "n": "Anne of Austria",
+    "d": "Queen and regent of France, 1601-1666",
+    "born": 1601,
+    "died": 1666
+  },
+  {
     "id": "anthony",
     "n": "Susan B. Anthony",
     "d": "Campaigner for the ballot, 1820-1906",
@@ -47,6 +134,18 @@
     "d": "Geometer of Syracuse, c. 287-212 BCE"
   },
   {
+    "id": "aristotle",
+    "n": "Aristotle",
+    "d": "Philosopher and tutor of conquerors, 384-322 BCE"
+  },
+  {
+    "id": "arkwright",
+    "n": "Richard Arkwright",
+    "d": "Spinner of the water frame, 1732-1792",
+    "born": 1732,
+    "died": 1792
+  },
+  {
     "id": "armstrong",
     "n": "Neil Armstrong",
     "d": "Astronaut, 1930-2012",
@@ -54,9 +153,29 @@
     "died": 2012
   },
   {
+    "id": "askia",
+    "n": "Askia the Great",
+    "d": "Emperor of Songhai, died 1538",
+    "died": 1538
+  },
+  {
+    "id": "auguste-piccard",
+    "n": "Auguste Piccard",
+    "d": "Balloonist of the stratosphere, 1884-1962",
+    "born": 1884,
+    "died": 1962
+  },
+  {
     "id": "augustus",
     "n": "Augustus",
     "d": "First Roman emperor, 63 BCE-14 CE"
+  },
+  {
+    "id": "aurangzeb",
+    "n": "Aurangzeb",
+    "d": "Last great Mughal emperor, 1618-1707",
+    "born": 1618,
+    "died": 1707
   },
   {
     "id": "austen",
@@ -71,6 +190,13 @@
     "d": "Mathematician, 1791-1871",
     "born": 1791,
     "died": 1871
+  },
+  {
+    "id": "babur",
+    "n": "Babur",
+    "d": "Founder of the Mughal empire, 1483-1530",
+    "born": 1483,
+    "died": 1530
   },
   {
     "id": "bach",
@@ -94,6 +220,12 @@
     "died": 1820
   },
   {
+    "id": "barack-obama",
+    "n": "Barack Obama",
+    "d": "President, born 1961",
+    "born": 1961
+  },
+  {
     "id": "baudelaire",
     "n": "Charles Baudelaire",
     "d": "Poet of modern Paris, 1821-1867",
@@ -115,6 +247,27 @@
     "died": 1827
   },
   {
+    "id": "benedict-arnold",
+    "n": "Benedict Arnold",
+    "d": "The traitor of West Point, 1741-1801",
+    "born": 1741,
+    "died": 1801
+  },
+  {
+    "id": "benjamin-harrison",
+    "n": "Benjamin Harrison",
+    "d": "President, 1833-1901",
+    "born": 1833,
+    "died": 1901
+  },
+  {
+    "id": "benz",
+    "n": "Karl Benz",
+    "d": "Builder of the first motorcar, 1844-1929",
+    "born": 1844,
+    "died": 1929
+  },
+  {
     "id": "berlioz",
     "n": "Hector Berlioz",
     "d": "Composer, 1803-1869",
@@ -129,11 +282,72 @@
     "died": 1680
   },
   {
+    "id": "bernoulli",
+    "n": "Daniel Bernoulli",
+    "d": "Mathematician of the flowing fluids, 1700-1782",
+    "born": 1700,
+    "died": 1782
+  },
+  {
+    "id": "bette-davis",
+    "n": "Bette Davis",
+    "d": "Actor of Warner s marquee, 1908-1989",
+    "born": 1908,
+    "died": 1989
+  },
+  {
+    "id": "billy-the-kid",
+    "n": "Billy the Kid",
+    "d": "Gunman of Lincoln County, died 1881",
+    "died": 1881
+  },
+  {
+    "id": "blackbeard",
+    "n": "Blackbeard",
+    "d": "Pirate of the Carolinas, died 1718",
+    "died": 1718
+  },
+  {
+    "id": "bligh",
+    "n": "William Bligh",
+    "d": "Captain of the Bounty, 1754-1817",
+    "born": 1754,
+    "died": 1817
+  },
+  {
+    "id": "blucher",
+    "n": "Gebhard von Blucher",
+    "d": "Prussian field marshal, 1742-1819",
+    "born": 1742,
+    "died": 1819
+  },
+  {
+    "id": "bogart",
+    "n": "Humphrey Bogart",
+    "d": "Actor of Casablanca, 1899-1957",
+    "born": 1899,
+    "died": 1957
+  },
+  {
+    "id": "bohr",
+    "n": "Niels Bohr",
+    "d": "Physicist of the atom, 1885-1962",
+    "born": 1885,
+    "died": 1962
+  },
+  {
     "id": "boole",
     "n": "George Boole",
     "d": "Mathematician of logic, 1815-1864",
     "born": 1815,
     "died": 1864
+  },
+  {
+    "id": "borromini",
+    "n": "Francesco Borromini",
+    "d": "Architect of Rome s baroque, 1599-1667",
+    "born": 1599,
+    "died": 1667
   },
   {
     "id": "boswell",
@@ -148,6 +362,12 @@
     "d": "Painter, c. 1445-1510",
     "born": 1445,
     "died": 1510
+  },
+  {
+    "id": "boudicca",
+    "n": "Boudicca",
+    "d": "Queen of the Iceni, died 61",
+    "died": 61
   },
   {
     "id": "boulton",
@@ -171,6 +391,13 @@
     "died": 1897
   },
   {
+    "id": "brezhnev",
+    "n": "Leonid Brezhnev",
+    "d": "Soviet leader of the long years, 1906-1982",
+    "born": 1906,
+    "died": 1982
+  },
+  {
     "id": "brunel",
     "n": "Isambard Kingdom Brunel",
     "d": "Engineer of steam and iron, 1806-1859",
@@ -185,6 +412,27 @@
     "died": 1797
   },
   {
+    "id": "bushnell",
+    "n": "David Bushnell",
+    "d": "Builder of the first submarine, 1740-1826",
+    "born": 1740,
+    "died": 1826
+  },
+  {
+    "id": "butch-cassidy",
+    "n": "Butch Cassidy",
+    "d": "Leader of the Wild Bunch, 1866-1908",
+    "born": 1866,
+    "died": 1908
+  },
+  {
+    "id": "byrd",
+    "n": "Richard Byrd",
+    "d": "Aviator of the poles, 1888-1957",
+    "born": 1888,
+    "died": 1957
+  },
+  {
     "id": "byron",
     "n": "Lord Byron",
     "d": "Poet, 1788-1824",
@@ -195,6 +443,27 @@
     "id": "caesar",
     "n": "Julius Caesar",
     "d": "Roman general and dictator, 100-44 BCE"
+  },
+  {
+    "id": "cagney",
+    "n": "James Cagney",
+    "d": "Actor of the gangster years, 1899-1986",
+    "born": 1899,
+    "died": 1986
+  },
+  {
+    "id": "calvin",
+    "n": "John Calvin",
+    "d": "Reformer of Geneva, 1509-1564",
+    "born": 1509,
+    "died": 1564
+  },
+  {
+    "id": "caravaggio",
+    "n": "Caravaggio",
+    "d": "Painter of the Roman shadows, 1571-1610",
+    "born": 1571,
+    "died": 1610
   },
   {
     "id": "carlyle",
@@ -211,6 +480,13 @@
     "died": 1828
   },
   {
+    "id": "cartwright",
+    "n": "Edmund Cartwright",
+    "d": "Inventor of the power loom, 1743-1823",
+    "born": 1743,
+    "died": 1823
+  },
+  {
     "id": "cassatt",
     "n": "Mary Cassatt",
     "d": "Painter, 1844-1926",
@@ -223,6 +499,27 @@
     "d": "Empress of Russia, 1729-1796",
     "born": 1729,
     "died": 1796
+  },
+  {
+    "id": "catherine-de-medici",
+    "n": "Catherine de Medici",
+    "d": "Queen of France, 1519-1589",
+    "born": 1519,
+    "died": 1589
+  },
+  {
+    "id": "catherine-parr",
+    "n": "Catherine Parr",
+    "d": "Sixth queen of Henry VIII, 1512-1548",
+    "born": 1512,
+    "died": 1548
+  },
+  {
+    "id": "caxton",
+    "n": "William Caxton",
+    "d": "England s first printer, c. 1422-1492",
+    "born": 1422,
+    "died": 1492
   },
   {
     "id": "cervantes",
@@ -244,6 +541,13 @@
     "d": "Painter, 1839-1906",
     "born": 1839,
     "died": 1906
+  },
+  {
+    "id": "chanel",
+    "n": "Coco Chanel",
+    "d": "Dressmaker of the little black dress, 1883-1971",
+    "born": 1883,
+    "died": 1971
   },
   {
     "id": "charles-i",
@@ -300,11 +604,29 @@
     "d": "Roman orator and consul, 106-43 BCE"
   },
   {
+    "id": "clara-barton",
+    "n": "Clara Barton",
+    "d": "Founder of the American Red Cross, 1821-1912",
+    "born": 1821,
+    "died": 1912
+  },
+  {
     "id": "clara-schumann",
     "n": "Clara Schumann",
     "d": "Pianist and composer, 1819-1896",
     "born": 1819,
     "died": 1896
+  },
+  {
+    "id": "cleopatra",
+    "n": "Cleopatra",
+    "d": "Last queen of Egypt, 69-30 BCE"
+  },
+  {
+    "id": "cnut",
+    "n": "Cnut the Great",
+    "d": "King of the North Sea, died 1035",
+    "died": 1035
   },
   {
     "id": "coleridge",
@@ -321,6 +643,18 @@
     "died": 1506
   },
   {
+    "id": "commodus",
+    "n": "Commodus",
+    "d": "Roman emperor, 161-192",
+    "born": 161,
+    "died": 192
+  },
+  {
+    "id": "confucius",
+    "n": "Confucius",
+    "d": "Teacher of Lu, 551-479 BCE"
+  },
+  {
     "id": "constable",
     "n": "John Constable",
     "d": "Painter, 1776-1837",
@@ -335,6 +669,13 @@
     "died": 1687
   },
   {
+    "id": "constantine",
+    "n": "Constantine",
+    "d": "First Christian Roman emperor, 272-337",
+    "born": 272,
+    "died": 337
+  },
+  {
     "id": "cook",
     "n": "James Cook",
     "d": "Explorer, 1728-1779",
@@ -342,11 +683,52 @@
     "died": 1779
   },
   {
+    "id": "copernicus",
+    "n": "Copernicus",
+    "d": "Astronomer of the moving earth, 1473-1543",
+    "born": 1473,
+    "died": 1543
+  },
+  {
     "id": "corelli",
     "n": "Arcangelo Corelli",
     "d": "Composer, 1653-1713",
     "born": 1653,
     "died": 1713
+  },
+  {
+    "id": "cortes",
+    "n": "Hernan Cortes",
+    "d": "Conqueror of the Aztec, 1485-1547",
+    "born": 1485,
+    "died": 1547
+  },
+  {
+    "id": "cosimo",
+    "n": "Cosimo de Medici",
+    "d": "First Medici of Florence, 1389-1464",
+    "born": 1389,
+    "died": 1464
+  },
+  {
+    "id": "cousteau",
+    "n": "Jacques Cousteau",
+    "d": "The aqualung and the Calypso, 1910-1997",
+    "born": 1910,
+    "died": 1997
+  },
+  {
+    "id": "coverdale",
+    "n": "Myles Coverdale",
+    "d": "Printer of the first whole English Bible, 1488-1569",
+    "born": 1488,
+    "died": 1569
+  },
+  {
+    "id": "crazy-horse",
+    "n": "Crazy Horse",
+    "d": "Lakota war leader, died 1877",
+    "died": 1877
   },
   {
     "id": "curie",
@@ -363,11 +745,32 @@
     "died": 1524
   },
   {
+    "id": "daguerre",
+    "n": "Louis Daguerre",
+    "d": "Inventor of the daguerreotype, 1787-1851",
+    "born": 1787,
+    "died": 1851
+  },
+  {
+    "id": "daimler",
+    "n": "Gottlieb Daimler",
+    "d": "Engineer of the high-speed engine, 1834-1900",
+    "born": 1834,
+    "died": 1900
+  },
+  {
     "id": "dante",
     "n": "Dante Alighieri",
     "d": "Poet of the Commedia, 1265-1321",
     "born": 1265,
     "died": 1321
+  },
+  {
+    "id": "danton",
+    "n": "Georges Danton",
+    "d": "Voice of the revolution, 1759-1794",
+    "born": 1759,
+    "died": 1794
   },
   {
     "id": "darwin",
@@ -391,11 +794,24 @@
     "died": 1829
   },
   {
+    "id": "de-forest",
+    "n": "Lee de Forest",
+    "d": "The audion man, 1873-1961",
+    "born": 1873,
+    "died": 1961
+  },
+  {
     "id": "de-morgan",
     "n": "Augustus De Morgan",
     "d": "Mathematician and logician, 1806-1871",
     "born": 1806,
     "died": 1871
+  },
+  {
+    "id": "de-soto",
+    "n": "Hernando de Soto",
+    "d": "Conqueror of Florida s interior, died 1542",
+    "died": 1542
   },
   {
     "id": "degas",
@@ -440,6 +856,31 @@
     "died": 1784
   },
   {
+    "id": "dior",
+    "n": "Christian Dior",
+    "d": "Couturier of the new look, 1905-1957",
+    "born": 1905,
+    "died": 1957
+  },
+  {
+    "id": "djoser",
+    "n": "Djoser",
+    "d": "Pharaoh of the step pyramid, c. 2687-2648 BCE"
+  },
+  {
+    "id": "donald-maclean",
+    "n": "Donald Maclean",
+    "d": "The first defector of the ring, 1913-1983",
+    "born": 1913,
+    "died": 1983
+  },
+  {
+    "id": "donatello",
+    "n": "Donatello",
+    "d": "Sculptor of Florence, died 1466",
+    "died": 1466
+  },
+  {
     "id": "donne",
     "n": "John Donne",
     "d": "Poet and dean of St Paul's, 1572-1631",
@@ -482,6 +923,13 @@
     "died": 1963
   },
   {
+    "id": "duke-ellington",
+    "n": "Duke Ellington",
+    "d": "Composer of the band that swung, 1899-1974",
+    "born": 1899,
+    "died": 1974
+  },
+  {
     "id": "dumas",
     "n": "Alexandre Dumas",
     "d": "Novelist, 1802-1870",
@@ -496,11 +944,38 @@
     "died": 1904
   },
   {
+    "id": "edgar-aetheling",
+    "n": "Edgar Aetheling",
+    "d": "The uncrowned Saxon claimant, died 1126",
+    "died": 1126
+  },
+  {
     "id": "edison",
     "n": "Thomas Edison",
     "d": "Inventor, 1847-1931",
     "born": 1847,
     "died": 1931
+  },
+  {
+    "id": "edward-i",
+    "n": "Edward I",
+    "d": "King of England, 1239-1307",
+    "born": 1239,
+    "died": 1307
+  },
+  {
+    "id": "edward-iv",
+    "n": "Edward IV",
+    "d": "First Yorkist king, 1442-1483",
+    "born": 1442,
+    "died": 1483
+  },
+  {
+    "id": "edwin-hubble",
+    "n": "Edwin Hubble",
+    "d": "Astronomer of the expanding universe, 1889-1953",
+    "born": 1889,
+    "died": 1953
   },
   {
     "id": "einstein",
@@ -524,11 +999,32 @@
     "died": 1962
   },
   {
+    "id": "elizabeth-blackwell",
+    "n": "Elizabeth Blackwell",
+    "d": "First woman on the medical register, 1821-1910",
+    "born": 1821,
+    "died": 1910
+  },
+  {
     "id": "elizabeth-i",
     "n": "Elizabeth I",
     "d": "Queen of England, 1533-1603",
     "born": 1533,
     "died": 1603
+  },
+  {
+    "id": "elizebeth-friedman",
+    "n": "Elizebeth Friedman",
+    "d": "Codebreaker of the rum wars, 1892-1980",
+    "born": 1892,
+    "died": 1980
+  },
+  {
+    "id": "ella-fitzgerald",
+    "n": "Ella Fitzgerald",
+    "d": "The first lady of song, 1917-1996",
+    "born": 1917,
+    "died": 1996
   },
   {
     "id": "emerson",
@@ -545,6 +1041,20 @@
     "died": 1749
   },
   {
+    "id": "emily-bronte",
+    "n": "Emily Bronte",
+    "d": "Novelist of the moors, 1818-1848",
+    "born": 1818,
+    "died": 1848
+  },
+  {
+    "id": "emily-davison",
+    "n": "Emily Davison",
+    "d": "The suffragette of the Derby, 1872-1913",
+    "born": 1872,
+    "died": 1913
+  },
+  {
     "id": "erasmus",
     "n": "Desiderius Erasmus",
     "d": "Prince of the humanists, c. 1466-1536",
@@ -559,11 +1069,35 @@
     "died": 1802
   },
   {
+    "id": "euclid",
+    "n": "Euclid",
+    "d": "Geometer of the elements, c. 300 BCE"
+  },
+  {
+    "id": "euripides",
+    "n": "Euripides",
+    "d": "Tragic poet of the skeptics, c. 480-406 BCE"
+  },
+  {
     "id": "faraday",
     "n": "Michael Faraday",
     "d": "Physicist, 1791-1867",
     "born": 1791,
     "died": 1867
+  },
+  {
+    "id": "fermi",
+    "n": "Enrico Fermi",
+    "d": "Physicist of the first pile, 1901-1954",
+    "born": 1901,
+    "died": 1954
+  },
+  {
+    "id": "fessenden",
+    "n": "Reginald Fessenden",
+    "d": "The first voice of the air, 1866-1932",
+    "born": 1866,
+    "died": 1932
   },
   {
     "id": "flaubert",
@@ -587,6 +1121,13 @@
     "died": 1547
   },
   {
+    "id": "frank-capra",
+    "n": "Frank Capra",
+    "d": "Director of the common man, 1897-1991",
+    "born": 1897,
+    "died": 1991
+  },
+  {
     "id": "franklin",
     "n": "Benjamin Franklin",
     "d": "Printer and scientist, 1706-1790",
@@ -608,11 +1149,32 @@
     "died": 1786
   },
   {
+    "id": "frederick-cook",
+    "n": "Frederick Cook",
+    "d": "The rival claimant, 1865-1940",
+    "born": 1865,
+    "died": 1940
+  },
+  {
     "id": "frost",
     "n": "Robert Frost",
     "d": "Poet, 1874-1963",
     "born": 1874,
     "died": 1963
+  },
+  {
+    "id": "fulton",
+    "n": "Robert Fulton",
+    "d": "Steamboat builder of the Hudson, 1765-1815",
+    "born": 1765,
+    "died": 1815
+  },
+  {
+    "id": "galen",
+    "n": "Galen",
+    "d": "Physician of the emperors, 129-216",
+    "born": 129,
+    "died": 216
   },
   {
     "id": "galileo",
@@ -627,6 +1189,13 @@
     "d": "Leader of Indian independence, 1869-1948",
     "born": 1869,
     "died": 1948
+  },
+  {
+    "id": "garfield",
+    "n": "James A. Garfield",
+    "d": "President, 1831-1881",
+    "born": 1831,
+    "died": 1881
   },
   {
     "id": "garrick",
@@ -655,6 +1224,13 @@
     "d": "Painter, 1848-1903",
     "born": 1848,
     "died": 1903
+  },
+  {
+    "id": "genghis-khan",
+    "n": "Genghis Khan",
+    "d": "Founder of the Mongol empire, 1162-1227",
+    "born": 1162,
+    "died": 1227
   },
   {
     "id": "gentile-bellini",
@@ -692,6 +1268,13 @@
     "died": 1936
   },
   {
+    "id": "geronimo",
+    "n": "Geronimo",
+    "d": "Apache leader of the last resistance, 1829-1909",
+    "born": 1829,
+    "died": 1909
+  },
+  {
     "id": "gibbon",
     "n": "Edward Gibbon",
     "d": "Historian of Rome’s decline, 1737-1794",
@@ -704,6 +1287,12 @@
     "d": "Painter of Venetian color, c. 1430-1516",
     "born": 1430,
     "died": 1516
+  },
+  {
+    "id": "godfrey-of-bouillon",
+    "n": "Godfrey of Bouillon",
+    "d": "First ruler of crusader Jerusalem, died 1100",
+    "died": 1100
   },
   {
     "id": "godwin",
@@ -727,6 +1316,13 @@
     "died": 1852
   },
   {
+    "id": "gorbachev",
+    "n": "Mikhail Gorbachev",
+    "d": "The last Soviet leader, 1931-2022",
+    "born": 1931,
+    "died": 2022
+  },
+  {
     "id": "goya",
     "n": "Francisco Goya",
     "d": "Painter, 1746-1828",
@@ -739,6 +1335,19 @@
     "d": "General and president, 1822-1885",
     "born": 1822,
     "died": 1885
+  },
+  {
+    "id": "gutenberg",
+    "n": "Johannes Gutenberg",
+    "d": "Printer of Mainz, died 1468",
+    "died": 1468
+  },
+  {
+    "id": "guy-burgess",
+    "n": "Guy Burgess",
+    "d": "The missing diplomat, 1911-1963",
+    "born": 1911,
+    "died": 1963
   },
   {
     "id": "guy-fawkes",
@@ -776,6 +1385,44 @@
     "died": 1759
   },
   {
+    "id": "hannibal",
+    "n": "Hannibal",
+    "d": "Carthaginian general, 247-182 BCE"
+  },
+  {
+    "id": "harald-bluetooth",
+    "n": "Harald Bluetooth",
+    "d": "King of Denmark, died 986",
+    "died": 986
+  },
+  {
+    "id": "harald-hardrada",
+    "n": "Harald Hardrada",
+    "d": "King of Norway, 1015-1066",
+    "born": 1015,
+    "died": 1066
+  },
+  {
+    "id": "hardy",
+    "n": "Thomas Hardy",
+    "d": "Novelist of Wessex, 1840-1928",
+    "born": 1840,
+    "died": 1928
+  },
+  {
+    "id": "harold-godwinson",
+    "n": "Harold Godwinson",
+    "d": "The last crowned Saxon king, died 1066",
+    "died": 1066
+  },
+  {
+    "id": "harvey",
+    "n": "William Harvey",
+    "d": "Physician of the circulation, 1578-1657",
+    "born": 1578,
+    "died": 1657
+  },
+  {
     "id": "hawthorne",
     "n": "Nathaniel Hawthorne",
     "d": "Novelist of Salem, 1804-1864",
@@ -811,11 +1458,65 @@
     "died": 1961
   },
   {
+    "id": "henry-ford",
+    "n": "Henry Ford",
+    "d": "Maker of the Model T, 1863-1947",
+    "born": 1863,
+    "died": 1947
+  },
+  {
+    "id": "henry-iii",
+    "n": "Henry III",
+    "d": "King of England, 1207-1272",
+    "born": 1207,
+    "died": 1272
+  },
+  {
+    "id": "henry-vii",
+    "n": "Henry VII",
+    "d": "First Tudor king, 1457-1509",
+    "born": 1457,
+    "died": 1509
+  },
+  {
     "id": "henry-viii",
     "n": "Henry VIII",
     "d": "King of England, 1491-1547",
     "born": 1491,
     "died": 1547
+  },
+  {
+    "id": "heraclius",
+    "n": "Heraclius",
+    "d": "Byzantine emperor of the Persian wars, 575-641",
+    "born": 575,
+    "died": 641
+  },
+  {
+    "id": "hillary",
+    "n": "Edmund Hillary",
+    "d": "The first summit of Everest, 1919-2008",
+    "born": 1919,
+    "died": 2008
+  },
+  {
+    "id": "hilleman",
+    "n": "Maurice Hilleman",
+    "d": "Maker of the century s vaccines, 1919-2005",
+    "born": 1919,
+    "died": 2005
+  },
+  {
+    "id": "hippocrates",
+    "n": "Hippocrates",
+    "d": "Physician of Cos, c. 460-370 BCE"
+  },
+  {
+    "id": "hitchcock",
+    "n": "Alfred Hitchcock",
+    "d": "The master of suspense, 1899-1980",
+    "born": 1899,
+    "died": 1980
   },
   {
     "id": "hobbes",
@@ -830,6 +1531,13 @@
     "d": "Portraitist of the Tudor court, c. 1497-1543",
     "born": 1497,
     "died": 1543
+  },
+  {
+    "id": "holland",
+    "n": "John Philip Holland",
+    "d": "Father of the modern submarine, 1841-1914",
+    "born": 1841,
+    "died": 1914
   },
   {
     "id": "hooke",
@@ -881,11 +1589,52 @@
     "died": 1695
   },
   {
+    "id": "ibn-battuta",
+    "n": "Ibn Battuta",
+    "d": "Traveler of the Dar al-Islam, 1304-1369",
+    "born": 1304,
+    "died": 1369
+  },
+  {
+    "id": "ibn-rushd",
+    "n": "Ibn Rushd",
+    "d": "The Commentator of Cordoba, 1126-1198",
+    "born": 1126,
+    "died": 1198
+  },
+  {
+    "id": "ibn-sina",
+    "n": "Ibn Sina",
+    "d": "Physician of the canon, 980-1037",
+    "born": 980,
+    "died": 1037
+  },
+  {
     "id": "isabella",
     "n": "Isabella of Castile",
     "d": "Queen of Castile, 1451-1504",
     "born": 1451,
     "died": 1504
+  },
+  {
+    "id": "ito-hirobumi",
+    "n": "Ito Hirobumi",
+    "d": "First prime minister of Meiji Japan, 1841-1909",
+    "born": 1841,
+    "died": 1909
+  },
+  {
+    "id": "jacques-piccard",
+    "n": "Jacques Piccard",
+    "d": "Bathyscaphe man of the trench, 1922-2008",
+    "born": 1922,
+    "died": 2008
+  },
+  {
+    "id": "james-cameron",
+    "n": "James Cameron",
+    "d": "Filmmaker of the abyss, born 1954",
+    "born": 1954
   },
   {
     "id": "james-clark-ross",
@@ -909,11 +1658,65 @@
     "died": 1701
   },
   {
+    "id": "james-murray",
+    "n": "James Murray",
+    "d": "Editor of the Oxford dictionary, 1837-1915",
+    "born": 1837,
+    "died": 1915
+  },
+  {
+    "id": "jane-seymour",
+    "n": "Jane Seymour",
+    "d": "Third queen of Henry VIII, died 1537",
+    "died": 1537
+  },
+  {
     "id": "jefferson",
     "n": "Thomas Jefferson",
     "d": "President, 1743-1826",
     "born": 1743,
     "died": 1826
+  },
+  {
+    "id": "jefferson-davis",
+    "n": "Jefferson Davis",
+    "d": "President of the Confederacy, 1808-1889",
+    "born": 1808,
+    "died": 1889
+  },
+  {
+    "id": "jenner",
+    "n": "Edward Jenner",
+    "d": "Father of vaccination, 1749-1823",
+    "born": 1749,
+    "died": 1823
+  },
+  {
+    "id": "jerry-yang",
+    "n": "Jerry Yang",
+    "d": "Cofounder of Yahoo, born 1968",
+    "born": 1968
+  },
+  {
+    "id": "jesse-james",
+    "n": "Jesse James",
+    "d": "Outlaw of Missouri, 1847-1882",
+    "born": 1847,
+    "died": 1882
+  },
+  {
+    "id": "jesse-owens",
+    "n": "Jesse Owens",
+    "d": "Four golds of 1936, 1913-1980",
+    "born": 1913,
+    "died": 1980
+  },
+  {
+    "id": "jimmy-carter",
+    "n": "Jimmy Carter",
+    "d": "President, 1924-2024",
+    "born": 1924,
+    "died": 2024
   },
   {
     "id": "jj-thomson",
@@ -930,11 +1733,25 @@
     "died": 2011
   },
   {
+    "id": "john-brown",
+    "n": "John Brown",
+    "d": "The queen s Highland servant, 1826-1883",
+    "born": 1826,
+    "died": 1883
+  },
+  {
     "id": "john-franklin",
     "n": "John Franklin",
     "d": "Arctic explorer of Erebus and Terror, 1786-1847",
     "born": 1786,
     "died": 1847
+  },
+  {
+    "id": "john-harrison",
+    "n": "John Harrison",
+    "d": "Clockmaker of the longitude, 1693-1776",
+    "born": 1693,
+    "died": 1776
   },
   {
     "id": "john-herschel",
@@ -956,6 +1773,20 @@
     "d": "Songwriter and Beatle, 1940-1980",
     "born": 1940,
     "died": 1980
+  },
+  {
+    "id": "john-quincy-adams",
+    "n": "John Quincy Adams",
+    "d": "President, 1767-1848",
+    "born": 1767,
+    "died": 1848
+  },
+  {
+    "id": "john-snow",
+    "n": "John Snow",
+    "d": "Physician of the Broad Street pump, 1813-1858",
+    "born": 1813,
+    "died": 1858
   },
   {
     "id": "johnson",
@@ -986,6 +1817,20 @@
     "died": 1513
   },
   {
+    "id": "justinian",
+    "n": "Justinian",
+    "d": "Byzantine emperor of the code, 482-565",
+    "born": 482,
+    "died": 565
+  },
+  {
+    "id": "keats",
+    "n": "John Keats",
+    "d": "Poet, 1795-1821",
+    "born": 1795,
+    "died": 1821
+  },
+  {
     "id": "keller",
     "n": "Helen Keller",
     "d": "Writer and advocate, 1880-1968",
@@ -1007,6 +1852,45 @@
     "died": 1630
   },
   {
+    "id": "khrushchev",
+    "n": "Nikita Khrushchev",
+    "d": "Soviet leader of the thaw, 1894-1971",
+    "born": 1894,
+    "died": 1971
+  },
+  {
+    "id": "khufu",
+    "n": "Khufu",
+    "d": "Pharaoh of the Great Pyramid, c. 2589-2566 BCE"
+  },
+  {
+    "id": "kidd",
+    "n": "William Kidd",
+    "d": "The hanged privateer, died 1701",
+    "died": 1701
+  },
+  {
+    "id": "kim-philby",
+    "n": "Kim Philby",
+    "d": "The third man of the Cambridge ring, 1912-1988",
+    "born": 1912,
+    "died": 1988
+  },
+  {
+    "id": "koch",
+    "n": "Robert Koch",
+    "d": "Founder of bacteriology, 1843-1910",
+    "born": 1843,
+    "died": 1910
+  },
+  {
+    "id": "kublai-khan",
+    "n": "Kublai Khan",
+    "d": "Khan of the Yuan, 1215-1294",
+    "born": 1215,
+    "died": 1294
+  },
+  {
     "id": "lafayette",
     "n": "Marquis de Lafayette",
     "d": "General, 1757-1834",
@@ -1014,11 +1898,49 @@
     "died": 1834
   },
   {
+    "id": "lanfranc",
+    "n": "Lanfranc",
+    "d": "Archbishop of Canterbury, died 1089",
+    "died": 1089
+  },
+  {
+    "id": "langston-hughes",
+    "n": "Langston Hughes",
+    "d": "Poet of Harlem, 1902-1967",
+    "born": 1902,
+    "died": 1967
+  },
+  {
+    "id": "lao-tzu",
+    "n": "Lao-tzu",
+    "d": "Old master of the Tao, 6th century BCE"
+  },
+  {
+    "id": "larry-page",
+    "n": "Larry Page",
+    "d": "Cofounder of Google, born 1973",
+    "born": 1973
+  },
+  {
     "id": "lavoisier",
     "n": "Antoine Lavoisier",
     "d": "Chemist, 1743-1794",
     "born": 1743,
     "died": 1794
+  },
+  {
+    "id": "leavitt",
+    "n": "Henrietta Leavitt",
+    "d": "Astronomer of the Cepheid yardstick, 1868-1921",
+    "born": 1868,
+    "died": 1921
+  },
+  {
+    "id": "lee",
+    "n": "Robert E. Lee",
+    "d": "Commander of the Army of Northern Virginia, 1807-1870",
+    "born": 1807,
+    "died": 1870
   },
   {
     "id": "leeuwenhoek",
@@ -1063,6 +1985,13 @@
     "died": 1865
   },
   {
+    "id": "lindbergh",
+    "n": "Charles Lindbergh",
+    "d": "The first solo Atlantic, 1902-1974",
+    "born": 1902,
+    "died": 1974
+  },
+  {
     "id": "linnaeus",
     "n": "Carl Linnaeus",
     "d": "Naturalist, 1707-1778",
@@ -1098,11 +2027,25 @@
     "died": 1492
   },
   {
+    "id": "louis-armstrong",
+    "n": "Louis Armstrong",
+    "d": "Trumpeter of New Orleans, 1901-1971",
+    "born": 1901,
+    "died": 1971
+  },
+  {
     "id": "louis-xiv",
     "n": "Louis XIV",
     "d": "King of France, 1638-1715",
     "born": 1638,
     "died": 1715
+  },
+  {
+    "id": "louis-xv",
+    "n": "Louis XV",
+    "d": "King of France, 1710-1774",
+    "born": 1710,
+    "died": 1774
   },
   {
     "id": "louis-xvi",
@@ -1175,6 +2118,12 @@
     "died": 1883
   },
   {
+    "id": "mansa-musa",
+    "n": "Mansa Musa",
+    "d": "Emperor of Mali, died 1337",
+    "died": 1337
+  },
+  {
     "id": "manuel-i",
     "n": "Manuel I",
     "d": "King of Portugal, 1469-1521",
@@ -1189,11 +2138,24 @@
     "died": 1793
   },
   {
+    "id": "marc-andreessen",
+    "n": "Marc Andreessen",
+    "d": "Maker of the Mosaic browser, born 1971",
+    "born": 1971
+  },
+  {
     "id": "marco-polo",
     "n": "Marco Polo",
     "d": "Venetian traveller to the Yuan court, c. 1254-1324",
     "born": 1254,
     "died": 1324
+  },
+  {
+    "id": "marconi",
+    "n": "Guglielmo Marconi",
+    "d": "Wireless man of the Atlantic, 1874-1937",
+    "born": 1874,
+    "died": 1937
   },
   {
     "id": "marcus-aurelius",
@@ -1245,6 +2207,19 @@
     "died": 1851
   },
   {
+    "id": "mata-hari",
+    "n": "Mata Hari",
+    "d": "The dancer shot as a spy, 1876-1917",
+    "born": 1876,
+    "died": 1917
+  },
+  {
+    "id": "matilda-of-flanders",
+    "n": "Matilda of Flanders",
+    "d": "Queen of England, died 1083",
+    "died": 1083
+  },
+  {
     "id": "maxwell",
     "n": "James Clerk Maxwell",
     "d": "Physicist, 1831-1879",
@@ -1252,11 +2227,32 @@
     "died": 1879
   },
   {
+    "id": "mazarin",
+    "n": "Cardinal Mazarin",
+    "d": "Richelieu s heir in the ministry, 1602-1661",
+    "born": 1602,
+    "died": 1661
+  },
+  {
+    "id": "mckinley",
+    "n": "William McKinley",
+    "d": "President, 1843-1901",
+    "born": 1843,
+    "died": 1901
+  },
+  {
     "id": "mehmed-ii",
     "n": "Mehmed II",
     "d": "Conqueror of Constantinople, 1432-1481",
     "born": 1432,
     "died": 1481
+  },
+  {
+    "id": "meiji",
+    "n": "Emperor Meiji",
+    "d": "Emperor of the restoration, 1852-1912",
+    "born": 1852,
+    "died": 1912
   },
   {
     "id": "melbourne",
@@ -1273,6 +2269,11 @@
     "died": 1891
   },
   {
+    "id": "mencius",
+    "n": "Mencius",
+    "d": "Confucian of the good heart, c. 372-289 BCE"
+  },
+  {
     "id": "mendelssohn",
     "n": "Felix Mendelssohn",
     "d": "Composer and conductor, 1809-1847",
@@ -1280,11 +2281,30 @@
     "died": 1847
   },
   {
+    "id": "mercator",
+    "n": "Gerardus Mercator",
+    "d": "Mapmaker of the projection, 1512-1594",
+    "born": 1512,
+    "died": 1594
+  },
+  {
+    "id": "messner",
+    "n": "Reinhold Messner",
+    "d": "The first without oxygen, born 1944",
+    "born": 1944
+  },
+  {
     "id": "metternich",
     "n": "Klemens von Metternich",
     "d": "Austrian statesman, 1773-1859",
     "born": 1773,
     "died": 1859
+  },
+  {
+    "id": "michael-phelps",
+    "n": "Michael Phelps",
+    "d": "The most decorated Olympian, born 1985",
+    "born": 1985
   },
   {
     "id": "michelangelo",
@@ -1306,6 +2326,13 @@
     "d": "Painter, 1829-1896",
     "born": 1829,
     "died": 1896
+  },
+  {
+    "id": "millicent-fawcett",
+    "n": "Millicent Fawcett",
+    "d": "Leader of the constitutional suffragists, 1847-1929",
+    "born": 1847,
+    "died": 1929
   },
   {
     "id": "milton",
@@ -1343,6 +2370,13 @@
     "died": 1791
   },
   {
+    "id": "nader-shah",
+    "n": "Nader Shah",
+    "d": "Persia s last conqueror, 1688-1747",
+    "born": 1688,
+    "died": 1747
+  },
+  {
     "id": "nansen",
     "n": "Fridtjof Nansen",
     "d": "Arctic drifter of the Fram, 1861-1930",
@@ -1364,11 +2398,25 @@
     "died": 1873
   },
   {
+    "id": "necker",
+    "n": "Jacques Necker",
+    "d": "Finance minister of the old regime, 1732-1804",
+    "born": 1732,
+    "died": 1804
+  },
+  {
     "id": "nelson",
     "n": "Horatio Nelson",
     "d": "Admiral, 1758-1805",
     "born": 1758,
     "died": 1805
+  },
+  {
+    "id": "nero",
+    "n": "Nero",
+    "d": "Roman emperor, 37-68",
+    "born": 37,
+    "died": 68
   },
   {
     "id": "newton",
@@ -1378,6 +2426,20 @@
     "died": 1727
   },
   {
+    "id": "ney",
+    "n": "Marshal Ney",
+    "d": "The bravest of the brave, 1769-1815",
+    "born": 1769,
+    "died": 1815
+  },
+  {
+    "id": "niepce",
+    "n": "Nicephore Niepce",
+    "d": "Maker of the first photograph, 1765-1833",
+    "born": 1765,
+    "died": 1833
+  },
+  {
     "id": "nietzsche",
     "n": "Friedrich Nietzsche",
     "d": "Philosopher, 1844-1900",
@@ -1385,11 +2447,66 @@
     "died": 1900
   },
   {
+    "id": "nightingale",
+    "n": "Florence Nightingale",
+    "d": "Founder of modern nursing, 1820-1910",
+    "born": 1820,
+    "died": 1910
+  },
+  {
+    "id": "noah-webster",
+    "n": "Noah Webster",
+    "d": "Lexicographer of American English, 1758-1843",
+    "born": 1758,
+    "died": 1843
+  },
+  {
+    "id": "noor-inayat-khan",
+    "n": "Noor Inayat Khan",
+    "d": "The wireless operator of the SOE, 1914-1944",
+    "born": 1914,
+    "died": 1944
+  },
+  {
+    "id": "odo",
+    "n": "Odo",
+    "d": "Bishop of Bayeux, died 1097",
+    "died": 1097
+  },
+  {
+    "id": "ogedei-khan",
+    "n": "Ogedei Khan",
+    "d": "Second great khan, 1186-1241",
+    "born": 1186,
+    "died": 1241
+  },
+  {
     "id": "oliver-cromwell",
     "n": "Oliver Cromwell",
     "d": "Lord Protector, 1599-1658",
     "born": 1599,
     "died": 1658
+  },
+  {
+    "id": "omar-khayyam",
+    "n": "Omar Khayyam",
+    "d": "Poet and mathematician of Persia, 1048-1131",
+    "born": 1048,
+    "died": 1131
+  },
+  {
+    "id": "oppenheimer",
+    "n": "J. Robert Oppenheimer",
+    "d": "Physicist of Los Alamos, 1904-1967",
+    "born": 1904,
+    "died": 1967
+  },
+  {
+    "id": "orson-welles",
+    "n": "Orson Welles",
+    "d": "The boy wonder of Kane, 1915-1985",
+    "born": 1915,
+    "died": 1985
   },
   {
     "id": "orwell",
@@ -1418,11 +2535,25 @@
     "died": 1809
   },
   {
+    "id": "pankhurst",
+    "n": "Emmeline Pankhurst",
+    "d": "Founder of the WSPU, 1858-1928",
+    "born": 1858,
+    "died": 1928
+  },
+  {
     "id": "pasteur",
     "n": "Louis Pasteur",
     "d": "Chemist, 1822-1895",
     "born": 1822,
     "died": 1895
+  },
+  {
+    "id": "pat-garrett",
+    "n": "Pat Garrett",
+    "d": "The sheriff who shot the Kid, 1850-1908",
+    "born": 1850,
+    "died": 1908
   },
   {
     "id": "patrick-henry",
@@ -1432,11 +2563,31 @@
     "died": 1799
   },
   {
+    "id": "peary",
+    "n": "Robert Peary",
+    "d": "Claimant of the North Pole, 1856-1920",
+    "born": 1856,
+    "died": 1920
+  },
+  {
     "id": "pepys",
     "n": "Samuel Pepys",
     "d": "Diarist and naval officer, 1633-1703",
     "born": 1633,
     "died": 1703
+  },
+  {
+    "id": "peter-cooper",
+    "n": "Peter Cooper",
+    "d": "Builder of the first American locomotive, 1791-1883",
+    "born": 1791,
+    "died": 1883
+  },
+  {
+    "id": "peter-henlein",
+    "n": "Peter Henlein",
+    "d": "Watchmaker of Nuremberg, died 1542",
+    "died": 1542
   },
   {
     "id": "philip-ii",
@@ -1460,11 +2611,22 @@
     "died": 1903
   },
   {
+    "id": "pizarro",
+    "n": "Francisco Pizarro",
+    "d": "Conqueror of the Inca, died 1541",
+    "died": 1541
+  },
+  {
     "id": "planck",
     "n": "Max Planck",
     "d": "Founder of the quantum, 1858-1947",
     "born": 1858,
     "died": 1947
+  },
+  {
+    "id": "plato",
+    "n": "Plato",
+    "d": "Philosopher of Athens, 427-347 BCE"
   },
   {
     "id": "plutarch",
@@ -1481,6 +2643,13 @@
     "died": 1849
   },
   {
+    "id": "pompadour",
+    "n": "Madame de Pompadour",
+    "d": "The king s taste-maker, 1721-1764",
+    "born": 1721,
+    "died": 1764
+  },
+  {
     "id": "pope",
     "n": "Alexander Pope",
     "d": "Poet, 1688-1744",
@@ -1493,6 +2662,27 @@
     "d": "Chemist, 1733-1804",
     "born": 1733,
     "died": 1804
+  },
+  {
+    "id": "prince-albert",
+    "n": "Prince Albert",
+    "d": "Consort of the queen, 1819-1861",
+    "born": 1819,
+    "died": 1861
+  },
+  {
+    "id": "ptolemy",
+    "n": "Ptolemy",
+    "d": "Astronomer of the Almagest, 100-170",
+    "born": 100,
+    "died": 170
+  },
+  {
+    "id": "purcell",
+    "n": "Henry Purcell",
+    "d": "Composer of the English baroque, 1659-1695",
+    "born": 1659,
+    "died": 1695
   },
   {
     "id": "pushkin",
@@ -1516,6 +2706,11 @@
     "died": 1618
   },
   {
+    "id": "ramses-ii",
+    "n": "Ramses II",
+    "d": "Pharaoh of Kadesh, c. 1279-1213 BCE"
+  },
+  {
     "id": "raphael",
     "n": "Raphael",
     "d": "Painter, 1483-1520",
@@ -1528,6 +2723,13 @@
     "d": "President, 1911-2004",
     "born": 1911,
     "died": 2004
+  },
+  {
+    "id": "rejewski",
+    "n": "Marian Rejewski",
+    "d": "First into the Enigma, 1905-1980",
+    "born": 1905,
+    "died": 1980
   },
   {
     "id": "rembrandt",
@@ -1551,11 +2753,45 @@
     "died": 1792
   },
   {
+    "id": "richard-iii",
+    "n": "Richard III",
+    "d": "King of England, 1452-1485",
+    "born": 1452,
+    "died": 1485
+  },
+  {
+    "id": "richard-lionheart",
+    "n": "Richard the Lionheart",
+    "d": "King of England, 1157-1199",
+    "born": 1157,
+    "died": 1199
+  },
+  {
+    "id": "richelieu",
+    "n": "Cardinal Richelieu",
+    "d": "Chief minister of France, 1585-1642",
+    "born": 1585,
+    "died": 1642
+  },
+  {
+    "id": "robert-ballard",
+    "n": "Robert Ballard",
+    "d": "Finder of the Titanic, born 1942",
+    "born": 1942
+  },
+  {
     "id": "robert-schumann",
     "n": "Robert Schumann",
     "d": "Composer, 1810-1856",
     "born": 1810,
     "died": 1856
+  },
+  {
+    "id": "robespierre",
+    "n": "Maximilien Robespierre",
+    "d": "The incorruptible, 1758-1794",
+    "born": 1758,
+    "died": 1794
   },
   {
     "id": "rosa-parks",
@@ -1593,6 +2829,13 @@
     "died": 1640
   },
   {
+    "id": "rudolf-hess",
+    "n": "Rudolf Hess",
+    "d": "The deputy who flew to Scotland, 1894-1987",
+    "born": 1894,
+    "died": 1987
+  },
+  {
     "id": "ruskin",
     "n": "John Ruskin",
     "d": "Critic, 1819-1900",
@@ -1612,6 +2855,34 @@
     "d": "Splitter of the atom, 1871-1937",
     "born": 1871,
     "died": 1937
+  },
+  {
+    "id": "rutherford-hayes",
+    "n": "Rutherford B. Hayes",
+    "d": "President, 1822-1893",
+    "born": 1822,
+    "died": 1893
+  },
+  {
+    "id": "saigo-takamori",
+    "n": "Saigo Takamori",
+    "d": "The last samurai, 1828-1877",
+    "born": 1828,
+    "died": 1877
+  },
+  {
+    "id": "saladin",
+    "n": "Saladin",
+    "d": "Sultan of Egypt and Syria, 1137-1193",
+    "born": 1137,
+    "died": 1193
+  },
+  {
+    "id": "salk",
+    "n": "Jonas Salk",
+    "d": "Conqueror of polio, 1914-1995",
+    "born": 1914,
+    "died": 1995
   },
   {
     "id": "sand",
@@ -1670,6 +2941,13 @@
     "died": 1683
   },
   {
+    "id": "shah-jahan",
+    "n": "Shah Jahan",
+    "d": "Mughal emperor of the Taj, 1592-1666",
+    "born": 1592,
+    "died": 1666
+  },
+  {
     "id": "shakespeare",
     "n": "William Shakespeare",
     "d": "Playwright, 1564-1616",
@@ -1691,11 +2969,22 @@
     "died": 1822
   },
   {
+    "id": "sitting-bull",
+    "n": "Sitting Bull",
+    "d": "Lakota leader, died 1890",
+    "died": 1890
+  },
+  {
     "id": "smith",
     "n": "Adam Smith",
     "d": "Economist, 1723-1790",
     "born": 1723,
     "died": 1790
+  },
+  {
+    "id": "sneferu",
+    "n": "Sneferu",
+    "d": "Pharaoh of the true pyramid, c. 2613-2589 BCE"
   },
   {
     "id": "socrates",
@@ -1708,6 +2997,17 @@
     "d": "Botanist, 1733-1782",
     "born": 1733,
     "died": 1782
+  },
+  {
+    "id": "sonni-ali",
+    "n": "Sonni Ali",
+    "d": "King of Songhai, died 1492",
+    "died": 1492
+  },
+  {
+    "id": "sophocles",
+    "n": "Sophocles",
+    "d": "Tragic poet of Thebes, c. 497-406 BCE"
   },
   {
     "id": "spencer",
@@ -1738,6 +3038,13 @@
     "died": 1848
   },
   {
+    "id": "steuben",
+    "n": "Baron von Steuben",
+    "d": "Drillmaster of Valley Forge, 1730-1794",
+    "born": 1730,
+    "died": 1794
+  },
+  {
     "id": "suleiman",
     "n": "Suleiman the Magnificent",
     "d": "Ottoman sultan, 1494-1566",
@@ -1757,6 +3064,13 @@
     "died": 1745
   },
   {
+    "id": "talbot",
+    "n": "William Henry Fox Talbot",
+    "d": "Inventor of the negative, 1800-1877",
+    "born": 1800,
+    "died": 1877
+  },
+  {
     "id": "talleyrand",
     "n": "Talleyrand",
     "d": "French diplomat, 1754-1838",
@@ -1764,11 +3078,32 @@
     "died": 1838
   },
   {
+    "id": "tasman",
+    "n": "Abel Tasman",
+    "d": "Navigator of the South Seas, 1603-1659",
+    "born": 1603,
+    "died": 1659
+  },
+  {
     "id": "temple",
     "n": "William Temple",
     "d": "Diplomat, 1628-1699",
     "born": 1628,
     "died": 1699
+  },
+  {
+    "id": "tenzing",
+    "n": "Tenzing Norgay",
+    "d": "The tiger of the snows, 1914-1986",
+    "born": 1914,
+    "died": 1986
+  },
+  {
+    "id": "thabit-ibn-qurra",
+    "n": "Thabit ibn Qurra",
+    "d": "Mathematician of Harran, 836-901",
+    "born": 836,
+    "died": 901
   },
   {
     "id": "thackeray",
@@ -1839,6 +3174,20 @@
     "died": 1910
   },
   {
+    "id": "trajan",
+    "n": "Trajan",
+    "d": "Roman emperor of the greatest extent, 53-117",
+    "born": 53,
+    "died": 117
+  },
+  {
+    "id": "trollope",
+    "n": "Anthony Trollope",
+    "d": "Novelist of Barsetshire, 1815-1882",
+    "born": 1815,
+    "died": 1882
+  },
+  {
     "id": "turgenev",
     "n": "Ivan Turgenev",
     "d": "Novelist, 1818-1883",
@@ -1846,11 +3195,23 @@
     "died": 1883
   },
   {
+    "id": "turing",
+    "n": "Alan Turing",
+    "d": "Codebreaker and computer scientist, 1912-1954",
+    "born": 1912,
+    "died": 1954
+  },
+  {
     "id": "turner",
     "n": "J.M.W. Turner",
     "d": "Painter, 1775-1851",
     "born": 1775,
     "died": 1851
+  },
+  {
+    "id": "tutankhamun",
+    "n": "Tutankhamun",
+    "d": "Boy pharaoh of the New Kingdom, c. 1332-1323 BCE"
   },
   {
     "id": "twain",
@@ -1874,6 +3235,12 @@
     "died": 1536
   },
   {
+    "id": "usain-bolt",
+    "n": "Usain Bolt",
+    "d": "The fastest man measured, born 1986",
+    "born": 1986
+  },
+  {
     "id": "van-gogh",
     "n": "Vincent van Gogh",
     "d": "Painter, 1853-1890",
@@ -1888,6 +3255,18 @@
     "died": 1660
   },
   {
+    "id": "vera-rubin",
+    "n": "Vera Rubin",
+    "d": "Astronomer of the galaxy rotations, 1928-2016",
+    "born": 1928,
+    "died": 2016
+  },
+  {
+    "id": "vercingetorix",
+    "n": "Vercingetorix",
+    "d": "Chieftain of the Gauls, c. 82-46 BCE"
+  },
+  {
     "id": "verdi",
     "n": "Giuseppe Verdi",
     "d": "Opera composer of Italy, 1813-1901",
@@ -1895,11 +3274,25 @@
     "died": 1901
   },
   {
+    "id": "vermeer",
+    "n": "Johannes Vermeer",
+    "d": "Painter of Delft, 1632-1675",
+    "born": 1632,
+    "died": 1675
+  },
+  {
     "id": "verrocchio",
     "n": "Andrea del Verrocchio",
     "d": "Sculptor of Florence, c. 1435-1488",
     "born": 1435,
     "died": 1488
+  },
+  {
+    "id": "vesalius",
+    "n": "Andreas Vesalius",
+    "d": "Anatomist of the fabrica, 1514-1564",
+    "born": 1514,
+    "died": 1564
   },
   {
     "id": "vespucci",
@@ -1919,6 +3312,13 @@
     "id": "virgil",
     "n": "Virgil",
     "d": "Roman poet of the Aeneid, 70-19 BCE"
+  },
+  {
+    "id": "virginia-hall",
+    "n": "Virginia Hall",
+    "d": "The limping lady of the OSS, 1906-1982",
+    "born": 1906,
+    "died": 1982
   },
   {
     "id": "vivaldi",
@@ -1991,6 +3391,13 @@
     "died": 1903
   },
   {
+    "id": "wild-bill-hickok",
+    "n": "Wild Bill Hickok",
+    "d": "Gunfighter of the frontier, 1837-1876",
+    "born": 1837,
+    "died": 1876
+  },
+  {
     "id": "wilde",
     "n": "Oscar Wilde",
     "d": "Playwright, 1854-1900",
@@ -2012,11 +3419,24 @@
     "died": 1702
   },
   {
+    "id": "william-the-conqueror",
+    "n": "William the Conqueror",
+    "d": "King of England, died 1087",
+    "died": 1087
+  },
+  {
     "id": "wollstonecraft",
     "n": "Mary Wollstonecraft",
     "d": "Writer, 1759-1797",
     "born": 1759,
     "died": 1797
+  },
+  {
+    "id": "woodrow-wilson",
+    "n": "Woodrow Wilson",
+    "d": "President, 1856-1924",
+    "born": 1856,
+    "died": 1924
   },
   {
     "id": "wordsworth",
@@ -2033,10 +3453,44 @@
     "died": 1723
   },
   {
+    "id": "wyatt-earp",
+    "n": "Wyatt Earp",
+    "d": "Lawman of the O.K. Corral, 1848-1929",
+    "born": 1848,
+    "died": 1929
+  },
+  {
+    "id": "wycliffe",
+    "n": "John Wycliffe",
+    "d": "The morning star of the Reformation, died 1384",
+    "died": 1384
+  },
+  {
+    "id": "xuanzang",
+    "n": "Xuanzang",
+    "d": "Pilgrim monk of Chang an, 602-664",
+    "born": 602,
+    "died": 664
+  },
+  {
+    "id": "yves-saint-laurent",
+    "n": "Yves Saint Laurent",
+    "d": "Couturier of the tuxedo dress, 1936-2008",
+    "born": 1936,
+    "died": 2008
+  },
+  {
     "id": "zola",
     "n": "Emile Zola",
     "d": "Novelist, 1840-1902",
     "born": 1840,
     "died": 1902
+  },
+  {
+    "id": "zwingli",
+    "n": "Huldrych Zwingli",
+    "d": "Reformer of Zurich, 1484-1531",
+    "born": 1484,
+    "died": 1531
   }
 ]

@@ -7,11 +7,39 @@
     "month": 8
   },
   {
+    "id": "abolition-of-samurai",
+    "n": "The Sword Edict",
+    "q": "The Sword Edict strips the samurai class of its blades.",
+    "y": 1876
+  },
+  {
     "id": "alaska-purchase",
     "n": "The Alaska Purchase",
     "q": "The United States purchases Alaska from Russia.",
     "y": 1867,
     "month": 3
+  },
+  {
+    "id": "antietam",
+    "n": "The Battle of Antietam",
+    "q": "The bloodiest day of the war ends Lee s first invasion at Antietam.",
+    "y": 1862,
+    "month": 9,
+    "day": 17
+  },
+  {
+    "id": "antonine-plague",
+    "n": "The Antonine Plague",
+    "q": "A pandemic sweeps the Roman legions home from the Euphrates.",
+    "y": 165
+  },
+  {
+    "id": "apollo-11-broadcast",
+    "n": "The Apollo 11 Broadcast",
+    "q": "The Moon landing is broadcast live to six hundred million viewers.",
+    "y": 1969,
+    "month": 7,
+    "day": 20
   },
   {
     "id": "apollo-11-landing",
@@ -20,6 +48,20 @@
     "y": 1969,
     "month": 7,
     "day": 20
+  },
+  {
+    "id": "apollo-13",
+    "n": "The Apollo 13 Emergency",
+    "q": "An oxygen tank ruptures and Apollo 13 loops around the Moon instead of landing.",
+    "y": 1970,
+    "month": 4
+  },
+  {
+    "id": "apollo-8",
+    "n": "The Apollo 8 Moon Orbit",
+    "q": "Apollo 8 becomes the first crewed craft to orbit the Moon.",
+    "y": 1968,
+    "month": 12
   },
   {
     "id": "apple-founded",
@@ -54,11 +96,25 @@
     "day": 16
   },
   {
+    "id": "austerlitz",
+    "n": "The Battle of Austerlitz",
+    "q": "Napoleon s masterpiece breaks the Austrians and Russians at Austerlitz.",
+    "y": 1805,
+    "month": 12
+  },
+  {
     "id": "baird-television",
     "n": "Baird Demonstrates Television",
     "q": "John Logie Baird demonstrates the first working television.",
     "y": 1926,
     "month": 1
+  },
+  {
+    "id": "barbarossa",
+    "n": "Operation Barbarossa",
+    "q": "Germany invades the Soviet Union with the largest invasion force ever assembled.",
+    "y": 1941,
+    "month": 6
   },
   {
     "id": "battle-of-agincourt",
@@ -84,6 +140,14 @@
     "day": 14
   },
   {
+    "id": "battle-of-the-nile",
+    "n": "The Battle of the Nile",
+    "q": "Nelson destroys the French fleet at anchor in Aboukir Bay.",
+    "y": 1798,
+    "month": 8,
+    "day": 1
+  },
+  {
     "id": "berlin-wall-falls",
     "n": "The Fall of the Berlin Wall",
     "q": "The Berlin Wall falls.",
@@ -99,11 +163,41 @@
     "month": 10
   },
   {
+    "id": "borodino",
+    "n": "The Battle of Borodino",
+    "q": "The bloodiest day of the Napoleonic wars is fought before Moscow.",
+    "y": 1812,
+    "month": 9,
+    "day": 7
+  },
+  {
+    "id": "boston-tea-party",
+    "n": "The Boston Tea Party",
+    "q": "The tea goes into the harbor as the town watches.",
+    "y": 1773,
+    "month": 12,
+    "day": 16
+  },
+  {
+    "id": "bosworth",
+    "n": "The Battle of Bosworth",
+    "q": "Richard III falls at Bosworth and the Tudor crown is won on the field.",
+    "y": 1485,
+    "month": 8,
+    "day": 22
+  },
+  {
     "id": "castro-enters-havana",
     "n": "Castro Enters Havana",
     "q": "Fidel Castro’s rebels enter Havana.",
     "y": 1959,
     "month": 1
+  },
+  {
+    "id": "cat-and-mouse-act",
+    "n": "The Cat and Mouse Act",
+    "q": "Parliament passes the Act that frees and rearrests the hunger strikers.",
+    "y": 1913
   },
   {
     "id": "charlemagne-crowned",
@@ -122,6 +216,12 @@
     "day": 26
   },
   {
+    "id": "childrens-crusade",
+    "n": "The Children s Crusade",
+    "q": "The children s crusade sets out for the Mediterranean and vanishes.",
+    "y": 1212
+  },
+  {
     "id": "circumnavigation-completed",
     "n": "The First Circumnavigation",
     "q": "The last ship of Magellan’s fleet completes the first circumnavigation of the globe.",
@@ -138,12 +238,32 @@
     "day": 12
   },
   {
+    "id": "compulsory-schooling",
+    "n": "The Education Order of 1872",
+    "q": "Japan makes schooling compulsory for every child.",
+    "y": 1872
+  },
+  {
     "id": "congress-of-vienna",
     "n": "The Congress of Vienna",
     "d": "Diplomatic congress, 1814-1815",
     "q": "The great powers convene at Vienna to redraw the map of Europe.",
     "y": 1814,
     "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "constitutional-convention",
+    "n": "The Constitutional Convention",
+    "q": "The delegates meet in Philadelphia to write a constitution.",
+    "y": 1787,
+    "month": 5
+  },
+  {
+    "id": "cuban-missile-crisis",
+    "n": "The Cuban Missile Crisis",
+    "q": "The world waits out the thirteen days of the Cuban missile crisis.",
+    "y": 1962,
+    "month": 10
   },
   {
     "id": "curiosity-landing",
@@ -183,11 +303,27 @@
     "month": 12
   },
   {
+    "id": "draft-riots",
+    "n": "The New York Draft Riots",
+    "q": "The New York draft riots burn for four days.",
+    "y": 1863,
+    "month": 7,
+    "day": 13
+  },
+  {
     "id": "eiffel-tower-opens",
     "n": "The Eiffel Tower Opens",
     "q": "The Eiffel Tower opens as the entrance arch to a world’s fair.",
     "y": 1889,
     "month": 3
+  },
+  {
+    "id": "emancipation-proclamation",
+    "n": "The Emancipation Proclamation",
+    "q": "Lincoln s proclamation frees the enslaved in the rebellious states.",
+    "y": 1863,
+    "month": 1,
+    "day": 1
   },
   {
     "id": "execution-of-charles-i",
@@ -229,6 +365,13 @@
     "day": 4
   },
   {
+    "id": "fireside-chats",
+    "n": "The Fireside Chats",
+    "q": "Roosevelt takes the presidency to the family radio with his fireside chats.",
+    "y": 1933,
+    "month": 3
+  },
+  {
     "id": "first-crusade-jerusalem",
     "n": "The First Crusade Takes Jerusalem",
     "q": "The First Crusade captures Jerusalem.",
@@ -242,6 +385,12 @@
     "y": 1953,
     "month": 5,
     "day": 29
+  },
+  {
+    "id": "first-japanese-railway",
+    "n": "Japan s First Railway",
+    "q": "The first railway opens between Tokyo and Yokohama.",
+    "y": 1872
   },
   {
     "id": "first-modern-olympics",
@@ -289,6 +438,14 @@
     "day": 14
   },
   {
+    "id": "fulford",
+    "n": "The Battle of Fulford",
+    "q": "The Norse invaders beat the northern earls outside York.",
+    "y": 1066,
+    "month": 9,
+    "day": 20
+  },
+  {
     "id": "gagarin-flight",
     "n": "The First Human Spaceflight",
     "q": "Yuri Gagarin becomes the first human in space, aboard Vostok 1.",
@@ -302,6 +459,22 @@
     "q": "Galileo observes the moons of Jupiter through his telescope.",
     "y": 1610,
     "month": 1
+  },
+  {
+    "id": "gallipoli",
+    "n": "The Gallipoli Landings",
+    "q": "The landings at Gallipoli are pinned on the beaches.",
+    "y": 1915,
+    "month": 4,
+    "day": 25
+  },
+  {
+    "id": "galveston-hurricane",
+    "n": "The Galveston Hurricane",
+    "q": "A hurricane drowns Galveston Island.",
+    "y": 1900,
+    "month": 9,
+    "day": 8
   },
   {
     "id": "gandhi-assassinated",
@@ -318,6 +491,29 @@
     "y": 1871,
     "month": 1,
     "day": 18
+  },
+  {
+    "id": "gettysburg",
+    "n": "The Battle of Gettysburg",
+    "q": "The three days at Gettysburg break the Confederate charge and the invasion.",
+    "y": 1863,
+    "month": 7
+  },
+  {
+    "id": "great-blizzard-1888",
+    "n": "The Great Blizzard of 1888",
+    "q": "The White Hurricane buries the northeast for days.",
+    "y": 1888,
+    "month": 3,
+    "day": 11
+  },
+  {
+    "id": "great-chicago-fire",
+    "n": "The Great Chicago Fire",
+    "q": "Three days of fire burn down Chicago.",
+    "y": 1871,
+    "month": 10,
+    "day": 8
   },
   {
     "id": "great-exhibition",
@@ -341,6 +537,20 @@
     "y": 1666,
     "month": 9,
     "day": 2
+  },
+  {
+    "id": "great-heathen-army",
+    "n": "The Great Heathen Army",
+    "q": "The Viking Great Heathen Army lands in East Anglia.",
+    "y": 865
+  },
+  {
+    "id": "great-kanto-earthquake",
+    "n": "The Great Kanto Earthquake",
+    "q": "The Great Kanto earthquake levels Tokyo and Yokohama.",
+    "y": 1923,
+    "month": 9,
+    "day": 1
   },
   {
     "id": "gunpowder-plot",
@@ -371,6 +581,12 @@
     "month": 8
   },
   {
+    "id": "harrying-of-the-north",
+    "n": "The Harrying of the North",
+    "q": "William s army burns Yorkshire from the Humber to the Tees.",
+    "y": 1069
+  },
+  {
     "id": "hindenburg-disaster",
     "n": "The Hindenburg Disaster",
     "q": "The Hindenburg burns at Lakehurst, New Jersey.",
@@ -384,6 +600,21 @@
     "q": "The Hubble Space Telescope is launched.",
     "y": 1990,
     "month": 4
+  },
+  {
+    "id": "hundred-days",
+    "n": "The Hundred Days",
+    "q": "Napoleon returns from Elba for the Hundred Days.",
+    "y": 1815,
+    "month": 3
+  },
+  {
+    "id": "hurricane-katrina",
+    "n": "Hurricane Katrina",
+    "q": "Hurricane Katrina breaches the levees of New Orleans.",
+    "y": 2005,
+    "month": 8,
+    "day": 29
   },
   {
     "id": "ibm-pc",
@@ -407,6 +638,12 @@
     "month": 6
   },
   {
+    "id": "invasions-of-japan",
+    "n": "The Mongol Invasions of Japan",
+    "q": "The Mongol fleets are scattered by the divine winds off Kyushu.",
+    "y": 1274
+  },
+  {
     "id": "iphone-launch",
     "n": "The iPhone Launch",
     "q": "The iPhone goes on sale.",
@@ -422,12 +659,42 @@
     "month": 5
   },
   {
+    "id": "jena",
+    "n": "The Battle of Jena",
+    "q": "Napoleon shatters the Prussian army in a single day at Jena.",
+    "y": 1806,
+    "month": 10,
+    "day": 14
+  },
+  {
     "id": "jfk-assassination",
     "n": "The Assassination of John F. Kennedy",
     "q": "President John F. Kennedy is assassinated in Dallas.",
     "y": 1963,
     "month": 11,
     "day": 22
+  },
+  {
+    "id": "july-crisis",
+    "n": "The July Crisis",
+    "q": "The July ultimatums turn a Balkan murder into a general war.",
+    "y": 1914,
+    "month": 7
+  },
+  {
+    "id": "kursk",
+    "n": "The Battle of Kursk",
+    "q": "The largest armored battle of the war grinds the German army at Kursk.",
+    "y": 1943,
+    "month": 7
+  },
+  {
+    "id": "legnica",
+    "n": "The Battle of Legnica",
+    "q": "The Mongol columns defeat the Polish knights at Legnica.",
+    "y": 1241,
+    "month": 4,
+    "day": 9
   },
   {
     "id": "lepanto",
@@ -438,6 +705,14 @@
     "month": 10,
     "day": 7,
     "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "lexington-and-concord",
+    "n": "Lexington and Concord",
+    "q": "The first shots of the Revolution are fired on the road to Concord.",
+    "y": 1775,
+    "month": 4,
+    "day": 19
   },
   {
     "id": "lincoln-assassinated",
@@ -454,6 +729,14 @@
     "month": 5
   },
   {
+    "id": "lisbon-earthquake",
+    "n": "The Lisbon Earthquake",
+    "q": "An earthquake and tsunami level Lisbon on All Saints Day.",
+    "y": 1755,
+    "month": 11,
+    "day": 1
+  },
+  {
     "id": "louisiana-purchase",
     "n": "The Louisiana Purchase",
     "q": "The United States concludes the Louisiana Purchase.",
@@ -466,6 +749,13 @@
     "y": 1793,
     "month": 8,
     "day": 10
+  },
+  {
+    "id": "luna-2",
+    "n": "The Luna 2 Moon Impact",
+    "q": "The Soviet Luna 2 probe becomes the first craft to reach the Moon.",
+    "y": 1959,
+    "month": 9
   },
   {
     "id": "magellan-departs",
@@ -488,6 +778,25 @@
     "y": 1994
   },
   {
+    "id": "marathon",
+    "n": "The Battle of Marathon",
+    "d": "Battle, 490 BCE",
+    "q": "The Athenian phalanx turns back the Persian landing at Marathon."
+  },
+  {
+    "id": "march-to-the-sea",
+    "n": "The March to the Sea",
+    "q": "Sherman s columns cut a path from Atlanta to the sea.",
+    "y": 1864
+  },
+  {
+    "id": "market-garden",
+    "n": "Operation Market Garden",
+    "q": "The airborne attempt to bridge the Rhine falls short at Arnhem.",
+    "y": 1944,
+    "month": 9
+  },
+  {
     "id": "mayflower-landing",
     "n": "The Mayflower Landing",
     "q": "The Mayflower lands the Pilgrims at Plymouth.",
@@ -495,11 +804,24 @@
     "month": 12
   },
   {
+    "id": "meiji-constitution",
+    "n": "The Meiji Constitution",
+    "q": "The Meiji constitution creates Japan s first modern parliament.",
+    "y": 1889
+  },
+  {
     "id": "messiah-premiere",
     "n": "The Messiah Premiere in Dublin",
     "q": "Handel’s Messiah premieres in Dublin.",
     "y": 1742,
     "month": 4
+  },
+  {
+    "id": "midway",
+    "n": "The Battle of Midway",
+    "q": "American carriers sink four Japanese carriers and turn the Pacific war.",
+    "y": 1942,
+    "month": 6
   },
   {
     "id": "miracle-year",
@@ -542,6 +864,13 @@
     "month": 11
   },
   {
+    "id": "overlord",
+    "n": "The Normandy Landings",
+    "q": "The Allied armada lands in Normandy and opens the second front.",
+    "y": 1944,
+    "month": 6
+  },
+  {
     "id": "peasants-revolt",
     "n": "The Peasants' Revolt",
     "q": "The Peasants’ Revolt reaches London and burns the Savoy Palace.",
@@ -556,6 +885,12 @@
     "month": 9
   },
   {
+    "id": "plague-of-justinian",
+    "n": "The Plague of Justinian",
+    "q": "The first recorded bubonic pandemic strikes Constantinople.",
+    "y": 541
+  },
+  {
     "id": "plains-of-abraham",
     "n": "The Battle of the Plains of Abraham",
     "q": "Wolfe defeats Montcalm on the Plains of Abraham, and Britain takes Quebec.",
@@ -564,10 +899,30 @@
     "day": 13
   },
   {
+    "id": "plassey",
+    "n": "The Battle of Plassey",
+    "q": "Clive s victory at Plassey hands Bengal to the East India Company.",
+    "y": 1757,
+    "month": 6,
+    "day": 23
+  },
+  {
+    "id": "prague-spring",
+    "n": "The Prague Spring",
+    "q": "The Prague Spring ends under the tanks of the Warsaw Pact.",
+    "y": 1968
+  },
+  {
     "id": "principia-mathematica",
     "n": "The Principia Mathematica",
     "q": "Newton publishes the Principia Mathematica.",
     "y": 1687
+  },
+  {
+    "id": "reconstruction",
+    "n": "Reconstruction",
+    "q": "The federal reconstruction of the South begins.",
+    "y": 1865
   },
   {
     "id": "revolutions-of-1848",
@@ -598,11 +953,59 @@
     "month": 7
   },
   {
+    "id": "royal-christmas-message",
+    "n": "The First Royal Christmas Message",
+    "q": "The king speaks to the empire on the first royal Christmas broadcast.",
+    "y": 1932,
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "russo-japanese-war",
+    "n": "The Russo-Japanese War",
+    "q": "Japan sinks the Russian fleet and joins the great powers.",
+    "y": 1904
+  },
+  {
+    "id": "sack-of-baghdad",
+    "n": "The Sack of Baghdad",
+    "q": "The Mongols take Baghdad and end the Abbasid caliphate.",
+    "y": 1258
+  },
+  {
     "id": "sack-of-constantinople",
     "n": "The Sack of Constantinople",
     "q": "The Fourth Crusade, diverted from Jerusalem, storms and sacks Constantinople.",
     "y": 1204,
     "month": 4
+  },
+  {
+    "id": "salamis",
+    "n": "The Battle of Salamis",
+    "d": "Battle, 480 BCE",
+    "q": "The Greek triremes trap the Persian fleet in the strait of Salamis."
+  },
+  {
+    "id": "san-francisco-earthquake",
+    "n": "The San Francisco Earthquake",
+    "q": "Earthquake and fire destroy San Francisco.",
+    "y": 1906,
+    "month": 4,
+    "day": 18
+  },
+  {
+    "id": "sarajevo-assassination",
+    "n": "The Assassination at Sarajevo",
+    "q": "A shot in Sarajevo kills the archduke and his wife.",
+    "y": 1914,
+    "month": 6,
+    "day": 28
+  },
+  {
+    "id": "satsuma-rebellion",
+    "n": "The Satsuma Rebellion",
+    "q": "Saigo s last stand at Shiroyama ends the samurai era.",
+    "y": 1877
   },
   {
     "id": "second-world-war-begins",
@@ -611,6 +1014,13 @@
     "y": 1939,
     "month": 9,
     "day": 1
+  },
+  {
+    "id": "seneca-falls",
+    "n": "The Seneca Falls Convention",
+    "q": "The Seneca Falls convention declares the rights of women.",
+    "y": 1848,
+    "month": 7
   },
   {
     "id": "september-11-attacks",
@@ -628,6 +1038,18 @@
     "month": 4
   },
   {
+    "id": "shays-rebellion",
+    "n": "Shays Rebellion",
+    "q": "Shays indebted farmers close the courts of Massachusetts.",
+    "y": 1786
+  },
+  {
+    "id": "sino-japanese-war",
+    "n": "The First Sino-Japanese War",
+    "q": "Japan s victory over China redraws the map of East Asia.",
+    "y": 1894
+  },
+  {
     "id": "solvay-1911",
     "n": "The First Solvay Conference",
     "d": "Council of physics, 1911",
@@ -638,11 +1060,25 @@
     "provenance": "reviewed 2026-10-30"
   },
   {
+    "id": "somme",
+    "n": "The Battle of the Somme",
+    "q": "The first day of the Somme costs the British army fifty-seven thousand casualties.",
+    "y": 1916,
+    "month": 7,
+    "day": 1
+  },
+  {
     "id": "spanish-armada",
     "n": "The Spanish Armada",
     "d": "Invasion fleet, 1588",
     "q": "The Spanish Armada is defeated in the Channel and wrecked by storms on the way home.",
     "y": 1588
+  },
+  {
+    "id": "spanish-flu",
+    "n": "The Spanish Flu",
+    "q": "The influenza pandemic circles the world at the end of the First World War.",
+    "y": 1918
   },
   {
     "id": "sputnik-launch",
@@ -653,11 +1089,34 @@
     "day": 4
   },
   {
+    "id": "st-albans",
+    "n": "The First Battle of St Albans",
+    "q": "The first battle of the Wars of the Roses opens at St Albans.",
+    "y": 1455,
+    "month": 5,
+    "day": 22
+  },
+  {
     "id": "st-petersburg-founded",
     "n": "The Founding of St. Petersburg",
     "q": "Peter the Great founds St. Petersburg.",
     "y": 1703,
     "month": 5
+  },
+  {
+    "id": "stalingrad",
+    "n": "The Surrender at Stalingrad",
+    "q": "The German army at Stalingrad surrenders after the winter in the ruins.",
+    "y": 1943,
+    "month": 2
+  },
+  {
+    "id": "stamford-bridge",
+    "n": "The Battle of Stamford Bridge",
+    "q": "Harold destroys the Norwegian invasion before marching south.",
+    "y": 1066,
+    "month": 9,
+    "day": 25
   },
   {
     "id": "stockton-darlington",
@@ -674,11 +1133,44 @@
     "month": 11
   },
   {
+    "id": "summer-of-love",
+    "n": "The Summer of Love",
+    "q": "The Summer of Love draws the young to the Haight.",
+    "y": 1967
+  },
+  {
     "id": "telephone-patent",
     "n": "The Telephone Patent",
     "q": "Alexander Graham Bell is granted the telephone patent.",
     "y": 1876,
     "month": 3
+  },
+  {
+    "id": "tet-offensive",
+    "n": "The Tet Offensive",
+    "q": "The Tet offensive sweeps into the cities of the south.",
+    "y": 1968,
+    "month": 1
+  },
+  {
+    "id": "thermopylae",
+    "n": "The Battle of Thermopylae",
+    "d": "Battle, 480 BCE",
+    "q": "The Greek rearguard holds the pass until the last morning."
+  },
+  {
+    "id": "third-crusade",
+    "n": "The Third Crusade",
+    "q": "The kings of England, France and Sicily take the cross for Jerusalem.",
+    "y": 1189
+  },
+  {
+    "id": "thirteenth-amendment",
+    "n": "The Thirteenth Amendment",
+    "q": "The Thirteenth Amendment abolishes slavery in the United States.",
+    "y": 1865,
+    "month": 12,
+    "day": 6
   },
   {
     "id": "titanic-sinks",
@@ -687,6 +1179,14 @@
     "y": 1912,
     "month": 4,
     "day": 15
+  },
+  {
+    "id": "towton",
+    "n": "The Battle of Towton",
+    "q": "The bloodiest day on English soil is fought in a snowstorm at Towton.",
+    "y": 1461,
+    "month": 3,
+    "day": 29
   },
   {
     "id": "trafalgar",
@@ -699,12 +1199,36 @@
     "provenance": "reviewed 2026-10-30"
   },
   {
+    "id": "transcontinental-railroad",
+    "n": "The Transcontinental Railroad",
+    "q": "The golden spike joins the rails at Promontory Summit.",
+    "y": 1869,
+    "month": 5,
+    "day": 10
+  },
+  {
     "id": "treaty-of-paris-1783",
     "n": "The Treaty of Paris",
     "q": "The Treaty of Paris ends the Revolutionary War and Britain recognizes the United States.",
     "y": 1783,
     "month": 9,
     "day": 3
+  },
+  {
+    "id": "treaty-of-versailles",
+    "n": "The Treaty of Versailles",
+    "q": "The Treaty of Versailles imposes its peace on Germany.",
+    "y": 1919,
+    "month": 6,
+    "day": 28
+  },
+  {
+    "id": "triangle-shirtwaist-fire",
+    "n": "The Triangle Shirtwaist Fire",
+    "q": "The factory fire kills the seamstresses behind locked doors.",
+    "y": 1911,
+    "month": 3,
+    "day": 25
   },
   {
     "id": "trinity-test",
@@ -722,11 +1246,42 @@
     "month": 11
   },
   {
+    "id": "valley-forge",
+    "n": "The Winter at Valley Forge",
+    "q": "The Continental Army winters starving at Valley Forge.",
+    "y": 1777,
+    "month": 12
+  },
+  {
+    "id": "verdun",
+    "n": "The Battle of Verdun",
+    "q": "The grinding year of Verdun consumes the armies on the Meuse.",
+    "y": 1916,
+    "month": 2,
+    "day": 21
+  },
+  {
+    "id": "vicksburg",
+    "n": "The Siege of Vicksburg",
+    "q": "The fortress of Vicksburg surrenders on the Fourth of July and the river is Union.",
+    "y": 1863,
+    "month": 7,
+    "day": 4
+  },
+  {
     "id": "wall-street-crash",
     "n": "The Wall Street Crash",
     "q": "The Wall Street Crash wipes out the US stock market.",
     "y": 1929,
     "month": 10
+  },
+  {
+    "id": "war-of-the-worlds-broadcast",
+    "n": "The War of the Worlds Broadcast",
+    "q": "The Mercury Theater s Martians panic the Halloween radio audience.",
+    "y": 1938,
+    "month": 10,
+    "day": 30
   },
   {
     "id": "waterloo",
@@ -736,6 +1291,20 @@
     "y": 1815,
     "month": 6,
     "day": 18
+  },
+  {
+    "id": "womens-march-1913",
+    "n": "The Woman Suffrage Procession",
+    "q": "The suffrage procession fills Pennsylvania Avenue the day before the inauguration.",
+    "y": 1913,
+    "month": 3
+  },
+  {
+    "id": "woodstock",
+    "n": "The Woodstock Festival",
+    "q": "The Woodstock festival gathers half a million on Max Yasgur s farm.",
+    "y": 1969,
+    "month": 8
   },
   {
     "id": "wright-first-flight",

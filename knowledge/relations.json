@@ -12,6 +12,52 @@
     "w": "His vice president for eight years"
   },
   {
+    "a": "akbar",
+    "b": "shah-jahan",
+    "w": "The administration the Taj s builder inherited",
+    "t": "family"
+  },
+  {
+    "a": "al-kindi",
+    "b": "al-khwarizmi",
+    "w": "The House of Wisdom s philosopher and its algebraist",
+    "t": "colleague"
+  },
+  {
+    "a": "aldus-manutius",
+    "b": "erasmus",
+    "y": 1508,
+    "w": "The Venetian press where the Dutch scholar set his Greek",
+    "t": "colleague"
+  },
+  {
+    "a": "alfred",
+    "b": "william-the-conqueror",
+    "w": "He kept the Saxon s laws to claim the crown s line",
+    "t": "successor"
+  },
+  {
+    "a": "ali",
+    "b": "malcolm-x",
+    "y": 1964,
+    "w": "Brothers in the Nation, estranged the year the minister was killed",
+    "t": "ally"
+  },
+  {
+    "a": "alice-paul",
+    "b": "anthony",
+    "y": 1917,
+    "w": "The amendment s endgame the picketer took up where the parlor left it",
+    "t": "successor"
+  },
+  {
+    "a": "amelia-earhart",
+    "b": "lindbergh",
+    "y": 1932,
+    "w": "The lone eagle and the lady of the same Atlantic crossing",
+    "t": "kindred"
+  },
+  {
     "a": "amundsen",
     "b": "nansen",
     "y": 1910,
@@ -24,10 +70,79 @@
     "w": "Mother and daughter; Anne was gone before the girl was three"
   },
   {
+    "a": "anne-bronte",
+    "b": "charlotte-bronte",
+    "y": 1848,
+    "w": "Agnes Grey and the sisters year of three names",
+    "t": "family"
+  },
+  {
+    "a": "anne-bronte",
+    "b": "emily-bronte",
+    "w": "The two sisters who died a year apart in the parsonage",
+    "t": "family"
+  },
+  {
+    "a": "anne-of-austria",
+    "b": "louis-xiv",
+    "y": 1643,
+    "w": "The regency the queen mother held for the boy king",
+    "t": "family"
+  },
+  {
+    "a": "anne-of-austria",
+    "b": "richelieu",
+    "w": "The regent the cardinal kept watched for her Spain",
+    "t": "opposed"
+  },
+  {
     "a": "anthony",
     "b": "garrison",
     "y": 1856,
     "w": "the anti-slavery circuit that taught her the platform"
+  },
+  {
+    "a": "archimedes",
+    "b": "euclid",
+    "w": "The elements his circles stood on; the method Alexandria kept alive",
+    "t": "influence"
+  },
+  {
+    "a": "aristotle",
+    "b": "ptolemy",
+    "w": "The spheres the Almagest tuned into epicycles",
+    "t": "influence"
+  },
+  {
+    "a": "aristotle",
+    "b": "sophocles",
+    "w": "The Oedipus his Poetics made the perfect tragedy",
+    "t": "influence"
+  },
+  {
+    "a": "arkwright",
+    "b": "watt",
+    "w": "The mills the engine partnership kept in water and steam",
+    "t": "colleague"
+  },
+  {
+    "a": "armstrong",
+    "b": "lindbergh",
+    "y": 1969,
+    "w": "The lone eagle the papers reached for the night the Moon was walked",
+    "t": "influence"
+  },
+  {
+    "a": "auguste-piccard",
+    "b": "amundsen",
+    "w": "The last first places: the pole by dogsled, the stratosphere by balloon",
+    "t": "kindred"
+  },
+  {
+    "a": "auguste-piccard",
+    "b": "jacques-piccard",
+    "w": "The stratosphere balloon the son rode down into the trench",
+    "t": "family"
   },
   {
     "a": "augustus",
@@ -42,10 +157,22 @@
     "w": "the Aeneid he called back from the poet’s fire"
   },
   {
+    "a": "austen",
+    "b": "trollope",
+    "w": "The novelist he read every year and called the truest of them all",
+    "t": "influence"
+  },
+  {
     "a": "babbage",
     "b": "ada",
     "y": 1843,
     "w": "Her Notes on the Engine, longer than the paper they served"
+  },
+  {
+    "a": "babur",
+    "b": "akbar",
+    "w": "The memoir the grandson had translated into Persian",
+    "t": "family"
   },
   {
     "a": "bach",
@@ -58,6 +185,12 @@
     "b": "vivaldi",
     "y": 1713,
     "w": "Copied the concertos out by hand in Weimar"
+  },
+  {
+    "a": "bacon",
+    "b": "descartes",
+    "w": "The induction of the one, the methodical doubt that answered it",
+    "t": "influence"
   },
   {
     "a": "banks",
@@ -88,6 +221,12 @@
     "b": "william-herschel",
     "y": 1781,
     "w": "Welcomed the first report of a new planet as president"
+  },
+  {
+    "a": "barack-obama",
+    "b": "martin-luther-king",
+    "w": "The dream s forty-fifth anniversary the Denver speech landed on",
+    "t": "influence"
   },
   {
     "a": "baudelaire",
@@ -132,10 +271,109 @@
     "w": "A torchbearer at the funeral, buried a grave away the next year"
   },
   {
+    "a": "benedict-arnold",
+    "b": "washington",
+    "y": 1780,
+    "w": "West Point: the command the betrayal was waiting for",
+    "t": "opposed"
+  },
+  {
+    "a": "benz",
+    "b": "daimler",
+    "w": "The two engines that never met in life and share a company in death",
+    "t": "kindred"
+  },
+  {
+    "a": "benz",
+    "b": "henry-ford",
+    "w": "The patent of 1886 and the mass production the American built on it",
+    "t": "kindred"
+  },
+  {
     "a": "berlioz",
     "b": "paganini",
     "y": 1838,
     "w": "Sent twenty thousand francs and hailed him as Beethoven’s heir"
+  },
+  {
+    "a": "bernoulli",
+    "b": "newton",
+    "w": "The Principia s mechanics his flowing tubes weighed",
+    "t": "influence"
+  },
+  {
+    "a": "billy-the-kid",
+    "b": "jesse-james",
+    "w": "The dime novels that grew them both taller than the warrants",
+    "t": "kindred"
+  },
+  {
+    "a": "billy-the-kid",
+    "b": "pat-garrett",
+    "y": 1881,
+    "w": "The war s end he signed with a pistol and a biography",
+    "t": "opposed"
+  },
+  {
+    "a": "blackbeard",
+    "b": "anne-bonny",
+    "w": "The brief pirate republic s most famous names",
+    "t": "kindred"
+  },
+  {
+    "a": "blackbeard",
+    "b": "kidd",
+    "w": "The era s two famous ends: Wapping s gallows and Ocracoke s deck",
+    "t": "kindred"
+  },
+  {
+    "a": "bligh",
+    "b": "cook",
+    "y": 1779,
+    "w": "Sailing master of the Resolution; the chartwork he brought home from Hawaii",
+    "t": "colleague"
+  },
+  {
+    "a": "blucher",
+    "b": "wellington",
+    "y": 1815,
+    "w": "The four o clock columns that decided the ridge",
+    "t": "ally"
+  },
+  {
+    "a": "bogart",
+    "b": "bette-davis",
+    "y": 1936,
+    "w": "The Petrified Forest: the gangster and the waitress of the Warner lot",
+    "t": "colleague"
+  },
+  {
+    "a": "bogart",
+    "b": "cagney",
+    "y": 1938,
+    "w": "Angels with Dirty Faces: the two dead-end kids grown up",
+    "t": "colleague"
+  },
+  {
+    "a": "bogart",
+    "b": "hemingway",
+    "y": 1944,
+    "w": "The Hawks picture that married his Key West story to the screen s tough guy",
+    "t": "participant"
+  },
+  {
+    "a": "bohr",
+    "b": "einstein",
+    "y": 1927,
+    "w": "The decade of dispute over what the quantum leaves real, begun at Solvay",
+    "t": "opposed"
+  },
+  {
+    "a": "borromini",
+    "b": "bernini",
+    "y": 1624,
+    "w": "The assistant who became his rival across the Roman skyline",
+    "t": "rival"
   },
   {
     "a": "botticelli",
@@ -186,6 +424,26 @@
     "w": "Reflections against the Revolution; Rights of Man for it"
   },
   {
+    "a": "bushnell",
+    "b": "washington",
+    "y": 1776,
+    "w": "The first submarine attack the general s harbor launched",
+    "t": "participant"
+  },
+  {
+    "a": "butch-cassidy",
+    "b": "jesse-james",
+    "w": "The ballad line from Missouri s trains to the Hole-in-the-Wall",
+    "t": "kindred"
+  },
+  {
+    "a": "byrd",
+    "b": "amundsen",
+    "y": 1926,
+    "w": "The plane s pole claim three days before the Norge flew over it",
+    "t": "rival"
+  },
+  {
     "a": "byron",
     "b": "goethe",
     "y": 1821,
@@ -208,6 +466,24 @@
     "w": "the founder the Discourses judge the republic by"
   },
   {
+    "a": "calvin",
+    "b": "luther",
+    "w": "The Institutes the exile built on the reformer s papers",
+    "t": "influence"
+  },
+  {
+    "a": "calvin",
+    "b": "zwingli",
+    "w": "The Zurich tradition the Genevan discipline inherited",
+    "t": "successor"
+  },
+  {
+    "a": "caravaggio",
+    "b": "rembrandt",
+    "w": "The chiaroscuro the Dutch master deepened",
+    "t": "influence"
+  },
+  {
     "a": "carlyle",
     "b": "dickens",
     "y": 1859,
@@ -226,10 +502,30 @@
     "w": "Dressed as a page to reach his rooms; Glenarvon made the affair immortal"
   },
   {
+    "a": "cartwright",
+    "b": "arkwright",
+    "w": "The loom the spinners mills lacked, built after the parson s visit",
+    "t": "successor"
+  },
+  {
     "a": "catherine",
     "b": "diderot",
     "y": 1773,
     "w": "Bought his library years before, then hosted the man itself"
+  },
+  {
+    "a": "catherine-de-medici",
+    "b": "mary-queen-of-scots",
+    "y": 1558,
+    "w": "The mother-in-law who kept the little queen s power French",
+    "t": "family"
+  },
+  {
+    "a": "catherine-parr",
+    "b": "henry-viii",
+    "y": 1543,
+    "w": "The widow who buried the king and kept her head",
+    "t": "family"
   },
   {
     "a": "cervantes",
@@ -254,6 +550,19 @@
     "b": "zola",
     "y": 1852,
     "w": "Schoolfriends from Aix; the novel of the failed painter ended it"
+  },
+  {
+    "a": "chanel",
+    "b": "churchill",
+    "w": "The prime minister who stayed a friend through the occupation s whispers",
+    "t": "friend"
+  },
+  {
+    "a": "chanel",
+    "b": "dior",
+    "y": 1947,
+    "w": "The wasp waist the jersey suit s designer called a step backward",
+    "t": "rival"
   },
   {
     "a": "charles-i",
@@ -346,10 +655,44 @@
     "w": "Nine winters at Nohant, from Majorca to the breakup"
   },
   {
+    "a": "churchill",
+    "b": "eisenhower",
+    "y": 1944,
+    "w": "The prime minister and his supreme commander of the same crusade",
+    "t": "colleague"
+  },
+  {
+    "a": "churchill",
+    "b": "franklin-roosevelt",
+    "y": 1941,
+    "w": "The Atlantic meeting that fixed the alliance s aims",
+    "t": "ally"
+  },
+  {
     "a": "clara-schumann",
     "b": "robert-schumann",
     "y": 1840,
     "w": "Married against her father’s long fight"
+  },
+  {
+    "a": "cleopatra",
+    "b": "augustus",
+    "y": 30,
+    "w": "The asp that kept her from his triumph",
+    "t": "opposed"
+  },
+  {
+    "a": "cleopatra",
+    "b": "caesar",
+    "y": 48,
+    "w": "The Alexandrian winter that changed the calendar and the dynasty",
+    "t": "lover"
+  },
+  {
+    "a": "cnut",
+    "b": "alfred",
+    "w": "The Dane who ruled what the Saxon saved: two crowns of one England",
+    "t": "kindred"
   },
   {
     "a": "coleridge",
@@ -376,16 +719,99 @@
     "w": "The mapmakers read the other man’s letters, and the new world got the wrong name"
   },
   {
+    "a": "commodus",
+    "b": "marcus-aurelius",
+    "y": 161,
+    "w": "The son the philosopher left the empire",
+    "t": "family"
+  },
+  {
+    "a": "confucius",
+    "b": "lao-tzu",
+    "w": "The meeting the tradition keeps: the master who asked, the keeper who answered",
+    "t": "kindred"
+  },
+  {
+    "a": "confucius",
+    "b": "mencius",
+    "w": "The second sage who carried the Analects into the courts",
+    "t": "influence"
+  },
+  {
     "a": "constable",
     "b": "turner",
     "y": 1832,
     "w": "Varnishing Day at the Academy: the red buoy against Waterloo Bridge"
   },
   {
+    "a": "constantine",
+    "b": "augustus",
+    "y": 330,
+    "w": "The new Rome on the Bosphorus that carried the old name east",
+    "t": "successor"
+  },
+  {
+    "a": "copernicus",
+    "b": "galileo",
+    "y": 1610,
+    "w": "The forbidden book the telescope turned into a cause",
+    "t": "influence"
+  },
+  {
+    "a": "cortes",
+    "b": "columbus",
+    "w": "The admiral s discovery the conquistador s generation spent",
+    "t": "kindred"
+  },
+  {
+    "a": "cortes",
+    "b": "pizarro",
+    "w": "The second cousins who split the New World s empires between them",
+    "t": "family"
+  },
+  {
+    "a": "cosimo",
+    "b": "donatello",
+    "w": "The bronze David the banker s gold paid for",
+    "t": "patron"
+  },
+  {
+    "a": "cosimo",
+    "b": "lorenzo",
+    "y": 1464,
+    "w": "The bank the grandson s Florence was built on",
+    "t": "family"
+  },
+  {
+    "a": "cousteau",
+    "b": "cook",
+    "w": "The Endeavour s charts and the Calypso s cameras: the oceans the two centuries opened",
+    "t": "kindred"
+  },
+  {
+    "a": "cousteau",
+    "b": "james-cameron",
+    "w": "The Calypso decks the Titanic director grew up watching",
+    "t": "influence"
+  },
+  {
+    "a": "coverdale",
+    "b": "tyndale",
+    "w": "The hidden sheets he finished and printed whole",
+    "t": "successor"
+  },
+  {
     "a": "da-gama",
     "b": "manuel-i",
     "y": 1497,
     "w": "Chosen to open the sea road to India"
+  },
+  {
+    "a": "daguerre",
+    "b": "talbot",
+    "y": 1839,
+    "w": "The announcement war of 1839: silver plates against paper negatives",
+    "t": "rival"
   },
   {
     "a": "dante",
@@ -514,10 +940,42 @@
     "w": "The Garrick Club affair that ended twenty years of friendship"
   },
   {
+    "a": "dickinson",
+    "b": "frost",
+    "w": "The slant of light he learned from her drawer a generation on",
+    "t": "influence"
+  },
+  {
     "a": "diderot",
     "b": "rousseau",
     "y": 1742,
     "w": "Brothers of the Encyclopedie until Rousseau fell out with the world"
+  },
+  {
+    "a": "dior",
+    "b": "yves-saint-laurent",
+    "y": 1957,
+    "w": "The protege who took the house the morning after the heart attack",
+    "t": "successor"
+  },
+  {
+    "a": "donatello",
+    "b": "michelangelo",
+    "w": "The bronze David the marble David answered",
+    "t": "influence"
+  },
+  {
+    "a": "donne",
+    "b": "bacon",
+    "y": 1621,
+    "w": "The preacher and the philosopher, both made by King James s England",
+    "t": "colleague"
+  },
+  {
+    "a": "douglas-adams",
+    "b": "tolkien",
+    "w": "He shrugged at the quest and answered it with a towel",
+    "t": "kindred"
   },
   {
     "a": "douglass",
@@ -532,10 +990,69 @@
     "w": "Sailed as vice admiral aboard the Revenge"
   },
   {
+    "a": "du-bois",
+    "b": "einstein",
+    "y": 1951,
+    "w": "The Princeton friend the McCarthy years could not scare off",
+    "t": "friend"
+  },
+  {
+    "a": "du-bois",
+    "b": "langston-hughes",
+    "y": 1926,
+    "w": "The Crisis printed his poems; the color line kept its sharpness",
+    "t": "editor"
+  },
+  {
     "a": "dvorak",
     "b": "brahms",
     "y": 1877,
     "w": "The prize juror who sent him on to the publisher"
+  },
+  {
+    "a": "edison",
+    "b": "henry-ford",
+    "y": 1891,
+    "w": "The new man at the dynamos who left to build his own cars",
+    "t": "colleague"
+  },
+  {
+    "a": "edison",
+    "b": "leonardo",
+    "w": "Two lives of notebooks: the machines both kept drawing toward the light",
+    "t": "kindred"
+  },
+  {
+    "a": "edward-i",
+    "b": "henry-iii",
+    "w": "The barons wars of the father, the code and castles of the son",
+    "t": "family"
+  },
+  {
+    "a": "edward-i",
+    "b": "richard-lionheart",
+    "w": "The crusading kings of one crown, a century apart on the same road east",
+    "t": "kindred"
+  },
+  {
+    "a": "edward-i",
+    "b": "william-the-conqueror",
+    "w": "The crown the Conquest planted that the lawgiver s line kept",
+    "t": "family"
+  },
+  {
+    "a": "edwin-hubble",
+    "b": "einstein",
+    "y": 1931,
+    "w": "The Pasadena visit: the telescope against the cosmological constant",
+    "t": "colleague"
+  },
+  {
+    "a": "edwin-hubble",
+    "b": "leavitt",
+    "y": 1924,
+    "w": "The period-luminosity law his Andromeda stars ran on",
+    "t": "influence"
   },
   {
     "a": "einstein",
@@ -554,6 +1071,19 @@
     "b": "planck",
     "y": 1913,
     "w": "brought relativity to the Berlin academy"
+  },
+  {
+    "a": "eleanor-roosevelt",
+    "b": "franklin-roosevelt",
+    "y": 1905,
+    "w": "The marriage that became a partnership of separate platforms",
+    "t": "family"
+  },
+  {
+    "a": "eleanor-roosevelt",
+    "b": "keller",
+    "w": "The letters the two reformers traded across the decades",
+    "t": "correspondent"
   },
   {
     "a": "elizabeth-i",
@@ -610,6 +1140,13 @@
     "w": "The pond and the woodlot for the cabin were his mentor’s"
   },
   {
+    "a": "emily-bronte",
+    "b": "charlotte-bronte",
+    "y": 1847,
+    "w": "Wuthering Heights and Jane Eyre in one season of pseudonyms",
+    "t": "family"
+  },
+  {
     "a": "erasmus",
     "b": "cicero",
     "y": 1528,
@@ -652,6 +1189,18 @@
     "w": "Their children married; Charles Darwin was grandson to both"
   },
   {
+    "a": "euclid",
+    "b": "al-khwarizmi",
+    "w": "The Greek geometry the House of Wisdom arithmetic stood on",
+    "t": "influence"
+  },
+  {
+    "a": "euclid",
+    "b": "newton",
+    "w": "The geometry his Principia is written in, lemma upon lemma",
+    "t": "influence"
+  },
+  {
     "a": "faraday",
     "b": "davy",
     "y": 1813,
@@ -662,6 +1211,20 @@
     "b": "maxwell",
     "y": 1857,
     "w": "Letters across the generations: the lines of force became fields"
+  },
+  {
+    "a": "fermi",
+    "b": "bohr",
+    "y": 1934,
+    "w": "The neutron work Copenhagen carried home from Fermi s Rome",
+    "t": "colleague"
+  },
+  {
+    "a": "fessenden",
+    "b": "edison",
+    "y": 1886,
+    "w": "The boy from Bermuda the Machine Works took on",
+    "t": "colleague"
   },
   {
     "a": "flaubert",
@@ -694,6 +1257,13 @@
     "w": "His host at Amboise for the artist’s last three years"
   },
   {
+    "a": "frank-capra",
+    "b": "franklin-roosevelt",
+    "y": 1942,
+    "w": "The seven reels the general s office ordered to explain the war",
+    "t": "participant"
+  },
+  {
     "a": "franklin",
     "b": "adams",
     "y": 1778,
@@ -718,10 +1288,64 @@
     "w": "Admirers in letters while Poland was carved between them"
   },
   {
+    "a": "frederick-cook",
+    "b": "peary",
+    "y": 1909,
+    "w": "The doctor s claim the commander s friends dismantled",
+    "t": "rival"
+  },
+  {
+    "a": "frost",
+    "b": "hardy",
+    "y": 1914,
+    "w": "The Max Gate tea: the Wessex elder and the New England visitor",
+    "t": "friend"
+  },
+  {
+    "a": "fulton",
+    "b": "napoleon",
+    "y": 1801,
+    "w": "The submarine he peddled to the First Consul before the Hudson took him",
+    "t": "participant"
+  },
+  {
+    "a": "galen",
+    "b": "hippocrates",
+    "w": "The oath he swore by and the commentaries he built on it",
+    "t": "influence"
+  },
+  {
+    "a": "galen",
+    "b": "vesalius",
+    "y": 1543,
+    "w": "The fabrica against the old Greek s seventeen centuries of authority",
+    "t": "opposed"
+  },
+  {
     "a": "galileo",
     "b": "kepler",
     "y": 1597,
     "w": "Kepler wrote first; both held the Earth goes round the Sun"
+  },
+  {
+    "a": "gandhi",
+    "b": "churchill",
+    "y": 1930,
+    "w": "The salt march he answered with a sneer about half-naked fakirs",
+    "t": "opposed"
+  },
+  {
+    "a": "gandhi",
+    "b": "mandela",
+    "w": "The way of the prisoner the later one took for his own",
+    "t": "influence"
+  },
+  {
+    "a": "garfield",
+    "b": "twain",
+    "y": 1880,
+    "w": "The novelist who stumped the district for the major general",
+    "t": "ally"
   },
   {
     "a": "gaskell",
@@ -734,6 +1358,24 @@
     "b": "pissarro",
     "y": 1875,
     "w": "The stockbroker’s mentor in his first decade of painting"
+  },
+  {
+    "a": "genghis-khan",
+    "b": "babur",
+    "w": "The steppe blood in the Mughal line, both roads back to the great khan",
+    "t": "family"
+  },
+  {
+    "a": "genghis-khan",
+    "b": "kublai-khan",
+    "w": "The grandson the empire s east grew under",
+    "t": "family"
+  },
+  {
+    "a": "genghis-khan",
+    "b": "ogedei-khan",
+    "w": "The third son who finished the conquests the khan began",
+    "t": "family"
   },
   {
     "a": "george-eliot",
@@ -758,6 +1400,19 @@
     "b": "victoria",
     "y": 1910,
     "w": "the grandson who took the throne she had held sixty-three years"
+  },
+  {
+    "a": "geronimo",
+    "b": "sitting-bull",
+    "w": "The last resisters the century photographed, one and all",
+    "t": "kindred"
+  },
+  {
+    "a": "geronimo",
+    "b": "theodore-roosevelt",
+    "y": 1905,
+    "w": "The inaugural parade the old prisoner of war rode in",
+    "t": "participant"
   },
   {
     "a": "gibbon",
@@ -831,10 +1486,59 @@
     "w": "The Memoirs his publishing firm brought out for the widow"
   },
   {
+    "a": "gutenberg",
+    "b": "caxton",
+    "y": 1476,
+    "w": "The craft Caxton learned at Cologne and brought to Westminster",
+    "t": "successor"
+  },
+  {
+    "a": "gutenberg",
+    "b": "luther",
+    "y": 1517,
+    "w": "The press he called God s gift; the theses it carried",
+    "t": "influence"
+  },
+  {
+    "a": "guy-burgess",
+    "b": "donald-maclean",
+    "y": 1951,
+    "w": "The two who vanished on the same boat train",
+    "t": "colleague"
+  },
+  {
     "a": "guy-fawkes",
     "b": "gunpowder-plot",
     "y": 1605,
     "w": "Caught in the cellar with thirty-six barrels"
+  },
+  {
+    "a": "hale",
+    "b": "edwin-hubble",
+    "y": 1919,
+    "w": "The Mount Wilson he built that put the lawyer of the skies to work",
+    "t": "patron"
+  },
+  {
+    "a": "hamilton",
+    "b": "jefferson",
+    "y": 1791,
+    "w": "The cabinet quarrel over what the republic owed its debts",
+    "t": "rival"
+  },
+  {
+    "a": "hamilton",
+    "b": "madison",
+    "y": 1788,
+    "w": "The Federalist papers written together, the first party split apart",
+    "t": "colleague"
+  },
+  {
+    "a": "hamilton",
+    "b": "washington",
+    "y": 1789,
+    "w": "The aide-de-camp who became his Treasury",
+    "t": "colleague"
   },
   {
     "a": "handel",
@@ -847,6 +1551,38 @@
     "b": "corelli",
     "y": 1707,
     "w": "Played together in Rome that spring"
+  },
+  {
+    "a": "hannibal",
+    "b": "caesar",
+    "w": "The elephant crossing every Roman general since measured against",
+    "t": "influence"
+  },
+  {
+    "a": "harald-bluetooth",
+    "b": "cnut",
+    "w": "The grandfather who made Denmark Christian, the grandson who made it an empire",
+    "t": "family"
+  },
+  {
+    "a": "hardy",
+    "b": "dickens",
+    "w": "The Dorset tales he wrote in the shadow of the serials",
+    "t": "influence"
+  },
+  {
+    "a": "harold-godwinson",
+    "b": "harald-hardrada",
+    "y": 1066,
+    "w": "Stamford Bridge: the thunderbolt before the march south",
+    "t": "opposed"
+  },
+  {
+    "a": "harvey",
+    "b": "charles-i",
+    "y": 1630,
+    "w": "The lectures on blood he read to a king whose crown was slipping",
+    "t": "physician"
   },
   {
     "a": "hawthorne",
@@ -873,6 +1609,33 @@
     "w": "The world-soul on horseback, watched from Jena the day the Prussians broke"
   },
   {
+    "a": "hellman",
+    "b": "hemingway",
+    "y": 1952,
+    "w": "Both called before the committees; she would not name names",
+    "t": "ally"
+  },
+  {
+    "a": "hemingway",
+    "b": "orwell",
+    "y": 1945,
+    "w": "The Ritz meeting: one war-worn Englishman asking the other for a pistol",
+    "t": "colleague"
+  },
+  {
+    "a": "hemingway",
+    "b": "twain",
+    "w": "All American literature, he said, comes from one book by the man on the Mississippi",
+    "t": "influence"
+  },
+  {
+    "a": "henry-vii",
+    "b": "henry-viii",
+    "y": 1509,
+    "w": "The miser s gold the second Henry spent on wars and wives",
+    "t": "family"
+  },
+  {
     "a": "henry-viii",
     "b": "anne-boleyn",
     "y": 1533,
@@ -897,6 +1660,38 @@
     "w": "His fixer from the break with Rome onward"
   },
   {
+    "a": "hillary",
+    "b": "amundsen",
+    "w": "The poles by dogsled, the peak by the south col: firsts the century apart",
+    "t": "kindred"
+  },
+  {
+    "a": "hillary",
+    "b": "messner",
+    "y": 1978,
+    "w": "The oxygen the purist climbed without; the last first ways between them",
+    "t": "successor"
+  },
+  {
+    "a": "hillary",
+    "b": "tenzing",
+    "y": 1953,
+    "w": "The New Zealander and the Sherpa on the same rope to the summit",
+    "t": "partnered"
+  },
+  {
+    "a": "hilleman",
+    "b": "koch",
+    "w": "The century of vaccines grown on the plate the bacteriologist solidified",
+    "t": "influence"
+  },
+  {
+    "a": "hitchcock",
+    "b": "orson-welles",
+    "w": "Two masters of the same decade s nerves: the cut and the take",
+    "t": "kindred"
+  },
+  {
     "a": "hobbes",
     "b": "charles-ii",
     "y": 1646,
@@ -913,6 +1708,12 @@
     "b": "thomas-cromwell",
     "y": 1533,
     "w": "The portrait of the fixer himself, blue chaperon and all"
+  },
+  {
+    "a": "holland",
+    "b": "bushnell",
+    "w": "From the Turtle s one-man air to the gasoline dives of the Holland",
+    "t": "successor"
   },
   {
     "a": "hugo",
@@ -969,6 +1770,42 @@
     "w": "The young diplomat sat at his feet in Paris"
   },
   {
+    "a": "ibn-battuta",
+    "b": "marco-polo",
+    "w": "The two travel books the century keeps side by side",
+    "t": "kindred"
+  },
+  {
+    "a": "ibn-battuta",
+    "b": "xuanzang",
+    "w": "The monk and the qadi: the two great travelers of the middle empires",
+    "t": "kindred"
+  },
+  {
+    "a": "ibn-rushd",
+    "b": "aristotle",
+    "w": "The commentary that made the Philosopher the schools authority",
+    "t": "translator"
+  },
+  {
+    "a": "ibn-rushd",
+    "b": "ibn-sina",
+    "w": "The Commentator against the Physician on what Aristotle meant",
+    "t": "opposed"
+  },
+  {
+    "a": "ibn-sina",
+    "b": "al-razi",
+    "w": "The Continens the Canon displaced in the schools",
+    "t": "successor"
+  },
+  {
+    "a": "ibn-sina",
+    "b": "omar-khayyam",
+    "w": "The Healing the younger Persian weighed in verse and in proof",
+    "t": "influence"
+  },
+  {
     "a": "isabella",
     "b": "philip-ii",
     "w": "the great-grandson who ruled the Spain she joined with Ferdinand",
@@ -1011,6 +1848,13 @@
     "w": "Deposed by his own daughter and her Dutch husband"
   },
   {
+    "a": "jane-seymour",
+    "b": "henry-viii",
+    "y": 1537,
+    "w": "The queen who gave the prince and died of it",
+    "t": "family"
+  },
+  {
     "a": "jefferson",
     "b": "adams",
     "y": 1826,
@@ -1029,10 +1873,74 @@
     "w": "Three cents an acre; Napoleon wanted the cash"
   },
   {
+    "a": "jefferson-davis",
+    "b": "lincoln",
+    "y": 1861,
+    "w": "Both born in Kentucky log cabins, both presidents of one country s civil war",
+    "t": "rival"
+  },
+  {
+    "a": "jenner",
+    "b": "pasteur",
+    "y": 1880,
+    "w": "The empiric vaccine his germs finally explained",
+    "t": "influence"
+  },
+  {
+    "a": "jerry-yang",
+    "b": "marc-andreessen",
+    "w": "The browser and the directory: the web s first front doors",
+    "t": "kindred"
+  },
+  {
+    "a": "jesse-james",
+    "b": "wild-bill-hickok",
+    "w": "The two legends the frontier s ballads printed a decade apart",
+    "t": "kindred"
+  },
+  {
+    "a": "jesse-owens",
+    "b": "ali",
+    "w": "The century s fastest Americans the podiums made legends",
+    "t": "kindred"
+  },
+  {
+    "a": "jesse-owens",
+    "b": "usain-bolt",
+    "w": "The lanes two eras ran: the seconds the century lowered",
+    "t": "kindred"
+  },
+  {
+    "a": "jimmy-carter",
+    "b": "gorbachev",
+    "w": "The retired president and the retired general secretary, meeting on elections and peace",
+    "t": "friend"
+  },
+  {
     "a": "jj-thomson",
     "b": "maxwell",
     "y": 1897,
     "w": "found the electron in the Cavendish Maxwell built"
+  },
+  {
+    "a": "jobs",
+    "b": "edison",
+    "w": "The inventor-founder mold, cast in Menlo Park, recast in the Cupertino garage",
+    "t": "kindred"
+  },
+  {
+    "a": "jobs",
+    "b": "larry-page",
+    "y": 2011,
+    "w": "The dying founder s advice to the young one: remember the focus",
+    "t": "influence"
+  },
+  {
+    "a": "john-brown",
+    "b": "victoria",
+    "y": 1861,
+    "w": "The gillie the queen leaned on after the consort died",
+    "t": "friend"
   },
   {
     "a": "john-franklin",
@@ -1047,6 +1955,13 @@
     "w": "the midshipman at Trafalgar who ended in the ice"
   },
   {
+    "a": "john-harrison",
+    "b": "cook",
+    "y": 1776,
+    "w": "The third voyage navigated by his watch",
+    "t": "participant"
+  },
+  {
     "a": "john-herschel",
     "b": "babbage",
     "y": 1812,
@@ -1057,6 +1972,40 @@
     "b": "lyell",
     "y": 1836,
     "w": "Causes now in operation: the test the Principles answered"
+  },
+  {
+    "a": "john-kennedy",
+    "b": "franklin-roosevelt",
+    "y": 1960,
+    "w": "The New Deal s heir at the podium, the torch passed in 1960",
+    "t": "influence"
+  },
+  {
+    "a": "john-lennon",
+    "b": "ali",
+    "y": 1964,
+    "w": "The Miami gym where the century s loud young poets met",
+    "t": "participant"
+  },
+  {
+    "a": "john-quincy-adams",
+    "b": "adams",
+    "y": 1825,
+    "w": "The son the president s letters raised, the sixth who followed the first",
+    "t": "family"
+  },
+  {
+    "a": "john-snow",
+    "b": "koch",
+    "w": "The pump he pulled thirty years before the plate proved him right",
+    "t": "influence"
+  },
+  {
+    "a": "john-snow",
+    "b": "victoria",
+    "y": 1853,
+    "w": "The chloroform he gave the queen in childbirth",
+    "t": "physician"
   },
   {
     "a": "johnson",
@@ -1107,10 +2056,94 @@
     "w": "Signed him to the Stanze while the ceiling went up down the hall"
   },
   {
+    "a": "justinian",
+    "b": "constantine",
+    "w": "The city s two makers: the cross s standard and the code",
+    "t": "successor"
+  },
+  {
+    "a": "justinian",
+    "b": "heraclius",
+    "w": "The frontiers the later emperor won back from Persia",
+    "t": "successor"
+  },
+  {
+    "a": "keats",
+    "b": "byron",
+    "y": 1821,
+    "w": "Snuffed out by an article, the lord said; the season took them both",
+    "t": "rival"
+  },
+  {
+    "a": "keller",
+    "b": "twain",
+    "w": "The letter the old lion wrote the world about the wonder of her",
+    "t": "friend"
+  },
+  {
     "a": "kepler",
     "b": "tycho",
     "y": 1600,
     "w": "His assistant in Prague; inherited the Mars observations"
+  },
+  {
+    "a": "khrushchev",
+    "b": "brezhnev",
+    "y": 1964,
+    "w": "The Presidium vote that sent the corn king into pension",
+    "t": "successor"
+  },
+  {
+    "a": "khrushchev",
+    "b": "eisenhower",
+    "y": 1960,
+    "w": "The Camp David smile the U-2 undid",
+    "t": "rival"
+  },
+  {
+    "a": "khrushchev",
+    "b": "gorbachev",
+    "y": 1985,
+    "w": "The secret speech the Stavropol farm boy grew up on",
+    "t": "influence"
+  },
+  {
+    "a": "khufu",
+    "b": "sneferu",
+    "w": "His father s bent pyramid taught the angle his own would carry",
+    "t": "family"
+  },
+  {
+    "a": "kidd",
+    "b": "drake",
+    "w": "The privateer s bargain both made with the crown; the rope that paid only one",
+    "t": "kindred"
+  },
+  {
+    "a": "kim-philby",
+    "b": "guy-burgess",
+    "w": "The clubland friends who ended up neighbors in Moscow",
+    "t": "colleague"
+  },
+  {
+    "a": "kim-philby",
+    "b": "turing",
+    "w": "Cambridge kept two secrets that war, one sold and one kept",
+    "t": "kindred"
+  },
+  {
+    "a": "koch",
+    "b": "pasteur",
+    "y": 1885,
+    "w": "The anthrax rivalry that named the germ and made the science personal",
+    "t": "rival"
+  },
+  {
+    "a": "kublai-khan",
+    "b": "marco-polo",
+    "y": 1275,
+    "w": "The seventeen years the Venetian served at the Khan s court",
+    "t": "patron"
   },
   {
     "a": "lafayette",
@@ -1123,6 +2156,20 @@
     "b": "french-revolution",
     "y": 1794,
     "w": "Guillotined in the Terror; the tax farm was the charge"
+  },
+  {
+    "a": "lee",
+    "b": "grant",
+    "y": 1865,
+    "w": "The paroles he signed at Appomattox",
+    "t": "opposed"
+  },
+  {
+    "a": "lee",
+    "b": "jefferson-davis",
+    "y": 1861,
+    "w": "The general the Confederate president offered the command to",
+    "t": "colleague"
   },
   {
     "a": "leeuwenhoek",
@@ -1153,6 +2200,13 @@
     "b": "grant",
     "y": 1864,
     "w": "Raised him over every army; the hammering began that spring"
+  },
+  {
+    "a": "lindbergh",
+    "b": "byrd",
+    "y": 1927,
+    "w": "The rival flights the decade printed on one front page",
+    "t": "rival"
   },
   {
     "a": "liszt",
@@ -1191,6 +2245,27 @@
     "w": "His favourite painter at the Florentine court"
   },
   {
+    "a": "louis-armstrong",
+    "b": "duke-ellington",
+    "y": 1961,
+    "w": "The first record the two giants finally made together",
+    "t": "colleague"
+  },
+  {
+    "a": "louis-armstrong",
+    "b": "eisenhower",
+    "y": 1957,
+    "w": "The Little Rock telegram the trumpet sent the president",
+    "t": "opposed"
+  },
+  {
+    "a": "louis-armstrong",
+    "b": "ella-fitzgerald",
+    "y": 1956,
+    "w": "Ella and Louis: the Gershwin the two of them split",
+    "t": "colleague"
+  },
+  {
     "a": "louis-xiv",
     "b": "bernini",
     "y": 1665,
@@ -1201,6 +2276,20 @@
     "b": "moliere",
     "y": 1664,
     "w": "Patron of his troupe; the king danced in the early bills"
+  },
+  {
+    "a": "louis-xv",
+    "b": "louis-xiv",
+    "y": 1715,
+    "w": "The great-grandfather s wars and the great-grandson s debts",
+    "t": "family"
+  },
+  {
+    "a": "louis-xv",
+    "b": "pompadour",
+    "y": 1745,
+    "w": "The marchioness the king made the century s taste-maker",
+    "t": "lover"
   },
   {
     "a": "louis-xvi",
@@ -1245,10 +2334,30 @@
     "w": "Both had a hand in the scheme to bend the Arno around Pisa"
   },
   {
+    "a": "madison",
+    "b": "jefferson",
+    "y": 1784,
+    "w": "Eight years of letters between the Virginians shaping the republic",
+    "t": "correspondent"
+  },
+  {
     "a": "magellan",
     "b": "manuel-i",
     "y": 1517,
     "w": "Refused by the Portuguese king, he took his plan to Spain"
+  },
+  {
+    "a": "malcolm-x",
+    "b": "martin-luther-king",
+    "y": 1964,
+    "w": "Their single handshake in a Capitol corridor, photographed",
+    "t": "rival"
+  },
+  {
+    "a": "mandela",
+    "b": "martin-luther-king",
+    "w": "The mountain s path one read about in a prison of his own",
+    "t": "influence"
   },
   {
     "a": "manet",
@@ -1263,10 +2372,28 @@
     "w": "Friends whose names have been swapped ever since"
   },
   {
+    "a": "mansa-musa",
+    "b": "askia",
+    "w": "The golden hajj the Songhai emperor measured his own pilgrimage against",
+    "t": "kindred"
+  },
+  {
+    "a": "mansa-musa",
+    "b": "ibn-battuta",
+    "w": "The golden pilgrimage the traveler s Niger road still measured Mali by",
+    "t": "kindred"
+  },
+  {
     "a": "marat",
     "b": "french-revolution",
     "y": 1793,
     "w": "Its most radical journalist, assassinated in his bath"
+  },
+  {
+    "a": "marc-andreessen",
+    "b": "larry-page",
+    "w": "The front doors of the web s first decade: the browser and the search box",
+    "t": "kindred"
   },
   {
     "a": "marco-polo",
@@ -1275,10 +2402,43 @@
     "w": "The Travels in the Admiral’s margin: the Khan’s Cathay still the goal"
   },
   {
+    "a": "marconi",
+    "b": "de-forest",
+    "w": "The audion the flat spark sets needed and the patent wars that followed",
+    "t": "rival"
+  },
+  {
+    "a": "marconi",
+    "b": "fessenden",
+    "y": 1906,
+    "w": "The spark telegraph the Christmas Eve voice made overnight old",
+    "t": "rival"
+  },
+  {
     "a": "marie-antoinette",
     "b": "french-revolution",
     "y": 1793,
     "w": "Its bête noire; executed after a show trial"
+  },
+  {
+    "a": "martin-luther-king",
+    "b": "rosa-parks",
+    "y": 1955,
+    "w": "The young minister the arrest handed a movement to",
+    "t": "participant"
+  },
+  {
+    "a": "marx",
+    "b": "darwin",
+    "y": 1873,
+    "w": "The inscribed copy of Capital that the author never opened",
+    "t": "correspondent"
+  },
+  {
+    "a": "marx",
+    "b": "hegel",
+    "w": "The dialectic he stood on its head and set marching",
+    "t": "influence"
   },
   {
     "a": "mary-queen-of-scots",
@@ -1293,10 +2453,23 @@
     "w": "Eloped to France as teenagers, journals in hand"
   },
   {
+    "a": "mata-hari",
+    "b": "virginia-hall",
+    "w": "The Great War s dancer and the next war s limping lady",
+    "t": "kindred"
+  },
+  {
     "a": "maxwell",
     "b": "kelvin",
     "y": 1855,
     "w": "Corresponded from the Saturn papers onward"
+  },
+  {
+    "a": "mckinley",
+    "b": "theodore-roosevelt",
+    "y": 1901,
+    "w": "The war-hero vice president who became president by an assassin s shot",
+    "t": "successor"
   },
   {
     "a": "mehmed-ii",
@@ -1317,6 +2490,27 @@
     "w": "the great-grandfather whose conquest he inherited"
   },
   {
+    "a": "meiji",
+    "b": "grant",
+    "y": 1879,
+    "w": "The world tour s dinner: the ex-president advising the young emperor",
+    "t": "friend"
+  },
+  {
+    "a": "meiji",
+    "b": "ito-hirobumi",
+    "y": 1889,
+    "w": "The Choshu samurai who drafted his constitution",
+    "t": "colleague"
+  },
+  {
+    "a": "meiji",
+    "b": "saigo-takamori",
+    "y": 1877,
+    "w": "The last samurai his own restoration left behind",
+    "t": "opposed"
+  },
+  {
     "a": "melbourne",
     "b": "caroline-lamb",
     "y": 1805,
@@ -1333,6 +2527,19 @@
     "b": "victoria",
     "y": 1842,
     "w": "Played for the Queen; she sang the Lieder at his accompaniment"
+  },
+  {
+    "a": "mercator",
+    "b": "al-idrisi",
+    "w": "The Tabula and the projection: the two maps that redrew the world a world apart",
+    "t": "kindred"
+  },
+  {
+    "a": "mercator",
+    "b": "charles-v",
+    "y": 1541,
+    "w": "The globes the emperor s court ordered from the Louvain workshop",
+    "t": "patron"
   },
   {
     "a": "metternich",
@@ -1413,6 +2620,12 @@
     "w": "Florio’s essays echo in The Tempest"
   },
   {
+    "a": "nader-shah",
+    "b": "babur",
+    "w": "The Turkic conquerors road both took through Kandahar",
+    "t": "kindred"
+  },
+  {
     "a": "nansen",
     "b": "scott",
     "y": 1899,
@@ -1467,10 +2680,31 @@
     "w": "Sent him to save French wine from souring"
   },
   {
+    "a": "necker",
+    "b": "marie-antoinette",
+    "y": 1789,
+    "w": "The dismissal the crowds answered a week later with a prison",
+    "t": "participant"
+  },
+  {
     "a": "nelson",
     "b": "trafalgar",
     "y": 1805,
     "w": "Victory and death in the same broadside"
+  },
+  {
+    "a": "nero",
+    "b": "augustus",
+    "y": 64,
+    "w": "The last of the Julian line, the dynasty s fire",
+    "t": "family"
+  },
+  {
+    "a": "nero",
+    "b": "boudicca",
+    "y": 61,
+    "w": "The burned cities of the province his tax collectors found",
+    "t": "opposed"
   },
   {
     "a": "newton",
@@ -1516,16 +2750,88 @@
     "w": "Friends from the exile years; Newton trusted him with his doubts"
   },
   {
+    "a": "ney",
+    "b": "napoleon",
+    "y": 1815,
+    "w": "The marshal who promised an iron cage and brought him an army",
+    "t": "ally"
+  },
+  {
+    "a": "niepce",
+    "b": "daguerre",
+    "y": 1829,
+    "w": "The partnership that outlived him and bore the survivor s name",
+    "t": "colleague"
+  },
+  {
     "a": "nietzsche",
     "b": "wagner",
     "y": 1872,
     "w": "The Birth of Tragedy dedicated to the master at Tribschen; Bayreuth ended it"
   },
   {
+    "a": "nightingale",
+    "b": "clara-barton",
+    "w": "The letters across the Atlantic that carried the nursing idea to the war between the states",
+    "t": "correspondent"
+  },
+  {
+    "a": "nightingale",
+    "b": "elizabeth-blackwell",
+    "w": "The lamp of Scutari and the register s first woman, friends of the same reform",
+    "t": "friend"
+  },
+  {
+    "a": "nightingale",
+    "b": "victoria",
+    "y": 1856,
+    "w": "The letters to Balmoral that built the Sanitary Commission",
+    "t": "correspondent"
+  },
+  {
+    "a": "noah-webster",
+    "b": "adams",
+    "w": "The letters on a national tongue: the academy the president wanted, the book the schoolmaster wrote",
+    "t": "correspondent"
+  },
+  {
+    "a": "noah-webster",
+    "b": "james-murray",
+    "w": "The lexicon s two shores: the American spellings and the Oxford quotations",
+    "t": "kindred"
+  },
+  {
     "a": "oliver-cromwell",
     "b": "charles-ii",
     "y": 1651,
     "w": "Smashed the young king’s army at Worcester"
+  },
+  {
+    "a": "omar-khayyam",
+    "b": "al-khwarizmi",
+    "w": "The cubic roots he found in the older algebra",
+    "t": "successor"
+  },
+  {
+    "a": "oppenheimer",
+    "b": "einstein",
+    "y": 1947,
+    "w": "The institute the refugee and the ex-director shared on Olden Lane",
+    "t": "colleague"
+  },
+  {
+    "a": "oppenheimer",
+    "b": "fermi",
+    "y": 1942,
+    "w": "Fellow builders of the atomic project s first year",
+    "t": "colleague"
+  },
+  {
+    "a": "orson-welles",
+    "b": "shakespeare",
+    "y": 1948,
+    "w": "The Falstaff of his Chimes; the stage s giant he carried to the screen",
+    "t": "influence"
   },
   {
     "a": "ovid",
@@ -1540,10 +2846,45 @@
     "w": "Franklin’s note carried him to Philadelphia"
   },
   {
+    "a": "pankhurst",
+    "b": "churchill",
+    "y": 1909,
+    "w": "The cabinet minister the window-smashers made a target of",
+    "t": "opposed"
+  },
+  {
+    "a": "pankhurst",
+    "b": "emily-davison",
+    "y": 1913,
+    "w": "The deed at the Derby the movement mourned",
+    "t": "member"
+  },
+  {
+    "a": "pankhurst",
+    "b": "millicent-fawcett",
+    "y": 1903,
+    "w": "The militancy that split the sisters movement in its last years",
+    "t": "rival"
+  },
+  {
     "a": "pasteur",
     "b": "lister",
     "y": 1867,
     "w": "Lister credited the germ theory in his antiseptic papers"
+  },
+  {
+    "a": "patrick-henry",
+    "b": "jefferson",
+    "y": 1765,
+    "w": "The Williamsburg lawyer whose liberty speech the young student never forgot",
+    "t": "rival"
+  },
+  {
+    "a": "peary",
+    "b": "amundsen",
+    "y": 1909,
+    "w": "The pole he claimed the year the other man went south instead",
+    "t": "rival"
   },
   {
     "a": "pepys",
@@ -1556,6 +2897,19 @@
     "b": "newton",
     "y": 1693,
     "w": "The diarist asked him about dice; the letters became a classic problem"
+  },
+  {
+    "a": "peter-cooper",
+    "b": "lincoln",
+    "y": 1860,
+    "w": "The institute s hall where the western lawyer made himself president",
+    "t": "patron"
+  },
+  {
+    "a": "peter-henlein",
+    "b": "john-harrison",
+    "w": "From the Nuremberg egg to the sea watch, two centuries of springs",
+    "t": "kindred"
   },
   {
     "a": "philip-ii",
@@ -1586,6 +2940,18 @@
     "b": "cezanne",
     "y": 1872,
     "w": "Side by side at Pontoise; the mentor’s patience against the doubt"
+  },
+  {
+    "a": "pizarro",
+    "b": "de-soto",
+    "w": "The lieutenant at Cajamarca who went looking for his own gold road",
+    "t": "colleague"
+  },
+  {
+    "a": "plato",
+    "b": "aristotle",
+    "w": "Twenty years in the Academy s garden, the teacher s greatest student",
+    "t": "teacher"
   },
   {
     "a": "plutarch",
@@ -1630,6 +2996,26 @@
     "w": "Told him over dinner of the new gas; oxygen followed"
   },
   {
+    "a": "prince-albert",
+    "b": "victoria",
+    "y": 1851,
+    "w": "The Crystal Palace the prince consort built to show the world British",
+    "t": "family"
+  },
+  {
+    "a": "ptolemy",
+    "b": "copernicus",
+    "y": 1543,
+    "w": "The Almagest the revolving canon overthrew",
+    "t": "influence"
+  },
+  {
+    "a": "purcell",
+    "b": "handel",
+    "w": "The island s tune the continental master kept in his suites",
+    "t": "influence"
+  },
+  {
     "a": "pushkin",
     "b": "byron",
     "y": 1824,
@@ -1654,16 +3040,94 @@
     "w": "Thirteen years in the Tower, then the block"
   },
   {
+    "a": "ramses-ii",
+    "b": "khufu",
+    "w": "The pyramid and Kadesh: the two pharaohs every schoolchild can name",
+    "t": "kindred"
+  },
+  {
+    "a": "ramses-ii",
+    "b": "tutankhamun",
+    "w": "The erased boy and the builder whose name every temple carved",
+    "t": "kindred"
+  },
+  {
+    "a": "reagan",
+    "b": "gorbachev",
+    "y": 1985,
+    "w": "Geneva to Reykjavik: the two who talked the cold war shut",
+    "t": "rival"
+  },
+  {
+    "a": "rejewski",
+    "b": "elizebeth-friedman",
+    "w": "The two independent Enigma attacks: the cyclometer and the crib rooms",
+    "t": "kindred"
+  },
+  {
     "a": "rembrandt",
     "b": "constantijn",
     "y": 1629,
     "w": "Championed the young Rembrandt and his rival Lievens"
   },
   {
+    "a": "richard-iii",
+    "b": "edward-iv",
+    "w": "The protector of his brother s sons who took their crown",
+    "t": "family"
+  },
+  {
+    "a": "richard-iii",
+    "b": "henry-vii",
+    "y": 1485,
+    "w": "The crown found under the hawthorn after Bosworth s charge",
+    "t": "opposed"
+  },
+  {
+    "a": "richard-iii",
+    "b": "henry-viii",
+    "w": "The uncle whose memory the Tudor line blackened for good",
+    "t": "family"
+  },
+  {
+    "a": "richard-lionheart",
+    "b": "saladin",
+    "y": 1191,
+    "w": "The war for Jerusalem that ended in a treaty neither called defeat",
+    "t": "rival"
+  },
+  {
+    "a": "richelieu",
+    "b": "mazarin",
+    "y": 1642,
+    "w": "The Italian who inherited the cardinal s France",
+    "t": "successor"
+  },
+  {
+    "a": "robert-ballard",
+    "b": "james-cameron",
+    "w": "The wreck the finder mapped and the filmmaker lit",
+    "t": "colleague"
+  },
+  {
     "a": "robert-schumann",
     "b": "brahms",
     "y": 1853,
     "w": "His article announced the twenty-year-old as the destined one"
+  },
+  {
+    "a": "robespierre",
+    "b": "danton",
+    "y": 1794,
+    "w": "The Terror that ate them both, Danton first",
+    "t": "rival"
+  },
+  {
+    "a": "robespierre",
+    "b": "marat",
+    "y": 1793,
+    "w": "The Jacobin benches they shared until the knife found the tub",
+    "t": "ally"
   },
   {
     "a": "rossini",
@@ -1702,6 +3166,13 @@
     "w": "Met in Madrid; Rubens urged the younger man toward Italy"
   },
   {
+    "a": "rudolf-hess",
+    "b": "churchill",
+    "y": 1941,
+    "w": "The parachute peace mission that landed in a Scottish field",
+    "t": "opposed"
+  },
+  {
     "a": "ruskin",
     "b": "millais",
     "y": 1853,
@@ -1714,6 +3185,13 @@
     "w": "The pot of paint in the public’s face; the farthing verdict"
   },
   {
+    "a": "russell",
+    "b": "einstein",
+    "y": 1955,
+    "w": "The manifesto they signed together in the last summer",
+    "t": "ally"
+  },
+  {
     "a": "rutherford",
     "b": "jj-thomson",
     "y": 1895,
@@ -1724,6 +3202,26 @@
     "b": "kelvin",
     "y": 1904,
     "w": "undid the age of the Earth in the lecture the old man attended"
+  },
+  {
+    "a": "rutherford-hayes",
+    "b": "grant",
+    "y": 1876,
+    "w": "The Ohio general who followed the general into the White House",
+    "t": "successor"
+  },
+  {
+    "a": "saladin",
+    "b": "godfrey-of-bouillon",
+    "w": "The first defender of the kingdom the sultan came to end",
+    "t": "kindred"
+  },
+  {
+    "a": "salk",
+    "b": "pasteur",
+    "y": 1955,
+    "w": "The killed vaccine the French tradition s heirs carried to the schoolchildren",
+    "t": "influence"
   },
   {
     "a": "sand",
@@ -1798,6 +3296,13 @@
     "w": "marched south together from the Discovery"
   },
   {
+    "a": "shah-jahan",
+    "b": "aurangzeb",
+    "y": 1658,
+    "w": "The son who deposed him and locked him in the Agra fort",
+    "t": "family"
+  },
+  {
     "a": "shakespeare",
     "b": "james-i",
     "y": 1603,
@@ -1810,10 +3315,36 @@
     "w": "Rival playwrights of the same London"
   },
   {
+    "a": "shaw",
+    "b": "wilde",
+    "y": 1893,
+    "w": "The wit and the paradox trading barbs across the London stage",
+    "t": "rival"
+  },
+  {
     "a": "shelley",
     "b": "byron",
     "y": 1816,
     "w": "The Geneva summer of ghost stories; Frankenstein came out of it"
+  },
+  {
+    "a": "sitting-bull",
+    "b": "crazy-horse",
+    "y": 1876,
+    "w": "The sun dance visions and the war shirts that broke Custer",
+    "t": "ally"
+  },
+  {
+    "a": "sneferu",
+    "b": "djoser",
+    "w": "The step pyramid his smooth ones answered",
+    "t": "successor"
+  },
+  {
+    "a": "socrates",
+    "b": "plato",
+    "w": "The teacher who never wrote a line, the student who never stopped",
+    "t": "teacher"
   },
   {
     "a": "solander",
@@ -1844,6 +3375,25 @@
     "b": "rutherford",
     "y": 1911,
     "w": "the nucleus he had just found, on the table"
+  },
+  {
+    "a": "sonni-ali",
+    "b": "askia",
+    "y": 1493,
+    "w": "The rebel captain who ended the Sonni line at Anfao",
+    "t": "successor"
+  },
+  {
+    "a": "sophocles",
+    "b": "aeschylus",
+    "w": "The first Dionysia the newcomer took from the old master",
+    "t": "rival"
+  },
+  {
+    "a": "sophocles",
+    "b": "euripides",
+    "w": "The public mourning he led when the younger poet died",
+    "t": "friend"
   },
   {
     "a": "spencer",
@@ -1900,10 +3450,29 @@
     "w": "the high-pressure engines that left Watt’s low-pressure behind"
   },
   {
+    "a": "steuben",
+    "b": "washington",
+    "y": 1778,
+    "w": "The baron who turned farmers into a line at Valley Forge",
+    "t": "colleague"
+  },
+  {
     "a": "suleiman",
     "b": "francis-i",
     "y": 1536,
     "w": "The alliance of the lilies and the crescent scandalised Europe"
+  },
+  {
+    "a": "sun-tzu",
+    "b": "lao-tzu",
+    "w": "The way and the art: two counsel books of the same warring age",
+    "t": "kindred"
+  },
+  {
+    "a": "sun-tzu",
+    "b": "machiavelli",
+    "w": "The counsel of state both books keep: the prince and the art",
+    "t": "kindred"
   },
   {
     "a": "swift",
@@ -1918,10 +3487,23 @@
     "w": "His secretary at Moor Park, reading between duties"
   },
   {
+    "a": "talbot",
+    "b": "john-herschel",
+    "y": 1839,
+    "w": "The friend who named the art and fixed the picture in hypo",
+    "t": "friend"
+  },
+  {
     "a": "talleyrand",
     "b": "congress-of-vienna",
     "y": 1815,
     "w": "The old bishop out-negotiated the victors"
+  },
+  {
+    "a": "tasman",
+    "b": "cook",
+    "w": "The coasts the Dutchman saw first that the Endeavour mapped for keeps",
+    "t": "successor"
   },
   {
     "a": "temple",
@@ -1930,10 +3512,56 @@
     "w": "Negotiated the marriage that put William in line for England"
   },
   {
+    "a": "thabit-ibn-qurra",
+    "b": "archimedes",
+    "w": "The Lemmas he carried from Syriac that kept the machines moving",
+    "t": "translator"
+  },
+  {
     "a": "thackeray",
     "b": "charlotte-bronte",
     "y": 1848,
     "w": "Jane Eyre’s second edition dedicated to the man she had admired from afar"
+  },
+  {
+    "a": "theodore-parker",
+    "b": "martin-luther-king",
+    "w": "The arc of the universe, first bent in a Boston sermon",
+    "t": "influence"
+  },
+  {
+    "a": "theodore-parker",
+    "b": "thoreau",
+    "y": 1845,
+    "w": "The radical pulpit the Concord woodsman sat under",
+    "t": "colleague"
+  },
+  {
+    "a": "theodore-roosevelt",
+    "b": "benjamin-harrison",
+    "y": 1889,
+    "w": "The civil service the young reformer badgered from inside his cabinet",
+    "t": "colleague"
+  },
+  {
+    "a": "theodore-roosevelt",
+    "b": "lincoln",
+    "w": "The portrait he kept on his desk and the martyr s course he set himself",
+    "t": "influence"
+  },
+  {
+    "a": "theodore-roosevelt",
+    "b": "twain",
+    "y": 1905,
+    "w": "The White House dinner the humorist came to; the tales both of them left",
+    "t": "friend"
+  },
+  {
+    "a": "theodore-roosevelt",
+    "b": "woodrow-wilson",
+    "y": 1912,
+    "w": "The Bull Moose split that handed the other professor the White House",
+    "t": "rival"
   },
   {
     "a": "thomas-cromwell",
@@ -1966,6 +3594,32 @@
     "w": "Planted the garden at the Manse before the tenant wrote a word"
   },
   {
+    "a": "thucydides",
+    "b": "hobbes",
+    "y": 1629,
+    "w": "The war of the Greeks he turned into the first English Thucydides",
+    "t": "translator"
+  },
+  {
+    "a": "tolkien",
+    "b": "james-murray",
+    "y": 1919,
+    "w": "The young philologist who drafted the W s in the Scriptorium",
+    "t": "editor"
+  },
+  {
+    "a": "trajan",
+    "b": "marcus-aurelius",
+    "w": "The adoptive chain from the Spaniard to the philosopher on the throne",
+    "t": "successor"
+  },
+  {
+    "a": "trollope",
+    "b": "hardy",
+    "w": "The Barsetshire the Wessex novelist counted a friend s country",
+    "t": "friend"
+  },
+  {
     "a": "turgenev",
     "b": "dostoevsky",
     "y": 1866,
@@ -1978,10 +3632,29 @@
     "w": "Friends whose quarrel that summer almost went to pistols"
   },
   {
+    "a": "turing",
+    "b": "babbage",
+    "w": "The general purpose machine the one imagined and the other proved",
+    "t": "influence"
+  },
+  {
+    "a": "turing",
+    "b": "rejewski",
+    "y": 1939,
+    "w": "The Polish gift the hut s machines grew from",
+    "t": "influence"
+  },
+  {
     "a": "turner",
     "b": "ruskin",
     "y": 1843,
     "w": "Modern Painters set out to defend his truth to nature"
+  },
+  {
+    "a": "tutankhamun",
+    "b": "cleopatra",
+    "w": "The valley dynasties from the hidden tomb to the last queen",
+    "t": "kindred"
   },
   {
     "a": "tycho",
@@ -1996,6 +3669,12 @@
     "w": "The pamphlet war over the English Testament; both ended on the block"
   },
   {
+    "a": "usain-bolt",
+    "b": "michael-phelps",
+    "w": "The Beijing summer the pool and the track both rewrote",
+    "t": "kindred"
+  },
+  {
     "a": "van-gogh",
     "b": "gauguin",
     "y": 1888,
@@ -2006,6 +3685,19 @@
     "b": "philip-iv",
     "y": 1623,
     "w": "His court painter from the first sitting"
+  },
+  {
+    "a": "vera-rubin",
+    "b": "edwin-hubble",
+    "w": "The flat rotation curves that weighed what his yardstick measured",
+    "t": "successor"
+  },
+  {
+    "a": "vercingetorix",
+    "b": "caesar",
+    "y": 52,
+    "w": "Alesia: the sword laid down at the conqueror s feet",
+    "t": "opposed"
   },
   {
     "a": "verdi",
@@ -2020,6 +3712,12 @@
     "w": "Born the same year; the century’s two answers to opera, and they never met"
   },
   {
+    "a": "vermeer",
+    "b": "rembrandt",
+    "w": "The Fabritius line from the Amsterdam studio to the Delft light",
+    "t": "influence"
+  },
+  {
     "a": "verrocchio",
     "b": "botticelli",
     "y": 1468,
@@ -2030,6 +3728,13 @@
     "b": "leonardo",
     "y": 1472,
     "w": "His apprentice; the kneeling angel in the Baptism of Christ is the boy’s"
+  },
+  {
+    "a": "vesalius",
+    "b": "harvey",
+    "y": 1628,
+    "w": "The circulation the anatomist s pictures made thinkable",
+    "t": "influence"
   },
   {
     "a": "victoria",
@@ -2048,6 +3753,18 @@
     "b": "dante",
     "y": 1308,
     "w": "the pagan poet he chose as guide through Hell"
+  },
+  {
+    "a": "virginia-hall",
+    "b": "nightingale",
+    "w": "Two women the crown decorated, a century of wars apart",
+    "t": "kindred"
+  },
+  {
+    "a": "virginia-hall",
+    "b": "noor-inayat-khan",
+    "w": "The F section s two wireless hands; the one who lived, the one who did not",
+    "t": "colleague"
   },
   {
     "a": "voltaire",
@@ -2110,6 +3827,13 @@
     "w": "Held the ridge until the evening came"
   },
   {
+    "a": "wilde",
+    "b": "whistler",
+    "y": 1885,
+    "w": "The pupil who outgrew the master s epigrams, then the master s patience",
+    "t": "rival"
+  },
+  {
     "a": "william-herschel",
     "b": "george-iii",
     "y": 1782,
@@ -2120,6 +3844,45 @@
     "b": "john-herschel",
     "y": 1792,
     "w": "Father and son; the southern sky finished the survey"
+  },
+  {
+    "a": "william-the-conqueror",
+    "b": "edgar-aetheling",
+    "w": "The boy the Witan chose and the Conqueror pardoned",
+    "t": "kindred"
+  },
+  {
+    "a": "william-the-conqueror",
+    "b": "harold-godwinson",
+    "y": 1066,
+    "w": "Senlac Hill: the arrow and the shield wall",
+    "t": "opposed"
+  },
+  {
+    "a": "william-the-conqueror",
+    "b": "henry-viii",
+    "w": "Every English crown from the Conquest to the Tudors descended from him",
+    "t": "family"
+  },
+  {
+    "a": "william-the-conqueror",
+    "b": "lanfranc",
+    "y": 1070,
+    "w": "The prior of Bec he made archbishop to rebuild the English church",
+    "t": "patron"
+  },
+  {
+    "a": "william-the-conqueror",
+    "b": "matilda-of-flanders",
+    "w": "The marriage the pope blessed with a penance and an abbey",
+    "t": "family"
+  },
+  {
+    "a": "william-the-conqueror",
+    "b": "odo",
+    "y": 1066,
+    "w": "His half-brother in the saddle at Hastings, the mace swinging",
+    "t": "family"
   },
   {
     "a": "wollstonecraft",
@@ -2138,6 +3901,30 @@
     "b": "great-fire",
     "y": 1669,
     "w": "Rebuilt the city’s churches, St Paul’s above them all"
+  },
+  {
+    "a": "wyatt-earp",
+    "b": "geronimo",
+    "w": "The same decade s two front-page legends of the frontier",
+    "t": "kindred"
+  },
+  {
+    "a": "wyatt-earp",
+    "b": "wild-bill-hickok",
+    "w": "The dead man s hand the young lawman grew up measuring against",
+    "t": "influence"
+  },
+  {
+    "a": "wycliffe",
+    "b": "tyndale",
+    "w": "The English Bible the Oxford doctor began and the strangled translator finished",
+    "t": "influence"
+  },
+  {
+    "a": "xuanzang",
+    "b": "marco-polo",
+    "w": "Two pilgrim roads on the same Silk Road, seven centuries apart",
+    "t": "kindred"
   },
   {
     "a": "zola",

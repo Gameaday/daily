@@ -15,9 +15,10 @@
      line), the canonical description, year and month-day come from
      the layer, and the stores compile byte-identical to the
      hand-authored stores they replace
-   - entity types no recipe consumes yet (places, artifacts, quotes)
-     are defined in knowledge/SCHEMA.md; a file appears here when the
-     first recipe needs it, and this tool fails loudly if one is missing
+   - places and presence spans are seeded but no recipe consumes
+     them yet (brunch will be the first); artifacts and quotes are
+     defined in knowledge/SCHEMA.md, and this tool fails loudly if a
+     needed file is missing
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -27,8 +28,10 @@
    - reveal sentences are required strings; years are positive integers
      or absent (ancient relations carry no y at all)
    - optional entity fields are honest or absent: d and q are strings,
-     y a positive integer, month 1-12 and day 1-31, and a day never
-     appears without its month
+     y a positive integer, month 1-12 and day 1-31, a day never appears
+     without its month, born and died are positive integers in order,
+     and every presence span runs forward between a known person and a
+     known place
 
    Default mode (what CI runs) never writes anything and exits 1 on
    drift. Run: node tools/build-knowledge.mjs         (verify)
@@ -54,15 +57,18 @@ const readRecipe = game =>
 const people = readLayer('people');
 const events = readLayer('events');
 const relations = readLayer('relations');
+const places = readLayer('places');
+const presence = readLayer('presence');
 
-for (const entry of [['people', people], ['events', events], ['relations', relations]]){
+for (const entry of [['people', people], ['events', events], ['places', places],
+                       ['relations', relations], ['presence', presence]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
 
 /* entities: one id namespace across every type */
 const entities = [];
-for (const arr of [people, events]){
+for (const arr of [people, events, places]){
   if (!Array.isArray(arr)) continue;
   for (const x of arr){
     if (!x || typeof x.id !== 'string' || typeof x.n !== 'string')
@@ -80,6 +86,12 @@ for (const arr of [people, events]){
         fail('knowledge: entity ' + x.id + ' day must be an integer 1-31 or absent');
       if (x.day !== undefined && x.month === undefined)
         fail('knowledge: entity ' + x.id + ' carries a day without a month');
+      if (x.born !== undefined && (!Number.isInteger(x.born) || x.born <= 0))
+        fail('knowledge: entity ' + x.id + ' born must be a positive integer or absent');
+      if (x.died !== undefined && (!Number.isInteger(x.died) || x.died <= 0))
+        fail('knowledge: entity ' + x.id + ' died must be a positive integer or absent');
+      if (x.born !== undefined && x.died !== undefined && x.born > x.died)
+        fail('knowledge: entity ' + x.id + ' is born after dying');
       entities.push(x);
     }
   }
@@ -111,6 +123,27 @@ const rels = Array.isArray(relations) ? relations : [];
       const key = r.a < r.b ? r.a + ':' + r.b : r.b + ':' + r.a;
       if (pairs.has(key)) fail('knowledge: duplicate relation pair ' + r.a + ' - ' + r.b);
       pairs.add(key);
+    }
+  }
+}
+
+/* presence spans: where people demonstrably were */
+{
+  const peopleIds = new Set(Array.isArray(people) ? people.map(x => x.id) : []);
+  const placeIds = new Set(Array.isArray(places) ? places.map(x => x.id) : []);
+  const rows = new Set();
+  for (const s of (Array.isArray(presence) ? presence : [])){
+    if (!s || typeof s.p !== 'string' || typeof s.place !== 'string' ||
+        !Number.isInteger(s.from) || !Number.isInteger(s.to))
+      fail('knowledge: presence needs string p and place and integer from and to: ' + JSON.stringify(s));
+    else if (!peopleIds.has(s.p)) fail('knowledge: presence references unknown person ' + s.p);
+    else if (!placeIds.has(s.place)) fail('knowledge: presence references unknown place ' + s.place);
+    else if (s.from <= 0 || s.to < s.from)
+      fail('knowledge: presence span must run forward (' + s.p + ' at ' + s.place + ')');
+    else {
+      const key = s.p + ':' + s.place + ':' + s.from + ':' + s.to;
+      if (rows.has(key)) fail('knowledge: duplicate presence span ' + s.p + ' at ' + s.place);
+      rows.add(key);
     }
   }
 }

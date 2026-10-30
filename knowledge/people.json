@@ -2,27 +2,37 @@
   {
     "id": "ada",
     "n": "Ada Lovelace",
-    "d": "Mathematician, 1815-1852"
+    "d": "Mathematician, 1815-1852",
+    "born": 1815,
+    "died": 1852
   },
   {
     "id": "adams",
     "n": "John Adams",
-    "d": "President, 1735-1826"
+    "d": "President, 1735-1826",
+    "born": 1735,
+    "died": 1826
   },
   {
     "id": "amundsen",
     "n": "Roald Amundsen",
-    "d": "First to the South Pole, 1872-1928"
+    "d": "First to the South Pole, 1872-1928",
+    "born": 1872,
+    "died": 1928
   },
   {
     "id": "anne-boleyn",
     "n": "Anne Boleyn",
-    "d": "Queen of England, c. 1501-1536"
+    "d": "Queen of England, c. 1501-1536",
+    "born": 1501,
+    "died": 1536
   },
   {
     "id": "anthony",
     "n": "Susan B. Anthony",
-    "d": "Campaigner for the ballot, 1820-1906"
+    "d": "Campaigner for the ballot, 1820-1906",
+    "born": 1820,
+    "died": 1906
   },
   {
     "id": "augustus",
@@ -32,87 +42,121 @@
   {
     "id": "babbage",
     "n": "Charles Babbage",
-    "d": "Mathematician, 1791-1871"
+    "d": "Mathematician, 1791-1871",
+    "born": 1791,
+    "died": 1871
   },
   {
     "id": "bach",
     "n": "Johann Sebastian Bach",
-    "d": "Composer, 1685-1750"
+    "d": "Composer, 1685-1750",
+    "born": 1685,
+    "died": 1750
   },
   {
     "id": "banks",
     "n": "Joseph Banks",
-    "d": "Botanist, 1743-1820"
+    "d": "Botanist, 1743-1820",
+    "born": 1743,
+    "died": 1820
   },
   {
     "id": "baudelaire",
     "n": "Charles Baudelaire",
-    "d": "Poet of modern Paris, 1821-1867"
+    "d": "Poet of modern Paris, 1821-1867",
+    "born": 1821,
+    "died": 1867
   },
   {
     "id": "baudin",
     "n": "Nicolas Baudin",
-    "d": "Naturalist voyager of France, 1754-1803"
+    "d": "Naturalist voyager of France, 1754-1803",
+    "born": 1754,
+    "died": 1803
   },
   {
     "id": "beethoven",
     "n": "Ludwig van Beethoven",
-    "d": "Composer, 1770-1827"
+    "d": "Composer, 1770-1827",
+    "born": 1770,
+    "died": 1827
   },
   {
     "id": "berlioz",
     "n": "Hector Berlioz",
-    "d": "Composer, 1803-1869"
+    "d": "Composer, 1803-1869",
+    "born": 1803,
+    "died": 1869
   },
   {
     "id": "bernini",
     "n": "Gian Lorenzo Bernini",
-    "d": "Sculptor and architect, 1598-1680"
+    "d": "Sculptor and architect, 1598-1680",
+    "born": 1598,
+    "died": 1680
   },
   {
     "id": "boole",
     "n": "George Boole",
-    "d": "Mathematician of logic, 1815-1864"
+    "d": "Mathematician of logic, 1815-1864",
+    "born": 1815,
+    "died": 1864
   },
   {
     "id": "boswell",
     "n": "James Boswell",
-    "d": "Biographer, 1740-1795"
+    "d": "Biographer, 1740-1795",
+    "born": 1740,
+    "died": 1795
   },
   {
     "id": "botticelli",
     "n": "Botticelli",
-    "d": "Painter, c. 1445-1510"
+    "d": "Painter, c. 1445-1510",
+    "born": 1445,
+    "died": 1510
   },
   {
     "id": "boulton",
     "n": "Matthew Boulton",
-    "d": "Manufacturer, 1728-1809"
+    "d": "Manufacturer, 1728-1809",
+    "born": 1728,
+    "died": 1809
   },
   {
     "id": "boyle",
     "n": "Robert Boyle",
-    "d": "Chemist, 1627-1691"
+    "d": "Chemist, 1627-1691",
+    "born": 1627,
+    "died": 1691
   },
   {
     "id": "brahms",
     "n": "Johannes Brahms",
-    "d": "Composer, 1833-1897"
+    "d": "Composer, 1833-1897",
+    "born": 1833,
+    "died": 1897
   },
   {
     "id": "brunel",
     "n": "Isambard Kingdom Brunel",
-    "d": "Engineer of steam and iron, 1806-1859"
+    "d": "Engineer of steam and iron, 1806-1859",
+    "born": 1806,
+    "died": 1859
   },
   {
     "id": "burke",
     "n": "Edmund Burke",
-    "d": "Statesman and writer, 1730-1797"
+    "d": "Statesman and writer, 1730-1797",
+    "born": 1730,
+    "died": 1797
   },
   {
     "id": "byron",
     "n": "Lord Byron",
-    "d": "Poet, 1788-1824"
+    "d": "Poet, 1788-1824",
+    "born": 1788,
+    "died": 1824
   },
   {
     "id": "caesar",
@@ -122,67 +166,93 @@
   {
     "id": "carlyle",
     "n": "Thomas Carlyle",
-    "d": "Historian and sage, 1795-1881"
+    "d": "Historian and sage, 1795-1881",
+    "born": 1795,
+    "died": 1881
   },
   {
     "id": "caroline-lamb",
     "n": "Lady Caroline Lamb",
-    "d": "Novelist of the Byron affair, 1785-1828"
+    "d": "Novelist of the Byron affair, 1785-1828",
+    "born": 1785,
+    "died": 1828
   },
   {
     "id": "cassatt",
     "n": "Mary Cassatt",
-    "d": "Painter, 1844-1926"
+    "d": "Painter, 1844-1926",
+    "born": 1844,
+    "died": 1926
   },
   {
     "id": "catherine",
     "n": "Catherine the Great",
-    "d": "Empress of Russia, 1729-1796"
+    "d": "Empress of Russia, 1729-1796",
+    "born": 1729,
+    "died": 1796
   },
   {
     "id": "cervantes",
     "n": "Miguel de Cervantes",
-    "d": "Novelist, 1547-1616"
+    "d": "Novelist, 1547-1616",
+    "born": 1547,
+    "died": 1616
   },
   {
     "id": "cesare-borgia",
     "n": "Cesare Borgia",
-    "d": "Cardinal’s son and condottiero, 1475-1507"
+    "d": "Cardinal’s son and condottiero, 1475-1507",
+    "born": 1475,
+    "died": 1507
   },
   {
     "id": "cezanne",
     "n": "Paul Cezanne",
-    "d": "Painter, 1839-1906"
+    "d": "Painter, 1839-1906",
+    "born": 1839,
+    "died": 1906
   },
   {
     "id": "charles-i",
     "n": "Charles I",
-    "d": "King of England, 1600-1649"
+    "d": "King of England, 1600-1649",
+    "born": 1600,
+    "died": 1649
   },
   {
     "id": "charles-ii",
     "n": "Charles II",
-    "d": "King of England, 1630-1685"
+    "d": "King of England, 1630-1685",
+    "born": 1630,
+    "died": 1685
   },
   {
     "id": "charles-v",
     "n": "Charles V",
-    "d": "Holy Roman Emperor, 1500-1558"
+    "d": "Holy Roman Emperor, 1500-1558",
+    "born": 1500,
+    "died": 1558
   },
   {
     "id": "charlotte-bronte",
     "n": "Charlotte Bronte",
-    "d": "Novelist of Haworth, 1816-1855"
+    "d": "Novelist of Haworth, 1816-1855",
+    "born": 1816,
+    "died": 1855
   },
   {
     "id": "chopin",
     "n": "Frederic Chopin",
-    "d": "Composer, 1810-1849"
+    "d": "Composer, 1810-1849",
+    "born": 1810,
+    "died": 1849
   },
   {
     "id": "christina",
     "n": "Christina of Sweden",
-    "d": "Queen of Sweden, 1626-1689"
+    "d": "Queen of Sweden, 1626-1689",
+    "born": 1626,
+    "died": 1689
   },
   {
     "id": "cicero",
@@ -192,667 +262,933 @@
   {
     "id": "clara-schumann",
     "n": "Clara Schumann",
-    "d": "Pianist and composer, 1819-1896"
+    "d": "Pianist and composer, 1819-1896",
+    "born": 1819,
+    "died": 1896
   },
   {
     "id": "coleridge",
     "n": "Samuel Coleridge",
-    "d": "Poet, 1772-1834"
+    "d": "Poet, 1772-1834",
+    "born": 1772,
+    "died": 1834
   },
   {
     "id": "columbus",
     "n": "Christopher Columbus",
-    "d": "Explorer, 1451-1506"
+    "d": "Explorer, 1451-1506",
+    "born": 1451,
+    "died": 1506
   },
   {
     "id": "constable",
     "n": "John Constable",
-    "d": "Painter, 1776-1837"
+    "d": "Painter, 1776-1837",
+    "born": 1776,
+    "died": 1837
   },
   {
     "id": "constantijn",
     "n": "Constantijn Huygens",
-    "d": "Dutch poet and diplomat, 1596-1687"
+    "d": "Dutch poet and diplomat, 1596-1687",
+    "born": 1596,
+    "died": 1687
   },
   {
     "id": "cook",
     "n": "James Cook",
-    "d": "Explorer, 1728-1779"
+    "d": "Explorer, 1728-1779",
+    "born": 1728,
+    "died": 1779
   },
   {
     "id": "corelli",
     "n": "Arcangelo Corelli",
-    "d": "Composer, 1653-1713"
+    "d": "Composer, 1653-1713",
+    "born": 1653,
+    "died": 1713
   },
   {
     "id": "curie",
     "n": "Marie Curie",
-    "d": "Chemist of the radioactive elements, 1867-1934"
+    "d": "Chemist of the radioactive elements, 1867-1934",
+    "born": 1867,
+    "died": 1934
   },
   {
     "id": "da-gama",
     "n": "Vasco da Gama",
-    "d": "Explorer, c. 1469-1524"
+    "d": "Explorer, c. 1469-1524",
+    "born": 1469,
+    "died": 1524
   },
   {
     "id": "dante",
     "n": "Dante Alighieri",
-    "d": "Poet of the Commedia, 1265-1321"
+    "d": "Poet of the Commedia, 1265-1321",
+    "born": 1265,
+    "died": 1321
   },
   {
     "id": "darwin",
     "n": "Charles Darwin",
-    "d": "Naturalist, 1809-1882"
+    "d": "Naturalist, 1809-1882",
+    "born": 1809,
+    "died": 1882
   },
   {
     "id": "david",
     "n": "Jacques-Louis David",
-    "d": "Painter, 1748-1825"
+    "d": "Painter, 1748-1825",
+    "born": 1748,
+    "died": 1825
   },
   {
     "id": "davy",
     "n": "Humphrey Davy",
-    "d": "Chemist, 1778-1829"
+    "d": "Chemist, 1778-1829",
+    "born": 1778,
+    "died": 1829
   },
   {
     "id": "de-morgan",
     "n": "Augustus De Morgan",
-    "d": "Mathematician and logician, 1806-1871"
+    "d": "Mathematician and logician, 1806-1871",
+    "born": 1806,
+    "died": 1871
   },
   {
     "id": "degas",
     "n": "Edgar Degas",
-    "d": "Painter, 1834-1917"
+    "d": "Painter, 1834-1917",
+    "born": 1834,
+    "died": 1917
   },
   {
     "id": "delacroix",
     "n": "Eugene Delacroix",
-    "d": "Painter, 1798-1863"
+    "d": "Painter, 1798-1863",
+    "born": 1798,
+    "died": 1863
   },
   {
     "id": "descartes",
     "n": "Rene Descartes",
-    "d": "Philosopher and mathematician, 1596-1650"
+    "d": "Philosopher and mathematician, 1596-1650",
+    "born": 1596,
+    "died": 1650
   },
   {
     "id": "dickens",
     "n": "Charles Dickens",
-    "d": "Novelist of London, 1812-1870"
+    "d": "Novelist of London, 1812-1870",
+    "born": 1812,
+    "died": 1870
   },
   {
     "id": "diderot",
     "n": "Denis Diderot",
-    "d": "Philosopher and editor, 1713-1784"
+    "d": "Philosopher and editor, 1713-1784",
+    "born": 1713,
+    "died": 1784
   },
   {
     "id": "dostoevsky",
     "n": "Fyodor Dostoevsky",
-    "d": "Novelist, 1821-1881"
+    "d": "Novelist, 1821-1881",
+    "born": 1821,
+    "died": 1881
   },
   {
     "id": "douglass",
     "n": "Frederick Douglass",
-    "d": "Abolitionist orator, c. 1818-1895"
+    "d": "Abolitionist orator, c. 1818-1895",
+    "born": 1818,
+    "died": 1895
   },
   {
     "id": "drake",
     "n": "Francis Drake",
-    "d": "Privateer and explorer, c. 1540-1596"
+    "d": "Privateer and explorer, c. 1540-1596",
+    "born": 1540,
+    "died": 1596
   },
   {
     "id": "dumas",
     "n": "Alexandre Dumas",
-    "d": "Novelist, 1802-1870"
+    "d": "Novelist, 1802-1870",
+    "born": 1802,
+    "died": 1870
   },
   {
     "id": "dvorak",
     "n": "Antonin Dvorak",
-    "d": "Composer of Bohemia, 1841-1904"
+    "d": "Composer of Bohemia, 1841-1904",
+    "born": 1841,
+    "died": 1904
   },
   {
     "id": "einstein",
     "n": "Albert Einstein",
-    "d": "Theorist of relativity, 1879-1955"
+    "d": "Theorist of relativity, 1879-1955",
+    "born": 1879,
+    "died": 1955
   },
   {
     "id": "elizabeth-i",
     "n": "Elizabeth I",
-    "d": "Queen of England, 1533-1603"
+    "d": "Queen of England, 1533-1603",
+    "born": 1533,
+    "died": 1603
   },
   {
     "id": "emerson",
     "n": "Ralph Waldo Emerson",
-    "d": "Essayist of Concord, 1803-1882"
+    "d": "Essayist of Concord, 1803-1882",
+    "born": 1803,
+    "died": 1882
   },
   {
     "id": "emilie",
     "n": "Emilie du Chatelet",
-    "d": "Mathematician and translator, 1706-1749"
+    "d": "Mathematician and translator, 1706-1749",
+    "born": 1706,
+    "died": 1749
   },
   {
     "id": "erasmus",
     "n": "Desiderius Erasmus",
-    "d": "Prince of the humanists, c. 1466-1536"
+    "d": "Prince of the humanists, c. 1466-1536",
+    "born": 1466,
+    "died": 1536
   },
   {
     "id": "erasmus-darwin",
     "n": "Erasmus Darwin",
-    "d": "Physician and poet, 1731-1802"
+    "d": "Physician and poet, 1731-1802",
+    "born": 1731,
+    "died": 1802
   },
   {
     "id": "faraday",
     "n": "Michael Faraday",
-    "d": "Physicist, 1791-1867"
+    "d": "Physicist, 1791-1867",
+    "born": 1791,
+    "died": 1867
   },
   {
     "id": "flaubert",
     "n": "Gustave Flaubert",
-    "d": "Novelist, 1821-1880"
+    "d": "Novelist, 1821-1880",
+    "born": 1821,
+    "died": 1880
   },
   {
     "id": "flinders",
     "n": "Matthew Flinders",
-    "d": "Circumnavigator of Australia, 1774-1814"
+    "d": "Circumnavigator of Australia, 1774-1814",
+    "born": 1774,
+    "died": 1814
   },
   {
     "id": "francis-i",
     "n": "Francis I",
-    "d": "King of France, 1494-1547"
+    "d": "King of France, 1494-1547",
+    "born": 1494,
+    "died": 1547
   },
   {
     "id": "franklin",
     "n": "Benjamin Franklin",
-    "d": "Printer and scientist, 1706-1790"
+    "d": "Printer and scientist, 1706-1790",
+    "born": 1706,
+    "died": 1790
   },
   {
     "id": "frederick",
     "n": "Frederick the Great",
-    "d": "King of Prussia, 1712-1786"
+    "d": "King of Prussia, 1712-1786",
+    "born": 1712,
+    "died": 1786
   },
   {
     "id": "galileo",
     "n": "Galileo Galilei",
-    "d": "Astronomer, 1564-1642"
+    "d": "Astronomer, 1564-1642",
+    "born": 1564,
+    "died": 1642
   },
   {
     "id": "garrick",
     "n": "David Garrick",
-    "d": "Actor, 1717-1779"
+    "d": "Actor, 1717-1779",
+    "born": 1717,
+    "died": 1779
   },
   {
     "id": "garrison",
     "n": "William Lloyd Garrison",
-    "d": "Abolitionist editor, 1805-1879"
+    "d": "Abolitionist editor, 1805-1879",
+    "born": 1805,
+    "died": 1879
   },
   {
     "id": "gaskell",
     "n": "Elizabeth Gaskell",
-    "d": "Novelist of Manchester, 1810-1865"
+    "d": "Novelist of Manchester, 1810-1865",
+    "born": 1810,
+    "died": 1865
   },
   {
     "id": "gauguin",
     "n": "Paul Gauguin",
-    "d": "Painter, 1848-1903"
+    "d": "Painter, 1848-1903",
+    "born": 1848,
+    "died": 1903
   },
   {
     "id": "gentile-bellini",
     "n": "Gentile Bellini",
-    "d": "Portraitist of Venice, c. 1429-1507"
+    "d": "Portraitist of Venice, c. 1429-1507",
+    "born": 1429,
+    "died": 1507
   },
   {
     "id": "george-eliot",
     "n": "George Eliot",
-    "d": "Novelist of the Midlands, 1819-1880"
+    "d": "Novelist of the Midlands, 1819-1880",
+    "born": 1819,
+    "died": 1880
   },
   {
     "id": "george-ii",
     "n": "George II",
-    "d": "King of Great Britain, 1683-1760"
+    "d": "King of Great Britain, 1683-1760",
+    "born": 1683,
+    "died": 1760
   },
   {
     "id": "george-iii",
     "n": "George III",
-    "d": "King of Great Britain, 1738-1820"
+    "d": "King of Great Britain, 1738-1820",
+    "born": 1738,
+    "died": 1820
   },
   {
     "id": "george-v",
     "n": "George V",
-    "d": "King of England, 1865-1936"
+    "d": "King of England, 1865-1936",
+    "born": 1865,
+    "died": 1936
   },
   {
     "id": "gibbon",
     "n": "Edward Gibbon",
-    "d": "Historian of Rome’s decline, 1737-1794"
+    "d": "Historian of Rome’s decline, 1737-1794",
+    "born": 1737,
+    "died": 1794
   },
   {
     "id": "giovanni-bellini",
     "n": "Giovanni Bellini",
-    "d": "Painter of Venetian color, c. 1430-1516"
+    "d": "Painter of Venetian color, c. 1430-1516",
+    "born": 1430,
+    "died": 1516
   },
   {
     "id": "godwin",
     "n": "William Godwin",
-    "d": "Political writer, 1756-1836"
+    "d": "Political writer, 1756-1836",
+    "born": 1756,
+    "died": 1836
   },
   {
     "id": "goethe",
     "n": "Johann Goethe",
-    "d": "Writer, 1749-1832"
+    "d": "Writer, 1749-1832",
+    "born": 1749,
+    "died": 1832
   },
   {
     "id": "gogol",
     "n": "Nikolai Gogol",
-    "d": "Novelist, 1809-1852"
+    "d": "Novelist, 1809-1852",
+    "born": 1809,
+    "died": 1852
   },
   {
     "id": "goya",
     "n": "Francisco Goya",
-    "d": "Painter, 1746-1828"
+    "d": "Painter, 1746-1828",
+    "born": 1746,
+    "died": 1828
   },
   {
     "id": "grant",
     "n": "Ulysses S. Grant",
-    "d": "General and president, 1822-1885"
+    "d": "General and president, 1822-1885",
+    "born": 1822,
+    "died": 1885
   },
   {
     "id": "guy-fawkes",
     "n": "Guy Fawkes",
-    "d": "Gunpowder plotter, 1570-1606"
+    "d": "Gunpowder plotter, 1570-1606",
+    "born": 1570,
+    "died": 1606
   },
   {
     "id": "halley",
     "n": "Edmond Halley",
-    "d": "Astronomer, 1656-1742"
+    "d": "Astronomer, 1656-1742",
+    "born": 1656,
+    "died": 1742
   },
   {
     "id": "handel",
     "n": "George Frideric Handel",
-    "d": "Composer, 1685-1759"
+    "d": "Composer, 1685-1759",
+    "born": 1685,
+    "died": 1759
   },
   {
     "id": "hawthorne",
     "n": "Nathaniel Hawthorne",
-    "d": "Novelist of Salem, 1804-1864"
+    "d": "Novelist of Salem, 1804-1864",
+    "born": 1804,
+    "died": 1864
   },
   {
     "id": "haydn",
     "n": "Joseph Haydn",
-    "d": "Composer, 1732-1809"
+    "d": "Composer, 1732-1809",
+    "born": 1732,
+    "died": 1809
   },
   {
     "id": "hegel",
     "n": "Georg Hegel",
-    "d": "Philosopher of the dialectic, 1770-1831"
+    "d": "Philosopher of the dialectic, 1770-1831",
+    "born": 1770,
+    "died": 1831
   },
   {
     "id": "henry-viii",
     "n": "Henry VIII",
-    "d": "King of England, 1491-1547"
+    "d": "King of England, 1491-1547",
+    "born": 1491,
+    "died": 1547
   },
   {
     "id": "hobbes",
     "n": "Thomas Hobbes",
-    "d": "Philosopher, 1588-1679"
+    "d": "Philosopher, 1588-1679",
+    "born": 1588,
+    "died": 1679
   },
   {
     "id": "holbein",
     "n": "Hans Holbein the Younger",
-    "d": "Portraitist of the Tudor court, c. 1497-1543"
+    "d": "Portraitist of the Tudor court, c. 1497-1543",
+    "born": 1497,
+    "died": 1543
   },
   {
     "id": "hooke",
     "n": "Robert Hooke",
-    "d": "Polymath, 1635-1703"
+    "d": "Polymath, 1635-1703",
+    "born": 1635,
+    "died": 1703
   },
   {
     "id": "hooker",
     "n": "Joseph Hooker",
-    "d": "Botanist, 1817-1911"
+    "d": "Botanist, 1817-1911",
+    "born": 1817,
+    "died": 1911
   },
   {
     "id": "hugo",
     "n": "Victor Hugo",
-    "d": "Novelist, 1802-1885"
+    "d": "Novelist, 1802-1885",
+    "born": 1802,
+    "died": 1885
   },
   {
     "id": "humboldt",
     "n": "Alexander von Humboldt",
-    "d": "Scientific traveller, 1769-1859"
+    "d": "Scientific traveller, 1769-1859",
+    "born": 1769,
+    "died": 1859
   },
   {
     "id": "hume",
     "n": "David Hume",
-    "d": "Philosopher, 1711-1776"
+    "d": "Philosopher, 1711-1776",
+    "born": 1711,
+    "died": 1776
   },
   {
     "id": "huxley",
     "n": "Thomas Huxley",
-    "d": "Biologist, 1825-1895"
+    "d": "Biologist, 1825-1895",
+    "born": 1825,
+    "died": 1895
   },
   {
     "id": "huygens",
     "n": "Christiaan Huygens",
-    "d": "Astronomer and physicist, 1629-1695"
+    "d": "Astronomer and physicist, 1629-1695",
+    "born": 1629,
+    "died": 1695
   },
   {
     "id": "isabella",
     "n": "Isabella of Castile",
-    "d": "Queen of Castile, 1451-1504"
+    "d": "Queen of Castile, 1451-1504",
+    "born": 1451,
+    "died": 1504
   },
   {
     "id": "james-clark-ross",
     "n": "James Clark Ross",
-    "d": "Explorer of both poles, 1800-1862"
+    "d": "Explorer of both poles, 1800-1862",
+    "born": 1800,
+    "died": 1862
   },
   {
     "id": "james-i",
     "n": "James I",
-    "d": "King of England and Scotland, 1566-1625"
+    "d": "King of England and Scotland, 1566-1625",
+    "born": 1566,
+    "died": 1625
   },
   {
     "id": "james-ii",
     "n": "James II",
-    "d": "King of England, 1633-1701"
+    "d": "King of England, 1633-1701",
+    "born": 1633,
+    "died": 1701
   },
   {
     "id": "jefferson",
     "n": "Thomas Jefferson",
-    "d": "President, 1743-1826"
+    "d": "President, 1743-1826",
+    "born": 1743,
+    "died": 1826
   },
   {
     "id": "jj-thomson",
     "n": "J. J. Thomson",
-    "d": "Cavendish discoverer of the electron, 1856-1940"
+    "d": "Cavendish discoverer of the electron, 1856-1940",
+    "born": 1856,
+    "died": 1940
   },
   {
     "id": "john-franklin",
     "n": "John Franklin",
-    "d": "Arctic explorer of Erebus and Terror, 1786-1847"
+    "d": "Arctic explorer of Erebus and Terror, 1786-1847",
+    "born": 1786,
+    "died": 1847
   },
   {
     "id": "john-herschel",
     "n": "John Herschel",
-    "d": "Astronomer, 1792-1871"
+    "d": "Astronomer, 1792-1871",
+    "born": 1792,
+    "died": 1871
   },
   {
     "id": "johnson",
     "n": "Samuel Johnson",
-    "d": "Man of letters, 1709-1784"
+    "d": "Man of letters, 1709-1784",
+    "born": 1709,
+    "died": 1784
   },
   {
     "id": "josephine",
     "n": "Josephine",
-    "d": "Empress of the French, 1763-1814"
+    "d": "Empress of the French, 1763-1814",
+    "born": 1763,
+    "died": 1814
   },
   {
     "id": "joule",
     "n": "James Joule",
-    "d": "Physicist, 1818-1889"
+    "d": "Physicist, 1818-1889",
+    "born": 1818,
+    "died": 1889
   },
   {
     "id": "julius-ii",
     "n": "Pope Julius II",
-    "d": "Warrior pope, 1443-1513"
+    "d": "Warrior pope, 1443-1513",
+    "born": 1443,
+    "died": 1513
   },
   {
     "id": "kelvin",
     "n": "Lord Kelvin",
-    "d": "Physicist, 1824-1907"
+    "d": "Physicist, 1824-1907",
+    "born": 1824,
+    "died": 1907
   },
   {
     "id": "kepler",
     "n": "Johannes Kepler",
-    "d": "Astronomer, 1571-1630"
+    "d": "Astronomer, 1571-1630",
+    "born": 1571,
+    "died": 1630
   },
   {
     "id": "lafayette",
     "n": "Marquis de Lafayette",
-    "d": "General, 1757-1834"
+    "d": "General, 1757-1834",
+    "born": 1757,
+    "died": 1834
   },
   {
     "id": "lavoisier",
     "n": "Antoine Lavoisier",
-    "d": "Chemist, 1743-1794"
+    "d": "Chemist, 1743-1794",
+    "born": 1743,
+    "died": 1794
   },
   {
     "id": "leeuwenhoek",
     "n": "Antonie van Leeuwenhoek",
-    "d": "Lens grinder of Delft, 1632-1723"
+    "d": "Lens grinder of Delft, 1632-1723",
+    "born": 1632,
+    "died": 1723
   },
   {
     "id": "leibniz",
     "n": "Gottfried Leibniz",
-    "d": "Philosopher and mathematician, 1646-1716"
+    "d": "Philosopher and mathematician, 1646-1716",
+    "born": 1646,
+    "died": 1716
   },
   {
     "id": "leonardo",
     "n": "Leonardo da Vinci",
-    "d": "Painter and engineer, 1452-1519"
+    "d": "Painter and engineer, 1452-1519",
+    "born": 1452,
+    "died": 1519
   },
   {
     "id": "lewes",
     "n": "George Henry Lewes",
-    "d": "Critic and man of science, 1817-1878"
+    "d": "Critic and man of science, 1817-1878",
+    "born": 1817,
+    "died": 1878
   },
   {
     "id": "lewis",
     "n": "Meriwether Lewis",
-    "d": "Explorer, 1774-1809"
+    "d": "Explorer, 1774-1809",
+    "born": 1774,
+    "died": 1809
   },
   {
     "id": "lincoln",
     "n": "Abraham Lincoln",
-    "d": "President, 1809-1865"
+    "d": "President, 1809-1865",
+    "born": 1809,
+    "died": 1865
   },
   {
     "id": "linnaeus",
     "n": "Carl Linnaeus",
-    "d": "Naturalist, 1707-1778"
+    "d": "Naturalist, 1707-1778",
+    "born": 1707,
+    "died": 1778
   },
   {
     "id": "lister",
     "n": "Joseph Lister",
-    "d": "Surgeon, 1827-1912"
+    "d": "Surgeon, 1827-1912",
+    "born": 1827,
+    "died": 1912
   },
   {
     "id": "liszt",
     "n": "Franz Liszt",
-    "d": "Pianist and composer, 1811-1886"
+    "d": "Pianist and composer, 1811-1886",
+    "born": 1811,
+    "died": 1886
   },
   {
     "id": "locke",
     "n": "John Locke",
-    "d": "Philosopher, 1632-1704"
+    "d": "Philosopher, 1632-1704",
+    "born": 1632,
+    "died": 1704
   },
   {
     "id": "lorenzo",
     "n": "Lorenzo de Medici",
-    "d": "Ruler of Florence, 1449-1492"
+    "d": "Ruler of Florence, 1449-1492",
+    "born": 1449,
+    "died": 1492
   },
   {
     "id": "louis-xiv",
     "n": "Louis XIV",
-    "d": "King of France, 1638-1715"
+    "d": "King of France, 1638-1715",
+    "born": 1638,
+    "died": 1715
   },
   {
     "id": "louis-xvi",
     "n": "Louis XVI",
-    "d": "King of France, 1754-1793"
+    "d": "King of France, 1754-1793",
+    "born": 1754,
+    "died": 1793
   },
   {
     "id": "ludwig-ii",
     "n": "Ludwig II",
-    "d": "King of Bavaria, 1845-1886"
+    "d": "King of Bavaria, 1845-1886",
+    "born": 1845,
+    "died": 1886
   },
   {
     "id": "luther",
     "n": "Martin Luther",
-    "d": "The reformer of Wittenberg, 1483-1546"
+    "d": "The reformer of Wittenberg, 1483-1546",
+    "born": 1483,
+    "died": 1546
   },
   {
     "id": "lyell",
     "n": "Charles Lyell",
-    "d": "Geologist, 1797-1875"
+    "d": "Geologist, 1797-1875",
+    "born": 1797,
+    "died": 1875
   },
   {
     "id": "machiavelli",
     "n": "Niccolo Machiavelli",
-    "d": "Political thinker, 1469-1527"
+    "d": "Political thinker, 1469-1527",
+    "born": 1469,
+    "died": 1527
   },
   {
     "id": "magellan",
     "n": "Ferdinand Magellan",
-    "d": "Explorer, c. 1480-1521"
+    "d": "Explorer, c. 1480-1521",
+    "born": 1480,
+    "died": 1521
   },
   {
     "id": "manet",
     "n": "Edouard Manet",
-    "d": "Painter, 1832-1883"
+    "d": "Painter, 1832-1883",
+    "born": 1832,
+    "died": 1883
   },
   {
     "id": "manuel-i",
     "n": "Manuel I",
-    "d": "King of Portugal, 1469-1521"
+    "d": "King of Portugal, 1469-1521",
+    "born": 1469,
+    "died": 1521
   },
   {
     "id": "marat",
     "n": "Jean-Paul Marat",
-    "d": "Revolutionary journalist, 1743-1793"
+    "d": "Revolutionary journalist, 1743-1793",
+    "born": 1743,
+    "died": 1793
   },
   {
     "id": "marco-polo",
     "n": "Marco Polo",
-    "d": "Venetian traveller to the Yuan court, c. 1254-1324"
+    "d": "Venetian traveller to the Yuan court, c. 1254-1324",
+    "born": 1254,
+    "died": 1324
   },
   {
     "id": "marcus-aurelius",
     "n": "Marcus Aurelius",
-    "d": "Stoic emperor of Rome, 121-180"
+    "d": "Stoic emperor of Rome, 121-180",
+    "born": 121,
+    "died": 180
   },
   {
     "id": "marie-antoinette",
     "n": "Marie Antoinette",
-    "d": "Queen of France, 1755-1793"
+    "d": "Queen of France, 1755-1793",
+    "born": 1755,
+    "died": 1793
   },
   {
     "id": "marlowe",
     "n": "Christopher Marlowe",
-    "d": "Playwright, 1564-1593"
+    "d": "Playwright, 1564-1593",
+    "born": 1564,
+    "died": 1593
   },
   {
     "id": "mary-queen-of-scots",
     "n": "Mary, Queen of Scots",
-    "d": "Queen of Scotland, 1542-1587"
+    "d": "Queen of Scotland, 1542-1587",
+    "born": 1542,
+    "died": 1587
   },
   {
     "id": "mary-shelley",
     "n": "Mary Shelley",
-    "d": "Novelist, 1797-1851"
+    "d": "Novelist, 1797-1851",
+    "born": 1797,
+    "died": 1851
   },
   {
     "id": "maxwell",
     "n": "James Clerk Maxwell",
-    "d": "Physicist, 1831-1879"
+    "d": "Physicist, 1831-1879",
+    "born": 1831,
+    "died": 1879
   },
   {
     "id": "mehmed-ii",
     "n": "Mehmed II",
-    "d": "Conqueror of Constantinople, 1432-1481"
+    "d": "Conqueror of Constantinople, 1432-1481",
+    "born": 1432,
+    "died": 1481
   },
   {
     "id": "melbourne",
     "n": "Lord Melbourne",
-    "d": "Whig prime minister, 1779-1848"
+    "d": "Whig prime minister, 1779-1848",
+    "born": 1779,
+    "died": 1848
   },
   {
     "id": "melville",
     "n": "Herman Melville",
-    "d": "Novelist of the whale, 1819-1891"
+    "d": "Novelist of the whale, 1819-1891",
+    "born": 1819,
+    "died": 1891
   },
   {
     "id": "mendelssohn",
     "n": "Felix Mendelssohn",
-    "d": "Composer and conductor, 1809-1847"
+    "d": "Composer and conductor, 1809-1847",
+    "born": 1809,
+    "died": 1847
   },
   {
     "id": "metternich",
     "n": "Klemens von Metternich",
-    "d": "Austrian statesman, 1773-1859"
+    "d": "Austrian statesman, 1773-1859",
+    "born": 1773,
+    "died": 1859
   },
   {
     "id": "michelangelo",
     "n": "Michelangelo",
-    "d": "Sculptor and painter, 1475-1564"
+    "d": "Sculptor and painter, 1475-1564",
+    "born": 1475,
+    "died": 1564
   },
   {
     "id": "mill",
     "n": "John Stuart Mill",
-    "d": "Philosopher and economist, 1806-1873"
+    "d": "Philosopher and economist, 1806-1873",
+    "born": 1806,
+    "died": 1873
   },
   {
     "id": "millais",
     "n": "John Millais",
-    "d": "Painter, 1829-1896"
+    "d": "Painter, 1829-1896",
+    "born": 1829,
+    "died": 1896
   },
   {
     "id": "milton",
     "n": "John Milton",
-    "d": "Poet, 1608-1674"
+    "d": "Poet, 1608-1674",
+    "born": 1608,
+    "died": 1674
   },
   {
     "id": "moliere",
     "n": "Moliere",
-    "d": "Playwright and actor, 1622-1673"
+    "d": "Playwright and actor, 1622-1673",
+    "born": 1622,
+    "died": 1673
   },
   {
     "id": "monet",
     "n": "Claude Monet",
-    "d": "Painter, 1840-1926"
+    "d": "Painter, 1840-1926",
+    "born": 1840,
+    "died": 1926
   },
   {
     "id": "montaigne",
     "n": "Michel de Montaigne",
-    "d": "Essayist of Gascony, 1533-1592"
+    "d": "Essayist of Gascony, 1533-1592",
+    "born": 1533,
+    "died": 1592
   },
   {
     "id": "mozart",
     "n": "Wolfgang Amadeus Mozart",
-    "d": "Composer, 1756-1791"
+    "d": "Composer, 1756-1791",
+    "born": 1756,
+    "died": 1791
   },
   {
     "id": "nansen",
     "n": "Fridtjof Nansen",
-    "d": "Arctic drifter of the Fram, 1861-1930"
+    "d": "Arctic drifter of the Fram, 1861-1930",
+    "born": 1861,
+    "died": 1930
   },
   {
     "id": "napoleon",
     "n": "Napoleon Bonaparte",
-    "d": "Emperor of the French, 1769-1821"
+    "d": "Emperor of the French, 1769-1821",
+    "born": 1769,
+    "died": 1821
   },
   {
     "id": "napoleon-iii",
     "n": "Napoleon III",
-    "d": "Emperor of the French, 1808-1873"
+    "d": "Emperor of the French, 1808-1873",
+    "born": 1808,
+    "died": 1873
   },
   {
     "id": "nelson",
     "n": "Horatio Nelson",
-    "d": "Admiral, 1758-1805"
+    "d": "Admiral, 1758-1805",
+    "born": 1758,
+    "died": 1805
   },
   {
     "id": "newton",
     "n": "Isaac Newton",
-    "d": "Mathematician and physicist, 1643-1727"
+    "d": "Mathematician and physicist, 1643-1727",
+    "born": 1643,
+    "died": 1727
   },
   {
     "id": "nietzsche",
     "n": "Friedrich Nietzsche",
-    "d": "Philosopher, 1844-1900"
+    "d": "Philosopher, 1844-1900",
+    "born": 1844,
+    "died": 1900
   },
   {
     "id": "oliver-cromwell",
     "n": "Oliver Cromwell",
-    "d": "Lord Protector, 1599-1658"
+    "d": "Lord Protector, 1599-1658",
+    "born": 1599,
+    "died": 1658
   },
   {
     "id": "ovid",
@@ -862,317 +1198,443 @@
   {
     "id": "paganini",
     "n": "Niccolo Paganini",
-    "d": "Violinist, 1782-1840"
+    "d": "Violinist, 1782-1840",
+    "born": 1782,
+    "died": 1840
   },
   {
     "id": "paine",
     "n": "Thomas Paine",
-    "d": "Pamphleteer, 1737-1809"
+    "d": "Pamphleteer, 1737-1809",
+    "born": 1737,
+    "died": 1809
   },
   {
     "id": "pasteur",
     "n": "Louis Pasteur",
-    "d": "Chemist, 1822-1895"
+    "d": "Chemist, 1822-1895",
+    "born": 1822,
+    "died": 1895
   },
   {
     "id": "pepys",
     "n": "Samuel Pepys",
-    "d": "Diarist and naval officer, 1633-1703"
+    "d": "Diarist and naval officer, 1633-1703",
+    "born": 1633,
+    "died": 1703
   },
   {
     "id": "philip-ii",
     "n": "Philip II",
-    "d": "King of Spain, 1527-1598"
+    "d": "King of Spain, 1527-1598",
+    "born": 1527,
+    "died": 1598
   },
   {
     "id": "philip-iv",
     "n": "Philip IV",
-    "d": "King of Spain, 1605-1665"
+    "d": "King of Spain, 1605-1665",
+    "born": 1605,
+    "died": 1665
   },
   {
     "id": "pissarro",
     "n": "Camille Pissarro",
-    "d": "Painter, 1830-1903"
+    "d": "Painter, 1830-1903",
+    "born": 1830,
+    "died": 1903
   },
   {
     "id": "planck",
     "n": "Max Planck",
-    "d": "Founder of the quantum, 1858-1947"
+    "d": "Founder of the quantum, 1858-1947",
+    "born": 1858,
+    "died": 1947
   },
   {
     "id": "plutarch",
     "n": "Plutarch",
-    "d": "Greek biographer of the Lives, c. 46-119"
+    "d": "Greek biographer of the Lives, c. 46-119",
+    "born": 46,
+    "died": 119
   },
   {
     "id": "poe",
     "n": "Edgar Allan Poe",
-    "d": "Poet and storyteller, 1809-1849"
+    "d": "Poet and storyteller, 1809-1849",
+    "born": 1809,
+    "died": 1849
   },
   {
     "id": "pope",
     "n": "Alexander Pope",
-    "d": "Poet, 1688-1744"
+    "d": "Poet, 1688-1744",
+    "born": 1688,
+    "died": 1744
   },
   {
     "id": "priestley",
     "n": "Joseph Priestley",
-    "d": "Chemist, 1733-1804"
+    "d": "Chemist, 1733-1804",
+    "born": 1733,
+    "died": 1804
   },
   {
     "id": "pushkin",
     "n": "Alexander Pushkin",
-    "d": "Poet, 1799-1837"
+    "d": "Poet, 1799-1837",
+    "born": 1799,
+    "died": 1837
   },
   {
     "id": "racine",
     "n": "Jean Racine",
-    "d": "Tragedian, 1639-1699"
+    "d": "Tragedian, 1639-1699",
+    "born": 1639,
+    "died": 1699
   },
   {
     "id": "raleigh",
     "n": "Walter Raleigh",
-    "d": "Courtier and colonist, c. 1552-1618"
+    "d": "Courtier and colonist, c. 1552-1618",
+    "born": 1552,
+    "died": 1618
   },
   {
     "id": "raphael",
     "n": "Raphael",
-    "d": "Painter, 1483-1520"
+    "d": "Painter, 1483-1520",
+    "born": 1483,
+    "died": 1520
   },
   {
     "id": "rembrandt",
     "n": "Rembrandt",
-    "d": "Painter, 1606-1669"
+    "d": "Painter, 1606-1669",
+    "born": 1606,
+    "died": 1669
   },
   {
     "id": "renoir",
     "n": "Pierre-Auguste Renoir",
-    "d": "Painter, 1841-1919"
+    "d": "Painter, 1841-1919",
+    "born": 1841,
+    "died": 1919
   },
   {
     "id": "reynolds",
     "n": "Joshua Reynolds",
-    "d": "Painter, 1723-1792"
+    "d": "Painter, 1723-1792",
+    "born": 1723,
+    "died": 1792
   },
   {
     "id": "robert-schumann",
     "n": "Robert Schumann",
-    "d": "Composer, 1810-1856"
+    "d": "Composer, 1810-1856",
+    "born": 1810,
+    "died": 1856
   },
   {
     "id": "rossetti",
     "n": "Dante Rossetti",
-    "d": "Painter and poet, 1828-1882"
+    "d": "Painter and poet, 1828-1882",
+    "born": 1828,
+    "died": 1882
   },
   {
     "id": "rossini",
     "n": "Gioachino Rossini",
-    "d": "Composer of comic opera, 1792-1868"
+    "d": "Composer of comic opera, 1792-1868",
+    "born": 1792,
+    "died": 1868
   },
   {
     "id": "rousseau",
     "n": "Jean-Jacques Rousseau",
-    "d": "Philosopher, 1712-1778"
+    "d": "Philosopher, 1712-1778",
+    "born": 1712,
+    "died": 1778
   },
   {
     "id": "rubens",
     "n": "Peter Paul Rubens",
-    "d": "Painter and diplomat, 1577-1640"
+    "d": "Painter and diplomat, 1577-1640",
+    "born": 1577,
+    "died": 1640
   },
   {
     "id": "ruskin",
     "n": "John Ruskin",
-    "d": "Critic, 1819-1900"
+    "d": "Critic, 1819-1900",
+    "born": 1819,
+    "died": 1900
   },
   {
     "id": "rutherford",
     "n": "Ernest Rutherford",
-    "d": "Splitter of the atom, 1871-1937"
+    "d": "Splitter of the atom, 1871-1937",
+    "born": 1871,
+    "died": 1937
   },
   {
     "id": "sand",
     "n": "George Sand",
-    "d": "Novelist, 1804-1876"
+    "d": "Novelist, 1804-1876",
+    "born": 1804,
+    "died": 1876
   },
   {
     "id": "savonarola",
     "n": "Girolamo Savonarola",
-    "d": "Preacher of Florence, 1452-1498"
+    "d": "Preacher of Florence, 1452-1498",
+    "born": 1452,
+    "died": 1498
   },
   {
     "id": "schiller",
     "n": "Friedrich Schiller",
-    "d": "Poet and playwright, 1759-1805"
+    "d": "Poet and playwright, 1759-1805",
+    "born": 1759,
+    "died": 1805
   },
   {
     "id": "schopenhauer",
     "n": "Arthur Schopenhauer",
-    "d": "Philosopher of the will, 1788-1860"
+    "d": "Philosopher of the will, 1788-1860",
+    "born": 1788,
+    "died": 1860
   },
   {
     "id": "schubert",
     "n": "Franz Schubert",
-    "d": "Composer, 1797-1828"
+    "d": "Composer, 1797-1828",
+    "born": 1797,
+    "died": 1828
   },
   {
     "id": "scott",
     "n": "Robert Falcon Scott",
-    "d": "Commander of the Terra Nova, 1868-1912"
+    "d": "Commander of the Terra Nova, 1868-1912",
+    "born": 1868,
+    "died": 1912
   },
   {
     "id": "shackleton",
     "n": "Ernest Shackleton",
-    "d": "Commander of the Endurance, 1874-1922"
+    "d": "Commander of the Endurance, 1874-1922",
+    "born": 1874,
+    "died": 1922
   },
   {
     "id": "shaftesbury",
     "n": "Anthony Ashley Cooper",
-    "d": "Earl of Shaftesbury, 1621-1683"
+    "d": "Earl of Shaftesbury, 1621-1683",
+    "born": 1621,
+    "died": 1683
   },
   {
     "id": "shakespeare",
     "n": "William Shakespeare",
-    "d": "Playwright, 1564-1616"
+    "d": "Playwright, 1564-1616",
+    "born": 1564,
+    "died": 1616
   },
   {
     "id": "shelley",
     "n": "Percy Shelley",
-    "d": "Poet, 1792-1822"
+    "d": "Poet, 1792-1822",
+    "born": 1792,
+    "died": 1822
   },
   {
     "id": "smith",
     "n": "Adam Smith",
-    "d": "Economist, 1723-1790"
+    "d": "Economist, 1723-1790",
+    "born": 1723,
+    "died": 1790
   },
   {
     "id": "solander",
     "n": "Daniel Solander",
-    "d": "Botanist, 1733-1782"
+    "d": "Botanist, 1733-1782",
+    "born": 1733,
+    "died": 1782
   },
   {
     "id": "spencer",
     "n": "Herbert Spencer",
-    "d": "Philosopher of evolution, 1820-1903"
+    "d": "Philosopher of evolution, 1820-1903",
+    "born": 1820,
+    "died": 1903
   },
   {
     "id": "spinoza",
     "n": "Baruch Spinoza",
-    "d": "Philosopher, 1632-1677"
+    "d": "Philosopher, 1632-1677",
+    "born": 1632,
+    "died": 1677
   },
   {
     "id": "stanton",
     "n": "Elizabeth Cady Stanton",
-    "d": "Convener of Seneca Falls, 1815-1902"
+    "d": "Convener of Seneca Falls, 1815-1902",
+    "born": 1815,
+    "died": 1902
   },
   {
     "id": "stephenson",
     "n": "George Stephenson",
-    "d": "Engineer of the first railway, 1781-1848"
+    "d": "Engineer of the first railway, 1781-1848",
+    "born": 1781,
+    "died": 1848
   },
   {
     "id": "suleiman",
     "n": "Suleiman the Magnificent",
-    "d": "Ottoman sultan, 1494-1566"
+    "d": "Ottoman sultan, 1494-1566",
+    "born": 1494,
+    "died": 1566
   },
   {
     "id": "swift",
     "n": "Jonathan Swift",
-    "d": "Satirist, 1667-1745"
+    "d": "Satirist, 1667-1745",
+    "born": 1667,
+    "died": 1745
   },
   {
     "id": "talleyrand",
     "n": "Talleyrand",
-    "d": "French diplomat, 1754-1838"
+    "d": "French diplomat, 1754-1838",
+    "born": 1754,
+    "died": 1838
   },
   {
     "id": "temple",
     "n": "William Temple",
-    "d": "Diplomat, 1628-1699"
+    "d": "Diplomat, 1628-1699",
+    "born": 1628,
+    "died": 1699
   },
   {
     "id": "thackeray",
     "n": "William Thackeray",
-    "d": "Novelist and satirist, 1811-1863"
+    "d": "Novelist and satirist, 1811-1863",
+    "born": 1811,
+    "died": 1863
   },
   {
     "id": "thomas-cromwell",
     "n": "Thomas Cromwell",
-    "d": "Minister to Henry VIII, c. 1485-1540"
+    "d": "Minister to Henry VIII, c. 1485-1540",
+    "born": 1485,
+    "died": 1540
   },
   {
     "id": "thomas-more",
     "n": "Thomas More",
-    "d": "Lord chancellor and author, 1478-1535"
+    "d": "Lord chancellor and author, 1478-1535",
+    "born": 1478,
+    "died": 1535
   },
   {
     "id": "thoreau",
     "n": "Henry David Thoreau",
-    "d": "Writer of Walden, 1817-1862"
+    "d": "Writer of Walden, 1817-1862",
+    "born": 1817,
+    "died": 1862
   },
   {
     "id": "titian",
     "n": "Titian",
-    "d": "Painter, c. 1488-1576"
+    "d": "Painter, c. 1488-1576",
+    "born": 1488,
+    "died": 1576
   },
   {
     "id": "tolstoy",
     "n": "Leo Tolstoy",
-    "d": "Novelist, 1828-1910"
+    "d": "Novelist, 1828-1910",
+    "born": 1828,
+    "died": 1910
   },
   {
     "id": "turgenev",
     "n": "Ivan Turgenev",
-    "d": "Novelist, 1818-1883"
+    "d": "Novelist, 1818-1883",
+    "born": 1818,
+    "died": 1883
   },
   {
     "id": "turner",
     "n": "J.M.W. Turner",
-    "d": "Painter, 1775-1851"
+    "d": "Painter, 1775-1851",
+    "born": 1775,
+    "died": 1851
   },
   {
     "id": "twain",
     "n": "Mark Twain",
-    "d": "Novelist of the Mississippi, 1835-1910"
+    "d": "Novelist of the Mississippi, 1835-1910",
+    "born": 1835,
+    "died": 1910
   },
   {
     "id": "tycho",
     "n": "Tycho Brahe",
-    "d": "Astronomer, 1546-1601"
+    "d": "Astronomer, 1546-1601",
+    "born": 1546,
+    "died": 1601
   },
   {
     "id": "tyndale",
     "n": "William Tyndale",
-    "d": "Translator of the English Bible, c. 1494-1536"
+    "d": "Translator of the English Bible, c. 1494-1536",
+    "born": 1494,
+    "died": 1536
   },
   {
     "id": "van-gogh",
     "n": "Vincent van Gogh",
-    "d": "Painter, 1853-1890"
+    "d": "Painter, 1853-1890",
+    "born": 1853,
+    "died": 1890
   },
   {
     "id": "velazquez",
     "n": "Diego Velazquez",
-    "d": "Painter, 1599-1660"
+    "d": "Painter, 1599-1660",
+    "born": 1599,
+    "died": 1660
   },
   {
     "id": "verdi",
     "n": "Giuseppe Verdi",
-    "d": "Opera composer of Italy, 1813-1901"
+    "d": "Opera composer of Italy, 1813-1901",
+    "born": 1813,
+    "died": 1901
   },
   {
     "id": "verrocchio",
     "n": "Andrea del Verrocchio",
-    "d": "Sculptor of Florence, c. 1435-1488"
+    "d": "Sculptor of Florence, c. 1435-1488",
+    "born": 1435,
+    "died": 1488
   },
   {
     "id": "vespucci",
     "n": "Amerigo Vespucci",
-    "d": "Navigator, 1454-1512"
+    "d": "Navigator, 1454-1512",
+    "born": 1454,
+    "died": 1512
   },
   {
     "id": "victoria",
     "n": "Queen Victoria",
-    "d": "Queen and empress, 1819-1901"
+    "d": "Queen and empress, 1819-1901",
+    "born": 1819,
+    "died": 1901
   },
   {
     "id": "virgil",
@@ -1182,81 +1644,113 @@
   {
     "id": "vivaldi",
     "n": "Antonio Vivaldi",
-    "d": "Composer, 1678-1741"
+    "d": "Composer, 1678-1741",
+    "born": 1678,
+    "died": 1741
   },
   {
     "id": "voltaire",
     "n": "Voltaire",
-    "d": "Writer and philosopher, 1694-1778"
+    "d": "Writer and philosopher, 1694-1778",
+    "born": 1694,
+    "died": 1778
   },
   {
     "id": "wagner",
     "n": "Richard Wagner",
-    "d": "Composer, 1813-1883"
+    "d": "Composer, 1813-1883",
+    "born": 1813,
+    "died": 1883
   },
   {
     "id": "wallace",
     "n": "Alfred Russel Wallace",
-    "d": "Naturalist, 1823-1913"
+    "d": "Naturalist, 1823-1913",
+    "born": 1823,
+    "died": 1913
   },
   {
     "id": "walsingham",
     "n": "Francis Walsingham",
-    "d": "Spymaster, c. 1532-1590"
+    "d": "Spymaster, c. 1532-1590",
+    "born": 1532,
+    "died": 1590
   },
   {
     "id": "washington",
     "n": "George Washington",
-    "d": "General and president, 1732-1799"
+    "d": "General and president, 1732-1799",
+    "born": 1732,
+    "died": 1799
   },
   {
     "id": "watt",
     "n": "James Watt",
-    "d": "Engineer, 1736-1819"
+    "d": "Engineer, 1736-1819",
+    "born": 1736,
+    "died": 1819
   },
   {
     "id": "wedgwood",
     "n": "Josiah Wedgwood",
-    "d": "Potter, 1730-1795"
+    "d": "Potter, 1730-1795",
+    "born": 1730,
+    "died": 1795
   },
   {
     "id": "wellington",
     "n": "Arthur Wellesley",
-    "d": "Duke of Wellington, 1769-1852"
+    "d": "Duke of Wellington, 1769-1852",
+    "born": 1769,
+    "died": 1852
   },
   {
     "id": "whistler",
     "n": "James Whistler",
-    "d": "Painter, 1834-1903"
+    "d": "Painter, 1834-1903",
+    "born": 1834,
+    "died": 1903
   },
   {
     "id": "william-herschel",
     "n": "William Herschel",
-    "d": "Astronomer, 1738-1822"
+    "d": "Astronomer, 1738-1822",
+    "born": 1738,
+    "died": 1822
   },
   {
     "id": "william-iii",
     "n": "William III",
-    "d": "King of England, 1650-1702"
+    "d": "King of England, 1650-1702",
+    "born": 1650,
+    "died": 1702
   },
   {
     "id": "wollstonecraft",
     "n": "Mary Wollstonecraft",
-    "d": "Writer, 1759-1797"
+    "d": "Writer, 1759-1797",
+    "born": 1759,
+    "died": 1797
   },
   {
     "id": "wordsworth",
     "n": "William Wordsworth",
-    "d": "Poet, 1770-1850"
+    "d": "Poet, 1770-1850",
+    "born": 1770,
+    "died": 1850
   },
   {
     "id": "wren",
     "n": "Christopher Wren",
-    "d": "Architect and scientist, 1632-1723"
+    "d": "Architect and scientist, 1632-1723",
+    "born": 1632,
+    "died": 1723
   },
   {
     "id": "zola",
     "n": "Emile Zola",
-    "d": "Novelist, 1840-1902"
+    "d": "Novelist, 1840-1902",
+    "born": 1840,
+    "died": 1902
   }
 ]

@@ -141,7 +141,9 @@
     "id": "congress-of-vienna",
     "n": "The Congress of Vienna",
     "d": "Diplomatic congress, 1814-1815",
-    "y": 1814
+    "q": "The great powers convene at Vienna to redraw the map of Europe.",
+    "y": 1814,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "curiosity-landing",
@@ -431,9 +433,11 @@
     "id": "lepanto",
     "n": "The Battle of Lepanto",
     "d": "Naval battle, 1571",
+    "q": "A Holy League fleet defeats the Ottoman navy at Lepanto.",
     "y": 1571,
     "month": 10,
-    "day": 7
+    "day": 7,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "lincoln-assassinated",
@@ -627,9 +631,11 @@
     "id": "solvay-1911",
     "n": "The First Solvay Conference",
     "d": "Council of physics, 1911",
+    "q": "Europe’s leading physicists gather in Brussels for the first Solvay Conference.",
     "y": 1911,
     "month": 10,
-    "day": 30
+    "day": 30,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "spanish-armada",
@@ -686,9 +692,11 @@
     "id": "trafalgar",
     "n": "The Battle of Trafalgar",
     "d": "Naval battle, 1805",
+    "q": "Nelson defeats the Franco-Spanish fleet at Trafalgar.",
     "y": 1805,
     "month": 10,
-    "day": 21
+    "day": 21,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "id": "treaty-of-paris-1783",

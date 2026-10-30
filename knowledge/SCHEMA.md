@@ -41,7 +41,8 @@ schedule that the first post-flip bank change reshuffles.
 Every entity may also carry (nothing requires them yet):
 
 - sameAs - the Wikidata Q-id (Q42), for dedupe and cross-checks
-- provenance - where the fact came from, and when it was reviewed
+- provenance - where the fact came from, and when it was reviewed;
+  facts added since the layer audit carry a reviewed date
 - born / died (people), month / day (events) and from / to (presence
   spans) - structured dates, only when defensible
 
@@ -51,7 +52,10 @@ Every entity may also carry (nothing requires them yet):
   that turned a planned John Franklin id into john-franklin is why.
 - Honest dates or none. A year is a positive integer, so the
   ancients carry their BCE ranges in d alone; month-day and presence
-  spans are recorded only when they are defensible.
+  spans are recorded only when they are defensible. A presence
+  span stays inside its person's life dates, a dated relation touches
+  at least one living endpoint, and a relation never precedes the
+  event it names.
 - Original prose only. Never paste text from Wikipedia or any other
   share-alike source; contamination forecloses every future option.
 - Facts about the world live here. Facts about how a puzzle plays

@@ -305,6 +305,12 @@
   },
   {
     "a": "charles-v",
+    "b": "isabella",
+    "w": null,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "a": "charles-v",
     "b": "magellan",
     "y": 1519,
     "w": "Funded the voyage that first circled the Earth"
@@ -963,6 +969,12 @@
     "w": "The young diplomat sat at his feet in Paris"
   },
   {
+    "a": "isabella",
+    "b": "philip-ii",
+    "w": null,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "a": "james-clark-ross",
     "b": "hooker",
     "y": 1839,
@@ -1463,8 +1475,9 @@
   {
     "a": "newton",
     "b": "emilie",
-    "y": 1759,
-    "w": "Her French Principia is still the standard edition"
+    "y": 1749,
+    "w": "Her French Principia is still the standard edition",
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "a": "newton",

@@ -46,23 +46,23 @@
       "Andrea del Verrocchio",
       "Gentile Bellini",
       "Giovanni Bellini",
-      "Botticelli"
+      "Leonardo da Vinci"
     ],
     "a": 3,
-    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Botticelli was in Florence (1470-1510)."
+    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Leonardo da Vinci was in Milan (1482-1499)."
   },
   {
     "t": "Venice",
     "y": 1486,
     "q": "Venice, 1486. Three of these four were in the city that year. Who missed the table?",
     "opts": [
-      "Botticelli",
+      "Leonardo da Vinci",
       "Andrea del Verrocchio",
       "Gentile Bellini",
       "Giovanni Bellini"
     ],
     "a": 0,
-    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Botticelli was in Florence (1470-1510)."
+    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Leonardo da Vinci was in Milan (1482-1499)."
   },
   {
     "t": "Venice",
@@ -71,11 +71,11 @@
     "opts": [
       "Andrea del Verrocchio",
       "Gentile Bellini",
-      "Botticelli",
+      "Leonardo da Vinci",
       "Giovanni Bellini"
     ],
     "a": 2,
-    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Botticelli was in Florence (1470-1510)."
+    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Leonardo da Vinci was in Milan (1482-1499)."
   },
   {
     "t": "Florence",
@@ -239,12 +239,12 @@
     "q": "London, 1700. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Isaac Newton",
-      "Samuel Pepys",
+      "Robert Hooke",
       "Louis XIV",
-      "Christopher Wren"
+      "Samuel Pepys"
     ],
     "a": 2,
-    "w": "In London then: Isaac Newton (1696-1727), Samuel Pepys (1660-1703), Christopher Wren (1666-1723). Louis XIV was in Versailles (1682-1715)."
+    "w": "In London then: Isaac Newton (1696-1727), Robert Hooke (1662-1703), Samuel Pepys (1660-1703). Louis XIV was in Versailles (1682-1715)."
   },
   {
     "t": "Philadelphia",
@@ -252,38 +252,38 @@
     "q": "Philadelphia, 1775. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Thomas Jefferson",
-      "Edmund Burke",
+      "Joseph Banks",
       "Thomas Paine",
       "Benjamin Franklin"
     ],
     "a": 1,
-    "w": "In Philadelphia then: Thomas Jefferson (1775-1776), Thomas Paine (1774-1776), Benjamin Franklin (1723-1776). Edmund Burke was in London (1765-1797)."
+    "w": "In Philadelphia then: Thomas Jefferson (1775-1776), Thomas Paine (1774-1776), Benjamin Franklin (1723-1776). Joseph Banks was in London (1772-1820)."
   },
   {
     "t": "Philadelphia",
     "y": 1776,
     "q": "Philadelphia, 1776. Three of these four were in the city that year. Who missed the table?",
     "opts": [
-      "Edmund Burke",
+      "Joseph Banks",
       "Thomas Jefferson",
       "Thomas Paine",
       "Benjamin Franklin"
     ],
     "a": 0,
-    "w": "In Philadelphia then: Thomas Jefferson (1775-1776), Thomas Paine (1774-1776), Benjamin Franklin (1723-1776). Edmund Burke was in London (1765-1797)."
+    "w": "In Philadelphia then: Thomas Jefferson (1775-1776), Thomas Paine (1774-1776), Benjamin Franklin (1723-1776). Joseph Banks was in London (1772-1820)."
   },
   {
     "t": "Paris",
     "y": 1789,
     "q": "Paris, 1789. Three of these four were in the city that year. Who missed the table?",
     "opts": [
-      "Edmund Burke",
+      "Joseph Banks",
       "Marquis de Lafayette",
       "Jean-Paul Marat",
       "Marie Antoinette"
     ],
     "a": 0,
-    "w": "In Paris then: Marquis de Lafayette (1789-1792), Jean-Paul Marat (1789-1793), Marie Antoinette (1789-1793). Edmund Burke was in London (1765-1797)."
+    "w": "In Paris then: Marquis de Lafayette (1789-1792), Jean-Paul Marat (1789-1793), Marie Antoinette (1789-1793). Joseph Banks was in London (1772-1820)."
   },
   {
     "t": "Paris",
@@ -293,10 +293,10 @@
       "Marquis de Lafayette",
       "Jean-Paul Marat",
       "Marie Antoinette",
-      "Edmund Burke"
+      "Joseph Banks"
     ],
     "a": 3,
-    "w": "In Paris then: Marquis de Lafayette (1789-1792), Jean-Paul Marat (1789-1793), Marie Antoinette (1789-1793). Edmund Burke was in London (1765-1797)."
+    "w": "In Paris then: Marquis de Lafayette (1789-1792), Jean-Paul Marat (1789-1793), Marie Antoinette (1789-1793). Joseph Banks was in London (1772-1820)."
   },
   {
     "t": "Vienna",
@@ -305,11 +305,11 @@
     "opts": [
       "Joseph Haydn",
       "Franz Schubert",
-      "Johann Goethe",
+      "Joseph Banks",
       "Ludwig van Beethoven"
     ],
     "a": 2,
-    "w": "In Vienna then: Joseph Haydn (1796-1809), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Johann Goethe was in Weimar (1775-1832)."
+    "w": "In Vienna then: Joseph Haydn (1796-1809), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Joseph Banks was in London (1772-1820)."
   },
   {
     "t": "Vienna",
@@ -317,25 +317,25 @@
     "q": "Vienna, 1809. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Joseph Haydn",
-      "Johann Goethe",
+      "Joseph Banks",
       "Franz Schubert",
       "Ludwig van Beethoven"
     ],
     "a": 1,
-    "w": "In Vienna then: Joseph Haydn (1796-1809), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Johann Goethe was in Weimar (1775-1832)."
+    "w": "In Vienna then: Joseph Haydn (1796-1809), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Joseph Banks was in London (1772-1820)."
   },
   {
     "t": "Vienna",
     "y": 1822,
     "q": "Vienna, 1822. Three of these four were in the city that year. Who missed the table?",
     "opts": [
-      "Hector Berlioz",
+      "Charles Babbage",
       "Franz Liszt",
       "Franz Schubert",
       "Ludwig van Beethoven"
     ],
     "a": 0,
-    "w": "In Vienna then: Franz Liszt (1822-1823), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Hector Berlioz was in Paris (1821-1869)."
+    "w": "In Vienna then: Franz Liszt (1822-1823), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Vienna",
@@ -345,10 +345,10 @@
       "Franz Liszt",
       "Franz Schubert",
       "Ludwig van Beethoven",
-      "Hector Berlioz"
+      "Charles Babbage"
     ],
     "a": 3,
-    "w": "In Vienna then: Franz Liszt (1822-1823), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Hector Berlioz was in Paris (1821-1869)."
+    "w": "In Vienna then: Franz Liszt (1822-1823), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Paris",
@@ -356,51 +356,51 @@
     "q": "Paris, 1824. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Franz Liszt",
-      "Ludwig van Beethoven",
+      "Charles Babbage",
       "Victor Hugo",
       "Eugene Delacroix"
     ],
     "a": 1,
-    "w": "In Paris then: Franz Liszt (1823-1835), Victor Hugo (1821-1851), Eugene Delacroix (1822-1863). Ludwig van Beethoven was in Vienna (1792-1827)."
+    "w": "In Paris then: Franz Liszt (1823-1835), Victor Hugo (1821-1851), Eugene Delacroix (1822-1863). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Berlin",
     "y": 1827,
     "q": "Berlin, 1827. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Arthur Schopenhauer",
       "Georg Hegel",
       "Alexander von Humboldt",
-      "Felix Mendelssohn",
-      "Ludwig van Beethoven"
+      "Charles Babbage"
     ],
     "a": 3,
-    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Ludwig van Beethoven was in Vienna (1792-1827)."
+    "w": "In Berlin then: Arthur Schopenhauer (1825-1831), Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Berlin",
     "y": 1829,
     "q": "Berlin, 1829. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Arthur Schopenhauer",
+      "Charles Babbage",
       "Georg Hegel",
-      "Hector Berlioz",
-      "Alexander von Humboldt",
-      "Felix Mendelssohn"
+      "Alexander von Humboldt"
     ],
     "a": 1,
-    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Hector Berlioz was in Paris (1821-1869)."
+    "w": "In Berlin then: Arthur Schopenhauer (1825-1831), Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Berlin",
     "y": 1831,
     "q": "Berlin, 1831. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Arthur Schopenhauer",
       "Georg Hegel",
       "Alexander von Humboldt",
-      "Felix Mendelssohn",
-      "Hector Berlioz"
+      "Charles Babbage"
     ],
     "a": 3,
-    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Hector Berlioz was in Paris (1821-1869)."
+    "w": "In Berlin then: Arthur Schopenhauer (1825-1831), Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Paris",
@@ -408,12 +408,12 @@
     "q": "Paris, 1832. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Franz Liszt",
-      "Charles Dickens",
+      "Charles Babbage",
       "Frederic Chopin",
       "Victor Hugo"
     ],
     "a": 1,
-    "w": "In Paris then: Franz Liszt (1823-1835), Frederic Chopin (1831-1849), Victor Hugo (1821-1851). Charles Dickens was in London (1822-1870)."
+    "w": "In Paris then: Franz Liszt (1823-1835), Frederic Chopin (1831-1849), Victor Hugo (1821-1851). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "London",
@@ -421,12 +421,12 @@
     "q": "London, 1834. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Hector Berlioz",
-      "William Thackeray",
-      "Arthur Wellesley",
-      "Thomas Carlyle"
+      "Samuel Coleridge",
+      "John Stuart Mill",
+      "William Thackeray"
     ],
     "a": 0,
-    "w": "In London then: William Thackeray (1831-1863), Arthur Wellesley (1818-1852), Thomas Carlyle (1834-1881). Hector Berlioz was in Paris (1821-1869)."
+    "w": "In London then: Samuel Coleridge (1816-1834), John Stuart Mill (1830-1858), William Thackeray (1831-1863). Hector Berlioz was in Paris (1821-1869)."
   },
   {
     "t": "London",
@@ -434,25 +434,25 @@
     "q": "London, 1838. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Hector Berlioz",
-      "William Thackeray",
-      "Arthur Wellesley",
-      "Thomas Carlyle"
+      "Charles Darwin",
+      "Queen Victoria",
+      "John Stuart Mill"
     ],
     "a": 0,
-    "w": "In London then: William Thackeray (1831-1863), Arthur Wellesley (1818-1852), Thomas Carlyle (1834-1881). Hector Berlioz was in Paris (1821-1869)."
+    "w": "In London then: Charles Darwin (1837-1842), Queen Victoria (1837-1861), John Stuart Mill (1830-1858). Hector Berlioz was in Paris (1821-1869)."
   },
   {
     "t": "Paris",
     "y": 1845,
     "q": "Paris, 1845. Three of these four were in the city that year. Who missed the table?",
     "opts": [
-      "Thomas Carlyle",
+      "Charles Babbage",
       "Gustave Flaubert",
       "Frederic Chopin",
       "Charles Baudelaire"
     ],
     "a": 0,
-    "w": "In Paris then: Gustave Flaubert (1841-1846), Frederic Chopin (1831-1849), Charles Baudelaire (1842-1867). Thomas Carlyle was in London (1834-1881)."
+    "w": "In Paris then: Gustave Flaubert (1841-1846), Frederic Chopin (1831-1849), Charles Baudelaire (1842-1867). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "London",
@@ -460,12 +460,12 @@
     "q": "London, 1846. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Charles Baudelaire",
-      "William Thackeray",
-      "Arthur Wellesley",
-      "Thomas Carlyle"
+      "Queen Victoria",
+      "John Stuart Mill",
+      "William Thackeray"
     ],
     "a": 0,
-    "w": "In London then: William Thackeray (1831-1863), Arthur Wellesley (1818-1852), Thomas Carlyle (1834-1881). Charles Baudelaire was in Paris (1842-1867)."
+    "w": "In London then: Queen Victoria (1837-1861), John Stuart Mill (1830-1858), William Thackeray (1831-1863). Charles Baudelaire was in Paris (1842-1867)."
   },
   {
     "t": "Paris",
@@ -485,13 +485,13 @@
     "y": 1851,
     "q": "London, 1851. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Queen Victoria",
+      "John Stuart Mill",
       "George Eliot",
-      "William Thackeray",
-      "Arthur Wellesley",
       "Charles Baudelaire"
     ],
     "a": 3,
-    "w": "In London then: George Eliot (1851-1880), William Thackeray (1831-1863), Arthur Wellesley (1818-1852). Charles Baudelaire was in Paris (1842-1867)."
+    "w": "In London then: Queen Victoria (1837-1861), John Stuart Mill (1830-1858), George Eliot (1851-1880). Charles Baudelaire was in Paris (1842-1867)."
   },
   {
     "t": "Paris",
@@ -512,12 +512,12 @@
     "q": "London, 1858. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "Charles Baudelaire",
-      "George Eliot",
-      "William Thackeray",
-      "Thomas Carlyle"
+      "Queen Victoria",
+      "John Stuart Mill",
+      "George Eliot"
     ],
     "a": 0,
-    "w": "In London then: George Eliot (1851-1880), William Thackeray (1831-1863), Thomas Carlyle (1834-1881). Charles Baudelaire was in Paris (1842-1867)."
+    "w": "In London then: Queen Victoria (1837-1861), John Stuart Mill (1830-1858), George Eliot (1851-1880). Charles Baudelaire was in Paris (1842-1867)."
   },
   {
     "t": "Paris",
@@ -537,26 +537,26 @@
     "y": 1862,
     "q": "Paris, 1862. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Paul Cezanne",
       "Claude Monet",
       "Pierre-Auguste Renoir",
-      "Camille Pissarro",
-      "Thomas Carlyle"
+      "Charles Babbage"
     ],
     "a": 3,
-    "w": "In Paris then: Claude Monet (1862-1867), Pierre-Auguste Renoir (1862-1867), Camille Pissarro (1855-1870). Thomas Carlyle was in London (1834-1881)."
+    "w": "In Paris then: Paul Cezanne (1861-1863), Claude Monet (1862-1867), Pierre-Auguste Renoir (1862-1867). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "London",
     "y": 1863,
     "q": "London, 1863. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "James Clerk Maxwell",
       "George Eliot",
       "William Thackeray",
-      "Thomas Carlyle",
       "Charles Baudelaire"
     ],
     "a": 3,
-    "w": "In London then: George Eliot (1851-1880), William Thackeray (1831-1863), Thomas Carlyle (1834-1881). Charles Baudelaire was in Paris (1842-1867)."
+    "w": "In London then: James Clerk Maxwell (1860-1865), George Eliot (1851-1880), William Thackeray (1831-1863). Charles Baudelaire was in Paris (1842-1867)."
   },
   {
     "t": "London",
@@ -565,11 +565,11 @@
     "opts": [
       "Charles Baudelaire",
       "George Eliot",
-      "Thomas Carlyle",
-      "Charles Dickens"
+      "Herbert Spencer",
+      "Thomas Huxley"
     ],
     "a": 0,
-    "w": "In London then: George Eliot (1851-1880), Thomas Carlyle (1834-1881), Charles Dickens (1822-1870). Charles Baudelaire was in Paris (1842-1867)."
+    "w": "In London then: George Eliot (1851-1880), Herbert Spencer (1848-1882), Thomas Huxley (1854-1895). Charles Baudelaire was in Paris (1842-1867)."
   },
   {
     "t": "Paris",
@@ -579,10 +579,10 @@
       "Claude Monet",
       "Pierre-Auguste Renoir",
       "Camille Pissarro",
-      "Thomas Carlyle"
+      "Charles Babbage"
     ],
     "a": 3,
-    "w": "In Paris then: Claude Monet (1862-1867), Pierre-Auguste Renoir (1862-1867), Camille Pissarro (1855-1870). Thomas Carlyle was in London (1834-1881)."
+    "w": "In Paris then: Claude Monet (1862-1867), Pierre-Auguste Renoir (1862-1867), Camille Pissarro (1855-1870). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "Paris",
@@ -592,10 +592,10 @@
       "Camille Pissarro",
       "Napoleon III",
       "Edouard Manet",
-      "Johannes Brahms"
+      "Charles Babbage"
     ],
     "a": 3,
-    "w": "In Paris then: Camille Pissarro (1855-1870), Napoleon III (1848-1870), Edouard Manet (1850-1883). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In Paris then: Camille Pissarro (1855-1870), Napoleon III (1848-1870), Edouard Manet (1850-1883). Charles Babbage was in London (1814-1871)."
   },
   {
     "t": "London",
@@ -605,23 +605,23 @@
       "Mark Twain",
       "George Eliot",
       "Johannes Brahms",
-      "Thomas Carlyle"
+      "Herbert Spencer"
     ],
     "a": 2,
-    "w": "In London then: Mark Twain (1872-1874), George Eliot (1851-1880), Thomas Carlyle (1834-1881). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In London then: Mark Twain (1872-1874), George Eliot (1851-1880), Herbert Spencer (1848-1882). Johannes Brahms was in Vienna (1869-1897)."
   },
   {
     "t": "Paris",
     "y": 1875,
     "q": "Paris, 1875. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Mary Cassatt",
       "Ivan Turgenev",
-      "Edouard Manet",
       "Johannes Brahms",
-      "Emile Zola"
+      "Edouard Manet"
     ],
     "a": 2,
-    "w": "In Paris then: Ivan Turgenev (1871-1883), Edouard Manet (1850-1883), Emile Zola (1858-1897). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In Paris then: Mary Cassatt (1874-1886), Ivan Turgenev (1871-1883), Edouard Manet (1850-1883). Johannes Brahms was in Vienna (1869-1897)."
   },
   {
     "t": "London",
@@ -630,11 +630,11 @@
     "opts": [
       "Johannes Brahms",
       "George Eliot",
-      "Thomas Carlyle",
-      "John Millais"
+      "Herbert Spencer",
+      "Thomas Huxley"
     ],
     "a": 0,
-    "w": "In London then: George Eliot (1851-1880), Thomas Carlyle (1834-1881), John Millais (1846-1896). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In London then: George Eliot (1851-1880), Herbert Spencer (1848-1882), Thomas Huxley (1854-1895). Johannes Brahms was in Vienna (1869-1897)."
   },
   {
     "t": "London",
@@ -642,37 +642,37 @@
     "q": "London, 1880. Three of these four were in the city that year. Who missed the table?",
     "opts": [
       "George Eliot",
-      "Thomas Carlyle",
+      "Herbert Spencer",
       "Johannes Brahms",
-      "John Millais"
+      "Thomas Huxley"
     ],
     "a": 2,
-    "w": "In London then: George Eliot (1851-1880), Thomas Carlyle (1834-1881), John Millais (1846-1896). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In London then: George Eliot (1851-1880), Herbert Spencer (1848-1882), Thomas Huxley (1854-1895). Johannes Brahms was in Vienna (1869-1897)."
   },
   {
     "t": "Paris",
     "y": 1880,
     "q": "Paris, 1880. Three of these four were in the city that year. Who missed the table?",
     "opts": [
-      "Ivan Turgenev",
+      "Mary Cassatt",
       "Johannes Brahms",
-      "Edouard Manet",
-      "Emile Zola"
+      "Ivan Turgenev",
+      "Edouard Manet"
     ],
     "a": 1,
-    "w": "In Paris then: Ivan Turgenev (1871-1883), Edouard Manet (1850-1883), Emile Zola (1858-1897). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In Paris then: Mary Cassatt (1874-1886), Ivan Turgenev (1871-1883), Edouard Manet (1850-1883). Johannes Brahms was in Vienna (1869-1897)."
   },
   {
     "t": "Paris",
     "y": 1883,
     "q": "Paris, 1883. Three of these four were in the city that year. Who missed the table?",
     "opts": [
+      "Mary Cassatt",
       "Ivan Turgenev",
-      "Edouard Manet",
       "Johannes Brahms",
-      "Emile Zola"
+      "Edouard Manet"
     ],
     "a": 2,
-    "w": "In Paris then: Ivan Turgenev (1871-1883), Edouard Manet (1850-1883), Emile Zola (1858-1897). Johannes Brahms was in Vienna (1869-1897)."
+    "w": "In Paris then: Mary Cassatt (1874-1886), Ivan Turgenev (1871-1883), Edouard Manet (1850-1883). Johannes Brahms was in Vienna (1869-1897)."
   }
 ]

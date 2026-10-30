@@ -1,5 +1,26 @@
 [
   {
+    "p": "anne-boleyn",
+    "place": "london",
+    "from": 1533,
+    "to": 1536,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "babbage",
+    "place": "london",
+    "from": 1814,
+    "to": 1871,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "banks",
+    "place": "london",
+    "from": 1772,
+    "to": 1820,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "baudelaire",
     "place": "paris",
     "from": 1842,
@@ -24,16 +45,37 @@
     "to": 1680
   },
   {
+    "p": "boswell",
+    "place": "edinburgh",
+    "from": 1769,
+    "to": 1773,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "botticelli",
     "place": "florence",
     "from": 1470,
     "to": 1510
   },
   {
+    "p": "boyle",
+    "place": "london",
+    "from": 1668,
+    "to": 1691,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "brahms",
     "place": "vienna",
     "from": 1869,
     "to": 1897
+  },
+  {
+    "p": "brunel",
+    "place": "london",
+    "from": 1823,
+    "to": 1859,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "burke",
@@ -60,10 +102,31 @@
     "to": 1881
   },
   {
+    "p": "cassatt",
+    "place": "paris",
+    "from": 1874,
+    "to": 1886,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "catherine",
+    "place": "st-petersburg",
+    "from": 1762,
+    "to": 1796,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "cervantes",
     "place": "madrid",
     "from": 1606,
     "to": 1616
+  },
+  {
+    "p": "cesare-borgia",
+    "place": "milan",
+    "from": 1499,
+    "to": 1499,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "cesare-borgia",
@@ -72,16 +135,51 @@
     "to": 1498
   },
   {
+    "p": "cezanne",
+    "place": "paris",
+    "from": 1861,
+    "to": 1863,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "charles-ii",
+    "place": "london",
+    "from": 1660,
+    "to": 1685,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "chopin",
     "place": "paris",
     "from": 1831,
     "to": 1849
   },
   {
+    "p": "christina",
+    "place": "rome",
+    "from": 1655,
+    "to": 1689,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "coleridge",
+    "place": "london",
+    "from": 1816,
+    "to": 1834,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "columbus",
     "place": "lisbon",
     "from": 1476,
     "to": 1485
+  },
+  {
+    "p": "curie",
+    "place": "paris",
+    "from": 1891,
+    "to": 1934,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "da-gama",
@@ -96,6 +194,13 @@
     "to": 1302
   },
   {
+    "p": "darwin",
+    "place": "london",
+    "from": 1837,
+    "to": 1842,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "degas",
     "place": "paris",
     "from": 1855,
@@ -106,6 +211,13 @@
     "place": "paris",
     "from": 1822,
     "to": 1863
+  },
+  {
+    "p": "descartes",
+    "place": "amsterdam",
+    "from": 1630,
+    "to": 1635,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "dickens",
@@ -130,6 +242,27 @@
     "place": "paris",
     "from": 1823,
     "to": 1870
+  },
+  {
+    "p": "einstein",
+    "place": "berlin",
+    "from": 1914,
+    "to": 1932,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "elizabeth-i",
+    "place": "london",
+    "from": 1558,
+    "to": 1603,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "faraday",
+    "place": "london",
+    "from": 1813,
+    "to": 1862,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "flaubert",
@@ -210,6 +343,13 @@
     "to": 1885
   },
   {
+    "p": "guy-fawkes",
+    "place": "london",
+    "from": 1604,
+    "to": 1605,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "hawthorne",
     "place": "rome",
     "from": 1858,
@@ -226,6 +366,27 @@
     "place": "berlin",
     "from": 1818,
     "to": 1831
+  },
+  {
+    "p": "henry-viii",
+    "place": "london",
+    "from": 1509,
+    "to": 1547,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "holbein",
+    "place": "london",
+    "from": 1532,
+    "to": 1543,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "hooke",
+    "place": "london",
+    "from": 1662,
+    "to": 1703,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "hugo",
@@ -246,6 +407,27 @@
     "to": 1776
   },
   {
+    "p": "hume",
+    "place": "paris",
+    "from": 1763,
+    "to": 1766,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "huxley",
+    "place": "london",
+    "from": 1854,
+    "to": 1895,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "james-i",
+    "place": "london",
+    "from": 1603,
+    "to": 1625,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "jefferson",
     "place": "paris",
     "from": 1784,
@@ -256,6 +438,13 @@
     "place": "philadelphia",
     "from": 1775,
     "to": 1776
+  },
+  {
+    "p": "johnson",
+    "place": "edinburgh",
+    "from": 1773,
+    "to": 1773,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "johnson",
@@ -274,6 +463,13 @@
     "place": "paris",
     "from": 1789,
     "to": 1792
+  },
+  {
+    "p": "lafayette",
+    "place": "versailles",
+    "from": 1774,
+    "to": 1777,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "leonardo",
@@ -306,6 +502,13 @@
     "to": 1516
   },
   {
+    "p": "leonardo",
+    "place": "venice",
+    "from": 1500,
+    "to": 1500,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "liszt",
     "place": "paris",
     "from": 1823,
@@ -322,6 +525,13 @@
     "place": "weimar",
     "from": 1848,
     "to": 1861
+  },
+  {
+    "p": "locke",
+    "place": "london",
+    "from": 1667,
+    "to": 1675,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "lorenzo",
@@ -390,6 +600,20 @@
     "to": 1789
   },
   {
+    "p": "marlowe",
+    "place": "london",
+    "from": 1587,
+    "to": 1593,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "maxwell",
+    "place": "london",
+    "from": 1860,
+    "to": 1865,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "mehmed-ii",
     "place": "constantinople",
     "from": 1453,
@@ -406,6 +630,13 @@
     "place": "berlin",
     "from": 1811,
     "to": 1847
+  },
+  {
+    "p": "metternich",
+    "place": "vienna",
+    "from": 1809,
+    "to": 1848,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "michelangelo",
@@ -430,6 +661,13 @@
     "place": "rome",
     "from": 1534,
     "to": 1564
+  },
+  {
+    "p": "mill",
+    "place": "london",
+    "from": 1830,
+    "to": 1858,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "millais",
@@ -498,6 +736,20 @@
     "to": 1870
   },
   {
+    "p": "poe",
+    "place": "new-york",
+    "from": 1844,
+    "to": 1846,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "pushkin",
+    "place": "st-petersburg",
+    "from": 1831,
+    "to": 1837,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "raphael",
     "place": "rome",
     "from": 1508,
@@ -520,6 +772,13 @@
     "place": "paris",
     "from": 1742,
     "to": 1762
+  },
+  {
+    "p": "rubens",
+    "place": "madrid",
+    "from": 1628,
+    "to": 1629,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "ruskin",
@@ -546,6 +805,13 @@
     "to": 1813
   },
   {
+    "p": "schopenhauer",
+    "place": "berlin",
+    "from": 1825,
+    "to": 1831,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "schubert",
     "place": "vienna",
     "from": 1808,
@@ -556,6 +822,20 @@
     "place": "london",
     "from": 1592,
     "to": 1613
+  },
+  {
+    "p": "smith",
+    "place": "edinburgh",
+    "from": 1748,
+    "to": 1751,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "spencer",
+    "place": "london",
+    "from": 1848,
+    "to": 1882,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "spinoza",
@@ -576,6 +856,27 @@
     "to": 1863
   },
   {
+    "p": "thomas-cromwell",
+    "place": "london",
+    "from": 1530,
+    "to": 1540,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "thomas-more",
+    "place": "london",
+    "from": 1478,
+    "to": 1518,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "thomas-more",
+    "place": "london",
+    "from": 1534,
+    "to": 1535,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "titian",
     "place": "venice",
     "from": 1510,
@@ -588,10 +889,31 @@
     "to": 1883
   },
   {
+    "p": "turgenev",
+    "place": "st-petersburg",
+    "from": 1834,
+    "to": 1836,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "twain",
     "place": "london",
     "from": 1872,
     "to": 1874
+  },
+  {
+    "p": "twain",
+    "place": "new-york",
+    "from": 1904,
+    "to": 1908,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "twain",
+    "place": "vienna",
+    "from": 1897,
+    "to": 1899,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "velazquez",
@@ -624,6 +946,20 @@
     "to": 1488
   },
   {
+    "p": "victoria",
+    "place": "london",
+    "from": 1837,
+    "to": 1861,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "p": "vivaldi",
+    "place": "venice",
+    "from": 1703,
+    "to": 1740,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
     "p": "wagner",
     "place": "venice",
     "from": 1858,
@@ -634,6 +970,13 @@
     "place": "venice",
     "from": 1882,
     "to": 1883
+  },
+  {
+    "p": "walsingham",
+    "place": "london",
+    "from": 1573,
+    "to": 1590,
+    "provenance": "reviewed 2026-10-30"
   },
   {
     "p": "washington",

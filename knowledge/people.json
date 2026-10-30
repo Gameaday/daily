@@ -707,7 +707,8 @@
     "n": "Arcangelo Corelli",
     "d": "Composer, 1653-1713",
     "born": 1653,
-    "died": 1713
+    "died": 1713,
+    "works": 72
   },
   {
     "id": "cortes",
@@ -1846,7 +1847,8 @@
     "n": "Pope Julius II",
     "d": "Warrior pope, 1443-1513",
     "born": 1443,
-    "died": 1513
+    "died": 1513,
+    "reign": 10
   },
   {
     "id": "justinian",
@@ -2287,7 +2289,8 @@
     "n": "Mehmed II",
     "d": "Conqueror of Constantinople, 1432-1481",
     "born": 1432,
-    "died": 1481
+    "died": 1481,
+    "reign": 30
   },
   {
     "id": "meiji",
@@ -2535,7 +2538,8 @@
     "n": "Oliver Cromwell",
     "d": "Lord Protector, 1599-1658",
     "born": 1599,
-    "died": 1658
+    "died": 1658,
+    "reign": 5
   },
   {
     "id": "omar-khayyam",

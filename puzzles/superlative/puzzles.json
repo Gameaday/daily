@@ -305,7 +305,29 @@
       "Arcangelo Corelli"
     ],
     "a": 2,
-    "w": "Constantine 65 (272-337); James Cook 51 (1728-1779); Copernicus 70 (1473-1543); Arcangelo Corelli 60 (1653-1713)."
+    "w": "Constantine 65 (272-337); James Cook 51 (1728-1779); Copernicus 70 (1473-1543); Arcangelo Corelli 60 (1653-1713).",
+    "b": [
+      {
+        "q": "lived the longest",
+        "a": 2,
+        "v": "70 years"
+      },
+      {
+        "q": "was born first",
+        "a": 0,
+        "v": "born 272"
+      },
+      {
+        "q": "was born last",
+        "a": 1,
+        "v": "born 1728"
+      },
+      {
+        "q": "was the most prolific",
+        "a": 3,
+        "v": "72 works"
+      }
+    ]
   },
   {
     "t": "Birth Order",

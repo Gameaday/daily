@@ -330,6 +330,14 @@ at 21, Napoleon III at 18, Nader Shah at 11. 3 boards carry
 the bonus now; the composers without a crisp catalogue count stay
 honest at zero until a reputable source settles them.
 
+Batch three goes targeted: the blocker map says 51 boards sit one
+number away, and the batch seats what a reputable source settles,
+Corelli at 72 (six published sets of twelve, the authenticated
+works), plus three crowns the first pass missed, Mehmed II at 30,
+Julius II at 10, Cromwell at 5. 4 boards carry the bonus
+now (0, 6, 21, 44). Vivaldi stays honest at zero: the RV
+catalogue is open-ended past 740, so no standard total exists.
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

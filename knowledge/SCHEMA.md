@@ -42,7 +42,12 @@ schedule that the first post-flip bank change reshuffles.
   structures and kept things to the places they belong to. y is a positive integer year, and it is absent when no honest
   one exists (ancient relations carry no y at all).
 - places.json - cities the presence spans anchor to and the
-  location relations point at. Fields: id, n, d.
+  location relations point at. Fields: id, n, d, plus optional
+  numbers a reputable source states: pop (the latest city proper
+  population a census or the national statistics office settles),
+  popYear (the year that figure dates from) and tall (the commonly
+  cited height in whole meters of the city's tallest building,
+  recorded only where no contest over the figure exists).
 - world.json - the wider world the day tiles will point at: ships,
   deities, myths, works, buildings, instruments, geography,
   organizations, foods, words, money and games. Fields: id, n, d.

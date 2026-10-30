@@ -2,91 +2,140 @@
   {
     "id": "amsterdam",
     "n": "Amsterdam",
-    "d": "Chief city of Holland"
+    "d": "Chief city of Holland",
+    "pop": 941873,
+    "popYear": 2026,
+    "tall": 135
   },
   {
     "id": "berlin",
     "n": "Berlin",
-    "d": "Capital of Prussia"
+    "d": "Capital of Prussia",
+    "pop": 3700577,
+    "popYear": 2025
   },
   {
     "id": "constantinople",
     "n": "Constantinople",
-    "d": "Imperial city on the Bosphorus"
+    "d": "Imperial city on the Bosphorus",
+    "pop": 15701602,
+    "popYear": 2024,
+    "tall": 354
   },
   {
     "id": "edinburgh",
     "n": "Edinburgh",
-    "d": "Capital of Scotland"
+    "d": "Capital of Scotland",
+    "pop": 531370,
+    "popYear": 2025,
+    "tall": 90
   },
   {
     "id": "florence",
     "n": "Florence",
-    "d": "City on the Arno, seat of the Medici"
+    "d": "City on the Arno, seat of the Medici",
+    "pop": 361625,
+    "popYear": 2026
   },
   {
     "id": "lisbon",
     "n": "Lisbon",
-    "d": "Capital of Portugal"
+    "d": "Capital of Portugal",
+    "pop": 545796,
+    "popYear": 2021,
+    "tall": 160
   },
   {
     "id": "london",
     "n": "London",
-    "d": "Capital of England"
+    "d": "Capital of England",
+    "pop": 9122909,
+    "popYear": 2025,
+    "tall": 310
   },
   {
     "id": "madrid",
     "n": "Madrid",
-    "d": "Capital of Spain"
+    "d": "Capital of Spain",
+    "pop": 3477497,
+    "popYear": 2025,
+    "tall": 249
   },
   {
     "id": "milan",
     "n": "Milan",
-    "d": "City of the Lombard plain"
+    "d": "City of the Lombard plain",
+    "pop": 1362863,
+    "popYear": 2026
   },
   {
     "id": "new-york",
     "n": "New York",
-    "d": "Largest city of the United States"
+    "d": "Largest city of the United States",
+    "pop": 8586038,
+    "popYear": 2026,
+    "tall": 541
   },
   {
     "id": "paris",
     "n": "Paris",
-    "d": "Capital of France"
+    "d": "Capital of France",
+    "pop": 2103778,
+    "popYear": 2023,
+    "tall": 210
   },
   {
     "id": "philadelphia",
     "n": "Philadelphia",
-    "d": "Founding capital of the United States"
+    "d": "Founding capital of the United States",
+    "pop": 1573916,
+    "popYear": 2025,
+    "tall": 342
   },
   {
     "id": "rome",
     "n": "Rome",
-    "d": "City of the popes"
+    "d": "City of the popes",
+    "pop": 2745062,
+    "popYear": 2026,
+    "tall": 155
   },
   {
     "id": "st-petersburg",
     "n": "St. Petersburg",
-    "d": "Capital of the Russian empire"
+    "d": "Capital of the Russian empire",
+    "pop": 5601911,
+    "popYear": 2021,
+    "tall": 462
   },
   {
     "id": "venice",
     "n": "Venice",
-    "d": "Capital of the lagoon republic"
+    "d": "Capital of the lagoon republic",
+    "pop": 249385,
+    "popYear": 2026,
+    "tall": 99
   },
   {
     "id": "versailles",
     "n": "Versailles",
-    "d": "The Bourbon palace capital"
+    "d": "The Bourbon palace capital",
+    "pop": 84095,
+    "popYear": 2023
   },
   {
     "id": "vienna",
     "n": "Vienna",
-    "d": "Capital of the Habsburgs"
+    "d": "Capital of the Habsburgs",
+    "pop": 2040914,
+    "popYear": 2026,
+    "tall": 250
   },
   {
     "id": "weimar",
     "n": "Weimar",
-    "d": "Court city in Thuringia"
+    "d": "Court city in Thuringia",
+    "pop": 65566,
+    "popYear": 2025
   }
 ]

@@ -387,6 +387,27 @@ asserts every board seats four chips, the calculated-middle pin
 lives on day 13 (Byrd), and the most-average pin on day 48
 (Hillary).
 
+The places batch gives the eighteen cities the numbers a later
+game can compare, the same completeness directive batch four
+answered for heights. Every city now carries pop, the latest city
+proper figure a census or the national statistics office settles,
+with popYear dating it, from Constantinople, which carries
+Istanbul's 15,701,602 at the end of 2024, down to Weimar's 65,566.
+Thirteen carry tall, the commonly cited height in whole meters of
+the city's tallest building: One World Trade Center stands 541
+for New York, the Lakhta Center 462 for Saint Petersburg, the
+Shard 310 for London, the CBRT Tower 354 for Constantinople, and
+at the other end the campanile of St Mark's counts 99 for Venice
+and St Mary's Cathedral spire 90 for Edinburgh. Five stay honest
+without one: Berlin's Estrel Tower tops out at 176 but no source
+confirms it open, Milan's Allianz Tower is fought over between its
+architectural height and its antenna pinnacle, and Florence,
+Versailles and Weimar keep no standard figure at all. Lisbon's
+census count stands at 545,796 because the newer estimate track
+(658,236) outruns what the census series supports. Nothing compiles
+from these fields yet, so the batch is a deposit for the games the
+place layer will serve, and the compiled stores keep their bytes.
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

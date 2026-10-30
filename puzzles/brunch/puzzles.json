@@ -1,0 +1,678 @@
+[
+  {
+    "t": "Florence",
+    "y": 1469,
+    "q": "Florence, 1469. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Lorenzo de Medici",
+      "Andrea del Verrocchio",
+      "Gentile Bellini"
+    ],
+    "a": 3,
+    "w": "In Florence then: Leonardo da Vinci (1466-1482), Lorenzo de Medici (1449-1492), Andrea del Verrocchio (1435-1482). Gentile Bellini was in Venice (1454-1507)."
+  },
+  {
+    "t": "Florence",
+    "y": 1475,
+    "q": "Florence, 1475. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Gentile Bellini",
+      "Botticelli",
+      "Lorenzo de Medici"
+    ],
+    "a": 1,
+    "w": "In Florence then: Leonardo da Vinci (1466-1482), Botticelli (1470-1510), Lorenzo de Medici (1449-1492). Gentile Bellini was in Venice (1454-1507)."
+  },
+  {
+    "t": "Florence",
+    "y": 1482,
+    "q": "Florence, 1482. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Botticelli",
+      "Christopher Columbus",
+      "Lorenzo de Medici"
+    ],
+    "a": 2,
+    "w": "In Florence then: Leonardo da Vinci (1466-1482), Botticelli (1470-1510), Lorenzo de Medici (1449-1492). Christopher Columbus was in Lisbon (1476-1485)."
+  },
+  {
+    "t": "Venice",
+    "y": 1483,
+    "q": "Venice, 1483. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Andrea del Verrocchio",
+      "Gentile Bellini",
+      "Giovanni Bellini",
+      "Botticelli"
+    ],
+    "a": 3,
+    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Botticelli was in Florence (1470-1510)."
+  },
+  {
+    "t": "Venice",
+    "y": 1486,
+    "q": "Venice, 1486. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Botticelli",
+      "Andrea del Verrocchio",
+      "Gentile Bellini",
+      "Giovanni Bellini"
+    ],
+    "a": 0,
+    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Botticelli was in Florence (1470-1510)."
+  },
+  {
+    "t": "Venice",
+    "y": 1488,
+    "q": "Venice, 1488. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Andrea del Verrocchio",
+      "Gentile Bellini",
+      "Botticelli",
+      "Giovanni Bellini"
+    ],
+    "a": 2,
+    "w": "In Venice then: Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516). Botticelli was in Florence (1470-1510)."
+  },
+  {
+    "t": "Florence",
+    "y": 1490,
+    "q": "Florence, 1490. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Michelangelo",
+      "Girolamo Savonarola",
+      "Leonardo da Vinci",
+      "Botticelli"
+    ],
+    "a": 2,
+    "w": "In Florence then: Michelangelo (1488-1494), Girolamo Savonarola (1490-1498), Botticelli (1470-1510). Leonardo da Vinci was in Milan (1482-1499)."
+  },
+  {
+    "t": "Florence",
+    "y": 1494,
+    "q": "Florence, 1494. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Michelangelo",
+      "Girolamo Savonarola",
+      "Leonardo da Vinci",
+      "Botticelli"
+    ],
+    "a": 2,
+    "w": "In Florence then: Michelangelo (1488-1494), Girolamo Savonarola (1490-1498), Botticelli (1470-1510). Leonardo da Vinci was in Milan (1482-1499)."
+  },
+  {
+    "t": "Florence",
+    "y": 1504,
+    "q": "Florence, 1504. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Vasco da Gama",
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Niccolo Machiavelli"
+    ],
+    "a": 0,
+    "w": "In Florence then: Leonardo da Vinci (1503-1506), Michelangelo (1501-1505), Niccolo Machiavelli (1498-1512). Vasco da Gama was in Lisbon (1497-1524)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1505,
+    "q": "Lisbon, 1505. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ferdinand Magellan",
+      "Botticelli",
+      "Manuel I",
+      "Vasco da Gama"
+    ],
+    "a": 1,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Botticelli was in Florence (1470-1510)."
+  },
+  {
+    "t": "Florence",
+    "y": 1506,
+    "q": "Florence, 1506. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Niccolo Machiavelli",
+      "Vasco da Gama",
+      "Botticelli"
+    ],
+    "a": 2,
+    "w": "In Florence then: Leonardo da Vinci (1503-1506), Niccolo Machiavelli (1498-1512), Botticelli (1470-1510). Vasco da Gama was in Lisbon (1497-1524)."
+  },
+  {
+    "t": "Rome",
+    "y": 1508,
+    "q": "Rome, 1508. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Pope Julius II",
+      "Raphael"
+    ],
+    "a": 0,
+    "w": "In Rome then: Michelangelo (1508-1516), Pope Julius II (1503-1513), Raphael (1508-1520). Leonardo da Vinci was in Milan (1506-1513)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1510,
+    "q": "Lisbon, 1510. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Botticelli",
+      "Ferdinand Magellan",
+      "Manuel I",
+      "Vasco da Gama"
+    ],
+    "a": 0,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Botticelli was in Florence (1470-1510)."
+  },
+  {
+    "t": "Rome",
+    "y": 1512,
+    "q": "Rome, 1512. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Pope Julius II",
+      "Raphael"
+    ],
+    "a": 0,
+    "w": "In Rome then: Michelangelo (1508-1516), Pope Julius II (1503-1513), Raphael (1508-1520). Leonardo da Vinci was in Milan (1506-1513)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1513,
+    "q": "Lisbon, 1513. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ferdinand Magellan",
+      "Giovanni Bellini",
+      "Manuel I",
+      "Vasco da Gama"
+    ],
+    "a": 1,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Giovanni Bellini was in Venice (1459-1516)."
+  },
+  {
+    "t": "Rome",
+    "y": 1513,
+    "q": "Rome, 1513. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Pope Julius II",
+      "Vasco da Gama"
+    ],
+    "a": 3,
+    "w": "In Rome then: Leonardo da Vinci (1513-1516), Michelangelo (1508-1516), Pope Julius II (1503-1513). Vasco da Gama was in Lisbon (1497-1524)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1516,
+    "q": "Lisbon, 1516. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ferdinand Magellan",
+      "Manuel I",
+      "Giovanni Bellini",
+      "Vasco da Gama"
+    ],
+    "a": 2,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Giovanni Bellini was in Venice (1459-1516)."
+  },
+  {
+    "t": "Rome",
+    "y": 1516,
+    "q": "Rome, 1516. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Vasco da Gama",
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Raphael"
+    ],
+    "a": 0,
+    "w": "In Rome then: Leonardo da Vinci (1513-1516), Michelangelo (1508-1516), Raphael (1508-1520). Vasco da Gama was in Lisbon (1497-1524)."
+  },
+  {
+    "t": "London",
+    "y": 1700,
+    "q": "London, 1700. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Isaac Newton",
+      "Samuel Pepys",
+      "Louis XIV",
+      "Christopher Wren"
+    ],
+    "a": 2,
+    "w": "In London then: Isaac Newton (1696-1727), Samuel Pepys (1660-1703), Christopher Wren (1666-1723). Louis XIV was in Versailles (1682-1715)."
+  },
+  {
+    "t": "Philadelphia",
+    "y": 1775,
+    "q": "Philadelphia, 1775. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Thomas Jefferson",
+      "Edmund Burke",
+      "Thomas Paine",
+      "Benjamin Franklin"
+    ],
+    "a": 1,
+    "w": "In Philadelphia then: Thomas Jefferson (1775-1776), Thomas Paine (1774-1776), Benjamin Franklin (1723-1776). Edmund Burke was in London (1765-1797)."
+  },
+  {
+    "t": "Philadelphia",
+    "y": 1776,
+    "q": "Philadelphia, 1776. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Edmund Burke",
+      "Thomas Jefferson",
+      "Thomas Paine",
+      "Benjamin Franklin"
+    ],
+    "a": 0,
+    "w": "In Philadelphia then: Thomas Jefferson (1775-1776), Thomas Paine (1774-1776), Benjamin Franklin (1723-1776). Edmund Burke was in London (1765-1797)."
+  },
+  {
+    "t": "Paris",
+    "y": 1789,
+    "q": "Paris, 1789. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Edmund Burke",
+      "Marquis de Lafayette",
+      "Jean-Paul Marat",
+      "Marie Antoinette"
+    ],
+    "a": 0,
+    "w": "In Paris then: Marquis de Lafayette (1789-1792), Jean-Paul Marat (1789-1793), Marie Antoinette (1789-1793). Edmund Burke was in London (1765-1797)."
+  },
+  {
+    "t": "Paris",
+    "y": 1790,
+    "q": "Paris, 1790. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Marquis de Lafayette",
+      "Jean-Paul Marat",
+      "Marie Antoinette",
+      "Edmund Burke"
+    ],
+    "a": 3,
+    "w": "In Paris then: Marquis de Lafayette (1789-1792), Jean-Paul Marat (1789-1793), Marie Antoinette (1789-1793). Edmund Burke was in London (1765-1797)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1808,
+    "q": "Vienna, 1808. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Joseph Haydn",
+      "Franz Schubert",
+      "Johann Goethe",
+      "Ludwig van Beethoven"
+    ],
+    "a": 2,
+    "w": "In Vienna then: Joseph Haydn (1796-1809), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Johann Goethe was in Weimar (1775-1832)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1809,
+    "q": "Vienna, 1809. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Joseph Haydn",
+      "Johann Goethe",
+      "Franz Schubert",
+      "Ludwig van Beethoven"
+    ],
+    "a": 1,
+    "w": "In Vienna then: Joseph Haydn (1796-1809), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Johann Goethe was in Weimar (1775-1832)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1822,
+    "q": "Vienna, 1822. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Hector Berlioz",
+      "Franz Liszt",
+      "Franz Schubert",
+      "Ludwig van Beethoven"
+    ],
+    "a": 0,
+    "w": "In Vienna then: Franz Liszt (1822-1823), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1823,
+    "q": "Vienna, 1823. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Franz Liszt",
+      "Franz Schubert",
+      "Ludwig van Beethoven",
+      "Hector Berlioz"
+    ],
+    "a": 3,
+    "w": "In Vienna then: Franz Liszt (1822-1823), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "Paris",
+    "y": 1824,
+    "q": "Paris, 1824. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Franz Liszt",
+      "Ludwig van Beethoven",
+      "Victor Hugo",
+      "Eugene Delacroix"
+    ],
+    "a": 1,
+    "w": "In Paris then: Franz Liszt (1823-1835), Victor Hugo (1821-1851), Eugene Delacroix (1822-1863). Ludwig van Beethoven was in Vienna (1792-1827)."
+  },
+  {
+    "t": "Berlin",
+    "y": 1827,
+    "q": "Berlin, 1827. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Georg Hegel",
+      "Alexander von Humboldt",
+      "Felix Mendelssohn",
+      "Ludwig van Beethoven"
+    ],
+    "a": 3,
+    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Ludwig van Beethoven was in Vienna (1792-1827)."
+  },
+  {
+    "t": "Berlin",
+    "y": 1829,
+    "q": "Berlin, 1829. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Georg Hegel",
+      "Hector Berlioz",
+      "Alexander von Humboldt",
+      "Felix Mendelssohn"
+    ],
+    "a": 1,
+    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "Berlin",
+    "y": 1831,
+    "q": "Berlin, 1831. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Georg Hegel",
+      "Alexander von Humboldt",
+      "Felix Mendelssohn",
+      "Hector Berlioz"
+    ],
+    "a": 3,
+    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "Paris",
+    "y": 1832,
+    "q": "Paris, 1832. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Franz Liszt",
+      "Charles Dickens",
+      "Frederic Chopin",
+      "Victor Hugo"
+    ],
+    "a": 1,
+    "w": "In Paris then: Franz Liszt (1823-1835), Frederic Chopin (1831-1849), Victor Hugo (1821-1851). Charles Dickens was in London (1822-1870)."
+  },
+  {
+    "t": "London",
+    "y": 1834,
+    "q": "London, 1834. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Hector Berlioz",
+      "William Thackeray",
+      "Arthur Wellesley",
+      "Thomas Carlyle"
+    ],
+    "a": 0,
+    "w": "In London then: William Thackeray (1831-1863), Arthur Wellesley (1818-1852), Thomas Carlyle (1834-1881). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "London",
+    "y": 1838,
+    "q": "London, 1838. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Hector Berlioz",
+      "William Thackeray",
+      "Arthur Wellesley",
+      "Thomas Carlyle"
+    ],
+    "a": 0,
+    "w": "In London then: William Thackeray (1831-1863), Arthur Wellesley (1818-1852), Thomas Carlyle (1834-1881). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "Paris",
+    "y": 1845,
+    "q": "Paris, 1845. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Thomas Carlyle",
+      "Gustave Flaubert",
+      "Frederic Chopin",
+      "Charles Baudelaire"
+    ],
+    "a": 0,
+    "w": "In Paris then: Gustave Flaubert (1841-1846), Frederic Chopin (1831-1849), Charles Baudelaire (1842-1867). Thomas Carlyle was in London (1834-1881)."
+  },
+  {
+    "t": "London",
+    "y": 1846,
+    "q": "London, 1846. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Charles Baudelaire",
+      "William Thackeray",
+      "Arthur Wellesley",
+      "Thomas Carlyle"
+    ],
+    "a": 0,
+    "w": "In London then: William Thackeray (1831-1863), Arthur Wellesley (1818-1852), Thomas Carlyle (1834-1881). Charles Baudelaire was in Paris (1842-1867)."
+  },
+  {
+    "t": "Paris",
+    "y": 1850,
+    "q": "Paris, 1850. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Napoleon III",
+      "Charles Baudelaire",
+      "Victor Hugo",
+      "Franz Liszt"
+    ],
+    "a": 3,
+    "w": "In Paris then: Napoleon III (1848-1870), Charles Baudelaire (1842-1867), Victor Hugo (1821-1851). Franz Liszt was in Weimar (1848-1861)."
+  },
+  {
+    "t": "London",
+    "y": 1851,
+    "q": "London, 1851. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "George Eliot",
+      "William Thackeray",
+      "Arthur Wellesley",
+      "Charles Baudelaire"
+    ],
+    "a": 3,
+    "w": "In London then: George Eliot (1851-1880), William Thackeray (1831-1863), Arthur Wellesley (1818-1852). Charles Baudelaire was in Paris (1842-1867)."
+  },
+  {
+    "t": "Paris",
+    "y": 1855,
+    "q": "Paris, 1855. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Camille Pissarro",
+      "Napoleon III",
+      "Franz Liszt",
+      "Charles Baudelaire"
+    ],
+    "a": 2,
+    "w": "In Paris then: Camille Pissarro (1855-1870), Napoleon III (1848-1870), Charles Baudelaire (1842-1867). Franz Liszt was in Weimar (1848-1861)."
+  },
+  {
+    "t": "London",
+    "y": 1858,
+    "q": "London, 1858. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Charles Baudelaire",
+      "George Eliot",
+      "William Thackeray",
+      "Thomas Carlyle"
+    ],
+    "a": 0,
+    "w": "In London then: George Eliot (1851-1880), William Thackeray (1831-1863), Thomas Carlyle (1834-1881). Charles Baudelaire was in Paris (1842-1867)."
+  },
+  {
+    "t": "Paris",
+    "y": 1859,
+    "q": "Paris, 1859. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Camille Pissarro",
+      "Napoleon III",
+      "Franz Liszt",
+      "Charles Baudelaire"
+    ],
+    "a": 2,
+    "w": "In Paris then: Camille Pissarro (1855-1870), Napoleon III (1848-1870), Charles Baudelaire (1842-1867). Franz Liszt was in Weimar (1848-1861)."
+  },
+  {
+    "t": "Paris",
+    "y": 1862,
+    "q": "Paris, 1862. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Claude Monet",
+      "Pierre-Auguste Renoir",
+      "Camille Pissarro",
+      "Thomas Carlyle"
+    ],
+    "a": 3,
+    "w": "In Paris then: Claude Monet (1862-1867), Pierre-Auguste Renoir (1862-1867), Camille Pissarro (1855-1870). Thomas Carlyle was in London (1834-1881)."
+  },
+  {
+    "t": "London",
+    "y": 1863,
+    "q": "London, 1863. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "George Eliot",
+      "William Thackeray",
+      "Thomas Carlyle",
+      "Charles Baudelaire"
+    ],
+    "a": 3,
+    "w": "In London then: George Eliot (1851-1880), William Thackeray (1831-1863), Thomas Carlyle (1834-1881). Charles Baudelaire was in Paris (1842-1867)."
+  },
+  {
+    "t": "London",
+    "y": 1866,
+    "q": "London, 1866. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Charles Baudelaire",
+      "George Eliot",
+      "Thomas Carlyle",
+      "Charles Dickens"
+    ],
+    "a": 0,
+    "w": "In London then: George Eliot (1851-1880), Thomas Carlyle (1834-1881), Charles Dickens (1822-1870). Charles Baudelaire was in Paris (1842-1867)."
+  },
+  {
+    "t": "Paris",
+    "y": 1866,
+    "q": "Paris, 1866. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Claude Monet",
+      "Pierre-Auguste Renoir",
+      "Camille Pissarro",
+      "Thomas Carlyle"
+    ],
+    "a": 3,
+    "w": "In Paris then: Claude Monet (1862-1867), Pierre-Auguste Renoir (1862-1867), Camille Pissarro (1855-1870). Thomas Carlyle was in London (1834-1881)."
+  },
+  {
+    "t": "Paris",
+    "y": 1870,
+    "q": "Paris, 1870. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Camille Pissarro",
+      "Napoleon III",
+      "Edouard Manet",
+      "Johannes Brahms"
+    ],
+    "a": 3,
+    "w": "In Paris then: Camille Pissarro (1855-1870), Napoleon III (1848-1870), Edouard Manet (1850-1883). Johannes Brahms was in Vienna (1869-1897)."
+  },
+  {
+    "t": "London",
+    "y": 1872,
+    "q": "London, 1872. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Mark Twain",
+      "George Eliot",
+      "Johannes Brahms",
+      "Thomas Carlyle"
+    ],
+    "a": 2,
+    "w": "In London then: Mark Twain (1872-1874), George Eliot (1851-1880), Thomas Carlyle (1834-1881). Johannes Brahms was in Vienna (1869-1897)."
+  },
+  {
+    "t": "Paris",
+    "y": 1875,
+    "q": "Paris, 1875. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ivan Turgenev",
+      "Edouard Manet",
+      "Johannes Brahms",
+      "Emile Zola"
+    ],
+    "a": 2,
+    "w": "In Paris then: Ivan Turgenev (1871-1883), Edouard Manet (1850-1883), Emile Zola (1858-1897). Johannes Brahms was in Vienna (1869-1897)."
+  },
+  {
+    "t": "London",
+    "y": 1878,
+    "q": "London, 1878. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Johannes Brahms",
+      "George Eliot",
+      "Thomas Carlyle",
+      "John Millais"
+    ],
+    "a": 0,
+    "w": "In London then: George Eliot (1851-1880), Thomas Carlyle (1834-1881), John Millais (1846-1896). Johannes Brahms was in Vienna (1869-1897)."
+  },
+  {
+    "t": "London",
+    "y": 1880,
+    "q": "London, 1880. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "George Eliot",
+      "Thomas Carlyle",
+      "Johannes Brahms",
+      "John Millais"
+    ],
+    "a": 2,
+    "w": "In London then: George Eliot (1851-1880), Thomas Carlyle (1834-1881), John Millais (1846-1896). Johannes Brahms was in Vienna (1869-1897)."
+  },
+  {
+    "t": "Paris",
+    "y": 1880,
+    "q": "Paris, 1880. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ivan Turgenev",
+      "Johannes Brahms",
+      "Edouard Manet",
+      "Emile Zola"
+    ],
+    "a": 1,
+    "w": "In Paris then: Ivan Turgenev (1871-1883), Edouard Manet (1850-1883), Emile Zola (1858-1897). Johannes Brahms was in Vienna (1869-1897)."
+  },
+  {
+    "t": "Paris",
+    "y": 1883,
+    "q": "Paris, 1883. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ivan Turgenev",
+      "Edouard Manet",
+      "Johannes Brahms",
+      "Emile Zola"
+    ],
+    "a": 2,
+    "w": "In Paris then: Ivan Turgenev (1871-1883), Edouard Manet (1850-1883), Emile Zola (1858-1897). Johannes Brahms was in Vienna (1869-1897)."
+  }
+]

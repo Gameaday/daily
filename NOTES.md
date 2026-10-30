@@ -247,8 +247,9 @@ file exits 0 in Node, so a silent pass must be impossible).
 ## Batch 5 candidates: recipes over the layer (2026-10-30)
 
 The idea list below is recorded as the recipe each game would arrive
-as, so the layer grows toward them and the games land thin. None of
-these build yet; the ko-fi card on the landing page covers the support
+as, so the layer grows toward them and the games land thin.
+Superlative below has since landed; the rest do not build yet; the
+ko-fi card on the landing page covers the support
 idea and is already live.
 
 - Who Said It: the quote game. quotes.json already keys each line to
@@ -296,6 +297,19 @@ quotes carried their sources and three more their years, and the kept
 things found their cities: ten new housed-at edges beside the two
 Paris residents and the three Everest and Moon participants. Person
 numbers wait for the Superlative recipe that defines them.
+
+Superlative landed the same day as its v1 recipe, and it doubles as
+the web test the layer wanted: a game whose whole content is the
+people file. Every life the layer dates at both ends joins the pool
+in canonical id order (450 of the 512), the pool cuts into groups of
+four, and each group serves the question its own numbers settle
+alone, the longest life or the first or last birth, rotating by
+group (day 0: Ada Lovelace, John Adams, Akbar and Al-Idrisi, the
+longest life, John Adams). The store carries 112 boards on the same
+store-and-bank pipeline, checked by the same cross-checks, with its
+own headless playthrough and server-gated block. Person numbers
+still wait; when they land the recipe grows richer questions
+without a new store shape.
 
 ## Knowledge layer (done 2026-10-30)
 

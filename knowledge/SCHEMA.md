@@ -154,6 +154,13 @@ Every entity may also carry (nothing requires them yet):
   ever moves a question. Only the question fields compile; the
   ids and the about keys stay in the layer. Output:
   puzzles/fermi/puzzles.json and its bank file.
+- superlative: no recipe file; the people layer is the pool, every
+  life it dates at both ends in canonical id order, cut into
+  groups of four. Each group serves the question its own numbers
+  can settle alone, the longest life or the first or last birth,
+  the three questions rotate by group, and a group no question
+  can decide never serves. Output: puzzles/superlative/puzzles.json
+  and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

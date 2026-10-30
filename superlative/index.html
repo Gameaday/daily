@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Four lives from the record, one question: the longest life, or the first or last birth. One guess." />
+<title>Superlative · the daily record game</title>
+<link rel="stylesheet" href="../shell/common.css"/>
+<style>
+:root{ --gold:#c99a2e; --gold-soft:#f6eccf; --red:#b3402e; --red-soft:#f7e0da; }
+header{display:flex; align-items:flex-end; justify-content:space-between;}
+h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+.lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+.qcard{background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:6px;}
+.qtag{display:inline-block; background:var(--accent-soft); color:var(--accent);
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    border-radius:999px; padding:3px 12px; margin-bottom:10px;}
+.qtext{font-family:Georgia,serif; font-size:22px; margin:0 0 18px; line-height:1.35;}
+.opts{display:flex; flex-direction:column; gap:8px;}
+.opt{display:block; width:100%; text-align:left; background:var(--paper); border:1.5px solid var(--line);
+    border-radius:10px; padding:12px 14px; font-family:Georgia,serif; font-size:17px; color:var(--ink);
+    cursor:pointer; animation:rise .25s ease;}
+.opt:hover:not(:disabled){filter:brightness(.96); border-color:var(--accent);}
+.opt:disabled{cursor:default;}
+.opt.best{border-color:var(--green); background:var(--green-soft); font-weight:700;}
+.opt.miss{border-color:var(--red); background:var(--red-soft);}
+.opt.empty{opacity:.55;}
+@keyframes rise{from{opacity:0; transform:translateY(6px);}to{opacity:1; transform:none;}}
+.reveal{margin-top:16px; display:none;}
+.verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
+.why{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px;}
+.sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+.actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+@media (max-width:480px){
+    h1{font-size:28px;}
+    .qtext{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Superlative<span class="dot">.</span></h1>
+      <p class="sub">the daily record game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">new puzzle at midnight ET</span>
+  </div>
+
+  <p class="lead">Four lives from the record, <b>one question</b>. The board asks for the longest life, or the first or last birth. Pick the one who stands alone. <b>One guess.</b></p>
+
+  <div class="qcard">
+    <span class="qtag" id="qtag"></span>
+    <p class="qtext" id="qtext"></p>
+    <div class="opts" id="opts"></div>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <p class="verdict" id="verdict"></p>
+    <div class="why" id="why"></div>
+    <div class="sharebox" id="sharetext"></div>
+    <div id="curve"></div>
+    <div class="actions">
+      <button class="btn" id="btnShare">Share result</button>
+      <span class="countdown">next board in <span id="countdown">–</span></span>
+    </div>
+  </div>
+
+  <footer>
+    Runs entirely in your browser · no accounts, no ads, no tracking<br/>
+    a <b>history labs</b> morning warmup
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Four lives from the people record, one question: who lived the longest, or who was born first or last. <b>Pick the one the record makes stand alone.</b></p>
+    <p>The reveal shows every span in years. A life only counts when the record dates both ends, and a group where the answer could tie never serves, so the one to pick is always settled alone.</p>
+    <p>One guess a day. Everyone gets the same board, so compare notes over coffee.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../shell/common.js"></script>
+<script src="../assets/banks/superlative.js"></script>
+<script>
+'use strict';
+
+/* ---------------- the daily record ---------------- */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js - destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let EV = null;
+async function loadPuzzle(){
+  const L = typeof SUPERLATIVES !== 'undefined' ? SUPERLATIVES.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof SUPERLATIVES !== 'undefined') EV = SUPERLATIVES[idx];
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('superlative', dayIndex); if (d && d.puzzle) EV = d.puzzle; } catch (e) {}
+}
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.superlative.v1';
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!(S.status === 'won' && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since last win */
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, best:null};
+  S = { day: dayIndex, pick: null, status: 'playing', stats };
+}
+saveState();
+
+/* ---------------- dom ---------------- */
+function renderOpts(){
+  let html = '';
+  for (let i = 0; i < EV.opts.length; i++)
+    html += '<button class="opt" id="opt' + i + '">' + EV.opts[i] + '</button>';
+  $('opts').innerHTML = html;
+  for (let i = 0; i < EV.opts.length; i++)
+    $('opt' + i).addEventListener('click', () => pick(i));
+  if (S.pick !== null) markBoard();
+}
+
+function markBoard(){
+  for (let i = 0; i < EV.opts.length; i++){
+    const b = $('opt' + i);
+    b.disabled = true;
+    if (i === EV.a) b.classList.add('best');
+    else if (i === S.pick) b.classList.add('miss');
+    else b.classList.add('empty');
+  }
+}
+
+function pick(i){
+  if (!EV || S.status !== 'playing') return;
+  S.pick = i;
+  const st = S.stats;
+  if (i === EV.a){
+    S.status = 'won';
+    st.played++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+  } else {
+    S.status = 'lost';
+    st.played++; st.streak = 0;
+  }
+  saveState();
+  markBoard();
+  showReveal();
+}
+
+function shareText(){
+  const sq = S.status === 'won' ? '🏆' : '📜';
+  if (S.status === 'won') return 'Superlative No. ' + num + ' · best of the four ' + sq;
+  return 'Superlative No. ' + num + ' · not the one ' + sq;
+}
+
+function showReveal(){
+  const st = S.stats;
+  if (S.status === 'won'){
+    $('verdict').textContent = 'Right. ' + EV.opts[EV.a] + ' stands alone.';
+  } else {
+    $('verdict').textContent = 'The record says ' + EV.opts[EV.a] + '.';
+    $('verdict').style.color = 'var(--accent)';
+  }
+  $('why').textContent = EV.w;
+  $('sharetext').textContent = shareText() + String.fromCharCode(10) + 'streak ' + st.streak + ' · played ' + st.played;
+  $('reveal').classList.add('show');
+  syncBoard(S.status === 'won' ? 1 : 2);
+}
+
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'superlative';
+const SYNC_BETTER = 'low';
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* ---------------- share / toast ---------------- */
+SHELL.wireShare(shareText);
+const toastMsg = SHELL.toast;
+
+/* ---------------- help / countdown ---------------- */
+SHELL.wireHelp();
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+/* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
+if (!EV){ SHELL.showUnavailable(); return; }
+$('pno').textContent = num;
+$('pdate').textContent = SHELL.pdateText();
+$('qtag').textContent = EV.t;
+$('qtext').textContent = EV.q;
+renderOpts();
+if (S.status !== 'playing') showReveal();
+SHELL.startCountdown('countdown', 500);
+});
+</script>
+</body>
+</html>

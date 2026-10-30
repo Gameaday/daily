@@ -47,6 +47,13 @@
      knows it; the file compiles in file order, the file order being
      the day rotation
 
+   - superlative is a recipe over people: every life the layer dates
+     at both ends joins the pool in canonical id order, the pool cuts
+     into groups of four, and each group serves the question its own
+     numbers can settle alone, the longest life or the first or last
+     birth; the three questions rotate by group and a group no
+     question can decide never serves
+
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
      Benjamin / John Franklin near miss stays impossible forever)
@@ -630,6 +637,53 @@ function compileFermi(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
+/* ---------------- recipe: superlative ---------------- */
+function compileSuperlative(){
+  if (!Array.isArray(people)) return null;
+  const TYPES = [
+    { t: 'Longevity', q: 'Four lives from the record. Who lived the longest life?',
+      pick: g => {
+        const spans = g.map(p => p.died - p.born);
+        const best = Math.max(...spans);
+        return spans.filter(s => s === best).length === 1 ? spans.indexOf(best) : -1;
+      } },
+    { t: 'Birth Order', q: 'Four lives from the record. Who was born first?',
+      pick: g => {
+        const borns = g.map(p => p.born);
+        const best = Math.min(...borns);
+        return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1;
+      } },
+    { t: 'Birth Order', q: 'Four lives from the record. Who was born last?',
+      pick: g => {
+        const borns = g.map(p => p.born);
+        const best = Math.max(...borns);
+        return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1;
+      } }
+  ];
+  const pool = people
+    .filter(p => p && Number.isInteger(p.born) && Number.isInteger(p.died) && p.died >= p.born)
+    .sort((p, q) => p.id < q.id ? -1 : p.id > q.id ? 1 : 0);
+  const bank = [];
+  for (let i = 0; i + 4 <= pool.length; i += 4){
+    const group = pool.slice(i, i + 4);
+    if (new Set(group.map(p => p.n)).size !== 4) continue;
+    let kind = null, a = -1;
+    for (let k = 0; k < 3 && a < 0; k++){
+      const next = TYPES[(i / 4 + k) % 3];
+      const pick = next.pick(group);
+      if (pick >= 0){ kind = next; a = pick; }
+    }
+    if (a < 0) continue;
+    bank.push({
+      t: kind.t, q: kind.q, opts: group.map(p => p.n), a,
+      w: group.map(p => p.n + ' ' + (p.died - p.born) + ' (' + p.born + '-' + p.died + ')').join('; ') + '.'
+    });
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: superlative bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '\n';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -657,6 +711,7 @@ if (LIST.gated.bogus) checkStore('bogus', compileBogus());
 if (LIST.gated['well-actually']) checkStore('well-actually', compileWellActually());
 if (LIST.gated.sift) checkStore('sift', compileSift());
 if (LIST.gated.fermi) checkStore('fermi', compileFermi());
+if (LIST.gated.superlative) checkStore('superlative', compileSuperlative());
 
 if (fails){
   console.error('');

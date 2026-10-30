@@ -1,6 +1,6 @@
 # daily · Developer Documentation
 
-**daily** is 15 morning warmup games for History Labs: one new puzzle per
+**daily** is 16 morning warmup games for History Labs: one new puzzle per
 game per day, self-hosted as dumb static files plus a tiny stdlib-only
 Python scores service. Everything uses relative paths.
 
@@ -34,7 +34,7 @@ hand-banked by design.
 ## Puzzle delivery
 
 Bank games (bogus, well-actually, rounds, fermi, cipher, museum, lightbox,
-sift, timeline, thread, brunch) ship their bank inline (solo/offline play works with
+sift, timeline, thread, brunch, superlative) ship their bank inline (solo/offline play works with
 zero infrastructure) and, when online, ask the scores service for the day's
 puzzle:
 

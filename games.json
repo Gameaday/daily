@@ -1,7 +1,7 @@
 {
   "order": ["bogus", "well-actually", "recycle-rings", "recycle-grid", "fermi",
             "sift", "rounds", "trace", "lightbox", "sprint", "cipher",
-            "timeline", "museum", "thread", "brunch"],
+            "timeline", "museum", "thread", "brunch", "superlative"],
   "gated": {
     "bogus": "PUZZLES",
     "well-actually": "PUZZLES",
@@ -13,7 +13,8 @@
     "sift": "BOARDS",
     "timeline": "EVENTS",
     "thread": "THREAD",
-    "brunch": "BRUNCH"
+    "brunch": "BRUNCH",
+    "superlative": "SUPERLATIVES"
   },
   "generator": ["sprint", "trace", "recycle-grid", "recycle-rings"],
   "ledger": {
@@ -31,7 +32,8 @@
     "timeline": ["timeline"],
     "museum": ["museum"],
     "thread": ["thread"],
-    "brunch": ["brunch"]
+    "brunch": ["brunch"],
+    "superlative": ["superlative"]
   },
   "wordBank": ["recycle-grid", "recycle-rings", "trace"],
   "minBank": 15,

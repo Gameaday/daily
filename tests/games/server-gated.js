@@ -113,6 +113,16 @@ async function run(h, ctx){
     r.env.els['opt' + served.puzzle.a].click();
     h.eq(r.x.S.status, 'won', 'gated: brunch won on the served table');
   }
+  /* superlative: the served board plays through */
+  {
+    const live = h.boot('superlative', ['S', 'EV'], { now: T0, store: {} });
+    const served = serve('superlative', live.x.EV);
+    const r = h.boot('superlative', ['S', 'EV', 'SUPERLATIVES'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    h.ok(r.x.SUPERLATIVES === undefined, 'gated: superlative online boot has no bank');
+    await h.flush();
+    r.env.els['opt' + served.puzzle.a].click();
+    h.eq(r.x.S.status, 'won', 'gated: superlative won on the served board');
+  }
   /* thread: the served chain plays through */
   {
     const live = h.boot('thread', ['PZ'], { now: T0, store: {} });
@@ -146,6 +156,9 @@ async function run(h, ctx){
     const bl = h.boot('brunch', ['EV'], { now: T0, store: {} });
     h.ok(JSON.stringify(bl.x.EV) === JSON.stringify(store.brunch[0]),
       'gated: exported brunch bank matches the generated bank');
+    const sup = h.boot('superlative', ['EV'], { now: T0, store: {} });
+    h.ok(JSON.stringify(sup.x.EV) === JSON.stringify(store.superlative[0]),
+      'gated: exported superlative bank matches the generated bank');
   }
 }
 

@@ -28,6 +28,11 @@
      defensible. Both files compile to their stores in file order,
      the file order being the day rotation, and this tool fails
      loudly if a needed file is missing
+   - bogus and well-actually are whole-file twist recipes: each
+     telling keys itself to the entity it is about when the layer
+     knows it, and marks its lie by segment position; the lies
+     stay authored, and both files compile to their stores in
+     file order, the file order being the day rotation
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -51,6 +56,12 @@
    - quotes carry a unique id outside the entity namespace, a known
      speaker, never the same text twice, and a year inside the life
      of the speaker
+   - twist tellings carry an id outside the entity and quote
+     namespaces, a lie position that points at a real segment, and
+     a reveal; bogus tellings are titled uniquely, well-actually
+     tellings name their answer among its accepted spellings, and
+     neither file may cluster its lies into fewer than three
+     positions
 
    Default mode (what CI runs) never writes anything and exits 1 on
    drift. Run: node tools/build-knowledge.mjs         (verify)
@@ -81,10 +92,12 @@ const presence = readLayer('presence');
 const stories = readLayer('stories');
 const artifacts = readLayer('artifacts');
 const quotes = readLayer('quotes');
+const bogus = readLayer('bogus');
+const wellActually = readLayer('well-actually');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
-                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes]]){
+                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['well-actually', wellActually]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
@@ -180,6 +193,66 @@ for (const x of entities) byId[x.id] = x;
   }
 }
 
+/* twists: the lies stay authored, but keyed and marked */
+{
+  const ids = new Set(entities.map(x => x.id));
+  const quoteIds = new Set((Array.isArray(quotes) ? quotes : [])
+    .filter(q => q && typeof q.id === 'string').map(q => q.id));
+  const taken = new Set();
+  for (const [file, arr, isBogus] of [
+      ['bogus', Array.isArray(bogus) ? bogus : [], true],
+      ['well-actually', Array.isArray(wellActually) ? wellActually : [], false]]){
+    const titles = new Set();
+    const pairs = new Set();
+    const lies = new Set();
+    for (const x of arr){
+      const where = 'knowledge/' + file + '.json';
+      if (!x || typeof x.id !== 'string' || !x.id){
+        fail(where + ': twist needs a string id');
+        continue;
+      }
+      if (taken.has(x.id)) fail('knowledge: twist id ' + x.id + ' appears twice');
+      else if (ids.has(x.id)) fail('knowledge: twist id collides with an entity: ' + x.id);
+      else if (quoteIds.has(x.id)) fail('knowledge: twist id collides with a quote: ' + x.id);
+      else taken.add(x.id);
+      if (typeof x.t !== 'string' || !x.t) fail(where + ' twist ' + x.id + ' needs a title (t)');
+      if (!Number.isInteger(x.l) || x.l < 0) fail(where + ' twist ' + x.id + ' needs a lie position (l)');
+      if (!Array.isArray(x.s) || !x.s.length || x.s.some(v => typeof v !== 'string' || !v))
+        fail(where + ' twist ' + x.id + ' needs segment strings (s)');
+      else if (Number.isInteger(x.l) && x.l >= x.s.length)
+        fail(where + ' twist ' + x.id + ' marks its lie outside the segments');
+      if (typeof x.w !== 'string' || !x.w) fail(where + ' twist ' + x.id + ' needs a reveal (w)');
+      if (x.about !== undefined && !ids.has(x.about))
+        fail(where + ' twist ' + x.id + ' is about an unknown entity: ' + x.about);
+      if (isBogus){
+        if (x.s && x.s.length < 5)
+          fail('knowledge: bogus telling ' + x.id + ' needs at least five segments');
+        if (typeof x.t === 'string' && titles.has(x.t))
+          fail('knowledge: bogus telling tells ' + x.t + ' twice');
+        titles.add(x.t);
+      } else {
+        if (x.s && x.s.length < 4)
+          fail('knowledge: well-actually telling ' + x.id + ' needs at least four segments');
+        if (typeof x.c !== 'string' || !x.c)
+          fail('knowledge: well-actually telling ' + x.id + ' needs the answer (c)');
+        if (!Array.isArray(x.a) || !x.a.length || x.a.some(v => typeof v !== 'string' || !v))
+          fail('knowledge: well-actually telling ' + x.id + ' needs accepted answers (a)');
+        else if (typeof x.c === 'string' && !x.a.includes(x.c))
+          fail('knowledge: well-actually telling ' + x.id + ' omits its own answer');
+        else if (new Set(x.a).size !== x.a.length)
+          fail('knowledge: well-actually telling ' + x.id + ' repeats an answer');
+        if (typeof x.t === 'string' && typeof x.c === 'string'){
+          const pair = x.t + ':' + x.c;
+          if (pairs.has(pair)) fail('knowledge: well-actually answers ' + x.c + ' under ' + x.t + ' twice');
+          pairs.add(pair);
+        }
+      }
+      if (Number.isInteger(x.l)) lies.add(x.l);
+    }
+    if (arr.length && lies.size < 3)
+      fail('knowledge: ' + file + ' clusters its lies in fewer than three positions');
+  }
+}
 /* relations: typed, dated where honest */
 const rels = Array.isArray(relations) ? relations : [];
 {
@@ -434,6 +507,31 @@ function compileCipher(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
+/* ---------------- whole-file recipes: bogus and well-actually ---------------- */
+function compileBogus(){
+  if (!Array.isArray(bogus)) return null;
+  const bank = [];
+  for (const x of bogus){
+    if (!x || typeof x.t !== 'string') continue;
+    bank.push({ t: x.t, l: x.l, s: x.s, w: x.w });
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: bogus bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '\n';
+}
+
+function compileWellActually(){
+  if (!Array.isArray(wellActually)) return null;
+  const bank = [];
+  for (const x of wellActually){
+    if (!x || typeof x.t !== 'string') continue;
+    bank.push({ t: x.t, l: x.l, c: x.c, a: x.a, s: x.s, w: x.w });
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: well-actually bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '\n';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -457,6 +555,8 @@ if (LIST.gated.rounds) checkStore('rounds', compileRounds());
 if (LIST.gated.brunch) checkStore('brunch', compileBrunch());
 if (LIST.gated.museum) checkStore('museum', compileMuseum());
 if (LIST.gated.cipher) checkStore('cipher', compileCipher());
+if (LIST.gated.bogus) checkStore('bogus', compileBogus());
+if (LIST.gated['well-actually']) checkStore('well-actually', compileWellActually());
 
 if (fails){
   console.error('');

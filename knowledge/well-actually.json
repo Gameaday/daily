@@ -1,0 +1,1499 @@
+[
+  {
+    "id": "mona-lisa-was-painted",
+    "about": "leonardo",
+    "t": "Art · Renaissance",
+    "l": 1,
+    "c": "Leonardo da Vinci",
+    "a": [
+      "Leonardo da Vinci",
+      "Leonardo",
+      "da Vinci",
+      "Leonardo DaVinci",
+      "Leonardo di ser Piero da Vinci"
+    ],
+    "s": [
+      "The Mona Lisa was painted by",
+      "Michelangelo",
+      "in the early 1500s,",
+      "and it now hangs in the Louvre."
+    ],
+    "w": "It’s Leonardo da Vinci. Michelangelo was across town sculpting David, but he never painted her."
+  },
+  {
+    "id": "built-around-2560-bce-as",
+    "t": "Ancient Egypt",
+    "l": 3,
+    "c": "the Egyptians",
+    "a": [
+      "Egyptians",
+      "the Egyptians",
+      "ancient Egyptians"
+    ],
+    "s": [
+      "Built around 2560 BCE",
+      "as a tomb for the pharaoh Khufu,",
+      "the Great Pyramid of Giza",
+      "is the work of the Romans."
+    ],
+    "w": "Egyptians built it. Rome would not be founded for another two thousand years."
+  },
+  {
+    "id": "mount-everest-sits-on-the",
+    "t": "Geography",
+    "l": 1,
+    "c": "Nepal and China",
+    "a": [
+      "Nepal and China",
+      "Nepal and China (Tibet)",
+      "Nepal and Tibet",
+      "China",
+      "Tibet"
+    ],
+    "s": [
+      "Mount Everest sits on the border between",
+      "Nepal and India,",
+      "and its summit rises",
+      "about 8,849 meters above sea level."
+    ],
+    "w": "Nepal and China, on the Tibetan side. India borders Nepal, but nowhere near Everest."
+  },
+  {
+    "id": "thomas-jefferson-was-the-first",
+    "about": "washington",
+    "t": "US History",
+    "l": 0,
+    "c": "George Washington",
+    "a": [
+      "George Washington",
+      "Washington"
+    ],
+    "s": [
+      "Thomas Jefferson",
+      "was the first President of the United States,",
+      "taking the oath of office",
+      "in New York City in 1789."
+    ],
+    "w": "Washington took the oath in April 1789, in New York, then the capital. Jefferson was the third president."
+  },
+  {
+    "id": "world-war-ii-ended-in",
+    "t": "Modern History",
+    "l": 2,
+    "c": "Germany and Japan",
+    "a": [
+      "Germany and Japan",
+      "Japan",
+      "Japan and Germany"
+    ],
+    "s": [
+      "World War II ended in 1945",
+      "with the surrenders of",
+      "Germany and Italy,",
+      "followed by years of rebuilding."
+    ],
+    "w": "Germany surrendered in May 1945, Japan that September. Italy had switched sides and surrendered back in 1943."
+  },
+  {
+    "id": "named-for-its-latin-name",
+    "t": "Chemistry",
+    "l": 3,
+    "c": "Au",
+    "a": [
+      "Au",
+      "AU",
+      "au"
+    ],
+    "s": [
+      "Named for its Latin name, aurum,",
+      "gold",
+      "carries the chemical symbol",
+      "Go."
+    ],
+    "w": "Au, from the Latin aurum. “Go” is not on the periodic table, however excellent a board game it is."
+  },
+  {
+    "id": "atlantic-ocean-is-the",
+    "t": "Geography",
+    "l": 0,
+    "c": "the Pacific",
+    "a": [
+      "Pacific",
+      "the Pacific",
+      "Pacific Ocean",
+      "the Pacific Ocean"
+    ],
+    "s": [
+      "The Atlantic Ocean",
+      "is the largest ocean on Earth,",
+      "covering roughly a third",
+      "of the planet’s surface."
+    ],
+    "w": "The Pacific is the largest, about 165 million square kilometers, more than double the Atlantic."
+  },
+  {
+    "id": "nothing-is-faster-than-light",
+    "t": "Physics",
+    "l": 3,
+    "c": "per second",
+    "a": [
+      "second",
+      "seconds",
+      "sec",
+      "s",
+      "per second"
+    ],
+    "s": [
+      "Nothing is faster than light,",
+      "which races through empty space",
+      "at roughly 300,000 kilometers",
+      "per hour."
+    ],
+    "w": "About 300,000 km per second. At 300,000 km per hour, sunlight would take roughly three weeks to reach Earth."
+  },
+  {
+    "id": "before-conquering-recorded-music-the",
+    "t": "Music",
+    "l": 3,
+    "c": "Liverpool",
+    "a": [
+      "Liverpool"
+    ],
+    "s": [
+      "Before conquering recorded music,",
+      "the Beatles",
+      "got their start in 1960 in",
+      "London."
+    ],
+    "w": "Liverpool. The Fab Four were Merseyside lads; London came later, once the records sold."
+  },
+  {
+    "id": "dedicated-in-1886-the-statue",
+    "t": "US History",
+    "l": 1,
+    "c": "France",
+    "a": [
+      "France",
+      "the French",
+      "french"
+    ],
+    "s": [
+      "Dedicated in 1886,",
+      "the Statue of Liberty was a gift from",
+      "Britain",
+      "to the United States."
+    ],
+    "w": "A gift from France, sculpted by Bartholdi, with the iron frame engineered by a young Gustave Eiffel."
+  },
+  {
+    "id": "bananas-are-our-closest-living",
+    "t": "Biology",
+    "l": 0,
+    "c": "chimpanzees",
+    "a": [
+      "chimpanzees",
+      "chimps",
+      "bonobos",
+      "chimpanzees and bonobos",
+      "the chimpanzees"
+    ],
+    "s": [
+      "Bananas",
+      "are our closest living relatives,",
+      "sharing about 98.8%",
+      "of human DNA."
+    ],
+    "w": "Chimpanzees (and bonobos), at about 98.8%. Bananas share roughly 40–60% of our gene families, oddly high, but no relative."
+  },
+  {
+    "id": "flowing-from-the-andes-across",
+    "t": "Geography",
+    "l": 3,
+    "c": "the Atlantic",
+    "a": [
+      "Atlantic",
+      "the Atlantic",
+      "Atlantic Ocean",
+      "the Atlantic Ocean"
+    ],
+    "s": [
+      "Flowing from the Andes across South America,",
+      "Earth’s largest river by volume,",
+      "the Amazon",
+      "empties into the Pacific Ocean."
+    ],
+    "w": "The Atlantic. East of the Andes there is a continent in the way; the Pacific is the far side."
+  },
+  {
+    "id": "neil-armstrong-was-the-first",
+    "t": "Space",
+    "l": 0,
+    "c": "Yuri Gagarin",
+    "a": [
+      "Yuri Gagarin",
+      "Gagarin"
+    ],
+    "s": [
+      "Neil Armstrong",
+      "was the first human in space,",
+      "launched by the Soviet Union",
+      "in April 1961."
+    ],
+    "w": "Yuri Gagarin, aboard Vostok 1, April 12, 1961. Armstrong’s big first came eight years later, on the Moon."
+  },
+  {
+    "id": "in-1989-tim-berners-lee-invented",
+    "t": "Tech",
+    "l": 1,
+    "c": "CERN",
+    "a": [
+      "CERN",
+      "cern"
+    ],
+    "s": [
+      "In 1989, Tim Berners-Lee invented the World Wide Web",
+      "while working at MIT,",
+      "and later gave it away",
+      "royalty-free."
+    ],
+    "w": "CERN, the particle physics lab in Geneva. A good reminder that the Web’s birthplace was a physics lab, not a university."
+  },
+  {
+    "id": "yuan-is-the-official",
+    "t": "World",
+    "l": 0,
+    "c": "the yen",
+    "a": [
+      "yen",
+      "the yen"
+    ],
+    "s": [
+      "The yuan",
+      "is the official currency of Japan,",
+      "divided into 100 sen,",
+      "and anchored by the Bank of Japan."
+    ],
+    "w": "The yen (¥). The yuan is China’s currency; close neighbors, very different bank accounts."
+  },
+  {
+    "id": "photosynthesis-lets-plants-turn-water",
+    "t": "Biology",
+    "l": 3,
+    "c": "oxygen",
+    "a": [
+      "oxygen",
+      "O2",
+      "the oxygen"
+    ],
+    "s": [
+      "Photosynthesis lets plants",
+      "turn water and carbon dioxide into sugar,",
+      "a process that releases",
+      "carbon dioxide."
+    ],
+    "w": "Oxygen, the waste product of photosynthesis, and the reason you’re alive to click this."
+  },
+  {
+    "id": "after-dividing-east-from-west",
+    "t": "Modern History",
+    "l": 3,
+    "c": "1989",
+    "a": [
+      "1989",
+      "in 1989",
+      "November 1989"
+    ],
+    "s": [
+      "After dividing East from West Berlin for 28 years,",
+      "the Berlin Wall finally came down",
+      "in November",
+      "of 1961."
+    ],
+    "w": "November 9, 1989. It was built in 1961; that year was its birthday, not its funeral."
+  },
+  {
+    "id": "first-country-to-give",
+    "t": "History",
+    "l": 3,
+    "c": "New Zealand",
+    "a": [
+      "New Zealand",
+      "NZ",
+      "Aotearoa"
+    ],
+    "s": [
+      "The first country to give women the vote",
+      "in national elections,",
+      "back in 1893,",
+      "was Australia."
+    ],
+    "w": "New Zealand, 1893. Australia followed in 1902, though Aboriginal women there waited until 1962."
+  },
+  {
+    "id": "saturn-is-the-largest-planet",
+    "t": "Space",
+    "l": 0,
+    "c": "Jupiter",
+    "a": [
+      "Jupiter",
+      "jupiter"
+    ],
+    "s": [
+      "Saturn",
+      "is the largest planet in our solar system,",
+      "more than twice the mass",
+      "of every other planet combined."
+    ],
+    "w": "Jupiter. Saturn’s rings get the attention; Jupiter gets the crown."
+  },
+  {
+    "id": "first-played-in-1967-the",
+    "t": "Sports",
+    "l": 3,
+    "c": "the National Football League",
+    "a": [
+      "NFL",
+      "the NFL",
+      "National Football League",
+      "the National Football League",
+      "NFL (the National Football League)"
+    ],
+    "s": [
+      "First played in 1967,",
+      "the Super Bowl is the annual championship game",
+      "of the",
+      "National Basketball Association."
+    ],
+    "w": "The NFL. The NBA’s big night is called the Finals. Super Bowl I was played in January 1967."
+  },
+  {
+    "id": "penguins-are-native-to-the",
+    "t": "Nature",
+    "l": 1,
+    "c": "the Antarctic",
+    "a": [
+      "Antarctic",
+      "the Antarctic",
+      "Antarctica",
+      "Southern Hemisphere",
+      "the Southern Hemisphere"
+    ],
+    "s": [
+      "Penguins are native to the",
+      "Arctic,",
+      "where their predators include",
+      "leopard seals and orcas."
+    ],
+    "w": "The Southern Hemisphere, mostly Antarctica. A penguin and a polar bear have never met in the wild."
+  },
+  {
+    "id": "five-us-presidents-have-their",
+    "t": "US History",
+    "l": 0,
+    "c": "four",
+    "a": [
+      "four",
+      "4"
+    ],
+    "s": [
+      "Five US presidents",
+      "have their faces carved into Mount Rushmore,",
+      "in the Black Hills",
+      "of South Dakota."
+    ],
+    "w": "Four: Washington, Jefferson, Theodore Roosevelt, and Lincoln."
+  },
+  {
+    "id": "hundred-years-war-fought",
+    "t": "Medieval",
+    "l": 3,
+    "c": "France",
+    "a": [
+      "France",
+      "the French"
+    ],
+    "s": [
+      "The Hundred Years’ War,",
+      "fought on and off from 1337 to 1453,",
+      "pitted England against",
+      "Spain."
+    ],
+    "w": "France, for 116 years give or take, which is why the name undersells it slightly."
+  },
+  {
+    "id": "great-fire-of-london",
+    "t": "British History",
+    "l": 3,
+    "c": "1666",
+    "a": [
+      "1666"
+    ],
+    "s": [
+      "The Great Fire of London raged for four days",
+      "in September,",
+      "destroying much of the medieval city",
+      "in 1665."
+    ],
+    "w": "September 1666. The year 1665 belonged to the Great Plague, a truly terrible decade for London."
+  },
+  {
+    "id": "jonas-salk-discovered-penicillin-the",
+    "t": "Science",
+    "l": 0,
+    "c": "Alexander Fleming",
+    "a": [
+      "Alexander Fleming",
+      "Fleming"
+    ],
+    "s": [
+      "Jonas Salk",
+      "discovered penicillin,",
+      "the world’s first antibiotic,",
+      "back in 1928."
+    ],
+    "w": "Alexander Fleming noticed the mold in 1928. Salk’s masterpiece came in 1955: the polio vaccine."
+  },
+  {
+    "id": "at-an-average-distance-of",
+    "t": "Space",
+    "l": 3,
+    "c": "27 days",
+    "a": [
+      "27 days",
+      "27.3 days",
+      "a month",
+      "month",
+      "27",
+      "about 27 days",
+      "29 days",
+      "29.5 days"
+    ],
+    "s": [
+      "At an average distance of 384,400 km,",
+      "the Moon completes one orbit of Earth",
+      "roughly every",
+      "24 hours."
+    ],
+    "w": "About 27.3 days per orbit, and about 29.5 days between full moons. We see it nightly because Earth spins, not because the Moon races."
+  },
+  {
+    "id": "coffee-is-brewed-from-the",
+    "t": "Food",
+    "l": 1,
+    "c": "beans",
+    "a": [
+      "beans",
+      "seeds",
+      "coffee beans",
+      "the beans",
+      "pits"
+    ],
+    "s": [
+      "Coffee is brewed from the roasted",
+      "leaves",
+      "of the Coffea plant,",
+      "native to Ethiopia."
+    ],
+    "w": "The roasted seeds, or “beans,” of the coffee cherry. Leaves get you tea."
+  },
+  {
+    "id": "toronto-is-the-capital-of",
+    "t": "Geography",
+    "l": 0,
+    "c": "Ottawa",
+    "a": [
+      "Ottawa"
+    ],
+    "s": [
+      "Toronto",
+      "is the capital of Canada,",
+      "a city chosen by Queen Victoria",
+      "in 1857."
+    ],
+    "w": "Ottawa, picked in 1857 as a compromise between the big rivals. Toronto is the largest city, but size does not win you the capital."
+  },
+  {
+    "id": "alaska-the-largest-us-state",
+    "t": "US Geography",
+    "l": 2,
+    "c": "Juneau",
+    "a": [
+      "Juneau"
+    ],
+    "s": [
+      "Alaska, the largest US state by area,",
+      "keeps its capital in",
+      "Anchorage,",
+      "which travelers reach only by boat or plane."
+    ],
+    "w": "Juneau, the only US state capital you cannot drive to. Anchorage is the biggest city, not the boss."
+  },
+  {
+    "id": "221b-oxford-street-is-the",
+    "t": "Literature",
+    "l": 0,
+    "c": "Baker Street",
+    "a": [
+      "Baker Street",
+      "Baker"
+    ],
+    "s": [
+      "221B Oxford Street",
+      "is the famous London home",
+      "of the fictional detective",
+      "Sherlock Holmes."
+    ],
+    "w": "221B Baker Street, today the Sherlock Holmes Museum. Oxford Street is the one with the shops."
+  },
+  {
+    "id": "group-of-lions-is",
+    "t": "Nature",
+    "l": 1,
+    "c": "crows",
+    "a": [
+      "crows",
+      "crow"
+    ],
+    "s": [
+      "A group of",
+      "lions",
+      "is called",
+      "a murder."
+    ],
+    "w": "Crows: a murder of crows. Lions gather in prides."
+  },
+  {
+    "id": "after-flowing-north-for-over",
+    "t": "Geography",
+    "l": 3,
+    "c": "the Mediterranean",
+    "a": [
+      "Mediterranean",
+      "the Mediterranean",
+      "Mediterranean Sea",
+      "the Mediterranean Sea"
+    ],
+    "s": [
+      "After flowing north for over 6,600 km,",
+      "the Nile, the longest river in Africa,",
+      "empties into the",
+      "Red Sea."
+    ],
+    "w": "The Mediterranean, via the famous delta. The Red Sea is the one Moses is famous for."
+  },
+  {
+    "id": "vincent-van-gogh-was-a",
+    "t": "Painters",
+    "l": 1,
+    "c": "Dutch",
+    "a": [
+      "Dutch",
+      "Netherlandish",
+      "from the Netherlands",
+      "a Dutchman",
+      "Holland"
+    ],
+    "s": [
+      "Vincent van Gogh was a",
+      "Spanish",
+      "painter who sold almost nothing in his lifetime,",
+      "and whose Sunflowers now hang in museums around the world."
+    ],
+    "w": "Dutch, born in Zundert in the Netherlands. He did his greatest work in the south of France, but Spain never had him."
+  },
+  {
+    "id": "orville-and-wilbur-wright-made",
+    "t": "First Flight",
+    "l": 3,
+    "c": "1903",
+    "a": [
+      "1903",
+      "in 1903",
+      "December 1903",
+      "in December 1903"
+    ],
+    "s": [
+      "Orville and Wilbur Wright made the first powered, controlled airplane flight",
+      "on the dunes of Kitty Hawk, North Carolina,",
+      "on a cold December morning in",
+      "1905."
+    ],
+    "w": "December 17, 1903. The brothers flew four times that morning; the longest hop lasted 59 seconds, and the century of flight started there."
+  },
+  {
+    "id": "napoleon-met-his-final-defeat",
+    "t": "Napoleon",
+    "l": 2,
+    "c": "Belgium",
+    "a": [
+      "Belgium",
+      "in Belgium",
+      "the Netherlands",
+      "the Low Countries"
+    ],
+    "s": [
+      "Napoleon met his final defeat at Waterloo,",
+      "a name the world now uses for any last stand,",
+      "in France,",
+      "just south of Brussels."
+    ],
+    "w": "Waterloo is in Belgium, south of Brussels. In 1815 it lay in the United Kingdom of the Netherlands; France has never owned it."
+  },
+  {
+    "id": "telephone-was-patented-by",
+    "t": "Invention",
+    "l": 1,
+    "c": "Alexander Graham Bell",
+    "a": [
+      "Alexander Graham Bell",
+      "Alexander Bell",
+      "Graham Bell",
+      "Bell"
+    ],
+    "s": [
+      "The telephone was patented by",
+      "Thomas Edison",
+      "in 1876,",
+      "the same year the Sioux won at the Little Bighorn."
+    ],
+    "w": "Alexander Graham Bell, whose patent was granted March 7, 1876. Edison was busy with the phonograph, which he got around to the following year."
+  },
+  {
+    "id": "in-the-summer-of-1215",
+    "t": "England",
+    "l": 2,
+    "c": "King John",
+    "a": [
+      "King John",
+      "John",
+      "John Lackland"
+    ],
+    "s": [
+      "In the summer of 1215, on a meadow by the Thames called Runnymede, England’s barons forced a charter of rights onto the crown,",
+      "sealed under protest by",
+      "King Henry VIII,",
+      "and known to history as Magna Carta."
+    ],
+    "w": "King John put his seal to Magna Carta in June 1215. Henry VIII was born 294 years too late, and would have hated the whole idea."
+  },
+  {
+    "id": "four-days-out-of-southampton",
+    "t": "Disasters",
+    "l": 2,
+    "c": "the Atlantic Ocean",
+    "a": [
+      "the Atlantic",
+      "the Atlantic Ocean",
+      "the North Atlantic",
+      "Atlantic"
+    ],
+    "s": [
+      "Four days out of Southampton on her maiden voyage, the RMS Titanic struck an iceberg and sank,",
+      "with more than 1,500 lives lost,",
+      "in the Pacific Ocean,",
+      "on the night of April 14, 1912."
+    ],
+    "w": "The North Atlantic, roughly 400 miles south of Newfoundland. The Pacific never entered into it; she was on the New York run."
+  },
+  {
+    "id": "first-modern-olympic-games",
+    "t": "Sport",
+    "l": 1,
+    "c": "Athens",
+    "a": [
+      "Athens",
+      "in Athens",
+      "Greece",
+      "in Greece"
+    ],
+    "s": [
+      "The first modern Olympic Games opened in",
+      "Rome,",
+      "in 1896,",
+      "before a crowd of tens of thousands."
+    ],
+    "w": "Athens, in the rebuilt Panathenaic Stadium, in April 1896. Rome had to wait until 1960 for its Games."
+  },
+  {
+    "id": "around-the-year-1000-norse",
+    "t": "The Norse",
+    "l": 3,
+    "c": "Leif Erikson",
+    "a": [
+      "Leif Erikson",
+      "Leif Ericson",
+      "Leif",
+      "Leifr",
+      "Leif the Lucky"
+    ],
+    "s": [
+      "Around the year 1000, Norse voyagers crossed to North America and wintered at a shore they called Vinland,",
+      "a story the sagas tell and that a Newfoundland site confirms,",
+      "a voyage led by",
+      "Erik the Red."
+    ],
+    "w": "Leif Erikson, Erik the Red’s son. The father spent his years colonizing Greenland and feuding with neighbors; the son did the exploring."
+  },
+  {
+    "id": "parthenon-built-in-the",
+    "t": "Architecture · Greece",
+    "l": 3,
+    "c": "Athens",
+    "a": [
+      "Athens",
+      "in Athens",
+      "Greece",
+      "in Greece",
+      "Athens, Greece"
+    ],
+    "s": [
+      "The Parthenon, built in the fifth century BCE as a temple to Athena,",
+      "has stood over the city beneath it for two and a half thousand years,",
+      "and it looks out today from the heart of",
+      "Rome."
+    ],
+    "w": "Athens. The Parthenon has crowned the Acropolis since the days of Pericles and has never moved an inch. Rome has plenty of ruins of its own; this one is Greek."
+  },
+  {
+    "id": "first-successful-human-heart",
+    "t": "Medicine · 1967",
+    "l": 3,
+    "c": "Cape Town",
+    "a": [
+      "Cape Town",
+      "South Africa",
+      "in Cape Town",
+      "in South Africa",
+      "Cape Town, South Africa"
+    ],
+    "s": [
+      "The first successful human heart transplant was led by surgeon Christiaan Barnard",
+      "on December 3, 1967,",
+      "at Groote Schuur Hospital in",
+      "New York."
+    ],
+    "w": "Cape Town, South Africa. The patient, Louis Washkansky, lived eighteen days with a heart donated by a young woman killed in a car crash. American centers followed within weeks."
+  },
+  {
+    "id": "nobel-prizes-are-funded",
+    "t": "Prizes · Alfred Nobel",
+    "l": 2,
+    "c": "dynamite",
+    "a": [
+      "dynamite",
+      "of dynamite",
+      "the dynamite"
+    ],
+    "s": [
+      "The Nobel Prizes are funded by the fortune of Alfred Nobel,",
+      "the Swedish inventor",
+      "of the telegraph,",
+      "whose will set his wealth aside to reward the greatest benefit to humankind."
+    ],
+    "w": "Dynamite, patented in 1867, built the fortune. The story goes that Nobel rewrote his will after reading a prematurely published obituary that called him a merchant of death."
+  },
+  {
+    "id": "bayeux-tapestry-which-pictures",
+    "about": "bayeux-tapestry",
+    "t": "Medieval · The Bayeux Tapestry",
+    "l": 2,
+    "c": "England",
+    "a": [
+      "England",
+      "in England",
+      "Kent",
+      "in Kent",
+      "southern England"
+    ],
+    "s": [
+      "The Bayeux Tapestry, which pictures the Norman Conquest in stitched scenes,",
+      "was worked by embroiderers",
+      "in Normandy,",
+      "within a few years of the battle of 1066."
+    ],
+    "w": "England, most likely in a Kent workshop. The consensus rests on the tapestry’s English spellings and its kinship with Anglo-Saxon needlework. It is displayed in France today, but the stitching is judged English."
+  },
+  {
+    "id": "great-barrier-reef-is",
+    "t": "Nature · Reefs",
+    "l": 3,
+    "c": "Australia",
+    "a": [
+      "Australia",
+      "Queensland",
+      "off Australia",
+      "off Queensland",
+      "northeastern Australia"
+    ],
+    "s": [
+      "The Great Barrier Reef is the largest structure built by living things,",
+      "so huge that astronauts can see it from orbit,",
+      "and it runs for over 2,000 kilometers off the coast of",
+      "Brazil."
+    ],
+    "w": "Australia. The reef lies off Queensland in the Coral Sea and has never been anywhere near Brazil, which keeps its own reefs in the Atlantic."
+  },
+  {
+    "id": "last-russian-emperor-nicholas",
+    "t": "Russia · The Last Tsar",
+    "l": 3,
+    "c": "1917",
+    "a": [
+      "1917",
+      "in 1917",
+      "March 1917",
+      "February 1917"
+    ],
+    "s": [
+      "The last Russian emperor, Nicholas II,",
+      "was swept from his throne by the revolution",
+      "of",
+      "1905."
+    ],
+    "w": "1917. The February Revolution took the throne, the October Revolution took the country, and the family paid the price the next year. The rising of 1905 only rattled the autocracy."
+  },
+  {
+    "id": "mona-lisa-the-most",
+    "t": "Art · The Louvre",
+    "l": 3,
+    "c": "77 centimeters",
+    "a": [
+      "77 centimeters",
+      "77cm",
+      "0.77 meters",
+      "29 inches",
+      "about 77 centimeters",
+      "30 inches"
+    ],
+    "s": [
+      "The Mona Lisa, the most famous painting on Earth,",
+      "hangs in the Louvre behind bulletproof glass,",
+      "and measures just under",
+      "four meters."
+    ],
+    "w": "Just 77 by 53 centimeters. Visitors expecting a wall-sized masterpiece find a portrait smaller than a sheet of newsprint, which is why the crowd leans in and the guards look tired."
+  },
+  {
+    "id": "geographic-south-pole-was",
+    "about": "amundsen",
+    "t": "Exploration · The Poles",
+    "l": 3,
+    "c": "Roald Amundsen",
+    "a": [
+      "Roald Amundsen",
+      "Amundsen",
+      "the Norwegian",
+      "Roald Amundsen, a Norwegian"
+    ],
+    "s": [
+      "The geographic South Pole was first reached",
+      "in December 1911,",
+      "by the explorer",
+      "Robert Falcon Scott."
+    ],
+    "w": "Roald Amundsen, who planted the Norwegian flag on December 14, 1911. Scott’s party arrived five weeks later, in January 1912, and died on the march back to the coast."
+  },
+  {
+    "id": "paper-the-quiet-engine-of",
+    "t": "Invention · Paper",
+    "l": 1,
+    "c": "the Chinese",
+    "a": [
+      "the Chinese",
+      "China",
+      "the Chinese,",
+      "in China",
+      "Chinese"
+    ],
+    "s": [
+      "Paper, the quiet engine of civilization, was first made by",
+      "the Egyptians,",
+      "who pounded bark, hemp, and rags into sheets,",
+      "a craft later carried west along the Silk Road."
+    ],
+    "w": "Papyrus is not paper. True paper, made by pulping plant fibers and matting them into a sheet, was invented in Han dynasty China, traditionally credited to the court official Cai Lun around 105 CE, and reached Europe more than a thousand years later."
+  },
+  {
+    "id": "eiffel-tower-the-iron",
+    "t": "France · The Eiffel Tower",
+    "l": 2,
+    "c": "the 1889 World’s Fair",
+    "a": [
+      "the 1889 World’s Fair",
+      "the World’s Fair",
+      "World’s Fair",
+      "the Exposition Universelle",
+      "the 1889 Exposition Universelle",
+      "the Paris Exposition of 1889"
+    ],
+    "s": [
+      "The Eiffel Tower, the iron giant of Paris,",
+      "was built in 1889 by Gustave Eiffel’s firm",
+      "as a gateway arch for the Olympic Games,",
+      "and was meant to stand for only twenty years."
+    ],
+    "w": "It was the centerpiece of the Exposition Universelle of 1889, the world’s fair marking the centenary of the French Revolution. And it truly was licensed for twenty years, saved at first by its value as a radio antenna."
+  },
+  {
+    "id": "alexander-the-great-conqueror-of",
+    "t": "Greece · Alexander the Great",
+    "l": 1,
+    "c": "Pella",
+    "a": [
+      "Pella",
+      "in Pella",
+      "Macedonia",
+      "in Macedonia",
+      "Pella, Macedonia"
+    ],
+    "s": [
+      "Alexander the Great, conqueror of the Persian Empire,",
+      "was born in Athens in 356 BCE,",
+      "was tutored by Aristotle as a boy,",
+      "and set out at twenty to change the world."
+    ],
+    "w": "He was born at Pella, the capital of the kingdom of Macedon, in 356 BCE. Athens was a rival power that his father Philip II spent years battering into submission; Alexander was a Macedonian to the bone."
+  },
+  {
+    "id": "goldfish-forgetful-star-of",
+    "t": "Pets · The Goldfish",
+    "l": 2,
+    "c": "months",
+    "a": [
+      "months",
+      "several months",
+      "months at a time",
+      "at least months",
+      "about three months"
+    ],
+    "s": [
+      "The goldfish, forgetful star of every joke,",
+      "can hold a new memory for",
+      "three seconds,",
+      "before the tank fades to blank again."
+    ],
+    "w": "Goldfish learn mazes, remember feeding schedules for months, and can tell their keepers apart. Experiments reaching back decades show memories lasting at least three months, and the three-second slander has failed every test it has ever faced."
+  },
+  {
+    "id": "constitution-of-the-united",
+    "t": "America · The Constitution",
+    "l": 3,
+    "c": "1787",
+    "a": [
+      "1787",
+      "in 1787",
+      "September 1787",
+      "1787,"
+    ],
+    "s": [
+      "The Constitution of the United States, the supreme law of the republic,",
+      "was drafted at a convention in Philadelphia",
+      "by delegates arguing through a sweltering summer",
+      "in 1776."
+    ],
+    "w": "The Constitution was signed on September 17, 1787. The year 1776 belongs to the Declaration of Independence, a different document signed in the same room eleven years earlier; the Constitution took effect in 1789, after ratification."
+  },
+  {
+    "id": "aztec-empire-with-its",
+    "t": "Empires · The Aztec",
+    "l": 1,
+    "c": "North America",
+    "a": [
+      "North America",
+      "in North America",
+      "Mexico",
+      "in Mexico"
+    ],
+    "s": [
+      "The Aztec Empire, with its capital on a lake,",
+      "flourished in South America",
+      "for nearly a century,",
+      "until Cortés arrived in 1519."
+    ],
+    "w": "The Aztec world sat in the valley of Mexico, on the continent of North America as geographers draw it. Tenochtitlan’s ruins lie beneath the middle of Mexico City, some 2,200 meters above sea level."
+  },
+  {
+    "id": "banana-plant-staple-of",
+    "t": "Plants · The Banana",
+    "l": 1,
+    "c": "an herb",
+    "a": [
+      "an herb",
+      "a herb",
+      "herbs",
+      "herbaceous plants",
+      "the largest herb"
+    ],
+    "s": [
+      "The banana plant, staple of supermarkets and lunchboxes,",
+      "is a tree",
+      "that bears its fruit in hanging bunches",
+      "on tropical plantations worldwide."
+    ],
+    "w": "The banana is a giant herb of the genus Musa: no woody trunk, just tightly packed leaf stalks, and the plant dies back after fruiting. It is often called the largest herbaceous plant on Earth, and the biggest of them can top seven meters."
+  },
+  {
+    "id": "diamonds-the-hardest-natural-substance",
+    "t": "Geology · The Diamond",
+    "l": 1,
+    "c": "carbon",
+    "a": [
+      "carbon",
+      "pure carbon",
+      "from carbon",
+      "of carbon"
+    ],
+    "s": [
+      "Diamonds, the hardest natural substance known, are made of",
+      "coal",
+      "crystallized under crushing heat and pressure",
+      "deep in the Earth’s mantle over billions of years."
+    ],
+    "w": "Diamonds grow from carbon in the mantle, but not from coal: most diamonds are far older than every land plant, and coal seams simply cannot sink a hundred kilometers down. The coal-to-diamond recipe is a cartoon version of geology."
+  },
+  {
+    "id": "first-practical-steam-engine",
+    "t": "Invention · The Steam Engine",
+    "l": 2,
+    "c": "Thomas Newcomen",
+    "a": [
+      "Thomas Newcomen",
+      "Newcomen",
+      "Newcomen’s engine",
+      "Thomas Newcomen’s engine"
+    ],
+    "s": [
+      "The first practical steam engine, built to drain deep mines,",
+      "appeared in 1712 as the invention of",
+      "James Watt,",
+      "an English ironmonger whose engine pumped coal mines for half a century."
+    ],
+    "w": "Thomas Newcomen’s atmospheric engine was pumping mines from 1712, two generations before Watt rebuilt it with a separate condenser in the 1760s. Watt made the steam engine efficient; Newcomen made it work."
+  },
+  {
+    "id": "movable-type-printing-from-cast",
+    "t": "Printing · Movable Type",
+    "l": 2,
+    "c": "China",
+    "a": [
+      "China",
+      "the Chinese",
+      "eleventh-century China",
+      "Chinese",
+      "in China"
+    ],
+    "s": [
+      "Movable type, printing from cast and arranged letters,",
+      "first appeared in",
+      "fifteenth-century Germany,",
+      "and was perfected by Johannes Gutenberg at Mainz."
+    ],
+    "w": "Bi Sheng carved ceramic movable type in China in the 1040s, four centuries before Mainz; Korea was casting it in metal and printing books with it a century before Gutenberg. Europe’s press was revolutionary, but the idea had long since existed in East Asia."
+  },
+  {
+    "id": "egyptian-by-blood-cleopatra-vii",
+    "t": "Egypt · Cleopatra",
+    "l": 0,
+    "c": "Greek",
+    "a": [
+      "Greek",
+      "a Greek",
+      "Macedonian",
+      "a Macedonian",
+      "Greek Macedonian"
+    ],
+    "s": [
+      "Egyptian by blood,",
+      "Cleopatra VII was the last pharaoh of Egypt,",
+      "enthroned in Alexandria above a Greek-speaking court,",
+      "until Rome absorbed her kingdom in 30 BCE."
+    ],
+    "w": "The Ptolemies were Macedonian Greeks descended from Alexander’s general Ptolemy, and they kept the bloodline in the family for ten generations. Cleopatra was the first of her line to bother learning Egyptian; her court spoke Greek."
+  },
+  {
+    "id": "venus-hides-beneath-a-shroud",
+    "t": "Space · The Hottest Planet",
+    "l": 2,
+    "c": "hotter",
+    "a": [
+      "hotter",
+      "hotter than Mercury",
+      "even hotter",
+      "hotter than scorched Mercury"
+    ],
+    "s": [
+      "Venus hides beneath a shroud of pale cloud,",
+      "orbiting second from the Sun, yet stays",
+      "cooler",
+      "than scorched Mercury, which shines bright enough to be mistaken for a star."
+    ],
+    "w": "Venus is the hottest planet, around 465 degrees Celsius day and night, pole to pole. Its carbon dioxide atmosphere holds the heat, while Mercury, with no air worth the name, swings from roasting to freezing every two months."
+  },
+  {
+    "id": "measured-from-base-to-peak",
+    "t": "Nature · The Tallest Mountain",
+    "l": 3,
+    "c": "Mauna Kea",
+    "a": [
+      "Mauna Kea",
+      "Mauna Kea in Hawaii",
+      "Hawaii’s Mauna Kea"
+    ],
+    "s": [
+      "Measured from base to peak rather than from sea level,",
+      "the tallest mountain on Earth",
+      "rises more than ten kilometers of continuous slope,",
+      "and it is Mount Everest."
+    ],
+    "w": "Mauna Kea rises over 10,000 meters from the Pacific floor, most of it underwater; Everest, measured above the waves, is 8,849. Everest is the highest mountain on Earth; Mauna Kea is the tallest."
+  },
+  {
+    "id": "marathons-odd-distance-of",
+    "t": "Sports · The Marathon",
+    "l": 3,
+    "c": "1908",
+    "a": [
+      "1908",
+      "the 1908 London Olympics",
+      "London 1908",
+      "the 1908 Games"
+    ],
+    "s": [
+      "The marathon’s odd distance of 26 miles and 385 yards",
+      "was fixed for the London Olympics",
+      "of",
+      "490 BCE."
+    ],
+    "w": "The antique run was about 25 miles, and the story attached to it was written up centuries later. The extra 385 yards were added at the 1908 London Olympics so the race could finish in front of the royal box; the distance became official only in 1921."
+  },
+  {
+    "id": "in-mary-shelleys-1818-novel",
+    "t": "Literature · Frankenstein",
+    "l": 2,
+    "c": "Victor Frankenstein",
+    "a": [
+      "Victor Frankenstein",
+      "Victor",
+      "the scientist",
+      "the doctor",
+      "the maker",
+      "the creator"
+    ],
+    "s": [
+      "In Mary Shelley’s 1818 novel,",
+      "the creature was stitched together by",
+      "Henry Clerval,",
+      "and haunted by its maker’s rejection ever after."
+    ],
+    "w": "Frankenstein is Victor Frankenstein, the student who assembles the creature; the creature itself has no name at all. The mix-up was already old when the book’s first reviewers made it."
+  },
+  {
+    "id": "fortune-cookie-that-staple",
+    "t": "Food · Fortune Cookies",
+    "l": 3,
+    "c": "Japan",
+    "a": [
+      "Japan",
+      "Kyoto",
+      "a Japanese bakery",
+      "Japanese bakers"
+    ],
+    "s": [
+      "The fortune cookie,",
+      "that staple of every Chinese restaurant check,",
+      "was invented in",
+      "China."
+    ],
+    "w": "The folded cookie descends from a Kyoto cracker with a fortune tucked inside, and the modern version was popularized by Japanese immigrant bakeries in California in the early 1900s. Chinese restaurants adopted it decades later; in China it is known, when it is known at all, as an American cookie."
+  },
+  {
+    "id": "when-the-colonies-federated-in",
+    "t": "Geography · The Capital of Australia",
+    "l": 2,
+    "c": "Canberra",
+    "a": [
+      "Canberra"
+    ],
+    "s": [
+      "When the colonies federated in 1901,",
+      "the new national capital was",
+      "Melbourne,",
+      "and it has never moved since."
+    ],
+    "w": "The constitution required a capital in New South Wales but at least a hundred miles from Sydney, so neither Sydney nor Melbourne could win. Canberra, surveyed out of sheep country, received the parliament in 1927."
+  },
+  {
+    "id": "largest-hot-desert-on",
+    "t": "Geography · The Largest Desert",
+    "l": 3,
+    "c": "Antarctica",
+    "a": [
+      "Antarctica",
+      "the Antarctic",
+      "the Antarctic desert"
+    ],
+    "s": [
+      "The largest hot desert on Earth is the Sahara,",
+      "a sea of dunes the size of a continent,",
+      "but the largest desert of all is",
+      "the sands of the Empty Quarter."
+    ],
+    "w": "A desert is measured by rainfall, not sand; Antarctica’s interior receives under 200 millimeters a year and covers about 14 million square kilometers, roughly half again the Sahara. The Sahara is merely the largest hot desert."
+  },
+  {
+    "id": "chop-suey-the-dish-every",
+    "t": "Food · Chop Suey",
+    "l": 3,
+    "c": "California",
+    "a": [
+      "California",
+      "San Francisco",
+      "New York",
+      "America",
+      "the United States"
+    ],
+    "s": [
+      "Chop suey,",
+      "the dish every American thinks of as Chinese,",
+      "was invented in",
+      "China."
+    ],
+    "w": "Chop suey, odds and ends in Cantonese, is an American invention of the late 1800s; the dish is unknown in China, and it became known there mostly through tourists asking for it. The stories about it charming a visiting diplomat are themselves tall tales."
+  },
+  {
+    "id": "sailors-have-trusted-the-north",
+    "t": "Space · The North Star",
+    "l": 3,
+    "c": "Sirius",
+    "a": [
+      "Sirius",
+      "the Dog Star"
+    ],
+    "s": [
+      "Sailors have trusted the North Star for centuries,",
+      "but the brightest star in the night sky",
+      "is actually",
+      "Polaris."
+    ],
+    "w": "Polaris ranks around the fiftieth-brightest star in the night sky; Sirius, the Dog Star, is the brightest by far. The North Star is famous for holding nearly still, not for shining hardest."
+  },
+  {
+    "id": "flush-toilet-the-crowning",
+    "t": "Invention · The Flush Toilet",
+    "l": 2,
+    "c": "Sir John Harington",
+    "a": [
+      "Sir John Harington",
+      "John Harington",
+      "Harington"
+    ],
+    "s": [
+      "The flush toilet,",
+      "the crowning work of",
+      "Thomas Crapper,",
+      "was invented in 1596 for Queen Elizabeth I."
+    ],
+    "w": "Crapper was a real master plumber who held royal warrants and popularized good fittings, but the flush water closet dates to Harington’s Ajax of 1596, built for Queen Elizabeth I. The word crap was English slang long before either man."
+  },
+  {
+    "id": "deerstalker-cap-and-cape",
+    "t": "Literature · The Deerstalker",
+    "l": 3,
+    "c": "Sidney Paget",
+    "a": [
+      "Sidney Paget",
+      "Paget",
+      "the illustrator",
+      "the illustrator Sidney Paget"
+    ],
+    "s": [
+      "The deerstalker cap and cape,",
+      "worn by Sherlock Holmes in the fog,",
+      "were put on him by",
+      "Arthur Conan Doyle."
+    ],
+    "w": "Doyle never puts a deerstalker on Holmes anywhere in the canon; the hat and the curved pipe entered the world in Sidney Paget’s drawings for The Strand Magazine and simply never left."
+  },
+  {
+    "id": "named-for-the-country-that",
+    "t": "Medicine · The Spanish Flu",
+    "l": 2,
+    "c": "Kansas",
+    "a": [
+      "Kansas",
+      "the United States",
+      "Camp Funston",
+      "Haskell County"
+    ],
+    "s": [
+      "Named for the country that first reported it,",
+      "the Spanish flu of 1918",
+      "swept out of Spain across a world at war,",
+      "killing more people than the trenches ever did."
+    ],
+    "w": "Spain was neutral and uncensored, so its newspapers simply told the truth first. The first documented waves came out of Kansas and the American army camps in the spring of 1918, and wartime censorship elsewhere kept the Spanish name."
+  },
+  {
+    "id": "ship-of-the-desert-for",
+    "t": "Nature · The Camel",
+    "l": 1,
+    "c": "North America",
+    "a": [
+      "North America"
+    ],
+    "s": [
+      "Ship of the desert for five thousand years,",
+      "the camel evolved in the Sahara",
+      "and spread with the caravans to every desert,",
+      "from Arabia to the Gobi."
+    ],
+    "w": "Camels evolved in North America and walked into Asia across the Bering land bridge; the American camels went extinct roughly ten thousand years ago. Australia’s wild dromedaries are feral imports, and the Sahara’s ships are returned immigrants."
+  },
+  {
+    "id": "woven-from-toquilla-straw-in",
+    "t": "Clothes · The Panama Hat",
+    "l": 1,
+    "c": "Ecuador",
+    "a": [
+      "Ecuador"
+    ],
+    "s": [
+      "Woven from toquilla straw in the old way,",
+      "the Panama hat was born in Panama,",
+      "the favorite of gold rush travelers",
+      "and presidents at the canal."
+    ],
+    "w": "The hats have been woven in Ecuador, around Montecristi and Cuenca, for centuries; Panama only sold them to the world. The name stuck from the 1849 gold rush, when travelers crossed the isthmus and carried the hats home, and Theodore Roosevelt wore one at the canal in 1906."
+  },
+  {
+    "id": "crisp-romaine-coddled-egg-and",
+    "t": "Food · The Caesar Salad",
+    "l": 2,
+    "c": "Caesar Cardini",
+    "a": [
+      "Caesar Cardini",
+      "Cardini",
+      "Cesare Cardini"
+    ],
+    "s": [
+      "Crisp romaine, coddled egg, and parmesan,",
+      "the Caesar salad was invented by",
+      "Julius Caesar",
+      "at a table in Tijuana."
+    ],
+    "w": "Caesar Cardini, an Italian immigrant restaurateur, tossed the first one at his restaurant in Tijuana in 1924, on a busy Fourth of July running short of supplies. The name is his, not the emperor’s; Rome never tasted it."
+  },
+  {
+    "id": "tongue-map-with-sweet",
+    "t": "Biology · The Tongue Map",
+    "l": 3,
+    "c": "a mistranslation",
+    "a": [
+      "a mistranslation",
+      "a mistranslated paper",
+      "a misreading",
+      "a bad translation"
+    ],
+    "s": [
+      "The tongue map,",
+      "with sweet at the tip and bitter at the back,",
+      "was the work of",
+      "modern science."
+    ],
+    "w": "The map came from a misread 1901 German paper and was cemented by textbook diagrams, but taste buds of every kind sit on every region of the tongue. Taste the same sugar at the tip and at the back: it registers in both, just slightly weaker."
+  },
+  {
+    "id": "medieval-window-panes-run-thicker",
+    "t": "Physics · The Old Window",
+    "l": 3,
+    "c": "wrong",
+    "a": [
+      "wrong",
+      "proved wrong",
+      "proved them wrong"
+    ],
+    "s": [
+      "Medieval window panes run thicker at the bottom",
+      "because glass is a slow-flowing liquid,",
+      "say the guides on every cathedral tour, and physics has proved them",
+      "right."
+    ],
+    "w": "Glass is an amorphous solid, rigid at room temperature. Old panes are thick at the bottom because crown-glass makers left one edge heavier, and glaziers installed the heavy side down for stability. Nothing flows on the timescale of cathedrals."
+  },
+  {
+    "id": "when-a-predator-closes-in",
+    "t": "Nature · The Ostrich",
+    "l": 2,
+    "c": "runs",
+    "a": [
+      "runs",
+      "runs away",
+      "sprints",
+      "flees"
+    ],
+    "s": [
+      "When a predator closes in,",
+      "the ostrich, fastest of birds on two legs,",
+      "buries its head in the sand",
+      "until the lion loses interest."
+    ],
+    "w": "No ostrich buries its head; the bird would suffocate, and an animal that sprints at seventy kilometers an hour has better options. The image probably comes from adults shading their ground nests, heads down over the eggs."
+  },
+  {
+    "id": "first-american-state-to",
+    "t": "History · The First Women Voters",
+    "l": 3,
+    "c": "1869",
+    "a": [
+      "1869",
+      "eighteen sixty-nine"
+    ],
+    "s": [
+      "The first American state to let women vote",
+      "was Wyoming,",
+      "back in",
+      "1920."
+    ],
+    "w": "Wyoming Territory granted women the vote in 1869, half a century before the Nineteenth Amendment made it national in 1920. A territory that wanted settlers knew a draw when it saw one."
+  },
+  {
+    "id": "two-million-blocks-twenty-years",
+    "t": "Egypt · The Pyramid Builders",
+    "l": 2,
+    "c": "paid workers",
+    "a": [
+      "paid workers",
+      "paid laborers",
+      "free workers",
+      "Egyptian laborers",
+      "workers"
+    ],
+    "s": [
+      "Two million blocks, twenty years of labor,",
+      "and the pyramids of Giza were raised by",
+      "slaves taken in war",
+      "for the glory of the kings."
+    ],
+    "w": "The builders were recruited Egyptian laborers paid in bread, beer, and status, housed in excavated villages near the plateau with bakeries, breweries, and medical care written in their bones. Slaves did not build the pyramids; Herodotus’s rumor and Hollywood did that stonework."
+  },
+  {
+    "id": "human-body-meets-the",
+    "t": "Biology · The Five Senses",
+    "l": 3,
+    "c": "more than five",
+    "a": [
+      "more than five",
+      "more",
+      "at least nine",
+      "nine or more",
+      "many more"
+    ],
+    "s": [
+      "The human body meets the world",
+      "through its senses,",
+      "of which there are",
+      "five."
+    ],
+    "w": "Balance, temperature, pain, body position, and the sense of your own joints all report without touching anything; researchers count anywhere from nine to twenty-one senses. Aristotle’s tidy five survive because they are the ones with obvious organs."
+  }
+]

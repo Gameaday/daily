@@ -1,0 +1,47 @@
+[
+  {
+    "id": "laika",
+    "n": "Laika",
+    "d": "The first dog in orbit, 1957"
+  },
+  {
+    "id": "ham",
+    "n": "Ham",
+    "d": "The first chimpanzee in space, 1961"
+  },
+  {
+    "id": "felicette",
+    "n": "Félicette",
+    "d": "The first cat in space, 1963"
+  },
+  {
+    "id": "woolly-mammoth",
+    "n": "The Woolly Mammoth",
+    "d": "The tusked giant of the ice age steppes"
+  },
+  {
+    "id": "sabre-toothed-cat",
+    "n": "The Sabre-toothed Cat",
+    "d": "The cat with the killing blades"
+  },
+  {
+    "id": "woolly-rhino",
+    "n": "The Woolly Rhinoceros",
+    "d": "The shaggy rhinoceros of the steppe"
+  },
+  {
+    "id": "anglerfish",
+    "n": "The Anglerfish",
+    "d": "The deep sea fish with the glowing lure"
+  },
+  {
+    "id": "giant-squid",
+    "n": "The Giant Squid",
+    "d": "The Architeuthis of the deep"
+  },
+  {
+    "id": "vampire-squid",
+    "n": "The Vampire Squid",
+    "d": "The squid with the cloak of webbing"
+  }
+]

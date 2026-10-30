@@ -1,7 +1,7 @@
 # The knowledge layer
 
 One home for the facts the games share: entities (people, events,
-places and artifacts today; quotes when cipher joins the layer),
+places, artifacts and quotes today),
 the shared stories the year games tell, and their typed relations, compiled by tools/build-knowledge.mjs into
 the per-game puzzle stores. The layer is the hand-maintained source;
 the stores are generated artifacts, exactly like the bank files. CI
@@ -43,8 +43,13 @@ schedule that the first post-flip bank change reshuffles.
   documents, vessels). Fields: id, n, al (the accepted answers),
   c (five clue strings, cryptic to plain) and w (the story the
   reveal tells). museum compiles the whole file, in file order.
-- quotes.json - defined but not yet populated. It appears when
-  cipher joins the layer.
+- quotes.json - the sayings cipher hides. Each entry is { id, by, q }:
+  by keys to the speaker's person id, q is the line itself, y (the
+  year it was said) and via (the work or the record that carries it)
+  appear only when they are defensible, and a quote carries
+  provenance when its dating was reviewed. Quote ids live outside
+  the entity namespace. cipher compiles the whole file, in file
+  order.
 
 Every entity may also carry (nothing requires them yet):
 
@@ -92,6 +97,9 @@ Every entity may also carry (nothing requires them yet):
 - museum: no recipe file; the whole artifacts file is the bank, and
   the file order is the day rotation, so no id sort ever moves an
   exhibit. Output: puzzles/museum/puzzles.json and its bank file.
+- cipher: no recipe file; the whole quotes file is the bank, in
+  file order, and the answers are the speakers the quotes name.
+  Output: puzzles/cipher/puzzles.json and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

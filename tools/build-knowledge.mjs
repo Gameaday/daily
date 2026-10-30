@@ -21,11 +21,12 @@
      plus one impostor, alive that year but documented elsewhere;
      the seating rotates with the year so a crowded table does not
      serve the same faces twice
-   - museum is a whole-file recipe over artifacts: the made things
-     carry their aliases, five clues and the story the reveal tells,
-     and the whole file compiles to the store in file order, the file
-     order being the day rotation. quotes stay defined in
-     knowledge/SCHEMA.md until cipher lands, and this tool fails
+   - museum and cipher are whole-file recipes over artifacts and
+     quotes: the made things carry their aliases, five clues and the
+     story the reveal tells, and the quotes name their speakers by
+     person id and carry the year and the source when they are
+     defensible. Both files compile to their stores in file order,
+     the file order being the day rotation, and this tool fails
      loudly if a needed file is missing
 
    Lint (always, before anything compiles):
@@ -47,6 +48,9 @@
    - artifacts carry their alias strings, five clue strings and a
      story, with no duplicate names and no alias that names another
      artifact
+   - quotes carry a unique id outside the entity namespace, a known
+     speaker, never the same text twice, and a year inside the life
+     of the speaker
 
    Default mode (what CI runs) never writes anything and exits 1 on
    drift. Run: node tools/build-knowledge.mjs         (verify)
@@ -76,10 +80,11 @@ const places = readLayer('places');
 const presence = readLayer('presence');
 const stories = readLayer('stories');
 const artifacts = readLayer('artifacts');
+const quotes = readLayer('quotes');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
-                       ['stories', stories], ['artifacts', artifacts]]){
+                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
@@ -142,6 +147,36 @@ for (const x of entities) byId[x.id] = x;
     else if (artifacts.some(y => y !== x && typeof y.n === 'string' && x.al.includes(y.n)))
       fail('knowledge: artifact ' + x.id + ' lists an alias that names another artifact');
     else names.add(x.n);
+  }
+}
+
+/* quotes: the sayings cipher hides, keyed to their speakers */
+{
+  const ids = new Set(entities.map(x => x.id));
+  const seen = new Set();
+  const peopleIds = new Set(Array.isArray(people) ? people.map(x => x.id) : []);
+  const texts = new Set();
+  for (const x of (Array.isArray(quotes) ? quotes : [])){
+    if (!x || typeof x.id !== 'string') continue;
+    if (seen.has(x.id)) fail('knowledge: quote id ' + x.id + ' appears twice');
+    else if (ids.has(x.id)) fail('knowledge: quote id collides with an entity: ' + x.id);
+    else if (!peopleIds.has(x.by)) fail('knowledge: quote names an unknown speaker: ' + x.by);
+    else if (typeof x.q !== 'string' || !x.q) fail('knowledge: quote ' + x.id + ' needs text (q)');
+    else if (texts.has(x.q)) fail('knowledge: quote ' + x.id + ' tells a quote twice');
+    else if (x.y !== undefined && (!Number.isInteger(x.y) || x.y <= 0))
+      fail('knowledge: quote ' + x.id + ' year must be a positive integer or absent');
+    else if (x.via !== undefined && (typeof x.via !== 'string' || !x.via))
+      fail('knowledge: quote ' + x.id + ' needs a via string or none');
+    else if (x.provenance !== undefined && (typeof x.provenance !== 'string' || !x.provenance))
+      fail('knowledge: quote ' + x.id + ' needs a provenance string or none');
+    else {
+      seen.add(x.id);
+      texts.add(x.q);
+      const speaker = byId[x.by];
+      if (x.y !== undefined && speaker && speaker.born !== undefined && speaker.died !== undefined &&
+          (x.y < speaker.born || x.y > speaker.died))
+        fail('knowledge: quote ' + x.id + ' falls outside the life of its speaker');
+    }
   }
 }
 
@@ -386,6 +421,21 @@ function compileMuseum(){
 ';
 }
 
+/* ---------------- whole-file recipe: cipher ---------------- */
+function compileCipher(){
+  if (!Array.isArray(quotes)) return null;
+  const bank = [];
+  for (const x of quotes){
+    const speaker = x && byId[x.by];
+    if (!speaker) continue;
+    bank.push({ q: x.q, a: speaker.n });
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: cipher bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '
+';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -408,6 +458,7 @@ if (LIST.gated.timeline) checkStore('timeline', compileTimeline());
 if (LIST.gated.rounds) checkStore('rounds', compileRounds());
 if (LIST.gated.brunch) checkStore('brunch', compileBrunch());
 if (LIST.gated.museum) checkStore('museum', compileMuseum());
+if (LIST.gated.cipher) checkStore('cipher', compileCipher());
 
 if (fails){
   console.error('');

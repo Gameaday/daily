@@ -12,6 +12,11 @@
         "d": "President, 1735-1826"
       },
       {
+        "id": "ali",
+        "n": "Muhammad Ali",
+        "d": "Boxer, 1942-2016"
+      },
+      {
         "id": "amundsen",
         "n": "Roald Amundsen",
         "d": "First to the South Pole, 1872-1928"
@@ -27,9 +32,24 @@
         "d": "Campaigner for the ballot, 1820-1906"
       },
       {
+        "id": "archimedes",
+        "n": "Archimedes",
+        "d": "Geometer of Syracuse, c. 287-212 BCE"
+      },
+      {
+        "id": "armstrong",
+        "n": "Neil Armstrong",
+        "d": "Astronaut, 1930-2012"
+      },
+      {
         "id": "augustus",
         "n": "Augustus",
         "d": "First Roman emperor, 63 BCE-14 CE"
+      },
+      {
+        "id": "austen",
+        "n": "Jane Austen",
+        "d": "Novelist, 1775-1817"
       },
       {
         "id": "babbage",
@@ -40,6 +60,11 @@
         "id": "bach",
         "n": "Johann Sebastian Bach",
         "d": "Composer, 1685-1750"
+      },
+      {
+        "id": "bacon",
+        "n": "Francis Bacon",
+        "d": "Essayist and philosopher, 1561-1626"
       },
       {
         "id": "banks",
@@ -187,6 +212,11 @@
         "d": "Queen of Sweden, 1626-1689"
       },
       {
+        "id": "churchill",
+        "n": "Winston Churchill",
+        "d": "Prime minister, 1874-1965"
+      },
+      {
         "id": "cicero",
         "n": "Cicero",
         "d": "Roman orator and consul, 106-43 BCE"
@@ -287,14 +317,29 @@
         "d": "Novelist of London, 1812-1870"
       },
       {
+        "id": "dickinson",
+        "n": "Emily Dickinson",
+        "d": "Poet of Amherst, 1830-1886"
+      },
+      {
         "id": "diderot",
         "n": "Denis Diderot",
         "d": "Philosopher and editor, 1713-1784"
       },
       {
+        "id": "donne",
+        "n": "John Donne",
+        "d": "Poet and dean of St Paul's, 1572-1631"
+      },
+      {
         "id": "dostoevsky",
         "n": "Fyodor Dostoevsky",
         "d": "Novelist, 1821-1881"
+      },
+      {
+        "id": "douglas-adams",
+        "n": "Douglas Adams",
+        "d": "Comic novelist, 1952-2001"
       },
       {
         "id": "douglass",
@@ -307,6 +352,11 @@
         "d": "Privateer and explorer, c. 1540-1596"
       },
       {
+        "id": "du-bois",
+        "n": "W.E.B. Du Bois",
+        "d": "Sociologist and writer, 1868-1963"
+      },
+      {
         "id": "dumas",
         "n": "Alexandre Dumas",
         "d": "Novelist, 1802-1870"
@@ -317,9 +367,24 @@
         "d": "Composer of Bohemia, 1841-1904"
       },
       {
+        "id": "edison",
+        "n": "Thomas Edison",
+        "d": "Inventor, 1847-1931"
+      },
+      {
         "id": "einstein",
         "n": "Albert Einstein",
         "d": "Theorist of relativity, 1879-1955"
+      },
+      {
+        "id": "eisenhower",
+        "n": "Dwight D. Eisenhower",
+        "d": "General and president, 1890-1969"
+      },
+      {
+        "id": "eleanor-roosevelt",
+        "n": "Eleanor Roosevelt",
+        "d": "Reformer and diplomat, 1884-1962"
       },
       {
         "id": "elizabeth-i",
@@ -372,6 +437,11 @@
         "d": "Printer and scientist, 1706-1790"
       },
       {
+        "id": "franklin-roosevelt",
+        "n": "Franklin D. Roosevelt",
+        "d": "President, 1882-1945"
+      },
+      {
         "id": "frederick",
         "n": "Frederick the Great",
         "d": "King of Prussia, 1712-1786"
@@ -382,9 +452,19 @@
         "d": "Revolution, 1789"
       },
       {
+        "id": "frost",
+        "n": "Robert Frost",
+        "d": "Poet, 1874-1963"
+      },
+      {
         "id": "galileo",
         "n": "Galileo Galilei",
         "d": "Astronomer, 1564-1642"
+      },
+      {
+        "id": "gandhi",
+        "n": "Mahatma Gandhi",
+        "d": "Leader of Indian independence, 1869-1948"
       },
       {
         "id": "garrick",
@@ -482,9 +562,19 @@
         "d": "Gunpowder plotter, 1570-1606"
       },
       {
+        "id": "hale",
+        "n": "Nathan Hale",
+        "d": "Captain of the Revolution, 1755-1776"
+      },
+      {
         "id": "halley",
         "n": "Edmond Halley",
         "d": "Astronomer, 1656-1742"
+      },
+      {
+        "id": "hamilton",
+        "n": "Alexander Hamilton",
+        "d": "First Treasury secretary, c. 1757-1804"
       },
       {
         "id": "handel",
@@ -505,6 +595,16 @@
         "id": "hegel",
         "n": "Georg Hegel",
         "d": "Philosopher of the dialectic, 1770-1831"
+      },
+      {
+        "id": "hellman",
+        "n": "Lillian Hellman",
+        "d": "Playwright, 1905-1984"
+      },
+      {
+        "id": "hemingway",
+        "n": "Ernest Hemingway",
+        "d": "Novelist, 1899-1961"
       },
       {
         "id": "henry-viii",
@@ -587,6 +687,11 @@
         "d": "Cavendish discoverer of the electron, 1856-1940"
       },
       {
+        "id": "jobs",
+        "n": "Steve Jobs",
+        "d": "Co-founder of Apple, 1955-2011"
+      },
+      {
         "id": "john-franklin",
         "n": "John Franklin",
         "d": "Arctic explorer of Erebus and Terror, 1786-1847"
@@ -595,6 +700,16 @@
         "id": "john-herschel",
         "n": "John Herschel",
         "d": "Astronomer, 1792-1871"
+      },
+      {
+        "id": "john-kennedy",
+        "n": "John F. Kennedy",
+        "d": "President, 1917-1963"
+      },
+      {
+        "id": "john-lennon",
+        "n": "John Lennon",
+        "d": "Songwriter and Beatle, 1940-1980"
       },
       {
         "id": "johnson",
@@ -615,6 +730,11 @@
         "id": "julius-ii",
         "n": "Pope Julius II",
         "d": "Warrior pope, 1443-1513"
+      },
+      {
+        "id": "keller",
+        "n": "Helen Keller",
+        "d": "Writer and advocate, 1880-1968"
       },
       {
         "id": "kelvin",
@@ -727,9 +847,24 @@
         "d": "Political thinker, 1469-1527"
       },
       {
+        "id": "madison",
+        "n": "James Madison",
+        "d": "President, 1751-1836"
+      },
+      {
         "id": "magellan",
         "n": "Ferdinand Magellan",
         "d": "Explorer, c. 1480-1521"
+      },
+      {
+        "id": "malcolm-x",
+        "n": "Malcolm X",
+        "d": "Minister and activist, 1925-1965"
+      },
+      {
+        "id": "mandela",
+        "n": "Nelson Mandela",
+        "d": "President of South Africa, 1918-2013"
       },
       {
         "id": "manet",
@@ -765,6 +900,16 @@
         "id": "marlowe",
         "n": "Christopher Marlowe",
         "d": "Playwright, 1564-1593"
+      },
+      {
+        "id": "martin-luther-king",
+        "n": "Martin Luther King Jr.",
+        "d": "Civil rights leader, 1929-1968"
+      },
+      {
+        "id": "marx",
+        "n": "Karl Marx",
+        "d": "Philosopher of class struggle, 1818-1883"
       },
       {
         "id": "mary-queen-of-scots",
@@ -882,6 +1027,11 @@
         "d": "Lord Protector, 1599-1658"
       },
       {
+        "id": "orwell",
+        "n": "George Orwell",
+        "d": "Novelist and essayist, 1903-1950"
+      },
+      {
         "id": "ovid",
         "n": "Ovid",
         "d": "Roman poet of the Metamorphoses, 43 BCE-17 CE"
@@ -900,6 +1050,11 @@
         "id": "pasteur",
         "n": "Louis Pasteur",
         "d": "Chemist, 1822-1895"
+      },
+      {
+        "id": "patrick-henry",
+        "n": "Patrick Henry",
+        "d": "Orator of the Revolution, 1736-1799"
       },
       {
         "id": "pepys",
@@ -967,6 +1122,11 @@
         "d": "Painter, 1483-1520"
       },
       {
+        "id": "reagan",
+        "n": "Ronald Reagan",
+        "d": "President, 1911-2004"
+      },
+      {
         "id": "rembrandt",
         "n": "Rembrandt",
         "d": "Painter, 1606-1669"
@@ -985,6 +1145,11 @@
         "id": "robert-schumann",
         "n": "Robert Schumann",
         "d": "Composer, 1810-1856"
+      },
+      {
+        "id": "rosa-parks",
+        "n": "Rosa Parks",
+        "d": "Civil rights activist, 1913-2005"
       },
       {
         "id": "rossetti",
@@ -1010,6 +1175,11 @@
         "id": "ruskin",
         "n": "John Ruskin",
         "d": "Critic, 1819-1900"
+      },
+      {
+        "id": "russell",
+        "n": "Bertrand Russell",
+        "d": "Philosopher, 1872-1970"
       },
       {
         "id": "rutherford",
@@ -1062,6 +1232,11 @@
         "d": "Playwright, 1564-1616"
       },
       {
+        "id": "shaw",
+        "n": "George Bernard Shaw",
+        "d": "Playwright, 1856-1950"
+      },
+      {
         "id": "shelley",
         "n": "Percy Shelley",
         "d": "Poet, 1792-1822"
@@ -1070,6 +1245,11 @@
         "id": "smith",
         "n": "Adam Smith",
         "d": "Economist, 1723-1790"
+      },
+      {
+        "id": "socrates",
+        "n": "Socrates",
+        "d": "Philosopher of Athens, 470-399 BCE"
       },
       {
         "id": "solander",
@@ -1112,6 +1292,11 @@
         "d": "Ottoman sultan, 1494-1566"
       },
       {
+        "id": "sun-tzu",
+        "n": "Sun Tzu",
+        "d": "Strategist, c. 544-496 BCE"
+      },
+      {
         "id": "swift",
         "n": "Jonathan Swift",
         "d": "Satirist, 1667-1745"
@@ -1132,6 +1317,16 @@
         "d": "Novelist and satirist, 1811-1863"
       },
       {
+        "id": "theodore-parker",
+        "n": "Theodore Parker",
+        "d": "Minister and abolitionist, 1810-1860"
+      },
+      {
+        "id": "theodore-roosevelt",
+        "n": "Theodore Roosevelt",
+        "d": "President, 1858-1919"
+      },
+      {
         "id": "thomas-cromwell",
         "n": "Thomas Cromwell",
         "d": "Minister to Henry VIII, c. 1485-1540"
@@ -1147,9 +1342,19 @@
         "d": "Writer of Walden, 1817-1862"
       },
       {
+        "id": "thucydides",
+        "n": "Thucydides",
+        "d": "Historian, c. 460-400 BCE"
+      },
+      {
         "id": "titian",
         "n": "Titian",
         "d": "Painter, c. 1488-1576"
+      },
+      {
+        "id": "tolkien",
+        "n": "J.R.R. Tolkien",
+        "d": "Novelist and philologist, 1892-1973"
       },
       {
         "id": "tolstoy",
@@ -1275,6 +1480,11 @@
         "id": "whistler",
         "n": "James Whistler",
         "d": "Painter, 1834-1903"
+      },
+      {
+        "id": "wilde",
+        "n": "Oscar Wilde",
+        "d": "Playwright, 1854-1900"
       },
       {
         "id": "william-herschel",
@@ -3463,7 +3673,7 @@
       ],
       "d": [
         "shackleton",
-        "gogol"
+        "goethe"
       ]
     },
     {
@@ -3477,7 +3687,7 @@
       ],
       "d": [
         "stephenson",
-        "victoria"
+        "verrocchio"
       ]
     },
     {
@@ -3490,8 +3700,8 @@
         "james-i"
       ],
       "d": [
-        "mary-shelley",
-        "hawthorne"
+        "marlowe",
+        "halley"
       ]
     },
     {
@@ -3503,8 +3713,8 @@
         "darwin"
       ],
       "d": [
-        "milton",
-        "paine"
+        "mill",
+        "paganini"
       ]
     },
     {
@@ -3516,8 +3726,8 @@
         "byron"
       ],
       "d": [
-        "augustus",
-        "watt"
+        "archimedes",
+        "waterloo"
       ]
     },
     {
@@ -3529,7 +3739,7 @@
         "james-clark-ross"
       ],
       "d": [
-        "emilie",
+        "elizabeth-i",
         "rubens"
       ]
     },
@@ -3543,8 +3753,8 @@
         "goethe"
       ],
       "d": [
-        "carlyle",
-        "einstein"
+        "caesar",
+        "rosa-parks"
       ]
     },
     {
@@ -3556,7 +3766,7 @@
       ],
       "d": [
         "cervantes",
-        "sand"
+        "rutherford"
       ]
     },
     {
@@ -3569,8 +3779,8 @@
         "shakespeare"
       ],
       "d": [
-        "velazquez",
-        "baudelaire"
+        "tyndale",
+        "bach"
       ]
     },
     {
@@ -3583,8 +3793,8 @@
         "cesare-borgia"
       ],
       "d": [
-        "hobbes",
-        "vivaldi"
+        "hellman",
+        "victoria"
       ]
     },
     {
@@ -3597,8 +3807,8 @@
         "trafalgar"
       ],
       "d": [
-        "thoreau",
-        "frederick"
+        "thomas-cromwell",
+        "franklin"
       ]
     },
     {
@@ -3611,7 +3821,7 @@
       ],
       "d": [
         "rembrandt",
-        "burke"
+        "brunel"
       ]
     },
     {
@@ -3622,8 +3832,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "galileo",
-        "george-v"
+        "french-revolution",
+        "george-eliot"
       ]
     },
     {
@@ -3636,8 +3846,8 @@
         "dante"
       ],
       "d": [
-        "leonardo",
-        "galileo"
+        "lavoisier",
+        "frederick"
       ]
     },
     {
@@ -3650,8 +3860,8 @@
         "kepler"
       ],
       "d": [
-        "magellan",
-        "tyndale"
+        "madison",
+        "turgenev"
       ]
     },
     {
@@ -3662,7 +3872,7 @@
         "darwin"
       ],
       "d": [
-        "francis-i",
+        "flinders",
         "raleigh"
       ]
     },
@@ -3675,8 +3885,8 @@
         "humboldt"
       ],
       "d": [
-        "carlyle",
-        "marco-polo"
+        "byron",
+        "manuel-i"
       ]
     },
     {
@@ -3689,8 +3899,8 @@
         "darwin"
       ],
       "d": [
-        "charles-ii",
-        "boswell"
+        "charles-v",
+        "berlioz"
       ]
     },
     {
@@ -3702,8 +3912,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "descartes",
-        "amundsen"
+        "diderot",
+        "ali"
       ]
     },
     {
@@ -3715,7 +3925,7 @@
         "wagner"
       ],
       "d": [
-        "columbus",
+        "congress-of-vienna",
         "shackleton"
       ]
     },
@@ -3728,8 +3938,8 @@
         "verdi"
       ],
       "d": [
-        "emilie",
-        "charles-ii"
+        "charles-ii",
+        "isabella"
       ]
     },
     {
@@ -3741,8 +3951,8 @@
         "james-i"
       ],
       "d": [
-        "mary-queen-of-scots",
-        "catherine"
+        "marie-antoinette",
+        "cassatt"
       ]
     },
     {
@@ -3755,8 +3965,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "linnaeus",
-        "great-fire"
+        "lewes",
+        "grant"
       ]
     },
     {
@@ -3767,8 +3977,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "beethoven",
-        "marco-polo"
+        "banks",
+        "manet"
       ]
     },
     {
@@ -3780,8 +3990,8 @@
         "byron"
       ],
       "d": [
-        "jefferson",
-        "descartes"
+        "james-i",
+        "diderot"
       ]
     },
     {
@@ -3794,7 +4004,7 @@
       ],
       "d": [
         "robert-schumann",
-        "josephine"
+        "john-kennedy"
       ]
     },
     {
@@ -3807,7 +4017,7 @@
       ],
       "d": [
         "william-herschel",
-        "savonarola"
+        "sand"
       ]
     },
     {
@@ -3820,8 +4030,8 @@
         "shakespeare"
       ],
       "d": [
-        "vivaldi",
-        "augustus"
+        "victoria",
+        "archimedes"
       ]
     },
     {
@@ -3833,8 +4043,8 @@
         "newton"
       ],
       "d": [
-        "holbein",
-        "halley"
+        "hemingway",
+        "guy-fawkes"
       ]
     },
     {
@@ -3845,8 +4055,8 @@
         "goethe"
       ],
       "d": [
-        "hawthorne",
-        "leonardo"
+        "halley",
+        "lafayette"
       ]
     },
     {
@@ -3870,8 +4080,8 @@
         "manet"
       ],
       "d": [
-        "erasmus-darwin",
-        "philip-iv"
+        "emilie",
+        "pepys"
       ]
     },
     {
@@ -3882,8 +4092,8 @@
         "flaubert"
       ],
       "d": [
-        "tolstoy",
-        "marie-antoinette"
+        "christina",
+        "thoreau"
       ]
     },
     {
@@ -3896,7 +4106,7 @@
         "napoleon"
       ],
       "d": [
-        "liszt",
+        "linnaeus",
         "thackeray"
       ]
     },
@@ -3911,7 +4121,7 @@
       ],
       "d": [
         "wellington",
-        "wallace"
+        "voltaire"
       ]
     },
     {
@@ -3923,8 +4133,8 @@
         "descartes"
       ],
       "d": [
-        "erasmus",
-        "george-eliot"
+        "emerson",
+        "gaskell"
       ]
     },
     {
@@ -3936,8 +4146,8 @@
         "napoleon"
       ],
       "d": [
-        "nietzsche",
-        "adams"
+        "newton",
+        "ali"
       ]
     },
     {
@@ -3949,8 +4159,8 @@
         "maxwell"
       ],
       "d": [
-        "melbourne",
-        "spanish-armada"
+        "mary-queen-of-scots",
+        "solvay-1911"
       ]
     },
     {
@@ -3962,8 +4172,8 @@
         "rubens"
       ],
       "d": [
-        "hawthorne",
-        "caroline-lamb"
+        "hamilton",
+        "carlyle"
       ]
     },
     {
@@ -3976,7 +4186,7 @@
       ],
       "d": [
         "watt",
-        "augustus"
+        "archimedes"
       ]
     },
     {
@@ -3989,7 +4199,7 @@
       ],
       "d": [
         "wren",
-        "bach"
+        "augustus"
       ]
     },
     {
@@ -4001,8 +4211,8 @@
         "darwin"
       ],
       "d": [
-        "rubens",
-        "hegel"
+        "rousseau",
+        "hawthorne"
       ]
     },
     {
@@ -4015,7 +4225,7 @@
         "dante"
       ],
       "d": [
-        "vespucci",
+        "verdi",
         "racine"
       ]
     },
@@ -4039,8 +4249,8 @@
         "brahms"
       ],
       "d": [
-        "brunel",
-        "mary-queen-of-scots"
+        "marcus-aurelius",
+        "mozart"
       ]
     },
     {
@@ -4053,7 +4263,7 @@
         "napoleon"
       ],
       "d": [
-        "john-franklin",
+        "jj-thomson",
         "reynolds"
       ]
     },
@@ -4066,8 +4276,8 @@
         "william-herschel"
       ],
       "d": [
-        "cook",
-        "isabella"
+        "corelli",
+        "huxley"
       ]
     },
     {
@@ -4079,7 +4289,7 @@
         "dante"
       ],
       "d": [
-        "boswell",
+        "berlioz",
         "smith"
       ]
     },
@@ -4094,7 +4304,7 @@
       ],
       "d": [
         "raleigh",
-        "berlioz"
+        "baudelaire"
       ]
     },
     {
@@ -4107,8 +4317,8 @@
         "huygens"
       ],
       "d": [
-        "leonardo",
-        "handel"
+        "lavoisier",
+        "halley"
       ]
     },
     {
@@ -4120,8 +4330,8 @@
         "titian"
       ],
       "d": [
-        "marco-polo",
-        "dostoevsky"
+        "manet",
+        "douglas-adams"
       ]
     },
     {
@@ -4134,8 +4344,8 @@
         "byron"
       ],
       "d": [
-        "humboldt",
-        "degas"
+        "hooke",
+        "dickens"
       ]
     },
     {
@@ -4147,8 +4357,8 @@
         "john-herschel"
       ],
       "d": [
-        "william-iii",
-        "turgenev"
+        "titian",
+        "constable"
       ]
     },
     {
@@ -4161,8 +4371,8 @@
         "mary-queen-of-scots"
       ],
       "d": [
-        "trafalgar",
-        "spanish-armada"
+        "thucydides",
+        "solvay-1911"
       ]
     },
     {
@@ -4174,8 +4384,8 @@
         "dante"
       ],
       "d": [
-        "david",
-        "marlowe"
+        "de-morgan",
+        "marco-polo"
       ]
     },
     {
@@ -4187,8 +4397,8 @@
         "baudin"
       ],
       "d": [
-        "shelley",
-        "wordsworth"
+        "shaw",
+        "gentile-bellini"
       ]
     },
     {
@@ -4200,8 +4410,8 @@
         "caesar"
       ],
       "d": [
-        "nietzsche",
-        "frederick"
+        "newton",
+        "franklin"
       ]
     },
     {
@@ -4212,7 +4422,7 @@
         "charles-ii"
       ],
       "d": [
-        "boswell",
+        "bernini",
         "raphael"
       ]
     },
@@ -4226,8 +4436,8 @@
         "constantijn"
       ],
       "d": [
-        "schubert",
-        "twain"
+        "schopenhauer",
+        "trafalgar"
       ]
     },
     {
@@ -4238,8 +4448,8 @@
         "james-i"
       ],
       "d": [
-        "renoir",
-        "william-herschel"
+        "rembrandt",
+        "wilde"
       ]
     },
     {
@@ -4250,7 +4460,7 @@
         "charles-v"
       ],
       "d": [
-        "napoleon",
+        "nansen",
         "dvorak"
       ]
     },
@@ -4263,8 +4473,8 @@
         "henry-viii"
       ],
       "d": [
-        "erasmus",
-        "beethoven"
+        "elizabeth-i",
+        "bacon"
       ]
     },
     {
@@ -4277,8 +4487,8 @@
         "goethe"
       ],
       "d": [
-        "lister",
-        "kelvin"
+        "lewis",
+        "lincoln"
       ]
     },
     {
@@ -4290,8 +4500,8 @@
         "plutarch"
       ],
       "d": [
-        "mary-shelley",
-        "schubert"
+        "marlowe",
+        "schopenhauer"
       ]
     },
     {
@@ -4303,8 +4513,8 @@
         "flaubert"
       ],
       "d": [
-        "grant",
-        "lorenzo"
+        "goya",
+        "liszt"
       ]
     },
     {
@@ -4317,8 +4527,8 @@
         "byron"
       ],
       "d": [
-        "faraday",
-        "manuel-i"
+        "erasmus-darwin",
+        "erasmus"
       ]
     },
     {
@@ -4331,7 +4541,7 @@
       ],
       "d": [
         "robert-schumann",
-        "verdi"
+        "tyndale"
       ]
     },
     {
@@ -4344,8 +4554,8 @@
         "botticelli"
       ],
       "d": [
-        "hooke",
-        "constantijn"
+        "henry-viii",
+        "cook"
       ]
     },
     {
@@ -4370,8 +4580,8 @@
         "jefferson"
       ],
       "d": [
-        "marat",
-        "beethoven"
+        "mandela",
+        "banks"
       ]
     },
     {
@@ -4383,8 +4593,8 @@
         "darwin"
       ],
       "d": [
-        "machiavelli",
-        "lincoln"
+        "lyell",
+        "lewes"
       ]
     },
     {
@@ -4396,7 +4606,7 @@
         "erasmus"
       ],
       "d": [
-        "erasmus-darwin",
+        "emerson",
         "anne-boleyn"
       ]
     },
@@ -4410,8 +4620,8 @@
         "goya"
       ],
       "d": [
-        "augustus",
-        "lister"
+        "archimedes",
+        "lincoln"
       ]
     },
     {
@@ -4424,7 +4634,7 @@
       ],
       "d": [
         "ruskin",
-        "charlotte-bronte"
+        "chopin"
       ]
     },
     {
@@ -4436,7 +4646,7 @@
         "frederick"
       ],
       "d": [
-        "hobbes",
+        "hellman",
         "whistler"
       ]
     },
@@ -4449,7 +4659,7 @@
         "wagner"
       ],
       "d": [
-        "chopin",
+        "christina",
         "charles-i"
       ]
     },
@@ -4463,7 +4673,7 @@
         "descartes"
       ],
       "d": [
-        "paganini",
+        "ovid",
         "washington"
       ]
     },
@@ -4477,8 +4687,8 @@
         "temple"
       ],
       "d": [
-        "henry-viii",
-        "paganini"
+        "haydn",
+        "ovid"
       ]
     },
     {
@@ -4490,8 +4700,8 @@
         "trafalgar"
       ],
       "d": [
-        "baudin",
-        "cervantes"
+        "bacon",
+        "catherine"
       ]
     },
     {
@@ -4505,7 +4715,7 @@
       ],
       "d": [
         "drake",
-        "millais"
+        "metternich"
       ]
     },
     {
@@ -4518,8 +4728,8 @@
         "darwin"
       ],
       "d": [
-        "mendelssohn",
-        "joule"
+        "maxwell",
+        "john-kennedy"
       ]
     },
     {
@@ -4532,8 +4742,8 @@
         "shakespeare"
       ],
       "d": [
-        "david",
-        "lavoisier"
+        "degas",
+        "keller"
       ]
     },
     {
@@ -4545,8 +4755,8 @@
         "george-v"
       ],
       "d": [
-        "brahms",
-        "carlyle"
+        "boulton",
+        "caesar"
       ]
     },
     {
@@ -4559,8 +4769,8 @@
         "dante"
       ],
       "d": [
-        "elizabeth-i",
-        "gauguin"
+        "eisenhower",
+        "garrick"
       ]
     },
     {
@@ -4572,7 +4782,7 @@
         "oliver-cromwell"
       ],
       "d": [
-        "raleigh",
+        "racine",
         "anthony"
       ]
     },
@@ -4586,8 +4796,8 @@
         "kepler"
       ],
       "d": [
-        "hawthorne",
-        "douglass"
+        "hamilton",
+        "drake"
       ]
     },
     {
@@ -4599,8 +4809,8 @@
         "verdi"
       ],
       "d": [
-        "rutherford",
-        "constable"
+        "russell",
+        "constantijn"
       ]
     },
     {
@@ -4613,7 +4823,7 @@
       ],
       "d": [
         "gunpowder-plot",
-        "holbein"
+        "hemingway"
       ]
     },
     {
@@ -4625,8 +4835,8 @@
         "babbage"
       ],
       "d": [
-        "congress-of-vienna",
-        "shelley"
+        "constable",
+        "shaw"
       ]
     },
     {
@@ -4638,8 +4848,8 @@
         "dante"
       ],
       "d": [
-        "gogol",
-        "sand"
+        "goethe",
+        "rutherford"
       ]
     },
     {
@@ -4650,8 +4860,8 @@
         "charles-ii"
       ],
       "d": [
-        "lafayette",
-        "john-franklin"
+        "julius-ii",
+        "jj-thomson"
       ]
     },
     {
@@ -4664,7 +4874,7 @@
       ],
       "d": [
         "thackeray",
-        "franklin"
+        "flinders"
       ]
     },
     {
@@ -4677,8 +4887,8 @@
         "charles-i"
       ],
       "d": [
-        "tyndale",
-        "hegel"
+        "turner",
+        "hawthorne"
       ]
     },
     {
@@ -4690,8 +4900,8 @@
         "velazquez"
       ],
       "d": [
-        "guy-fawkes",
-        "liszt"
+        "gunpowder-plot",
+        "linnaeus"
       ]
     },
     {
@@ -4704,8 +4914,8 @@
         "haydn"
       ],
       "d": [
-        "gauguin",
-        "john-herschel"
+        "garrick",
+        "jobs"
       ]
     },
     {
@@ -4717,8 +4927,8 @@
         "brahms"
       ],
       "d": [
-        "congress-of-vienna",
-        "hugo"
+        "constable",
+        "hooke"
       ]
     },
     {
@@ -4731,8 +4941,8 @@
         "jefferson"
       ],
       "d": [
-        "banks",
-        "constantijn"
+        "babbage",
+        "cook"
       ]
     },
     {
@@ -4745,7 +4955,7 @@
       ],
       "d": [
         "wedgwood",
-        "julius-ii"
+        "john-lennon"
       ]
     },
     {
@@ -4757,7 +4967,7 @@
         "turner"
       ],
       "d": [
-        "erasmus",
+        "emerson",
         "cesare-borgia"
       ]
     },
@@ -4771,8 +4981,8 @@
         "caesar"
       ],
       "d": [
-        "melville",
-        "jefferson"
+        "maxwell",
+        "james-ii"
       ]
     },
     {
@@ -4785,8 +4995,8 @@
         "louis-xiv"
       ],
       "d": [
-        "george-eliot",
-        "napoleon-iii"
+        "gaskell",
+        "napoleon"
       ]
     },
     {
@@ -4797,7 +5007,7 @@
         "hooke"
       ],
       "d": [
-        "melville",
+        "mary-shelley",
         "whistler"
       ]
     },
@@ -4810,8 +5020,8 @@
         "darwin"
       ],
       "d": [
-        "rossetti",
-        "nelson"
+        "rosa-parks",
+        "napoleon-iii"
       ]
     },
     {
@@ -4824,8 +5034,8 @@
         "constantijn"
       ],
       "d": [
-        "french-revolution",
-        "lavoisier"
+        "frederick",
+        "keller"
       ]
     },
     {
@@ -4836,8 +5046,8 @@
         "waterloo"
       ],
       "d": [
-        "virgil",
-        "william-herschel"
+        "vespucci",
+        "wilde"
       ]
     },
     {
@@ -4850,8 +5060,8 @@
         "james-i"
       ],
       "d": [
-        "cook",
-        "marat"
+        "curie",
+        "malcolm-x"
       ]
     },
     {
@@ -4862,8 +5072,8 @@
         "byron"
       ],
       "d": [
-        "philip-ii",
-        "paganini"
+        "pepys",
+        "ovid"
       ]
     },
     {
@@ -4876,8 +5086,8 @@
         "flaubert"
       ],
       "d": [
-        "schiller",
-        "columbus"
+        "savonarola",
+        "congress-of-vienna"
       ]
     },
     {
@@ -4889,8 +5099,8 @@
         "james-clark-ross"
       ],
       "d": [
-        "beethoven",
-        "newton"
+        "banks",
+        "napoleon-iii"
       ]
     },
     {
@@ -4903,7 +5113,7 @@
         "coleridge"
       ],
       "d": [
-        "walsingham",
+        "wagner",
         "cicero"
       ]
     },
@@ -4917,7 +5127,7 @@
         "byron"
       ],
       "d": [
-        "tycho",
+        "turgenev",
         "cesare-borgia"
       ]
     },
@@ -4930,7 +5140,7 @@
         "byron"
       ],
       "d": [
-        "george-v",
+        "george-eliot",
         "shackleton"
       ]
     },
@@ -4944,8 +5154,8 @@
         "banks"
       ],
       "d": [
-        "giovanni-bellini",
-        "handel"
+        "george-v",
+        "halley"
       ]
     },
     {
@@ -4958,8 +5168,8 @@
         "augustus"
       ],
       "d": [
-        "pissarro",
-        "emilie"
+        "philip-ii",
+        "elizabeth-i"
       ]
     },
     {
@@ -4971,7 +5181,7 @@
       ],
       "d": [
         "shackleton",
-        "tycho"
+        "turgenev"
       ]
     },
     {
@@ -4997,7 +5207,7 @@
         "darwin"
       ],
       "d": [
-        "verrocchio",
+        "van-gogh",
         "smith"
       ]
     },
@@ -5011,8 +5221,8 @@
         "shakespeare"
       ],
       "d": [
-        "marco-polo",
-        "priestley"
+        "manet",
+        "pope"
       ]
     },
     {
@@ -5024,7 +5234,7 @@
         "beethoven"
       ],
       "d": [
-        "luther",
+        "ludwig-ii",
         "racine"
       ]
     },
@@ -5038,8 +5248,8 @@
         "godwin"
       ],
       "d": [
-        "tycho",
-        "lafayette"
+        "turgenev",
+        "julius-ii"
       ]
     },
     {
@@ -5051,8 +5261,8 @@
         "darwin"
       ],
       "d": [
-        "mary-shelley",
-        "amundsen"
+        "marlowe",
+        "ali"
       ]
     },
     {
@@ -5064,8 +5274,8 @@
         "paine"
       ],
       "d": [
-        "wren",
-        "henry-viii"
+        "wordsworth",
+        "hegel"
       ]
     },
     {
@@ -5078,7 +5288,7 @@
         "schopenhauer"
       ],
       "d": [
-        "newton",
+        "napoleon-iii",
         "wordsworth"
       ]
     },
@@ -5090,8 +5300,8 @@
         "newton"
       ],
       "d": [
-        "jefferson",
-        "lorenzo"
+        "james-i",
+        "liszt"
       ]
     },
     {
@@ -5103,8 +5313,8 @@
         "leonardo"
       ],
       "d": [
-        "holbein",
-        "anthony"
+        "hemingway",
+        "anne-boleyn"
       ]
     },
     {
@@ -5115,7 +5325,7 @@
         "napoleon"
       ],
       "d": [
-        "montaigne",
+        "moliere",
         "rubens"
       ]
     },
@@ -5129,8 +5339,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "hooker",
-        "henry-viii"
+        "hobbes",
+        "haydn"
       ]
     },
     {
@@ -5142,8 +5352,8 @@
         "charles-ii"
       ],
       "d": [
-        "tolstoy",
-        "franklin"
+        "thoreau",
+        "great-fire"
       ]
     },
     {
@@ -5154,7 +5364,7 @@
         "melbourne"
       ],
       "d": [
-        "poe",
+        "plutarch",
         "zola"
       ]
     },
@@ -5166,8 +5376,8 @@
         "shakespeare"
       ],
       "d": [
-        "ludwig-ii",
-        "david"
+        "louis-xiv",
+        "de-morgan"
       ]
     },
     {
@@ -5179,8 +5389,8 @@
         "dante"
       ],
       "d": [
-        "verdi",
-        "stanton"
+        "tyndale",
+        "spinoza"
       ]
     },
     {
@@ -5192,8 +5402,8 @@
         "dante"
       ],
       "d": [
-        "kelvin",
-        "delacroix"
+        "josephine",
+        "dickens"
       ]
     },
     {
@@ -5204,8 +5414,8 @@
         "james-ii"
       ],
       "d": [
-        "philip-iv",
-        "constantijn"
+        "pepys",
+        "cook"
       ]
     },
     {
@@ -5218,7 +5428,7 @@
       ],
       "d": [
         "dumas",
-        "walsingham"
+        "frederick"
       ]
     },
     {
@@ -5231,8 +5441,8 @@
         "milton"
       ],
       "d": [
-        "grant",
-        "elizabeth-i"
+        "david",
+        "goya"
       ]
     },
     {
@@ -5245,8 +5455,8 @@
         "wagner"
       ],
       "d": [
-        "lincoln",
-        "pasteur"
+        "lewes",
+        "paganini"
       ]
     },
     {
@@ -5258,8 +5468,8 @@
         "darwin"
       ],
       "d": [
-        "solvay-1911",
-        "cicero"
+        "solander",
+        "clara-schumann"
       ]
     },
     {
@@ -5271,8 +5481,8 @@
         "dostoevsky"
       ],
       "d": [
-        "rousseau",
-        "mary-shelley"
+        "rossini",
+        "marie-antoinette"
       ]
     },
     {
@@ -5285,8 +5495,8 @@
         "newton"
       ],
       "d": [
-        "corelli",
-        "thackeray"
+        "curie",
+        "temple"
       ]
     },
     {
@@ -5299,8 +5509,8 @@
         "temple"
       ],
       "d": [
-        "garrison",
-        "cassatt"
+        "frost",
+        "caroline-lamb"
       ]
     },
     {
@@ -5312,7 +5522,7 @@
       ],
       "d": [
         "wedgwood",
-        "david"
+        "de-morgan"
       ]
     },
     {
@@ -5325,8 +5535,8 @@
         "dante"
       ],
       "d": [
-        "david",
-        "hooke"
+        "degas",
+        "hemingway"
       ]
     },
     {
@@ -5339,8 +5549,8 @@
         "caesar"
       ],
       "d": [
-        "turner",
-        "magellan"
+        "tolstoy",
+        "madison"
       ]
     },
     {
@@ -5352,8 +5562,8 @@
         "napoleon"
       ],
       "d": [
-        "louis-xvi",
-        "rubens"
+        "lorenzo",
+        "rousseau"
       ]
     },
     {
@@ -5365,8 +5575,8 @@
         "verdi"
       ],
       "d": [
-        "huygens",
-        "schiller"
+        "humboldt",
+        "savonarola"
       ]
     },
     {
@@ -5379,8 +5589,8 @@
         "kepler"
       ],
       "d": [
-        "columbus",
-        "anthony"
+        "congress-of-vienna",
+        "anne-boleyn"
       ]
     },
     {
@@ -5391,8 +5601,8 @@
         "wagner"
       ],
       "d": [
-        "voltaire",
-        "boulton"
+        "virgil",
+        "boole"
       ]
     },
     {
@@ -5405,8 +5615,8 @@
         "james-ii"
       ],
       "d": [
-        "constable",
-        "manet"
+        "constantijn",
+        "madison"
       ]
     },
     {
@@ -5418,8 +5628,8 @@
         "dante"
       ],
       "d": [
-        "great-fire",
-        "congress-of-vienna"
+        "grant",
+        "constable"
       ]
     },
     {
@@ -5431,7 +5641,7 @@
       ],
       "d": [
         "suleiman",
-        "luther"
+        "ludwig-ii"
       ]
     },
     {
@@ -5444,8 +5654,8 @@
         "byron"
       ],
       "d": [
-        "raleigh",
-        "lafayette"
+        "racine",
+        "julius-ii"
       ]
     },
     {
@@ -5458,8 +5668,8 @@
         "banks"
       ],
       "d": [
-        "augustus",
-        "voltaire"
+        "archimedes",
+        "vivaldi"
       ]
     },
     {
@@ -5472,8 +5682,8 @@
         "dante"
       ],
       "d": [
-        "waterloo",
-        "french-revolution"
+        "de-morgan",
+        "washington"
       ]
     },
     {
@@ -5484,8 +5694,8 @@
         "charles-i"
       ],
       "d": [
-        "george-v",
-        "pope"
+        "george-ii",
+        "poe"
       ]
     },
     {
@@ -5496,7 +5706,7 @@
         "beethoven"
       ],
       "d": [
-        "turgenev",
+        "titian",
         "anne-boleyn"
       ]
     },
@@ -5510,8 +5720,8 @@
         "coleridge"
       ],
       "d": [
-        "walsingham",
-        "james-i"
+        "wallace",
+        "isabella"
       ]
     },
     {
@@ -5524,8 +5734,8 @@
         "constable"
       ],
       "d": [
-        "bernini",
-        "temple"
+        "baudin",
+        "talleyrand"
       ]
     },
     {
@@ -5538,8 +5748,8 @@
         "charles-v"
       ],
       "d": [
-        "millais",
-        "gaskell"
+        "metternich",
+        "gandhi"
       ]
     },
     {
@@ -5552,8 +5762,8 @@
         "schopenhauer"
       ],
       "d": [
-        "isabella",
-        "tycho"
+        "huxley",
+        "turgenev"
       ]
     },
     {
@@ -5566,8 +5776,8 @@
         "beethoven"
       ],
       "d": [
-        "melbourne",
-        "garrick"
+        "mary-queen-of-scots",
+        "french-revolution"
       ]
     },
     {
@@ -5579,7 +5789,7 @@
       ],
       "d": [
         "shaftesbury",
-        "boole"
+        "beethoven"
       ]
     },
     {
@@ -5590,8 +5800,8 @@
         "liszt"
       ],
       "d": [
-        "virgil",
-        "schiller"
+        "vespucci",
+        "savonarola"
       ]
     },
     {
@@ -5604,8 +5814,8 @@
         "wordsworth"
       ],
       "d": [
-        "james-ii",
-        "locke"
+        "james-i",
+        "lister"
       ]
     },
     {
@@ -5617,8 +5827,8 @@
         "dante"
       ],
       "d": [
-        "huxley",
-        "gogol"
+        "hugo",
+        "charles-ii"
       ]
     },
     {
@@ -5630,8 +5840,8 @@
         "liszt"
       ],
       "d": [
-        "marlowe",
-        "james-clark-ross"
+        "marcus-aurelius",
+        "isabella"
       ]
     },
     {
@@ -5644,8 +5854,8 @@
         "shakespeare"
       ],
       "d": [
-        "voltaire",
-        "linnaeus"
+        "virgil",
+        "lewis"
       ]
     },
     {
@@ -5657,8 +5867,8 @@
         "james-ii"
       ],
       "d": [
-        "banks",
-        "swift"
+        "babbage",
+        "sun-tzu"
       ]
     },
     {
@@ -5671,8 +5881,8 @@
         "darwin"
       ],
       "d": [
-        "halley",
-        "josephine"
+        "hale",
+        "john-kennedy"
       ]
     },
     {
@@ -5685,7 +5895,7 @@
         "velazquez"
       ],
       "d": [
-        "boyle",
+        "botticelli",
         "watt"
       ]
     },
@@ -5698,8 +5908,8 @@
         "moliere"
       ],
       "d": [
-        "godwin",
-        "smith"
+        "giovanni-bellini",
+        "shelley"
       ]
     },
     {
@@ -5711,7 +5921,7 @@
         "william-iii"
       ],
       "d": [
-        "mary-queen-of-scots",
+        "marie-antoinette",
         "shackleton"
       ]
     },
@@ -5724,8 +5934,8 @@
         "waterloo"
       ],
       "d": [
-        "cook",
-        "george-ii"
+        "corelli",
+        "gentile-bellini"
       ]
     },
     {
@@ -5738,8 +5948,8 @@
         "lincoln"
       ],
       "d": [
-        "george-ii",
-        "pope"
+        "gauguin",
+        "poe"
       ]
     },
     {
@@ -5751,8 +5961,8 @@
         "brahms"
       ],
       "d": [
-        "grant",
-        "melville"
+        "goya",
+        "maxwell"
       ]
     },
     {
@@ -5765,8 +5975,8 @@
         "haydn"
       ],
       "d": [
-        "lewes",
-        "marie-antoinette"
+        "leibniz",
+        "marco-polo"
       ]
     },
     {
@@ -5780,7 +5990,7 @@
       ],
       "d": [
         "stephenson",
-        "gibbon"
+        "george-iii"
       ]
     },
     {
@@ -5793,8 +6003,8 @@
         "kepler"
       ],
       "d": [
-        "swift",
-        "congress-of-vienna"
+        "suleiman",
+        "constable"
       ]
     },
     {
@@ -5807,7 +6017,7 @@
         "descartes"
       ],
       "d": [
-        "dostoevsky",
+        "douglass",
         "william-iii"
       ]
     },
@@ -5821,8 +6031,8 @@
         "emilie"
       ],
       "d": [
-        "mozart",
-        "paine"
+        "monet",
+        "paganini"
       ]
     },
     {
@@ -5835,8 +6045,8 @@
         "caroline-lamb"
       ],
       "d": [
-        "galileo",
-        "william-iii"
+        "frederick",
+        "william-herschel"
       ]
     },
     {
@@ -5847,8 +6057,8 @@
         "charles-v"
       ],
       "d": [
-        "johnson",
-        "magellan"
+        "pepys",
+        "john-franklin"
       ]
     },
     {
@@ -5860,8 +6070,8 @@
         "oliver-cromwell"
       ],
       "d": [
-        "descartes",
-        "einstein"
+        "diderot",
+        "edison"
       ]
     },
     {
@@ -5875,7 +6085,7 @@
       ],
       "d": [
         "anne-boleyn",
-        "spencer"
+        "spanish-armada"
       ]
     },
     {
@@ -5887,8 +6097,8 @@
         "french-revolution"
       ],
       "d": [
-        "paganini",
-        "degas"
+        "ovid",
+        "descartes"
       ]
     },
     {
@@ -5900,8 +6110,8 @@
         "darwin"
       ],
       "d": [
-        "giovanni-bellini",
-        "paine"
+        "george-v",
+        "ovid"
       ]
     },
     {
@@ -5913,8 +6123,8 @@
         "coleridge"
       ],
       "d": [
-        "lister",
-        "emerson"
+        "lincoln",
+        "eleanor-roosevelt"
       ]
     },
     {
@@ -5925,8 +6135,8 @@
         "waterloo"
       ],
       "d": [
-        "temple",
-        "cicero"
+        "talleyrand",
+        "clara-schumann"
       ]
     },
     {
@@ -5938,7 +6148,7 @@
         "smith"
       ],
       "d": [
-        "george-eliot",
+        "gaskell",
         "shaftesbury"
       ]
     },
@@ -5952,8 +6162,8 @@
         "shakespeare"
       ],
       "d": [
-        "nietzsche",
-        "thomas-more"
+        "newton",
+        "theodore-roosevelt"
       ]
     },
     {
@@ -5964,8 +6174,8 @@
         "montaigne"
       ],
       "d": [
-        "marat",
-        "dostoevsky"
+        "mandela",
+        "douglas-adams"
       ]
     },
     {
@@ -5976,8 +6186,8 @@
         "james-i"
       ],
       "d": [
-        "wallace",
-        "goya"
+        "wagner",
+        "gogol"
       ]
     },
     {
@@ -6004,8 +6214,8 @@
         "darwin"
       ],
       "d": [
-        "monet",
-        "napoleon"
+        "milton",
+        "mozart"
       ]
     },
     {
@@ -6018,8 +6228,8 @@
         "darwin"
       ],
       "d": [
-        "francis-i",
-        "marlowe"
+        "flinders",
+        "marco-polo"
       ]
     },
     {
@@ -6031,7 +6241,7 @@
       ],
       "d": [
         "shakespeare",
-        "hooker"
+        "hobbes"
       ]
     },
     {
@@ -6043,8 +6253,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "garrick",
-        "melbourne"
+        "frost",
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -6055,8 +6265,8 @@
         "john-herschel"
       ],
       "d": [
-        "gogol",
-        "millais"
+        "goethe",
+        "metternich"
       ]
     },
     {
@@ -6068,8 +6278,8 @@
         "wagner"
       ],
       "d": [
-        "louis-xvi",
-        "caesar"
+        "lorenzo",
+        "byron"
       ]
     },
     {
@@ -6081,8 +6291,8 @@
         "rubens"
       ],
       "d": [
-        "augustus",
-        "waterloo"
+        "archimedes",
+        "washington"
       ]
     },
     {
@@ -6093,8 +6303,8 @@
         "dante"
       ],
       "d": [
-        "mary-shelley",
-        "james-ii"
+        "marie-antoinette",
+        "james-i"
       ]
     },
     {
@@ -6105,8 +6315,8 @@
         "leibniz"
       ],
       "d": [
-        "french-revolution",
-        "nietzsche"
+        "franklin-roosevelt",
+        "vivaldi"
       ]
     },
     {
@@ -6118,8 +6328,8 @@
         "william-iii"
       ],
       "d": [
-        "swift",
-        "dostoevsky"
+        "sun-tzu",
+        "douglass"
       ]
     },
     {
@@ -6132,8 +6342,8 @@
         "napoleon"
       ],
       "d": [
-        "leibniz",
-        "titian"
+        "lafayette",
+        "thomas-cromwell"
       ]
     },
     {
@@ -6146,8 +6356,8 @@
         "darwin"
       ],
       "d": [
-        "hawthorne",
-        "philip-iv"
+        "hamilton",
+        "david"
       ]
     },
     {
@@ -6160,8 +6370,8 @@
         "newton"
       ],
       "d": [
-        "maxwell",
-        "carlyle"
+        "martin-luther-king",
+        "caesar"
       ]
     },
     {
@@ -6173,8 +6383,8 @@
         "jefferson"
       ],
       "d": [
-        "wallace",
-        "charles-ii"
+        "voltaire",
+        "charles-v"
       ]
     },
     {
@@ -6185,8 +6395,8 @@
         "napoleon"
       ],
       "d": [
-        "shaftesbury",
-        "twain"
+        "shackleton",
+        "tolstoy"
       ]
     },
     {
@@ -6198,8 +6408,8 @@
         "scott"
       ],
       "d": [
-        "huygens",
-        "spanish-armada"
+        "hume",
+        "solvay-1911"
       ]
     },
     {
@@ -6211,8 +6421,8 @@
         "coleridge"
       ],
       "d": [
-        "boyle",
-        "george-v"
+        "botticelli",
+        "george-ii"
       ]
     },
     {
@@ -6223,8 +6433,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "reynolds",
-        "vivaldi"
+        "renoir",
+        "virgil"
       ]
     },
     {
@@ -6237,8 +6447,8 @@
         "william-iii"
       ],
       "d": [
-        "planck",
-        "turner"
+        "pissarro",
+        "tolkien"
       ]
     },
     {
@@ -6249,7 +6459,7 @@
         "napoleon-iii"
       ],
       "d": [
-        "metternich",
+        "melbourne",
         "dvorak"
       ]
     },
@@ -6263,8 +6473,8 @@
         "emilie"
       ],
       "d": [
-        "thoreau",
-        "walsingham"
+        "theodore-roosevelt",
+        "wallace"
       ]
     },
     {
@@ -6276,8 +6486,8 @@
         "waterloo"
       ],
       "d": [
-        "jj-thomson",
-        "john-franklin"
+        "jefferson",
+        "jj-thomson"
       ]
     },
     {
@@ -6290,8 +6500,8 @@
         "shakespeare"
       ],
       "d": [
-        "turner",
-        "diderot"
+        "tolkien",
+        "douglas-adams"
       ]
     },
     {
@@ -6304,8 +6514,8 @@
         "shakespeare"
       ],
       "d": [
-        "flaubert",
-        "marco-polo"
+        "faraday",
+        "manet"
       ]
     },
     {
@@ -6318,8 +6528,8 @@
         "jefferson"
       ],
       "d": [
-        "giovanni-bellini",
-        "solander"
+        "gibbon",
+        "smith"
       ]
     },
     {
@@ -6330,8 +6540,8 @@
         "byron"
       ],
       "d": [
-        "tycho",
-        "wallace"
+        "turgenev",
+        "wagner"
       ]
     },
     {
@@ -6342,8 +6552,8 @@
         "wagner"
       ],
       "d": [
-        "kepler",
-        "jefferson"
+        "joule",
+        "james-ii"
       ]
     },
     {
@@ -6357,7 +6567,7 @@
       ],
       "d": [
         "raphael",
-        "josephine"
+        "john-kennedy"
       ]
     },
     {
@@ -6370,8 +6580,8 @@
         "darwin"
       ],
       "d": [
-        "lorenzo",
-        "galileo"
+        "liszt",
+        "french-revolution"
       ]
     },
     {
@@ -6384,8 +6594,8 @@
         "newton"
       ],
       "d": [
-        "isabella",
-        "emerson"
+        "huxley",
+        "eisenhower"
       ]
     },
     {
@@ -6397,8 +6607,8 @@
         "mozart"
       ],
       "d": [
-        "amundsen",
-        "babbage"
+        "ali",
+        "armstrong"
       ]
     },
     {
@@ -6411,8 +6621,8 @@
         "jefferson"
       ],
       "d": [
-        "goya",
-        "cervantes"
+        "gogol",
+        "catherine"
       ]
     },
     {
@@ -6425,7 +6635,7 @@
         "napoleon"
       ],
       "d": [
-        "bernini",
+        "baudin",
         "cezanne"
       ]
     },
@@ -6437,8 +6647,8 @@
         "hume"
       ],
       "d": [
-        "beethoven",
-        "washington"
+        "banks",
+        "walsingham"
       ]
     },
     {
@@ -6451,8 +6661,8 @@
         "shakespeare"
       ],
       "d": [
-        "marat",
-        "amundsen"
+        "mandela",
+        "ali"
       ]
     },
     {
@@ -6466,7 +6676,7 @@
       ],
       "d": [
         "shackleton",
-        "degas"
+        "descartes"
       ]
     },
     {
@@ -6478,7 +6688,7 @@
         "napoleon"
       ],
       "d": [
-        "james-clark-ross",
+        "huygens",
         "adams"
       ]
     },
@@ -6492,8 +6702,8 @@
         "locke"
       ],
       "d": [
-        "virgil",
-        "monet"
+        "vespucci",
+        "milton"
       ]
     },
     {
@@ -6505,8 +6715,8 @@
         "darwin"
       ],
       "d": [
-        "hegel",
-        "napoleon-iii"
+        "haydn",
+        "nansen"
       ]
     },
     {
@@ -6518,8 +6728,8 @@
         "dante"
       ],
       "d": [
-        "ruskin",
-        "lewis"
+        "rubens",
+        "lepanto"
       ]
     },
     {
@@ -6531,8 +6741,8 @@
         "baudelaire"
       ],
       "d": [
-        "jj-thomson",
-        "boole"
+        "jefferson",
+        "beethoven"
       ]
     },
     {
@@ -6545,8 +6755,8 @@
         "verdi"
       ],
       "d": [
-        "curie",
-        "george-v"
+        "dante",
+        "george-eliot"
       ]
     },
     {
@@ -6559,8 +6769,8 @@
         "dante"
       ],
       "d": [
-        "magellan",
-        "kelvin"
+        "madison",
+        "hamilton"
       ]
     },
     {
@@ -6573,7 +6783,7 @@
       ],
       "d": [
         "catherine",
-        "suleiman"
+        "stephenson"
       ]
     },
     {
@@ -6585,8 +6795,8 @@
         "wagner"
       ],
       "d": [
-        "isabella",
-        "nelson"
+        "huxley",
+        "napoleon-iii"
       ]
     },
     {
@@ -6600,7 +6810,7 @@
       ],
       "d": [
         "stanton",
-        "gauguin"
+        "garrick"
       ]
     },
     {
@@ -6614,7 +6824,7 @@
       ],
       "d": [
         "shakespeare",
-        "leeuwenhoek"
+        "kepler"
       ]
     },
     {
@@ -6639,8 +6849,8 @@
         "dante"
       ],
       "d": [
-        "wollstonecraft",
-        "priestley"
+        "william-iii",
+        "pope"
       ]
     },
     {
@@ -6652,8 +6862,8 @@
         "milton"
       ],
       "d": [
-        "hugo",
-        "adams"
+        "holbein",
+        "ali"
       ]
     },
     {
@@ -6666,7 +6876,7 @@
         "lincoln"
       ],
       "d": [
-        "verdi",
+        "tyndale",
         "constable"
       ]
     },
@@ -6678,7 +6888,7 @@
         "napoleon-iii"
       ],
       "d": [
-        "linnaeus",
+        "lewis",
         "raphael"
       ]
     },
@@ -6691,8 +6901,8 @@
         "dostoevsky"
       ],
       "d": [
-        "milton",
-        "julius-ii"
+        "michelangelo",
+        "john-lennon"
       ]
     },
     {
@@ -6705,7 +6915,7 @@
       ],
       "d": [
         "suleiman",
-        "philip-iv"
+        "philip-ii"
       ]
     },
     {
@@ -6716,8 +6926,8 @@
         "charles-v"
       ],
       "d": [
-        "emerson",
-        "walsingham"
+        "eleanor-roosevelt",
+        "wallace"
       ]
     },
     {
@@ -6728,8 +6938,8 @@
         "dante"
       ],
       "d": [
-        "velazquez",
-        "sand"
+        "tycho",
+        "russell"
       ]
     },
     {
@@ -6741,8 +6951,8 @@
         "shakespeare"
       ],
       "d": [
-        "hegel",
-        "caroline-lamb"
+        "hawthorne",
+        "carlyle"
       ]
     },
     {
@@ -6756,7 +6966,7 @@
       ],
       "d": [
         "wedgwood",
-        "magellan"
+        "machiavelli"
       ]
     },
     {
@@ -6769,8 +6979,8 @@
         "pepys"
       ],
       "d": [
-        "turner",
-        "gunpowder-plot"
+        "tolkien",
+        "berlioz"
       ]
     },
     {
@@ -6783,7 +6993,7 @@
       ],
       "d": [
         "temple",
-        "lewes"
+        "leonardo"
       ]
     },
     {
@@ -6796,8 +7006,8 @@
         "moliere"
       ],
       "d": [
-        "carlyle",
-        "boswell"
+        "byron",
+        "bernini"
       ]
     },
     {
@@ -6808,7 +7018,7 @@
         "titian"
       ],
       "d": [
-        "lorenzo",
+        "locke",
         "cervantes"
       ]
     },
@@ -6821,8 +7031,8 @@
         "schopenhauer"
       ],
       "d": [
-        "schubert",
-        "newton"
+        "nelson",
+        "garrison"
       ]
     },
     {
@@ -6833,8 +7043,8 @@
         "dickens"
       ],
       "d": [
-        "william-iii",
-        "cassatt"
+        "william-herschel",
+        "caroline-lamb"
       ]
     },
     {
@@ -6845,8 +7055,8 @@
         "oliver-cromwell"
       ],
       "d": [
-        "cassatt",
-        "gentile-bellini"
+        "caroline-lamb",
+        "garrison"
       ]
     },
     {
@@ -6858,8 +7068,8 @@
         "wellington"
       ],
       "d": [
-        "robert-schumann",
-        "lepanto"
+        "reynolds",
+        "leeuwenhoek"
       ]
     },
     {
@@ -6870,8 +7080,8 @@
         "dante"
       ],
       "d": [
-        "huxley",
-        "william-iii"
+        "hugo",
+        "william-herschel"
       ]
     },
     {
@@ -6884,7 +7094,7 @@
         "grant"
       ],
       "d": [
-        "monet",
+        "millais",
         "raleigh"
       ]
     },
@@ -6898,8 +7108,8 @@
         "trafalgar"
       ],
       "d": [
-        "sand",
-        "solvay-1911"
+        "rutherford",
+        "solander"
       ]
     },
     {
@@ -6912,8 +7122,8 @@
         "ruskin"
       ],
       "d": [
-        "george-v",
-        "waterloo"
+        "george-ii",
+        "washington"
       ]
     },
     {
@@ -6925,7 +7135,7 @@
       ],
       "d": [
         "pushkin",
-        "twain"
+        "tolstoy"
       ]
     },
     {
@@ -6937,7 +7147,7 @@
         "french-revolution"
       ],
       "d": [
-        "walsingham",
+        "wallace",
         "wedgwood"
       ]
     },
@@ -6951,8 +7161,8 @@
         "newton"
       ],
       "d": [
-        "temple",
-        "grant"
+        "talleyrand",
+        "goya"
       ]
     },
     {
@@ -6965,8 +7175,8 @@
         "magellan"
       ],
       "d": [
-        "paine",
-        "leibniz"
+        "paganini",
+        "lafayette"
       ]
     },
     {
@@ -6979,8 +7189,8 @@
         "waterloo"
       ],
       "d": [
-        "baudelaire",
-        "leibniz"
+        "babbage",
+        "lafayette"
       ]
     },
     {
@@ -6993,7 +7203,7 @@
       ],
       "d": [
         "cervantes",
-        "louis-xiv"
+        "lorenzo"
       ]
     },
     {
@@ -7006,8 +7216,8 @@
         "caesar"
       ],
       "d": [
-        "twain",
-        "leeuwenhoek"
+        "trafalgar",
+        "kepler"
       ]
     },
     {
@@ -7020,8 +7230,8 @@
         "napoleon"
       ],
       "d": [
-        "rubens",
-        "turner"
+        "rousseau",
+        "tolkien"
       ]
     },
     {
@@ -7034,8 +7244,8 @@
         "babbage"
       ],
       "d": [
-        "virgil",
-        "velazquez"
+        "vespucci",
+        "tycho"
       ]
     },
     {
@@ -7048,8 +7258,8 @@
         "shelley"
       ],
       "d": [
-        "maxwell",
-        "mary-queen-of-scots"
+        "martin-luther-king",
+        "marcus-aurelius"
       ]
     },
     {
@@ -7060,8 +7270,8 @@
         "dickens"
       ],
       "d": [
-        "nelson",
-        "halley"
+        "napoleon-iii",
+        "guy-fawkes"
       ]
     },
     {
@@ -7072,8 +7282,8 @@
         "haydn"
       ],
       "d": [
-        "montaigne",
-        "humboldt"
+        "moliere",
+        "hooke"
       ]
     },
     {
@@ -7087,7 +7297,7 @@
       ],
       "d": [
         "shaftesbury",
-        "monet"
+        "milton"
       ]
     },
     {
@@ -7098,8 +7308,8 @@
         "franklin"
       ],
       "d": [
-        "cervantes",
-        "millais"
+        "catherine",
+        "metternich"
       ]
     },
     {
@@ -7110,8 +7320,8 @@
         "montaigne"
       ],
       "d": [
-        "boole",
-        "byron"
+        "beethoven",
+        "burke"
       ]
     },
     {
@@ -7123,8 +7333,8 @@
         "cervantes"
       ],
       "d": [
-        "marco-polo",
-        "pasteur"
+        "manet",
+        "paine"
       ]
     },
     {
@@ -7136,8 +7346,8 @@
         "montaigne"
       ],
       "d": [
-        "mehmed-ii",
-        "verrocchio"
+        "marx",
+        "velazquez"
       ]
     },
     {
@@ -7151,7 +7361,7 @@
       ],
       "d": [
         "raleigh",
-        "george-eliot"
+        "gaskell"
       ]
     },
     {
@@ -7163,8 +7373,8 @@
         "rubens"
       ],
       "d": [
-        "jefferson",
-        "carlyle"
+        "james-ii",
+        "caesar"
       ]
     },
     {
@@ -7176,8 +7386,8 @@
         "beethoven"
       ],
       "d": [
-        "frederick",
-        "adams"
+        "franklin",
+        "ali"
       ]
     },
     {
@@ -7188,8 +7398,8 @@
         "leonardo"
       ],
       "d": [
-        "monet",
-        "wagner"
+        "milton",
+        "vivaldi"
       ]
     },
     {
@@ -7202,8 +7412,8 @@
         "beethoven"
       ],
       "d": [
-        "wollstonecraft",
-        "goethe"
+        "william-iii",
+        "giovanni-bellini"
       ]
     },
     {
@@ -7216,7 +7426,7 @@
       ],
       "d": [
         "wellington",
-        "pepys"
+        "pasteur"
       ]
     },
     {
@@ -7229,8 +7439,8 @@
         "pasteur"
       ],
       "d": [
-        "pissarro",
-        "constantijn"
+        "philip-iv",
+        "cook"
       ]
     },
     {
@@ -7243,8 +7453,8 @@
         "dante"
       ],
       "d": [
-        "flinders",
-        "lorenzo"
+        "faraday",
+        "liszt"
       ]
     },
     {
@@ -7256,8 +7466,8 @@
         "jefferson"
       ],
       "d": [
-        "manet",
-        "delacroix"
+        "madison",
+        "dickinson"
       ]
     },
     {
@@ -7268,8 +7478,8 @@
         "bach"
       ],
       "d": [
-        "rossetti",
-        "wagner"
+        "robert-schumann",
+        "voltaire"
       ]
     },
     {
@@ -7281,8 +7491,8 @@
         "erasmus-darwin"
       ],
       "d": [
-        "baudelaire",
-        "garrison"
+        "babbage",
+        "frost"
       ]
     },
     {
@@ -7295,8 +7505,8 @@
         "descartes"
       ],
       "d": [
-        "gibbon",
-        "caroline-lamb"
+        "george-iii",
+        "carlyle"
       ]
     },
     {
@@ -7309,8 +7519,8 @@
         "james-i"
       ],
       "d": [
-        "frederick",
-        "davy"
+        "franklin",
+        "degas"
       ]
     },
     {
@@ -7322,7 +7532,7 @@
         "newton"
       ],
       "d": [
-        "reynolds",
+        "renoir",
         "shakespeare"
       ]
     },
@@ -7334,8 +7544,8 @@
         "napoleon"
       ],
       "d": [
-        "babbage",
-        "thomas-cromwell"
+        "armstrong",
+        "theodore-parker"
       ]
     },
     {
@@ -7348,8 +7558,8 @@
         "grant"
       ],
       "d": [
-        "philip-ii",
-        "van-gogh"
+        "patrick-henry",
+        "charles-i"
       ]
     },
     {
@@ -7362,8 +7572,8 @@
         "delacroix"
       ],
       "d": [
-        "marat",
-        "scott"
+        "mandela",
+        "schubert"
       ]
     },
     {
@@ -7374,8 +7584,8 @@
         "charles-i"
       ],
       "d": [
-        "sand",
-        "milton"
+        "rutherford",
+        "michelangelo"
       ]
     },
     {
@@ -7386,7 +7596,7 @@
         "darwin"
       ],
       "d": [
-        "francis-i",
+        "flaubert",
         "wellington"
       ]
     },
@@ -7398,8 +7608,8 @@
         "augustus"
       ],
       "d": [
-        "manuel-i",
-        "constable"
+        "magellan",
+        "constantijn"
       ]
     },
     {
@@ -7411,8 +7621,8 @@
         "jefferson"
       ],
       "d": [
-        "waterloo",
-        "hobbes"
+        "washington",
+        "hegel"
       ]
     },
     {
@@ -7425,8 +7635,8 @@
         "french-revolution"
       ],
       "d": [
-        "manuel-i",
-        "byron"
+        "malcolm-x",
+        "brunel"
       ]
     },
     {
@@ -7437,8 +7647,8 @@
         "napoleon"
       ],
       "d": [
-        "boulton",
-        "curie"
+        "boswell",
+        "da-gama"
       ]
     },
     {
@@ -7451,8 +7661,8 @@
         "faraday"
       ],
       "d": [
-        "oliver-cromwell",
-        "diderot"
+        "nietzsche",
+        "dostoevsky"
       ]
     },
     {
@@ -7465,7 +7675,7 @@
       ],
       "d": [
         "charles-ii",
-        "napoleon"
+        "mozart"
       ]
     },
     {
@@ -7478,8 +7688,8 @@
         "byron"
       ],
       "d": [
-        "dante",
-        "congress-of-vienna"
+        "david",
+        "constable"
       ]
     },
     {
@@ -7492,8 +7702,8 @@
         "augustus"
       ],
       "d": [
-        "marco-polo",
-        "francis-i"
+        "manet",
+        "flaubert"
       ]
     },
     {
@@ -7517,8 +7727,8 @@
         "shelley"
       ],
       "d": [
-        "smith",
-        "thoreau"
+        "thomas-cromwell",
+        "archimedes"
       ]
     },
     {
@@ -7529,8 +7739,8 @@
         "goethe"
       ],
       "d": [
-        "hawthorne",
-        "halley"
+        "hamilton",
+        "hale"
       ]
     },
     {
@@ -7541,8 +7751,8 @@
         "rossetti"
       ],
       "d": [
-        "descartes",
-        "tolstoy"
+        "diderot",
+        "thoreau"
       ]
     },
     {
@@ -7554,7 +7764,7 @@
         "verdi"
       ],
       "d": [
-        "catherine",
+        "cassatt",
         "zola"
       ]
     },
@@ -7568,8 +7778,8 @@
         "augustus"
       ],
       "d": [
-        "erasmus-darwin",
-        "tyndale"
+        "emilie",
+        "turner"
       ]
     },
     {
@@ -7582,7 +7792,7 @@
       ],
       "d": [
         "cicero",
-        "frederick"
+        "franklin"
       ]
     },
     {
@@ -7594,8 +7804,8 @@
         "jefferson"
       ],
       "d": [
-        "manuel-i",
-        "dvorak"
+        "malcolm-x",
+        "edison"
       ]
     },
     {
@@ -7607,8 +7817,8 @@
         "erasmus-darwin"
       ],
       "d": [
-        "david",
-        "manet"
+        "de-morgan",
+        "madison"
       ]
     },
     {
@@ -7619,8 +7829,8 @@
         "temple"
       ],
       "d": [
-        "montaigne",
-        "victoria"
+        "moliere",
+        "verrocchio"
       ]
     },
     {
@@ -7633,8 +7843,8 @@
         "wagner"
       ],
       "d": [
-        "john-herschel",
-        "flaubert"
+        "jobs",
+        "erasmus-darwin"
       ]
     },
     {
@@ -7645,8 +7855,8 @@
         "dante"
       ],
       "d": [
-        "victoria",
-        "philip-ii"
+        "verdi",
+        "patrick-henry"
       ]
     },
     {
@@ -7658,8 +7868,8 @@
         "wagner"
       ],
       "d": [
-        "great-fire",
-        "brahms"
+        "grant",
+        "boulton"
       ]
     },
     {
@@ -7672,8 +7882,8 @@
         "shakespeare"
       ],
       "d": [
-        "franklin",
-        "marat"
+        "francis-i",
+        "malcolm-x"
       ]
     },
     {
@@ -7686,8 +7896,8 @@
         "dostoevsky"
       ],
       "d": [
-        "schubert",
-        "manet"
+        "schopenhauer",
+        "madison"
       ]
     },
     {
@@ -7699,8 +7909,8 @@
         "bach"
       ],
       "d": [
-        "isabella",
-        "gauguin"
+        "hume",
+        "garrick"
       ]
     },
     {
@@ -7711,8 +7921,8 @@
         "goya"
       ],
       "d": [
-        "voltaire",
-        "schiller"
+        "vivaldi",
+        "gogol"
       ]
     },
     {
@@ -7723,8 +7933,8 @@
         "napoleon"
       ],
       "d": [
-        "tyndale",
-        "huygens"
+        "turgenev",
+        "hume"
       ]
     },
     {
@@ -7736,7 +7946,7 @@
         "lyell"
       ],
       "d": [
-        "george-eliot",
+        "gauguin",
         "william-herschel"
       ]
     },
@@ -7751,7 +7961,7 @@
       ],
       "d": [
         "charlotte-bronte",
-        "hugo"
+        "holbein"
       ]
     },
     {
@@ -7762,8 +7972,8 @@
         "byron"
       ],
       "d": [
-        "henry-viii",
-        "lewis"
+        "haydn",
+        "lepanto"
       ]
     },
     {
@@ -7775,8 +7985,8 @@
         "lincoln"
       ],
       "d": [
-        "josephine",
-        "velazquez"
+        "john-herschel",
+        "tycho"
       ]
     },
     {
@@ -7788,8 +7998,8 @@
         "charles-v"
       ],
       "d": [
-        "george-eliot",
-        "hobbes"
+        "gaskell",
+        "hellman"
       ]
     },
     {
@@ -7802,8 +8012,8 @@
         "charles-ii"
       ],
       "d": [
-        "johnson",
-        "mehmed-ii"
+        "john-franklin",
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -7827,8 +8037,8 @@
         "napoleon"
       ],
       "d": [
-        "cervantes",
-        "shackleton"
+        "catherine",
+        "scott"
       ]
     },
     {
@@ -7839,8 +8049,8 @@
         "trafalgar"
       ],
       "d": [
-        "marat",
-        "douglass"
+        "mandela",
+        "drake"
       ]
     },
     {
@@ -7853,8 +8063,8 @@
         "charles-ii"
       ],
       "d": [
-        "nansen",
-        "rossetti"
+        "mozart",
+        "rosa-parks"
       ]
     },
     {
@@ -7868,7 +8078,7 @@
       ],
       "d": [
         "coleridge",
-        "francis-i"
+        "flaubert"
       ]
     },
     {
@@ -7881,8 +8091,8 @@
         "spencer"
       ],
       "d": [
-        "elizabeth-i",
-        "isabella"
+        "einstein",
+        "huxley"
       ]
     },
     {
@@ -7895,8 +8105,8 @@
         "dante"
       ],
       "d": [
-        "spanish-armada",
-        "milton"
+        "solvay-1911",
+        "michelangelo"
       ]
     },
     {
@@ -7908,8 +8118,8 @@
         "leonardo"
       ],
       "d": [
-        "galileo",
-        "temple"
+        "frederick",
+        "talleyrand"
       ]
     },
     {
@@ -7922,7 +8132,7 @@
         "dante"
       ],
       "d": [
-        "trafalgar",
+        "titian",
         "priestley"
       ]
     },
@@ -7935,8 +8145,8 @@
         "darwin"
       ],
       "d": [
-        "godwin",
-        "haydn"
+        "giovanni-bellini",
+        "handel"
       ]
     },
     {
@@ -7947,8 +8157,8 @@
         "trafalgar"
       ],
       "d": [
-        "plutarch",
-        "hooker"
+        "planck",
+        "hobbes"
       ]
     },
     {
@@ -7961,8 +8171,8 @@
         "pasteur"
       ],
       "d": [
-        "boswell",
-        "melville"
+        "bernini",
+        "maxwell"
       ]
     },
     {
@@ -7975,8 +8185,8 @@
         "galileo"
       ],
       "d": [
-        "french-revolution",
-        "planck"
+        "franklin-roosevelt",
+        "pissarro"
       ]
     },
     {
@@ -7989,8 +8199,8 @@
         "titian"
       ],
       "d": [
-        "trafalgar",
-        "curie"
+        "da-gama",
+        "socrates"
       ]
     },
     {
@@ -8002,7 +8212,7 @@
         "byron"
       ],
       "d": [
-        "emilie",
+        "eleanor-roosevelt",
         "drake"
       ]
     },
@@ -8016,8 +8226,8 @@
         "augustus"
       ],
       "d": [
-        "cesare-borgia",
-        "amundsen"
+        "cervantes",
+        "ali"
       ]
     },
     {
@@ -8030,7 +8240,7 @@
         "baudelaire"
       ],
       "d": [
-        "adams",
+        "ali",
         "cervantes"
       ]
     },
@@ -8044,7 +8254,7 @@
       ],
       "d": [
         "thackeray",
-        "spinoza"
+        "spencer"
       ]
     },
     {
@@ -8058,7 +8268,7 @@
       ],
       "d": [
         "amundsen",
-        "cervantes"
+        "catherine"
       ]
     },
     {
@@ -8071,8 +8281,8 @@
         "goethe"
       ],
       "d": [
-        "savonarola",
-        "vespucci"
+        "sand",
+        "velazquez"
       ]
     },
     {
@@ -8083,8 +8293,8 @@
         "rubens"
       ],
       "d": [
-        "thomas-cromwell",
-        "montaigne"
+        "thackeray",
+        "milton"
       ]
     },
     {
@@ -8095,8 +8305,8 @@
         "napoleon"
       ],
       "d": [
-        "grant",
-        "victoria"
+        "goya",
+        "thucydides"
       ]
     },
     {
@@ -8108,8 +8318,8 @@
         "velazquez"
       ],
       "d": [
-        "diderot",
-        "vespucci"
+        "dostoevsky",
+        "verdi"
       ]
     },
     {
@@ -8122,8 +8332,8 @@
         "turgenev"
       ],
       "d": [
-        "boole",
-        "marat"
+        "berlioz",
+        "mandela"
       ]
     },
     {
@@ -8134,8 +8344,8 @@
         "scott"
       ],
       "d": [
-        "isabella",
-        "racine"
+        "huxley",
+        "pushkin"
       ]
     },
     {
@@ -8146,7 +8356,7 @@
         "watt"
       ],
       "d": [
-        "hooke",
+        "hemingway",
         "renoir"
       ]
     },
@@ -8160,7 +8370,7 @@
       ],
       "d": [
         "nietzsche",
-        "kelvin"
+        "johnson"
       ]
     },
     {
@@ -8172,8 +8382,8 @@
         "henry-viii"
       ],
       "d": [
-        "baudin",
-        "adams"
+        "bacon",
+        "ali"
       ]
     },
     {
@@ -8184,7 +8394,7 @@
         "byron"
       ],
       "d": [
-        "mary-shelley",
+        "marlowe",
         "schubert"
       ]
     },
@@ -8198,8 +8408,8 @@
         "dante"
       ],
       "d": [
-        "washington",
-        "rubens"
+        "walsingham",
+        "rousseau"
       ]
     },
     {
@@ -8210,8 +8420,8 @@
         "henry-viii"
       ],
       "d": [
-        "garrick",
-        "renoir"
+        "frost",
+        "rembrandt"
       ]
     },
     {
@@ -8223,8 +8433,8 @@
         "beethoven"
       ],
       "d": [
-        "james-i",
-        "vespucci"
+        "isabella",
+        "verdi"
       ]
     },
     {
@@ -8235,7 +8445,7 @@
         "dickens"
       ],
       "d": [
-        "cesare-borgia",
+        "cervantes",
         "wollstonecraft"
       ]
     },
@@ -8248,8 +8458,8 @@
         "watt"
       ],
       "d": [
-        "machiavelli",
-        "george-eliot"
+        "lyell",
+        "gaskell"
       ]
     },
     {
@@ -8261,8 +8471,8 @@
         "goethe"
       ],
       "d": [
-        "hegel",
-        "liszt"
+        "haydn",
+        "hawthorne"
       ]
     },
     {
@@ -8287,8 +8497,8 @@
         "james-ii"
       ],
       "d": [
-        "reynolds",
-        "lewes"
+        "renoir",
+        "leibniz"
       ]
     },
     {
@@ -8299,7 +8509,7 @@
         "plutarch"
       ],
       "d": [
-        "leonardo",
+        "lafayette",
         "robert-schumann"
       ]
     },
@@ -8311,7 +8521,7 @@
         "kepler"
       ],
       "d": [
-        "james-i",
+        "james-clark-ross",
         "adams"
       ]
     },
@@ -8325,8 +8535,8 @@
         "trafalgar"
       ],
       "d": [
-        "wollstonecraft",
-        "magellan"
+        "william-iii",
+        "madison"
       ]
     },
     {
@@ -8338,8 +8548,8 @@
         "kepler"
       ],
       "d": [
-        "wedgwood",
-        "flinders"
+        "watt",
+        "faraday"
       ]
     },
     {
@@ -8352,8 +8562,8 @@
         "wagner"
       ],
       "d": [
-        "lorenzo",
-        "james-ii"
+        "liszt",
+        "jobs"
       ]
     },
     {
@@ -8364,8 +8574,8 @@
         "shakespeare"
       ],
       "d": [
-        "hawthorne",
-        "julius-ii"
+        "hamilton",
+        "johnson"
       ]
     },
     {
@@ -8378,8 +8588,8 @@
         "savonarola"
       ],
       "d": [
-        "grant",
-        "bach"
+        "goya",
+        "augustus"
       ]
     },
     {
@@ -8391,8 +8601,8 @@
         "mozart"
       ],
       "d": [
-        "gunpowder-plot",
-        "turner"
+        "great-fire",
+        "tolkien"
       ]
     },
     {
@@ -8403,8 +8613,8 @@
         "godwin"
       ],
       "d": [
-        "anne-boleyn",
-        "erasmus"
+        "amundsen",
+        "elizabeth-i"
       ]
     },
     {
@@ -8416,8 +8626,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "lafayette",
-        "erasmus-darwin"
+        "keller",
+        "emilie"
       ]
     },
     {
@@ -8430,8 +8640,8 @@
         "wagner"
       ],
       "d": [
-        "degas",
-        "solander"
+        "descartes",
+        "socrates"
       ]
     },
     {
@@ -8444,8 +8654,8 @@
         "dostoevsky"
       ],
       "d": [
-        "gaskell",
-        "davy"
+        "gandhi",
+        "degas"
       ]
     },
     {
@@ -8457,8 +8667,8 @@
         "john-franklin"
       ],
       "d": [
-        "flaubert",
-        "solander"
+        "erasmus-darwin",
+        "socrates"
       ]
     },
     {
@@ -8470,8 +8680,8 @@
         "tycho"
       ],
       "d": [
-        "dostoevsky",
-        "george-v"
+        "douglass",
+        "george-ii"
       ]
     },
     {
@@ -8484,8 +8694,8 @@
         "descartes"
       ],
       "d": [
-        "bernini",
-        "vivaldi"
+        "baudin",
+        "victoria"
       ]
     },
     {
@@ -8497,8 +8707,8 @@
         "goethe"
       ],
       "d": [
-        "voltaire",
-        "lincoln"
+        "virgil",
+        "lewes"
       ]
     },
     {
@@ -8510,8 +8720,8 @@
         "darwin"
       ],
       "d": [
-        "liszt",
-        "milton"
+        "linnaeus",
+        "michelangelo"
       ]
     },
     {
@@ -8522,8 +8732,8 @@
         "shakespeare"
       ],
       "d": [
-        "liszt",
-        "marie-antoinette"
+        "linnaeus",
+        "marat"
       ]
     },
     {
@@ -8536,8 +8746,8 @@
         "milton"
       ],
       "d": [
-        "monet",
-        "spanish-armada"
+        "solvay-1911",
+        "henry-viii"
       ]
     },
     {
@@ -8549,8 +8759,8 @@
         "melbourne"
       ],
       "d": [
-        "savonarola",
-        "bach"
+        "sand",
+        "augustus"
       ]
     },
     {
@@ -8562,7 +8772,7 @@
       ],
       "d": [
         "constantijn",
-        "francis-i"
+        "flinders"
       ]
     },
     {
@@ -8576,7 +8786,7 @@
       ],
       "d": [
         "raleigh",
-        "gibbon"
+        "george-iii"
       ]
     },
     {
@@ -8587,8 +8797,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "banks",
-        "racine"
+        "austen",
+        "pushkin"
       ]
     },
     {
@@ -8599,8 +8809,8 @@
         "caroline-lamb"
       ],
       "d": [
-        "darwin",
-        "bach"
+        "davy",
+        "augustus"
       ]
     },
     {
@@ -8614,7 +8824,7 @@
       ],
       "d": [
         "coleridge",
-        "turgenev"
+        "tolkien"
       ]
     },
     {
@@ -8627,7 +8837,7 @@
       ],
       "d": [
         "ruskin",
-        "melbourne"
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -8640,8 +8850,8 @@
         "wagner"
       ],
       "d": [
-        "garrick",
-        "thackeray"
+        "frost",
+        "voltaire"
       ]
     },
     {
@@ -8655,7 +8865,7 @@
       ],
       "d": [
         "watt",
-        "dickens"
+        "donne"
       ]
     },
     {
@@ -8669,7 +8879,7 @@
       ],
       "d": [
         "washington",
-        "amundsen"
+        "ali"
       ]
     },
     {
@@ -8682,8 +8892,8 @@
         "haydn"
       ],
       "d": [
-        "mendelssohn",
-        "moliere"
+        "maxwell",
+        "millais"
       ]
     },
     {
@@ -8695,7 +8905,7 @@
         "napoleon"
       ],
       "d": [
-        "jj-thomson",
+        "james-ii",
         "catherine"
       ]
     },
@@ -8707,8 +8917,8 @@
         "james-ii"
       ],
       "d": [
-        "catherine",
-        "kelvin"
+        "cassatt",
+        "josephine"
       ]
     },
     {
@@ -8720,8 +8930,8 @@
         "goethe"
       ],
       "d": [
-        "leeuwenhoek",
-        "monet"
+        "kepler",
+        "milton"
       ]
     },
     {
@@ -8733,8 +8943,8 @@
         "wagner"
       ],
       "d": [
-        "jefferson",
-        "garrick"
+        "james-ii",
+        "frost"
       ]
     },
     {
@@ -8747,8 +8957,8 @@
         "shakespeare"
       ],
       "d": [
-        "schopenhauer",
-        "james-i"
+        "schiller",
+        "james-clark-ross"
       ]
     },
     {
@@ -8761,8 +8971,8 @@
         "trafalgar"
       ],
       "d": [
-        "amundsen",
-        "grant"
+        "ali",
+        "socrates"
       ]
     },
     {
@@ -8775,7 +8985,7 @@
         "newton"
       ],
       "d": [
-        "giovanni-bellini",
+        "gibbon",
         "oliver-cromwell"
       ]
     },
@@ -8789,8 +8999,8 @@
         "baudin"
       ],
       "d": [
-        "erasmus",
-        "darwin"
+        "elizabeth-i",
+        "davy"
       ]
     },
     {
@@ -8803,7 +9013,7 @@
         "wagner"
       ],
       "d": [
-        "francis-i",
+        "flinders",
         "rubens"
       ]
     },
@@ -8817,8 +9027,8 @@
         "james-i"
       ],
       "d": [
-        "spencer",
-        "john-herschel"
+        "spanish-armada",
+        "jobs"
       ]
     },
     {
@@ -8829,8 +9039,8 @@
         "shakespeare"
       ],
       "d": [
-        "plutarch",
-        "thomas-more"
+        "pissarro",
+        "theodore-roosevelt"
       ]
     },
     {
@@ -8842,8 +9052,8 @@
         "wagner"
       ],
       "d": [
-        "gogol",
-        "josephine"
+        "godwin",
+        "john-herschel"
       ]
     },
     {
@@ -8856,8 +9066,8 @@
         "maxwell"
       ],
       "d": [
-        "hugo",
-        "de-morgan"
+        "holbein",
+        "descartes"
       ]
     },
     {
@@ -8869,8 +9079,8 @@
         "augustus"
       ],
       "d": [
-        "marlowe",
-        "stephenson"
+        "marco-polo",
+        "stanton"
       ]
     },
     {
@@ -8883,8 +9093,8 @@
         "caesar"
       ],
       "d": [
-        "leeuwenhoek",
-        "john-franklin"
+        "kelvin",
+        "jj-thomson"
       ]
     },
     {
@@ -8898,7 +9108,7 @@
       ],
       "d": [
         "columbus",
-        "shelley"
+        "shaw"
       ]
     },
     {
@@ -8910,8 +9120,8 @@
         "suleiman"
       ],
       "d": [
-        "emilie",
-        "spanish-armada"
+        "elizabeth-i",
+        "solvay-1911"
       ]
     },
     {
@@ -8923,8 +9133,8 @@
         "john-herschel"
       ],
       "d": [
-        "jj-thomson",
-        "louis-xiv"
+        "jefferson",
+        "locke"
       ]
     },
     {
@@ -8935,8 +9145,8 @@
         "napoleon"
       ],
       "d": [
-        "huxley",
-        "banks"
+        "hugo",
+        "austen"
       ]
     },
     {
@@ -8947,8 +9157,8 @@
         "caesar"
       ],
       "d": [
-        "handel",
-        "james-clark-ross"
+        "halley",
+        "isabella"
       ]
     },
     {
@@ -8961,8 +9171,8 @@
         "cesare-borgia"
       ],
       "d": [
-        "spanish-armada",
-        "james-clark-ross"
+        "solvay-1911",
+        "isabella"
       ]
     },
     {
@@ -8975,8 +9185,8 @@
         "wagner"
       ],
       "d": [
-        "monet",
-        "paganini"
+        "milton",
+        "orwell"
       ]
     },
     {
@@ -8988,8 +9198,8 @@
         "augustus"
       ],
       "d": [
-        "van-gogh",
-        "gaskell"
+        "twain",
+        "galileo"
       ]
     },
     {
@@ -9002,8 +9212,8 @@
         "waterloo"
       ],
       "d": [
-        "delacroix",
-        "gauguin"
+        "dickinson",
+        "garrick"
       ]
     },
     {
@@ -9016,8 +9226,8 @@
         "waterloo"
       ],
       "d": [
-        "swift",
-        "leeuwenhoek"
+        "sun-tzu",
+        "kelvin"
       ]
     },
     {
@@ -9028,8 +9238,8 @@
         "rubens"
       ],
       "d": [
-        "halley",
-        "ovid"
+        "hale",
+        "oliver-cromwell"
       ]
     },
     {
@@ -9042,8 +9252,8 @@
         "verdi"
       ],
       "d": [
-        "botticelli",
-        "van-gogh"
+        "boole",
+        "twain"
       ]
     },
     {
@@ -9055,8 +9265,8 @@
         "william-herschel"
       ],
       "d": [
-        "planck",
-        "tyndale"
+        "philip-iv",
+        "turner"
       ]
     },
     {
@@ -9070,7 +9280,7 @@
       ],
       "d": [
         "whistler",
-        "paganini"
+        "orwell"
       ]
     },
     {
@@ -9083,7 +9293,7 @@
         "jefferson"
       ],
       "d": [
-        "beethoven",
+        "banks",
         "suleiman"
       ]
     },
@@ -9095,8 +9305,8 @@
         "louis-xiv"
       ],
       "d": [
-        "priestley",
-        "poe"
+        "pope",
+        "plutarch"
       ]
     },
     {
@@ -9108,8 +9318,8 @@
         "henry-viii"
       ],
       "d": [
-        "george-ii",
-        "franklin"
+        "gauguin",
+        "francis-i"
       ]
     },
     {
@@ -9120,8 +9330,8 @@
         "darwin"
       ],
       "d": [
-        "curie",
-        "vivaldi"
+        "da-gama",
+        "victoria"
       ]
     },
     {
@@ -9134,7 +9344,7 @@
       ],
       "d": [
         "pope",
-        "lewis"
+        "leonardo"
       ]
     },
     {
@@ -9146,8 +9356,8 @@
         "pushkin"
       ],
       "d": [
-        "hume",
-        "caesar"
+        "hooker",
+        "burke"
       ]
     },
     {
@@ -9160,8 +9370,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "rutherford",
-        "paganini"
+        "ruskin",
+        "ovid"
       ]
     },
     {
@@ -9173,8 +9383,8 @@
         "caroline-lamb"
       ],
       "d": [
-        "emerson",
-        "oliver-cromwell"
+        "eisenhower",
+        "nietzsche"
       ]
     },
     {
@@ -9186,8 +9396,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "clara-schumann",
-        "paganini"
+        "coleridge",
+        "orwell"
       ]
     },
     {
@@ -9200,8 +9410,8 @@
         "trafalgar"
       ],
       "d": [
-        "turner",
-        "amundsen"
+        "tolstoy",
+        "ali"
       ]
     },
     {
@@ -9214,8 +9424,8 @@
         "rossetti"
       ],
       "d": [
-        "rossini",
-        "lewes"
+        "rosa-parks",
+        "leonardo"
       ]
     },
     {
@@ -9229,7 +9439,7 @@
       ],
       "d": [
         "cassatt",
-        "davy"
+        "degas"
       ]
     },
     {
@@ -9243,7 +9453,7 @@
       ],
       "d": [
         "cervantes",
-        "spencer"
+        "spanish-armada"
       ]
     },
     {
@@ -9254,8 +9464,8 @@
         "charles-v"
       ],
       "d": [
-        "vespucci",
-        "wollstonecraft"
+        "verdi",
+        "william-iii"
       ]
     },
     {
@@ -9266,8 +9476,8 @@
         "verdi"
       ],
       "d": [
-        "schiller",
-        "boulton"
+        "savonarola",
+        "boswell"
       ]
     },
     {
@@ -9279,7 +9489,7 @@
         "james-i"
       ],
       "d": [
-        "dickens",
+        "dostoevsky",
         "einstein"
       ]
     },
@@ -9293,8 +9503,8 @@
         "wagner"
       ],
       "d": [
-        "milton",
-        "adams"
+        "michelangelo",
+        "ali"
       ]
     },
     {
@@ -9307,8 +9517,8 @@
         "beethoven"
       ],
       "d": [
-        "george-v",
-        "dickens"
+        "george-ii",
+        "donne"
       ]
     },
     {
@@ -9321,8 +9531,8 @@
         "banks"
       ],
       "d": [
-        "hooke",
-        "josephine"
+        "henry-viii",
+        "mozart"
       ]
     },
     {
@@ -9335,7 +9545,7 @@
       ],
       "d": [
         "shakespeare",
-        "goethe"
+        "giovanni-bellini"
       ]
     },
     {
@@ -9347,8 +9557,8 @@
         "goethe"
       ],
       "d": [
-        "rossetti",
-        "josephine"
+        "rosa-parks",
+        "john-herschel"
       ]
     },
     {
@@ -9361,8 +9571,8 @@
         "james-i"
       ],
       "d": [
-        "rossini",
-        "congress-of-vienna"
+        "rossetti",
+        "constable"
       ]
     },
     {
@@ -9374,8 +9584,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "congress-of-vienna",
-        "guy-fawkes"
+        "constable",
+        "gunpowder-plot"
       ]
     },
     {
@@ -9387,8 +9597,8 @@
         "rossetti"
       ],
       "d": [
-        "emilie",
-        "joule"
+        "eleanor-roosevelt",
+        "john-lennon"
       ]
     },
     {
@@ -9400,7 +9610,7 @@
       ],
       "d": [
         "raleigh",
-        "vespucci"
+        "verdi"
       ]
     },
     {
@@ -9411,8 +9621,8 @@
         "wagner"
       ],
       "d": [
-        "haydn",
-        "turgenev"
+        "handel",
+        "titian"
       ]
     },
     {
@@ -9425,8 +9635,8 @@
         "napoleon"
       ],
       "d": [
-        "philip-ii",
-        "rubens"
+        "pepys",
+        "rousseau"
       ]
     },
     {
@@ -9438,8 +9648,8 @@
         "napoleon"
       ],
       "d": [
-        "john-herschel",
-        "newton"
+        "jobs",
+        "nelson"
       ]
     },
     {
@@ -9451,8 +9661,8 @@
         "french-revolution"
       ],
       "d": [
-        "twain",
-        "gogol"
+        "tolstoy",
+        "godwin"
       ]
     },
     {
@@ -9464,8 +9674,8 @@
         "goethe"
       ],
       "d": [
-        "joule",
-        "james-ii"
+        "john-kennedy",
+        "james-clark-ross"
       ]
     },
     {
@@ -9478,8 +9688,8 @@
         "babbage"
       ],
       "d": [
-        "rousseau",
-        "mendelssohn"
+        "rossini",
+        "maxwell"
       ]
     },
     {
@@ -9490,8 +9700,8 @@
         "darwin"
       ],
       "d": [
-        "pissarro",
-        "turner"
+        "philip-iv",
+        "tolstoy"
       ]
     },
     {
@@ -9503,8 +9713,8 @@
         "millais"
       ],
       "d": [
-        "jefferson",
-        "french-revolution"
+        "james-i",
+        "frederick"
       ]
     },
     {
@@ -9517,8 +9727,8 @@
         "maxwell"
       ],
       "d": [
-        "ludwig-ii",
-        "verrocchio"
+        "louis-xvi",
+        "velazquez"
       ]
     },
     {
@@ -9529,8 +9739,8 @@
         "mary-shelley"
       ],
       "d": [
-        "linnaeus",
-        "stephenson"
+        "lewes",
+        "stanton"
       ]
     },
     {
@@ -9543,8 +9753,8 @@
         "beethoven"
       ],
       "d": [
-        "rossini",
-        "douglass"
+        "rosa-parks",
+        "drake"
       ]
     },
     {
@@ -9556,8 +9766,8 @@
         "kepler"
       ],
       "d": [
-        "corelli",
-        "thoreau"
+        "da-gama",
+        "thomas-cromwell"
       ]
     },
     {
@@ -9569,7 +9779,7 @@
         "dante"
       ],
       "d": [
-        "erasmus-darwin",
+        "emilie",
         "chopin"
       ]
     },
@@ -9583,8 +9793,8 @@
         "milton"
       ],
       "d": [
-        "julius-ii",
-        "mary-shelley"
+        "john-lennon",
+        "marlowe"
       ]
     },
     {
@@ -9596,8 +9806,8 @@
         "augustus"
       ],
       "d": [
-        "solvay-1911",
-        "boswell"
+        "socrates",
+        "berlioz"
       ]
     },
     {
@@ -9609,7 +9819,7 @@
       ],
       "d": [
         "william-iii",
-        "halley"
+        "guy-fawkes"
       ]
     },
     {
@@ -9621,7 +9831,7 @@
       ],
       "d": [
         "clara-schumann",
-        "thomas-more"
+        "theodore-roosevelt"
       ]
     },
     {
@@ -9633,8 +9843,8 @@
         "trafalgar"
       ],
       "d": [
-        "curie",
-        "lister"
+        "da-gama",
+        "lincoln"
       ]
     },
     {
@@ -9647,8 +9857,8 @@
         "napoleon"
       ],
       "d": [
-        "hooke",
-        "caesar"
+        "hemingway",
+        "burke"
       ]
     },
     {
@@ -9661,7 +9871,7 @@
       ],
       "d": [
         "guy-fawkes",
-        "lafayette"
+        "julius-ii"
       ]
     },
     {
@@ -9674,8 +9884,8 @@
         "dante"
       ],
       "d": [
-        "george-iii",
-        "talleyrand"
+        "gentile-bellini",
+        "swift"
       ]
     },
     {
@@ -9689,7 +9899,7 @@
       ],
       "d": [
         "shaftesbury",
-        "boole"
+        "berlioz"
       ]
     },
     {
@@ -9701,8 +9911,8 @@
         "botticelli"
       ],
       "d": [
-        "drake",
-        "lister"
+        "du-bois",
+        "lincoln"
       ]
     },
     {
@@ -9715,8 +9925,8 @@
         "banks"
       ],
       "d": [
-        "elizabeth-i",
-        "christina"
+        "eisenhower",
+        "churchill"
       ]
     },
     {
@@ -9727,8 +9937,8 @@
         "oliver-cromwell"
       ],
       "d": [
-        "louis-xvi",
-        "burke"
+        "louis-xiv",
+        "brunel"
       ]
     },
     {
@@ -9741,8 +9951,8 @@
         "byron"
       ],
       "d": [
-        "pepys",
-        "rutherford"
+        "pasteur",
+        "russell"
       ]
     },
     {
@@ -9754,8 +9964,8 @@
         "kelvin"
       ],
       "d": [
-        "rousseau",
-        "beethoven"
+        "rossini",
+        "bacon"
       ]
     },
     {
@@ -9766,8 +9976,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "john-franklin",
-        "monet"
+        "jj-thomson",
+        "milton"
       ]
     },
     {
@@ -9778,8 +9988,8 @@
         "coleridge"
       ],
       "d": [
-        "tolstoy",
-        "walsingham"
+        "thoreau",
+        "wagner"
       ]
     },
     {
@@ -9790,8 +10000,8 @@
         "french-revolution"
       ],
       "d": [
-        "dante",
-        "boulton"
+        "darwin",
+        "boswell"
       ]
     },
     {
@@ -9802,8 +10012,8 @@
         "james-i"
       ],
       "d": [
-        "caesar",
-        "machiavelli"
+        "byron",
+        "lyell"
       ]
     },
     {
@@ -9815,8 +10025,8 @@
         "goethe"
       ],
       "d": [
-        "virgil",
-        "congress-of-vienna"
+        "vespucci",
+        "constable"
       ]
     },
     {
@@ -9828,8 +10038,8 @@
         "william-iii"
       ],
       "d": [
-        "monet",
-        "brunel"
+        "milton",
+        "boyle"
       ]
     },
     {
@@ -9843,7 +10053,7 @@
       ],
       "d": [
         "robert-schumann",
-        "garrison"
+        "frost"
       ]
     },
     {
@@ -9856,8 +10066,8 @@
         "beethoven"
       ],
       "d": [
-        "brahms",
-        "leeuwenhoek"
+        "boulton",
+        "kepler"
       ]
     },
     {
@@ -9870,7 +10080,7 @@
         "mary-shelley"
       ],
       "d": [
-        "henry-viii",
+        "haydn",
         "cicero"
       ]
     },
@@ -9882,8 +10092,8 @@
         "monet"
       ],
       "d": [
-        "george-eliot",
-        "coleridge"
+        "gauguin",
+        "columbus"
       ]
     },
     {
@@ -9894,8 +10104,8 @@
         "kepler"
       ],
       "d": [
-        "garrison",
-        "robert-schumann"
+        "frost",
+        "reynolds"
       ]
     },
     {
@@ -9908,8 +10118,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "garrick",
-        "david"
+        "frost",
+        "de-morgan"
       ]
     },
     {
@@ -9920,8 +10130,8 @@
         "dickens"
       ],
       "d": [
-        "constantijn",
-        "john-herschel"
+        "cook",
+        "jobs"
       ]
     },
     {
@@ -9933,8 +10143,8 @@
         "waterloo"
       ],
       "d": [
-        "berlioz",
-        "stephenson"
+        "baudelaire",
+        "stanton"
       ]
     },
     {
@@ -9947,8 +10157,8 @@
         "ruskin"
       ],
       "d": [
-        "reynolds",
-        "maxwell"
+        "renoir",
+        "martin-luther-king"
       ]
     },
     {
@@ -9960,8 +10170,8 @@
         "victoria"
       ],
       "d": [
-        "corelli",
-        "congress-of-vienna"
+        "da-gama",
+        "constable"
       ]
     },
     {
@@ -9975,7 +10185,7 @@
       ],
       "d": [
         "renoir",
-        "constable"
+        "constantijn"
       ]
     },
     {
@@ -9988,8 +10198,8 @@
         "goethe"
       ],
       "d": [
-        "haydn",
-        "beethoven"
+        "handel",
+        "banks"
       ]
     },
     {
@@ -10017,7 +10227,7 @@
       ],
       "d": [
         "schubert",
-        "galileo"
+        "frederick"
       ]
     },
     {
@@ -10028,7 +10238,7 @@
         "napoleon"
       ],
       "d": [
-        "virgil",
+        "vespucci",
         "dvorak"
       ]
     },
@@ -10040,8 +10250,8 @@
         "emilie"
       ],
       "d": [
-        "julius-ii",
-        "dante"
+        "johnson",
+        "david"
       ]
     },
     {
@@ -10053,7 +10263,7 @@
         "wollstonecraft"
       ],
       "d": [
-        "drake",
+        "du-bois",
         "dumas"
       ]
     },
@@ -10067,8 +10277,8 @@
         "newton"
       ],
       "d": [
-        "cassatt",
-        "byron"
+        "caroline-lamb",
+        "brunel"
       ]
     },
     {
@@ -10079,8 +10289,8 @@
         "mehmed-ii"
       ],
       "d": [
-        "mill",
-        "douglass"
+        "mendelssohn",
+        "drake"
       ]
     },
     {
@@ -10092,7 +10302,7 @@
       ],
       "d": [
         "clara-schumann",
-        "marie-antoinette"
+        "marco-polo"
       ]
     },
     {
@@ -10105,8 +10315,8 @@
         "verdi"
       ],
       "d": [
-        "gaskell",
-        "spanish-armada"
+        "gandhi",
+        "solander"
       ]
     },
     {
@@ -10119,7 +10329,7 @@
       ],
       "d": [
         "raleigh",
-        "george-ii"
+        "gauguin"
       ]
     },
     {
@@ -10132,8 +10342,8 @@
         "napoleon"
       ],
       "d": [
-        "boole",
-        "voltaire"
+        "beethoven",
+        "virgil"
       ]
     },
     {
@@ -10144,8 +10354,8 @@
         "dante"
       ],
       "d": [
-        "vivaldi",
-        "franklin"
+        "victoria",
+        "francis-i"
       ]
     },
     {
@@ -10158,8 +10368,8 @@
         "dostoevsky"
       ],
       "d": [
-        "isabella",
-        "monet"
+        "huxley",
+        "milton"
       ]
     },
     {
@@ -10172,8 +10382,8 @@
         "franklin"
       ],
       "d": [
-        "walsingham",
-        "oliver-cromwell"
+        "wallace",
+        "nietzsche"
       ]
     },
     {
@@ -10186,8 +10396,8 @@
         "kepler"
       ],
       "d": [
-        "handel",
-        "brahms"
+        "halley",
+        "boyle"
       ]
     },
     {
@@ -10199,8 +10409,8 @@
         "shakespeare"
       ],
       "d": [
-        "turgenev",
-        "handel"
+        "titian",
+        "halley"
       ]
     },
     {
@@ -10211,7 +10421,7 @@
         "james-clark-ross"
       ],
       "d": [
-        "millais",
+        "metternich",
         "zola"
       ]
     },
@@ -10225,8 +10435,8 @@
         "napoleon"
       ],
       "d": [
-        "solander",
-        "schubert"
+        "socrates",
+        "schopenhauer"
       ]
     },
     {
@@ -10239,8 +10449,8 @@
         "byron"
       ],
       "d": [
-        "rutherford",
-        "jefferson"
+        "russell",
+        "james-i"
       ]
     },
     {
@@ -10252,8 +10462,8 @@
         "shakespeare"
       ],
       "d": [
-        "garrison",
-        "schopenhauer"
+        "frost",
+        "schiller"
       ]
     },
     {
@@ -10265,8 +10475,8 @@
         "rubens"
       ],
       "d": [
-        "pissarro",
-        "newton"
+        "philip-ii",
+        "nelson"
       ]
     },
     {
@@ -10278,7 +10488,7 @@
       ],
       "d": [
         "charles-ii",
-        "godwin"
+        "gibbon"
       ]
     },
     {
@@ -10290,7 +10500,7 @@
       ],
       "d": [
         "cicero",
-        "van-gogh"
+        "twain"
       ]
     },
     {
@@ -10317,7 +10527,7 @@
         "leibniz"
       ],
       "d": [
-        "lorenzo",
+        "locke",
         "cervantes"
       ]
     },
@@ -10331,7 +10541,7 @@
       ],
       "d": [
         "cicero",
-        "emilie"
+        "elizabeth-i"
       ]
     },
     {
@@ -10344,8 +10554,8 @@
         "wedgwood"
       ],
       "d": [
-        "cook",
-        "tycho"
+        "corelli",
+        "turgenev"
       ]
     },
     {
@@ -10359,7 +10569,7 @@
       ],
       "d": [
         "shaftesbury",
-        "poe"
+        "raphael"
       ]
     },
     {
@@ -10371,8 +10581,8 @@
         "sand"
       ],
       "d": [
-        "humboldt",
-        "henry-viii"
+        "hooke",
+        "hegel"
       ]
     },
     {
@@ -10384,8 +10594,8 @@
         "beethoven"
       ],
       "d": [
-        "elizabeth-i",
-        "baudin"
+        "einstein",
+        "bacon"
       ]
     },
     {
@@ -10398,8 +10608,8 @@
         "watt"
       ],
       "d": [
-        "montaigne",
-        "constable"
+        "monet",
+        "constantijn"
       ]
     },
     {
@@ -10412,8 +10622,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "louis-xiv",
-        "emerson"
+        "lorenzo",
+        "eleanor-roosevelt"
       ]
     },
     {
@@ -10424,8 +10634,8 @@
         "dante"
       ],
       "d": [
-        "cook",
-        "babbage"
+        "corelli",
+        "armstrong"
       ]
     },
     {
@@ -10436,8 +10646,8 @@
         "mehmed-ii"
       ],
       "d": [
-        "gunpowder-plot",
-        "baudin"
+        "great-fire",
+        "bacon"
       ]
     },
     {
@@ -10448,8 +10658,8 @@
         "french-revolution"
       ],
       "d": [
-        "suleiman",
-        "nelson"
+        "stephenson",
+        "napoleon-iii"
       ]
     },
     {
@@ -10461,8 +10671,8 @@
         "goethe"
       ],
       "d": [
-        "paine",
-        "melbourne"
+        "ovid",
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -10474,7 +10684,7 @@
       ],
       "d": [
         "raphael",
-        "nietzsche"
+        "newton"
       ]
     },
     {
@@ -10486,7 +10696,7 @@
         "dante"
       ],
       "d": [
-        "faraday",
+        "erasmus",
         "waterloo"
       ]
     },
@@ -10500,8 +10710,8 @@
         "botticelli"
       ],
       "d": [
-        "gentile-bellini",
-        "josephine"
+        "garrison",
+        "john-herschel"
       ]
     },
     {
@@ -10512,8 +10722,8 @@
         "solander"
       ],
       "d": [
-        "ovid",
-        "caroline-lamb"
+        "orwell",
+        "carlyle"
       ]
     },
     {
@@ -10527,7 +10737,7 @@
       ],
       "d": [
         "raleigh",
-        "shakespeare"
+        "shaftesbury"
       ]
     },
     {
@@ -10540,7 +10750,7 @@
         "monet"
       ],
       "d": [
-        "cook",
+        "corelli",
         "clara-schumann"
       ]
     },
@@ -10553,8 +10763,8 @@
         "napoleon"
       ],
       "d": [
-        "james-i",
-        "boyle"
+        "swift",
+        "isabella"
       ]
     },
     {
@@ -10566,8 +10776,8 @@
         "newton"
       ],
       "d": [
-        "tolstoy",
-        "boulton"
+        "thoreau",
+        "boswell"
       ]
     },
     {
@@ -10579,7 +10789,7 @@
         "goethe"
       ],
       "d": [
-        "flinders",
+        "faraday",
         "gunpowder-plot"
       ]
     },
@@ -10591,8 +10801,8 @@
         "erasmus-darwin"
       ],
       "d": [
-        "tolstoy",
-        "maxwell"
+        "thoreau",
+        "martin-luther-king"
       ]
     },
     {
@@ -10605,7 +10815,7 @@
         "bach"
       ],
       "d": [
-        "metternich",
+        "mehmed-ii",
         "thackeray"
       ]
     },
@@ -10618,8 +10828,8 @@
         "shakespeare"
       ],
       "d": [
-        "flaubert",
-        "oliver-cromwell"
+        "faraday",
+        "nietzsche"
       ]
     },
     {
@@ -10632,8 +10842,8 @@
         "dostoevsky"
       ],
       "d": [
-        "galileo",
-        "chopin"
+        "french-revolution",
+        "frederick"
       ]
     },
     {
@@ -10644,8 +10854,8 @@
         "rubens"
       ],
       "d": [
-        "talleyrand",
-        "anne-boleyn"
+        "swift",
+        "amundsen"
       ]
     },
     {
@@ -10657,8 +10867,8 @@
         "mary-shelley"
       ],
       "d": [
-        "david",
-        "marat"
+        "de-morgan",
+        "malcolm-x"
       ]
     },
     {
@@ -10672,7 +10882,7 @@
       ],
       "d": [
         "temple",
-        "rossetti"
+        "robert-schumann"
       ]
     },
     {
@@ -10683,7 +10893,7 @@
         "liszt"
       ],
       "d": [
-        "monet",
+        "milton",
         "shaftesbury"
       ]
     },
@@ -10696,8 +10906,8 @@
         "darwin"
       ],
       "d": [
-        "thomas-cromwell",
-        "descartes"
+        "thackeray",
+        "diderot"
       ]
     },
     {
@@ -10709,8 +10919,8 @@
         "columbus"
       ],
       "d": [
-        "tycho",
-        "augustus"
+        "turgenev",
+        "archimedes"
       ]
     },
     {
@@ -10722,8 +10932,8 @@
         "darwin"
       ],
       "d": [
-        "henry-viii",
-        "jj-thomson"
+        "hegel",
+        "erasmus"
       ]
     },
     {
@@ -10737,7 +10947,7 @@
       ],
       "d": [
         "anthony",
-        "tycho"
+        "turgenev"
       ]
     },
     {
@@ -10749,8 +10959,8 @@
         "caesar"
       ],
       "d": [
-        "lewes",
-        "augustus"
+        "leonardo",
+        "anthony"
       ]
     },
     {
@@ -10762,8 +10972,8 @@
         "napoleon"
       ],
       "d": [
-        "darwin",
-        "vivaldi"
+        "davy",
+        "virgil"
       ]
     },
     {
@@ -10776,8 +10986,8 @@
         "victoria"
       ],
       "d": [
-        "humboldt",
-        "erasmus-darwin"
+        "hooke",
+        "emilie"
       ]
     },
     {
@@ -10791,7 +11001,7 @@
       ],
       "d": [
         "charles-i",
-        "gauguin"
+        "garrick"
       ]
     },
     {
@@ -10802,8 +11012,8 @@
         "wagner"
       ],
       "d": [
-        "gibbon",
-        "galileo"
+        "george-iii",
+        "frederick"
       ]
     },
     {
@@ -10816,8 +11026,8 @@
         "newton"
       ],
       "d": [
-        "anne-boleyn",
-        "erasmus"
+        "amundsen",
+        "emerson"
       ]
     },
     {
@@ -10828,7 +11038,7 @@
         "napoleon"
       ],
       "d": [
-        "elizabeth-i",
+        "einstein",
         "waterloo"
       ]
     },
@@ -10840,8 +11050,8 @@
         "trafalgar"
       ],
       "d": [
-        "holbein",
-        "boyle"
+        "hemingway",
+        "botticelli"
       ]
     },
     {
@@ -10853,8 +11063,8 @@
         "napoleon"
       ],
       "d": [
-        "verdi",
-        "thoreau"
+        "van-gogh",
+        "theodore-roosevelt"
       ]
     },
     {
@@ -10865,8 +11075,8 @@
         "victoria"
       ],
       "d": [
-        "brunel",
-        "watt"
+        "brahms",
+        "waterloo"
       ]
     },
     {
@@ -10878,7 +11088,7 @@
         "douglass"
       ],
       "d": [
-        "mill",
+        "mendelssohn",
         "wollstonecraft"
       ]
     },
@@ -10892,8 +11102,8 @@
         "verdi"
       ],
       "d": [
-        "rubens",
-        "carlyle"
+        "rousseau",
+        "caesar"
       ]
     },
     {
@@ -10906,8 +11116,8 @@
         "dante"
       ],
       "d": [
-        "julius-ii",
-        "baudelaire"
+        "johnson",
+        "bach"
       ]
     },
     {
@@ -10920,8 +11130,8 @@
         "shakespeare"
       ],
       "d": [
-        "spanish-armada",
-        "bach"
+        "solvay-1911",
+        "augustus"
       ]
     },
     {
@@ -10934,8 +11144,8 @@
         "watt"
       ],
       "d": [
-        "brunel",
-        "hawthorne"
+        "boyle",
+        "hamilton"
       ]
     },
     {
@@ -10948,8 +11158,8 @@
         "james-i"
       ],
       "d": [
-        "mary-queen-of-scots",
-        "mary-shelley"
+        "marie-antoinette",
+        "marlowe"
       ]
     },
     {
@@ -10961,8 +11171,8 @@
         "douglass"
       ],
       "d": [
-        "james-i",
-        "lavoisier"
+        "isabella",
+        "kelvin"
       ]
     },
     {
@@ -10975,8 +11185,8 @@
         "wagner"
       ],
       "d": [
-        "haydn",
-        "goya"
+        "handel",
+        "gogol"
       ]
     },
     {
@@ -10988,8 +11198,8 @@
         "galileo"
       ],
       "d": [
-        "flaubert",
-        "monet"
+        "erasmus-darwin",
+        "millais"
       ]
     },
     {
@@ -11002,7 +11212,7 @@
       ],
       "d": [
         "charles-v",
-        "chopin"
+        "christina"
       ]
     },
     {
@@ -11015,8 +11225,8 @@
         "james-i"
       ],
       "d": [
-        "christina",
-        "marco-polo"
+        "churchill",
+        "manet"
       ]
     },
     {
@@ -11028,8 +11238,8 @@
         "rossetti"
       ],
       "d": [
-        "george-v",
-        "pushkin"
+        "george-eliot",
+        "priestley"
       ]
     },
     {
@@ -11042,8 +11252,8 @@
         "scott"
       ],
       "d": [
-        "gauguin",
-        "mary-shelley"
+        "garrick",
+        "marlowe"
       ]
     },
     {
@@ -11055,8 +11265,8 @@
         "turgenev"
       ],
       "d": [
-        "verrocchio",
-        "julius-ii"
+        "velazquez",
+        "john-lennon"
       ]
     },
     {
@@ -11067,8 +11277,8 @@
         "voltaire"
       ],
       "d": [
-        "temple",
-        "johnson"
+        "talleyrand",
+        "john-herschel"
       ]
     },
     {
@@ -11081,8 +11291,8 @@
         "byron"
       ],
       "d": [
-        "banks",
-        "baudin"
+        "babbage",
+        "godwin"
       ]
     },
     {
@@ -11094,7 +11304,7 @@
         "rubens"
       ],
       "d": [
-        "thomas-more",
+        "theodore-roosevelt",
         "wedgwood"
       ]
     },
@@ -11108,8 +11318,8 @@
         "newton"
       ],
       "d": [
-        "scott",
-        "nansen"
+        "schubert",
+        "mozart"
       ]
     },
     {
@@ -11122,8 +11332,8 @@
         "dante"
       ],
       "d": [
-        "curie",
-        "columbus"
+        "da-gama",
+        "congress-of-vienna"
       ]
     },
     {
@@ -11135,7 +11345,7 @@
       ],
       "d": [
         "poe",
-        "walsingham"
+        "wallace"
       ]
     },
     {
@@ -11148,7 +11358,7 @@
         "ruskin"
       ],
       "d": [
-        "louis-xvi",
+        "lorenzo",
         "wollstonecraft"
       ]
     },
@@ -11162,8 +11372,8 @@
         "schopenhauer"
       ],
       "d": [
-        "nietzsche",
-        "washington"
+        "newton",
+        "walsingham"
       ]
     },
     {
@@ -11175,8 +11385,8 @@
         "augustus"
       ],
       "d": [
-        "thomas-cromwell",
-        "louis-xvi"
+        "thackeray",
+        "david"
       ]
     },
     {
@@ -11188,8 +11398,8 @@
         "bach"
       ],
       "d": [
-        "huygens",
-        "turgenev"
+        "hume",
+        "titian"
       ]
     },
     {
@@ -11203,7 +11413,7 @@
       ],
       "d": [
         "raphael",
-        "guy-fawkes"
+        "gunpowder-plot"
       ]
     },
     {
@@ -11214,8 +11424,8 @@
         "humboldt"
       ],
       "d": [
-        "michelangelo",
-        "solvay-1911"
+        "melville",
+        "solander"
       ]
     },
     {
@@ -11226,7 +11436,7 @@
         "magellan"
       ],
       "d": [
-        "faraday",
+        "erasmus",
         "adams"
       ]
     },
@@ -11240,8 +11450,8 @@
         "wagner"
       ],
       "d": [
-        "kepler",
-        "darwin"
+        "joule",
+        "david"
       ]
     },
     {
@@ -11252,8 +11462,8 @@
         "shakespeare"
       ],
       "d": [
-        "james-clark-ross",
-        "boole"
+        "huygens",
+        "berlioz"
       ]
     },
     {
@@ -11267,7 +11477,7 @@
       ],
       "d": [
         "charlotte-bronte",
-        "douglass"
+        "drake"
       ]
     },
     {
@@ -11280,7 +11490,7 @@
         "banks"
       ],
       "d": [
-        "johnson",
+        "john-franklin",
         "wollstonecraft"
       ]
     },
@@ -11293,8 +11503,8 @@
         "darwin"
       ],
       "d": [
-        "caesar",
-        "temple"
+        "byron",
+        "talleyrand"
       ]
     },
     {
@@ -11305,8 +11515,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "chopin",
-        "hobbes"
+        "christina",
+        "hegel"
       ]
     },
     {
@@ -11318,8 +11528,8 @@
         "milton"
       ],
       "d": [
-        "boulton",
-        "talleyrand"
+        "boswell",
+        "sun-tzu"
       ]
     },
     {
@@ -11332,8 +11542,8 @@
         "shakespeare"
       ],
       "d": [
-        "brahms",
-        "manet"
+        "boulton",
+        "magellan"
       ]
     },
     {
@@ -11345,8 +11555,8 @@
         "cesare-borgia"
       ],
       "d": [
-        "huxley",
-        "charles-i"
+        "humboldt",
+        "charles-ii"
       ]
     },
     {
@@ -11359,7 +11569,7 @@
       ],
       "d": [
         "charlotte-bronte",
-        "henry-viii"
+        "haydn"
       ]
     },
     {
@@ -11370,7 +11580,7 @@
         "chopin"
       ],
       "d": [
-        "tyndale",
+        "turner",
         "reynolds"
       ]
     },
@@ -11382,7 +11592,7 @@
         "maxwell"
       ],
       "d": [
-        "lorenzo",
+        "locke",
         "shakespeare"
       ]
     },
@@ -11396,8 +11606,8 @@
         "newton"
       ],
       "d": [
-        "hawthorne",
-        "milton"
+        "hamilton",
+        "michelangelo"
       ]
     },
     {
@@ -11410,8 +11620,8 @@
         "philip-ii"
       ],
       "d": [
-        "leeuwenhoek",
-        "schiller"
+        "kepler",
+        "savonarola"
       ]
     },
     {
@@ -11423,8 +11633,8 @@
         "napoleon"
       ],
       "d": [
-        "leibniz",
-        "pushkin"
+        "lafayette",
+        "priestley"
       ]
     },
     {
@@ -11437,8 +11647,8 @@
         "milton"
       ],
       "d": [
-        "newton",
-        "diderot"
+        "napoleon-iii",
+        "dostoevsky"
       ]
     },
     {
@@ -11449,7 +11659,7 @@
         "goethe"
       ],
       "d": [
-        "nansen",
+        "montaigne",
         "cezanne"
       ]
     },
@@ -11462,8 +11672,8 @@
         "goethe"
       ],
       "d": [
-        "great-fire",
-        "hooke"
+        "grant",
+        "henry-viii"
       ]
     },
     {
@@ -11474,8 +11684,8 @@
         "wagner"
       ],
       "d": [
-        "louis-xiv",
-        "francis-i"
+        "lorenzo",
+        "flaubert"
       ]
     },
     {
@@ -11488,8 +11698,8 @@
         "dostoevsky"
       ],
       "d": [
-        "erasmus-darwin",
-        "liszt"
+        "emilie",
+        "linnaeus"
       ]
     },
     {
@@ -11501,8 +11711,8 @@
         "mary-queen-of-scots"
       ],
       "d": [
-        "vespucci",
-        "bach"
+        "velazquez",
+        "austen"
       ]
     },
     {
@@ -11513,8 +11723,8 @@
         "napoleon"
       ],
       "d": [
-        "baudelaire",
-        "spencer"
+        "babbage",
+        "spanish-armada"
       ]
     },
     {
@@ -11526,8 +11736,8 @@
         "shakespeare"
       ],
       "d": [
-        "solvay-1911",
-        "da-gama"
+        "socrates",
+        "darwin"
       ]
     },
     {
@@ -11539,8 +11749,8 @@
         "rubens"
       ],
       "d": [
-        "walsingham",
-        "clara-schumann"
+        "wallace",
+        "coleridge"
       ]
     },
     {
@@ -11553,8 +11763,8 @@
         "beethoven"
       ],
       "d": [
-        "bernini",
-        "lewes"
+        "baudin",
+        "leibniz"
       ]
     },
     {
@@ -11565,8 +11775,8 @@
         "gunpowder-plot"
       ],
       "d": [
-        "william-iii",
-        "monet"
+        "william-herschel",
+        "milton"
       ]
     },
     {
@@ -11579,8 +11789,8 @@
         "charles-ii"
       ],
       "d": [
-        "talleyrand",
-        "carlyle"
+        "swift",
+        "nietzsche"
       ]
     },
     {
@@ -11591,7 +11801,7 @@
         "darwin"
       ],
       "d": [
-        "catherine",
+        "cassatt",
         "zola"
       ]
     },
@@ -11605,8 +11815,8 @@
         "goethe"
       ],
       "d": [
-        "josephine",
-        "manet"
+        "john-kennedy",
+        "magellan"
       ]
     },
     {
@@ -11620,7 +11830,7 @@
       ],
       "d": [
         "douglass",
-        "marlowe"
+        "marcus-aurelius"
       ]
     },
     {
@@ -11631,7 +11841,7 @@
         "verdi"
       ],
       "d": [
-        "joule",
+        "john-kennedy",
         "wren"
       ]
     },
@@ -11644,7 +11854,7 @@
       ],
       "d": [
         "shakespeare",
-        "diderot"
+        "einstein"
       ]
     },
     {
@@ -11670,7 +11880,7 @@
       ],
       "d": [
         "cesare-borgia",
-        "lincoln"
+        "lepanto"
       ]
     },
     {
@@ -11683,7 +11893,7 @@
       ],
       "d": [
         "wren",
-        "lewes"
+        "leonardo"
       ]
     },
     {
@@ -11696,8 +11906,8 @@
         "rossetti"
       ],
       "d": [
-        "linnaeus",
-        "catherine"
+        "lewes",
+        "cassatt"
       ]
     },
     {
@@ -11710,8 +11920,8 @@
         "napoleon"
       ],
       "d": [
-        "george-ii",
-        "shackleton"
+        "gentile-bellini",
+        "scott"
       ]
     },
     {
@@ -11723,8 +11933,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "velazquez",
-        "berlioz"
+        "tyndale",
+        "baudelaire"
       ]
     },
     {
@@ -11736,8 +11946,8 @@
         "henry-viii"
       ],
       "d": [
-        "pope",
-        "lister"
+        "poe",
+        "lewis"
       ]
     },
     {
@@ -11748,8 +11958,8 @@
         "columbus"
       ],
       "d": [
-        "huxley",
-        "spinoza"
+        "hugo",
+        "spencer"
       ]
     },
     {
@@ -11762,8 +11972,8 @@
         "rossetti"
       ],
       "d": [
-        "nietzsche",
-        "velazquez"
+        "newton",
+        "tycho"
       ]
     },
     {
@@ -11774,8 +11984,8 @@
         "napoleon"
       ],
       "d": [
-        "napoleon-iii",
-        "george-iii"
+        "george-eliot",
+        "spanish-armada"
       ]
     },
     {
@@ -11788,8 +11998,8 @@
         "goethe"
       ],
       "d": [
-        "chopin",
-        "twain"
+        "christina",
+        "trafalgar"
       ]
     },
     {
@@ -11802,8 +12012,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "robert-schumann",
-        "tycho"
+        "bernini",
+        "reynolds"
       ]
     },
     {
@@ -11814,8 +12024,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "rubens",
-        "hobbes"
+        "rousseau",
+        "hegel"
       ]
     },
     {
@@ -11828,8 +12038,8 @@
         "wagner"
       ],
       "d": [
-        "corelli",
-        "wallace"
+        "curie",
+        "metternich"
       ]
     },
     {
@@ -11841,8 +12051,8 @@
         "cesare-borgia"
       ],
       "d": [
-        "josephine",
-        "diderot"
+        "john-herschel",
+        "douglas-adams"
       ]
     },
     {
@@ -11855,8 +12065,8 @@
         "banks"
       ],
       "d": [
-        "spanish-armada",
-        "pushkin"
+        "solander",
+        "priestley"
       ]
     },
     {
@@ -11868,8 +12078,8 @@
         "liszt"
       ],
       "d": [
-        "halley",
-        "solvay-1911"
+        "hale",
+        "solander"
       ]
     },
     {
@@ -11883,7 +12093,7 @@
       ],
       "d": [
         "shackleton",
-        "mozart"
+        "monet"
       ]
     },
     {
@@ -11896,7 +12106,7 @@
         "french-revolution"
       ],
       "d": [
-        "marat",
+        "mandela",
         "rembrandt"
       ]
     },
@@ -11909,8 +12119,8 @@
         "french-revolution"
       ],
       "d": [
-        "garrison",
-        "manet"
+        "franklin-roosevelt",
+        "galileo"
       ]
     },
     {
@@ -11924,7 +12134,7 @@
       ],
       "d": [
         "wollstonecraft",
-        "augustus"
+        "archimedes"
       ]
     },
     {
@@ -11937,7 +12147,7 @@
       ],
       "d": [
         "wellington",
-        "paine"
+        "paganini"
       ]
     },
     {
@@ -11950,8 +12160,8 @@
         "beethoven"
       ],
       "d": [
-        "rembrandt",
-        "george-iii"
+        "reagan",
+        "gentile-bellini"
       ]
     },
     {
@@ -11963,8 +12173,8 @@
         "napoleon"
       ],
       "d": [
-        "thoreau",
-        "vespucci"
+        "thomas-cromwell",
+        "velazquez"
       ]
     },
     {
@@ -11978,7 +12188,7 @@
       ],
       "d": [
         "charlotte-bronte",
-        "trafalgar"
+        "thucydides"
       ]
     },
     {
@@ -11990,8 +12200,8 @@
         "shakespeare"
       ],
       "d": [
-        "mill",
-        "boswell"
+        "mendelssohn",
+        "bernini"
       ]
     },
     {
@@ -12004,8 +12214,8 @@
         "napoleon"
       ],
       "d": [
-        "delacroix",
-        "mary-queen-of-scots"
+        "dickinson",
+        "marcus-aurelius"
       ]
     },
     {
@@ -12017,8 +12227,8 @@
         "darwin"
       ],
       "d": [
-        "louis-xiv",
-        "twain"
+        "lorenzo",
+        "trafalgar"
       ]
     },
     {
@@ -12030,8 +12240,8 @@
         "trafalgar"
       ],
       "d": [
-        "anne-boleyn",
-        "rutherford"
+        "amundsen",
+        "russell"
       ]
     },
     {
@@ -12043,8 +12253,8 @@
         "french-revolution"
       ],
       "d": [
-        "cervantes",
-        "marcus-aurelius"
+        "catherine",
+        "manuel-i"
       ]
     },
     {
@@ -12056,8 +12266,8 @@
         "augustus"
       ],
       "d": [
-        "magellan",
-        "leibniz"
+        "madison",
+        "kepler"
       ]
     },
     {
@@ -12070,8 +12280,8 @@
         "baudin"
       ],
       "d": [
-        "holbein",
-        "ovid"
+        "hellman",
+        "oliver-cromwell"
       ]
     },
     {
@@ -12084,8 +12294,8 @@
         "goya"
       ],
       "d": [
-        "haydn",
-        "milton"
+        "handel",
+        "michelangelo"
       ]
     },
     {
@@ -12097,8 +12307,8 @@
         "hooke"
       ],
       "d": [
-        "amundsen",
-        "hugo"
+        "pasteur",
+        "ali"
       ]
     },
     {
@@ -12111,7 +12321,7 @@
         "shelley"
       ],
       "d": [
-        "ludwig-ii",
+        "louis-xvi",
         "cicero"
       ]
     },
@@ -12123,8 +12333,8 @@
         "brahms"
       ],
       "d": [
-        "renoir",
-        "vespucci"
+        "rembrandt",
+        "verdi"
       ]
     },
     {
@@ -12137,7 +12347,7 @@
       ],
       "d": [
         "dvorak",
-        "locke"
+        "lister"
       ]
     },
     {
@@ -12161,8 +12371,8 @@
         "ruskin"
       ],
       "d": [
-        "rutherford",
-        "paganini"
+        "russell",
+        "ovid"
       ]
     },
     {
@@ -12174,8 +12384,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "pissarro",
-        "hawthorne"
+        "philip-iv",
+        "hamilton"
       ]
     },
     {
@@ -12188,8 +12398,8 @@
         "spencer"
       ],
       "d": [
-        "talleyrand",
-        "rubens"
+        "sun-tzu",
+        "rousseau"
       ]
     },
     {
@@ -12201,8 +12411,8 @@
         "scott"
       ],
       "d": [
-        "mary-shelley",
-        "flinders"
+        "marlowe",
+        "faraday"
       ]
     },
     {
@@ -12215,8 +12425,8 @@
         "byron"
       ],
       "d": [
-        "linnaeus",
-        "melbourne"
+        "lewes",
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -12229,8 +12439,8 @@
         "darwin"
       ],
       "d": [
-        "cook",
-        "wollstonecraft"
+        "corelli",
+        "william-iii"
       ]
     },
     {
@@ -12242,8 +12452,8 @@
         "gauguin"
       ],
       "d": [
-        "brahms",
-        "mozart"
+        "boyle",
+        "montaigne"
       ]
     },
     {
@@ -12256,8 +12466,8 @@
         "john-franklin"
       ],
       "d": [
-        "rossini",
-        "holbein"
+        "rossetti",
+        "hemingway"
       ]
     },
     {
@@ -12270,7 +12480,7 @@
         "beethoven"
       ],
       "d": [
-        "descartes",
+        "diderot",
         "robert-schumann"
       ]
     },
@@ -12282,7 +12492,7 @@
         "hume"
       ],
       "d": [
-        "dante",
+        "david",
         "coleridge"
       ]
     },
@@ -12295,7 +12505,7 @@
         "dante"
       ],
       "d": [
-        "savonarola",
+        "rutherford",
         "catherine"
       ]
     },
@@ -12308,8 +12518,8 @@
         "caroline-lamb"
       ],
       "d": [
-        "velazquez",
-        "newton"
+        "tycho",
+        "nelson"
       ]
     },
     {
@@ -12322,7 +12532,7 @@
         "botticelli"
       ],
       "d": [
-        "michelangelo",
+        "melville",
         "shaftesbury"
       ]
     },
@@ -12335,8 +12545,8 @@
         "william-iii"
       ],
       "d": [
-        "turner",
-        "melbourne"
+        "tolstoy",
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -12348,8 +12558,8 @@
         "napoleon"
       ],
       "d": [
-        "john-franklin",
-        "garrison"
+        "jj-thomson",
+        "galileo"
       ]
     },
     {
@@ -12361,7 +12571,7 @@
         "napoleon"
       ],
       "d": [
-        "de-morgan",
+        "delacroix",
         "einstein"
       ]
     },
@@ -12374,8 +12584,8 @@
         "darwin"
       ],
       "d": [
-        "goethe",
-        "jj-thomson"
+        "giovanni-bellini",
+        "jefferson"
       ]
     },
     {
@@ -12389,7 +12599,7 @@
       ],
       "d": [
         "charles-ii",
-        "huxley"
+        "humboldt"
       ]
     },
     {
@@ -12402,8 +12612,8 @@
         "dante"
       ],
       "d": [
-        "tyndale",
-        "emilie"
+        "turner",
+        "elizabeth-i"
       ]
     },
     {
@@ -12416,8 +12626,8 @@
         "napoleon"
       ],
       "d": [
-        "nansen",
-        "wordsworth"
+        "montaigne",
+        "wollstonecraft"
       ]
     },
     {
@@ -12430,8 +12640,8 @@
         "grant"
       ],
       "d": [
-        "schiller",
-        "washington"
+        "savonarola",
+        "walsingham"
       ]
     },
     {
@@ -12444,8 +12654,8 @@
         "thomas-more"
       ],
       "d": [
-        "temple",
-        "marie-antoinette"
+        "talleyrand",
+        "marco-polo"
       ]
     },
     {
@@ -12456,8 +12666,8 @@
         "pushkin"
       ],
       "d": [
-        "thoreau",
-        "paganini"
+        "theodore-roosevelt",
+        "ovid"
       ]
     },
     {
@@ -12468,8 +12678,8 @@
         "moliere"
       ],
       "d": [
-        "george-ii",
-        "philip-iv"
+        "gentile-bellini",
+        "pepys"
       ]
     },
     {
@@ -12480,8 +12690,8 @@
         "tycho"
       ],
       "d": [
-        "pushkin",
-        "dostoevsky"
+        "priestley",
+        "douglas-adams"
       ]
     },
     {
@@ -12492,7 +12702,7 @@
         "hooke"
       ],
       "d": [
-        "lewis",
+        "lepanto",
         "douglass"
       ]
     },
@@ -12504,8 +12714,8 @@
         "plutarch"
       ],
       "d": [
-        "solander",
-        "verrocchio"
+        "socrates",
+        "velazquez"
       ]
     },
     {
@@ -12516,8 +12726,8 @@
         "henry-viii"
       ],
       "d": [
-        "josephine",
-        "carlyle"
+        "john-herschel",
+        "caesar"
       ]
     },
     {
@@ -12528,8 +12738,8 @@
         "dante"
       ],
       "d": [
-        "maxwell",
-        "locke"
+        "marlowe",
+        "lister"
       ]
     },
     {
@@ -12541,8 +12751,8 @@
         "napoleon"
       ],
       "d": [
-        "hegel",
-        "beethoven"
+        "hawthorne",
+        "banks"
       ]
     },
     {
@@ -12555,8 +12765,8 @@
         "shakespeare"
       ],
       "d": [
-        "josephine",
-        "stanton"
+        "john-kennedy",
+        "spinoza"
       ]
     },
     {
@@ -12568,7 +12778,7 @@
         "hume"
       ],
       "d": [
-        "hooker",
+        "hobbes",
         "pushkin"
       ]
     },
@@ -12581,7 +12791,7 @@
       ],
       "d": [
         "dumas",
-        "verrocchio"
+        "velazquez"
       ]
     },
     {
@@ -12593,8 +12803,8 @@
         "napoleon"
       ],
       "d": [
-        "montaigne",
-        "twain"
+        "moliere",
+        "tolstoy"
       ]
     },
     {
@@ -12607,8 +12817,8 @@
         "john-herschel"
       ],
       "d": [
-        "gunpowder-plot",
-        "ludwig-ii"
+        "great-fire",
+        "louis-xvi"
       ]
     },
     {
@@ -12621,8 +12831,8 @@
         "charles-ii"
       ],
       "d": [
-        "solvay-1911",
-        "smith"
+        "solander",
+        "shelley"
       ]
     },
     {
@@ -12635,7 +12845,7 @@
         "darwin"
       ],
       "d": [
-        "poe",
+        "plutarch",
         "schopenhauer"
       ]
     },
@@ -12649,8 +12859,8 @@
         "newton"
       ],
       "d": [
-        "temple",
-        "lafayette"
+        "talleyrand",
+        "keller"
       ]
     },
     {
@@ -12661,8 +12871,8 @@
         "franklin"
       ],
       "d": [
-        "virgil",
-        "smith"
+        "victoria",
+        "shelley"
       ]
     },
     {
@@ -12676,7 +12886,7 @@
       ],
       "d": [
         "zola",
-        "constable"
+        "constantijn"
       ]
     },
     {
@@ -12689,8 +12899,8 @@
         "ruskin"
       ],
       "d": [
-        "thomas-cromwell",
-        "metternich"
+        "theodore-parker",
+        "melbourne"
       ]
     },
     {
@@ -12701,8 +12911,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "nietzsche",
-        "huygens"
+        "newton",
+        "hume"
       ]
     },
     {
@@ -12715,8 +12925,8 @@
         "charles-ii"
       ],
       "d": [
-        "leonardo",
-        "mendelssohn"
+        "lavoisier",
+        "maxwell"
       ]
     },
     {
@@ -12728,8 +12938,8 @@
         "caroline-lamb"
       ],
       "d": [
-        "mendelssohn",
-        "maxwell"
+        "mehmed-ii",
+        "martin-luther-king"
       ]
     },
     {
@@ -12742,8 +12952,8 @@
         "rubens"
       ],
       "d": [
-        "leibniz",
-        "milton"
+        "lafayette",
+        "michelangelo"
       ]
     },
     {
@@ -12756,8 +12966,8 @@
         "humboldt"
       ],
       "d": [
-        "corelli",
-        "philip-ii"
+        "curie",
+        "patrick-henry"
       ]
     },
     {
@@ -12783,7 +12993,7 @@
         "charles-v"
       ],
       "d": [
-        "michelangelo",
+        "melville",
         "amundsen"
       ]
     },
@@ -12796,8 +13006,8 @@
         "henry-viii"
       ],
       "d": [
-        "william-herschel",
-        "rousseau"
+        "wilde",
+        "rossini"
       ]
     },
     {
@@ -12810,8 +13020,8 @@
         "napoleon"
       ],
       "d": [
-        "jefferson",
-        "gauguin"
+        "james-i",
+        "garrick"
       ]
     },
     {
@@ -12823,8 +13033,8 @@
         "louis-xiv"
       ],
       "d": [
-        "voltaire",
-        "gaskell"
+        "vivaldi",
+        "gandhi"
       ]
     },
     {
@@ -12836,7 +13046,7 @@
       ],
       "d": [
         "dvorak",
-        "ovid"
+        "oliver-cromwell"
       ]
     },
     {
@@ -12848,8 +13058,8 @@
         "charles-ii"
       ],
       "d": [
-        "rossetti",
-        "gaskell"
+        "rosa-parks",
+        "gandhi"
       ]
     },
     {
@@ -12862,7 +13072,7 @@
         "bach"
       ],
       "d": [
-        "manuel-i",
+        "magellan",
         "pope"
       ]
     },
@@ -12876,8 +13086,8 @@
         "james-i"
       ],
       "d": [
-        "twain",
-        "john-herschel"
+        "trafalgar",
+        "jobs"
       ]
     },
     {
@@ -12888,8 +13098,8 @@
         "bach"
       ],
       "d": [
-        "hobbes",
-        "tycho"
+        "hellman",
+        "turgenev"
       ]
     },
     {
@@ -12900,8 +13110,8 @@
         "oliver-cromwell"
       ],
       "d": [
-        "titian",
-        "rossetti"
+        "thomas-more",
+        "robert-schumann"
       ]
     },
     {
@@ -12913,8 +13123,8 @@
         "french-revolution"
       ],
       "d": [
-        "drake",
-        "halley"
+        "du-bois",
+        "hale"
       ]
     },
     {
@@ -12927,8 +13137,8 @@
         "gibbon"
       ],
       "d": [
-        "dante",
-        "mill"
+        "darwin",
+        "mendelssohn"
       ]
     },
     {
@@ -12941,8 +13151,8 @@
         "wagner"
       ],
       "d": [
-        "brunel",
-        "turgenev"
+        "boyle",
+        "titian"
       ]
     },
     {
@@ -12956,7 +13166,7 @@
       ],
       "d": [
         "wollstonecraft",
-        "shaftesbury"
+        "shackleton"
       ]
     },
     {
@@ -12968,8 +13178,8 @@
         "jefferson"
       ],
       "d": [
-        "magellan",
-        "columbus"
+        "machiavelli",
+        "congress-of-vienna"
       ]
     },
     {
@@ -12981,7 +13191,7 @@
       ],
       "d": [
         "cezanne",
-        "john-franklin"
+        "jj-thomson"
       ]
     },
     {
@@ -12992,8 +13202,8 @@
         "byron"
       ],
       "d": [
-        "george-v",
-        "berlioz"
+        "george-ii",
+        "baudelaire"
       ]
     },
     {
@@ -13006,8 +13216,8 @@
         "botticelli"
       ],
       "d": [
-        "lewes",
-        "victoria"
+        "leibniz",
+        "verdi"
       ]
     },
     {
@@ -13019,8 +13229,8 @@
         "shakespeare"
       ],
       "d": [
-        "thackeray",
-        "maxwell"
+        "temple",
+        "marx"
       ]
     },
     {
@@ -13032,8 +13242,8 @@
         "faraday"
       ],
       "d": [
-        "anne-boleyn",
-        "tycho"
+        "amundsen",
+        "turgenev"
       ]
     },
     {
@@ -13046,8 +13256,8 @@
         "john-herschel"
       ],
       "d": [
-        "augustus",
-        "rousseau"
+        "archimedes",
+        "rossini"
       ]
     },
     {
@@ -13061,7 +13271,7 @@
       ],
       "d": [
         "suleiman",
-        "erasmus"
+        "emerson"
       ]
     },
     {
@@ -13074,8 +13284,8 @@
         "magellan"
       ],
       "d": [
-        "anne-boleyn",
-        "josephine"
+        "amundsen",
+        "john-kennedy"
       ]
     },
     {
@@ -13088,8 +13298,8 @@
         "newton"
       ],
       "d": [
-        "rossetti",
-        "priestley"
+        "robert-schumann",
+        "pope"
       ]
     },
     {
@@ -13102,8 +13312,8 @@
         "pasteur"
       ],
       "d": [
-        "planck",
-        "millais"
+        "philip-iv",
+        "michelangelo"
       ]
     },
     {
@@ -13115,8 +13325,8 @@
         "jefferson"
       ],
       "d": [
-        "giovanni-bellini",
-        "leeuwenhoek"
+        "george-v",
+        "kelvin"
       ]
     },
     {
@@ -13129,8 +13339,8 @@
         "shakespeare"
       ],
       "d": [
-        "lorenzo",
-        "hugo"
+        "locke",
+        "hooke"
       ]
     },
     {
@@ -13143,7 +13353,7 @@
       ],
       "d": [
         "anne-boleyn",
-        "victoria"
+        "verrocchio"
       ]
     },
     {
@@ -13154,8 +13364,8 @@
         "jefferson"
       ],
       "d": [
-        "solander",
-        "tyndale"
+        "socrates",
+        "turner"
       ]
     },
     {
@@ -13168,8 +13378,8 @@
         "wagner"
       ],
       "d": [
-        "smith",
-        "temple"
+        "shelley",
+        "talleyrand"
       ]
     },
     {
@@ -13182,8 +13392,8 @@
         "wagner"
       ],
       "d": [
-        "da-gama",
-        "lorenzo"
+        "darwin",
+        "liszt"
       ]
     },
     {
@@ -13196,7 +13406,7 @@
       ],
       "d": [
         "raphael",
-        "lafayette"
+        "julius-ii"
       ]
     },
     {
@@ -13208,7 +13418,7 @@
       ],
       "d": [
         "shaftesbury",
-        "corelli"
+        "curie"
       ]
     },
     {
@@ -13220,8 +13430,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "lewes",
-        "monet"
+        "leonardo",
+        "leibniz"
       ]
     },
     {
@@ -13233,8 +13443,8 @@
         "beethoven"
       ],
       "d": [
-        "jj-thomson",
-        "lorenzo"
+        "jefferson",
+        "locke"
       ]
     },
     {
@@ -13247,8 +13457,8 @@
         "delacroix"
       ],
       "d": [
-        "haydn",
-        "trafalgar"
+        "handel",
+        "thucydides"
       ]
     },
     {
@@ -13259,8 +13469,8 @@
         "isabella"
       ],
       "d": [
-        "marlowe",
-        "boole"
+        "beethoven",
+        "orwell"
       ]
     },
     {
@@ -13273,8 +13483,8 @@
         "davy"
       ],
       "d": [
-        "twain",
-        "handel"
+        "tolstoy",
+        "halley"
       ]
     },
     {
@@ -13287,7 +13497,7 @@
       ],
       "d": [
         "reynolds",
-        "marco-polo"
+        "manet"
       ]
     },
     {
@@ -13299,8 +13509,8 @@
         "hooker"
       ],
       "d": [
-        "hobbes",
-        "goethe"
+        "hegel",
+        "giovanni-bellini"
       ]
     },
     {
@@ -13311,7 +13521,7 @@
         "mehmed-ii"
       ],
       "d": [
-        "diderot",
+        "dostoevsky",
         "dvorak"
       ]
     },
@@ -13324,7 +13534,7 @@
       ],
       "d": [
         "charles-ii",
-        "louis-xvi"
+        "lorenzo"
       ]
     },
     {
@@ -13336,7 +13546,7 @@
         "william-herschel"
       ],
       "d": [
-        "degas",
+        "dickens",
         "rubens"
       ]
     },
@@ -13350,8 +13560,8 @@
         "spinoza"
       ],
       "d": [
-        "metternich",
-        "corelli"
+        "melbourne",
+        "curie"
       ]
     },
     {
@@ -13362,8 +13572,8 @@
         "caesar"
       ],
       "d": [
-        "shaftesbury",
-        "ada"
+        "lyell",
+        "shaftesbury"
       ]
     },
     {
@@ -13374,8 +13584,8 @@
         "french-revolution"
       ],
       "d": [
-        "amundsen",
-        "julius-ii"
+        "ali",
+        "john-lennon"
       ]
     },
     {
@@ -13387,8 +13597,8 @@
         "suleiman"
       ],
       "d": [
-        "james-clark-ross",
-        "christina"
+        "huygens",
+        "churchill"
       ]
     },
     {
@@ -13399,8 +13609,8 @@
         "john-franklin"
       ],
       "d": [
-        "berlioz",
-        "planck"
+        "baudelaire",
+        "pissarro"
       ]
     },
     {
@@ -13412,8 +13622,8 @@
         "beethoven"
       ],
       "d": [
-        "julius-ii",
-        "manuel-i"
+        "johnson",
+        "malcolm-x"
       ]
     },
     {
@@ -13425,8 +13635,8 @@
         "louis-xiv"
       ],
       "d": [
-        "delacroix",
-        "baudin"
+        "dickinson",
+        "bacon"
       ]
     },
     {
@@ -13439,8 +13649,8 @@
         "french-revolution"
       ],
       "d": [
-        "louis-xvi",
-        "turgenev"
+        "lorenzo",
+        "titian"
       ]
     },
     {
@@ -13452,8 +13662,8 @@
         "oliver-cromwell"
       ],
       "d": [
-        "nelson",
-        "swift"
+        "michelangelo",
+        "napoleon-iii"
       ]
     },
     {
@@ -13467,7 +13677,7 @@
       ],
       "d": [
         "priestley",
-        "erasmus-darwin"
+        "emilie"
       ]
     },
     {
@@ -13479,8 +13689,8 @@
         "magellan"
       ],
       "d": [
-        "mendelssohn",
-        "mozart"
+        "mehmed-ii",
+        "monet"
       ]
     },
     {
@@ -13493,7 +13703,7 @@
         "franklin"
       ],
       "d": [
-        "mill",
+        "mendelssohn",
         "clara-schumann"
       ]
     },
@@ -13505,8 +13715,8 @@
         "james-ii"
       ],
       "d": [
-        "george-v",
-        "jefferson"
+        "george-ii",
+        "james-i"
       ]
     },
     {
@@ -13519,8 +13729,8 @@
         "oliver-cromwell"
       ],
       "d": [
-        "christina",
-        "virgil"
+        "churchill",
+        "vespucci"
       ]
     },
     {
@@ -13533,8 +13743,8 @@
         "godwin"
       ],
       "d": [
-        "nelson",
-        "gentile-bellini"
+        "napoleon",
+        "garrison"
       ]
     },
     {
@@ -13546,7 +13756,7 @@
         "john-herschel"
       ],
       "d": [
-        "titian",
+        "thomas-more",
         "adams"
       ]
     },
@@ -13558,8 +13768,8 @@
         "napoleon"
       ],
       "d": [
-        "carlyle",
-        "plutarch"
+        "caesar",
+        "planck"
       ]
     },
     {
@@ -13571,8 +13781,8 @@
         "caesar"
       ],
       "d": [
-        "cassatt",
-        "tolstoy"
+        "caroline-lamb",
+        "thoreau"
       ]
     },
     {
@@ -13596,8 +13806,8 @@
         "wagner"
       ],
       "d": [
-        "coleridge",
-        "rousseau"
+        "columbus",
+        "rossini"
       ]
     },
     {
@@ -13610,8 +13820,8 @@
         "brahms"
       ],
       "d": [
-        "johnson",
-        "botticelli"
+        "john-herschel",
+        "boole"
       ]
     },
     {
@@ -13623,8 +13833,8 @@
         "erasmus-darwin"
       ],
       "d": [
-        "stanton",
-        "james-ii"
+        "spinoza",
+        "james-i"
       ]
     },
     {
@@ -13636,8 +13846,8 @@
         "victoria"
       ],
       "d": [
-        "garrick",
-        "lewis"
+        "frost",
+        "leonardo"
       ]
     },
     {
@@ -13651,7 +13861,7 @@
       ],
       "d": [
         "charles-ii",
-        "sand"
+        "rutherford"
       ]
     },
     {
@@ -13662,7 +13872,7 @@
         "louis-xiv"
       ],
       "d": [
-        "melbourne",
+        "mary-queen-of-scots",
         "einstein"
       ]
     },
@@ -13674,8 +13884,8 @@
         "napoleon"
       ],
       "d": [
-        "rossetti",
-        "liszt"
+        "rosa-parks",
+        "linnaeus"
       ]
     },
     {
@@ -13688,8 +13898,8 @@
         "ruskin"
       ],
       "d": [
-        "gogol",
-        "descartes"
+        "godwin",
+        "diderot"
       ]
     },
     {
@@ -13703,7 +13913,7 @@
       ],
       "d": [
         "charles-i",
-        "rossini"
+        "rossetti"
       ]
     },
     {
@@ -13715,8 +13925,8 @@
         "william-iii"
       ],
       "d": [
-        "gogol",
-        "baudin"
+        "goethe",
+        "bach"
       ]
     },
     {
@@ -13728,8 +13938,8 @@
         "scott"
       ],
       "d": [
-        "priestley",
-        "thoreau"
+        "pope",
+        "theodore-roosevelt"
       ]
     },
     {
@@ -13741,8 +13951,8 @@
         "liszt"
       ],
       "d": [
-        "nelson",
-        "augustus"
+        "napoleon",
+        "archimedes"
       ]
     },
     {
@@ -13754,7 +13964,7 @@
         "liszt"
       ],
       "d": [
-        "pepys",
+        "patrick-henry",
         "raphael"
       ]
     },
@@ -13768,8 +13978,8 @@
         "newton"
       ],
       "d": [
-        "washington",
-        "tyndale"
+        "walsingham",
+        "turner"
       ]
     },
     {
@@ -13782,7 +13992,7 @@
       ],
       "d": [
         "wren",
-        "ovid"
+        "oliver-cromwell"
       ]
     },
     {
@@ -13793,8 +14003,8 @@
         "william-iii"
       ],
       "d": [
-        "marcus-aurelius",
-        "wren"
+        "manuel-i",
+        "wordsworth"
       ]
     },
     {
@@ -13806,8 +14016,8 @@
         "george-v"
       ],
       "d": [
-        "gauguin",
-        "rossetti"
+        "garrick",
+        "rosa-parks"
       ]
     },
     {
@@ -13818,7 +14028,7 @@
         "shakespeare"
       ],
       "d": [
-        "van-gogh",
+        "twain",
         "ada"
       ]
     },
@@ -13830,7 +14040,7 @@
         "erasmus-darwin"
       ],
       "d": [
-        "holbein",
+        "hellman",
         "stephenson"
       ]
     },
@@ -13844,8 +14054,8 @@
         "waterloo"
       ],
       "d": [
-        "plutarch",
-        "leeuwenhoek"
+        "pissarro",
+        "kelvin"
       ]
     },
     {
@@ -13858,7 +14068,7 @@
         "botticelli"
       ],
       "d": [
-        "garrick",
+        "frost",
         "reynolds"
       ]
     },
@@ -13883,8 +14093,8 @@
         "trafalgar"
       ],
       "d": [
-        "hobbes",
-        "grant"
+        "hegel",
+        "goya"
       ]
     },
     {
@@ -13895,7 +14105,7 @@
         "victoria"
       ],
       "d": [
-        "spanish-armada",
+        "solvay-1911",
         "clara-schumann"
       ]
     },
@@ -13908,8 +14118,8 @@
         "dante"
       ],
       "d": [
-        "caesar",
-        "philip-ii"
+        "patrick-henry",
+        "grant"
       ]
     },
     {
@@ -13922,8 +14132,8 @@
         "leibniz"
       ],
       "d": [
-        "wollstonecraft",
-        "pope"
+        "william-iii",
+        "poe"
       ]
     },
     {
@@ -13935,8 +14145,8 @@
         "darwin"
       ],
       "d": [
-        "magellan",
-        "maxwell"
+        "machiavelli",
+        "martin-luther-king"
       ]
     },
     {
@@ -13948,8 +14158,8 @@
         "verdi"
       ],
       "d": [
-        "hegel",
-        "shackleton"
+        "hawthorne",
+        "scott"
       ]
     },
     {
@@ -13960,8 +14170,8 @@
         "leonardo"
       ],
       "d": [
-        "johnson",
-        "rubens"
+        "john-franklin",
+        "rousseau"
       ]
     },
     {
@@ -13974,8 +14184,8 @@
         "french-revolution"
       ],
       "d": [
-        "lepanto",
-        "douglass"
+        "leeuwenhoek",
+        "drake"
       ]
     },
     {
@@ -13986,8 +14196,8 @@
         "monet"
       ],
       "d": [
-        "william-iii",
-        "hume"
+        "william-herschel",
+        "hugo"
       ]
     },
     {
@@ -13999,8 +14209,8 @@
         "wellington"
       ],
       "d": [
-        "wallace",
-        "david"
+        "voltaire",
+        "de-morgan"
       ]
     },
     {
@@ -14012,7 +14222,7 @@
       ],
       "d": [
         "catherine",
-        "walsingham"
+        "wallace"
       ]
     },
     {
@@ -14024,8 +14234,8 @@
         "john-herschel"
       ],
       "d": [
-        "christina",
-        "corelli"
+        "churchill",
+        "curie"
       ]
     },
     {
@@ -14036,7 +14246,7 @@
         "montaigne"
       ],
       "d": [
-        "sand",
+        "rutherford",
         "einstein"
       ]
     },
@@ -14049,8 +14259,8 @@
         "dickens"
       ],
       "d": [
-        "mill",
-        "louis-xiv"
+        "mendelssohn",
+        "lorenzo"
       ]
     },
     {
@@ -14063,8 +14273,8 @@
         "dante"
       ],
       "d": [
-        "douglass",
-        "carlyle"
+        "drake",
+        "caesar"
       ]
     },
     {
@@ -14075,8 +14285,8 @@
         "locke"
       ],
       "d": [
-        "julius-ii",
-        "wren"
+        "johnson",
+        "wordsworth"
       ]
     },
     {
@@ -14087,7 +14297,7 @@
         "constable"
       ],
       "d": [
-        "gibbon",
+        "george-iii",
         "racine"
       ]
     },
@@ -14101,8 +14311,8 @@
         "shakespeare"
       ],
       "d": [
-        "flinders",
-        "grant"
+        "faraday",
+        "gogol"
       ]
     },
     {
@@ -14113,7 +14323,7 @@
         "dante"
       ],
       "d": [
-        "planck",
+        "pissarro",
         "drake"
       ]
     },
@@ -14127,8 +14337,8 @@
         "charles-ii"
       ],
       "d": [
-        "marat",
-        "boyle"
+        "mandela",
+        "botticelli"
       ]
     },
     {
@@ -14140,7 +14350,7 @@
       ],
       "d": [
         "anthony",
-        "thoreau"
+        "theodore-roosevelt"
       ]
     },
     {
@@ -14152,8 +14362,8 @@
         "louis-xiv"
       ],
       "d": [
-        "oliver-cromwell",
-        "einstein"
+        "nietzsche",
+        "edison"
       ]
     },
     {
@@ -14166,8 +14376,8 @@
         "brahms"
       ],
       "d": [
-        "poe",
-        "caesar"
+        "planck",
+        "byron"
       ]
     },
     {
@@ -14179,8 +14389,8 @@
         "titian"
       ],
       "d": [
-        "johnson",
-        "boole"
+        "john-franklin",
+        "berlioz"
       ]
     },
     {
@@ -14193,8 +14403,8 @@
         "napoleon"
       ],
       "d": [
-        "garrick",
-        "baudin"
+        "frost",
+        "bacon"
       ]
     },
     {
@@ -14207,8 +14417,8 @@
         "hooke"
       ],
       "d": [
-        "spanish-armada",
-        "thomas-cromwell"
+        "solvay-1911",
+        "thackeray"
       ]
     },
     {
@@ -14219,8 +14429,8 @@
         "darwin"
       ],
       "d": [
-        "george-ii",
-        "william-iii"
+        "gentile-bellini",
+        "william-herschel"
       ]
     },
     {
@@ -14233,8 +14443,8 @@
         "james-i"
       ],
       "d": [
-        "thomas-more",
-        "garrison"
+        "theodore-roosevelt",
+        "galileo"
       ]
     },
     {
@@ -14247,8 +14457,8 @@
         "goethe"
       ],
       "d": [
-        "hawthorne",
-        "wedgwood"
+        "hamilton",
+        "watt"
       ]
     },
     {
@@ -14261,8 +14471,8 @@
         "diderot"
       ],
       "d": [
-        "marlowe",
-        "marat"
+        "marcus-aurelius",
+        "malcolm-x"
       ]
     },
     {
@@ -14273,8 +14483,8 @@
         "wollstonecraft"
       ],
       "d": [
-        "marat",
-        "hobbes"
+        "mandela",
+        "hellman"
       ]
     },
     {
@@ -14285,8 +14495,8 @@
         "byron"
       ],
       "d": [
-        "carlyle",
-        "marcus-aurelius"
+        "marat",
+        "gogol"
       ]
     },
     {
@@ -14297,8 +14507,8 @@
         "napoleon"
       ],
       "d": [
-        "ovid",
-        "huygens"
+        "oliver-cromwell",
+        "hume"
       ]
     },
     {
@@ -14310,8 +14520,8 @@
         "goethe"
       ],
       "d": [
-        "virgil",
-        "solvay-1911"
+        "victoria",
+        "vespucci"
       ]
     },
     {
@@ -14323,7 +14533,7 @@
       ],
       "d": [
         "shelley",
-        "tycho"
+        "turgenev"
       ]
     },
     {
@@ -14335,8 +14545,8 @@
         "constantijn"
       ],
       "d": [
-        "wedgwood",
-        "john-herschel"
+        "watt",
+        "jobs"
       ]
     },
     {
@@ -14348,8 +14558,8 @@
         "goethe"
       ],
       "d": [
-        "verrocchio",
-        "spanish-armada"
+        "van-gogh",
+        "solvay-1911"
       ]
     },
     {
@@ -14361,8 +14571,8 @@
         "flaubert"
       ],
       "d": [
-        "kepler",
-        "kelvin"
+        "joule",
+        "josephine"
       ]
     },
     {
@@ -14375,8 +14585,8 @@
         "botticelli"
       ],
       "d": [
-        "mendelssohn",
-        "nelson"
+        "maxwell",
+        "napoleon"
       ]
     },
     {
@@ -14387,8 +14597,8 @@
         "napoleon"
       ],
       "d": [
-        "bernini",
-        "holbein"
+        "baudin",
+        "hemingway"
       ]
     },
     {
@@ -14401,8 +14611,8 @@
         "trafalgar"
       ],
       "d": [
-        "haydn",
-        "lister"
+        "handel",
+        "lewis"
       ]
     },
     {
@@ -14415,7 +14625,7 @@
         "scott"
       ],
       "d": [
-        "priestley",
+        "pope",
         "great-fire"
       ]
     },
@@ -14429,8 +14639,8 @@
         "shakespeare"
       ],
       "d": [
-        "voltaire",
-        "haydn"
+        "virgil",
+        "handel"
       ]
     },
     {
@@ -14442,7 +14652,7 @@
         "napoleon"
       ],
       "d": [
-        "reynolds",
+        "renoir",
         "charles-v"
       ]
     },
@@ -14456,8 +14666,8 @@
         "charles-ii"
       ],
       "d": [
-        "french-revolution",
-        "baudelaire"
+        "franklin-roosevelt",
+        "bach"
       ]
     },
     {
@@ -14471,7 +14681,7 @@
       ],
       "d": [
         "anne-boleyn",
-        "melbourne"
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -14482,8 +14692,8 @@
         "solander"
       ],
       "d": [
-        "spanish-armada",
-        "giovanni-bellini"
+        "solvay-1911",
+        "george-v"
       ]
     },
     {
@@ -14494,8 +14704,8 @@
         "napoleon"
       ],
       "d": [
-        "verdi",
-        "watt"
+        "van-gogh",
+        "temple"
       ]
     },
     {
@@ -14508,8 +14718,8 @@
         "velazquez"
       ],
       "d": [
-        "hegel",
-        "locke"
+        "haydn",
+        "lister"
       ]
     },
     {
@@ -14521,7 +14731,7 @@
         "charles-v"
       ],
       "d": [
-        "millais",
+        "metternich",
         "schopenhauer"
       ]
     },
@@ -14535,8 +14745,8 @@
         "solander"
       ],
       "d": [
-        "haydn",
-        "grant"
+        "handel",
+        "goya"
       ]
     },
     {
@@ -14548,8 +14758,8 @@
         "mary-queen-of-scots"
       ],
       "d": [
-        "schiller",
-        "caroline-lamb"
+        "savonarola",
+        "carlyle"
       ]
     },
     {
@@ -14561,8 +14771,8 @@
         "james-i"
       ],
       "d": [
-        "lafayette",
-        "byron"
+        "keller",
+        "burke"
       ]
     },
     {
@@ -14575,7 +14785,7 @@
         "verdi"
       ],
       "d": [
-        "reynolds",
+        "renoir",
         "ruskin"
       ]
     },
@@ -14588,8 +14798,8 @@
         "victoria"
       ],
       "d": [
-        "halley",
-        "locke"
+        "hale",
+        "lister"
       ]
     },
     {
@@ -14600,8 +14810,8 @@
         "charles-i"
       ],
       "d": [
-        "solvay-1911",
-        "nelson"
+        "solander",
+        "napoleon-iii"
       ]
     },
     {
@@ -14612,8 +14822,8 @@
         "trafalgar"
       ],
       "d": [
-        "faraday",
-        "wagner"
+        "erasmus",
+        "voltaire"
       ]
     },
     {
@@ -14624,8 +14834,8 @@
         "shakespeare"
       ],
       "d": [
-        "curie",
-        "pasteur"
+        "dante",
+        "paine"
       ]
     },
     {
@@ -14638,8 +14848,8 @@
         "wagner"
       ],
       "d": [
-        "christina",
-        "newton"
+        "churchill",
+        "nelson"
       ]
     },
     {
@@ -14650,8 +14860,8 @@
         "lavoisier"
       ],
       "d": [
-        "handel",
-        "vivaldi"
+        "hale",
+        "virgil"
       ]
     },
     {
@@ -14663,8 +14873,8 @@
         "shakespeare"
       ],
       "d": [
-        "cassatt",
-        "lister"
+        "caroline-lamb",
+        "lincoln"
       ]
     },
     {
@@ -14677,8 +14887,8 @@
         "william-iii"
       ],
       "d": [
-        "frederick",
-        "great-fire"
+        "franklin",
+        "grant"
       ]
     },
     {
@@ -14690,8 +14900,8 @@
         "wagner"
       ],
       "d": [
-        "flaubert",
-        "lorenzo"
+        "faraday",
+        "locke"
       ]
     },
     {
@@ -14704,8 +14914,8 @@
         "caesar"
       ],
       "d": [
-        "byron",
-        "dostoevsky"
+        "burke",
+        "douglass"
       ]
     },
     {
@@ -14716,7 +14926,7 @@
         "james-ii"
       ],
       "d": [
-        "solvay-1911",
+        "socrates",
         "cezanne"
       ]
     },
@@ -14729,7 +14939,7 @@
         "darwin"
       ],
       "d": [
-        "mehmed-ii",
+        "marx",
         "schopenhauer"
       ]
     },
@@ -14743,8 +14953,8 @@
         "french-revolution"
       ],
       "d": [
-        "linnaeus",
-        "talleyrand"
+        "lewis",
+        "swift"
       ]
     },
     {
@@ -14757,8 +14967,8 @@
         "johnson"
       ],
       "d": [
-        "hegel",
-        "marco-polo"
+        "hawthorne",
+        "manet"
       ]
     },
     {
@@ -14771,7 +14981,7 @@
         "schopenhauer"
       ],
       "d": [
-        "amundsen",
+        "ali",
         "charles-ii"
       ]
     },
@@ -14783,8 +14993,8 @@
         "newton"
       ],
       "d": [
-        "ovid",
-        "virgil"
+        "orwell",
+        "vespucci"
       ]
     },
     {
@@ -14795,8 +15005,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "christina",
-        "voltaire"
+        "churchill",
+        "vivaldi"
       ]
     },
     {
@@ -14808,8 +15018,8 @@
         "charles-i"
       ],
       "d": [
-        "franklin",
-        "mozart"
+        "francis-i",
+        "monet"
       ]
     },
     {
@@ -14822,8 +15032,8 @@
         "french-revolution"
       ],
       "d": [
-        "charlotte-bronte",
-        "francis-i"
+        "chopin",
+        "flaubert"
       ]
     },
     {
@@ -14836,8 +15046,8 @@
         "louis-xiv"
       ],
       "d": [
-        "sand",
-        "brunel"
+        "rutherford",
+        "brahms"
       ]
     },
     {
@@ -14849,8 +15059,8 @@
         "waterloo"
       ],
       "d": [
-        "hooke",
-        "voltaire"
+        "henry-viii",
+        "virgil"
       ]
     },
     {
@@ -14861,8 +15071,8 @@
         "darwin"
       ],
       "d": [
-        "boyle",
-        "caesar"
+        "botticelli",
+        "byron"
       ]
     },
     {
@@ -14873,8 +15083,8 @@
         "wagner"
       ],
       "d": [
-        "botticelli",
-        "diderot"
+        "bernini",
+        "dostoevsky"
       ]
     },
     {
@@ -14886,7 +15096,7 @@
         "rubens"
       ],
       "d": [
-        "solvay-1911",
+        "solander",
         "ada"
       ]
     },
@@ -14899,7 +15109,7 @@
       ],
       "d": [
         "charles-i",
-        "haydn"
+        "handel"
       ]
     },
     {
@@ -14910,7 +15120,7 @@
         "james-i"
       ],
       "d": [
-        "thomas-cromwell",
+        "thackeray",
         "rousseau"
       ]
     },
@@ -14922,8 +15132,8 @@
         "grant"
       ],
       "d": [
-        "velazquez",
-        "isabella"
+        "tycho",
+        "huxley"
       ]
     },
     {
@@ -14936,8 +15146,8 @@
         "moliere"
       ],
       "d": [
-        "davy",
-        "pope"
+        "delacroix",
+        "poe"
       ]
     },
     {
@@ -14949,8 +15159,8 @@
         "wordsworth"
       ],
       "d": [
-        "swift",
-        "shelley"
+        "sun-tzu",
+        "shaw"
       ]
     },
     {
@@ -14961,7 +15171,7 @@
         "charles-ii"
       ],
       "d": [
-        "goya",
+        "gogol",
         "smith"
       ]
     },
@@ -14974,7 +15184,7 @@
         "douglass"
       ],
       "d": [
-        "vespucci",
+        "verdi",
         "charlotte-bronte"
       ]
     },
@@ -14987,7 +15197,7 @@
       ],
       "d": [
         "whistler",
-        "milton"
+        "michelangelo"
       ]
     },
     {
@@ -15000,8 +15210,8 @@
         "wellington"
       ],
       "d": [
-        "faraday",
-        "john-herschel"
+        "erasmus",
+        "jobs"
       ]
     },
     {
@@ -15012,8 +15222,8 @@
         "darwin"
       ],
       "d": [
-        "titian",
-        "renoir"
+        "thomas-more",
+        "rembrandt"
       ]
     },
     {
@@ -15026,7 +15236,7 @@
         "rossetti"
       ],
       "d": [
-        "montaigne",
+        "moliere",
         "wollstonecraft"
       ]
     },
@@ -15040,8 +15250,8 @@
         "hume"
       ],
       "d": [
-        "banks",
-        "louis-xvi"
+        "austen",
+        "eleanor-roosevelt"
       ]
     },
     {
@@ -15054,8 +15264,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "delacroix",
-        "charlotte-bronte"
+        "dickinson",
+        "chopin"
       ]
     },
     {
@@ -15066,8 +15276,8 @@
         "napoleon-iii"
       ],
       "d": [
-        "velazquez",
-        "planck"
+        "tyndale",
+        "philip-iv"
       ]
     },
     {
@@ -15078,8 +15288,8 @@
         "shakespeare"
       ],
       "d": [
-        "gauguin",
-        "solander"
+        "garrick",
+        "socrates"
       ]
     },
     {
@@ -15092,8 +15302,8 @@
         "elizabeth-i"
       ],
       "d": [
-        "hume",
-        "boole"
+        "hugo",
+        "beethoven"
       ]
     },
     {
@@ -15105,7 +15315,7 @@
       ],
       "d": [
         "smith",
-        "flinders"
+        "flaubert"
       ]
     },
     {
@@ -15118,8 +15328,8 @@
         "goethe"
       ],
       "d": [
-        "verrocchio",
-        "plutarch"
+        "van-gogh",
+        "planck"
       ]
     },
     {
@@ -15132,7 +15342,7 @@
         "stanton"
       ],
       "d": [
-        "constantijn",
+        "cook",
         "schubert"
       ]
     },
@@ -15146,8 +15356,8 @@
         "beethoven"
       ],
       "d": [
-        "congress-of-vienna",
-        "thomas-cromwell"
+        "constable",
+        "theodore-parker"
       ]
     },
     {
@@ -15158,8 +15368,8 @@
         "napoleon"
       ],
       "d": [
-        "montaigne",
-        "erasmus-darwin"
+        "moliere",
+        "emilie"
       ]
     },
     {
@@ -15171,8 +15381,8 @@
         "davy"
       ],
       "d": [
-        "faraday",
-        "mary-queen-of-scots"
+        "delacroix",
+        "erasmus"
       ]
     },
     {
@@ -15185,7 +15395,7 @@
       ],
       "d": [
         "congress-of-vienna",
-        "boole"
+        "beethoven"
       ]
     },
     {
@@ -15198,8 +15408,8 @@
         "swift"
       ],
       "d": [
-        "marlowe",
-        "bach"
+        "marcus-aurelius",
+        "austen"
       ]
     },
     {
@@ -15211,8 +15421,8 @@
         "george-v"
       ],
       "d": [
-        "priestley",
-        "thomas-more"
+        "pope",
+        "theodore-parker"
       ]
     },
     {
@@ -15225,7 +15435,7 @@
         "george-eliot"
       ],
       "d": [
-        "mehmed-ii",
+        "marx",
         "raleigh"
       ]
     },
@@ -15239,8 +15449,8 @@
         "william-iii"
       ],
       "d": [
-        "vivaldi",
-        "marie-antoinette"
+        "victoria",
+        "marat"
       ]
     },
     {
@@ -15253,8 +15463,8 @@
         "galileo"
       ],
       "d": [
-        "catherine",
-        "boyle"
+        "cassatt",
+        "botticelli"
       ]
     },
     {
@@ -15266,8 +15476,8 @@
         "columbus"
       ],
       "d": [
-        "mill",
-        "botticelli"
+        "mendelssohn",
+        "boole"
       ]
     },
     {
@@ -15281,7 +15491,7 @@
       ],
       "d": [
         "constable",
-        "maxwell"
+        "martin-luther-king"
       ]
     },
     {
@@ -15295,7 +15505,7 @@
       ],
       "d": [
         "schopenhauer",
-        "spencer"
+        "spanish-armada"
       ]
     },
     {
@@ -15306,8 +15516,8 @@
         "shakespeare"
       ],
       "d": [
-        "lorenzo",
-        "dante"
+        "liszt",
+        "david"
       ]
     },
     {
@@ -15319,8 +15529,8 @@
         "beethoven"
       ],
       "d": [
-        "caroline-lamb",
-        "millais"
+        "carlyle",
+        "metternich"
       ]
     },
     {
@@ -15331,8 +15541,8 @@
         "frederick"
       ],
       "d": [
-        "verrocchio",
-        "schubert"
+        "velazquez",
+        "schopenhauer"
       ]
     },
     {
@@ -15344,8 +15554,8 @@
         "galileo"
       ],
       "d": [
-        "banks",
-        "melville"
+        "babbage",
+        "maxwell"
       ]
     },
     {
@@ -15357,8 +15567,8 @@
         "newton"
       ],
       "d": [
-        "bach",
-        "elizabeth-i"
+        "augustus",
+        "einstein"
       ]
     },
     {
@@ -15371,8 +15581,8 @@
         "napoleon"
       ],
       "d": [
-        "boswell",
-        "wagner"
+        "bernini",
+        "voltaire"
       ]
     },
     {
@@ -15385,7 +15595,7 @@
         "douglass"
       ],
       "d": [
-        "corelli",
+        "curie",
         "rubens"
       ]
     },
@@ -15398,8 +15608,8 @@
         "schopenhauer"
       ],
       "d": [
-        "savonarola",
-        "augustus"
+        "sand",
+        "archimedes"
       ]
     },
     {
@@ -15412,7 +15622,7 @@
       ],
       "d": [
         "anthony",
-        "wagner"
+        "voltaire"
       ]
     },
     {
@@ -15425,8 +15635,8 @@
         "scott"
       ],
       "d": [
-        "paine",
-        "trafalgar"
+        "paganini",
+        "thucydides"
       ]
     },
     {
@@ -15439,8 +15649,8 @@
         "erasmus-darwin"
       ],
       "d": [
-        "thomas-cromwell",
-        "napoleon-iii"
+        "thackeray",
+        "nansen"
       ]
     },
     {
@@ -15453,8 +15663,8 @@
         "beethoven"
       ],
       "d": [
-        "marcus-aurelius",
-        "congress-of-vienna"
+        "manuel-i",
+        "constable"
       ]
     },
     {
@@ -15467,7 +15677,7 @@
         "waterloo"
       ],
       "d": [
-        "gunpowder-plot",
+        "great-fire",
         "wren"
       ]
     },
@@ -15479,8 +15689,8 @@
         "turner"
       ],
       "d": [
-        "banks",
-        "manet"
+        "babbage",
+        "madison"
       ]
     },
     {
@@ -15492,8 +15702,8 @@
         "kepler"
       ],
       "d": [
-        "louis-xiv",
-        "moliere"
+        "locke",
+        "mill"
       ]
     },
     {
@@ -15506,8 +15716,8 @@
         "caesar"
       ],
       "d": [
-        "marcus-aurelius",
-        "flaubert"
+        "manuel-i",
+        "erasmus-darwin"
       ]
     },
     {
@@ -15519,8 +15729,8 @@
         "turgenev"
       ],
       "d": [
-        "catherine",
-        "thoreau"
+        "cassatt",
+        "thomas-cromwell"
       ]
     },
     {
@@ -15533,7 +15743,7 @@
         "elizabeth-i"
       ],
       "d": [
-        "bach",
+        "austen",
         "wellington"
       ]
     },
@@ -15546,8 +15756,8 @@
         "erasmus-darwin"
       ],
       "d": [
-        "rossetti",
-        "van-gogh"
+        "rosa-parks",
+        "twain"
       ]
     },
     {
@@ -15560,8 +15770,8 @@
         "french-revolution"
       ],
       "d": [
-        "virgil",
-        "huxley"
+        "victoria",
+        "humboldt"
       ]
     },
     {
@@ -15572,8 +15782,8 @@
         "jefferson"
       ],
       "d": [
-        "virgil",
-        "mehmed-ii"
+        "vespucci",
+        "mary-queen-of-scots"
       ]
     },
     {
@@ -15585,8 +15795,8 @@
         "william-herschel"
       ],
       "d": [
-        "botticelli",
-        "charles-ii"
+        "boole",
+        "charles-v"
       ]
     },
     {
@@ -15598,7 +15808,7 @@
         "beethoven"
       ],
       "d": [
-        "verrocchio",
+        "velazquez",
         "wollstonecraft"
       ]
     },
@@ -15612,7 +15822,7 @@
       ],
       "d": [
         "watt",
-        "goya"
+        "goethe"
       ]
     },
     {
@@ -15624,8 +15834,8 @@
         "columbus"
       ],
       "d": [
-        "mary-shelley",
-        "mary-queen-of-scots"
+        "marlowe",
+        "marie-antoinette"
       ]
     },
     {
@@ -15638,7 +15848,7 @@
         "temple"
       ],
       "d": [
-        "dante",
+        "david",
         "raleigh"
       ]
     },
@@ -15652,8 +15862,8 @@
         "botticelli"
       ],
       "d": [
-        "einstein",
-        "diderot"
+        "edison",
+        "dostoevsky"
       ]
     },
     {
@@ -15666,7 +15876,7 @@
         "shakespeare"
       ],
       "d": [
-        "pasteur",
+        "paine",
         "catherine"
       ]
     },
@@ -15680,8 +15890,8 @@
         "wagner"
       ],
       "d": [
-        "delacroix",
-        "great-fire"
+        "dickinson",
+        "grant"
       ]
     },
     {
@@ -15694,7 +15904,7 @@
       ],
       "d": [
         "guy-fawkes",
-        "diderot"
+        "dostoevsky"
       ]
     },
     {
@@ -15707,8 +15917,8 @@
         "dante"
       ],
       "d": [
-        "manet",
-        "carlyle"
+        "madison",
+        "spinoza"
       ]
     },
     {
@@ -15720,7 +15930,7 @@
         "kepler"
       ],
       "d": [
-        "carlyle",
+        "caesar",
         "wren"
       ]
     },
@@ -15734,8 +15944,8 @@
         "schopenhauer"
       ],
       "d": [
-        "diderot",
-        "spencer"
+        "dostoevsky",
+        "spanish-armada"
       ]
     },
     {
@@ -15748,8 +15958,8 @@
         "schopenhauer"
       ],
       "d": [
-        "ovid",
-        "louis-xiv"
+        "orwell",
+        "locke"
       ]
     },
     {
@@ -15761,7 +15971,7 @@
         "machiavelli"
       ],
       "d": [
-        "augustus",
+        "archimedes",
         "anthony"
       ]
     },
@@ -15774,8 +15984,8 @@
         "beethoven"
       ],
       "d": [
-        "lyell",
-        "congress-of-vienna"
+        "luther",
+        "constable"
       ]
     },
     {
@@ -15786,8 +15996,8 @@
         "burke"
       ],
       "d": [
-        "napoleon",
-        "david"
+        "mozart",
+        "de-morgan"
       ]
     },
     {
@@ -15799,8 +16009,8 @@
         "james-i"
       ],
       "d": [
-        "john-franklin",
-        "solvay-1911"
+        "jj-thomson",
+        "socrates"
       ]
     },
     {
@@ -15811,8 +16021,8 @@
         "philip-ii"
       ],
       "d": [
-        "linnaeus",
-        "curie"
+        "lewis",
+        "da-gama"
       ]
     },
     {
@@ -15823,8 +16033,8 @@
         "chopin"
       ],
       "d": [
-        "schubert",
-        "huygens"
+        "schopenhauer",
+        "hume"
       ]
     },
     {
@@ -15836,7 +16046,7 @@
       ],
       "d": [
         "congress-of-vienna",
-        "verdi"
+        "van-gogh"
       ]
     },
     {
@@ -15848,8 +16058,8 @@
         "descartes"
       ],
       "d": [
-        "paganini",
-        "hugo"
+        "ovid",
+        "holbein"
       ]
     },
     {
@@ -15862,8 +16072,8 @@
         "darwin"
       ],
       "d": [
-        "schiller",
-        "solvay-1911"
+        "savonarola",
+        "solander"
       ]
     },
     {
@@ -15874,7 +16084,7 @@
         "banks"
       ],
       "d": [
-        "pope",
+        "poe",
         "charles-ii"
       ]
     },
@@ -15888,8 +16098,8 @@
         "charles-ii"
       ],
       "d": [
-        "burke",
-        "mehmed-ii"
+        "brunel",
+        "marx"
       ]
     },
     {
@@ -15900,8 +16110,8 @@
         "machiavelli"
       ],
       "d": [
-        "botticelli",
-        "babbage"
+        "bernini",
+        "armstrong"
       ]
     },
     {
@@ -15913,8 +16123,8 @@
         "dante"
       ],
       "d": [
-        "melville",
-        "james-i"
+        "mary-shelley",
+        "brunel"
       ]
     },
     {
@@ -15927,8 +16137,8 @@
         "byron"
       ],
       "d": [
-        "sand",
-        "ovid"
+        "russell",
+        "oliver-cromwell"
       ]
     },
     {
@@ -15939,8 +16149,8 @@
         "beethoven"
       ],
       "d": [
-        "washington",
-        "erasmus"
+        "walsingham",
+        "emerson"
       ]
     },
     {
@@ -15951,8 +16161,8 @@
         "darwin"
       ],
       "d": [
-        "henry-viii",
-        "banks"
+        "haydn",
+        "hegel"
       ]
     },
     {
@@ -15964,8 +16174,8 @@
         "wagner"
       ],
       "d": [
-        "lavoisier",
-        "newton"
+        "kelvin",
+        "nelson"
       ]
     },
     {
@@ -15978,7 +16188,7 @@
       ],
       "d": [
         "raphael",
-        "rembrandt"
+        "reagan"
       ]
     },
     {
@@ -15989,8 +16199,8 @@
         "dante"
       ],
       "d": [
-        "maxwell",
-        "francis-i"
+        "martin-luther-king",
+        "flaubert"
       ]
     },
     {
@@ -16003,8 +16213,8 @@
         "napoleon"
       ],
       "d": [
-        "nansen",
-        "swift"
+        "montaigne",
+        "suleiman"
       ]
     },
     {
@@ -16016,8 +16226,8 @@
         "mary-shelley"
       ],
       "d": [
-        "louis-xvi",
-        "spanish-armada"
+        "louis-xiv",
+        "solvay-1911"
       ]
     },
     {
@@ -16029,8 +16239,8 @@
         "hugo"
       ],
       "d": [
-        "bernini",
-        "anthony"
+        "baudin",
+        "anne-boleyn"
       ]
     },
     {
@@ -16042,7 +16252,7 @@
         "schopenhauer"
       ],
       "d": [
-        "flaubert",
+        "faraday",
         "raleigh"
       ]
     },
@@ -16056,8 +16266,8 @@
         "machiavelli"
       ],
       "d": [
-        "leeuwenhoek",
-        "charles-v"
+        "kepler",
+        "charlotte-bronte"
       ]
     },
     {
@@ -16070,8 +16280,8 @@
         "turner"
       ],
       "d": [
-        "mozart",
-        "anthony"
+        "montaigne",
+        "anne-boleyn"
       ]
     },
     {
@@ -16098,7 +16308,7 @@
       ],
       "d": [
         "thackeray",
-        "amundsen"
+        "ali"
       ]
     },
     {
@@ -16110,8 +16320,8 @@
         "ruskin"
       ],
       "d": [
-        "napoleon-iii",
-        "frederick"
+        "napoleon",
+        "franklin"
       ]
     },
     {
@@ -16123,8 +16333,8 @@
         "beethoven"
       ],
       "d": [
-        "swift",
-        "locke"
+        "suleiman",
+        "lister"
       ]
     },
     {
@@ -16135,8 +16345,8 @@
         "velazquez"
       ],
       "d": [
-        "hume",
-        "tolstoy"
+        "hugo",
+        "thucydides"
       ]
     },
     {
@@ -16149,7 +16359,7 @@
         "mary-shelley"
       ],
       "d": [
-        "melbourne",
+        "mary-queen-of-scots",
         "shaftesbury"
       ]
     },
@@ -16163,8 +16373,8 @@
         "bach"
       ],
       "d": [
-        "pope",
-        "rubens"
+        "poe",
+        "rousseau"
       ]
     },
     {
@@ -16177,8 +16387,8 @@
         "babbage"
       ],
       "d": [
-        "shelley",
-        "marlowe"
+        "shaw",
+        "marco-polo"
       ]
     },
     {
@@ -16190,7 +16400,7 @@
         "henry-viii"
       ],
       "d": [
-        "mendelssohn",
+        "mehmed-ii",
         "dumas"
       ]
     },
@@ -16203,8 +16413,8 @@
         "dante"
       ],
       "d": [
-        "schiller",
-        "dostoevsky"
+        "savonarola",
+        "douglass"
       ]
     },
     {
@@ -16217,7 +16427,7 @@
         "scott"
       ],
       "d": [
-        "lorenzo",
+        "liszt",
         "spinoza"
       ]
     },
@@ -16231,8 +16441,8 @@
         "rubens"
       ],
       "d": [
-        "talleyrand",
-        "huygens"
+        "swift",
+        "hume"
       ]
     },
     {
@@ -16244,8 +16454,8 @@
         "dante"
       ],
       "d": [
-        "james-i",
-        "emerson"
+        "isabella",
+        "eleanor-roosevelt"
       ]
     },
     {
@@ -16257,8 +16467,8 @@
         "napoleon"
       ],
       "d": [
-        "montaigne",
-        "george-eliot"
+        "moliere",
+        "gauguin"
       ]
     },
     {
@@ -16271,8 +16481,8 @@
         "haydn"
       ],
       "d": [
-        "de-morgan",
-        "babbage"
+        "delacroix",
+        "armstrong"
       ]
     },
     {
@@ -16284,7 +16494,7 @@
       ],
       "d": [
         "dvorak",
-        "boswell"
+        "bernini"
       ]
     },
     {
@@ -16297,8 +16507,8 @@
         "napoleon"
       ],
       "d": [
-        "washington",
-        "humboldt"
+        "walsingham",
+        "hooker"
       ]
     },
     {
@@ -16310,8 +16520,8 @@
         "milton"
       ],
       "d": [
-        "lepanto",
-        "faraday"
+        "leeuwenhoek",
+        "erasmus"
       ]
     },
     {
@@ -16323,7 +16533,7 @@
       ],
       "d": [
         "ruskin",
-        "george-eliot"
+        "gaskell"
       ]
     },
     {
@@ -16334,7 +16544,7 @@
         "banks"
       ],
       "d": [
-        "corelli",
+        "curie",
         "machiavelli"
       ]
     },
@@ -16348,8 +16558,8 @@
         "wagner"
       ],
       "d": [
-        "paine",
-        "magellan"
+        "ovid",
+        "madison"
       ]
     },
     {
@@ -16361,8 +16571,8 @@
         "darwin"
       ],
       "d": [
-        "curie",
-        "huxley"
+        "da-gama",
+        "hugo"
       ]
     },
     {
@@ -16373,8 +16583,8 @@
         "kelvin"
       ],
       "d": [
-        "lister",
-        "shelley"
+        "lincoln",
+        "shaw"
       ]
     },
     {
@@ -16387,7 +16597,7 @@
       ],
       "d": [
         "rubens",
-        "rutherford"
+        "ruskin"
       ]
     },
     {
@@ -16400,7 +16610,7 @@
         "napoleon-iii"
       ],
       "d": [
-        "charles-ii",
+        "charles-v",
         "oliver-cromwell"
       ]
     },
@@ -16413,7 +16623,7 @@
         "gibbon"
       ],
       "d": [
-        "moliere",
+        "millais",
         "watt"
       ]
     },
@@ -16427,8 +16637,8 @@
         "dostoevsky"
       ],
       "d": [
-        "john-herschel",
-        "rembrandt"
+        "jobs",
+        "reagan"
       ]
     },
     {
@@ -16440,8 +16650,8 @@
         "french-revolution"
       ],
       "d": [
-        "solvay-1911",
-        "leonardo"
+        "solander",
+        "lavoisier"
       ]
     },
     {
@@ -16454,8 +16664,8 @@
         "moliere"
       ],
       "d": [
-        "boyle",
-        "james-i"
+        "botticelli",
+        "isabella"
       ]
     },
     {
@@ -16467,8 +16677,8 @@
         "newton"
       ],
       "d": [
-        "planck",
-        "emerson"
+        "pissarro",
+        "eleanor-roosevelt"
       ]
     },
     {
@@ -16481,8 +16691,8 @@
         "einstein"
       ],
       "d": [
-        "hooke",
-        "darwin"
+        "henry-viii",
+        "theodore-parker"
       ]
     },
     {
@@ -16494,8 +16704,8 @@
         "newton"
       ],
       "d": [
-        "coleridge",
-        "marat"
+        "columbus",
+        "mandela"
       ]
     },
     {
@@ -16506,8 +16716,8 @@
         "henry-viii"
       ],
       "d": [
-        "nansen",
-        "vespucci"
+        "montaigne",
+        "verdi"
       ]
     },
     {
@@ -16519,8 +16729,8 @@
         "rossetti"
       ],
       "d": [
-        "machiavelli",
-        "mill"
+        "lyell",
+        "mendelssohn"
       ]
     },
     {
@@ -16532,7 +16742,7 @@
       ],
       "d": [
         "charles-ii",
-        "leonardo"
+        "lavoisier"
       ]
     },
     {
@@ -16545,8 +16755,8 @@
         "newton"
       ],
       "d": [
-        "thoreau",
-        "leibniz"
+        "theodore-roosevelt",
+        "lafayette"
       ]
     },
     {
@@ -16558,8 +16768,8 @@
         "gauguin"
       ],
       "d": [
-        "holbein",
-        "banks"
+        "hellman",
+        "austen"
       ]
     },
     {
@@ -16572,8 +16782,8 @@
         "jefferson"
       ],
       "d": [
-        "oliver-cromwell",
-        "anne-boleyn"
+        "nietzsche",
+        "james-i"
       ]
     },
     {
@@ -16584,8 +16794,8 @@
         "locke"
       ],
       "d": [
-        "mendelssohn",
-        "da-gama"
+        "mehmed-ii",
+        "darwin"
       ]
     },
     {
@@ -16597,8 +16807,8 @@
         "newton"
       ],
       "d": [
-        "verrocchio",
-        "congress-of-vienna"
+        "velazquez",
+        "constable"
       ]
     },
     {
@@ -16611,8 +16821,8 @@
         "wordsworth"
       ],
       "d": [
-        "flinders",
-        "voltaire"
+        "flaubert",
+        "vivaldi"
       ]
     }
   ]

@@ -1,0 +1,562 @@
+[
+  {
+    "id": "the-only-thing-we-have",
+    "by": "franklin-roosevelt",
+    "q": "THE ONLY THING WE HAVE TO FEAR IS FEAR ITSELF.",
+    "y": 1933,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "ask-not-what-your-country",
+    "by": "john-kennedy",
+    "q": "ASK NOT WHAT YOUR COUNTRY CAN DO FOR YOU. ASK WHAT YOU CAN DO FOR YOUR COUNTRY.",
+    "y": 1961,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "never-in-the-field-of",
+    "by": "churchill",
+    "q": "NEVER IN THE FIELD OF HUMAN CONFLICT WAS SO MUCH OWED BY SO MANY TO SO FEW.",
+    "y": 1940,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "we-shall-defend-our-island",
+    "by": "churchill",
+    "q": "WE SHALL DEFEND OUR ISLAND, WHATEVER THE COST MAY BE.",
+    "y": 1940,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "give-me-liberty-or-give",
+    "by": "patrick-henry",
+    "q": "GIVE ME LIBERTY, OR GIVE ME DEATH.",
+    "y": 1775,
+    "via": "reported by William Wirt, 1817",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-history-of-all-hitherto",
+    "by": "marx",
+    "q": "THE HISTORY OF ALL HITHERTO EXISTING SOCIETY IS THE HISTORY OF CLASS STRUGGLES.",
+    "y": 1848,
+    "via": "The Communist Manifesto",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "it-is-not-from-the",
+    "by": "smith",
+    "q": "IT IS NOT FROM THE BENEVOLENCE OF THE BUTCHER, THE BREWER, OR THE BAKER THAT WE EXPECT OUR DINNER, BUT FROM THEIR REGARD TO THEIR OWN INTEREST.",
+    "y": 1776,
+    "via": "The Wealth of Nations",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "if-i-have-seen-further",
+    "by": "newton",
+    "q": "IF I HAVE SEEN FURTHER, IT IS BY STANDING ON THE SHOULDERS OF GIANTS.",
+    "y": 1675,
+    "via": "a letter to Robert Hooke",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "injustice-anywhere-is-a-threat",
+    "by": "martin-luther-king",
+    "q": "INJUSTICE ANYWHERE IS A THREAT TO JUSTICE EVERYWHERE.",
+    "y": 1963,
+    "via": "Letter from Birmingham Jail",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-arc-of-the-moral",
+    "by": "theodore-parker",
+    "q": "THE ARC OF THE MORAL UNIVERSE IS LONG, BUT IT BENDS TOWARD JUSTICE.",
+    "y": 1853,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "in-this-world-nothing-can",
+    "by": "franklin",
+    "q": "IN THIS WORLD NOTHING CAN BE SAID TO BE CERTAIN, EXCEPT DEATH AND TAXES.",
+    "y": 1789,
+    "via": "a letter to Jean-Baptiste Le Roy",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-never-expect-to-see",
+    "by": "hamilton",
+    "q": "I NEVER EXPECT TO SEE A PERFECT WORK FROM AN IMPERFECT MAN."
+  },
+  {
+    "id": "these-are-the-times-that",
+    "by": "paine",
+    "q": "THESE ARE THE TIMES THAT TRY MEN’S SOULS.",
+    "y": 1776,
+    "via": "The American Crisis",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "if-men-were-angels-no",
+    "by": "madison",
+    "q": "IF MEN WERE ANGELS, NO GOVERNMENT WOULD BE NECESSARY.",
+    "y": 1788,
+    "via": "The Federalist No. 51",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "ambition-must-be-made-to",
+    "by": "madison",
+    "q": "AMBITION MUST BE MADE TO COUNTERACT AMBITION.",
+    "y": 1788,
+    "via": "The Federalist No. 51",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "man-is-born-free-and",
+    "by": "rousseau",
+    "q": "MAN IS BORN FREE, AND EVERYWHERE HE IS IN CHAINS.",
+    "y": 1762,
+    "via": "The Social Contract",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "everyone-sees-what-you-appear",
+    "by": "machiavelli",
+    "q": "EVERYONE SEES WHAT YOU APPEAR TO BE; FEW EXPERIENCE WHAT YOU REALLY ARE.",
+    "via": "The Prince",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-strong-do-what-they",
+    "by": "thucydides",
+    "q": "THE STRONG DO WHAT THEY CAN AND THE WEAK SUFFER WHAT THEY MUST.",
+    "via": "History of the Peloponnesian War",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "a-house-divided-against-itself",
+    "by": "lincoln",
+    "q": "A HOUSE DIVIDED AGAINST ITSELF CANNOT STAND.",
+    "y": 1858,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "four-score-and-seven-years",
+    "by": "lincoln",
+    "q": "FOUR SCORE AND SEVEN YEARS AGO OUR FATHERS BROUGHT FORTH UPON THIS CONTINENT A NEW NATION.",
+    "y": 1863,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "if-there-is-no-struggle",
+    "by": "douglass",
+    "q": "IF THERE IS NO STRUGGLE THERE IS NO PROGRESS.",
+    "y": 1857,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-problem-of-the-twentieth",
+    "by": "du-bois",
+    "q": "THE PROBLEM OF THE TWENTIETH CENTURY IS THE PROBLEM OF THE COLOR LINE.",
+    "y": 1903,
+    "via": "The Souls of Black Folk",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-unexamined-life-is-not",
+    "by": "socrates",
+    "q": "THE UNEXAMINED LIFE IS NOT WORTH LIVING.",
+    "via": "Plato's Apology",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "every-gun-that-is-made",
+    "by": "eisenhower",
+    "q": "EVERY GUN THAT IS MADE, EVERY WARSHIP LAUNCHED, SIGNIFIES A THEFT FROM THOSE WHO HUNGER.",
+    "y": 1953,
+    "via": "The Chance for Peace address",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "mr-gorbachev-tear-down-this",
+    "by": "reagan",
+    "q": "MR. GORBACHEV, TEAR DOWN THIS WALL.",
+    "y": 1987,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-think-therefore-i-am",
+    "by": "descartes",
+    "q": "I THINK, THEREFORE I AM.",
+    "y": 1637,
+    "via": "Discourse on the Method",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "all-warfare-is-based-on",
+    "by": "sun-tzu",
+    "q": "ALL WARFARE IS BASED ON DECEPTION.",
+    "via": "The Art of War",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "government-of-the-people-by",
+    "by": "lincoln",
+    "q": "GOVERNMENT OF THE PEOPLE, BY THE PEOPLE, FOR THE PEOPLE, SHALL NOT PERISH FROM THE EARTH.",
+    "y": 1863,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-have-nothing-to-offer",
+    "by": "churchill",
+    "q": "I HAVE NOTHING TO OFFER BUT BLOOD, TOIL, TEARS AND SWEAT.",
+    "y": 1940,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-cannot-live-without-books",
+    "by": "jefferson",
+    "q": "I CANNOT LIVE WITHOUT BOOKS.",
+    "y": 1815,
+    "via": "a letter to John Adams",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-only-regret-that-i",
+    "by": "hale",
+    "q": "I ONLY REGRET THAT I HAVE BUT ONE LIFE TO LOSE FOR MY COUNTRY.",
+    "y": 1776,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "give-me-a-place-to",
+    "by": "archimedes",
+    "q": "GIVE ME A PLACE TO STAND, AND I SHALL MOVE THE EARTH.",
+    "via": "Pappus of Alexandria",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "any-mans-death-diminishes-me",
+    "by": "donne",
+    "q": "ANY MAN’S DEATH DIMINISHES ME, BECAUSE I AM INVOLVED IN MANKIND.",
+    "y": 1624,
+    "via": "Devotions upon Emergent Occasions",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "imagination-is-more-important-than",
+    "by": "einstein",
+    "q": "IMAGINATION IS MORE IMPORTANT THAN KNOWLEDGE.",
+    "y": 1929,
+    "via": "a Saturday Evening Post interview",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "speak-softly-and-carry-a",
+    "by": "theodore-roosevelt",
+    "q": "SPEAK SOFTLY AND CARRY A BIG STICK; YOU WILL GO FAR.",
+    "y": 1900,
+    "via": "a private letter",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "we-choose-to-go-to",
+    "by": "john-kennedy",
+    "q": "WE CHOOSE TO GO TO THE MOON IN THIS DECADE AND DO THE OTHER THINGS, NOT BECAUSE THEY ARE EASY, BUT BECAUSE THEY ARE HARD.",
+    "y": 1962,
+    "via": "the Rice University address",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "cowards-die-many-times-before",
+    "by": "shakespeare",
+    "q": "COWARDS DIE MANY TIMES BEFORE THEIR DEATHS; THE VALIANT NEVER TASTE OF DEATH BUT ONCE.",
+    "via": "Julius Caesar",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "when-a-man-is-tired",
+    "by": "johnson",
+    "q": "WHEN A MAN IS TIRED OF LONDON, HE IS TIRED OF LIFE.",
+    "y": 1777,
+    "via": "Boswell's Life of Johnson",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-must-study-politics-and",
+    "by": "adams",
+    "q": "I MUST STUDY POLITICS AND WAR THAT MY SONS MAY HAVE LIBERTY TO STUDY MATHEMATICS AND PHILOSOPHY.",
+    "y": 1780,
+    "via": "a letter to Abigail Adams",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-have-sworn-upon-the",
+    "by": "jefferson",
+    "q": "I HAVE SWORN UPON THE ALTAR OF GOD ETERNAL HOSTILITY AGAINST EVERY FORM OF TYRANNY OVER THE MIND OF MAN.",
+    "y": 1800,
+    "via": "a letter to Benjamin Rush",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "no-man-is-above-the",
+    "by": "theodore-roosevelt",
+    "q": "NO MAN IS ABOVE THE LAW AND NO MAN IS BELOW IT."
+  },
+  {
+    "id": "the-credit-belongs-to-the",
+    "by": "theodore-roosevelt",
+    "q": "THE CREDIT BELONGS TO THE MAN WHO IS ACTUALLY IN THE ARENA, WHOSE FACE IS MARRED BY DUST AND SWEAT AND BLOOD.",
+    "y": 1910,
+    "via": "Citizenship in a Republic",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "with-malice-toward-none-with",
+    "by": "lincoln",
+    "q": "WITH MALICE TOWARD NONE, WITH CHARITY FOR ALL.",
+    "y": 1865,
+    "via": "the second inaugural",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-ballot-is-stronger-than",
+    "by": "lincoln",
+    "q": "THE BALLOT IS STRONGER THAN THE BULLET."
+  },
+  {
+    "id": "the-summer-soldier-and-the",
+    "by": "paine",
+    "q": "THE SUMMER SOLDIER AND THE SUNSHINE PATRIOT WILL, IN THIS CRISIS, SHRINK FROM THE SERVICE OF THEIR COUNTRY.",
+    "y": 1776,
+    "via": "The American Crisis",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "we-are-not-makers-of",
+    "by": "martin-luther-king",
+    "q": "WE ARE NOT MAKERS OF HISTORY; WE ARE MADE BY HISTORY."
+  },
+  {
+    "id": "in-the-beginning-the-universe",
+    "by": "douglas-adams",
+    "q": "IN THE BEGINNING THE UNIVERSE WAS CREATED. THIS HAS MADE A LOT OF PEOPLE VERY ANGRY AND BEEN WIDELY REGARDED AS A BAD MOVE.",
+    "y": 1979,
+    "via": "The Hitchhiker's Guide to the Galaxy",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "energy-and-persistence-conquer-all",
+    "by": "franklin",
+    "q": "ENERGY AND PERSISTENCE CONQUER ALL THINGS.",
+    "via": "Poor Richard's almanac",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "science-is-the-great-antidote",
+    "by": "smith",
+    "q": "SCIENCE IS THE GREAT ANTIDOTE TO THE POISON OF ENTHUSIASM AND SUPERSTITION.",
+    "y": 1776,
+    "via": "The Wealth of Nations",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "if-you-want-to-tell",
+    "by": "shaw",
+    "q": "IF YOU WANT TO TELL PEOPLE THE TRUTH, MAKE THEM LAUGH, OTHERWISE THEY’LL KILL YOU."
+  },
+  {
+    "id": "courage-is-grace-under-pressure",
+    "by": "hemingway",
+    "q": "COURAGE IS GRACE UNDER PRESSURE.",
+    "y": 1926,
+    "via": "a New Yorker profile",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "not-all-those-who-wander",
+    "by": "tolkien",
+    "q": "NOT ALL THOSE WHO WANDER ARE LOST.",
+    "y": 1954,
+    "via": "The Fellowship of the Ring",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "whosoever-is-delighted-in-solitude",
+    "by": "bacon",
+    "q": "WHOSOEVER IS DELIGHTED IN SOLITUDE IS EITHER A WILD BEAST OR A GOD.",
+    "via": "Essays",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-cannot-and-will-not",
+    "by": "hellman",
+    "q": "I CANNOT AND WILL NOT CUT MY CONSCIENCE TO FIT THIS YEAR’S FASHIONS.",
+    "y": 1952,
+    "via": "a statement to the House committee",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "thats-one-small-step-for",
+    "by": "armstrong",
+    "q": "THAT’S ONE SMALL STEP FOR MAN, ONE GIANT LEAP FOR MANKIND.",
+    "y": 1969,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-report-of-my-death",
+    "by": "twain",
+    "q": "THE REPORT OF MY DEATH IS AN EXAGGERATION.",
+    "y": 1897,
+    "via": "a note to the press",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "a-man-who-dares-to",
+    "by": "darwin",
+    "q": "A MAN WHO DARES TO WASTE ONE HOUR OF TIME HAS NOT DISCOVERED THE VALUE OF LIFE."
+  },
+  {
+    "id": "education-is-the-most-powerful",
+    "by": "mandela",
+    "q": "EDUCATION IS THE MOST POWERFUL WEAPON WHICH YOU CAN USE TO CHANGE THE WORLD."
+  },
+  {
+    "id": "the-whole-problem-with-the",
+    "by": "russell",
+    "q": "THE WHOLE PROBLEM WITH THE WORLD IS THAT FOOLS AND FANATICS ARE ALWAYS SO CERTAIN OF THEMSELVES, AND WISER PEOPLE SO FULL OF DOUBTS."
+  },
+  {
+    "id": "the-only-tired-i-was",
+    "by": "rosa-parks",
+    "q": "THE ONLY TIRED I WAS, WAS TIRED OF GIVING IN.",
+    "via": "her memoir",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "all-animals-are-equal-but",
+    "by": "orwell",
+    "q": "ALL ANIMALS ARE EQUAL, BUT SOME ANIMALS ARE MORE EQUAL THAN OTHERS.",
+    "y": 1945,
+    "via": "Animal Farm",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "it-is-a-truth-universally",
+    "by": "austen",
+    "q": "IT IS A TRUTH UNIVERSALLY ACKNOWLEDGED, THAT A SINGLE MAN IN POSSESSION OF A GOOD FORTUNE, MUST BE IN WANT OF A WIFE.",
+    "y": 1813,
+    "via": "Pride and Prejudice",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-have-a-dream-that",
+    "by": "martin-luther-king",
+    "q": "I HAVE A DREAM THAT MY FOUR LITTLE CHILDREN WILL ONE DAY LIVE IN A NATION WHERE THEY WILL NOT BE JUDGED BY THE COLOR OF THEIR SKIN BUT BY THE CONTENT OF THEIR CHARACTER.",
+    "y": 1963,
+    "via": "the March on Washington",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "float-like-a-butterfly-sting",
+    "by": "ali",
+    "q": "FLOAT LIKE A BUTTERFLY, STING LIKE A BEE.",
+    "y": 1964,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "there-is-no-substitute-for",
+    "by": "edison",
+    "q": "THERE IS NO SUBSTITUTE FOR HARD WORK."
+  },
+  {
+    "id": "the-weak-can-never-forgive",
+    "by": "gandhi",
+    "q": "THE WEAK CAN NEVER FORGIVE. FORGIVENESS IS THE ATTRIBUTE OF THE STRONG."
+  },
+  {
+    "id": "life-is-what-happens-to",
+    "by": "john-lennon",
+    "q": "LIFE IS WHAT HAPPENS TO YOU WHILE YOU’RE BUSY MAKING OTHER PLANS.",
+    "y": 1980,
+    "via": "Beautiful Boy",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "education-is-the-passport-to",
+    "by": "malcolm-x",
+    "q": "EDUCATION IS THE PASSPORT TO THE FUTURE, FOR TOMORROW BELONGS TO THOSE WHO PREPARE FOR IT TODAY."
+  },
+  {
+    "id": "i-came-i-saw-i",
+    "by": "caesar",
+    "q": "I CAME, I SAW, I CONQUERED.",
+    "via": "Suetonius, Lives of the Caesars",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "well-done-is-better-than",
+    "by": "franklin",
+    "q": "WELL DONE IS BETTER THAN WELL SAID.",
+    "via": "Poor Richard's almanac",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "i-can-resist-everything-except",
+    "by": "wilde",
+    "q": "I CAN RESIST EVERYTHING EXCEPT TEMPTATION.",
+    "y": 1893,
+    "via": "Lady Windermere's Fan",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "hope-is-the-thing-with",
+    "by": "dickinson",
+    "q": "HOPE IS THE THING WITH FEATHERS.",
+    "via": "a poem published after her death",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "two-roads-diverged-in-a",
+    "by": "frost",
+    "q": "TWO ROADS DIVERGED IN A WOOD, AND I TOOK THE ONE LESS TRAVELED BY.",
+    "y": 1916,
+    "via": "Mountain Interval",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "failure-is-impossible",
+    "by": "anthony",
+    "q": "FAILURE IS IMPOSSIBLE.",
+    "y": 1906,
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "the-people-who-are-crazy",
+    "by": "jobs",
+    "q": "THE PEOPLE WHO ARE CRAZY ENOUGH TO THINK THEY CAN CHANGE THE WORLD ARE THE ONES WHO DO.",
+    "y": 1997,
+    "via": "Apple's Think Different campaign",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "life-is-either-a-daring",
+    "by": "keller",
+    "q": "LIFE IS EITHER A DARING ADVENTURE OR NOTHING.",
+    "y": 1940,
+    "via": "Let Us Have Faith",
+    "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "do-what-you-feel-in",
+    "by": "eleanor-roosevelt",
+    "q": "DO WHAT YOU FEEL IN YOUR HEART TO BE RIGHT, FOR YOU’LL BE CRITICIZED ANYWAY."
+  },
+  {
+    "id": "the-soul-becomes-dyed-with",
+    "by": "marcus-aurelius",
+    "q": "THE SOUL BECOMES DYED WITH THE COLOR OF ITS THOUGHTS.",
+    "via": "Meditations",
+    "provenance": "reviewed 2026-10-30"
+  }
+]

@@ -130,6 +130,14 @@ Every entity may also carry (nothing requires them yet):
   rotation, so no id sort ever moves a lie. Only the twist
   fields compile; the ids and the about keys stay in the layer.
   Output: puzzles/<game>/puzzles.json and its bank file.
+- sift: no recipe file of its own; knowledge/sift.json is the
+  board list, in file order, and the file order is the day
+  rotation. Each board is { id, t, cats }: t is the title, cats
+  holds four categories of three tiles, and each tile is an
+  entity id, or { id, as } when the tile spells its own display.
+  The store keeps the titles, the category names and the resolved
+  tile strings; the ids stay in the layer. Output:
+  puzzles/sift/puzzles.json and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

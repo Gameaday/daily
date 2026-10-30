@@ -34,6 +34,12 @@
      stay authored, and both files compile to their stores in
      file order, the file order being the day rotation
 
+   - sift is a recipe over the whole namespace: the boards in
+     knowledge/sift.json carry their titles and four categories of
+     three tiles, every tile keys to an entity id (an as carries the
+     tile's own spelling when the display differs), and the boards
+     compile in file order, the file order being the day rotation
+
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
      Benjamin / John Franklin near miss stays impossible forever)
@@ -66,6 +72,9 @@
      tellings name their answer among its accepted spellings, and
      neither file may cluster its lies into fewer than three
      positions
+   - sift boards carry unique titles, four categories of three
+     tiles, and every tile keys to a known entity; no tile id
+     appears twice in one board
 
    Default mode (what CI runs) never writes anything and exits 1 on
    drift. Run: node tools/build-knowledge.mjs         (verify)
@@ -100,11 +109,12 @@ const bogus = readLayer('bogus');
 const wellActually = readLayer('well-actually');
 const world = readLayer('world');
 const animals = readLayer('animals');
+const sift = readLayer('sift');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
                        ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['well-actually', wellActually],
-                       ['world', world], ['animals', animals]]){
+                       ['world', world], ['animals', animals], ['sift', sift]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
@@ -545,6 +555,44 @@ function compileWellActually(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
+function compileSift(){
+  if (!Array.isArray(sift)) return null;
+  const boards = [];
+  const titles = new Set();
+  const boardIds = new Set();
+  const entityIds = new Set(entities.map(x => x.id));
+  for (const b of sift){
+    if (!b || typeof b.id !== 'string' || !b.id || typeof b.t !== 'string' || !b.t || !Array.isArray(b.cats) || b.cats.length !== 4){
+      fail('knowledge: sift board needs string id, string t and four cats: ' + JSON.stringify(b).slice(0, 80));
+      continue;
+    }
+    if (titles.has(b.t)) fail('knowledge: sift board titled twice: ' + b.t);
+    titles.add(b.t);
+    if (boardIds.has(b.id)) fail('knowledge: sift board id appears twice: ' + b.id);
+    boardIds.add(b.id);
+    if (entityIds.has(b.id)) fail('knowledge: sift board id collides with an entity: ' + b.id);
+    const cats = [];
+    const seen = new Set();
+    for (const c of b.cats){
+      const tiles = [];
+      if (!c || typeof c.n !== 'string' || !c.n || !Array.isArray(c.i) || c.i.length !== 3)
+        fail('knowledge: sift category needs string n and three tiles: ' + JSON.stringify(c).slice(0, 80));
+      else for (const item of c.i){
+        const id = typeof item === 'string' ? item : (item && typeof item.id === 'string' ? item.id : null);
+        const ent = id ? byId[id] : null;
+        if (!ent){ fail('knowledge: sift tile references unknown entity: ' + JSON.stringify(item)); tiles.push(null); continue; }
+        if (seen.has(id)) fail('knowledge: sift board tiles ' + id + ' twice');
+        seen.add(id);
+        tiles.push(typeof item === 'string' ? ent.n : (typeof item.as === 'string' && item.as ? item.as : ent.n));
+      }
+      cats.push({ n: c.n, i: tiles });
+    }
+    boards.push({ t: b.t, cats });
+  }
+  if (boards.length < LIST.minBank)
+    fail('knowledge: sift bank below the minimum (' + boards.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(boards, null, 2) + '\n';
+}
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -570,6 +618,7 @@ if (LIST.gated.museum) checkStore('museum', compileMuseum());
 if (LIST.gated.cipher) checkStore('cipher', compileCipher());
 if (LIST.gated.bogus) checkStore('bogus', compileBogus());
 if (LIST.gated['well-actually']) checkStore('well-actually', compileWellActually());
+if (LIST.gated.sift) checkStore('sift', compileSift());
 
 if (fails){
   console.error('');

@@ -971,7 +971,6 @@
   {
     "t": "The Cotton Gin · 1793",
     "l": 5,
-    "w": "The gin made slavery expand, not fade: by making short-staple cotton profitable it pushed the plantation economy across the Deep South, and the enslaved population of the cotton states roughly tripled in the thirty years after 1790. Whitney’s machine was a force multiplier for the system it was supposed to ease.",
     "s": [
       "Eli Whitney’s cotton gin cleaned short-staple cotton far faster than hand picking, and the South never looked the same.",
       "The gin cleaned the seeds from short-staple cotton, a variety that had been too slow to process to pay.",
@@ -981,12 +980,12 @@
       "The gin’s fame won Whitney a federal musket contract built on interchangeable parts.",
       "The gin quietly hastened abolition in the South, making hand labor unnecessary and starving the slave system of demand.",
       "Within thirty years the cotton states’ enslaved population had roughly tripled, and abolition had moved further away, not closer."
-    ]
+    ],
+    "w": "The gin made slavery expand, not fade: by making short-staple cotton profitable it pushed the plantation economy across the Deep South, and the enslaved population of the cotton states roughly tripled in the thirty years after 1790. Whitney’s machine was a force multiplier for the system it was supposed to ease."
   },
   {
     "t": "The Klondike Gold Rush · 1897",
     "l": 4,
-    "w": "The creeks were locked in permafrost and the good claims were staked before the stampede arrived; miners burned and boiled their way to bedrock through the winters. The surest profits went to outfitters, saloons, and the boatmen of the Yukon, which is why the rush’s fortunes so often came off the stampeders rather than out of the ground.",
     "s": [
       "Gold found on Bonanza Creek in 1896 reached Seattle and San Francisco in July 1897 aboard the Portland, and the stampede began.",
       "Roughly one hundred thousand people set out for the Klondike; fewer than forty thousand ever arrived.",
@@ -996,12 +995,12 @@
       "The gold was easy money: a claim could be worked in a season with nothing but a pan and a shovel.",
       "Most claims were already staked by the time the great mass of stampeders arrived in 1898.",
       "Of those who reached the fields, only a few hundred emerged with any fortune at all, and many lost it within a few years."
-    ]
+    ],
+    "w": "The creeks were locked in permafrost and the good claims were staked before the stampede arrived; miners burned and boiled their way to bedrock through the winters. The surest profits went to outfitters, saloons, and the boatmen of the Yukon, which is why the rush’s fortunes so often came off the stampeders rather than out of the ground."
   },
   {
     "t": "The War of the Worlds Broadcast · 1938",
     "l": 5,
-    "w": "The mass panic was mostly a newspaper story: researchers find scattered fright, not stampedes, and most of the country never heard the show at all. The papers were fighting radio for advertising, and their coverage of the night became a legend that outran the event; the streets stayed quiet.",
     "s": [
       "On October 30, 1938, CBS broadcast an adaptation of H.G. Wells’s novel, produced by a young Orson Welles.",
       "The play ran as simulated news bulletins, interrupting a weather report and a dance band.",
@@ -1011,12 +1010,12 @@
       "Later studies found most listeners knew the program was a play or never heard it at all.",
       "The panic story sold papers and gave radio’s critics a weapon against the networks.",
       "Welles faced the press the next day, and the broadcast made him a celebrity rather than a scapegoat."
-    ]
+    ],
+    "w": "The mass panic was mostly a newspaper story: researchers find scattered fright, not stampedes, and most of the country never heard the show at all. The papers were fighting radio for advertising, and their coverage of the night became a legend that outran the event; the streets stayed quiet."
   },
   {
     "t": "The French Revolution · 1789",
     "l": 5,
-    "w": "The blade’s toll was grim but far smaller than the legend: about 16,600 official death sentences during the Terror, only a few thousand of them in Paris. The real killing fields were the Vendée and the revolutionary wars, which took far more lives than the guillotine and never became the symbol.",
     "s": [
       "In 1789 France went bankrupt aiding the American revolution, and the Estates-General met for the first time in 175 years.",
       "The Bastille held seven prisoners the day it fell, and its fall made July 14 the national day.",
@@ -1026,12 +1025,12 @@
       "About seventeen thousand official death sentences were handed down during the Terror, most in the provinces.",
       "More lives were lost in the Vendée and the revolutionary wars than under the blade itself.",
       "The guillotine remained France’s official method of execution until the death penalty was abolished in 1981."
-    ]
+    ],
+    "w": "The blade’s toll was grim but far smaller than the legend: about 16,600 official death sentences during the Terror, only a few thousand of them in Paris. The real killing fields were the Vendée and the revolutionary wars, which took far more lives than the guillotine and never became the symbol."
   },
   {
     "t": "The Spanish Inquisition · 1478",
     "l": 4,
-    "w": "The Inquisition was real and cruel, but its scale was a fraction of the legend: modern tallies from its own records count roughly three to five thousand executions across three and a half centuries. The far larger figures come from Protestant propaganda of the sixteenth century, not from the archive.",
     "s": [
       "Founded in 1478 under Ferdinand and Isabella, the Spanish Inquisition outlived every institution it policed.",
       "Its tribunals kept meticulous records, which is how historians can count its cases.",
@@ -1041,12 +1040,12 @@
       "It was abolished only in 1834, more than three and a half centuries after it began.",
       "Modern tallies from its own records put executions at a few thousand in all that time.",
       "The Black Legend painted its numbers far larger, to serve the Protestant rivals of Spain."
-    ]
+    ],
+    "w": "The Inquisition was real and cruel, but its scale was a fraction of the legend: modern tallies from its own records count roughly three to five thousand executions across three and a half centuries. The far larger figures come from Protestant propaganda of the sixteenth century, not from the archive."
   },
   {
     "t": "The Alamo · 1836",
     "l": 4,
-    "w": "The fight to the last man owes more to the stage and the screen than to the battlefield: accounts from the Mexican side describe several defenders captured and put to death on the morning of March 6. Travis’s line in the sand is likewise a story printed decades later; the sources nearest the morning say no such thing.",
     "s": [
       "The mission fell on March 6, 1836, on the thirteenth day of the siege.",
       "Santa Anna’s army entered before dawn, and the fighting inside lasted perhaps ninety minutes.",
@@ -1056,12 +1055,12 @@
       "A Mexican officer’s diary describes a handful of prisoners put to death on Santa Anna’s order.",
       "The noncombatants inside, women, children, and enslaved workers, survived the battle.",
       "The Alamo’s legend won Texas the reinforcements that settled the revolution at San Jacinto weeks later."
-    ]
+    ],
+    "w": "The fight to the last man owes more to the stage and the screen than to the battlefield: accounts from the Mexican side describe several defenders captured and put to death on the morning of March 6. Travis’s line in the sand is likewise a story printed decades later; the sources nearest the morning say no such thing."
   },
   {
     "t": "Custer’s Last Stand · 1876",
     "l": 5,
-    "w": "Sitting Bull was the moral center of the resistance, not its battlefield commander: in his mid-forties and recovering from the sun dance, he led in counsel while men like Crazy Horse and Gall led in the field. Custer’s battalion died on the ridges; the legend handed the older chief a sword he never carried that day.",
     "s": [
       "On June 25, 1876, George Custer split his regiment into three battalions near the Little Bighorn.",
       "The Lakota and Northern Cheyenne fielded the largest Native force of the Plains wars.",
@@ -1071,12 +1070,12 @@
       "Crazy Horse and Gall led the fighters while Sitting Bull, in his mid-forties, directed from the camp.",
       "Custer’s Crow scouts warned him the village was too big to fight, and he rode on anyway.",
       "News of the defeat reached the East during the centennial summer of 1876, a national shock."
-    ]
+    ],
+    "w": "Sitting Bull was the moral center of the resistance, not its battlefield commander: in his mid-forties and recovering from the sun dance, he led in counsel while men like Crazy Horse and Gall led in the field. Custer’s battalion died on the ridges; the legend handed the older chief a sword he never carried that day."
   },
   {
     "t": "The Donner Party · 1846",
     "l": 5,
-    "w": "Roughly half the party survived, and not all of them lived on the dead: some survivors, including entire families, refused cannibalism and ate boiled hide, glue, and bones. The resort to it was late and desperate, in a winter the guidebook’s shortcut had made fatal.",
     "s": [
       "The Donner party left Missouri in May 1846, a wagon train of about ninety people.",
       "A shortcut advertised in a guidebook, the Hastings Cutoff, cost them weeks in the salt desert.",
@@ -1086,6 +1085,7 @@
       "Every survivor of that winter lived by eating the dead.",
       "Not everyone resorted to it; some families refused, and lived on boiled hides and bones.",
       "Of the eighty-one trapped, a little more than half lived, and the disaster made the cutoff’s author infamous."
-    ]
+    ],
+    "w": "Roughly half the party survived, and not all of them lived on the dead: some survivors, including entire families, refused cannibalism and ate boiled hide, glue, and bones. The resort to it was late and desperate, in a winter the guidebook’s shortcut had made fatal."
   }
 ]

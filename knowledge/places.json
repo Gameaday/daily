@@ -1,0 +1,92 @@
+[
+  {
+    "id": "amsterdam",
+    "n": "Amsterdam",
+    "d": "Chief city of Holland"
+  },
+  {
+    "id": "berlin",
+    "n": "Berlin",
+    "d": "Capital of Prussia"
+  },
+  {
+    "id": "constantinople",
+    "n": "Constantinople",
+    "d": "Imperial city on the Bosphorus"
+  },
+  {
+    "id": "edinburgh",
+    "n": "Edinburgh",
+    "d": "Capital of Scotland"
+  },
+  {
+    "id": "florence",
+    "n": "Florence",
+    "d": "City on the Arno, seat of the Medici"
+  },
+  {
+    "id": "lisbon",
+    "n": "Lisbon",
+    "d": "Capital of Portugal"
+  },
+  {
+    "id": "london",
+    "n": "London",
+    "d": "Capital of England"
+  },
+  {
+    "id": "madrid",
+    "n": "Madrid",
+    "d": "Capital of Spain"
+  },
+  {
+    "id": "milan",
+    "n": "Milan",
+    "d": "City of the Lombard plain"
+  },
+  {
+    "id": "new-york",
+    "n": "New York",
+    "d": "Largest city of the United States"
+  },
+  {
+    "id": "paris",
+    "n": "Paris",
+    "d": "Capital of France"
+  },
+  {
+    "id": "philadelphia",
+    "n": "Philadelphia",
+    "d": "Founding capital of the United States"
+  },
+  {
+    "id": "rome",
+    "n": "Rome",
+    "d": "City of the popes"
+  },
+  {
+    "id": "st-petersburg",
+    "n": "St. Petersburg",
+    "d": "Capital of the Russian empire"
+  },
+  {
+    "id": "venice",
+    "n": "Venice",
+    "d": "Capital of the lagoon republic"
+  },
+  {
+    "id": "versailles",
+    "n": "Versailles",
+    "d": "The Bourbon palace capital"
+  },
+  {
+    "id": "vienna",
+    "n": "Vienna",
+    "d": "Capital of the Habsburgs"
+  },
+  {
+    "id": "weimar",
+    "n": "Weimar",
+    "d": "Court city in Thuringia"
+  }
+]

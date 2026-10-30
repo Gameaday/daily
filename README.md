@@ -75,15 +75,16 @@ container, read from the committed per-game stores
 
 The history the games share is stored once, in `knowledge/`: people,
 events, places, artifacts, the wider world, animals and quotes, their
-typed relations, the twist tellings behind bogus and well-actually, the
-stories the year games tell, and each game's recipe of what it draws.
+typed relations, the twist tellings behind bogus and well-actually, the commonly
+cited figures behind fermi, the stories the year games tell, and each game's recipe of what it draws.
 `tools/build-knowledge.mjs` compiles the layer into the per-game stores
 and `tools/export-puzzles.mjs` emits the client banks from them: truth
 lives in one place, every game reads the same facts, and CI fails if a
 store or bank drifts from the layer. `knowledge/SCHEMA.md` documents
-every file, lint and recipe. fermi and lightbox stay hand-banked by
-design: estimation questions and picture clues are not shared entities,
-so their pages remain their own source.
+every file, lint and recipe. lightbox stays hand-banked by
+design: picture clues are not shared entities, so its page remains its
+own source. fermi's questions live in the layer as facts, keyed to the
+graph when the layer knows the subject.
 
 ## The global curve
 
@@ -211,7 +212,7 @@ scarcity of moves, not time.
 1. Copy an existing game folder; include `../shell/common.css` and
    `../shell/common.js`, then destructure what you need from `SHELL`.
 2. Swap in the puzzle: a recipe over the knowledge layer for a history
-   game, an inline bank (fermi, lightbox) or a seeded generator. Word
+   game, an inline bank (lightbox) or a seeded generator. Word
    games can share `assets/words-en.js`.
 3. Add a card to the landing page and a row in the games table above.
 4. If it has a score: call `syncBoard(value)` on reveal, add the game to

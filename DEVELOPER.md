@@ -28,7 +28,7 @@ per-game stores (`puzzles/<game>/puzzles.json`); CI runs it in verify
 mode, so a hand-edited store or a layer change that shifts a store both
 fail the build. `tools/export-puzzles.mjs` then re-emits the client
 banks from the stores. `knowledge/SCHEMA.md` is the format reference.
-New games arrive as recipes over the layer; fermi and lightbox stay
+New games arrive as recipes over the layer; lightbox stays
 hand-banked by design.
 
 ## Puzzle delivery
@@ -46,7 +46,7 @@ every bank stripped (`tools/build-bundles.mjs`).
 The server reads its puzzles from the committed per-game stores:
 
 - `puzzles/<game>/puzzles.json`: the puzzle store, compiled from the
-  knowledge layer (hand-banked only for fermi and lightbox) and
+  knowledge layer (hand-banked only for lightbox) and
   deep-equal to the inline bank (verified in CI)
 - `puzzles/timeline/puzzles.json` and `puzzles/thread/puzzles.json`:
   windowed, `{bank, picks}` with 1000 precomputed days
@@ -56,7 +56,7 @@ The server reads its puzzles from the committed per-game stores:
 To change history content, edit the knowledge layer, run
 `node tools/build-knowledge.mjs --write`, then
 `node tools/export-puzzles.mjs --write`, and push layer, stores and
-banks together. For the hand-banked games (fermi, lightbox), edit the
+banks together. For the hand-banked game (lightbox), edit the
 game's `index.html` and run `node tools/export-puzzles.mjs --write`.
 CI (verify mode) fails any store that drifts from the layer or from
 its client bank.
@@ -122,7 +122,7 @@ the Pi only deploys commits whose CI run is green.
 1. Copy an existing game folder; include `../shell/common.css` and
    `../shell/common.js`, then destructure what you need from `SHELL`.
 2. Add the puzzle: a recipe over the knowledge layer for a history game,
-   an inline bank (fermi, lightbox) or a seeded generator.
+   an inline bank (lightbox) or a seeded generator.
 3. Add a card to the landing `index.html` and a row in README's games table.
 4. If it has a score: call `syncBoard(value)` on reveal, add the game to
    `scores/manifest.json`, and for a layer game run

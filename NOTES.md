@@ -244,16 +244,56 @@ entry in the MODULES list, nothing else. A suite-guard group fails the run
 if the orchestrator ever loads no modules or runs zero assertions (an empty
 file exits 0 in Node, so a silent pass must be impossible).
 
-## Batch 5 candidates
+## Batch 5 candidates: recipes over the layer (2026-10-30)
 
-- (none yet - see Batch 4 candidates above)
+The idea list below is recorded as the recipe each game would arrive
+as, so the layer grows toward them and the games land thin. None of
+these build yet; the ko-fi card on the landing page covers the support
+idea and is already live.
+
+- Who Said It: the quote game. quotes.json already keys each line to
+  its speaker; the enrichment it wants is more y and via on the quotes,
+  and a country hint after a miss wants country fields or resident
+  relations to read.
+- Relativity: which of two events a figure stood closer to. The layer
+  already carries born and died, event years, and dated participant
+  relations; the recipe draws a person, two events inside the life,
+  and asks which year sits nearer. Richer with every dated relation.
+- Fibbs: one truth among authored fibs. The facts file feeds the
+  truth, the fibs stay authored beside it twist-style, and both key
+  by about.
+- Archived: where an artifact is kept. The housed-at relations already
+  answer it; the recipe offers place options and grows with every new
+  housed-at edge. It wants more places than the eighteen cities to
+  shine.
+- Refactored: when people believed the false thing. Needs dated
+  misconception entries, a claim, a believed window, the correction;
+  a natural new file keyed like the twists.
+- Odd Fame: who did the odd accomplishment. Facts and twist entries
+  with about keys feed it; deep person profiles make it rich.
+- Superlative: group-relative superlatives. The pool wants a few
+  numeric person fields (height, works, reign length); the recipe
+  draws a group and asks the superlative the group itself decides.
+  Depth first.
+- Topical: this day in history. A pure recipe: events with month and
+  day against the day of the year, plus same-day impostors from the
+  same era.
+
+The cut line for the next testing round: finish the enrichment the
+recipes above point at (world entities for the fermi subjects, quote
+years and sources, person numbers, more housed-at and participant
+edges), then freeze layer growth, then one full round: every CI
+layer, store byte-identity, a spot-review of the newest entries, and
+per-game plays for any recipe game that has landed. After that round,
+1.0 and the privacy flip come into view.
 
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:
 people, events, places, artifacts, the wider world, animals and quotes
-as entities in one id namespace, relations typed nineteen ways, the
-twist tellings for bogus and well-actually, the stories the year games
+as entities in one id namespace, relations typed twenty-two ways, the
+twist tellings for bogus and well-actually, the commonly cited figures
+fermi asks about, the stories the year games
 share, and each game's recipe over the whole. build-knowledge compiles
 the layer to the committed stores byte-exact (CI verifies), and
 export-puzzles re-emits the client banks from the stores: truth stored
@@ -261,10 +301,10 @@ once, every manipulation a marked derivation. Timeline and rounds read
 events, thread walks the people graph (one connected component, no
 orphans, edges filtered to the nodes it knows), brunch seats the
 presence layer, museum shows artifacts, cipher encrypts quotes, sift
-sorts boards authored over the layer, and the twist tellings key
-themselves to the graph with about ids. fermi and lightbox stay
-hand-banked on purpose: estimation questions and picture clues are not
-shared entities. The wording guard retired with the rework it watched
+sorts boards authored over the layer, fermi asks the commonly cited
+figures keyed by about ids, and the twist tellings key
+themselves to the graph. lightbox stays hand-banked on purpose:
+picture clues are not shared entities. The wording guard retired with the rework it watched
 over (the module is gone); the em dash rule covers new copy only.
 SCHEMA.md in knowledge/ is the format reference.
 

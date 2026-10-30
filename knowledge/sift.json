@@ -1,0 +1,4056 @@
+[
+  {
+    "id": "the-ancient-world",
+    "t": "The Ancient World",
+    "cats": [
+      {
+        "n": "Roman emperors",
+        "i": [
+          "nero",
+          "trajan",
+          "commodus"
+        ]
+      },
+      {
+        "n": "Greek philosophers",
+        "i": [
+          "socrates",
+          "plato",
+          "aristotle"
+        ]
+      },
+      {
+        "n": "Wonders of the ancient world",
+        "i": [
+          {
+            "id": "lighthouse-of-alexandria",
+            "as": "Lighthouse of Alexandria"
+          },
+          {
+            "id": "hanging-gardens",
+            "as": "Hanging Gardens of Babylon"
+          },
+          {
+            "id": "colossus-of-rhodes",
+            "as": "Colossus of Rhodes"
+          }
+        ]
+      },
+      {
+        "n": "Egyptian pharaohs",
+        "i": [
+          "tutankhamun",
+          "ramses-ii",
+          {
+            "id": "cleopatra",
+            "as": "Cleopatra VII"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-space-race",
+    "t": "The Space Race",
+    "cats": [
+      {
+        "n": "Apollo missions",
+        "i": [
+          {
+            "id": "apollo-11-landing",
+            "as": "Apollo 11"
+          },
+          {
+            "id": "apollo-13",
+            "as": "Apollo 13"
+          },
+          {
+            "id": "apollo-8",
+            "as": "Apollo 8"
+          }
+        ]
+      },
+      {
+        "n": "First animals in space",
+        "i": [
+          "laika",
+          "ham",
+          "felicette"
+        ]
+      },
+      {
+        "n": "Soviet space firsts",
+        "i": [
+          {
+            "id": "sputnik-launch",
+            "as": "Sputnik 1"
+          },
+          {
+            "id": "gagarin-flight",
+            "as": "Vostok 1"
+          },
+          {
+            "id": "luna-2",
+            "as": "Luna 2"
+          }
+        ]
+      },
+      {
+        "n": "Space shuttles",
+        "i": [
+          {
+            "id": "discovery-shuttle",
+            "as": "Discovery"
+          },
+          "endeavour",
+          "atlantis"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-1990s-internet",
+    "t": "The 1990s Internet",
+    "cats": [
+      {
+        "n": "Early web browsers",
+        "i": [
+          "mosaic",
+          "netscape-navigator",
+          "internet-explorer"
+        ]
+      },
+      {
+        "n": "Dot-com flameouts",
+        "i": [
+          "pets-com",
+          "webvan",
+          "boo-com"
+        ]
+      },
+      {
+        "n": "Ways we talked online",
+        "i": [
+          "icq",
+          "irc",
+          "aim"
+        ]
+      },
+      {
+        "n": "Founders",
+        "i": [
+          "larry-page",
+          "jerry-yang",
+          "marc-andreessen"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "world-war-ii",
+    "t": "World War II",
+    "cats": [
+      {
+        "n": "Codebreaking",
+        "i": [
+          "enigma",
+          "bletchley-park",
+          "purple"
+        ]
+      },
+      {
+        "n": "Turning-point battles",
+        "i": [
+          {
+            "id": "midway",
+            "as": "Midway"
+          },
+          {
+            "id": "stalingrad",
+            "as": "Stalingrad"
+          },
+          {
+            "id": "kursk",
+            "as": "Kursk"
+          }
+        ]
+      },
+      {
+        "n": "Operation code names",
+        "i": [
+          {
+            "id": "barbarossa",
+            "as": "Barbarossa"
+          },
+          {
+            "id": "overlord",
+            "as": "Overlord"
+          },
+          {
+            "id": "market-garden",
+            "as": "Market Garden"
+          }
+        ]
+      },
+      {
+        "n": "Manhattan Project sites",
+        "i": [
+          "los-alamos",
+          "oak-ridge",
+          "hanford"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-renaissance",
+    "t": "The Renaissance",
+    "cats": [
+      {
+        "n": "Works by Leonardo da Vinci",
+        "i": [
+          {
+            "id": "mona-lisa",
+            "as": "Mona Lisa"
+          },
+          "last-supper",
+          {
+            "id": "vitruvian-man",
+            "as": "Vitruvian Man"
+          }
+        ]
+      },
+      {
+        "n": "The Medici family",
+        "i": [
+          {
+            "id": "lorenzo",
+            "as": "Lorenzo de’ Medici"
+          },
+          {
+            "id": "cosimo",
+            "as": "Cosimo de’ Medici"
+          },
+          {
+            "id": "catherine-de-medici",
+            "as": "Catherine de’ Medici"
+          }
+        ]
+      },
+      {
+        "n": "Florentine masters",
+        "i": [
+          "botticelli",
+          "michelangelo",
+          "donatello"
+        ]
+      },
+      {
+        "n": "Age-of-exploration navigators",
+        "i": [
+          {
+            "id": "columbus",
+            "as": "Columbus"
+          },
+          "da-gama",
+          "vespucci"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ancient-egypt",
+    "t": "Ancient Egypt",
+    "cats": [
+      {
+        "n": "Pharaohs who built pyramids",
+        "i": [
+          "khufu",
+          "sneferu",
+          "djoser"
+        ]
+      },
+      {
+        "n": "Gods of the pantheon",
+        "i": [
+          {
+            "id": "ra",
+            "as": "Ra"
+          },
+          {
+            "id": "anubis",
+            "as": "Anubis"
+          },
+          {
+            "id": "osiris",
+            "as": "Osiris"
+          }
+        ]
+      },
+      {
+        "n": "Found in Tutankhamun’s tomb",
+        "i": [
+          {
+            "id": "mask-of-tutankhamun",
+            "as": "Golden Mask"
+          },
+          {
+            "id": "iron-dagger",
+            "as": "Iron Dagger"
+          },
+          {
+            "id": "chariot",
+            "as": "Chariot"
+          }
+        ]
+      },
+      {
+        "n": "Towns on the Nile",
+        "i": [
+          "aswan",
+          "rosetta",
+          "luxor"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "us-presidents",
+    "t": "US Presidents",
+    "cats": [
+      {
+        "n": "Assassinated in office",
+        "i": [
+          {
+            "id": "lincoln",
+            "as": "Lincoln"
+          },
+          {
+            "id": "garfield",
+            "as": "Garfield"
+          },
+          {
+            "id": "mckinley",
+            "as": "McKinley"
+          }
+        ]
+      },
+      {
+        "n": "Nobel Peace Prize winners",
+        "i": [
+          "woodrow-wilson",
+          "jimmy-carter",
+          "barack-obama"
+        ]
+      },
+      {
+        "n": "Faces on Mount Rushmore",
+        "i": [
+          {
+            "id": "washington",
+            "as": "Washington"
+          },
+          {
+            "id": "jefferson",
+            "as": "Jefferson"
+          },
+          "theodore-roosevelt"
+        ]
+      },
+      {
+        "n": "Won the presidency while losing the popular vote",
+        "i": [
+          "john-quincy-adams",
+          {
+            "id": "rutherford-hayes",
+            "as": "Rutherford Hayes"
+          },
+          "benjamin-harrison"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "physics-and-computing",
+    "t": "Physics & Computing",
+    "cats": [
+      {
+        "n": "Units of electrical measurement",
+        "i": [
+          {
+            "id": "volt",
+            "as": "Volt"
+          },
+          {
+            "id": "ampere",
+            "as": "Ampere"
+          },
+          {
+            "id": "ohm",
+            "as": "Ohm"
+          }
+        ]
+      },
+      {
+        "n": "Scientists with elements named for them",
+        "i": [
+          {
+            "id": "curie",
+            "as": "Curie"
+          },
+          {
+            "id": "einstein",
+            "as": "Einstein"
+          },
+          {
+            "id": "rutherford",
+            "as": "Rutherford"
+          }
+        ]
+      },
+      {
+        "n": "Names attached to laws of physics",
+        "i": [
+          {
+            "id": "newton",
+            "as": "Newton"
+          },
+          {
+            "id": "hooke",
+            "as": "Hooke"
+          },
+          {
+            "id": "bernoulli",
+            "as": "Bernoulli"
+          }
+        ]
+      },
+      {
+        "n": "Pioneers of computing",
+        "i": [
+          {
+            "id": "ada",
+            "as": "Lovelace"
+          },
+          {
+            "id": "turing",
+            "as": "Turing"
+          },
+          {
+            "id": "babbage",
+            "as": "Babbage"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "where-words-come-from",
+    "t": "Where Words Come From",
+    "cats": [
+      {
+        "n": "From Nahuatl (Aztec)",
+        "i": [
+          {
+            "id": "chocolate",
+            "as": "chocolate"
+          },
+          {
+            "id": "tomato",
+            "as": "tomato"
+          },
+          {
+            "id": "avocado",
+            "as": "avocado"
+          }
+        ]
+      },
+      {
+        "n": "From Arabic",
+        "i": [
+          {
+            "id": "algebra",
+            "as": "algebra"
+          },
+          {
+            "id": "alcohol",
+            "as": "alcohol"
+          },
+          {
+            "id": "algorithm",
+            "as": "algorithm"
+          }
+        ]
+      },
+      {
+        "n": "From Japanese",
+        "i": [
+          {
+            "id": "tsunami",
+            "as": "tsunami"
+          },
+          {
+            "id": "karaoke",
+            "as": "karaoke"
+          },
+          {
+            "id": "emoji",
+            "as": "emoji"
+          }
+        ]
+      },
+      {
+        "n": "From Norman French",
+        "i": [
+          {
+            "id": "beef",
+            "as": "beef"
+          },
+          {
+            "id": "mutton",
+            "as": "mutton"
+          },
+          {
+            "id": "venison",
+            "as": "venison"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-reformation",
+    "t": "The Reformation",
+    "cats": [
+      {
+        "n": "Reformers",
+        "i": [
+          {
+            "id": "luther",
+            "as": "Luther"
+          },
+          {
+            "id": "calvin",
+            "as": "Calvin"
+          },
+          {
+            "id": "zwingli",
+            "as": "Zwingli"
+          }
+        ]
+      },
+      {
+        "n": "Printing centers c. 1500",
+        "i": [
+          "venice",
+          "mainz",
+          "antwerp"
+        ]
+      },
+      {
+        "n": "Henry VIII’s queens",
+        "i": [
+          "anne-boleyn",
+          "jane-seymour",
+          "catherine-parr"
+        ]
+      },
+      {
+        "n": "Early English Bible translators",
+        "i": [
+          {
+            "id": "tyndale",
+            "as": "Tyndale"
+          },
+          {
+            "id": "wycliffe",
+            "as": "Wycliffe"
+          },
+          {
+            "id": "coverdale",
+            "as": "Coverdale"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-sail",
+    "t": "The Age of Sail",
+    "cats": [
+      {
+        "n": "Famous pirates",
+        "i": [
+          "blackbeard",
+          "anne-bonny",
+          {
+            "id": "kidd",
+            "as": "Captain Kidd"
+          }
+        ]
+      },
+      {
+        "n": "Pirate havens",
+        "i": [
+          "port-royal",
+          "tortuga",
+          "nassau"
+        ]
+      },
+      {
+        "n": "Famous ships",
+        "i": [
+          {
+            "id": "santa-maria",
+            "as": "Santa María"
+          },
+          {
+            "id": "mayflower",
+            "as": "Mayflower"
+          },
+          {
+            "id": "victory",
+            "as": "Victory"
+          }
+        ]
+      },
+      {
+        "n": "Parts of a ship",
+        "i": [
+          {
+            "id": "keel",
+            "as": "keel"
+          },
+          {
+            "id": "starboard",
+            "as": "starboard"
+          },
+          {
+            "id": "bow",
+            "as": "bow"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-cold-war",
+    "t": "The Cold War",
+    "cats": [
+      {
+        "n": "Flashpoints",
+        "i": [
+          "berlin",
+          "cuba",
+          "korea"
+        ]
+      },
+      {
+        "n": "Soviet leaders",
+        "i": [
+          {
+            "id": "khrushchev",
+            "as": "Khrushchev"
+          },
+          {
+            "id": "brezhnev",
+            "as": "Brezhnev"
+          },
+          {
+            "id": "gorbachev",
+            "as": "Gorbachev"
+          }
+        ]
+      },
+      {
+        "n": "The Cambridge Five",
+        "i": [
+          "kim-philby",
+          "guy-burgess",
+          "donald-maclean"
+        ]
+      },
+      {
+        "n": "Pacts & treaties",
+        "i": [
+          {
+            "id": "warsaw-pact",
+            "as": "Warsaw Pact"
+          },
+          "salt-i",
+          {
+            "id": "helsinki-accords",
+            "as": "Helsinki Accords"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-silk-road",
+    "t": "The Silk Road",
+    "cats": [
+      {
+        "n": "Goods that traveled west",
+        "i": [
+          "silk",
+          "porcelain",
+          {
+            "id": "black-pepper",
+            "as": "Black pepper"
+          }
+        ]
+      },
+      {
+        "n": "Oasis cities",
+        "i": [
+          "samarkand",
+          "kashgar",
+          "dunhuang"
+        ]
+      },
+      {
+        "n": "Travelers of the road",
+        "i": [
+          "marco-polo",
+          "ibn-battuta",
+          "xuanzang"
+        ]
+      },
+      {
+        "n": "Empires along the route",
+        "i": [
+          "han-china",
+          "parthia",
+          "abbasid-caliphate"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-atomic-age",
+    "t": "The Atomic Age",
+    "cats": [
+      {
+        "n": "Nuclear test sites",
+        "i": [
+          "nevada-test-site",
+          "bikini-atoll",
+          "novaya-zemlya"
+        ]
+      },
+      {
+        "n": "Physicists of the Manhattan Project",
+        "i": [
+          "oppenheimer",
+          "fermi",
+          "bohr"
+        ]
+      },
+      {
+        "n": "Bombs and tests",
+        "i": [
+          {
+            "id": "trinity-test",
+            "as": "Trinity"
+          },
+          "little-boy",
+          "fat-man"
+        ]
+      },
+      {
+        "n": "Treaties and watchdogs",
+        "i": [
+          "npt",
+          "iaea",
+          "partial-test-ban-treaty"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-frozen-poles",
+    "t": "The Frozen Poles",
+    "cats": [
+      {
+        "n": "Race to the South Pole",
+        "i": [
+          "amundsen",
+          "scott",
+          "shackleton"
+        ]
+      },
+      {
+        "n": "Polar ships",
+        "i": [
+          {
+            "id": "fram",
+            "as": "Fram"
+          },
+          {
+            "id": "discovery-polar",
+            "as": "Discovery"
+          },
+          {
+            "id": "endurance",
+            "as": "Endurance"
+          }
+        ]
+      },
+      {
+        "n": "North Pole claimants",
+        "i": [
+          "peary",
+          "frederick-cook",
+          "byrd"
+        ]
+      },
+      {
+        "n": "Antarctic landmarks",
+        "i": [
+          {
+            "id": "ross-ice-shelf",
+            "as": "Ross Ice Shelf"
+          },
+          "mcmurdo-sound",
+          {
+            "id": "beardmore-glacier",
+            "as": "Beardmore Glacier"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-greek-myths",
+    "t": "The Greek Myths",
+    "cats": [
+      {
+        "n": "Olympians",
+        "i": [
+          "zeus",
+          "hera",
+          "hermes"
+        ]
+      },
+      {
+        "n": "The underworld",
+        "i": [
+          "hades",
+          "cerberus",
+          "charon"
+        ]
+      },
+      {
+        "n": "Heroes",
+        "i": [
+          "heracles",
+          "perseus",
+          "theseus"
+        ]
+      },
+      {
+        "n": "Monsters",
+        "i": [
+          "medusa",
+          {
+            "id": "minotaur",
+            "as": "Minotaur"
+          },
+          {
+            "id": "chimera",
+            "as": "Chimera"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-viking-world",
+    "t": "The Viking World",
+    "cats": [
+      {
+        "n": "Norse gods",
+        "i": [
+          "odin",
+          "thor",
+          "loki"
+        ]
+      },
+      {
+        "n": "Kings of the era",
+        "i": [
+          "harald-bluetooth",
+          "cnut",
+          "alfred"
+        ]
+      },
+      {
+        "n": "Raids and voyages",
+        "i": [
+          "lindisfarne",
+          "vinland",
+          "great-heathen-army"
+        ]
+      },
+      {
+        "n": "Norse artifacts",
+        "i": [
+          {
+            "id": "oseberg-ship",
+            "as": "The Oseberg ship"
+          },
+          {
+            "id": "lewis-chessmen",
+            "as": "The Lewis chessmen"
+          },
+          {
+            "id": "jelling-stones",
+            "as": "The Jelling stones"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "plagues-and-cures",
+    "t": "Plagues and Cures",
+    "cats": [
+      {
+        "n": "Historic outbreaks",
+        "i": [
+          "antonine-plague",
+          "plague-of-justinian",
+          {
+            "id": "black-death-europe",
+            "as": "The Black Death"
+          }
+        ]
+      },
+      {
+        "n": "Vaccine pioneers",
+        "i": [
+          "jenner",
+          "salk",
+          "hilleman"
+        ]
+      },
+      {
+        "n": "Germ theory figures",
+        "i": [
+          "pasteur",
+          "koch",
+          "john-snow"
+        ]
+      },
+      {
+        "n": "Diseases of history",
+        "i": [
+          "smallpox",
+          "cholera",
+          {
+            "id": "spanish-flu",
+            "as": "The Spanish flu"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ancient-greece",
+    "t": "Ancient Greece",
+    "cats": [
+      {
+        "n": "Greek city-states",
+        "i": [
+          "athens",
+          "sparta",
+          "corinth"
+        ]
+      },
+      {
+        "n": "Battles of the Persian Wars",
+        "i": [
+          {
+            "id": "marathon",
+            "as": "Marathon"
+          },
+          {
+            "id": "thermopylae",
+            "as": "Thermopylae"
+          },
+          {
+            "id": "salamis",
+            "as": "Salamis"
+          }
+        ]
+      },
+      {
+        "n": "Tragedians of Athens",
+        "i": [
+          "aeschylus",
+          "sophocles",
+          "euripides"
+        ]
+      },
+      {
+        "n": "Ancient Greek scientists",
+        "i": [
+          "archimedes",
+          "euclid",
+          "hippocrates"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-roman-republic",
+    "t": "The Roman Republic",
+    "cats": [
+      {
+        "n": "Enemies of Rome",
+        "i": [
+          "hannibal",
+          "vercingetorix",
+          "boudicca"
+        ]
+      },
+      {
+        "n": "Roman writers",
+        "i": [
+          "virgil",
+          "ovid",
+          "cicero"
+        ]
+      },
+      {
+        "n": "Gods of the Roman pantheon",
+        "i": [
+          "jupiter",
+          "mars",
+          "venus"
+        ]
+      },
+      {
+        "n": "Landmarks of ancient Rome",
+        "i": [
+          "colosseum",
+          "pantheon",
+          "circus-maximus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "revolutionary-france",
+    "t": "Revolutionary France",
+    "cats": [
+      {
+        "n": "Figures of the Revolution",
+        "i": [
+          "robespierre",
+          "danton",
+          "marat"
+        ]
+      },
+      {
+        "n": "Battles of the Napoleonic Wars",
+        "i": [
+          {
+            "id": "austerlitz",
+            "as": "Austerlitz"
+          },
+          {
+            "id": "trafalgar",
+            "as": "Trafalgar"
+          },
+          {
+            "id": "waterloo",
+            "as": "Waterloo"
+          }
+        ]
+      },
+      {
+        "n": "Instruments of the Revolution",
+        "i": [
+          {
+            "id": "guillotine",
+            "as": "The guillotine"
+          },
+          {
+            "id": "tricolor",
+            "as": "The tricolor"
+          },
+          "la-marseillaise"
+        ]
+      },
+      {
+        "n": "Napoleon’s greatest foes",
+        "i": [
+          {
+            "id": "wellington",
+            "as": "The Duke of Wellington"
+          },
+          {
+            "id": "nelson",
+            "as": "Lord Nelson"
+          },
+          "blucher"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-wild-west",
+    "t": "The Wild West",
+    "cats": [
+      {
+        "n": "Outlaws of the frontier",
+        "i": [
+          "billy-the-kid",
+          "jesse-james",
+          "butch-cassidy"
+        ]
+      },
+      {
+        "n": "Lawmen of the frontier",
+        "i": [
+          "wyatt-earp",
+          "wild-bill-hickok",
+          "pat-garrett"
+        ]
+      },
+      {
+        "n": "Famed frontier towns",
+        "i": [
+          "tombstone",
+          "dodge-city",
+          "deadwood"
+        ]
+      },
+      {
+        "n": "Leaders of the resistance",
+        "i": [
+          "sitting-bull",
+          "crazy-horse",
+          "geronimo"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-night-sky",
+    "t": "The Night Sky",
+    "cats": [
+      {
+        "n": "Familiar constellations",
+        "i": [
+          "orion",
+          "cassiopeia",
+          "ursa-major"
+        ]
+      },
+      {
+        "n": "Pioneers of heliocentrism",
+        "i": [
+          "copernicus",
+          {
+            "id": "galileo",
+            "as": "Galileo"
+          },
+          {
+            "id": "kepler",
+            "as": "Kepler"
+          }
+        ]
+      },
+      {
+        "n": "Moons of Jupiter",
+        "i": [
+          "io",
+          "europa",
+          "ganymede"
+        ]
+      },
+      {
+        "n": "Comets of history",
+        "i": [
+          {
+            "id": "halleys-comet",
+            "as": "Halley’s Comet"
+          },
+          "hale-bopp",
+          "shoemaker-levy-9"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-concert-hall",
+    "t": "The Concert Hall",
+    "cats": [
+      {
+        "n": "Classical composers",
+        "i": [
+          "bach",
+          "mozart",
+          "beethoven"
+        ]
+      },
+      {
+        "n": "Famous operas",
+        "i": [
+          "carmen",
+          "magic-flute",
+          "la-boheme"
+        ]
+      },
+      {
+        "n": "Great opera houses",
+        "i": [
+          "la-scala",
+          "metropolitan-opera",
+          "sydney-opera-house"
+        ]
+      },
+      {
+        "n": "Keyboard instruments",
+        "i": [
+          {
+            "id": "piano",
+            "as": "The piano"
+          },
+          {
+            "id": "harpsichord",
+            "as": "The harpsichord"
+          },
+          {
+            "id": "pipe-organ",
+            "as": "The pipe organ"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-the-train",
+    "t": "The Age of the Train",
+    "cats": [
+      {
+        "n": "Legendary trains and routes",
+        "i": [
+          "orient-express",
+          "flying-scotsman",
+          "trans-siberian"
+        ]
+      },
+      {
+        "n": "Railway pioneers",
+        "i": [
+          "stephenson",
+          "brunel",
+          "peter-cooper"
+        ]
+      },
+      {
+        "n": "Historic first railways",
+        "i": [
+          {
+            "id": "stockton-darlington",
+            "as": "The Stockton and Darlington"
+          },
+          "liverpool-manchester",
+          "baltimore-ohio"
+        ]
+      },
+      {
+        "n": "High-speed icons",
+        "i": [
+          "shinkansen",
+          "tgv",
+          {
+            "id": "shanghai-maglev",
+            "as": "The Shanghai maglev"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "physical-geography",
+    "t": "Physical Geography",
+    "cats": [
+      {
+        "n": "The longest rivers",
+        "i": [
+          "nile",
+          "amazon",
+          "yangtze"
+        ]
+      },
+      {
+        "n": "Great deserts",
+        "i": [
+          "sahara",
+          "gobi",
+          "kalahari"
+        ]
+      },
+      {
+        "n": "Great mountain ranges",
+        "i": [
+          "himalayas",
+          "andes",
+          "alps"
+        ]
+      },
+      {
+        "n": "The largest oceans",
+        "i": [
+          "pacific",
+          "atlantic",
+          {
+            "id": "indian",
+            "as": "The Indian"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-flight",
+    "t": "The Age of Flight",
+    "cats": [
+      {
+        "n": "Aviation pioneers",
+        "i": [
+          "wright-brothers",
+          "lindbergh",
+          "amelia-earhart"
+        ]
+      },
+      {
+        "n": "Aircraft of the Second World War",
+        "i": [
+          "spitfire",
+          "b-17",
+          "zero"
+        ]
+      },
+      {
+        "n": "Aircraft of the jet age",
+        "i": [
+          "dh-comet",
+          "boeing-707",
+          "concorde"
+        ]
+      },
+      {
+        "n": "Airlines of the golden age",
+        "i": [
+          "pan-am",
+          "twa",
+          "boac"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-olympics",
+    "t": "The Olympics",
+    "cats": [
+      {
+        "n": "Summer Games host cities",
+        "i": [
+          "los-angeles",
+          "paris",
+          "london"
+        ]
+      },
+      {
+        "n": "Olympic legends",
+        "i": [
+          "jesse-owens",
+          "usain-bolt",
+          "michael-phelps"
+        ]
+      },
+      {
+        "n": "Winter Olympic sports",
+        "i": [
+          "curling",
+          "luge",
+          "skeleton"
+        ]
+      },
+      {
+        "n": "Ancient Olympic events",
+        "i": [
+          {
+            "id": "stadion",
+            "as": "The stadion"
+          },
+          {
+            "id": "pentathlon",
+            "as": "The pentathlon"
+          },
+          "pankration"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "classic-hollywood",
+    "t": "Classic Hollywood",
+    "cats": [
+      {
+        "n": "Studios of the golden age",
+        "i": [
+          "mgm",
+          "paramount",
+          "warner-bros"
+        ]
+      },
+      {
+        "n": "Stars of the silver screen",
+        "i": [
+          "bogart",
+          "bette-davis",
+          "cagney"
+        ]
+      },
+      {
+        "n": "Films that defined the era",
+        "i": [
+          "casablanca",
+          "gone-with-the-wind",
+          "citizen-kane"
+        ]
+      },
+      {
+        "n": "Directors of the era",
+        "i": [
+          "hitchcock",
+          "orson-welles",
+          "frank-capra"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-bookshelf",
+    "t": "The Bookshelf",
+    "cats": [
+      {
+        "n": "Poets of the English language",
+        "i": [
+          "wordsworth",
+          "keats",
+          "dickinson"
+        ]
+      },
+      {
+        "n": "Novels by Charles Dickens",
+        "i": [
+          "great-expectations",
+          "oliver-twist",
+          "tale-of-two-cities"
+        ]
+      },
+      {
+        "n": "The Brontë sisters",
+        "i": [
+          {
+            "id": "charlotte-bronte",
+            "as": "Charlotte Brontë"
+          },
+          {
+            "id": "emily-bronte",
+            "as": "Emily Brontë"
+          },
+          {
+            "id": "anne-bronte",
+            "as": "Anne Brontë"
+          }
+        ]
+      },
+      {
+        "n": "Fictional detectives",
+        "i": [
+          "sherlock-holmes",
+          "hercule-poirot",
+          "miss-marple"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-deep-ocean",
+    "t": "The Deep Ocean",
+    "cats": [
+      {
+        "n": "Famous wrecks",
+        "i": [
+          "titanic",
+          "lusitania",
+          "bismarck"
+        ]
+      },
+      {
+        "n": "Explorers of the deep",
+        "i": [
+          "cousteau",
+          "robert-ballard",
+          "james-cameron"
+        ]
+      },
+      {
+        "n": "Trenches of the Pacific",
+        "i": [
+          "mariana-trench",
+          "tonga-trench",
+          "java-trench"
+        ]
+      },
+      {
+        "n": "Creatures of the deep",
+        "i": [
+          {
+            "id": "anglerfish",
+            "as": "The anglerfish"
+          },
+          {
+            "id": "giant-squid",
+            "as": "The giant squid"
+          },
+          {
+            "id": "vampire-squid",
+            "as": "The vampire squid"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shakespeare-s-england",
+    "t": "Shakespeare’s England",
+    "cats": [
+      {
+        "n": "Plays by Shakespeare",
+        "i": [
+          "hamlet",
+          "macbeth",
+          "king-lear"
+        ]
+      },
+      {
+        "n": "Rulers of the era",
+        "i": [
+          "elizabeth-i",
+          "james-i",
+          {
+            "id": "mary-queen-of-scots",
+            "as": "Mary Queen of Scots"
+          }
+        ]
+      },
+      {
+        "n": "Figures of the age",
+        "i": [
+          "raleigh",
+          "donne",
+          "drake"
+        ]
+      },
+      {
+        "n": "Landmarks of the era",
+        "i": [
+          "globe-theatre",
+          "tower-of-london",
+          "westminster-abbey"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-byzantine-world",
+    "t": "The Byzantine World",
+    "cats": [
+      {
+        "n": "Emperors of Byzantium",
+        "i": [
+          "constantine",
+          "justinian",
+          "heraclius"
+        ]
+      },
+      {
+        "n": "Landmarks of Constantinople",
+        "i": [
+          "hagia-sophia",
+          "theodosian-walls",
+          "hippodrome"
+        ]
+      },
+      {
+        "n": "Legacy of Byzantium",
+        "i": [
+          {
+            "id": "greek-fire",
+            "as": "Greek fire"
+          },
+          "justinian-code",
+          {
+            "id": "cyrillic-alphabet",
+            "as": "The Cyrillic alphabet"
+          }
+        ]
+      },
+      {
+        "n": "Enemies at the gates",
+        "i": [
+          "ottoman-empire",
+          "huns",
+          "seljuks"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-ice-age",
+    "t": "The Ice Age",
+    "cats": [
+      {
+        "n": "Human relatives",
+        "i": [
+          {
+            "id": "homo-habilis",
+            "as": "Homo habilis"
+          },
+          {
+            "id": "homo-erectus",
+            "as": "Homo erectus"
+          },
+          "neanderthals"
+        ]
+      },
+      {
+        "n": "Giants of the Ice Age",
+        "i": [
+          {
+            "id": "woolly-mammoth",
+            "as": "The woolly mammoth"
+          },
+          {
+            "id": "sabre-toothed-cat",
+            "as": "The sabre-toothed cat"
+          },
+          {
+            "id": "woolly-rhino",
+            "as": "The woolly rhinoceros"
+          }
+        ]
+      },
+      {
+        "n": "Caves of the painters",
+        "i": [
+          {
+            "id": "lascaux-cave",
+            "as": "Lascaux"
+          },
+          "chauvet",
+          "altamira"
+        ]
+      },
+      {
+        "n": "Tools of the deep past",
+        "i": [
+          {
+            "id": "handaxe",
+            "as": "The handaxe"
+          },
+          {
+            "id": "atlatl",
+            "as": "The atlatl"
+          },
+          {
+            "id": "bone-needle",
+            "as": "The bone needle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "drink-through-history",
+    "t": "Drink Through History",
+    "cats": [
+      {
+        "n": "Brews of the morning",
+        "i": [
+          "tea",
+          "coffee",
+          "cocoa"
+        ]
+      },
+      {
+        "n": "Spirits of history",
+        "i": [
+          "whisky",
+          "gin",
+          "rum"
+        ]
+      },
+      {
+        "n": "Wines of legend",
+        "i": [
+          "champagne",
+          "port",
+          "sherry"
+        ]
+      },
+      {
+        "n": "Inventions of the drink trade",
+        "i": [
+          {
+            "id": "tea-bag",
+            "as": "The tea bag"
+          },
+          {
+            "id": "espresso-machine",
+            "as": "The espresso machine"
+          },
+          {
+            "id": "crown-cork",
+            "as": "The crown cork"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-written-word",
+    "t": "The Written Word",
+    "cats": [
+      {
+        "n": "Scripts of the ancient world",
+        "i": [
+          "cuneiform",
+          "hieroglyphs",
+          "linear-b"
+        ]
+      },
+      {
+        "n": "Writing surfaces",
+        "i": [
+          "papyrus",
+          "parchment",
+          {
+            "id": "wax-tablets",
+            "as": "Wax tablets"
+          }
+        ]
+      },
+      {
+        "n": "Tools of the scribe",
+        "i": [
+          {
+            "id": "quill",
+            "as": "The quill"
+          },
+          {
+            "id": "reed-pen",
+            "as": "The reed pen"
+          },
+          {
+            "id": "stylus",
+            "as": "The stylus"
+          }
+        ]
+      },
+      {
+        "n": "Lost libraries",
+        "i": [
+          "library-of-alexandria",
+          "house-of-wisdom",
+          {
+            "id": "library-of-ashurbanipal",
+            "as": "The library of Ashurbanipal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "keeping-time",
+    "t": "Keeping Time",
+    "cats": [
+      {
+        "n": "Calendars",
+        "i": [
+          {
+            "id": "julian-calendar",
+            "as": "The Julian calendar"
+          },
+          {
+            "id": "gregorian-calendar",
+            "as": "The Gregorian calendar"
+          },
+          {
+            "id": "mayan-calendar",
+            "as": "The Mayan calendar"
+          }
+        ]
+      },
+      {
+        "n": "Timekeepers",
+        "i": [
+          {
+            "id": "sundial",
+            "as": "The sundial"
+          },
+          {
+            "id": "water-clock",
+            "as": "The water clock"
+          },
+          {
+            "id": "hourglass",
+            "as": "The hourglass"
+          }
+        ]
+      },
+      {
+        "n": "Landmarks of time",
+        "i": [
+          "big-ben",
+          "greenwich-meridian",
+          "prague-astronomical-clock"
+        ]
+      },
+      {
+        "n": "Masters of the clock",
+        "i": [
+          "john-harrison",
+          "huygens",
+          "peter-henlein"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-meeting-of-two-worlds",
+    "t": "The Meeting of Two Worlds",
+    "cats": [
+      {
+        "n": "Civilizations of Mesoamerica",
+        "i": [
+          "olmec",
+          "maya",
+          "aztec"
+        ]
+      },
+      {
+        "n": "Cities of the Americas",
+        "i": [
+          "tenochtitlan",
+          "teotihuacan",
+          "chichen-itza"
+        ]
+      },
+      {
+        "n": "Realms of the Andes",
+        "i": [
+          "machu-picchu",
+          "cusco",
+          "lake-titicaca"
+        ]
+      },
+      {
+        "n": "Conquistadors",
+        "i": [
+          {
+            "id": "cortes",
+            "as": "Hernán Cortés"
+          },
+          "pizarro",
+          "de-soto"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "votes-for-women",
+    "t": "Votes for Women",
+    "cats": [
+      {
+        "n": "American leaders of suffrage",
+        "i": [
+          "anthony",
+          "stanton",
+          "alice-paul"
+        ]
+      },
+      {
+        "n": "British leaders of suffrage",
+        "i": [
+          "pankhurst",
+          "millicent-fawcett",
+          "emily-davison"
+        ]
+      },
+      {
+        "n": "First to enfranchise women",
+        "i": [
+          "new-zealand",
+          "australia",
+          "finland"
+        ]
+      },
+      {
+        "n": "Battles for the ballot",
+        "i": [
+          "seneca-falls",
+          {
+            "id": "womens-march-1913",
+            "as": "The women’s march of 1913"
+          },
+          "cat-and-mouse-act"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-tower-of-london",
+    "t": "The Tower of London",
+    "cats": [
+      {
+        "n": "Kept in the Tower",
+        "i": [
+          "guy-fawkes",
+          "princes-in-the-tower",
+          "rudolf-hess"
+        ]
+      },
+      {
+        "n": "The Crown Jewels",
+        "i": [
+          "koh-i-noor",
+          "imperial-state-crown",
+          "cullinan-diamond"
+        ]
+      },
+      {
+        "n": "Things the Tower has been",
+        "i": [
+          "royal-mint",
+          {
+            "id": "menagerie",
+            "as": "The menagerie"
+          },
+          {
+            "id": "observatory",
+            "as": "The observatory"
+          }
+        ]
+      },
+      {
+        "n": "Builders of the Tower",
+        "i": [
+          "william-the-conqueror",
+          "henry-iii",
+          "edward-i"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "codes-and-ciphers",
+    "t": "Codes and Ciphers",
+    "cats": [
+      {
+        "n": "Historic ciphers",
+        "i": [
+          {
+            "id": "caesar-cipher",
+            "as": "The Caesar cipher"
+          },
+          {
+            "id": "vigenere-cipher",
+            "as": "The Vigenère cipher"
+          },
+          {
+            "id": "playfair-cipher",
+            "as": "The Playfair cipher"
+          }
+        ]
+      },
+      {
+        "n": "Codebreakers",
+        "i": [
+          "al-kindi",
+          "elizebeth-friedman",
+          "rejewski"
+        ]
+      },
+      {
+        "n": "Unsolved ciphers",
+        "i": [
+          "voynich-manuscript",
+          {
+            "id": "beale-ciphers",
+            "as": "The Beale ciphers"
+          },
+          {
+            "id": "kryptos",
+            "as": "The Kryptos sculpture"
+          }
+        ]
+      },
+      {
+        "n": "Spies",
+        "i": [
+          "mata-hari",
+          "virginia-hall",
+          "noor-inayat-khan"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "days-of-disaster",
+    "t": "Days of Disaster",
+    "cats": [
+      {
+        "n": "Volcanoes",
+        "i": [
+          "vesuvius",
+          "krakatoa",
+          "mount-st-helens"
+        ]
+      },
+      {
+        "n": "Earthquakes",
+        "i": [
+          "lisbon-earthquake",
+          "san-francisco-earthquake",
+          "great-kanto-earthquake"
+        ]
+      },
+      {
+        "n": "Storms",
+        "i": [
+          "galveston-hurricane",
+          "hurricane-katrina",
+          "great-blizzard-1888"
+        ]
+      },
+      {
+        "n": "Fires",
+        "i": [
+          "great-fire",
+          "great-chicago-fire",
+          "triangle-shirtwaist-fire"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-court-of-versailles",
+    "t": "The Court of Versailles",
+    "cats": [
+      {
+        "n": "Kings of France",
+        "i": [
+          "louis-xiv",
+          "louis-xv",
+          "louis-xvi"
+        ]
+      },
+      {
+        "n": "Queens and favorites",
+        "i": [
+          "marie-antoinette",
+          "pompadour",
+          "anne-of-austria"
+        ]
+      },
+      {
+        "n": "The palace",
+        "i": [
+          "hall-of-mirrors",
+          "grand-trianon",
+          "gardens-of-versailles"
+        ]
+      },
+      {
+        "n": "Chief ministers",
+        "i": [
+          "richelieu",
+          "mazarin",
+          "necker"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-norman-conquest",
+    "t": "The Norman Conquest",
+    "cats": [
+      {
+        "n": "Claimants of 1066",
+        "i": [
+          "harold-godwinson",
+          "harald-hardrada",
+          {
+            "id": "edgar-aetheling",
+            "as": "Edgar Ætheling"
+          }
+        ]
+      },
+      {
+        "n": "Battles",
+        "i": [
+          "battle-of-hastings",
+          "stamford-bridge",
+          "fulford"
+        ]
+      },
+      {
+        "n": "Norman changes",
+        "i": [
+          "domesday-book",
+          "white-tower",
+          {
+            "id": "harrying-of-the-north",
+            "as": "The harrying of the North"
+          }
+        ]
+      },
+      {
+        "n": "Faces of the conquest",
+        "i": [
+          {
+            "id": "odo",
+            "as": "Odo of Bayeux"
+          },
+          "matilda-of-flanders",
+          "lanfranc"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rivers-of-the-world",
+    "t": "Rivers of the World",
+    "cats": [
+      {
+        "n": "Rivers of Africa",
+        "i": [
+          "congo",
+          "zambezi",
+          "niger"
+        ]
+      },
+      {
+        "n": "Rivers of Asia",
+        "i": [
+          "mekong",
+          "ganges",
+          "indus"
+        ]
+      },
+      {
+        "n": "Rivers of Europe",
+        "i": [
+          "danube",
+          "rhine",
+          "volga"
+        ]
+      },
+      {
+        "n": "Rivers of the Americas",
+        "i": [
+          "mississippi",
+          "rio-grande",
+          "orinoco"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-orchestra",
+    "t": "The Orchestra",
+    "cats": [
+      {
+        "n": "Strings",
+        "i": [
+          {
+            "id": "violin",
+            "as": "The violin"
+          },
+          {
+            "id": "cello",
+            "as": "The cello"
+          },
+          {
+            "id": "double-bass",
+            "as": "The double bass"
+          }
+        ]
+      },
+      {
+        "n": "Woodwinds",
+        "i": [
+          {
+            "id": "oboe",
+            "as": "The oboe"
+          },
+          {
+            "id": "bassoon",
+            "as": "The bassoon"
+          },
+          {
+            "id": "clarinet",
+            "as": "The clarinet"
+          }
+        ]
+      },
+      {
+        "n": "Brass",
+        "i": [
+          {
+            "id": "trumpet",
+            "as": "The trumpet"
+          },
+          {
+            "id": "trombone",
+            "as": "The trombone"
+          },
+          {
+            "id": "french-horn",
+            "as": "The French horn"
+          }
+        ]
+      },
+      {
+        "n": "Percussion",
+        "i": [
+          {
+            "id": "timpani",
+            "as": "The timpani"
+          },
+          {
+            "id": "snare-drum",
+            "as": "The snare drum"
+          },
+          {
+            "id": "xylophone",
+            "as": "The xylophone"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "empires-of-west-africa",
+    "t": "Empires of West Africa",
+    "cats": [
+      {
+        "n": "The empires",
+        "i": [
+          "ghana-empire",
+          "mali-empire",
+          "songhai-empire"
+        ]
+      },
+      {
+        "n": "Cities",
+        "i": [
+          "timbuktu",
+          "gao",
+          {
+            "id": "djenne",
+            "as": "Djenné"
+          }
+        ]
+      },
+      {
+        "n": "Rulers",
+        "i": [
+          "mansa-musa",
+          "sonni-ali",
+          "askia"
+        ]
+      },
+      {
+        "n": "Goods that built them",
+        "i": [
+          "gold",
+          "salt",
+          {
+            "id": "camel-caravans",
+            "as": "Camel caravans"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-american-civil-war",
+    "t": "The American Civil War",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "grant",
+          "lee",
+          "jefferson-davis"
+        ]
+      },
+      {
+        "n": "Battles",
+        "i": [
+          "gettysburg",
+          "antietam",
+          "vicksburg"
+        ]
+      },
+      {
+        "n": "The war at home",
+        "i": [
+          "emancipation-proclamation",
+          {
+            "id": "draft-riots",
+            "as": "The draft riots"
+          },
+          {
+            "id": "march-to-the-sea",
+            "as": "Sherman’s March to the Sea"
+          }
+        ]
+      },
+      {
+        "n": "After the guns",
+        "i": [
+          "reconstruction",
+          {
+            "id": "thirteenth-amendment",
+            "as": "The 13th Amendment"
+          },
+          "transcontinental-railroad"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-first-world-war",
+    "t": "The First World War",
+    "cats": [
+      {
+        "n": "How it began",
+        "i": [
+          {
+            "id": "sarajevo-assassination",
+            "as": "The assassination at Sarajevo"
+          },
+          "schlieffen-plan",
+          "july-crisis"
+        ]
+      },
+      {
+        "n": "The battlefields",
+        "i": [
+          {
+            "id": "somme",
+            "as": "The Somme"
+          },
+          {
+            "id": "verdun",
+            "as": "Verdun"
+          },
+          {
+            "id": "gallipoli",
+            "as": "Gallipoli"
+          }
+        ]
+      },
+      {
+        "n": "New weapons",
+        "i": [
+          {
+            "id": "tank",
+            "as": "The tank"
+          },
+          {
+            "id": "poison-gas",
+            "as": "Poison gas"
+          },
+          {
+            "id": "machine-gun",
+            "as": "The machine gun"
+          }
+        ]
+      },
+      {
+        "n": "The eleventh hour",
+        "i": [
+          {
+            "id": "armistice-1918",
+            "as": "The Armistice"
+          },
+          "treaty-of-versailles",
+          "league-of-nations"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "islands-of-the-pacific",
+    "t": "Islands of the Pacific",
+    "cats": [
+      {
+        "n": "Polynesia",
+        "i": [
+          "hawaii",
+          "samoa",
+          "tonga"
+        ]
+      },
+      {
+        "n": "Melanesia",
+        "i": [
+          "fiji",
+          "vanuatu",
+          "new-caledonia"
+        ]
+      },
+      {
+        "n": "Micronesia",
+        "i": [
+          "guam",
+          "palau",
+          "kiribati"
+        ]
+      },
+      {
+        "n": "Explorers of the Pacific",
+        "i": [
+          {
+            "id": "cook",
+            "as": "Captain James Cook"
+          },
+          "tasman",
+          {
+            "id": "bligh",
+            "as": "Captain Bligh"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-medicine",
+    "t": "The History of Medicine",
+    "cats": [
+      {
+        "n": "Anatomy",
+        "i": [
+          "galen",
+          "vesalius",
+          "harvey"
+        ]
+      },
+      {
+        "n": "Fever fighters",
+        "i": [
+          "quinine",
+          "aspirin",
+          "penicillin"
+        ]
+      },
+      {
+        "n": "Hospital pioneers",
+        "i": [
+          "nightingale",
+          "clara-barton",
+          "elizabeth-blackwell"
+        ]
+      },
+      {
+        "n": "Tools of the trade",
+        "i": [
+          {
+            "id": "stethoscope",
+            "as": "The stethoscope"
+          },
+          {
+            "id": "lancet",
+            "as": "The lancet"
+          },
+          {
+            "id": "microscope",
+            "as": "The microscope"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-islamic-golden-age",
+    "t": "The Islamic Golden Age",
+    "cats": [
+      {
+        "n": "Mathematicians of the House of Wisdom",
+        "i": [
+          "al-khwarizmi",
+          "omar-khayyam",
+          "thabit-ibn-qurra"
+        ]
+      },
+      {
+        "n": "Physicians and philosophers",
+        "i": [
+          "ibn-sina",
+          "ibn-rushd",
+          "al-razi"
+        ]
+      },
+      {
+        "n": "Cities of learning",
+        "i": [
+          "baghdad",
+          "cordoba",
+          "cairo"
+        ]
+      },
+      {
+        "n": "Instruments and ideas",
+        "i": [
+          {
+            "id": "astrolabe",
+            "as": "The astrolabe"
+          },
+          {
+            "id": "camera-obscura",
+            "as": "The camera obscura"
+          },
+          {
+            "id": "arabic-numerals",
+            "as": "Arabic numerals"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-submarine",
+    "t": "The Submarine",
+    "cats": [
+      {
+        "n": "Early submersibles",
+        "i": [
+          "turtle",
+          "nautilus",
+          "hunley"
+        ]
+      },
+      {
+        "n": "Fathers of the deep",
+        "i": [
+          "bushnell",
+          "fulton",
+          "holland"
+        ]
+      },
+      {
+        "n": "The bathyscaphe",
+        "i": [
+          "auguste-piccard",
+          "jacques-piccard",
+          "trieste"
+        ]
+      },
+      {
+        "n": "Submarine fiction",
+        "i": [
+          "captain-nemo",
+          "twenty-thousand-leagues",
+          "red-october"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-maps",
+    "t": "The History of Maps",
+    "cats": [
+      {
+        "n": "Cartographers",
+        "i": [
+          "ptolemy",
+          "mercator",
+          "al-idrisi"
+        ]
+      },
+      {
+        "n": "Milestones",
+        "i": [
+          {
+            "id": "mercator-projection",
+            "as": "The Mercator projection"
+          },
+          {
+            "id": "portolan-chart",
+            "as": "The portolan chart"
+          },
+          {
+            "id": "mappa-mundi",
+            "as": "The mappa mundi"
+          }
+        ]
+      },
+      {
+        "n": "Navigation",
+        "i": [
+          {
+            "id": "compass",
+            "as": "The compass"
+          },
+          {
+            "id": "sextant",
+            "as": "The sextant"
+          },
+          {
+            "id": "kamal",
+            "as": "The kamal"
+          }
+        ]
+      },
+      {
+        "n": "Imaginary lines",
+        "i": [
+          {
+            "id": "equator",
+            "as": "The equator"
+          },
+          "tropic-of-cancer",
+          "date-line"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lost-cities",
+    "t": "Lost Cities",
+    "cats": [
+      {
+        "n": "Cities of the Near East",
+        "i": [
+          "babylon",
+          "nineveh",
+          "persepolis"
+        ]
+      },
+      {
+        "n": "Phoenician ports",
+        "i": [
+          "tyre",
+          "sidon",
+          "carthage"
+        ]
+      },
+      {
+        "n": "Maya cities",
+        "i": [
+          "tikal",
+          {
+            "id": "copan",
+            "as": "Copán"
+          },
+          "palenque"
+        ]
+      },
+      {
+        "n": "Cities of the Indus",
+        "i": [
+          "mohenjo-daro",
+          "harappa",
+          "dholavira"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-jazz-age",
+    "t": "The Jazz Age",
+    "cats": [
+      {
+        "n": "Jazz greats",
+        "i": [
+          "louis-armstrong",
+          "duke-ellington",
+          "ella-fitzgerald"
+        ]
+      },
+      {
+        "n": "Harlem",
+        "i": [
+          "cotton-club",
+          "harlem-renaissance",
+          "langston-hughes"
+        ]
+      },
+      {
+        "n": "Instruments",
+        "i": [
+          {
+            "id": "saxophone",
+            "as": "The saxophone"
+          },
+          {
+            "id": "banjo",
+            "as": "The banjo"
+          },
+          {
+            "id": "cornet",
+            "as": "The cornet"
+          }
+        ]
+      },
+      {
+        "n": "Dances",
+        "i": [
+          "charleston",
+          "lindy-hop",
+          {
+            "id": "tap-dancing",
+            "as": "Tap dancing"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-printed-book",
+    "t": "The Printed Book",
+    "cats": [
+      {
+        "n": "Printers and publishers",
+        "i": [
+          "gutenberg",
+          "caxton",
+          "aldus-manutius"
+        ]
+      },
+      {
+        "n": "Famous firsts",
+        "i": [
+          {
+            "id": "gutenberg-bible",
+            "as": "The Gutenberg Bible"
+          },
+          "diamond-sutra",
+          "nuremberg-chronicle"
+        ]
+      },
+      {
+        "n": "Craft",
+        "i": [
+          {
+            "id": "movable-type",
+            "as": "Movable type"
+          },
+          {
+            "id": "printing-press",
+            "as": "The printing press"
+          },
+          {
+            "id": "linotype",
+            "as": "The linotype machine"
+          }
+        ]
+      },
+      {
+        "n": "Cities of print",
+        "i": [
+          "augsburg",
+          "nuremberg",
+          "basel"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-story-of-food",
+    "t": "The Story of Food",
+    "cats": [
+      {
+        "n": "New World crops",
+        "i": [
+          {
+            "id": "potato",
+            "as": "The potato"
+          },
+          "maize",
+          {
+            "id": "chili-pepper",
+            "as": "The chili pepper"
+          }
+        ]
+      },
+      {
+        "n": "First farms",
+        "i": [
+          {
+            "id": "emmer-wheat",
+            "as": "Emmer wheat"
+          },
+          "barley",
+          "lentils"
+        ]
+      },
+      {
+        "n": "Spices",
+        "i": [
+          "nutmeg",
+          "cinnamon",
+          "cloves"
+        ]
+      },
+      {
+        "n": "Preservation",
+        "i": [
+          {
+            "id": "root-cellar",
+            "as": "The root cellar"
+          },
+          "salting",
+          {
+            "id": "ice-house",
+            "as": "The ice house"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "eyes-on-the-sky",
+    "t": "Eyes on the Sky",
+    "cats": [
+      {
+        "n": "Telescopes",
+        "i": [
+          "hubble-telescope",
+          "jwst",
+          "spitzer"
+        ]
+      },
+      {
+        "n": "Pioneers",
+        "i": [
+          "edwin-hubble",
+          {
+            "id": "leavitt",
+            "as": "Henrietta Swan Leavitt"
+          },
+          "vera-rubin"
+        ]
+      },
+      {
+        "n": "Orbits",
+        "i": [
+          {
+            "id": "low-earth-orbit",
+            "as": "Low Earth orbit"
+          },
+          {
+            "id": "geostationary-orbit",
+            "as": "Geostationary orbit"
+          },
+          {
+            "id": "lagrange-points",
+            "as": "The Lagrange points"
+          }
+        ]
+      },
+      {
+        "n": "What the sky revealed",
+        "i": [
+          "exoplanets",
+          {
+            "id": "expanding-universe",
+            "as": "The expanding universe"
+          },
+          {
+            "id": "cmb",
+            "as": "The cosmic microwave background"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-wars-of-the-roses",
+    "t": "The Wars of the Roses",
+    "cats": [
+      {
+        "n": "Houses",
+        "i": [
+          "house-of-lancaster",
+          "house-of-york",
+          "house-of-tudor"
+        ]
+      },
+      {
+        "n": "Battles",
+        "i": [
+          {
+            "id": "bosworth",
+            "as": "The Battle of Bosworth Field"
+          },
+          "towton",
+          {
+            "id": "st-albans",
+            "as": "The Battle of St Albans"
+          }
+        ]
+      },
+      {
+        "n": "Figures",
+        "i": [
+          "richard-iii",
+          "henry-vii",
+          "edward-iv"
+        ]
+      },
+      {
+        "n": "Motifs",
+        "i": [
+          "white-boar",
+          "sunne-in-splendour",
+          "tudor-rose"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-industrial-revolution",
+    "t": "The Industrial Revolution",
+    "cats": [
+      {
+        "n": "Inventors",
+        "i": [
+          "watt",
+          "arkwright",
+          "cartwright"
+        ]
+      },
+      {
+        "n": "Machines",
+        "i": [
+          {
+            "id": "spinning-jenny",
+            "as": "The spinning jenny"
+          },
+          {
+            "id": "power-loom",
+            "as": "The power loom"
+          },
+          {
+            "id": "water-frame",
+            "as": "The water frame"
+          }
+        ]
+      },
+      {
+        "n": "Factory cities",
+        "i": [
+          "manchester",
+          "leeds",
+          "birmingham"
+        ]
+      },
+      {
+        "n": "Getting around",
+        "i": [
+          {
+            "id": "canal-barge",
+            "as": "The canal barge"
+          },
+          {
+            "id": "macadam-road",
+            "as": "The macadam road"
+          },
+          {
+            "id": "iron-railway",
+            "as": "The iron railway"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-money",
+    "t": "The History of Money",
+    "cats": [
+      {
+        "n": "First coins",
+        "i": [
+          {
+            "id": "lydian-stater",
+            "as": "The Lydian stater"
+          },
+          {
+            "id": "drachm",
+            "as": "The drachm"
+          },
+          {
+            "id": "denarius",
+            "as": "The denarius"
+          }
+        ]
+      },
+      {
+        "n": "Paper promises",
+        "i": [
+          {
+            "id": "jiaozi",
+            "as": "The jiaozi"
+          },
+          {
+            "id": "assignat",
+            "as": "The assignat"
+          },
+          {
+            "id": "goldsmiths-note",
+            "as": "The goldsmith’s note"
+          }
+        ]
+      },
+      {
+        "n": "The gold standard era",
+        "i": [
+          {
+            "id": "gold-sovereign",
+            "as": "The gold sovereign"
+          },
+          {
+            "id": "gold-standard",
+            "as": "The gold standard"
+          },
+          "bretton-woods"
+        ]
+      },
+      {
+        "n": "Before money",
+        "i": [
+          {
+            "id": "cowrie-shells",
+            "as": "Cowrie shells"
+          },
+          {
+            "id": "rai-stones",
+            "as": "The Rai stones"
+          },
+          {
+            "id": "salt-bricks",
+            "as": "Salt bricks"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-photography",
+    "t": "The History of Photography",
+    "cats": [
+      {
+        "n": "Pioneers",
+        "i": [
+          {
+            "id": "niepce",
+            "as": "Nicéphore Niépce"
+          },
+          "daguerre",
+          "talbot"
+        ]
+      },
+      {
+        "n": "Processes",
+        "i": [
+          {
+            "id": "daguerreotype",
+            "as": "The daguerreotype"
+          },
+          {
+            "id": "calotype",
+            "as": "The calotype"
+          },
+          {
+            "id": "wet-plate",
+            "as": "The wet plate"
+          }
+        ]
+      },
+      {
+        "n": "Cameras for everyone",
+        "i": [
+          "kodak-brownie",
+          "leica",
+          "polaroid"
+        ]
+      },
+      {
+        "n": "Milestones",
+        "i": [
+          {
+            "id": "first-photograph",
+            "as": "The first photograph"
+          },
+          {
+            "id": "roll-film",
+            "as": "Roll film"
+          },
+          {
+            "id": "digital-sensor",
+            "as": "The digital sensor"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-days-of-radio",
+    "t": "The Days of Radio",
+    "cats": [
+      {
+        "n": "Pioneers",
+        "i": [
+          "marconi",
+          "fessenden",
+          "de-forest"
+        ]
+      },
+      {
+        "n": "Moments in the air",
+        "i": [
+          {
+            "id": "war-of-the-worlds-broadcast",
+            "as": "The War of the Worlds broadcast"
+          },
+          "fireside-chats",
+          {
+            "id": "royal-christmas-message",
+            "as": "The first royal Christmas message"
+          }
+        ]
+      },
+      {
+        "n": "Networks",
+        "i": [
+          "bbc",
+          "nbc",
+          "cbs"
+        ]
+      },
+      {
+        "n": "The hardware",
+        "i": [
+          {
+            "id": "crystal-set",
+            "as": "The crystal set"
+          },
+          {
+            "id": "vacuum-tube",
+            "as": "The vacuum tube"
+          },
+          {
+            "id": "transistor-radio",
+            "as": "The transistor radio"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-story-of-english",
+    "t": "The Story of English",
+    "cats": [
+      {
+        "n": "Literary firsts",
+        "i": [
+          "beowulf",
+          "canterbury-tales",
+          {
+            "id": "morte-darthur",
+            "as": "Le Morte d’Arthur"
+          }
+        ]
+      },
+      {
+        "n": "The tongues that shaped it",
+        "i": [
+          "old-norse",
+          "norman-french",
+          "latin"
+        ]
+      },
+      {
+        "n": "Dictionary makers",
+        "i": [
+          "johnson",
+          "noah-webster",
+          "james-murray"
+        ]
+      },
+      {
+        "n": "Carried worldwide",
+        "i": [
+          "king-james-bible",
+          "british-empire",
+          {
+            "id": "internet",
+            "as": "The internet"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chinese-dynasties",
+    "t": "Chinese Dynasties",
+    "cats": [
+      {
+        "n": "Dynasties",
+        "i": [
+          {
+            "id": "qin-dynasty",
+            "as": "The Qin dynasty"
+          },
+          {
+            "id": "tang-dynasty",
+            "as": "The Tang dynasty"
+          },
+          {
+            "id": "ming-dynasty",
+            "as": "The Ming dynasty"
+          }
+        ]
+      },
+      {
+        "n": "Thinkers",
+        "i": [
+          "confucius",
+          {
+            "id": "lao-tzu",
+            "as": "Lao Tzu"
+          },
+          "mencius"
+        ]
+      },
+      {
+        "n": "Built works",
+        "i": [
+          "forbidden-city",
+          "grand-canal",
+          "great-wall"
+        ]
+      },
+      {
+        "n": "Inventions",
+        "i": [
+          "gunpowder",
+          {
+            "id": "seismoscope",
+            "as": "The seismoscope"
+          },
+          {
+            "id": "seed-drill",
+            "as": "The seed drill"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-fashion",
+    "t": "The History of Fashion",
+    "cats": [
+      {
+        "n": "Foundations",
+        "i": [
+          {
+            "id": "corset",
+            "as": "The corset"
+          },
+          {
+            "id": "crinoline",
+            "as": "The crinoline"
+          },
+          {
+            "id": "bustle",
+            "as": "The bustle"
+          }
+        ]
+      },
+      {
+        "n": "Designers",
+        "i": [
+          "chanel",
+          "dior",
+          "yves-saint-laurent"
+        ]
+      },
+      {
+        "n": "Fabrics",
+        "i": [
+          "denim",
+          "tweed",
+          "tartan"
+        ]
+      },
+      {
+        "n": "Icons",
+        "i": [
+          {
+            "id": "little-black-dress",
+            "as": "The little black dress"
+          },
+          {
+            "id": "blue-jeans",
+            "as": "Blue jeans"
+          },
+          {
+            "id": "miniskirt",
+            "as": "The miniskirt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-the-car",
+    "t": "The History of the Car",
+    "cats": [
+      {
+        "n": "Pioneers",
+        "i": [
+          "benz",
+          "daimler",
+          "henry-ford"
+        ]
+      },
+      {
+        "n": "Cars that mattered",
+        "i": [
+          "model-t",
+          "vw-beetle",
+          "mini"
+        ]
+      },
+      {
+        "n": "Under the hood",
+        "i": [
+          {
+            "id": "assembly-line",
+            "as": "The assembly line"
+          },
+          {
+            "id": "automatic-transmission",
+            "as": "The automatic transmission"
+          },
+          {
+            "id": "catalytic-converter",
+            "as": "The catalytic converter"
+          }
+        ]
+      },
+      {
+        "n": "Racing",
+        "i": [
+          "indianapolis-500",
+          "formula-one",
+          "le-mans"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-mountains",
+    "t": "The Mountains",
+    "cats": [
+      {
+        "n": "The Himalayas",
+        "i": [
+          "mount-everest",
+          "k2",
+          "annapurna"
+        ]
+      },
+      {
+        "n": "The Alps",
+        "i": [
+          "mont-blanc",
+          "matterhorn",
+          "eiger"
+        ]
+      },
+      {
+        "n": "Summiteers",
+        "i": [
+          "hillary",
+          "tenzing",
+          "messner"
+        ]
+      },
+      {
+        "n": "The dangers",
+        "i": [
+          {
+            "id": "death-zone",
+            "as": "The death zone"
+          },
+          "hillary-step",
+          "khumbu-icefall"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-1960s",
+    "t": "The 1960s",
+    "cats": [
+      {
+        "n": "The sound",
+        "i": [
+          "beatles",
+          "rolling-stones",
+          "motown"
+        ]
+      },
+      {
+        "n": "The counterculture",
+        "i": [
+          {
+            "id": "woodstock",
+            "as": "Woodstock"
+          },
+          "summer-of-love",
+          {
+            "id": "hippie-trail",
+            "as": "The hippie trail"
+          }
+        ]
+      },
+      {
+        "n": "Turbulence",
+        "i": [
+          "cuban-missile-crisis",
+          "prague-spring",
+          "tet-offensive"
+        ]
+      },
+      {
+        "n": "On television",
+        "i": [
+          "star-trek",
+          "ed-sullivan-show",
+          {
+            "id": "apollo-11-broadcast",
+            "as": "The Apollo 11 broadcast"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-napoleonic-era",
+    "t": "The Napoleonic Era",
+    "cats": [
+      {
+        "n": "The man and his circle",
+        "i": [
+          "napoleon",
+          "josephine",
+          "ney"
+        ]
+      },
+      {
+        "n": "The final act",
+        "i": [
+          "elba",
+          {
+            "id": "hundred-days",
+            "as": "the Hundred Days"
+          },
+          "saint-helena"
+        ]
+      },
+      {
+        "n": "Tools of empire",
+        "i": [
+          {
+            "id": "napoleonic-code",
+            "as": "the Napoleonic Code"
+          },
+          {
+            "id": "continental-system",
+            "as": "the Continental System"
+          },
+          {
+            "id": "grande-armee",
+            "as": "the Grande Armée"
+          }
+        ]
+      },
+      {
+        "n": "Battles without end",
+        "i": [
+          {
+            "id": "borodino",
+            "as": "Borodino"
+          },
+          {
+            "id": "jena",
+            "as": "Jena"
+          },
+          {
+            "id": "battle-of-the-nile",
+            "as": "the Battle of the Nile"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-crusades",
+    "t": "The Crusades",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "saladin",
+          "richard-lionheart",
+          "godfrey-of-bouillon"
+        ]
+      },
+      {
+        "n": "Campaigns",
+        "i": [
+          {
+            "id": "first-crusade-jerusalem",
+            "as": "the First Crusade"
+          },
+          {
+            "id": "third-crusade",
+            "as": "the Third Crusade"
+          },
+          {
+            "id": "childrens-crusade",
+            "as": "the Children’s Crusade"
+          }
+        ]
+      },
+      {
+        "n": "Prizes and ports",
+        "i": [
+          "jerusalem",
+          "antioch",
+          "acre"
+        ]
+      },
+      {
+        "n": "The fighting orders",
+        "i": [
+          {
+            "id": "knights-templar",
+            "as": "the Knights Templar"
+          },
+          {
+            "id": "hospitallers",
+            "as": "the Hospitallers"
+          },
+          {
+            "id": "teutonic-knights",
+            "as": "the Teutonic Knights"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-mongol-empire",
+    "t": "The Mongol Empire",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "genghis-khan",
+          "kublai-khan",
+          "ogedei-khan"
+        ]
+      },
+      {
+        "n": "Successor states",
+        "i": [
+          {
+            "id": "golden-horde",
+            "as": "the Golden Horde"
+          },
+          {
+            "id": "yuan-dynasty",
+            "as": "the Yuan dynasty"
+          },
+          {
+            "id": "ilkhanate",
+            "as": "the Ilkhanate"
+          }
+        ]
+      },
+      {
+        "n": "Campaigns",
+        "i": [
+          {
+            "id": "sack-of-baghdad",
+            "as": "the sack of Baghdad"
+          },
+          {
+            "id": "legnica",
+            "as": "the battle of Legnica"
+          },
+          {
+            "id": "invasions-of-japan",
+            "as": "the invasions of Japan"
+          }
+        ]
+      },
+      {
+        "n": "Life on the steppe",
+        "i": [
+          {
+            "id": "ger",
+            "as": "the ger"
+          },
+          {
+            "id": "composite-bow",
+            "as": "the composite bow"
+          },
+          {
+            "id": "yam-relay",
+            "as": "the Yam relay"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-meiji-era",
+    "t": "The Meiji Era",
+    "cats": [
+      {
+        "n": "Leaders",
+        "i": [
+          "meiji",
+          "ito-hirobumi",
+          "saigo-takamori"
+        ]
+      },
+      {
+        "n": "Reforms",
+        "i": [
+          {
+            "id": "meiji-constitution",
+            "as": "the Meiji Constitution"
+          },
+          {
+            "id": "compulsory-schooling",
+            "as": "compulsory schooling"
+          },
+          {
+            "id": "abolition-of-samurai",
+            "as": "the abolition of the samurai class"
+          }
+        ]
+      },
+      {
+        "n": "Wars",
+        "i": [
+          {
+            "id": "satsuma-rebellion",
+            "as": "the Satsuma Rebellion"
+          },
+          {
+            "id": "sino-japanese-war",
+            "as": "the Sino-Japanese War"
+          },
+          {
+            "id": "russo-japanese-war",
+            "as": "the Russo-Japanese War"
+          }
+        ]
+      },
+      {
+        "n": "Symbols of the new age",
+        "i": [
+          {
+            "id": "first-japanese-railway",
+            "as": "the first Japanese railway"
+          },
+          {
+            "id": "rokumeikan",
+            "as": "the Rokumeikan"
+          },
+          {
+            "id": "bank-of-japan",
+            "as": "the Bank of Japan"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-mughal-empire",
+    "t": "The Mughal Empire",
+    "cats": [
+      {
+        "n": "Emperors",
+        "i": [
+          "babur",
+          "akbar",
+          "shah-jahan"
+        ]
+      },
+      {
+        "n": "Splendors",
+        "i": [
+          {
+            "id": "taj-mahal",
+            "as": "the Taj Mahal"
+          },
+          {
+            "id": "peacock-throne",
+            "as": "the Peacock Throne"
+          },
+          {
+            "id": "red-fort",
+            "as": "the Red Fort"
+          }
+        ]
+      },
+      {
+        "n": "The end",
+        "i": [
+          "aurangzeb",
+          "nader-shah",
+          {
+            "id": "plassey",
+            "as": "the Battle of Plassey"
+          }
+        ]
+      },
+      {
+        "n": "Legacies",
+        "i": [
+          {
+            "id": "mughal-gardens",
+            "as": "Mughal gardens"
+          },
+          {
+            "id": "mughal-miniatures",
+            "as": "Mughal miniatures"
+          },
+          {
+            "id": "urdu",
+            "as": "the Urdu language"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-history-of-games",
+    "t": "The History of Games",
+    "cats": [
+      {
+        "n": "Antiquity",
+        "i": [
+          {
+            "id": "senet",
+            "as": "senet"
+          },
+          {
+            "id": "knucklebones",
+            "as": "knucklebones"
+          },
+          {
+            "id": "royal-game-of-ur",
+            "as": "the Royal Game of Ur"
+          }
+        ]
+      },
+      {
+        "n": "The classics",
+        "i": [
+          {
+            "id": "chess",
+            "as": "chess"
+          },
+          {
+            "id": "backgammon",
+            "as": "backgammon"
+          },
+          {
+            "id": "go",
+            "as": "the game of Go"
+          }
+        ]
+      },
+      {
+        "n": "The parlor age",
+        "i": [
+          {
+            "id": "dominoes",
+            "as": "dominoes"
+          },
+          {
+            "id": "whist",
+            "as": "whist"
+          },
+          {
+            "id": "charades",
+            "as": "charades"
+          }
+        ]
+      },
+      {
+        "n": "The board game boom",
+        "i": [
+          "monopoly",
+          "scrabble",
+          "clue"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-american-revolution",
+    "t": "The American Revolution",
+    "cats": [
+      {
+        "n": "Voices of the cause",
+        "i": [
+          "adams",
+          "paine",
+          "franklin"
+        ]
+      },
+      {
+        "n": "The fight",
+        "i": [
+          {
+            "id": "boston-tea-party",
+            "as": "the Boston Tea Party"
+          },
+          "lexington-and-concord",
+          {
+            "id": "valley-forge",
+            "as": "Valley Forge"
+          }
+        ]
+      },
+      {
+        "n": "Allies and turncoats",
+        "i": [
+          {
+            "id": "lafayette",
+            "as": "the Marquis de Lafayette"
+          },
+          "steuben",
+          "benedict-arnold"
+        ]
+      },
+      {
+        "n": "After the peace",
+        "i": [
+          {
+            "id": "treaty-of-paris-1783",
+            "as": "the Treaty of Paris"
+          },
+          {
+            "id": "shays-rebellion",
+            "as": "Shays’ Rebellion"
+          },
+          {
+            "id": "constitutional-convention",
+            "as": "the Constitutional Convention"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-baroque-age",
+    "t": "The Baroque Age",
+    "cats": [
+      {
+        "n": "Composers",
+        "i": [
+          "vivaldi",
+          "handel",
+          "purcell"
+        ]
+      },
+      {
+        "n": "Painters",
+        "i": [
+          "caravaggio",
+          "rembrandt",
+          {
+            "id": "vermeer",
+            "as": "Vermeer"
+          }
+        ]
+      },
+      {
+        "n": "Architects and sculptors",
+        "i": [
+          {
+            "id": "bernini",
+            "as": "Bernini"
+          },
+          {
+            "id": "borromini",
+            "as": "Borromini"
+          },
+          "wren"
+        ]
+      },
+      {
+        "n": "Wonders of the age",
+        "i": [
+          {
+            "id": "st-peters-basilica",
+            "as": "St. Peter’s Basilica"
+          },
+          {
+            "id": "st-pauls-cathedral",
+            "as": "St. Paul’s Cathedral"
+          },
+          {
+            "id": "trevi-fountain",
+            "as": "the Trevi Fountain"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-trojan-war",
+    "t": "The Trojan War",
+    "cats": [
+      {
+        "n": "Warriors",
+        "i": [
+          "achilles",
+          "hector",
+          "odysseus"
+        ]
+      },
+      {
+        "n": "Kings and queens",
+        "i": [
+          "priam",
+          "agamemnon",
+          "helen-of-troy"
+        ]
+      },
+      {
+        "n": "The poets’ tale",
+        "i": [
+          {
+            "id": "iliad",
+            "as": "the Iliad"
+          },
+          {
+            "id": "odyssey",
+            "as": "the Odyssey"
+          },
+          {
+            "id": "trojan-horse",
+            "as": "the Trojan Horse"
+          }
+        ]
+      },
+      {
+        "n": "The world it ended",
+        "i": [
+          "mycenae",
+          {
+            "id": "fall-of-troy",
+            "as": "the fall of Troy"
+          },
+          {
+            "id": "bronze-age-collapse",
+            "as": "the Bronze Age collapse"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-victorian-age",
+    "t": "The Victorian Age",
+    "cats": [
+      {
+        "n": "The court",
+        "i": [
+          "victoria",
+          "prince-albert",
+          "john-brown"
+        ]
+      },
+      {
+        "n": "Marvels of the age",
+        "i": [
+          {
+            "id": "crystal-palace",
+            "as": "the Crystal Palace"
+          },
+          {
+            "id": "great-exhibition",
+            "as": "the Great Exhibition"
+          },
+          {
+            "id": "london-underground",
+            "as": "the London Underground"
+          }
+        ]
+      },
+      {
+        "n": "New machines",
+        "i": [
+          {
+            "id": "electric-telegraph",
+            "as": "the electric telegraph"
+          },
+          {
+            "id": "penny-post",
+            "as": "the penny post"
+          },
+          {
+            "id": "sewing-machine",
+            "as": "the sewing machine"
+          }
+        ]
+      },
+      {
+        "n": "The age’s writers",
+        "i": [
+          "dickens",
+          "trollope",
+          "hardy"
+        ]
+      }
+    ]
+  }
+]

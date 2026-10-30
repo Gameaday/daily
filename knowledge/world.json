@@ -2688,5 +2688,60 @@
     "id": "mycenae",
     "n": "Mycenae",
     "d": "The city of the lion gate"
+  },
+  {
+    "id": "ra",
+    "n": "Ra",
+    "d": "The sun god who sails the day barque"
+  },
+  {
+    "id": "anubis",
+    "n": "Anubis",
+    "d": "The jackal god of the embalming table"
+  },
+  {
+    "id": "osiris",
+    "n": "Osiris",
+    "d": "The murdered king who judges the dead"
+  },
+  {
+    "id": "spinning-jenny",
+    "n": "The Spinning Jenny",
+    "d": "The frame that let one spinner work many spindles"
+  },
+  {
+    "id": "water-frame",
+    "n": "The Water Frame",
+    "d": "The roller frame that powered the first mill"
+  },
+  {
+    "id": "power-loom",
+    "n": "The Power Loom",
+    "d": "The loom that moved weaving from cottage to mill"
+  },
+  {
+    "id": "st-peters-basilica",
+    "n": "St. Peter's Basilica",
+    "d": "Michelangelo's dome over the apostle's tomb"
+  },
+  {
+    "id": "st-pauls-cathedral",
+    "n": "St. Paul's Cathedral",
+    "d": "Wren's dome over the old city"
+  },
+  {
+    "id": "trevi-fountain",
+    "n": "The Trevi Fountain",
+    "d": "The baroque cascade where the coins fall"
+  },
+  {
+    "id": "fall-of-troy",
+    "n": "The Fall of Troy",
+    "d": "The night the ten year war ended in fire"
+  },
+  {
+    "id": "bronze-age-collapse",
+    "n": "The Bronze Age Collapse",
+    "d": "The centuries when the palace world went dark"
   }
 ]

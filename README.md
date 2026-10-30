@@ -156,27 +156,61 @@ terminate TLS there. The repo ships no domain or TLS config on purpose.
   (`scores-archive`) is mounted at /app/archive for the end-of-day
   snapshots: the only writable path in the container
 
-Updating after pushing to GitHub:
+Releases are tag-gated: the Pi does not track main. deploy/pull.py deploys
+only the newest stable v* tag, and only once the validate run for that
+exact tag commit finished green. Pushing the tag is the deploy act:
 
-    make deploy      # = python3 deploy/pull.py (fetch, CI-green check, ff-only pull, rebuild)
+    git tag v1.0.0 && git push --tags
 
-Better: install the update timer and the Pi does this itself every five
-minutes, only for commits whose CI run passed. A red or running CI run
-means the site keeps serving the last known-good version and tries again
-next cycle; a failed rebuild leaves the old containers running.
+The tag push also fires the release workflow (.github/workflows/release.yml),
+which builds the offline and online bundles and attaches both zips to the
+GitHub release for the tag. A red or still-running validate run means the
+Pi keeps serving the last known-good version and tries again next cycle;
+after a rebuild the loopback smoke test (/api/health and /) must pass, and
+on any failure the Pi rebuilds the previous tag, so a bad release cannot
+take the site down. Prerelease tags (v1.0.0-rc.1: anything with a hyphen)
+cut dogfood bundles but never auto-deploy.
+
+Better: install the update timer and the Pi checks for a new green-tagged
+release every five minutes:
 
     sudo cp deploy/daily-update.service deploy/daily-update.timer /etc/systemd/system/
     sudo systemctl daemon-reload
     sudo systemctl enable --now daily-update.timer
+
+When the repo goes private at 1.0, give the service a read-only GITHUB_TOKEN
+(the line is commented in daily-update.service); by hand,
+GITHUB_TOKEN=... python3 deploy/pull.py works the same way.
 
 Non-Docker alternative: `scores/warmup-scores.service` runs the service
 under systemd with DynamicUser and a hardened sandbox. Give it one
 writable directory for the archive (ReadWritePaths=) and pass
 `--archive-dir` in ExecStart.
 
-The loop is: push to GitHub, Actions runs the layers below, the Pi notices
-the green commit within about five minutes and rebuilds. If tests fail, the
-site never moves.
+The loop is: push to GitHub, Actions validates the push, the Pi deploys a
+tag only after its validate run goes green, and a failed smoke test rolls
+the site back to the previous tag. If tests fail, the site never moves.
+
+## Go-live checklist
+
+One-time on the Pi: install Docker, clone the repo,
+docker compose up -d --build, install the update timer, and point the edge
+proxy for daily.historylabs.dev at host port 8080 (TLS terminates at the
+edge; the repo ships no domain config on purpose). Then:
+
+1. push the first stable tag (git tag v1.0.0 && git push --tags); validate
+   runs on the tag push and the Pi deploys it once that run is green,
+   usually within ten minutes
+2. open the site: the landing page and one game should load, and
+   /api/health should answer ok
+3. play one puzzle online: the served puzzle replaces the inline pick, so
+   a win proves delivery end to end
+4. after ET midnight, confirm the first archive snapshot landed on the
+   scores-archive volume
+
+Day numbering comes from the epoch in scores/manifest.json (CI
+cross-checks it against shell/common.js), so nothing on the server decides
+which puzzle serves on which day.
 
 ## CI and validation
 
@@ -199,7 +233,8 @@ all dependency-free (Node 20+ and Python 3):
 5. `node tools/build-bundles.mjs` builds and verifies the offline and
    online bundles
 
-Local pre-push: `npm test` (or `make test`) runs the same layers in seconds.
+Local pre-push: `npm test` (or `make test`) runs the test layers CI runs, in
+seconds; only the bundle builds stay CI-side.
 
 ## The recycle rule
 

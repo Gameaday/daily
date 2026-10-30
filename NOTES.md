@@ -6,8 +6,10 @@ shell is extracted (see common.js below).
 ## Deploy state (2026-10)
 
 The repo now ships a Docker compose stack (Caddy web + scores, hardened) and
-pull-based, test-gated CD: the Pi itself polls GitHub for a green main and
-fast-forwards (deploy/pull.py + a systemd timer; see README). There is no
+pull-based, tag-gated CD: the Pi itself polls GitHub for the newest stable
+v* tag and deploys it once its validate run is green (deploy/pull.py + a
+systemd timer; see README). Pushing a tag is the deploy act, and a failed
+smoke test rolls the site back to the previous tag. There is no
 inbound access to the Pi and no SSH key stored anywhere - deliberately.
 Nothing in the notes below changes because of that - the scores service stays
 in-memory and consolidated only, whether it runs under systemd or in a

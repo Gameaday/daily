@@ -4,10 +4,10 @@
 
 .PHONY: test build up down restart logs deploy
 
-# full local gate: same three layers CI runs, with the committed puzzle
-# stores verified against the client banks first (run.js checks the
-# committed picks against the games)
+# full local gate: the same test layers CI runs, with the knowledge layer
+# verified against the committed stores first
 test:
+	node tools/build-knowledge.mjs
 	node tools/export-puzzles.mjs
 	node checks/games.js
 	node tests/run.js
@@ -29,10 +29,10 @@ restart:
 logs:
 	docker compose logs -f --tail=100
 
-# Run anywhere with the repo (the same thing the systemd timer runs):
-# fetch, verify CI is green on origin/main, fast-forward, rebuild containers.
-# The rebuild is what ships new site content - the site is baked into the
-# images, and a failed rebuild leaves the old containers running.
-# No SSH, no secrets - the machine running it only makes outbound connections.
+# The same thing the systemd timer runs: deploy the newest stable v* tag
+# once its validate run is green (fetch, CI check, checkout, rebuild),
+# smoke-test the loopback port, roll back on failure. Pushing a tag is
+# the deploy act - the Pi never tracks main. No SSH, no secrets - the
+# machine running it only makes outbound connections.
 deploy:
 	python3 deploy/pull.py

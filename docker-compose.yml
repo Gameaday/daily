@@ -11,9 +11,10 @@
 #           static archive snapshot on the scores-archive volume (written
 #           once, then read-only).
 #
-# Updating after a git push: `make deploy` (or the update timer) pulls
-# main when CI is green on that exact commit and rebuilds the containers -
-# a rebuild is what ships new site content now that the site is baked in.
+# Updating: `make deploy` (or the update timer) deploys the newest stable
+# v* tag once its validate run is green on that exact commit and rebuilds
+# the containers - a rebuild is what ships new site content now that the
+# site is baked in. The Pi never tracks main; pushing a tag is the deploy act.
 
 services:
   web:

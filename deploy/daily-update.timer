@@ -1,8 +1,9 @@
-# Checks GitHub for a green main every 5 minutes and updates when there is one.
-# The Pi only ever makes OUTBOUND connections - nothing can reach in.
+# Checks GitHub for a new green-tagged release every 5 minutes and deploys
+# when there is one. The Pi only ever makes OUTBOUND connections - nothing can
+# reach in.
 
 [Unit]
-Description=Check for a green main on GitHub every 5 minutes
+Description=Check GitHub for a new green-tagged release every 5 minutes
 
 [Timer]
 OnBootSec=3min

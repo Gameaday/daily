@@ -115,7 +115,8 @@ game's playthrough, `server-gated.js` the online-delivery tests,
 deleting its folder and its module, nothing else.
 
 CI (`.github/workflows/validate.yml`) runs the same layers on every push;
-the Pi only deploys commits whose CI run is green.
+the Pi deploys only the newest stable `v*` tag whose validate run is green
+(pushing a tag is the deploy act; see README).
 
 ## Adding a game
 

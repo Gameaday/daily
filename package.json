@@ -6,7 +6,7 @@
     "export": "node tools/export-puzzles.mjs",
     "export:write": "node tools/export-puzzles.mjs --write",
     "build": "node tools/build-bundles.mjs",
-    "test": "node tools/export-puzzles.mjs && node checks/games.js && node tests/run.js && python3 tests/server_test.py",
+    "test": "node tools/build-knowledge.mjs && node tools/export-puzzles.mjs && node checks/games.js && node tests/run.js && python3 tests/server_test.py",
     "test:games": "node checks/games.js && node tests/run.js",
     "test:server": "python3 tests/server_test.py"
   }

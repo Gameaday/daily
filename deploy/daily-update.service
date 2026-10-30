@@ -6,7 +6,7 @@
 # Edit the two paths below if your clone lives somewhere else.
 
 [Unit]
-Description=Pull green main and rebuild the daily warmup containers
+Description=Deploy the newest green-tagged release and rebuild the daily warmup containers
 
 [Service]
 Type=oneshot

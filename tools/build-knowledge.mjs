@@ -273,9 +273,10 @@ for (const x of entities) byId[x.id] = x;
 }
 /* relations: typed, dated where honest */
 const RELATION_TYPES = ['ally', 'colleague', 'correspondent', 'editor',
-  'family', 'friend', 'influence', 'kindred', 'lover', 'member',
-  'opposed', 'participant', 'partnered', 'patron', 'physician',
-  'rival', 'successor', 'teacher', 'translator'];
+  'family', 'friend', 'housed-at', 'influence', 'kindred', 'lover',
+  'member', 'opposed', 'participant', 'partnered', 'patron',
+  'physician', 'resident', 'rival', 'site-of', 'successor',
+  'teacher', 'translator'];
 const rels = Array.isArray(relations) ? relations : [];
 {
   const ids = new Set(entities.map(x => x.id));

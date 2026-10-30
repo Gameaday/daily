@@ -30,12 +30,15 @@ schedule that the first post-flip bank change reshuffles.
 - relations.json - each entry is { a, b, y, w, t }: a typed, dated
   relation between two entities. w is the reveal sentence. t is the
   relation type from the shared vocabulary (ally, colleague,
-  correspondent, editor, family, friend, influence, kindred, lover,
-  member, opposed, participant, partnered, patron, physician, rival,
-  successor, teacher, translator), present when the telling knows
-  it. y is a positive integer year, and it is absent when no honest
+  correspondent, editor, family, friend, housed-at, influence,
+  kindred, lover, member, opposed, participant, partnered, patron,
+  physician, resident, rival, site-of, successor, teacher,
+  translator), present when the telling knows it. The three location
+  types (resident, site-of, housed-at) tie people, events,
+  structures and kept things to the places they belong to. y is a positive integer year, and it is absent when no honest
   one exists (ancient relations carry no y at all).
-- places.json - cities the presence spans anchor to. Fields: id, n, d.
+- places.json - cities the presence spans anchor to and the
+  location relations point at. Fields: id, n, d.
 - world.json - the wider world the day tiles will point at: ships,
   deities, myths, works, buildings, instruments, geography,
   organizations, foods, words, money and games. Fields: id, n, d.

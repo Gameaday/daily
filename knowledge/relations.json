@@ -3963,5 +3963,313 @@
     "b": "gutenberg-bible",
     "w": "The printer and the forty two line book that outlived him",
     "t": "kindred"
+  },
+  {
+    "a": "anne-boleyn",
+    "b": "london",
+    "y": 1533,
+    "w": "The court that crowned her and the Tower that ended her",
+    "t": "resident"
+  },
+  {
+    "a": "babbage",
+    "b": "london",
+    "y": 1814,
+    "w": "The city where the engines were designed and never built",
+    "t": "resident"
+  },
+  {
+    "a": "banks",
+    "b": "london",
+    "y": 1772,
+    "w": "The Soho Square salon that ran the empire s botany",
+    "t": "resident"
+  },
+  {
+    "a": "london",
+    "b": "wren",
+    "y": 1666,
+    "w": "The city he rebuilt in stone after the fire",
+    "t": "resident"
+  },
+  {
+    "a": "dickens",
+    "b": "london",
+    "y": 1822,
+    "w": "The streets he walked at night and wrote up by morning",
+    "t": "resident"
+  },
+  {
+    "a": "london",
+    "b": "newton",
+    "y": 1696,
+    "w": "The Mint where he hunted counterfeiters to the gallows",
+    "t": "resident"
+  },
+  {
+    "a": "johnson",
+    "b": "london",
+    "y": 1737,
+    "w": "The garrets and coffeehouses of the Dictionary s years",
+    "t": "resident"
+  },
+  {
+    "a": "florence",
+    "b": "galileo",
+    "y": 1610,
+    "w": "The Medici court that made him its mathematician",
+    "t": "resident"
+  },
+  {
+    "a": "mozart",
+    "b": "vienna",
+    "y": 1781,
+    "w": "The freelance rooms where Figaro was rehearsed",
+    "t": "resident"
+  },
+  {
+    "a": "beethoven",
+    "b": "vienna",
+    "y": 1792,
+    "w": "The city he moved to at 22 and never left",
+    "t": "resident"
+  },
+  {
+    "a": "schiller",
+    "b": "weimar",
+    "y": 1799,
+    "w": "The friendship years on the Ilm",
+    "t": "resident"
+  },
+  {
+    "a": "goethe",
+    "b": "weimar",
+    "y": 1775,
+    "w": "The ducal desk where Faust was finished",
+    "t": "resident"
+  },
+  {
+    "a": "dostoevsky",
+    "b": "st-petersburg",
+    "y": 1845,
+    "w": "The canal city where Raskolnikov walks",
+    "t": "resident"
+  },
+  {
+    "a": "pushkin",
+    "b": "st-petersburg",
+    "y": 1831,
+    "w": "The capital of his poems and his last duel",
+    "t": "resident"
+  },
+  {
+    "a": "franklin",
+    "b": "philadelphia",
+    "y": 1723,
+    "w": "The printing house that made the man",
+    "t": "resident"
+  },
+  {
+    "a": "paine",
+    "b": "philadelphia",
+    "y": 1774,
+    "w": "The print shops where Common Sense broke",
+    "t": "resident"
+  },
+  {
+    "a": "amsterdam",
+    "b": "rembrandt",
+    "y": 1631,
+    "w": "The Jodenbreestraat house and the bankruptcy",
+    "t": "resident"
+  },
+  {
+    "a": "amsterdam",
+    "b": "spinoza",
+    "y": 1656,
+    "w": "The lens shop in the Portuguese quarter",
+    "t": "resident"
+  },
+  {
+    "a": "boswell",
+    "b": "edinburgh",
+    "y": 1769,
+    "w": "The High Street world the journals kept",
+    "t": "resident"
+  },
+  {
+    "a": "edinburgh",
+    "b": "hume",
+    "y": 1769,
+    "w": "The New Town s calm skeptic",
+    "t": "resident"
+  },
+  {
+    "a": "madrid",
+    "b": "velazquez",
+    "y": 1623,
+    "w": "The palace studio of the Habsburg brush",
+    "t": "resident"
+  },
+  {
+    "a": "goya",
+    "b": "madrid",
+    "y": 1780,
+    "w": "The court he painted light and then dark",
+    "t": "resident"
+  },
+  {
+    "a": "leonardo",
+    "b": "milan",
+    "y": 1482,
+    "w": "The Sforza years behind the Last Supper",
+    "t": "resident"
+  },
+  {
+    "a": "louis-xiv",
+    "b": "versailles",
+    "y": 1682,
+    "w": "The hunting lodge he grew into the seat of France",
+    "t": "resident"
+  },
+  {
+    "a": "berlin",
+    "b": "humboldt",
+    "y": 1827,
+    "w": "The university town he kept afloat with gifts",
+    "t": "resident"
+  },
+  {
+    "a": "da-gama",
+    "b": "lisbon",
+    "y": 1497,
+    "w": "The harbor his caravels cleared for India",
+    "t": "resident"
+  },
+  {
+    "a": "great-fire",
+    "b": "london",
+    "y": 1666,
+    "w": "The four days the medieval city burned",
+    "t": "site-of"
+  },
+  {
+    "a": "gunpowder-plot",
+    "b": "london",
+    "y": 1605,
+    "w": "The cellar under Westminster and the plot that failed",
+    "t": "site-of"
+  },
+  {
+    "a": "execution-of-charles-i",
+    "b": "london",
+    "y": 1649,
+    "w": "The scaffold outside the Banqueting House",
+    "t": "site-of"
+  },
+  {
+    "a": "abolition-act-1833",
+    "b": "london",
+    "y": 1833,
+    "w": "The vote in Parliament that freed the empire",
+    "t": "site-of"
+  },
+  {
+    "a": "french-revolution",
+    "b": "paris",
+    "y": 1789,
+    "w": "The Bastille fell to the city that stormed it",
+    "t": "site-of"
+  },
+  {
+    "a": "louisiana-purchase",
+    "b": "paris",
+    "y": 1803,
+    "w": "The treaty signed for a river empire",
+    "t": "site-of"
+  },
+  {
+    "a": "congress-of-vienna",
+    "b": "vienna",
+    "y": 1814,
+    "w": "The dance floors where the map of Europe was redrawn",
+    "t": "site-of"
+  },
+  {
+    "a": "st-petersburg",
+    "b": "st-petersburg-founded",
+    "y": 1703,
+    "w": "The marsh Peter decreed into a capital",
+    "t": "site-of"
+  },
+  {
+    "a": "declaration-of-independence",
+    "b": "philadelphia",
+    "y": 1776,
+    "w": "The State House where the Congress voted",
+    "t": "site-of"
+  },
+  {
+    "a": "florence",
+    "b": "mona-lisa-begun",
+    "y": 1503,
+    "w": "The workshop where the sitter first sat",
+    "t": "site-of"
+  },
+  {
+    "a": "new-york",
+    "b": "wall-street-crash",
+    "y": 1929,
+    "w": "The ticker in the street that stopped",
+    "t": "site-of"
+  },
+  {
+    "a": "antonine-plague",
+    "b": "rome",
+    "y": 165,
+    "w": "The pestilence the legions carried home",
+    "t": "site-of"
+  },
+  {
+    "a": "new-york",
+    "b": "war-of-the-worlds-broadcast",
+    "y": 1938,
+    "w": "The studio where Martians took the air",
+    "t": "site-of"
+  },
+  {
+    "a": "rome",
+    "b": "st-peters-basilica",
+    "y": 1626,
+    "w": "The basilica Urban VIII consecrated in the city of Peter",
+    "t": "resident"
+  },
+  {
+    "a": "london",
+    "b": "st-pauls-cathedral",
+    "y": 1710,
+    "w": "Wren s rebuilt dome over Ludgate Hill",
+    "t": "resident"
+  },
+  {
+    "a": "rome",
+    "b": "trevi-fountain",
+    "y": 1762,
+    "w": "Salvi s marble theatre against the Palazzo Poli",
+    "t": "resident"
+  },
+  {
+    "a": "london",
+    "b": "rosetta-stone",
+    "y": 1802,
+    "w": "In the British Museum since the French surrender",
+    "t": "housed-at"
+  },
+  {
+    "a": "mona-lisa",
+    "b": "paris",
+    "y": 1797,
+    "w": "In the Louvre since the Revolution",
+    "t": "housed-at"
   }
 ]

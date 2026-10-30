@@ -37,8 +37,12 @@
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
      Benjamin / John Franklin near miss stays impossible forever)
+   - the wider world and the animals join the one id namespace now:
+     nothing compiles from them yet, but a colliding id fails the
+     build the moment it lands
    - every relation endpoint must be a known entity; no self relations,
-     no duplicate pairs
+     no duplicate pairs, and a t, when present, comes from the shared
+     relation vocabulary
    - reveal sentences are required strings; years are positive integers
      or absent (ancient relations carry no y at all)
    - optional entity fields are honest or absent: d and q are strings,
@@ -94,17 +98,20 @@ const artifacts = readLayer('artifacts');
 const quotes = readLayer('quotes');
 const bogus = readLayer('bogus');
 const wellActually = readLayer('well-actually');
+const world = readLayer('world');
+const animals = readLayer('animals');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
-                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['well-actually', wellActually]]){
+                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['well-actually', wellActually],
+                       ['world', world], ['animals', animals]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
 
 /* entities: one id namespace across every type */
 const entities = [];
-for (const arr of [people, events, places, artifacts]){
+for (const arr of [people, events, places, artifacts, animals, world]){
   if (!Array.isArray(arr)) continue;
   for (const x of arr){
     if (!x || typeof x.id !== 'string' || typeof x.n !== 'string')
@@ -254,6 +261,10 @@ for (const x of entities) byId[x.id] = x;
   }
 }
 /* relations: typed, dated where honest */
+const RELATION_TYPES = ['ally', 'colleague', 'correspondent', 'editor',
+  'family', 'friend', 'influence', 'kindred', 'lover', 'member',
+  'opposed', 'participant', 'partnered', 'patron', 'physician',
+  'rival', 'successor', 'teacher', 'translator'];
 const rels = Array.isArray(relations) ? relations : [];
 {
   const ids = new Set(entities.map(x => x.id));
@@ -264,6 +275,8 @@ const rels = Array.isArray(relations) ? relations : [];
     else if (!ids.has(r.a)) fail('knowledge: relation references unknown entity ' + r.a);
     else if (!ids.has(r.b)) fail('knowledge: relation references unknown entity ' + r.b);
     else if (r.a === r.b) fail('knowledge: relation connects ' + r.a + ' to itself');
+    else if (r.t !== undefined && !RELATION_TYPES.includes(r.t))
+      fail('knowledge: relation t is not in the shared vocabulary: ' + r.t + ' (' + r.a + ' - ' + r.b + ')');
     else if (r.y !== undefined && (!Number.isInteger(r.y) || r.y <= 0))
       fail('knowledge: relation year must be a positive integer or absent (' + r.a + ' - ' + r.b + ')');
     else {

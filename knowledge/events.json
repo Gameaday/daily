@@ -352,7 +352,7 @@
     "day": 5
   },
   {
-    "id": "gutenberg-bible",
+    "id": "gutenberg-bible-printed",
     "n": "The Gutenberg Bible",
     "q": "Gutenberg prints his 42-line Bible, the first major book made with movable type.",
     "y": 1455
@@ -475,7 +475,7 @@
     "month": 9
   },
   {
-    "id": "magna-carta",
+    "id": "magna-carta-sealed",
     "n": "The Magna Carta",
     "q": "King John seals the Magna Carta at Runnymede.",
     "y": 1215,
@@ -515,7 +515,7 @@
     "month": 10
   },
   {
-    "id": "mona-lisa",
+    "id": "mona-lisa-begun",
     "n": "The Mona Lisa",
     "q": "Leonardo da Vinci begins painting the Mona Lisa.",
     "y": 1503

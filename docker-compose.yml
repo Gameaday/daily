@@ -3,8 +3,9 @@
 #
 # web     - Caddy serving the online bundle baked into the image (no puzzle
 #           banks inside; puzzles are served by the scores service). Plain
-#           HTTP on host port 8080: point your edge proxy (Traefik, nginx,
-#           ...) at it for TLS/domains. The repo needs no domain config.
+#           HTTP on host port WEB_PORT (default 8081, set in .env): point
+#           your edge proxy (Traefik, nginx, ...) at it for TLS/domains.
+#           The repo needs no domain config.
 # scores  - the global-curve + puzzle-delivery service; internal network
 #           only, no capabilities, 64 MB cap. Only fresh-day plays count
 #           toward the live curve; each finished day collapses into a
@@ -24,7 +25,7 @@ services:
     restart: unless-stopped
     ports:
       # plain HTTP entry point - the edge proxy terminates TLS elsewhere
-      - "8080:80"
+      - "${WEB_PORT:-8081}:80"
     environment:
       SCORES_UPSTREAM: ${SCORES_UPSTREAM:-scores:8787}
     depends_on:

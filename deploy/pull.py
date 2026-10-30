@@ -21,7 +21,8 @@ How releases work now:
 
 Env (all optional):
   DAILY_REQUIRE_CI=0     update even when the API is unreachable (default: wait)
-  DAILY_BASE_URL=<url>   smoke-test base (default: http://127.0.0.1:8080)
+  DAILY_BASE_URL=<url>   smoke-test base (default: the port docker compose
+                         actually publishes for web, fallback 127.0.0.1:8081)
   GITHUB_TOKEN=<t>       read-only token, ONLY needed if the repo is private
 
 Run by hand:  python3 deploy/pull.py      (or `make deploy`)
@@ -35,7 +36,7 @@ import urllib.request
 
 REPO = "Gameaday/daily"
 RUNS_URL = ("https://api.github.com/repos/%s/actions/runs?per_page=20" % REPO)
-BASE_URL = os.environ.get("DAILY_BASE_URL", "http://127.0.0.1:8080")
+FALLBACK_PORT = "8081"
 
 
 def die(msg):
@@ -95,11 +96,30 @@ def ci_state(sha):
     return "unknown"  # run not registered yet, or pruned by retention
 
 
+def smoke_base():
+    """The URL the loopback smoke test hits. DAILY_BASE_URL wins; otherwise
+    ask docker compose which host port the web container actually
+    publishes (a WEB_PORT override in .env lands there), so the smoke
+    test can never point at some other site that owns a fixed port."""
+    if os.environ.get("DAILY_BASE_URL"):
+        return os.environ["DAILY_BASE_URL"]
+    try:
+        r = subprocess.run(["docker", "compose", "port", "web", "80"],
+                            capture_output=True, text=True)
+        mapping = r.stdout.strip()
+        if mapping:
+            return "http://127.0.0.1:" + mapping.split(":")[-1]
+    except Exception:
+        pass
+    return "http://127.0.0.1:" + FALLBACK_PORT
+
+
 def smoke():
     """True when the freshly rebuilt site answers on the loopback interface."""
+    base = smoke_base()
     for path, want in [("/api/health", "ok"), ("/", "")]:
         try:
-            with urllib.request.urlopen(BASE_URL + path, timeout=15) as resp:
+            with urllib.request.urlopen(base + path, timeout=15) as resp:
                 body = resp.read().decode("utf-8", "replace")
                 if resp.status != 200 or (want and want not in body):
                     print("smoke test failed for %s (status %s)" % (path, resp.status))

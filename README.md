@@ -144,8 +144,9 @@ One-time setup:
     docker compose up -d --build
     docker compose ps                 # web + scores should be Up
 
-Then point your edge proxy (Traefik, nginx, Caddy) at host port 8080 and
-terminate TLS there. The repo ships no domain or TLS config on purpose.
+Then point your edge proxy (Traefik, nginx, Caddy) at the web port
+(WEB_PORT in .env, default 8081) and terminate TLS there. The repo ships
+no domain or TLS config on purpose.
 
 - `web`: Caddy serving the online bundle (no puzzle banks inside),
   proxying `/api/*` to the scores container
@@ -195,8 +196,9 @@ the site back to the previous tag. If tests fail, the site never moves.
 
 One-time on the Pi: install Docker, clone the repo,
 docker compose up -d --build, install the update timer, and point the edge
-proxy for daily.historylabs.dev at host port 8080 (TLS terminates at the
-edge; the repo ships no domain config on purpose). Then:
+proxy for daily.historylabs.dev at the web port (WEB_PORT in .env, default
+8081; TLS terminates at the edge; the repo ships no domain config on
+purpose). Then:
 
 1. push the first stable tag (git tag v1.0.0 && git push --tags); validate
    runs on the tag push and the Pi deploys it once that run is green,

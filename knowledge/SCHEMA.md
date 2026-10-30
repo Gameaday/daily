@@ -78,6 +78,13 @@ schedule that the first post-flip bank change reshuffles.
   spellings, l marks the lying segment, and about keys the
   telling to the entity it names when the layer knows it.
   well-actually compiles the whole file, in file order.
+- facts.json - the commonly cited figures the estimation game
+  asks about. Each entry is { id, about, t, q, a, w }: q is the
+  question, a the commonly cited figure, w the defense of the
+  number, and about keys the fact to the entity it is about
+  when the layer knows it. A fact whose subject the layer does
+  not carry yet stays keyless. fermi compiles the whole file,
+  in file order.
 
 Every entity may also carry (nothing requires them yet):
 
@@ -142,6 +149,11 @@ Every entity may also carry (nothing requires them yet):
   The store keeps the titles, the category names and the resolved
   tile strings; the ids stay in the layer. Output:
   puzzles/sift/puzzles.json and its bank file.
+- fermi: no recipe file; the whole facts file is the bank, in file
+  order, and the file order is the day rotation, so no id sort
+  ever moves a question. Only the question fields compile; the
+  ids and the about keys stay in the layer. Output:
+  puzzles/fermi/puzzles.json and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

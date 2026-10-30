@@ -41,6 +41,12 @@
      tile's own spelling when the display differs), and the boards
      compile in file order, the file order being the day rotation
 
+   - fermi is a whole-file recipe over facts: the commonly cited
+     figures carry the question and the defense of the number, and
+     each fact keys itself to the entity it is about when the layer
+     knows it; the file compiles in file order, the file order being
+     the day rotation
+
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
      Benjamin / John Franklin near miss stays impossible forever)
@@ -111,11 +117,12 @@ const wellActually = readLayer('well-actually');
 const world = readLayer('world');
 const animals = readLayer('animals');
 const sift = readLayer('sift');
+const facts = readLayer('facts');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
                        ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['well-actually', wellActually],
-                       ['world', world], ['animals', animals], ['sift', sift]]){
+                       ['world', world], ['animals', animals], ['sift', sift], ['facts', facts]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
@@ -596,6 +603,33 @@ function compileSift(){
     fail('knowledge: sift bank below the minimum (' + boards.length + ' < ' + LIST.minBank + ')');
   return JSON.stringify(boards, null, 2) + '\n';
 }
+/* ---------------- whole-file recipe: fermi ---------------- */
+function compileFermi(){
+  if (!Array.isArray(facts)) return null;
+  const bank = [];
+  const ids = new Set();
+  const entityIds = new Set(entities.map(x => x.id));
+  for (const x of facts){
+    if (!x || typeof x.t !== 'string' || !x.t || typeof x.q !== 'string' || !x.q
+        || !Number.isInteger(x.a) || x.a <= 0 || typeof x.w !== 'string' || !x.w)
+      fail('knowledge: fact needs string t, q, w and a positive integer a: ' + JSON.stringify(x).slice(0, 80));
+    else {
+      if (typeof x.id !== 'string' || !x.id)
+        fail('knowledge: fact needs a string id: ' + JSON.stringify(x).slice(0, 80));
+      else if (ids.has(x.id)) fail('knowledge: fact id appears twice: ' + x.id);
+      else ids.add(x.id);
+      if (x.about !== undefined){
+        if (typeof x.about !== 'string' || !x.about || !entityIds.has(x.about))
+          fail('knowledge: fact ' + x.id + ' is about an unknown entity: ' + x.about);
+      }
+      bank.push({ t: x.t, q: x.q, a: x.a, w: x.w });
+    }
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: fermi bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '\n';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -622,6 +656,7 @@ if (LIST.gated.cipher) checkStore('cipher', compileCipher());
 if (LIST.gated.bogus) checkStore('bogus', compileBogus());
 if (LIST.gated['well-actually']) checkStore('well-actually', compileWellActually());
 if (LIST.gated.sift) checkStore('sift', compileSift());
+if (LIST.gated.fermi) checkStore('fermi', compileFermi());
 
 if (fails){
   console.error('');

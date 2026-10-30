@@ -1,7 +1,10 @@
 /* superlative - headless playthrough (win, loss, day rollover) plus
    the bonus match. The boards cut from the people layer: day 0 seats
    Ada Lovelace, John Adams, Akbar and Al-Idrisi, asks for the longest
-   life, and its bonus seats all four. */
+   life, and its bonus seats all four. Every dim counts from both
+   ends now, and the one life no dim tops takes the most-average
+   chip: day 1 seats that way, day 13 stays the group nobody can
+   seat. */
 'use strict';
 const { T0, T1, TPRE } = require('./_lib');
 
@@ -22,6 +25,14 @@ async function run(h){
     await h.flush();
     h.eq(r.x.S.day, 1, 'superlative: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'superlative: streak preserved');
+    h.ok(Array.isArray(r.x.EV.b) && r.x.EV.b.length === 4,
+      'superlative: day 1 seats its bonus through the inversions');
+    h.ok(r.x.EV.b.some(x => x.q === 'was the most average' && x.v === 'nothing special'),
+      'superlative: the one life no dim tops takes the most average');
+    const T13 = T0 + 13 * 86400000;
+    const nb = {};
+    r = h.boot('superlative', EXP, { now: T13, store: nb });
+    await h.flush();
     h.ok(!r.x.EV.b, 'superlative: a group nobody can seat serves no bonus');
     const s2 = {};
     r = h.boot('superlative', EXP, { now: T0, store: s2 });

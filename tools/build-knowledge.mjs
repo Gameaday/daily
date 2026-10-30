@@ -53,8 +53,9 @@
      numbers can settle alone, the longest life or the first or last
      birth; the three questions rotate by group and a group no
      question can decide never serves. When the numbers seat every
-     life a superlative it tops, the board also carries a bonus
-     match: four chips, one per life, that the player assigns
+     life a superlative it tops, longest or shortest, the board also
+     carries a bonus match: four chips, one per life, that the player
+     assigns; the one life no dim tops takes the most-average chip
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -662,23 +663,41 @@ function compileSuperlative(){
         return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1;
       } }
   ];
-  /* the bonus dims: the three the dates already settle, plus the
-     numbers a reputable source states. A measured dim (height) only
-     counts when every life is measured; a counting dim (works, reign)
-     reads a missing number as zero. */
+  /* the bonus dims: every number now counts from both ends, so a
+     middle life can top the shortest reign or the shortest life the
+     way an extreme one tops the longest. The dates settle four dims;
+     a measured dim (height) only counts when every life is measured;
+     a counting dim (works, reign) reads a missing number as zero at
+     the top end, while the bottom end compares only the lives a
+     source actually measured */
   const DIMS = [
     { q: 'lived the longest', val: p => p.died - p.born, v: p => (p.died - p.born) + ' years' },
+    { q: 'lived the shortest', val: p => -(p.died - p.born), v: p => (p.died - p.born) + ' years' },
     { q: 'was born first', val: p => -p.born, v: p => 'born ' + p.born },
     { q: 'was born last', val: p => p.born, v: p => 'born ' + p.born },
     { q: 'stood the tallest', val: p => p.h, v: p => p.h + ' cm', need: true },
+    { q: 'stood the shortest', val: p => -p.h, v: p => p.h + ' cm', need: true },
     { q: 'was the most prolific', val: p => p.works, v: p => p.works + ' works' },
-    { q: 'reigned the longest', val: p => p.reign, v: p => p.reign + ' years' }
+    { q: 'was the least prolific', val: p => -p.works, v: p => p.works + ' works', some: true },
+    { q: 'reigned the longest', val: p => p.reign, v: p => p.reign + ' years' },
+    { q: 'reigned the shortest', val: p => -p.reign, v: p => p.reign + ' years', some: true }
   ];
   /* seat every life one superlative it tops, the fewest options
-     first; a group nobody can seat whole serves no bonus */
+     first; a group nobody can seat whole serves no bonus, unless a
+     single life is all that stays untopped, and it takes the
+     most-average chip so the group serves anyway */
   function bonusFor(group){
     const tops = [];
     DIMS.forEach((dim, di) => {
+      if (dim.some){
+        const pairs = [];
+        group.forEach((p, pi) => { const x = dim.val(p); if (x !== undefined) pairs.push({ pi, x }); });
+        if (pairs.length < 2) return;
+        const best = Math.max(...pairs.map(o => o.x));
+        if (pairs.filter(o => o.x === best).length === 1)
+          tops.push({ di, p: pairs.find(o => o.x === best).pi });
+        return;
+      }
       let vals = group.map(p => dim.val(p));
       if (vals.some(x => x === undefined)){
         if (dim.need) return;
@@ -687,26 +706,39 @@ function compileSuperlative(){
       const best = Math.max(...vals);
       if (vals.filter(x => x === best).length === 1) tops.push({ di, p: vals.indexOf(best) });
     });
-    const per = group.map((_, pi) => tops.filter(t => t.p === pi).map(t => t.di));
-    const order = per.map((x, pi) => ({ pi, n: x.length }))
-      .sort((x, y) => x.n - y.n || x.pi - y.pi).map(o => o.pi);
-    const pick = [];
-    function seat(i){
-      if (i === order.length) return true;
-      for (const di of per[order[i]]){
-        if (pick.indexOf(di) < 0){
-          pick[order[i]] = di;
-          if (seat(i + 1)) return true;
-          pick[order[i]] = undefined;
+    function seatAll(skip){
+      const idx = group.map((_, pi) => pi).filter(pi => pi !== skip);
+      const per = idx.map(pi => tops.filter(t => t.p === pi).map(t => t.di));
+      const order = per.map((x, k) => ({ pi: idx[k], k, n: x.length }))
+        .sort((a, b) => a.n - b.n || a.pi - b.pi).map(o => o.k);
+      const pick = [];
+      function seat(i){
+        if (i === order.length) return true;
+        for (const di of per[order[i]]){
+          if (pick.indexOf(di) < 0){
+            pick[order[i]] = di;
+            if (seat(i + 1)) return true;
+            pick[order[i]] = undefined;
+          }
         }
+        return false;
       }
-      return false;
+      return seat(0) ? idx.map(pi => ({ pi, di: pick[idx.indexOf(pi)] })) : null;
     }
-    if (!seat(0)) return null;
+    let seated = seatAll(-1), average = -1;
+    if (!seated){
+      for (let pi = 0; pi < group.length; pi++){
+        seated = seatAll(pi);
+        if (seated){ average = pi; break; }
+      }
+    }
+    if (!seated) return null;
     const chips = DIMS.map((dim, di) => {
-      const pi = pick.indexOf(di);
-      return pi < 0 ? null : { q: dim.q, a: pi, v: dim.v(group[pi]) };
+      const s = seated.find(o => o.di === di);
+      return s ? { q: dim.q, a: s.pi, v: dim.v(group[s.pi]) } : null;
     }).filter(Boolean);
+    if (average >= 0)
+      chips.push({ q: 'was the most average', a: average, v: 'nothing special' });
     return chips.length === group.length ? chips : null;
   }
   const pool = people

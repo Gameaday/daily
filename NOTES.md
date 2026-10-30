@@ -338,6 +338,24 @@ Julius II at 10, Cromwell at 5. 4 boards carry the bonus
 now (0, 6, 21, 44). Vivaldi stays honest at zero: the RV
 catalogue is open-ended past 740, so no standard total exists.
 
+The inversions land on Carl's read that with enough metrics
+everyone tops something: every dim counts from both ends now,
+so a middle life can top the shortest life or the shortest
+reign the way an extreme one tops the longest, and the bottom
+ends of the counting dims compare only the lives a source
+actually measured (a life that never reigned stays out of the
+shortest-reign contest). The one life a group cannot seat takes
+the most-average chip, so a board carries its bonus whenever a
+single life is all that stays untopped: 95 of the 112 boards
+carry the bonus now, 26 seated outright and 69 through the most
+average, and 17 groups still wait on numbers for their middles.
+The average lives are the honest zeros by another name, mostly
+novelists and composers without catalogues; the hunt continues
+against the middle lives of those 17. Day 1 (al-Khwarizmi,
+al-Kindi, al-Razi, Aldus Manutius) seats through the fallback
+with al-Razi the most average, so the no-bonus test pin moves
+to day 13 (Butch Cassidy, Richard Byrd, Byron, James Cagney).
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

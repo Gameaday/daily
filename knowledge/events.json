@@ -864,13 +864,6 @@
     "month": 11
   },
   {
-    "id": "overlord",
-    "n": "The Normandy Landings",
-    "q": "The Allied armada lands in Normandy and opens the second front.",
-    "y": 1944,
-    "month": 6
-  },
-  {
     "id": "peasants-revolt",
     "n": "The Peasants' Revolt",
     "q": "The Peasants’ Revolt reaches London and burns the Savoy Palace.",

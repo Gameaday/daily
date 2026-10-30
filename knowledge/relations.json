@@ -3931,5 +3931,37 @@
     "b": "manet",
     "y": 1866,
     "w": "Took up his cause against the Salon; the portrait was the thanks"
+  },
+  {
+    "a": "tutankhamun",
+    "b": "mask-of-tutankhamun",
+    "w": "The boy king and the golden face his tomb is known by",
+    "t": "kindred"
+  },
+  {
+    "a": "lindbergh",
+    "b": "lindbergh-flight",
+    "y": 1927,
+    "w": "The New York to Paris crossing he flew alone",
+    "t": "participant"
+  },
+  {
+    "a": "leonardo",
+    "b": "mona-lisa",
+    "y": 1503,
+    "w": "The portrait he kept and never delivered",
+    "t": "kindred"
+  },
+  {
+    "a": "gutenberg",
+    "b": "gutenberg-bible-printed",
+    "w": "The Mainz workshop and the first great book it printed",
+    "t": "kindred"
+  },
+  {
+    "a": "gutenberg",
+    "b": "gutenberg-bible",
+    "w": "The printer and the forty two line book that outlived him",
+    "t": "kindred"
   }
 ]

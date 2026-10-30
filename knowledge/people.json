@@ -1248,7 +1248,8 @@
     "n": "Genghis Khan",
     "d": "Founder of the Mongol empire, 1162-1227",
     "born": 1162,
-    "died": 1227
+    "died": 1227,
+    "reign": 21
   },
   {
     "id": "gentile-bellini",
@@ -1403,7 +1404,8 @@
     "n": "George Frideric Handel",
     "d": "Composer, 1685-1759",
     "born": 1685,
-    "died": 1759
+    "died": 1759,
+    "works": 612
   },
   {
     "id": "hannibal",
@@ -1456,7 +1458,8 @@
     "n": "Joseph Haydn",
     "d": "Composer, 1732-1809",
     "born": 1732,
-    "died": 1809
+    "died": 1809,
+    "works": 750
   },
   {
     "id": "hegel",
@@ -2415,7 +2418,8 @@
     "n": "Nader Shah",
     "d": "Persia s last conqueror, 1688-1747",
     "born": 1688,
-    "died": 1747
+    "died": 1747,
+    "reign": 11
   },
   {
     "id": "nansen",
@@ -2438,7 +2442,8 @@
     "n": "Napoleon III",
     "d": "Emperor of the French, 1808-1873",
     "born": 1808,
-    "died": 1873
+    "died": 1873,
+    "reign": 18
   },
   {
     "id": "necker",
@@ -3394,7 +3399,8 @@
     "n": "Richard Wagner",
     "d": "Composer, 1813-1883",
     "born": 1813,
-    "died": 1883
+    "died": 1883,
+    "works": 113
   },
   {
     "id": "wallace",

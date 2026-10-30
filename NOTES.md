@@ -324,6 +324,12 @@ moved to Monday 2026-11-02 with pre-launch days clamped to No. 1 so
 weekend visitors play the board Monday re-serves. 3 boards
 carry the bonus so far, and every batch of numbers seats more.
 
+Batch two seats six more: Handel at 612 by HWV, Haydn at 750 by
+Hoboken, Wagner at 113 by WWV, and three more crowns, Genghis Khan
+at 21, Napoleon III at 18, Nader Shah at 11. 3 boards carry
+the bonus now; the composers without a crisp catalogue count stay
+honest at zero until a reputable source settles them.
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

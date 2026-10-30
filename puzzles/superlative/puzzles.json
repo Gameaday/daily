@@ -581,7 +581,29 @@
       "Harald Hardrada"
     ],
     "a": 1,
-    "w": "Edmond Halley 86 (1656-1742); Alexander Hamilton 47 (1757-1804); George Frideric Handel 74 (1685-1759); Harald Hardrada 51 (1015-1066)."
+    "w": "Edmond Halley 86 (1656-1742); Alexander Hamilton 47 (1757-1804); George Frideric Handel 74 (1685-1759); Harald Hardrada 51 (1015-1066).",
+    "b": [
+      {
+        "q": "lived the longest",
+        "a": 0,
+        "v": "86 years"
+      },
+      {
+        "q": "was born first",
+        "a": 3,
+        "v": "born 1015"
+      },
+      {
+        "q": "was born last",
+        "a": 1,
+        "v": "born 1757"
+      },
+      {
+        "q": "was the most prolific",
+        "a": 2,
+        "v": "612 works"
+      }
+    ]
   },
   {
     "t": "Longevity",
@@ -965,29 +987,7 @@
       "Napoleon Bonaparte"
     ],
     "a": 1,
-    "w": "Wolfgang Amadeus Mozart 35 (1756-1791); Nader Shah 59 (1688-1747); Fridtjof Nansen 69 (1861-1930); Napoleon Bonaparte 52 (1769-1821).",
-    "b": [
-      {
-        "q": "lived the longest",
-        "a": 2,
-        "v": "69 years"
-      },
-      {
-        "q": "was born first",
-        "a": 1,
-        "v": "born 1688"
-      },
-      {
-        "q": "was the most prolific",
-        "a": 0,
-        "v": "626 works"
-      },
-      {
-        "q": "reigned the longest",
-        "a": 3,
-        "v": "10 years"
-      }
-    ]
+    "w": "Wolfgang Amadeus Mozart 35 (1756-1791); Nader Shah 59 (1688-1747); Fridtjof Nansen 69 (1861-1930); Napoleon Bonaparte 52 (1769-1821)."
   },
   {
     "t": "Birth Order",

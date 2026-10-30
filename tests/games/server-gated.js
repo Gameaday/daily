@@ -103,6 +103,16 @@ async function run(h, ctx){
       String(r.env.els[k].textContent || '').indexOf(needle) >= 0);
     h.ok(found, 'gated: timeline served events rendered');
   }
+  /* brunch: the served table plays through */
+  {
+    const live = h.boot('brunch', ['S', 'EV'], { now: T0, store: {} });
+    const served = serve('brunch', live.x.EV);
+    const r = h.boot('brunch', ['S', 'EV', 'BRUNCH'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    h.ok(r.x.BRUNCH === undefined, 'gated: brunch online boot has no bank');
+    await h.flush();
+    r.env.els['opt' + served.puzzle.a].click();
+    h.eq(r.x.S.status, 'won', 'gated: brunch won on the served table');
+  }
   /* thread: the served chain plays through */
   {
     const live = h.boot('thread', ['PZ'], { now: T0, store: {} });
@@ -133,6 +143,9 @@ async function run(h, ctx){
       JSON.stringify(tlive.x.PZ.m.map(x => x.id)) === JSON.stringify(tp.m) &&
       JSON.stringify(tlive.x.PZ.d.map(x => x.id)) === JSON.stringify(tp.d),
       'gated: exported thread picks[0] match the offline day-0 chain');
+    const bl = h.boot('brunch', ['EV'], { now: T0, store: {} });
+    h.ok(JSON.stringify(bl.x.EV) === JSON.stringify(store.brunch[0]),
+      'gated: exported brunch bank matches the generated bank');
   }
 }
 

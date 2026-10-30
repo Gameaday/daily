@@ -15,10 +15,12 @@
      line), the canonical description, year and month-day come from
      the layer, and the stores compile byte-identical to the
      hand-authored stores they replace
-   - places and presence spans are seeded but no recipe consumes
-     them yet (brunch will be the first); artifacts and quotes are
-     defined in knowledge/SCHEMA.md, and this tool fails loudly if a
-     needed file is missing
+   - brunch is a recipe over places and presence: the curated
+     moments in puzzles/brunch/recipe.json pick a city and a year, and
+     the compiler seats three people whose spans cover that city-year
+     plus one impostor, alive that year but documented elsewhere;
+     artifacts and quotes are defined in knowledge/SCHEMA.md, and this
+     tool fails loudly if a needed file is missing
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -222,6 +224,84 @@ function compileRounds(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
+/* ---------------- recipe: brunch ---------------- */
+function seatTable(placeId, y, folk, places, spans) {
+    const placeNames = {};
+    for (const pl of Array.isArray(places) ? places : [])placeNames[pl.id] = pl.n;
+    if (!placeNames[placeId]) return null;
+    const present = spans.filter((s)=>s.place === placeId && s.from <= y && s.to >= y).sort((p, q)=>p.to - p.from - (q.to - q.from) || (p.p < q.p ? -1 : 1));
+    if (present.length < 3) return null;
+    const trio = present.slice(0, 3);
+    const away = [];
+    for (const f of Array.isArray(folk) ? folk : []){
+      if (!f || f.born === undefined || f.died === undefined || y < f.born || y > f.died) continue;
+      if (present.some((s)=>s.p === f.id)) continue;
+      const other = spans.filter((s)=>s.p === f.id && s.place !== placeId && s.from <= y && s.to >= y).sort((p, q)=>p.to - p.from - (q.to - q.from))[0];
+      if (!other) continue;
+      const tie = spans.some((s)=>s.p === f.id && s.place === placeId) ? 1 : 0;
+      away.push({
+        id: f.id,
+        n: f.n,
+        tie: tie,
+        span: other
+      });
+    }
+    if (!away.length) return null;
+    away.sort((p, q)=>q.tie - p.tie || (p.id < q.id ? -1 : 1));
+    const imp = away[0];
+    const names = [];
+    for (const s of trio){
+      const f = folk.find((x)=>x.id === s.p);
+      if (!f) return null;
+      names.push(f.n);
+    }
+    names.push(imp.n);
+    if (new Set(names).size !== 4) return null;
+    const a = (y * 3 + placeId.length) % 4;
+    const opts = [];
+    let j = 0;
+    for(let i = 0; i < 4; i++)opts[i] = i === a ? imp.n : names[j++];
+    const q = placeNames[placeId] + ', ' + y + '. Three of these four were in the city that year. Who missed the table?';
+    const w = 'In ' + placeNames[placeId] + ' then: ' + trio.map((s)=>{
+      const f = folk.find((x)=>x.id === s.p);
+      return f.n + ' (' + s.from + '-' + s.to + ')';
+    }).join(', ') + '. ' + imp.n + ' was in ' + placeNames[imp.span.place] + ' (' + imp.span.from + '-' + imp.span.to + ').';
+    return {
+      t: placeNames[placeId],
+      y: y,
+      q: q,
+      opts: opts,
+      a: a,
+      w: w
+    };
+  }
+
+function compileBrunch(){
+  const recipe = readRecipe('brunch');
+  if (!Array.isArray(recipe)){
+    fail('brunch recipe must be an array of { id, y } moments');
+    return null;
+  }
+  const placeIds = new Set(Array.isArray(places) ? places.map(x => x.id) : []);
+  const rows = new Set();
+  const bank = [];
+  for (const m of recipe){
+    if (!m || !placeIds.has(m.id) || !Number.isInteger(m.y) || m.y <= 0){
+      fail('brunch recipe moment needs a known place id and a positive year: ' + JSON.stringify(m));
+      continue;
+    }
+    const key = m.id + ':' + m.y;
+    if (rows.has(key)){ fail('brunch recipe has a duplicate moment: ' + key); continue; }
+    rows.add(key);
+    const entry = seatTable(m.id, m.y, people, places, Array.isArray(presence) ? presence : []);
+    if (!entry) fail('brunch moment cannot be seated (three present, one elsewhere): ' + key);
+    else bank.push(entry);
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: brunch bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '\n';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -242,6 +322,7 @@ function checkStore(game, text){
 if (LIST.gated.thread) checkStore('thread', compileThread());
 if (LIST.gated.timeline) checkStore('timeline', compileTimeline());
 if (LIST.gated.rounds) checkStore('rounds', compileRounds());
+if (LIST.gated.brunch) checkStore('brunch', compileBrunch());
 
 if (fails){
   console.error('');

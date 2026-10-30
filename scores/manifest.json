@@ -1,5 +1,5 @@
 {
-  "epoch": "2026-11-01",
+  "epoch": "2026-11-02",
   "tz": "America/New_York",
   "games": {
     "bogus":         { "better": "high", "edges": [0, 1, 2, 3, 4] },

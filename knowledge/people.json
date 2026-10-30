@@ -14,6 +14,13 @@
     "died": 1826
   },
   {
+    "id": "ali",
+    "n": "Muhammad Ali",
+    "d": "Boxer, 1942-2016",
+    "born": 1942,
+    "died": 2016
+  },
+  {
     "id": "amundsen",
     "n": "Roald Amundsen",
     "d": "First to the South Pole, 1872-1928",
@@ -35,9 +42,28 @@
     "died": 1906
   },
   {
+    "id": "archimedes",
+    "n": "Archimedes",
+    "d": "Geometer of Syracuse, c. 287-212 BCE"
+  },
+  {
+    "id": "armstrong",
+    "n": "Neil Armstrong",
+    "d": "Astronaut, 1930-2012",
+    "born": 1930,
+    "died": 2012
+  },
+  {
     "id": "augustus",
     "n": "Augustus",
     "d": "First Roman emperor, 63 BCE-14 CE"
+  },
+  {
+    "id": "austen",
+    "n": "Jane Austen",
+    "d": "Novelist, 1775-1817",
+    "born": 1775,
+    "died": 1817
   },
   {
     "id": "babbage",
@@ -52,6 +78,13 @@
     "d": "Composer, 1685-1750",
     "born": 1685,
     "died": 1750
+  },
+  {
+    "id": "bacon",
+    "n": "Francis Bacon",
+    "d": "Essayist and philosopher, 1561-1626",
+    "born": 1561,
+    "died": 1626
   },
   {
     "id": "banks",
@@ -255,6 +288,13 @@
     "died": 1689
   },
   {
+    "id": "churchill",
+    "n": "Winston Churchill",
+    "d": "Prime minister, 1874-1965",
+    "born": 1874,
+    "died": 1965
+  },
+  {
     "id": "cicero",
     "n": "Cicero",
     "d": "Roman orator and consul, 106-43 BCE"
@@ -386,6 +426,13 @@
     "died": 1870
   },
   {
+    "id": "dickinson",
+    "n": "Emily Dickinson",
+    "d": "Poet of Amherst, 1830-1886",
+    "born": 1830,
+    "died": 1886
+  },
+  {
     "id": "diderot",
     "n": "Denis Diderot",
     "d": "Philosopher and editor, 1713-1784",
@@ -393,11 +440,25 @@
     "died": 1784
   },
   {
+    "id": "donne",
+    "n": "John Donne",
+    "d": "Poet and dean of St Paul's, 1572-1631",
+    "born": 1572,
+    "died": 1631
+  },
+  {
     "id": "dostoevsky",
     "n": "Fyodor Dostoevsky",
     "d": "Novelist, 1821-1881",
     "born": 1821,
     "died": 1881
+  },
+  {
+    "id": "douglas-adams",
+    "n": "Douglas Adams",
+    "d": "Comic novelist, 1952-2001",
+    "born": 1952,
+    "died": 2001
   },
   {
     "id": "douglass",
@@ -414,6 +475,13 @@
     "died": 1596
   },
   {
+    "id": "du-bois",
+    "n": "W.E.B. Du Bois",
+    "d": "Sociologist and writer, 1868-1963",
+    "born": 1868,
+    "died": 1963
+  },
+  {
     "id": "dumas",
     "n": "Alexandre Dumas",
     "d": "Novelist, 1802-1870",
@@ -428,11 +496,32 @@
     "died": 1904
   },
   {
+    "id": "edison",
+    "n": "Thomas Edison",
+    "d": "Inventor, 1847-1931",
+    "born": 1847,
+    "died": 1931
+  },
+  {
     "id": "einstein",
     "n": "Albert Einstein",
     "d": "Theorist of relativity, 1879-1955",
     "born": 1879,
     "died": 1955
+  },
+  {
+    "id": "eisenhower",
+    "n": "Dwight D. Eisenhower",
+    "d": "General and president, 1890-1969",
+    "born": 1890,
+    "died": 1969
+  },
+  {
+    "id": "eleanor-roosevelt",
+    "n": "Eleanor Roosevelt",
+    "d": "Reformer and diplomat, 1884-1962",
+    "born": 1884,
+    "died": 1962
   },
   {
     "id": "elizabeth-i",
@@ -505,6 +594,13 @@
     "died": 1790
   },
   {
+    "id": "franklin-roosevelt",
+    "n": "Franklin D. Roosevelt",
+    "d": "President, 1882-1945",
+    "born": 1882,
+    "died": 1945
+  },
+  {
     "id": "frederick",
     "n": "Frederick the Great",
     "d": "King of Prussia, 1712-1786",
@@ -512,11 +608,25 @@
     "died": 1786
   },
   {
+    "id": "frost",
+    "n": "Robert Frost",
+    "d": "Poet, 1874-1963",
+    "born": 1874,
+    "died": 1963
+  },
+  {
     "id": "galileo",
     "n": "Galileo Galilei",
     "d": "Astronomer, 1564-1642",
     "born": 1564,
     "died": 1642
+  },
+  {
+    "id": "gandhi",
+    "n": "Mahatma Gandhi",
+    "d": "Leader of Indian independence, 1869-1948",
+    "born": 1869,
+    "died": 1948
   },
   {
     "id": "garrick",
@@ -638,11 +748,25 @@
     "died": 1606
   },
   {
+    "id": "hale",
+    "n": "Nathan Hale",
+    "d": "Captain of the Revolution, 1755-1776",
+    "born": 1755,
+    "died": 1776
+  },
+  {
     "id": "halley",
     "n": "Edmond Halley",
     "d": "Astronomer, 1656-1742",
     "born": 1656,
     "died": 1742
+  },
+  {
+    "id": "hamilton",
+    "n": "Alexander Hamilton",
+    "d": "First Treasury secretary, c. 1757-1804",
+    "born": 1757,
+    "died": 1804
   },
   {
     "id": "handel",
@@ -671,6 +795,20 @@
     "d": "Philosopher of the dialectic, 1770-1831",
     "born": 1770,
     "died": 1831
+  },
+  {
+    "id": "hellman",
+    "n": "Lillian Hellman",
+    "d": "Playwright, 1905-1984",
+    "born": 1905,
+    "died": 1984
+  },
+  {
+    "id": "hemingway",
+    "n": "Ernest Hemingway",
+    "d": "Novelist, 1899-1961",
+    "born": 1899,
+    "died": 1961
   },
   {
     "id": "henry-viii",
@@ -785,6 +923,13 @@
     "died": 1940
   },
   {
+    "id": "jobs",
+    "n": "Steve Jobs",
+    "d": "Co-founder of Apple, 1955-2011",
+    "born": 1955,
+    "died": 2011
+  },
+  {
     "id": "john-franklin",
     "n": "John Franklin",
     "d": "Arctic explorer of Erebus and Terror, 1786-1847",
@@ -797,6 +942,20 @@
     "d": "Astronomer, 1792-1871",
     "born": 1792,
     "died": 1871
+  },
+  {
+    "id": "john-kennedy",
+    "n": "John F. Kennedy",
+    "d": "President, 1917-1963",
+    "born": 1917,
+    "died": 1963
+  },
+  {
+    "id": "john-lennon",
+    "n": "John Lennon",
+    "d": "Songwriter and Beatle, 1940-1980",
+    "born": 1940,
+    "died": 1980
   },
   {
     "id": "johnson",
@@ -825,6 +984,13 @@
     "d": "Warrior pope, 1443-1513",
     "born": 1443,
     "died": 1513
+  },
+  {
+    "id": "keller",
+    "n": "Helen Keller",
+    "d": "Writer and advocate, 1880-1968",
+    "born": 1880,
+    "died": 1968
   },
   {
     "id": "kelvin",
@@ -974,11 +1140,32 @@
     "died": 1527
   },
   {
+    "id": "madison",
+    "n": "James Madison",
+    "d": "President, 1751-1836",
+    "born": 1751,
+    "died": 1836
+  },
+  {
     "id": "magellan",
     "n": "Ferdinand Magellan",
     "d": "Explorer, c. 1480-1521",
     "born": 1480,
     "died": 1521
+  },
+  {
+    "id": "malcolm-x",
+    "n": "Malcolm X",
+    "d": "Minister and activist, 1925-1965",
+    "born": 1925,
+    "died": 1965
+  },
+  {
+    "id": "mandela",
+    "n": "Nelson Mandela",
+    "d": "President of South Africa, 1918-2013",
+    "born": 1918,
+    "died": 2013
   },
   {
     "id": "manet",
@@ -1028,6 +1215,20 @@
     "d": "Playwright, 1564-1593",
     "born": 1564,
     "died": 1593
+  },
+  {
+    "id": "martin-luther-king",
+    "n": "Martin Luther King Jr.",
+    "d": "Civil rights leader, 1929-1968",
+    "born": 1929,
+    "died": 1968
+  },
+  {
+    "id": "marx",
+    "n": "Karl Marx",
+    "d": "Philosopher of class struggle, 1818-1883",
+    "born": 1818,
+    "died": 1883
   },
   {
     "id": "mary-queen-of-scots",
@@ -1191,6 +1392,13 @@
     "died": 1658
   },
   {
+    "id": "orwell",
+    "n": "George Orwell",
+    "d": "Novelist and essayist, 1903-1950",
+    "born": 1903,
+    "died": 1950
+  },
+  {
     "id": "ovid",
     "n": "Ovid",
     "d": "Roman poet of the Metamorphoses, 43 BCE-17 CE"
@@ -1215,6 +1423,13 @@
     "d": "Chemist, 1822-1895",
     "born": 1822,
     "died": 1895
+  },
+  {
+    "id": "patrick-henry",
+    "n": "Patrick Henry",
+    "d": "Orator of the Revolution, 1736-1799",
+    "born": 1736,
+    "died": 1799
   },
   {
     "id": "pepys",
@@ -1308,6 +1523,13 @@
     "died": 1520
   },
   {
+    "id": "reagan",
+    "n": "Ronald Reagan",
+    "d": "President, 1911-2004",
+    "born": 1911,
+    "died": 2004
+  },
+  {
     "id": "rembrandt",
     "n": "Rembrandt",
     "d": "Painter, 1606-1669",
@@ -1334,6 +1556,13 @@
     "d": "Composer, 1810-1856",
     "born": 1810,
     "died": 1856
+  },
+  {
+    "id": "rosa-parks",
+    "n": "Rosa Parks",
+    "d": "Civil rights activist, 1913-2005",
+    "born": 1913,
+    "died": 2005
   },
   {
     "id": "rossetti",
@@ -1369,6 +1598,13 @@
     "d": "Critic, 1819-1900",
     "born": 1819,
     "died": 1900
+  },
+  {
+    "id": "russell",
+    "n": "Bertrand Russell",
+    "d": "Philosopher, 1872-1970",
+    "born": 1872,
+    "died": 1970
   },
   {
     "id": "rutherford",
@@ -1441,6 +1677,13 @@
     "died": 1616
   },
   {
+    "id": "shaw",
+    "n": "George Bernard Shaw",
+    "d": "Playwright, 1856-1950",
+    "born": 1856,
+    "died": 1950
+  },
+  {
     "id": "shelley",
     "n": "Percy Shelley",
     "d": "Poet, 1792-1822",
@@ -1453,6 +1696,11 @@
     "d": "Economist, 1723-1790",
     "born": 1723,
     "died": 1790
+  },
+  {
+    "id": "socrates",
+    "n": "Socrates",
+    "d": "Philosopher of Athens, 470-399 BCE"
   },
   {
     "id": "solander",
@@ -1497,6 +1745,11 @@
     "died": 1566
   },
   {
+    "id": "sun-tzu",
+    "n": "Sun Tzu",
+    "d": "Strategist, c. 544-496 BCE"
+  },
+  {
     "id": "swift",
     "n": "Jonathan Swift",
     "d": "Satirist, 1667-1745",
@@ -1525,6 +1778,20 @@
     "died": 1863
   },
   {
+    "id": "theodore-parker",
+    "n": "Theodore Parker",
+    "d": "Minister and abolitionist, 1810-1860",
+    "born": 1810,
+    "died": 1860
+  },
+  {
+    "id": "theodore-roosevelt",
+    "n": "Theodore Roosevelt",
+    "d": "President, 1858-1919",
+    "born": 1858,
+    "died": 1919
+  },
+  {
     "id": "thomas-cromwell",
     "n": "Thomas Cromwell",
     "d": "Minister to Henry VIII, c. 1485-1540",
@@ -1546,11 +1813,23 @@
     "died": 1862
   },
   {
+    "id": "thucydides",
+    "n": "Thucydides",
+    "d": "Historian, c. 460-400 BCE"
+  },
+  {
     "id": "titian",
     "n": "Titian",
     "d": "Painter, c. 1488-1576",
     "born": 1488,
     "died": 1576
+  },
+  {
+    "id": "tolkien",
+    "n": "J.R.R. Tolkien",
+    "d": "Novelist and philologist, 1892-1973",
+    "born": 1892,
+    "died": 1973
   },
   {
     "id": "tolstoy",
@@ -1710,6 +1989,13 @@
     "d": "Painter, 1834-1903",
     "born": 1834,
     "died": 1903
+  },
+  {
+    "id": "wilde",
+    "n": "Oscar Wilde",
+    "d": "Playwright, 1854-1900",
+    "born": 1854,
+    "died": 1900
   },
   {
     "id": "william-herschel",

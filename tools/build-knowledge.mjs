@@ -20,8 +20,13 @@
      the compiler seats three people whose spans cover that city-year
      plus one impostor, alive that year but documented elsewhere;
      the seating rotates with the year so a crowded table does not
-     serve the same faces twice; artifacts and quotes are defined in knowledge/SCHEMA.md, and this
-     tool fails loudly if a needed file is missing
+     serve the same faces twice
+   - museum is a whole-file recipe over artifacts: the made things
+     carry their aliases, five clues and the story the reveal tells,
+     and the whole file compiles to the store in file order, the file
+     order being the day rotation. quotes stay defined in
+     knowledge/SCHEMA.md until cipher lands, and this tool fails
+     loudly if a needed file is missing
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -39,6 +44,9 @@
      relation touches at least one living endpoint and never precedes
      the event it names
    - every story names a known event, and no story is told twice
+   - artifacts carry their alias strings, five clue strings and a
+     story, with no duplicate names and no alias that names another
+     artifact
 
    Default mode (what CI runs) never writes anything and exits 1 on
    drift. Run: node tools/build-knowledge.mjs         (verify)
@@ -67,17 +75,18 @@ const relations = readLayer('relations');
 const places = readLayer('places');
 const presence = readLayer('presence');
 const stories = readLayer('stories');
+const artifacts = readLayer('artifacts');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
-                       ['stories', stories]]){
+                       ['stories', stories], ['artifacts', artifacts]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
 }
 
 /* entities: one id namespace across every type */
 const entities = [];
-for (const arr of [people, events, places]){
+for (const arr of [people, events, places, artifacts]){
   if (!Array.isArray(arr)) continue;
   for (const x of arr){
     if (!x || typeof x.id !== 'string' || typeof x.n !== 'string')
@@ -114,6 +123,27 @@ for (const arr of [people, events, places]){
 }
 const byId = {};
 for (const x of entities) byId[x.id] = x;
+
+/* artifacts: the made things museum hangs its clues on */
+{
+  const names = new Set();
+  for (const x of (Array.isArray(artifacts) ? artifacts : [])){
+    if (!x || typeof x.id !== 'string') continue;
+    if (!Array.isArray(x.al) || !x.al.length || x.al.some(v => typeof v !== 'string' || !v))
+      fail('knowledge: artifact ' + x.id + ' needs alias strings (al)');
+    else if (!Array.isArray(x.c) || x.c.length !== 5 || x.c.some(v => typeof v !== 'string' || !v))
+      fail('knowledge: artifact ' + x.id + ' needs five clue strings (c)');
+    else if (typeof x.w !== 'string' || !x.w)
+      fail('knowledge: artifact ' + x.id + ' needs a story (w)');
+    else if (new Set(x.al).size !== x.al.length)
+      fail('knowledge: artifact ' + x.id + ' has duplicate aliases');
+    else if (names.has(x.n))
+      fail('knowledge: artifact ' + x.id + ' duplicates the name ' + x.n);
+    else if (artifacts.some(y => y !== x && typeof y.n === 'string' && x.al.includes(y.n)))
+      fail('knowledge: artifact ' + x.id + ' lists an alias that names another artifact');
+    else names.add(x.n);
+  }
+}
 
 /* relations: typed, dated where honest */
 const rels = Array.isArray(relations) ? relations : [];
@@ -342,6 +372,20 @@ function compileBrunch(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
+/* ---------------- whole-file recipe: museum ---------------- */
+function compileMuseum(){
+  if (!Array.isArray(artifacts)) return null;
+  const bank = [];
+  for (const x of artifacts){
+    if (!x || !byId[x.id]) continue;
+    bank.push({ a: x.n, al: x.al, c: x.c, w: x.w });
+  }
+  if (bank.length < LIST.minBank)
+    fail('knowledge: museum bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(bank, null, 2) + '
+';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -363,6 +407,7 @@ if (LIST.gated.thread) checkStore('thread', compileThread());
 if (LIST.gated.timeline) checkStore('timeline', compileTimeline());
 if (LIST.gated.rounds) checkStore('rounds', compileRounds());
 if (LIST.gated.brunch) checkStore('brunch', compileBrunch());
+if (LIST.gated.museum) checkStore('museum', compileMuseum());
 
 if (fails){
   console.error('');

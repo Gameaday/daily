@@ -1,7 +1,7 @@
 # The knowledge layer
 
-One home for the facts the games share: entities (people, events and
-places today; artifacts and quotes when a recipe first needs them),
+One home for the facts the games share: entities (people, events,
+places and artifacts today; quotes when cipher joins the layer),
 the shared stories the year games tell, and their typed relations, compiled by tools/build-knowledge.mjs into
 the per-game puzzle stores. The layer is the hand-maintained source;
 the stores are generated artifacts, exactly like the bank files. CI
@@ -39,8 +39,12 @@ schedule that the first post-flip bank change reshuffles.
   entry is { id, t, w }, keyed by event id. The topic label t and
   the flavor line w live here once, so timeline and rounds never
   carry divergent copies.
-- artifacts.json, quotes.json - defined but not yet populated. A file
-  appears when the first recipe that needs it lands.
+- artifacts.json - the made things (objects, artworks, structures,
+  documents, vessels). Fields: id, n, al (the accepted answers),
+  c (five clue strings, cryptic to plain) and w (the story the
+  reveal tells). museum compiles the whole file, in file order.
+- quotes.json - defined but not yet populated. It appears when
+  cipher joins the layer.
 
 Every entity may also carry (nothing requires them yet):
 
@@ -85,6 +89,9 @@ Every entity may also carry (nothing requires them yet):
   documented elsewhere, and scatters the four names with the seat
   index a. The seating rotates with the year, so a crowded table does
   not serve the same faces twice. Output: puzzles/brunch/puzzles.json and its bank file.
+- museum: no recipe file; the whole artifacts file is the bank, and
+  the file order is the day rotation, so no id sort ever moves an
+  exhibit. Output: puzzles/museum/puzzles.json and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

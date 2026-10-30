@@ -34,6 +34,9 @@
      without its month, born and died are positive integers in order,
      and every presence span runs forward between a known person and a
      known place
+   - presence spans stay inside their person's life dates, and a dated
+     relation touches at least one living endpoint and never precedes
+     the event it names
 
    Default mode (what CI runs) never writes anything and exits 1 on
    drift. Run: node tools/build-knowledge.mjs         (verify)
@@ -122,6 +125,15 @@ const rels = Array.isArray(relations) ? relations : [];
     else if (r.y !== undefined && (!Number.isInteger(r.y) || r.y <= 0))
       fail('knowledge: relation year must be a positive integer or absent (' + r.a + ' - ' + r.b + ')');
     else {
+      const lives = [r.a, r.b].map(end => byId[end])
+        .filter(ent => ent && ent.born !== undefined && ent.died !== undefined);
+      if (lives.length && !lives.some(ent => r.y >= ent.born && r.y <= ent.died))
+        fail('knowledge: relation year touches no living endpoint (' + r.a + ' - ' + r.b + ')');
+      for (const end of [r.a, r.b]){
+        const ent = byId[end];
+        if (ent && ent.y !== undefined && r.y < ent.y)
+          fail('knowledge: relation year precedes the event (' + r.a + ' - ' + r.b + ')');
+      }
       const key = r.a < r.b ? r.a + ':' + r.b : r.b + ':' + r.a;
       if (pairs.has(key)) fail('knowledge: duplicate relation pair ' + r.a + ' - ' + r.b);
       pairs.add(key);
@@ -143,6 +155,11 @@ const rels = Array.isArray(relations) ? relations : [];
     else if (s.from <= 0 || s.to < s.from)
       fail('knowledge: presence span must run forward (' + s.p + ' at ' + s.place + ')');
     else {
+      const owner = byId[s.p];
+      if (owner && owner.born !== undefined && s.from < owner.born)
+        fail('knowledge: presence span starts before birth (' + s.p + ' at ' + s.place + ')');
+      if (owner && owner.died !== undefined && s.to > owner.died)
+        fail('knowledge: presence span runs past death (' + s.p + ' at ' + s.place + ')');
       const key = s.p + ':' + s.place + ':' + s.from + ':' + s.to;
       if (rows.has(key)) fail('knowledge: duplicate presence span ' + s.p + ' at ' + s.place);
       rows.add(key);

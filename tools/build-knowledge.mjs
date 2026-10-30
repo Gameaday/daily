@@ -417,8 +417,7 @@ function compileMuseum(){
   }
   if (bank.length < LIST.minBank)
     fail('knowledge: museum bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
-  return JSON.stringify(bank, null, 2) + '
-';
+  return JSON.stringify(bank, null, 2) + '\n';
 }
 
 /* ---------------- whole-file recipe: cipher ---------------- */
@@ -432,8 +431,7 @@ function compileCipher(){
   }
   if (bank.length < LIST.minBank)
     fail('knowledge: cipher bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
-  return JSON.stringify(bank, null, 2) + '
-';
+  return JSON.stringify(bank, null, 2) + '\n';
 }
 
 function checkStore(game, text){

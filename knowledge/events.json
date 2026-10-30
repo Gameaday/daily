@@ -1,0 +1,47 @@
+[
+  {
+    "id": "congress-of-vienna",
+    "n": "The Congress of Vienna",
+    "d": "Diplomatic congress, 1814-1815"
+  },
+  {
+    "id": "french-revolution",
+    "n": "The French Revolution",
+    "d": "Revolution, 1789"
+  },
+  {
+    "id": "great-fire",
+    "n": "The Great Fire of London",
+    "d": "Fire, 1666"
+  },
+  {
+    "id": "gunpowder-plot",
+    "n": "The Gunpowder Plot",
+    "d": "Conspiracy, 1605"
+  },
+  {
+    "id": "lepanto",
+    "n": "The Battle of Lepanto",
+    "d": "Naval battle, 1571"
+  },
+  {
+    "id": "solvay-1911",
+    "n": "The First Solvay Conference",
+    "d": "Council of physics, 1911"
+  },
+  {
+    "id": "spanish-armada",
+    "n": "The Spanish Armada",
+    "d": "Invasion fleet, 1588"
+  },
+  {
+    "id": "trafalgar",
+    "n": "The Battle of Trafalgar",
+    "d": "Naval battle, 1805"
+  },
+  {
+    "id": "waterloo",
+    "n": "The Battle of Waterloo",
+    "d": "Battle, 1815"
+  }
+]

@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Verify the knowledge layer compiles to the committed stores
+        run: node tools/build-knowledge.mjs
       - name: Verify committed puzzle stores
         run: node tools/export-puzzles.mjs
       - name: Layer 1 - compile every game + shell/id/landing checks

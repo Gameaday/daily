@@ -1,7 +1,7 @@
 # The knowledge layer
 
 One home for the facts the games share: entities (people, events,
-places, artifacts and quotes today),
+places, artifacts, the wider world, the animals and quotes today),
 the shared stories the year games tell, and their typed relations, compiled by tools/build-knowledge.mjs into
 the per-game puzzle stores. The layer is the hand-maintained source;
 the stores are generated artifacts, exactly like the bank files. CI
@@ -27,11 +27,24 @@ schedule that the first post-flip bank change reshuffles.
   the thread page shows), q (the canonical one-line description the
   year games prompt with), y (a positive integer) and month and day,
   recorded only when they are defensible.
-- relations.json - each entry is { a, b, y, w }: a typed, dated relation
-  between two entities. w is the reveal sentence. y is a positive
-  integer year, and it is absent when no honest one exists (ancient
-  relations carry no y at all).
+- relations.json - each entry is { a, b, y, w, t }: a typed, dated
+  relation between two entities. w is the reveal sentence. t is the
+  relation type from the shared vocabulary (ally, colleague,
+  correspondent, editor, family, friend, influence, kindred, lover,
+  member, opposed, participant, partnered, patron, physician, rival,
+  successor, teacher, translator), present when the telling knows
+  it. y is a positive integer year, and it is absent when no honest
+  one exists (ancient relations carry no y at all).
 - places.json - cities the presence spans anchor to. Fields: id, n, d.
+- world.json - the wider world the day tiles will point at: ships,
+  deities, myths, works, buildings, instruments, geography,
+  organizations, foods, words, money and games. Fields: id, n, d.
+  Nothing compiles from it yet; the ids join the one namespace now,
+  so a collision fails the build the moment it lands.
+- animals.json - the creatures that flew and sailed before people
+  did: the dogs, the apes, the fish and the squid. Fields: id, n, d.
+  Same deal as the wider world: in the namespace now, compiled when
+  a recipe needs them.
 - presence.json - each entry is { p, place, from, to }: a person's
   documented span in one city. A person may hold several spans in the
   same city, and the brunch recipe queries the intersections.

@@ -1,47 +1,740 @@
 [
   {
+    "id": "abolition-act-1833",
+    "n": "The Slavery Abolition Act",
+    "q": "Britain’s Slavery Abolition Act ends slavery in most of the British Empire.",
+    "y": 1833,
+    "month": 8
+  },
+  {
+    "id": "alaska-purchase",
+    "n": "The Alaska Purchase",
+    "q": "The United States purchases Alaska from Russia.",
+    "y": 1867,
+    "month": 3
+  },
+  {
+    "id": "apollo-11-landing",
+    "n": "The Apollo 11 Moon Landing",
+    "q": "Apollo 11 lands on the Moon.",
+    "y": 1969,
+    "month": 7,
+    "day": 20
+  },
+  {
+    "id": "apple-founded",
+    "n": "The Founding of Apple Computer",
+    "q": "Apple Computer is founded in a garage in Cupertino.",
+    "y": 1976,
+    "month": 4,
+    "day": 1
+  },
+  {
+    "id": "armistice-1918",
+    "n": "The Armistice of 1918",
+    "q": "The First World War ends with the armistice.",
+    "y": 1918,
+    "month": 11,
+    "day": 11
+  },
+  {
+    "id": "arpanet-first-message",
+    "n": "The First ARPANET Message",
+    "q": "ARPANET sends its first message between two computers.",
+    "y": 1969,
+    "month": 10,
+    "day": 29
+  },
+  {
+    "id": "atlantic-cable-1858",
+    "n": "The First Atlantic Cable",
+    "q": "A telegraph message crosses the Atlantic for the first time, from Queen Victoria to President Buchanan.",
+    "y": 1858,
+    "month": 8,
+    "day": 16
+  },
+  {
+    "id": "baird-television",
+    "n": "Baird Demonstrates Television",
+    "q": "John Logie Baird demonstrates the first working television.",
+    "y": 1926,
+    "month": 1
+  },
+  {
+    "id": "battle-of-agincourt",
+    "n": "The Battle of Agincourt",
+    "q": "Henry V’s outnumbered army wins the battle of Agincourt.",
+    "y": 1415,
+    "month": 10,
+    "day": 25
+  },
+  {
+    "id": "battle-of-bannockburn",
+    "n": "The Battle of Bannockburn",
+    "q": "Robert the Bruce defeats the English at Bannockburn.",
+    "y": 1314,
+    "month": 6
+  },
+  {
+    "id": "battle-of-hastings",
+    "n": "The Battle of Hastings",
+    "q": "William of Normandy defeats Harold Godwinson at Hastings and takes the English crown.",
+    "y": 1066,
+    "month": 10,
+    "day": 14
+  },
+  {
+    "id": "berlin-wall-falls",
+    "n": "The Fall of the Berlin Wall",
+    "q": "The Berlin Wall falls.",
+    "y": 1989,
+    "month": 11,
+    "day": 9
+  },
+  {
+    "id": "black-death-europe",
+    "n": "The Black Death in Europe",
+    "q": "The Black Death reaches Europe aboard Genoese merchant ships.",
+    "y": 1347,
+    "month": 10
+  },
+  {
+    "id": "castro-enters-havana",
+    "n": "Castro Enters Havana",
+    "q": "Fidel Castro’s rebels enter Havana.",
+    "y": 1959,
+    "month": 1
+  },
+  {
+    "id": "charlemagne-crowned",
+    "n": "The Coronation of Charlemagne",
+    "q": "Charlemagne is crowned Emperor of the Romans in St. Peter’s, on Christmas Day.",
+    "y": 800,
+    "month": 12,
+    "day": 25
+  },
+  {
+    "id": "chernobyl-disaster",
+    "n": "The Chernobyl Disaster",
+    "q": "The Chernobyl reactor explodes.",
+    "y": 1986,
+    "month": 4,
+    "day": 26
+  },
+  {
+    "id": "circumnavigation-completed",
+    "n": "The First Circumnavigation",
+    "q": "The last ship of Magellan’s fleet completes the first circumnavigation of the globe.",
+    "y": 1522,
+    "month": 9,
+    "day": 6
+  },
+  {
+    "id": "columbus-landfall",
+    "n": "The Landfall of Columbus",
+    "q": "Columbus makes landfall in the Americas.",
+    "y": 1492,
+    "month": 10,
+    "day": 12
+  },
+  {
     "id": "congress-of-vienna",
     "n": "The Congress of Vienna",
-    "d": "Diplomatic congress, 1814-1815"
+    "d": "Diplomatic congress, 1814-1815",
+    "y": 1814
+  },
+  {
+    "id": "curiosity-landing",
+    "n": "The Curiosity Landing",
+    "q": "The Curiosity rover lands on Mars.",
+    "y": 2012,
+    "month": 8,
+    "day": 6
+  },
+  {
+    "id": "d-day",
+    "n": "The Normandy Landings",
+    "q": "D-Day: Allied forces land in Normandy.",
+    "y": 1944,
+    "month": 6,
+    "day": 6
+  },
+  {
+    "id": "de-revolutionibus",
+    "n": "De Revolutionibus",
+    "q": "Copernicus publishes De revolutionibus, placing the Sun at the center of the heavens.",
+    "y": 1543
+  },
+  {
+    "id": "declaration-of-independence",
+    "n": "The Declaration of Independence",
+    "q": "The Continental Congress adopts the Declaration of Independence.",
+    "y": 1776,
+    "month": 7,
+    "day": 4
+  },
+  {
+    "id": "discovery-of-radium",
+    "n": "The Discovery of Radium",
+    "q": "Pierre and Marie Curie announce the discovery of radium.",
+    "y": 1898,
+    "month": 12
+  },
+  {
+    "id": "eiffel-tower-opens",
+    "n": "The Eiffel Tower Opens",
+    "q": "The Eiffel Tower opens as the entrance arch to a world’s fair.",
+    "y": 1889,
+    "month": 3
+  },
+  {
+    "id": "execution-of-charles-i",
+    "n": "The Execution of Charles I",
+    "q": "Charles I is executed after a public trial.",
+    "y": 1649,
+    "month": 1
+  },
+  {
+    "id": "fall-of-constantinople",
+    "n": "The Fall of Constantinople",
+    "q": "Ottoman forces under Mehmed II take Constantinople, ending the Roman Empire in the East.",
+    "y": 1453,
+    "month": 5,
+    "day": 29
+  },
+  {
+    "id": "fall-of-saigon",
+    "n": "The Fall of Saigon",
+    "q": "Saigon falls and the Vietnam War ends.",
+    "y": 1975,
+    "month": 4,
+    "day": 30
+  },
+  {
+    "id": "fall-of-the-alamo",
+    "n": "The Fall of the Alamo",
+    "q": "The Alamo falls to Santa Anna’s army after a thirteen-day siege.",
+    "y": 1836,
+    "month": 3,
+    "day": 6
+  },
+  {
+    "id": "fall-of-western-rome",
+    "n": "The Fall of Western Rome",
+    "q": "The last western Roman emperor is deposed, and the empire of the west ends.",
+    "y": 476,
+    "month": 9,
+    "day": 4
+  },
+  {
+    "id": "first-crusade-jerusalem",
+    "n": "The First Crusade Takes Jerusalem",
+    "q": "The First Crusade captures Jerusalem.",
+    "y": 1099,
+    "month": 7
+  },
+  {
+    "id": "first-everest-ascent",
+    "n": "The First Ascent of Everest",
+    "q": "Edmund Hillary and Tenzing Norgay reach the summit of Everest.",
+    "y": 1953,
+    "month": 5,
+    "day": 29
+  },
+  {
+    "id": "first-modern-olympics",
+    "n": "The First Modern Olympics",
+    "q": "The first modern Olympic Games open in Athens.",
+    "y": 1896,
+    "month": 4
+  },
+  {
+    "id": "first-vaccination",
+    "n": "The First Vaccination",
+    "q": "Edward Jenner performs the first vaccination, inoculating a boy against smallpox with cowpox.",
+    "y": 1796,
+    "month": 5
+  },
+  {
+    "id": "first-world-war-begins",
+    "n": "The First World War Begins",
+    "q": "The First World War begins.",
+    "y": 1914,
+    "month": 7
+  },
+  {
+    "id": "fort-sumter",
+    "n": "The Bombardment of Fort Sumter",
+    "q": "The American Civil War begins at Fort Sumter.",
+    "y": 1861,
+    "month": 4
+  },
+  {
+    "id": "four-minute-mile",
+    "n": "The First Four Minute Mile",
+    "q": "Roger Bannister runs the first four minute mile.",
+    "y": 1954,
+    "month": 5,
+    "day": 6
   },
   {
     "id": "french-revolution",
     "n": "The French Revolution",
-    "d": "Revolution, 1789"
+    "d": "Revolution, 1789",
+    "q": "Parisians storm the Bastille.",
+    "y": 1789,
+    "month": 7,
+    "day": 14
+  },
+  {
+    "id": "gagarin-flight",
+    "n": "The First Human Spaceflight",
+    "q": "Yuri Gagarin becomes the first human in space, aboard Vostok 1.",
+    "y": 1961,
+    "month": 4,
+    "day": 12
+  },
+  {
+    "id": "galileo-jupiter-moons",
+    "n": "Galileo's Moons of Jupiter",
+    "q": "Galileo observes the moons of Jupiter through his telescope.",
+    "y": 1610,
+    "month": 1
+  },
+  {
+    "id": "gandhi-assassinated",
+    "n": "The Assassination of Mahatma Gandhi",
+    "q": "Mahatma Gandhi is assassinated in Delhi.",
+    "y": 1948,
+    "month": 1,
+    "day": 30
+  },
+  {
+    "id": "german-empire-proclaimed",
+    "n": "The Proclamation of the German Empire",
+    "q": "The German Empire is proclaimed at Versailles, with Prussia’s king as emperor.",
+    "y": 1871,
+    "month": 1,
+    "day": 18
+  },
+  {
+    "id": "great-exhibition",
+    "n": "The Great Exhibition",
+    "q": "The Great Exhibition opens in Joseph Paxton’s Crystal Palace in Hyde Park.",
+    "y": 1851,
+    "month": 5,
+    "day": 1
+  },
+  {
+    "id": "great-famine-ireland",
+    "n": "The Great Famine in Ireland",
+    "q": "The Great Famine begins as potato blight destroys the crop.",
+    "y": 1845
   },
   {
     "id": "great-fire",
     "n": "The Great Fire of London",
-    "d": "Fire, 1666"
+    "d": "Fire, 1666",
+    "q": "The Great Fire of London destroys most of the old city in four days.",
+    "y": 1666,
+    "month": 9,
+    "day": 2
   },
   {
     "id": "gunpowder-plot",
     "n": "The Gunpowder Plot",
-    "d": "Conspiracy, 1605"
+    "d": "Conspiracy, 1605",
+    "q": "The Gunpowder Plot is foiled and Guy Fawkes is captured.",
+    "y": 1605,
+    "month": 11,
+    "day": 5
+  },
+  {
+    "id": "gutenberg-bible",
+    "n": "The Gutenberg Bible",
+    "q": "Gutenberg prints his 42-line Bible, the first major book made with movable type.",
+    "y": 1455
+  },
+  {
+    "id": "gutenberg-press",
+    "n": "Gutenberg's Movable-Type Press",
+    "q": "Gutenberg is first recorded with his movable-type press at Mainz.",
+    "y": 1440
+  },
+  {
+    "id": "haitian-revolution-begins",
+    "n": "The Haitian Revolution Begins",
+    "q": "The Haitian Revolution begins with an uprising of the enslaved.",
+    "y": 1791,
+    "month": 8
+  },
+  {
+    "id": "hindenburg-disaster",
+    "n": "The Hindenburg Disaster",
+    "q": "The Hindenburg burns at Lakehurst, New Jersey.",
+    "y": 1937,
+    "month": 5,
+    "day": 6
+  },
+  {
+    "id": "hubble-launch",
+    "n": "The Launch of the Hubble Telescope",
+    "q": "The Hubble Space Telescope is launched.",
+    "y": 1990,
+    "month": 4
+  },
+  {
+    "id": "ibm-pc",
+    "n": "The IBM Personal Computer",
+    "q": "The IBM Personal Computer goes on sale.",
+    "y": 1981,
+    "month": 8
+  },
+  {
+    "id": "ibn-battuta-departs",
+    "n": "Ibn Battuta Leaves Tangier",
+    "q": "Ibn Battuta leaves Tangier on the first leg of a journey that will out-travel Marco Polo.",
+    "y": 1325,
+    "month": 6
+  },
+  {
+    "id": "invasion-of-russia-1812",
+    "n": "Napoleon's Invasion of Russia",
+    "q": "Napoleon invades Russia with the Grande Armée.",
+    "y": 1812,
+    "month": 6
+  },
+  {
+    "id": "iphone-launch",
+    "n": "The iPhone Launch",
+    "q": "The iPhone goes on sale.",
+    "y": 2007,
+    "month": 6,
+    "day": 29
+  },
+  {
+    "id": "jamestown-founded",
+    "n": "The Founding of Jamestown",
+    "q": "Jamestown, the first permanent English settlement in North America, is founded.",
+    "y": 1607,
+    "month": 5
+  },
+  {
+    "id": "jfk-assassination",
+    "n": "The Assassination of John F. Kennedy",
+    "q": "President John F. Kennedy is assassinated in Dallas.",
+    "y": 1963,
+    "month": 11,
+    "day": 22
   },
   {
     "id": "lepanto",
     "n": "The Battle of Lepanto",
-    "d": "Naval battle, 1571"
+    "d": "Naval battle, 1571",
+    "y": 1571,
+    "month": 10,
+    "day": 7
+  },
+  {
+    "id": "lincoln-assassinated",
+    "n": "The Assassination of Lincoln",
+    "q": "The Civil War ends and Abraham Lincoln is assassinated.",
+    "y": 1865,
+    "month": 4
+  },
+  {
+    "id": "lindbergh-flight",
+    "n": "Lindbergh's Solo Flight",
+    "q": "Lindbergh flies solo from New York to Paris.",
+    "y": 1927,
+    "month": 5
+  },
+  {
+    "id": "louisiana-purchase",
+    "n": "The Louisiana Purchase",
+    "q": "The United States concludes the Louisiana Purchase.",
+    "y": 1803
+  },
+  {
+    "id": "louvre-opens",
+    "n": "The Louvre Opens",
+    "q": "The Louvre opens to the public as the republic’s national museum.",
+    "y": 1793,
+    "month": 8,
+    "day": 10
+  },
+  {
+    "id": "magellan-departs",
+    "n": "Magellan Sets Out",
+    "q": "Magellan’s expedition sets out to circle the globe.",
+    "y": 1519,
+    "month": 9
+  },
+  {
+    "id": "magna-carta",
+    "n": "The Magna Carta",
+    "q": "King John seals the Magna Carta at Runnymede.",
+    "y": 1215,
+    "month": 6
+  },
+  {
+    "id": "mandela-elected",
+    "n": "The Election of Nelson Mandela",
+    "q": "Nelson Mandela is elected President of South Africa.",
+    "y": 1994
+  },
+  {
+    "id": "mayflower-landing",
+    "n": "The Mayflower Landing",
+    "q": "The Mayflower lands the Pilgrims at Plymouth.",
+    "y": 1620,
+    "month": 12
+  },
+  {
+    "id": "messiah-premiere",
+    "n": "The Messiah Premiere in Dublin",
+    "q": "Handel’s Messiah premieres in Dublin.",
+    "y": 1742,
+    "month": 4
+  },
+  {
+    "id": "miracle-year",
+    "n": "Einstein's Miracle Year",
+    "q": "Einstein publishes his miracle year papers, including special relativity.",
+    "y": 1905
+  },
+  {
+    "id": "model-t",
+    "n": "The Model T",
+    "q": "Ford introduces the Model T.",
+    "y": 1908,
+    "month": 10
+  },
+  {
+    "id": "mona-lisa",
+    "n": "The Mona Lisa",
+    "q": "Leonardo da Vinci begins painting the Mona Lisa.",
+    "y": 1503
+  },
+  {
+    "id": "nineteenth-amendment",
+    "n": "The Nineteenth Amendment",
+    "q": "The 19th Amendment is ratified, giving American women the vote.",
+    "y": 1920,
+    "month": 8
+  },
+  {
+    "id": "ninety-five-theses",
+    "n": "The Ninety-five Theses",
+    "q": "Martin Luther posts his Ninety-five Theses.",
+    "y": 1517,
+    "month": 10
+  },
+  {
+    "id": "origin-of-species",
+    "n": "On the Origin of Species",
+    "q": "Darwin publishes On the Origin of Species.",
+    "y": 1859,
+    "month": 11
+  },
+  {
+    "id": "peasants-revolt",
+    "n": "The Peasants' Revolt",
+    "q": "The Peasants’ Revolt reaches London and burns the Savoy Palace.",
+    "y": 1381,
+    "month": 6
+  },
+  {
+    "id": "penicillin-discovery",
+    "n": "The Discovery of Penicillin",
+    "q": "Alexander Fleming discovers penicillin.",
+    "y": 1928,
+    "month": 9
+  },
+  {
+    "id": "plains-of-abraham",
+    "n": "The Battle of the Plains of Abraham",
+    "q": "Wolfe defeats Montcalm on the Plains of Abraham, and Britain takes Quebec.",
+    "y": 1759,
+    "month": 9,
+    "day": 13
+  },
+  {
+    "id": "principia-mathematica",
+    "n": "The Principia Mathematica",
+    "q": "Newton publishes the Principia Mathematica.",
+    "y": 1687
+  },
+  {
+    "id": "revolutions-of-1848",
+    "n": "The Revolutions of 1848",
+    "q": "Revolutions sweep Europe from Paris to Vienna in the Year of Spring.",
+    "y": 1848
+  },
+  {
+    "id": "rosa-parks-arrest",
+    "n": "The Arrest of Rosa Parks",
+    "q": "Rosa Parks refuses to give up her bus seat, and the Montgomery boycott begins.",
+    "y": 1955,
+    "month": 12,
+    "day": 1
+  },
+  {
+    "id": "rosetta-stone-found",
+    "n": "The Rosetta Stone",
+    "q": "French soldiers digging a fort near Rosetta unearth a stone carved three ways.",
+    "y": 1799,
+    "month": 7
+  },
+  {
+    "id": "roswell-incident",
+    "n": "The Roswell Incident",
+    "q": "The Roswell incident makes UFOs a household word.",
+    "y": 1947,
+    "month": 7
+  },
+  {
+    "id": "sack-of-constantinople",
+    "n": "The Sack of Constantinople",
+    "q": "The Fourth Crusade, diverted from Jerusalem, storms and sacks Constantinople.",
+    "y": 1204,
+    "month": 4
+  },
+  {
+    "id": "second-world-war-begins",
+    "n": "The Second World War Begins",
+    "q": "The Second World War begins with the invasion of Poland.",
+    "y": 1939,
+    "month": 9,
+    "day": 1
+  },
+  {
+    "id": "september-11-attacks",
+    "n": "The September 11 Attacks",
+    "q": "The September 11 attacks",
+    "y": 2001,
+    "month": 9,
+    "day": 11
+  },
+  {
+    "id": "shakespeare-birth",
+    "n": "The Birth of Shakespeare",
+    "q": "William Shakespeare is born in Stratford-upon-Avon.",
+    "y": 1564,
+    "month": 4
   },
   {
     "id": "solvay-1911",
     "n": "The First Solvay Conference",
-    "d": "Council of physics, 1911"
+    "d": "Council of physics, 1911",
+    "y": 1911,
+    "month": 10,
+    "day": 30
   },
   {
     "id": "spanish-armada",
     "n": "The Spanish Armada",
-    "d": "Invasion fleet, 1588"
+    "d": "Invasion fleet, 1588",
+    "q": "The Spanish Armada is defeated in the Channel and wrecked by storms on the way home.",
+    "y": 1588
+  },
+  {
+    "id": "sputnik-launch",
+    "n": "The Launch of Sputnik 1",
+    "q": "The Soviet Union launches Sputnik 1, the first artificial satellite.",
+    "y": 1957,
+    "month": 10,
+    "day": 4
+  },
+  {
+    "id": "st-petersburg-founded",
+    "n": "The Founding of St. Petersburg",
+    "q": "Peter the Great founds St. Petersburg.",
+    "y": 1703,
+    "month": 5
+  },
+  {
+    "id": "stockton-darlington",
+    "n": "The Stockton and Darlington Railway",
+    "q": "The Stockton & Darlington opens as the first public steam railway.",
+    "y": 1825,
+    "month": 9
+  },
+  {
+    "id": "suez-canal",
+    "n": "The Suez Canal Opens",
+    "q": "The Suez Canal opens to shipping.",
+    "y": 1869,
+    "month": 11
+  },
+  {
+    "id": "telephone-patent",
+    "n": "The Telephone Patent",
+    "q": "Alexander Graham Bell is granted the telephone patent.",
+    "y": 1876,
+    "month": 3
+  },
+  {
+    "id": "titanic-sinks",
+    "n": "The Sinking of the Titanic",
+    "q": "The RMS Titanic sinks on her maiden voyage.",
+    "y": 1912,
+    "month": 4,
+    "day": 15
   },
   {
     "id": "trafalgar",
     "n": "The Battle of Trafalgar",
-    "d": "Naval battle, 1805"
+    "d": "Naval battle, 1805",
+    "y": 1805,
+    "month": 10,
+    "day": 21
+  },
+  {
+    "id": "treaty-of-paris-1783",
+    "n": "The Treaty of Paris",
+    "q": "The Treaty of Paris ends the Revolutionary War and Britain recognizes the United States.",
+    "y": 1783,
+    "month": 9,
+    "day": 3
+  },
+  {
+    "id": "trinity-test",
+    "n": "The Trinity Test",
+    "q": "The first atomic bomb is tested at Trinity.",
+    "y": 1945,
+    "month": 7,
+    "day": 16
+  },
+  {
+    "id": "tutankhamun-tomb",
+    "n": "The Tomb of Tutankhamun",
+    "q": "Howard Carter opens Tutankhamun’s tomb.",
+    "y": 1922,
+    "month": 11
+  },
+  {
+    "id": "wall-street-crash",
+    "n": "The Wall Street Crash",
+    "q": "The Wall Street Crash wipes out the US stock market.",
+    "y": 1929,
+    "month": 10
   },
   {
     "id": "waterloo",
     "n": "The Battle of Waterloo",
-    "d": "Battle, 1815"
+    "d": "Battle, 1815",
+    "q": "Napoleon is defeated at Waterloo.",
+    "y": 1815,
+    "month": 6,
+    "day": 18
+  },
+  {
+    "id": "wright-first-flight",
+    "n": "The First Airplane Flight",
+    "q": "The Wright brothers make the first powered airplane flight.",
+    "y": 1903,
+    "month": 12,
+    "day": 17
   }
 ]

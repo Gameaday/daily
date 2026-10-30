@@ -125,14 +125,16 @@ const rels = Array.isArray(relations) ? relations : [];
     else if (r.y !== undefined && (!Number.isInteger(r.y) || r.y <= 0))
       fail('knowledge: relation year must be a positive integer or absent (' + r.a + ' - ' + r.b + ')');
     else {
-      const lives = [r.a, r.b].map(end => byId[end])
-        .filter(ent => ent && ent.born !== undefined && ent.died !== undefined);
-      if (lives.length && !lives.some(ent => r.y >= ent.born && r.y <= ent.died))
-        fail('knowledge: relation year touches no living endpoint (' + r.a + ' - ' + r.b + ')');
-      for (const end of [r.a, r.b]){
-        const ent = byId[end];
-        if (ent && ent.y !== undefined && r.y < ent.y)
-          fail('knowledge: relation year precedes the event (' + r.a + ' - ' + r.b + ')');
+      if (r.y !== undefined){
+        const lives = [r.a, r.b].map(end => byId[end])
+          .filter(ent => ent && ent.born !== undefined && ent.died !== undefined);
+        if (lives.length && !lives.some(ent => r.y >= ent.born && r.y <= ent.died))
+          fail('knowledge: relation year touches no living endpoint (' + r.a + ' - ' + r.b + ')');
+        for (const end of [r.a, r.b]){
+          const ent = byId[end];
+          if (ent && ent.y !== undefined && r.y < ent.y)
+            fail('knowledge: relation year precedes the event (' + r.a + ' - ' + r.b + ')');
+        }
       }
       const key = r.a < r.b ? r.a + ':' + r.b : r.b + ':' + r.a;
       if (pairs.has(key)) fail('knowledge: duplicate relation pair ' + r.a + ' - ' + r.b);

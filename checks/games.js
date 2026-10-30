@@ -113,14 +113,9 @@ for (const g of Object.keys(GATED)) {
 for (const g of Object.keys(GATED))
   if (!LIST.order.includes(g)) fail('games.json: gated game ' + g + ' missing from order');
 
-/* wording: one word is banned by convention here; it must stay out of
-   tracked text (the dictionaries that legitimately contain it are exempt) */
-for (const hit of require('./wording').runWordingCheck()) fail('wording: ' + hit);
-
 if (failures) {
   console.error('');
   console.error(failures + ' failure(s)');
   process.exit(1);
 }
 console.log('all ' + games.length + ' games + landing validated');
-

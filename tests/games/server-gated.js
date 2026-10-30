@@ -122,6 +122,8 @@ async function run(h, ctx){
     await h.flush();
     r.env.els['opt' + served.puzzle.a].click();
     h.eq(r.x.S.status, 'won', 'gated: superlative won on the served board');
+    h.ok(Array.isArray(served.puzzle.b) && served.puzzle.b.length === 4,
+      'gated: the served board carries its bonus match');
   }
   /* thread: the served chain plays through */
   {

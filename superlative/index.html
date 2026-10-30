@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Four lives from the record, one question: the longest life, or the first or last birth. One guess." />
+<meta name="description" content="Four lives from the record, one question: the longest life, or the first or last birth. One guess, then a bonus match." />
 <title>Superlative · the daily record game</title>
 <link rel="stylesheet" href="../shell/common.css"/>
 <style>
@@ -32,6 +32,16 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px;}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+.bonusbox{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--green); border-radius:10px; padding:14px; margin-bottom:14px;}
+.bhead{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--green); margin-bottom:10px;}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
+.chip{background:var(--paper); border:1.5px solid var(--line); border-radius:999px; padding:6px 14px; font-size:13px; color:var(--ink); cursor:pointer;}
+.chip.sel{border-color:var(--accent); font-weight:700;}
+.chip.done{opacity:.45; cursor:default;}
+.names{display:flex; flex-wrap:wrap; gap:8px;}
+.bname{background:var(--paper); border:1.5px solid var(--line); border-radius:10px; padding:8px 12px; font-family:Georgia,serif; font-size:14px; color:var(--ink); cursor:pointer; text-align:left;}
+.bname.done{border-color:var(--green); background:var(--green-soft); cursor:default;}
+.bnote{margin-top:10px; font-size:13px; color:var(--muted);}
 .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
 @media (max-width:480px){
     h1{font-size:28px;}
@@ -67,6 +77,12 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="reveal" id="reveal">
     <p class="verdict" id="verdict"></p>
     <div class="why" id="why"></div>
+    <div class="bonusbox" id="bonus" style="display:none;">
+      <div class="bhead">Bonus · the four superlatives</div>
+      <div class="chips" id="chips"></div>
+      <div class="names" id="bnames"></div>
+      <div class="bnote" id="bnote"></div>
+    </div>
     <div class="sharebox" id="sharetext"></div>
     <div id="curve"></div>
     <div class="actions">
@@ -86,6 +102,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <h2>How to play</h2>
     <p>Four lives from the people record, one question: who lived the longest, or who was born first or last. <b>Pick the one the record makes stand alone.</b></p>
     <p>The reveal shows every span in years. A life only counts when the record dates both ends, and a group where the answer could tie never serves, so the one to pick is always settled alone.</p>
+    <p>Some boards carry a bonus match: four superlatives, one for each life. Pick a superlative, then pick the life it belongs to. Every life tops the one it holds.</p>
     <p>One guess a day. Everyone gets the same board, so compare notes over coffee.</p>
     <button class="close" data-close>Got it</button>
   </div>
@@ -122,7 +139,8 @@ if (!S || S.day !== dayIndex){
     if (!(S.status === 'won' && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since last win */
   }
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, best:null};
-  S = { day: dayIndex, pick: null, status: 'playing', stats };
+  S = { day: dayIndex, pick: null, status: 'playing', stats,
+        bonus: { matched: [], wrong: 0, done: false } };
 }
 saveState();
 
@@ -166,8 +184,12 @@ function pick(i){
 
 function shareText(){
   const sq = S.status === 'won' ? '🏆' : '📜';
-  if (S.status === 'won') return 'Superlative No. ' + num + ' · best of the four ' + sq;
-  return 'Superlative No. ' + num + ' · not the one ' + sq;
+  let out;
+  if (S.status === 'won') out = 'Superlative No. ' + num + ' · best of the four ' + sq;
+  else out = 'Superlative No. ' + num + ' · not the one ' + sq;
+  if (S.bonus && S.bonus.done)
+    out += ' · all four superlatives' + (S.bonus.wrong ? ' (' + S.bonus.wrong + ' wrong)' : ' clean');
+  return out;
 }
 
 function showReveal(){
@@ -181,7 +203,73 @@ function showReveal(){
   $('why').textContent = EV.w;
   $('sharetext').textContent = shareText() + String.fromCharCode(10) + 'streak ' + st.streak + ' · played ' + st.played;
   $('reveal').classList.add('show');
+  renderBonus();
   syncBoard(S.status === 'won' ? 1 : 2);
+}
+
+/* ---------------- bonus match ---------------- */
+let selChip = -1;
+function renderBonus(){
+  if (!EV.b) return;
+  S.bonus = S.bonus || { matched: [], wrong: 0, done: false };
+  $('bonus').style.display = 'block';
+  let chips = '';
+  for (let i = 0; i < EV.b.length; i++){
+    const m = S.bonus.matched.some(x => x[0] === i);
+    chips += '<button class="chip' + (m ? ' done' : (selChip === i ? ' sel' : '')) +
+      '" id="chip' + i + '">' + EV.b[i].q + '</button>';
+  }
+  $('chips').innerHTML = chips;
+  let names = '';
+  for (let j = 0; j < EV.opts.length; j++){
+    const m = S.bonus.matched.find(x => x[1] === j);
+    names += '<button class="bname' + (m ? ' done' : '') + '" id="bname' + j + '">' +
+      EV.opts[j] + (m ? ' · ' + EV.b[m[0]].v : '') + '</button>';
+  }
+  $('bnames').innerHTML = names;
+  wireBonus();
+  if (S.bonus.done) $('bnote').textContent = 'All four assigned' +
+    (S.bonus.wrong ? ' with ' + S.bonus.wrong + ' wrong' : ', a perfect match') + '.';
+}
+function wireBonus(){
+  for (let i = 0; i < EV.b.length; i++){
+    const b = $('chip' + i);
+    if (b.dataset.wired) continue;
+    b.dataset.wired = '1';
+    b.addEventListener('click', () => {
+      if (S.bonus.done || S.bonus.matched.some(x => x[0] === i)) return;
+      selChip = i;
+      renderBonus();
+    });
+  }
+  for (let j = 0; j < EV.opts.length; j++){
+    const b = $('bname' + j);
+    if (b.dataset.wired) continue;
+    b.dataset.wired = '1';
+    b.addEventListener('click', () => tryAssign(j));
+  }
+}
+function tryAssign(j){
+  if (!EV.b || S.bonus.done) return;
+  if (selChip < 0){ toastMsg('Pick a superlative first.'); return; }
+  if (S.bonus.matched.some(x => x[1] === j)){ selChip = -1; renderBonus(); return; }
+  if (EV.b[selChip].a === j){
+    S.bonus.matched.push([selChip, j]);
+    if (S.bonus.matched.length === EV.b.length){
+      S.bonus.done = true;
+      $('bnote').textContent = 'All four assigned' +
+        (S.bonus.wrong ? ' with ' + S.bonus.wrong + ' wrong' : ', a perfect match') + '.';
+      $('sharetext').textContent = shareText() + String.fromCharCode(10) +
+        'streak ' + S.stats.streak + ' · played ' + S.stats.played;
+      toastMsg('Bonus matched.');
+    }
+  } else {
+    S.bonus.wrong++;
+    toastMsg('The record disagrees.');
+  }
+  selChip = -1;
+  saveState();
+  renderBonus();
 }
 
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */

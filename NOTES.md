@@ -311,6 +311,19 @@ own headless playthrough and server-gated block. Person numbers
 still wait; when they land the recipe grows richer questions
 without a new store shape.
 
+The bonus round landed with the first person numbers. A board now
+carries a bonus match whenever the numbers seat every life one
+superlative it tops: the three the dates always settle (the longest
+life, the first birth, the last birth) plus the measured and counted
+dims, height only when all four lives are measured, works and reign
+reading a missing number as zero. Batch one records fifty reign
+years (sovereigns only, from bedrock accession dates), five heights
+(Lincoln, Washington, Napoleon, Victoria, Ali) and two catalogue
+counts (Bach at 1080 by BWV, Mozart at 626 by K), and the epoch
+moved to Monday 2026-11-02 with pre-launch days clamped to No. 1 so
+weekend visitors play the board Monday re-serves. 3 boards
+carry the bonus so far, and every batch of numbers seats more.
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

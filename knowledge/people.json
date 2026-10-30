@@ -23,7 +23,8 @@
     "n": "Akbar",
     "d": "Third Mughal emperor, 1542-1605",
     "born": 1542,
-    "died": 1605
+    "died": 1605,
+    "reign": 49
   },
   {
     "id": "al-idrisi",
@@ -65,14 +66,16 @@
     "n": "Alfred the Great",
     "d": "King of Wessex, 849-899",
     "born": 849,
-    "died": 899
+    "died": 899,
+    "reign": 28
   },
   {
     "id": "ali",
     "n": "Muhammad Ali",
     "d": "Boxer, 1942-2016",
     "born": 1942,
-    "died": 2016
+    "died": 2016,
+    "h": 190
   },
   {
     "id": "alice-paul",
@@ -175,7 +178,8 @@
     "n": "Aurangzeb",
     "d": "Last great Mughal emperor, 1618-1707",
     "born": 1618,
-    "died": 1707
+    "died": 1707,
+    "reign": 49
   },
   {
     "id": "austen",
@@ -196,14 +200,16 @@
     "n": "Babur",
     "d": "Founder of the Mughal empire, 1483-1530",
     "born": 1483,
-    "died": 1530
+    "died": 1530,
+    "reign": 4
   },
   {
     "id": "bach",
     "n": "Johann Sebastian Bach",
     "d": "Composer, 1685-1750",
     "born": 1685,
-    "died": 1750
+    "died": 1750,
+    "works": 1080
   },
   {
     "id": "bacon",
@@ -498,7 +504,8 @@
     "n": "Catherine the Great",
     "d": "Empress of Russia, 1729-1796",
     "born": 1729,
-    "died": 1796
+    "died": 1796,
+    "reign": 34
   },
   {
     "id": "catherine-de-medici",
@@ -554,21 +561,24 @@
     "n": "Charles I",
     "d": "King of England, 1600-1649",
     "born": 1600,
-    "died": 1649
+    "died": 1649,
+    "reign": 24
   },
   {
     "id": "charles-ii",
     "n": "Charles II",
     "d": "King of England, 1630-1685",
     "born": 1630,
-    "died": 1685
+    "died": 1685,
+    "reign": 25
   },
   {
     "id": "charles-v",
     "n": "Charles V",
     "d": "Holy Roman Emperor, 1500-1558",
     "born": 1500,
-    "died": 1558
+    "died": 1558,
+    "reign": 37
   },
   {
     "id": "charlotte-bronte",
@@ -589,7 +599,8 @@
     "n": "Christina of Sweden",
     "d": "Queen of Sweden, 1626-1689",
     "born": 1626,
-    "died": 1689
+    "died": 1689,
+    "reign": 22
   },
   {
     "id": "churchill",
@@ -647,7 +658,8 @@
     "n": "Commodus",
     "d": "Roman emperor, 161-192",
     "born": 161,
-    "died": 192
+    "died": 192,
+    "reign": 12
   },
   {
     "id": "confucius",
@@ -673,7 +685,8 @@
     "n": "Constantine",
     "d": "First Christian Roman emperor, 272-337",
     "born": 272,
-    "died": 337
+    "died": 337,
+    "reign": 31
   },
   {
     "id": "cook",
@@ -961,14 +974,16 @@
     "n": "Edward I",
     "d": "King of England, 1239-1307",
     "born": 1239,
-    "died": 1307
+    "died": 1307,
+    "reign": 35
   },
   {
     "id": "edward-iv",
     "n": "Edward IV",
     "d": "First Yorkist king, 1442-1483",
     "born": 1442,
-    "died": 1483
+    "died": 1483,
+    "reign": 21
   },
   {
     "id": "edwin-hubble",
@@ -1010,7 +1025,8 @@
     "n": "Elizabeth I",
     "d": "Queen of England, 1533-1603",
     "born": 1533,
-    "died": 1603
+    "died": 1603,
+    "reign": 45
   },
   {
     "id": "elizebeth-friedman",
@@ -1118,7 +1134,8 @@
     "n": "Francis I",
     "d": "King of France, 1494-1547",
     "born": 1494,
-    "died": 1547
+    "died": 1547,
+    "reign": 32
   },
   {
     "id": "frank-capra",
@@ -1146,7 +1163,8 @@
     "n": "Frederick the Great",
     "d": "King of Prussia, 1712-1786",
     "born": 1712,
-    "died": 1786
+    "died": 1786,
+    "reign": 46
   },
   {
     "id": "frederick-cook",
@@ -1251,21 +1269,24 @@
     "n": "George II",
     "d": "King of Great Britain, 1683-1760",
     "born": 1683,
-    "died": 1760
+    "died": 1760,
+    "reign": 33
   },
   {
     "id": "george-iii",
     "n": "George III",
     "d": "King of Great Britain, 1738-1820",
     "born": 1738,
-    "died": 1820
+    "died": 1820,
+    "reign": 60
   },
   {
     "id": "george-v",
     "n": "George V",
     "d": "King of England, 1865-1936",
     "born": 1865,
-    "died": 1936
+    "died": 1936,
+    "reign": 26
   },
   {
     "id": "geronimo",
@@ -1400,7 +1421,8 @@
     "n": "Harald Hardrada",
     "d": "King of Norway, 1015-1066",
     "born": 1015,
-    "died": 1066
+    "died": 1066,
+    "reign": 20
   },
   {
     "id": "hardy",
@@ -1469,28 +1491,32 @@
     "n": "Henry III",
     "d": "King of England, 1207-1272",
     "born": 1207,
-    "died": 1272
+    "died": 1272,
+    "reign": 56
   },
   {
     "id": "henry-vii",
     "n": "Henry VII",
     "d": "First Tudor king, 1457-1509",
     "born": 1457,
-    "died": 1509
+    "died": 1509,
+    "reign": 24
   },
   {
     "id": "henry-viii",
     "n": "Henry VIII",
     "d": "King of England, 1491-1547",
     "born": 1491,
-    "died": 1547
+    "died": 1547,
+    "reign": 38
   },
   {
     "id": "heraclius",
     "n": "Heraclius",
     "d": "Byzantine emperor of the Persian wars, 575-641",
     "born": 575,
-    "died": 641
+    "died": 641,
+    "reign": 31
   },
   {
     "id": "hillary",
@@ -1614,7 +1640,8 @@
     "n": "Isabella of Castile",
     "d": "Queen of Castile, 1451-1504",
     "born": 1451,
-    "died": 1504
+    "died": 1504,
+    "reign": 30
   },
   {
     "id": "ito-hirobumi",
@@ -1648,14 +1675,16 @@
     "n": "James I",
     "d": "King of England and Scotland, 1566-1625",
     "born": 1566,
-    "died": 1625
+    "died": 1625,
+    "reign": 22
   },
   {
     "id": "james-ii",
     "n": "James II",
     "d": "King of England, 1633-1701",
     "born": 1633,
-    "died": 1701
+    "died": 1701,
+    "reign": 3
   },
   {
     "id": "james-murray",
@@ -1821,7 +1850,8 @@
     "n": "Justinian",
     "d": "Byzantine emperor of the code, 482-565",
     "born": 482,
-    "died": 565
+    "died": 565,
+    "reign": 38
   },
   {
     "id": "keats",
@@ -1888,7 +1918,8 @@
     "n": "Kublai Khan",
     "d": "Khan of the Yuan, 1215-1294",
     "born": 1215,
-    "died": 1294
+    "died": 1294,
+    "reign": 34
   },
   {
     "id": "lafayette",
@@ -1982,7 +2013,8 @@
     "n": "Abraham Lincoln",
     "d": "President, 1809-1865",
     "born": 1809,
-    "died": 1865
+    "died": 1865,
+    "h": 193
   },
   {
     "id": "lindbergh",
@@ -2038,28 +2070,32 @@
     "n": "Louis XIV",
     "d": "King of France, 1638-1715",
     "born": 1638,
-    "died": 1715
+    "died": 1715,
+    "reign": 72
   },
   {
     "id": "louis-xv",
     "n": "Louis XV",
     "d": "King of France, 1710-1774",
     "born": 1710,
-    "died": 1774
+    "died": 1774,
+    "reign": 59
   },
   {
     "id": "louis-xvi",
     "n": "Louis XVI",
     "d": "King of France, 1754-1793",
     "born": 1754,
-    "died": 1793
+    "died": 1793,
+    "reign": 18
   },
   {
     "id": "ludwig-ii",
     "n": "Ludwig II",
     "d": "King of Bavaria, 1845-1886",
     "born": 1845,
-    "died": 1886
+    "died": 1886,
+    "reign": 22
   },
   {
     "id": "luther",
@@ -2128,7 +2164,8 @@
     "n": "Manuel I",
     "d": "King of Portugal, 1469-1521",
     "born": 1469,
-    "died": 1521
+    "died": 1521,
+    "reign": 26
   },
   {
     "id": "marat",
@@ -2162,7 +2199,8 @@
     "n": "Marcus Aurelius",
     "d": "Stoic emperor of Rome, 121-180",
     "born": 121,
-    "died": 180
+    "died": 180,
+    "reign": 19
   },
   {
     "id": "marie-antoinette",
@@ -2197,7 +2235,8 @@
     "n": "Mary, Queen of Scots",
     "d": "Queen of Scotland, 1542-1587",
     "born": 1542,
-    "died": 1587
+    "died": 1587,
+    "reign": 25
   },
   {
     "id": "mary-shelley",
@@ -2252,7 +2291,8 @@
     "n": "Emperor Meiji",
     "d": "Emperor of the restoration, 1852-1912",
     "born": 1852,
-    "died": 1912
+    "died": 1912,
+    "reign": 45
   },
   {
     "id": "melbourne",
@@ -2367,7 +2407,8 @@
     "n": "Wolfgang Amadeus Mozart",
     "d": "Composer, 1756-1791",
     "born": 1756,
-    "died": 1791
+    "died": 1791,
+    "works": 626
   },
   {
     "id": "nader-shah",
@@ -2388,7 +2429,9 @@
     "n": "Napoleon Bonaparte",
     "d": "Emperor of the French, 1769-1821",
     "born": 1769,
-    "died": 1821
+    "died": 1821,
+    "reign": 10,
+    "h": 168
   },
   {
     "id": "napoleon-iii",
@@ -2416,7 +2459,8 @@
     "n": "Nero",
     "d": "Roman emperor, 37-68",
     "born": 37,
-    "died": 68
+    "died": 68,
+    "reign": 14
   },
   {
     "id": "newton",
@@ -2478,7 +2522,8 @@
     "n": "Ogedei Khan",
     "d": "Second great khan, 1186-1241",
     "born": 1186,
-    "died": 1241
+    "died": 1241,
+    "reign": 12
   },
   {
     "id": "oliver-cromwell",
@@ -2594,14 +2639,16 @@
     "n": "Philip II",
     "d": "King of Spain, 1527-1598",
     "born": 1527,
-    "died": 1598
+    "died": 1598,
+    "reign": 42
   },
   {
     "id": "philip-iv",
     "n": "Philip IV",
     "d": "King of Spain, 1605-1665",
     "born": 1605,
-    "died": 1665
+    "died": 1665,
+    "reign": 44
   },
   {
     "id": "pissarro",
@@ -2757,14 +2804,16 @@
     "n": "Richard III",
     "d": "King of England, 1452-1485",
     "born": 1452,
-    "died": 1485
+    "died": 1485,
+    "reign": 2
   },
   {
     "id": "richard-lionheart",
     "n": "Richard the Lionheart",
     "d": "King of England, 1157-1199",
     "born": 1157,
-    "died": 1199
+    "died": 1199,
+    "reign": 10
   },
   {
     "id": "richelieu",
@@ -2875,7 +2924,8 @@
     "n": "Saladin",
     "d": "Sultan of Egypt and Syria, 1137-1193",
     "born": 1137,
-    "died": 1193
+    "died": 1193,
+    "reign": 19
   },
   {
     "id": "salk",
@@ -2945,7 +2995,8 @@
     "n": "Shah Jahan",
     "d": "Mughal emperor of the Taj, 1592-1666",
     "born": 1592,
-    "died": 1666
+    "died": 1666,
+    "reign": 30
   },
   {
     "id": "shakespeare",
@@ -3049,7 +3100,8 @@
     "n": "Suleiman the Magnificent",
     "d": "Ottoman sultan, 1494-1566",
     "born": 1494,
-    "died": 1566
+    "died": 1566,
+    "reign": 46
   },
   {
     "id": "sun-tzu",
@@ -3178,7 +3230,8 @@
     "n": "Trajan",
     "d": "Roman emperor of the greatest extent, 53-117",
     "born": 53,
-    "died": 117
+    "died": 117,
+    "reign": 19
   },
   {
     "id": "trollope",
@@ -3306,7 +3359,9 @@
     "n": "Queen Victoria",
     "d": "Queen and empress, 1819-1901",
     "born": 1819,
-    "died": 1901
+    "died": 1901,
+    "reign": 63,
+    "h": 152
   },
   {
     "id": "virgil",
@@ -3360,7 +3415,8 @@
     "n": "George Washington",
     "d": "General and president, 1732-1799",
     "born": 1732,
-    "died": 1799
+    "died": 1799,
+    "h": 188
   },
   {
     "id": "watt",
@@ -3416,7 +3472,8 @@
     "n": "William III",
     "d": "King of England, 1650-1702",
     "born": 1650,
-    "died": 1702
+    "died": 1702,
+    "reign": 13
   },
   {
     "id": "william-the-conqueror",

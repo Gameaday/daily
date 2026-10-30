@@ -1,6 +1,7 @@
-/* superlative - headless playthrough (win, loss, day rollover). The
-   boards cut from the people layer: day 0 seats Ada Lovelace, John
-   Adams, Akbar and Al-Idrisi and asks for the longest life. */
+/* superlative - headless playthrough (win, loss, day rollover) plus
+   the bonus match. The boards cut from the people layer: day 0 seats
+   Ada Lovelace, John Adams, Akbar and Al-Idrisi, asks for the longest
+   life, and its bonus seats all four. */
 'use strict';
 const { T0, T1, TPRE } = require('./_lib');
 
@@ -21,6 +22,7 @@ async function run(h){
     await h.flush();
     h.eq(r.x.S.day, 1, 'superlative: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'superlative: streak preserved');
+    h.ok(!r.x.EV.b, 'superlative: a group nobody can seat serves no bonus');
     const s2 = {};
     r = h.boot('superlative', EXP, { now: T0, store: s2 });
     await h.flush();
@@ -31,6 +33,19 @@ async function run(h){
     h.eq(h.lastPost(r.env).body.value, 2, 'superlative: curve value 2 on loss');
     h.ok(r.env.els.why.textContent.indexOf(r.x.EV.opts[r.x.EV.a]) >= 0,
       'superlative: the reveal names the one who stood alone');
+
+    /* the bonus match: four superlatives, one per life */
+    h.ok(Array.isArray(r.x.EV.b) && r.x.EV.b.length === 4,
+      'superlative: day 0 carries a bonus chip for every life');
+    h.eq(new Set(r.x.EV.b.map(x => x.a)).size, 4,
+      'superlative: the bonus seats one superlative per life');
+    const pairs = r.x.EV.b.map((x, i) => [i, x.a]).sort((x, y) => x[1] - y[1]);
+    for (const pair of pairs){
+      r.env.els['chip' + pair[0]].click();
+      r.env.els['bname' + pair[1]].click();
+    }
+    h.eq(r.x.S.bonus.done, true, 'superlative: all four superlatives assigned');
+    h.eq(r.x.S.bonus.wrong, 0, 'superlative: the bonus match played clean');
 
     /* the pre-launch clamp: before the epoch the shell reads No. 1, and a
        weekend win carries into the real Monday board */

@@ -21,7 +21,11 @@ schedule that the first post-flip bank change reshuffles.
 
 - people.json - humans. Fields: id, n, d, plus born and died (the
   years the descriptor states, recorded only for CE ranges; a c. in d
-  means the year is approximate).
+  means the year is approximate), plus optional numbers a reputable
+  source states: h (height in centimeters), works (the count a
+  standard catalogue gives, BWV for Bach, K for Mozart), and reign
+  (whole years of the headline reign as a sovereign; presidents and
+  consorts never carry it, and the games read its absence as zero).
 - events.json - dated occurrences (battles, plots, fires, revolutions,
   congresses, councils). Fields: id, n, plus d (the terse descriptor
   the thread page shows), q (the canonical one-line description the
@@ -159,8 +163,10 @@ Every entity may also carry (nothing requires them yet):
   groups of four. Each group serves the question its own numbers
   can settle alone, the longest life or the first or last birth,
   the three questions rotate by group, and a group no question
-  can decide never serves. Output: puzzles/superlative/puzzles.json
-  and its bank file.
+  can decide never serves. When the numbers let every life top
+  something, the board also carries a bonus match: four
+  superlatives, one per life, that the player assigns. Output:
+  puzzles/superlative/puzzles.json and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

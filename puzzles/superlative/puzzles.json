@@ -9,7 +9,29 @@
       "Al-Idrisi"
     ],
     "a": 1,
-    "w": "Ada Lovelace 37 (1815-1852); John Adams 91 (1735-1826); Akbar 63 (1542-1605); Al-Idrisi 65 (1100-1165)."
+    "w": "Ada Lovelace 37 (1815-1852); John Adams 91 (1735-1826); Akbar 63 (1542-1605); Al-Idrisi 65 (1100-1165).",
+    "b": [
+      {
+        "q": "lived the longest",
+        "a": 1,
+        "v": "91 years"
+      },
+      {
+        "q": "was born first",
+        "a": 3,
+        "v": "born 1100"
+      },
+      {
+        "q": "was born last",
+        "a": 0,
+        "v": "born 1815"
+      },
+      {
+        "q": "reigned the longest",
+        "a": 2,
+        "v": "49 years"
+      }
+    ]
   },
   {
     "t": "Birth Order",
@@ -81,7 +103,29 @@
       "Charles Baudelaire"
     ],
     "a": 2,
-    "w": "Johann Sebastian Bach 65 (1685-1750); Francis Bacon 65 (1561-1626); Joseph Banks 77 (1743-1820); Charles Baudelaire 46 (1821-1867)."
+    "w": "Johann Sebastian Bach 65 (1685-1750); Francis Bacon 65 (1561-1626); Joseph Banks 77 (1743-1820); Charles Baudelaire 46 (1821-1867).",
+    "b": [
+      {
+        "q": "lived the longest",
+        "a": 2,
+        "v": "77 years"
+      },
+      {
+        "q": "was born first",
+        "a": 1,
+        "v": "born 1561"
+      },
+      {
+        "q": "was born last",
+        "a": 3,
+        "v": "born 1821"
+      },
+      {
+        "q": "was the most prolific",
+        "a": 0,
+        "v": "1080 works"
+      }
+    ]
   },
   {
     "t": "Birth Order",
@@ -921,7 +965,29 @@
       "Napoleon Bonaparte"
     ],
     "a": 1,
-    "w": "Wolfgang Amadeus Mozart 35 (1756-1791); Nader Shah 59 (1688-1747); Fridtjof Nansen 69 (1861-1930); Napoleon Bonaparte 52 (1769-1821)."
+    "w": "Wolfgang Amadeus Mozart 35 (1756-1791); Nader Shah 59 (1688-1747); Fridtjof Nansen 69 (1861-1930); Napoleon Bonaparte 52 (1769-1821).",
+    "b": [
+      {
+        "q": "lived the longest",
+        "a": 2,
+        "v": "69 years"
+      },
+      {
+        "q": "was born first",
+        "a": 1,
+        "v": "born 1688"
+      },
+      {
+        "q": "was the most prolific",
+        "a": 0,
+        "v": "626 works"
+      },
+      {
+        "q": "reigned the longest",
+        "a": 3,
+        "v": "10 years"
+      }
+    ]
   },
   {
     "t": "Birth Order",

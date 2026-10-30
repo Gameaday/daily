@@ -28,7 +28,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /museum/ | Museum | Name the artifact from five clues, obscure to obvious |
 | /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
 | /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |
-| /superlative/ | Superlative | Four lives from the record; pick the one the question asks for, one guess |
+| /superlative/ | Superlative | Four lives from the record; pick the one the question asks for, one guess, then assign the bonus match |
 
 Each game is one self-contained index.html. The parts every game shares
 (day math, palette, countdown, curve client, help, share) live in
@@ -86,7 +86,9 @@ every file, lint and recipe. lightbox stays hand-banked by
 design: picture clues are not shared entities, so its page remains its
 own source. fermi's questions live in the layer as facts, keyed to the
 graph when the layer knows the subject. superlative's boards are the
-people layer itself, cut by the compiler into groups of four.
+people layer itself, cut by the compiler into groups of four, and the
+person numbers (heights, catalogue counts, reign years) feed its bonus
+match.
 
 ## The global curve
 

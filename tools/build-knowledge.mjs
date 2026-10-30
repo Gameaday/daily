@@ -52,7 +52,9 @@
      into groups of four, and each group serves the question its own
      numbers can settle alone, the longest life or the first or last
      birth; the three questions rotate by group and a group no
-     question can decide never serves
+     question can decide never serves. When the numbers seat every
+     life a superlative it tops, the board also carries a bonus
+     match: four chips, one per life, that the player assigns
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -660,6 +662,53 @@ function compileSuperlative(){
         return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1;
       } }
   ];
+  /* the bonus dims: the three the dates already settle, plus the
+     numbers a reputable source states. A measured dim (height) only
+     counts when every life is measured; a counting dim (works, reign)
+     reads a missing number as zero. */
+  const DIMS = [
+    { q: 'lived the longest', val: p => p.died - p.born, v: p => (p.died - p.born) + ' years' },
+    { q: 'was born first', val: p => -p.born, v: p => 'born ' + p.born },
+    { q: 'was born last', val: p => p.born, v: p => 'born ' + p.born },
+    { q: 'stood the tallest', val: p => p.h, v: p => p.h + ' cm', need: true },
+    { q: 'was the most prolific', val: p => p.works, v: p => p.works + ' works' },
+    { q: 'reigned the longest', val: p => p.reign, v: p => p.reign + ' years' }
+  ];
+  /* seat every life one superlative it tops, the fewest options
+     first; a group nobody can seat whole serves no bonus */
+  function bonusFor(group){
+    const tops = [];
+    DIMS.forEach((dim, di) => {
+      let vals = group.map(p => dim.val(p));
+      if (vals.some(x => x === undefined)){
+        if (dim.need) return;
+        vals = vals.map(x => x === undefined ? 0 : x);
+      }
+      const best = Math.max(...vals);
+      if (vals.filter(x => x === best).length === 1) tops.push({ di, p: vals.indexOf(best) });
+    });
+    const per = group.map((_, pi) => tops.filter(t => t.p === pi).map(t => t.di));
+    const order = per.map((x, pi) => ({ pi, n: x.length }))
+      .sort((x, y) => x.n - y.n || x.pi - y.pi).map(o => o.pi);
+    const pick = [];
+    function seat(i){
+      if (i === order.length) return true;
+      for (const di of per[order[i]]){
+        if (pick.indexOf(di) < 0){
+          pick[order[i]] = di;
+          if (seat(i + 1)) return true;
+          pick[order[i]] = undefined;
+        }
+      }
+      return false;
+    }
+    if (!seat(0)) return null;
+    const chips = DIMS.map((dim, di) => {
+      const pi = pick.indexOf(di);
+      return pi < 0 ? null : { q: dim.q, a: pi, v: dim.v(group[pi]) };
+    }).filter(Boolean);
+    return chips.length === group.length ? chips : null;
+  }
   const pool = people
     .filter(p => p && Number.isInteger(p.born) && Number.isInteger(p.died) && p.died >= p.born)
     .sort((p, q) => p.id < q.id ? -1 : p.id > q.id ? 1 : 0);
@@ -674,10 +723,13 @@ function compileSuperlative(){
       if (pick >= 0){ kind = next; a = pick; }
     }
     if (a < 0) continue;
-    bank.push({
+    const entry = {
       t: kind.t, q: kind.q, opts: group.map(p => p.n), a,
       w: group.map(p => p.n + ' ' + (p.died - p.born) + ' (' + p.born + '-' + p.died + ')').join('; ') + '.'
-    });
+    };
+    const b = bonusFor(group);
+    if (b) entry.b = b;
+    bank.push(entry);
   }
   if (bank.length < LIST.minBank)
     fail('knowledge: superlative bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');

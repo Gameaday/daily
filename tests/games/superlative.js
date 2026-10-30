@@ -2,9 +2,10 @@
    the bonus match. The boards cut from the people layer: day 0 seats
    Ada Lovelace, John Adams, Akbar and Al-Idrisi, asks for the longest
    life, and its bonus seats all four. Every dim counts from both
-   ends now, and the one life no dim tops takes the most-average
-   chip: day 1 seats that way, day 13 stays the group nobody can
-   seat. */
+   ends, and the dates calculate two more, the most average life and
+   the middle birth: day 1 seats Al-Razi on hers, day 13 seats on the
+   calculated middles, day 48 keeps the most-average chip, and the
+   bank check pins full coverage. */
 'use strict';
 const { T0, T1, TPRE } = require('./_lib');
 
@@ -27,13 +28,26 @@ async function run(h){
     h.eq(r.x.S.stats.streak, 1, 'superlative: streak preserved');
     h.ok(Array.isArray(r.x.EV.b) && r.x.EV.b.length === 4,
       'superlative: day 1 seats its bonus through the inversions');
-    h.ok(r.x.EV.b.some(x => x.q === 'was the most average' && x.v === 'nothing special'),
-      'superlative: the one life no dim tops takes the most average');
+    h.ok(r.x.EV.b.some(x => x.q === 'was born closest to the middle' &&
+      r.x.EV.opts[x.a] === 'Al-Razi'),
+      'superlative: the calculated middle birth is a chip in its own right');
     const T13 = T0 + 13 * 86400000;
     const nb = {};
     r = h.boot('superlative', EXP, { now: T13, store: nb });
     await h.flush();
-    h.ok(!r.x.EV.b, 'superlative: a group nobody can seat serves no bonus');
+    h.ok(r.x.EV.b.some(x => x.q === 'lived the most average life' &&
+      r.x.EV.opts[x.a] === 'Richard Byrd'),
+      'superlative: the calculated middles seat the group that once served no bonus');
+    const T48 = T0 + 48 * 86400000;
+    const fbs = {};
+    r = h.boot('superlative', EXP, { now: T48, store: fbs });
+    await h.flush();
+    h.ok(r.x.EV.b.some(x => x.q === 'was the most average' && x.v === 'nothing special'),
+      'superlative: the one life no dim tops still takes the most average');
+    const bankBoards = require('../../puzzles/superlative/puzzles.json');
+    h.ok(bankBoards.every(e => Array.isArray(e.b) && e.b.length === 4 &&
+      new Set(e.b.map(x => x.a)).size === 4),
+      'superlative: every board seats a bonus chip for every life');
     const s2 = {};
     r = h.boot('superlative', EXP, { now: T0, store: s2 });
     await h.flush();

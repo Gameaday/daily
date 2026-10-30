@@ -371,6 +371,22 @@ counts when a whole group of four is measured, so the compiled
 store came out byte-identical and the push carries no store or
 bank.
 
+The calculated middles close the same loop for every life the
+sources never counted: the dates hold two more dims no source can
+dispute, the life nearest the group's mean span and the birth
+nearest the group's middle year, computable for every pool
+member. All 112 boards seat a bonus now; the most-average chip
+drops from 69 boards to 29, which is the rare thing it was always
+meant to be, and the 17 waiting groups (Cassidy and Byrd, Barton
+and Clara Schumann, Franklin and Herschel and the rest) all seat
+on calculated middles. Day 0 trades Akbar's reign chip for the
+middle birth he actually holds (born 1542 against a group mean of
+1548), and day 1 seats Al-Razi on her middle birth instead of
+the fallback. The test pins move with them: the bank-wide check
+asserts every board seats four chips, the calculated-middle pin
+lives on day 13 (Byrd), and the most-average pin on day 48
+(Hillary).
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

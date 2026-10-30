@@ -53,9 +53,10 @@
      numbers can settle alone, the longest life or the first or last
      birth; the three questions rotate by group and a group no
      question can decide never serves. When the numbers seat every
-     life a superlative it tops, longest or shortest, the board also
-     carries a bonus match: four chips, one per life, that the player
-     assigns; the one life no dim tops takes the most-average chip
+     life a superlative it tops, longest, shortest or nearest the
+     middle, the board also carries a bonus match: four chips, one
+     per life, that the player assigns; the one life no dim tops
+     takes the most-average chip
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -665,16 +666,20 @@ function compileSuperlative(){
   ];
   /* the bonus dims: every number now counts from both ends, so a
      middle life can top the shortest reign or the shortest life the
-     way an extreme one tops the longest. The dates settle four dims;
-     a measured dim (height) only counts when every life is measured;
-     a counting dim (works, reign) reads a missing number as zero at
-     the top end, while the bottom end compares only the lives a
-     source actually measured */
+     way an extreme one tops the longest. The dates settle four dims
+     outright and two more by calculation, the life nearest the
+     group's mean span and the birth nearest the group's middle year,
+     both computable for every pool member; a measured dim (height)
+     only counts when every life is measured; a counting dim (works,
+     reign) reads a missing number as zero at the top end, while the
+     bottom end compares only the lives a source actually measured */
   const DIMS = [
     { q: 'lived the longest', val: p => p.died - p.born, v: p => (p.died - p.born) + ' years' },
     { q: 'lived the shortest', val: p => -(p.died - p.born), v: p => (p.died - p.born) + ' years' },
     { q: 'was born first', val: p => -p.born, v: p => 'born ' + p.born },
     { q: 'was born last', val: p => p.born, v: p => 'born ' + p.born },
+    { q: 'lived the most average life', mean: 'span', v: p => (p.died - p.born) + ' years' },
+    { q: 'was born closest to the middle', mean: 'born', v: p => 'born ' + p.born },
     { q: 'stood the tallest', val: p => p.h, v: p => p.h + ' cm', need: true },
     { q: 'stood the shortest', val: p => -p.h, v: p => p.h + ' cm', need: true },
     { q: 'was the most prolific', val: p => p.works, v: p => p.works + ' works' },
@@ -689,6 +694,15 @@ function compileSuperlative(){
   function bonusFor(group){
     const tops = [];
     DIMS.forEach((dim, di) => {
+      if (dim.mean){
+        const xs = group.map(p => dim.mean === 'born' ? p.born : p.died - p.born);
+        const avg = xs.reduce((a, b) => a + b, 0) / xs.length;
+        const dists = xs.map(x => Math.abs(x - avg));
+        const best = Math.min(...dists);
+        if (dists.filter(d => d === best).length === 1)
+          tops.push({ di, p: dists.indexOf(best) });
+        return;
+      }
       if (dim.some){
         const pairs = [];
         group.forEach((p, pi) => { const x = dim.val(p); if (x !== undefined) pairs.push({ pi, x }); });

@@ -356,6 +356,21 @@ al-Kindi, al-Razi, Aldus Manutius) seats through the fallback
 with al-Razi the most average, so the no-bonus test pin moves
 to day 13 (Butch Cassidy, Richard Byrd, Byron, James Cagney).
 
+Batch four answers the completeness directive: later games will
+read standardized fields, so the layer fills the h field from the
+one standard set the pool holds, seventeen presidential heights
+from the record table (Adams 170, Jefferson 189, Madison 163,
+Quincy Adams 171, Benjamin Harrison 168, Grant 173, Hayes 174,
+Garfield 183, McKinley 170, Theodore Roosevelt 178, Wilson 180,
+Franklin Roosevelt 188, Eisenhower 179, Kennedy 185, Carter 177,
+Reagan 185, Obama 187). Washington stays at its verified 188
+while the same table reads 187, and that spread is the warning
+for the softer numbers (actors, aviators) no standard source
+states. The batch is bonus-neutral by construction: height only
+counts when a whole group of four is measured, so the compiled
+store came out byte-identical and the push carries no store or
+bank.
+
 ## Knowledge layer (done 2026-10-30)
 
 Every bank game now compiles from one knowledge layer in knowledge/:

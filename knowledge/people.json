@@ -11,7 +11,8 @@
     "n": "John Adams",
     "d": "President, 1735-1826",
     "born": 1735,
-    "died": 1826
+    "died": 1826,
+    "h": 170
   },
   {
     "id": "aeschylus",
@@ -229,7 +230,8 @@
     "id": "barack-obama",
     "n": "Barack Obama",
     "d": "President, born 1961",
-    "born": 1961
+    "born": 1961,
+    "h": 187
   },
   {
     "id": "baudelaire",
@@ -264,7 +266,8 @@
     "n": "Benjamin Harrison",
     "d": "President, 1833-1901",
     "born": 1833,
-    "died": 1901
+    "died": 1901,
+    "h": 168
   },
   {
     "id": "benz",
@@ -1005,7 +1008,8 @@
     "n": "Dwight D. Eisenhower",
     "d": "General and president, 1890-1969",
     "born": 1890,
-    "died": 1969
+    "died": 1969,
+    "h": 179
   },
   {
     "id": "eleanor-roosevelt",
@@ -1157,7 +1161,8 @@
     "n": "Franklin D. Roosevelt",
     "d": "President, 1882-1945",
     "born": 1882,
-    "died": 1945
+    "died": 1945,
+    "h": 188
   },
   {
     "id": "frederick",
@@ -1214,7 +1219,8 @@
     "n": "James A. Garfield",
     "d": "President, 1831-1881",
     "born": 1831,
-    "died": 1881
+    "died": 1881,
+    "h": 183
   },
   {
     "id": "garrick",
@@ -1357,7 +1363,8 @@
     "n": "Ulysses S. Grant",
     "d": "General and president, 1822-1885",
     "born": 1822,
-    "died": 1885
+    "died": 1885,
+    "h": 173
   },
   {
     "id": "gutenberg",
@@ -1708,7 +1715,8 @@
     "n": "Thomas Jefferson",
     "d": "President, 1743-1826",
     "born": 1743,
-    "died": 1826
+    "died": 1826,
+    "h": 189
   },
   {
     "id": "jefferson-davis",
@@ -1749,7 +1757,8 @@
     "n": "Jimmy Carter",
     "d": "President, 1924-2024",
     "born": 1924,
-    "died": 2024
+    "died": 2024,
+    "h": 177
   },
   {
     "id": "jj-thomson",
@@ -1798,7 +1807,8 @@
     "n": "John F. Kennedy",
     "d": "President, 1917-1963",
     "born": 1917,
-    "died": 1963
+    "died": 1963,
+    "h": 185
   },
   {
     "id": "john-lennon",
@@ -1812,7 +1822,8 @@
     "n": "John Quincy Adams",
     "d": "President, 1767-1848",
     "born": 1767,
-    "died": 1848
+    "died": 1848,
+    "h": 171
   },
   {
     "id": "john-snow",
@@ -2128,7 +2139,8 @@
     "n": "James Madison",
     "d": "President, 1751-1836",
     "born": 1751,
-    "died": 1836
+    "died": 1836,
+    "h": 163
   },
   {
     "id": "magellan",
@@ -2282,7 +2294,8 @@
     "n": "William McKinley",
     "d": "President, 1843-1901",
     "born": 1843,
-    "died": 1901
+    "died": 1901,
+    "h": 170
   },
   {
     "id": "mehmed-ii",
@@ -2778,7 +2791,8 @@
     "n": "Ronald Reagan",
     "d": "President, 1911-2004",
     "born": 1911,
-    "died": 2004
+    "died": 2004,
+    "h": 185
   },
   {
     "id": "rejewski",
@@ -2919,7 +2933,8 @@
     "n": "Rutherford B. Hayes",
     "d": "President, 1822-1893",
     "born": 1822,
-    "died": 1893
+    "died": 1893,
+    "h": 174
   },
   {
     "id": "saigo-takamori",
@@ -3185,7 +3200,8 @@
     "n": "Theodore Roosevelt",
     "d": "President, 1858-1919",
     "born": 1858,
-    "died": 1919
+    "died": 1919,
+    "h": 178
   },
   {
     "id": "thomas-cromwell",
@@ -3503,7 +3519,8 @@
     "n": "Woodrow Wilson",
     "d": "President, 1856-1924",
     "born": 1856,
-    "died": 1924
+    "died": 1924,
+    "h": 180
   },
   {
     "id": "wordsworth",

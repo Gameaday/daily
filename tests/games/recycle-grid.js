@@ -7,7 +7,7 @@ const { T0, T1, T10 } = require('./_lib');
 async function run(h){
     const EXP = ['S', 'PUZZLE', 'MODES', 'bestPossible', 'doShift', 'undo', 'restart',
       'lockRows', 'setMode', 'applyRows', 'applyCols', 'VEC_BY_COST', 'shareText', 'findWords',
-      'getPuzzle', 'getPractice', 'getBudget', 'getMode', 'curBest'];
+      'getPuzzle', 'getPractice', 'getBudget', 'getMode', 'curBest', 'rotRow', 'rotCol'];
     const store = {};
     let r = h.boot('recycle-grid', EXP, { now: T0, store });
     h.eq(r.x.MODES.practice, 4, 'grid: practice = 4 shifts');
@@ -23,6 +23,25 @@ async function run(h){
     h.eq(r.x.bestPossible(P.start.slice(), r.x.getBudget()), P.best, 'grid: best possible recomputes exactly');
     h.eq(r.x.curBest(), P.best, 'grid: normal shows the daily optimum');
     h.eq(r.x.S.phase, 'rows', 'grid: starts in the rows phase');
+
+    /* shift directions, pinned letter by letter: each arrow must move its
+       line the way its glyph promises, and a shift never leaks across lines */
+    const b = 'ABCDEFGHIJKLMNOPQRSTUVWXY'.split('');
+    r.x.rotRow(b, 0, -1);
+    h.eq(b.slice(0, 5).join(''), 'BCDEA', 'grid: a row shift left moves the row left');
+    r.x.rotRow(b, 0, 1);
+    h.eq(b.slice(0, 5).join(''), 'ABCDE', 'grid: a row shift right moves the row right');
+    r.x.rotCol(b, 0, 1);
+    h.eq([b[0], b[5], b[10], b[15], b[20]].join(''), 'UAFKP', 'grid: a column shift down moves the column down');
+    r.x.rotCol(b, 0, -1);
+    h.eq(b.join(''), 'ABCDEFGHIJKLMNOPQRSTUVWXY', 'grid: shifts touch their own line only');
+
+    /* the board arrows and the letters agree, end to end */
+    const L0 = r.x.S.start.slice();
+    r.x.doShift('row', 0, -1);
+    h.eq(r.x.S.letters[1], L0[2], 'grid: the left arrow sends the row left');
+    h.eq(r.x.S.letters[5], L0[5], 'grid: a row arrow leaves the other rows alone');
+    r.x.undo();
 
     /* phase + budget guards */
     r.x.doShift('col', 0, 1);

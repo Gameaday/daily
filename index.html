@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Sixteen free morning warmup games - a new puzzle every day at midnight ET. History, wordplay, and estimation; no accounts, no ads, no tracking."/>
+<meta property="og:title" content="Warmup - the history labs morning games"/>
+<meta property="og:description" content="Sixteen free morning warmup games - a new puzzle every day at midnight ET. No accounts, no ads, no tracking."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://daily.historylabs.dev/"/>
+<meta name="twitter:card" content="summary"/>
 <title>Warmup · daily.historylabs.dev</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3EW.%3C/text%3E%3C/svg%3E"/>
 <style>
   :root{ --paper:#f7f1e5; --card:#fffdf7; --ink:#272117; --muted:#7a6f5d; --accent:#b3541e; --accent-soft:#f4e3d4; --line:#e5dbc8; }
   *{box-sizing:border-box;}
@@ -11,7 +18,8 @@
   main{max-width:720px; margin:0 auto; padding:56px 20px 60px;}
   h1{font-family:Georgia,serif; font-size:56px; margin:0; letter-spacing:-1.5px;}
   h1 span{color:var(--accent);}
-  .sub{color:var(--muted); margin:6px 0 36px; font-size:15px;}
+  .sub{color:var(--muted); margin:6px 0 8px; font-size:15px;}
+  .today{display:inline-block; margin:0 0 28px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:4px 12px;}
   .cards{display:flex; gap:16px; flex-wrap:wrap;}
   a.card{display:block; flex:1 1 300px; text-decoration:none; color:var(--ink); background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:22px 24px; box-shadow:0 2px 10px rgba(60,45,20,.06); transition:transform .12s, border-color .12s;}
   a.card:hover{transform:translateY(-2px); border-color:var(--accent);}
@@ -26,6 +34,7 @@
 <main>
   <h1>Warmup<span>.</span></h1>
   <p class="sub">the history labs morning games — a new puzzle every day at midnight ET</p>
+  <p class="today" id="today">today's warmup &middot; no. 1</p>
   <div class="cards">
     <a class="card" href="bogus/index.html">
       <span class="k">Game 01</span>
@@ -132,5 +141,12 @@
   </div>
   <footer>no accounts · no ads · no tracking — just puzzles<br>more games to come · <a href="mailto:feedback@historylabs.dev">feedback@historylabs.dev</a></footer>
 </main>
+<script src="shell/common.js"></script>
+<script>
+  (function(){
+    var el = document.getElementById('today');
+    if (el && window.SHELL) el.textContent = 'no. ' + SHELL.num + ' \u00b7 ' + SHELL.pdateText();
+  })();
+</script>
 </body>
 </html>

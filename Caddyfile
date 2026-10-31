@@ -20,6 +20,7 @@
 		header Cache-Control "public, max-age=3600"
 		header X-Content-Type-Options nosniff
 		header Referrer-Policy no-referrer
+		header Permissions-Policy "camera=(), microphone=(), geolocation=()"
 		header X-Frame-Options SAMEORIGIN
 		root * /srv/daily
 		file_server
@@ -29,8 +30,16 @@
 		header Cache-Control "no-cache"
 		header X-Content-Type-Options nosniff
 		header Referrer-Policy no-referrer
+		header Permissions-Policy "camera=(), microphone=(), geolocation=()"
 		header X-Frame-Options SAMEORIGIN
 		root * /srv/daily
+		file_server
+	}
+
+	# a real 404: any error falls through to the styled page
+	handle_errors {
+		root * /srv/daily
+		rewrite * /404.html
 		file_server
 	}
 }

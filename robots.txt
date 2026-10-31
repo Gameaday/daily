@@ -1,0 +1,3 @@
+# daily.historylabs.dev - the whole site is public
+User-agent: *
+Allow: /

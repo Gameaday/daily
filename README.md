@@ -28,7 +28,8 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /museum/ | Museum | Name the artifact from five clues, obscure to obvious |
 | /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
 | /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |
-| /superlative/ | Superlative | Four lives from the record; pick the one the question asks for, one guess, then assign the bonus match |
+| /superlative/ | Superlative | Four lives from the record; pick the one 
+the question asks for, one guess, then assign the bonus match |
 
 Each game is one self-contained index.html. The parts every game shares
 (day math, palette, countdown, curve client, help, share) live in
@@ -65,7 +66,8 @@ container, read from the committed per-game stores
 - sprint, trace, recycle-grid and recycle-rings stay client-generated on
   purpose: their banks are generators the game needs during play, not
   answer keys
-- `node tools/build-knowledge.mjs` verifies the knowledge layer compiles
+- `node tools/build-knowledge.mjs` verifies the knowledge layer com
+piles
   to the committed stores, and `node tools/export-puzzles.mjs` verifies
   every store against its client bank; to change a history game's
   content, edit the layer, run `node tools/build-knowledge.mjs --write`
@@ -103,7 +105,8 @@ The scoring model, on purpose:
   this is what a normal morning looks like; nothing from the archive can
   ever churn today's numbers
 - the live day is held in memory only, as consolidated numbers per
-  (game, day): count, sum, sum of squares, min, max, and a small fixed
+  (
+game, day): count, sum, sum of squares, min, max, and a small fixed
   histogram. No per-player records, no names, no text
 - client ids are hashed to 8 bytes and kept only in a transient dedupe set:
   the first submission of the day stands, reloads get a personalized reply
@@ -139,7 +142,8 @@ checkout, no cloning, no tokens; the images are public packages and stay
 pullable even after the repo goes private.
 
     docker compose up -d
-    docker compose ps                 # web + scores should be Up
+    docker compose ps                 # web
+ + scores should be Up
 
 Then point your edge proxy (Traefik, nginx, Caddy) at the web port
 (WEB_PORT in .env, default 8081) and terminate TLS there. The repo ships
@@ -150,10 +154,13 @@ moving it to another machine is copying the compose file, .env, and that
 one directory.
 
 - `web`: Caddy serving the online bundle baked into the image (no puzzle
-  banks inside), proxying `/api/*` to the scores container
+  banks inside), proxying `/api/*` to the scores container; read-only
+  filesystem (tmpfs for /config and /data), no capabilities beyond
+  binding :80, a 128 MB memory cap, and rotated logs
 - `scores`: the stdlib Python service (curve + puzzle delivery),
   read-only filesystem, no capabilities, no-new-privileges, a 64 MB memory
-  cap, internal network only. The puzzle stores are baked into the image
+  cap, a process cap, rotated logs, internal network only. The puzzle
+  stores are baked into the image
   from the committed `puzzles/` at build time, so the container is
   self-contained
 
@@ -184,7 +191,8 @@ under systemd with DynamicUser and a hardened sandbox. Give it one
 writable directory for the archive (ReadWritePaths=) and pass
 `--archive-dir` in ExecStart.
 
-The loop is: push to GitHub, Actions validates the push, the tag's
+The loop is: push to GitHub,
+ Actions validates the push, the tag's
 release workflow publishes the images only once its validate run is
 green, and the host picks them up with one compose pull. If tests fail,
 nothing publishes and the site never moves.
@@ -227,7 +235,8 @@ all dependency-free (Node 20+ and Python 3):
 3. `node tests/run.js` boots each game headless in a stubbed DOM, plays it
    to a win/loss, verifies the value posted to the curve, rolls the clock
    forward to prove streaks survive, then re-boots every bank game with the
-   bank stripped to prove the served puzzle drives it
+   bank stripped 
+to prove the served puzzle drives it
 4. `python3 tests/server_test.py` spawns the real scores service and
    exercises health, submit/dedupe, dist, puzzle delivery, validation,
    fresh-day counting and the archive handoff
@@ -269,7 +278,8 @@ scarcity of moves, not time.
 `dist/offline` is the whole site and nothing else, with every inline bank
 intact. Open it over `file://` (or copy it to an air-gapped machine) and
 everything works: daily puzzle, state, streaks. Games run in solo mode:
-nothing is submitted and the curve area says so. The build verifies every
+no
+thing is submitted and the curve area says so. The build verifies every
 relative reference resolves inside the bundle.
 
 ## Content rules (worth keeping)

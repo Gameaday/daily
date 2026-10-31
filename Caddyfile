@@ -7,6 +7,9 @@
 	auto_https off
 }
 :80 {
+	# compress text responses (zstd, gzip fallback): the bundles are small
+	# but this makes mobile loads snappier
+	encode zstd gzip
 	# global-curve + puzzle API -> the scores container (never exposed to the host)
 	handle_path /api/* {
 		reverse_proxy {$SCORES_UPSTREAM}

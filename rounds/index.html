@@ -199,12 +199,8 @@ function showReveal(){
   $('why').textContent = `The year was ${EV.y}. ${EV.w}`;
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best ? st.best + ' guesses' : '\u2014'}`;
   $('reveal').classList.add('show');
-  $('sliderrow').style.opacity = '.5';
-  $('slider').disabled = true;
-  $('btnLock').disabled = true;
-  $('btnDown').disabled = true;
-  $('btnUp').disabled = true;
-  $('yearbox').disabled = true;
+  /* the day is pinned - the slider row goes away entirely */
+  $('sliderrow').style.display = 'none';
   syncBoard(S.status === 'won' ? S.guesses.length : 7);
 }
 

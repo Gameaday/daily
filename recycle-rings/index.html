@@ -383,6 +383,8 @@ function showReveal(){
   $('sharetext').textContent =
     shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best == null ? '\u2013' : st.best + ' moves'}`;
   $('reveal').classList.add('show');
+  /* the word is aligned - the controls go quiet */
+  $('ringctl').style.display = 'none';
   syncBoard(S.moves);
   renderMeta();
 }

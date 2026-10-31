@@ -99,7 +99,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div class="words" id="words"><span class="none">no words yet — start shifting</span></div>
 
-  <div class="actions">
+  <div class="actions" id="playrow">
     <button class="btn" id="btnBank">Bank It</button>
     <button class="btn ghost" id="btnLock">Lock rows →</button>
     <button class="btn ghost" id="btnUndo">↩ Undo</button>
@@ -428,6 +428,13 @@ function renderMeta(){
   $('btnUndo').disabled = S.banked || S.moves.length === 0;
   $('btnRestart').disabled = S.banked;
   $('btnBank').disabled = S.banked;
+  /* banked: the grid dims and the play buttons go away; a mode switch
+     (practice) unbanks, and renderMeta is the one place that brings
+     them back - showReveal used to dim the grid and nothing ever
+     restored it, leaving practice unplayable after a bank */
+  $('grid').style.pointerEvents = S.banked ? 'none' : '';
+  $('grid').style.opacity = S.banked ? '.55' : '';
+  $('playrow').style.display = S.banked ? 'none' : '';
 }
 
 function renderModes(){
@@ -586,8 +593,6 @@ function showReveal(words, perfect){
     shareText() + (S.mode === 'practice' ? '' :
       `\nstreak ${st.streak} \u00b7 best ${st.bestWords} \u00b7 avg ${avg} words \u00b7 ${st.perfect} perfect`);
   $('reveal').classList.add('show');
-  $('grid').style.pointerEvents = 'none';
-  $('grid').style.opacity = '.55';
   if (S.mode === 'practice'){
     $('curve').innerHTML = '<div class="curve-note">practice — nothing is recorded</div>';
   } else {

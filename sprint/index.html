@@ -320,8 +320,9 @@ function showReveal(){
   }).slice(0, 5).join(' \u00b7 ');
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}`;
   $('reveal').classList.add('show');
-  $('wordbox').style.opacity = '.55';
-  $('wordbox').style.pointerEvents = 'none';
+  /* the clock is done - the word box and its input go away entirely */
+  $('wordbox').style.display = 'none';
+  $('clocknote').style.display = 'none';
   $('btnSkip').disabled = true;
   $('btnShuffle').style.display = 'none';
   $('bigclock').textContent = S.status === 'won' ? fmtClock(TOTAL_MS - timeLeft()) : '0:00';

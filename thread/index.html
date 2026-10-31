@@ -89,7 +89,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="tray" id="tray"></div>
   <p class="checknote" id="checknote">drag or tap a card to start weaving</p>
 
-  <div class="actions">
+  <div class="actions" id="actbox">
     <button class="btn" id="btnCheck">Check the chain</button>
     <button class="btn ghost" id="btnGiveUp">Give up</button>
   </div>
@@ -539,6 +539,8 @@ function showReveal(){
   $('chainbox').innerHTML = ch;
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
+  /* the day is woven - the play buttons go quiet */
+  $('actbox').style.display = 'none';
   syncBoard(won ? S.checks : 9);
 }
 SHELL.wireShare(shareText);

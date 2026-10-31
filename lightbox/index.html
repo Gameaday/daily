@@ -75,7 +75,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div class="mistakes" id="mistakes"></div>
 
-  <div class="actions">
+  <div class="actions" id="actbox">
     <button class="btn" id="btnDevelop">Develop 📷</button>
     <button class="btn ghost" id="btnClear">Clear board</button>
   </div>
@@ -280,10 +280,11 @@ function showReveal(){
   $('solvedpix').innerHTML = `<div class="pixgrid">${pix}</div>`;
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 developed ${st.solved}/${st.played}`;
   $('reveal').classList.add('show');
+  /* the film is developed - the play UI goes quiet */
   $('grid').style.pointerEvents = 'none';
   $('grid').style.opacity = '.55';
-  $('btnDevelop').disabled = true;
-  $('btnClear').disabled = true;
+  $('actbox').style.display = 'none';
+  $('clocknote').style.display = 'none';
   syncBoard(S.status === 'won' ? S.mistakes : 4);
 }
 SHELL.wireShare(shareText);

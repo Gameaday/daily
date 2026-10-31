@@ -260,6 +260,8 @@ function showReveal(){
     (S.bonus === 'wrong' && S.typed ? `<br/><span style="color:var(--muted);">You typed \u201c${S.typed.trim()}.\u201d — good instincts, wrong word.</span>` : '');
   $('sharetext').textContent = shareText();
   $('reveal').classList.add('show');
+  /* the day is argued - the pick meter goes quiet */
+  $('picks').style.display = 'none';
   renderPicks();
   syncBoard(score());
 }

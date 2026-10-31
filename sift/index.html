@@ -75,7 +75,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div class="mistakes" id="mistakes"></div>
 
-  <div class="submitrow">
+  <div class="submitrow" id="playrow">
     <button class="btn" id="btnSubmit" disabled>Test selection</button>
     <button class="btn ghost" id="btnClear">Clear</button>
   </div>
@@ -275,6 +275,8 @@ function showReveal(){
   $('sharetext').textContent =
     shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}`;
   $('reveal').classList.add('show');
+  /* the day is sifted - the play row goes quiet */
+  $('playrow').style.display = 'none';
   syncBoard(S.status === 'won' ? S.mistakes : 4);
   renderTiles(); // to apply reveal dimming
 }

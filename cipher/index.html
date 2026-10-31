@@ -87,9 +87,9 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div id="quotebox"><div class="wline" id="quote"></div></div>
   <input id="kbd" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" tabindex="-1" aria-hidden="true"/>
-  <p class="keynote">A–Z to fill the selected letter · backspace clears it · press Check when it reads right</p>
+  <p class="keynote" id="keynote">A–Z to fill the selected letter · backspace clears it · press Check when it reads right</p>
 
-  <div class="actions">
+  <div class="actions" id="playrow">
     <button class="btn" id="btnCheck">Check</button>
     <button class="btn ghost" id="btnHint">Hint (0/5)</button>
     <button class="btn ghost" id="btnGiveUp">Reveal the codebook</button>
@@ -349,8 +349,10 @@ function showReveal(){
   $('plainq').innerHTML = '<b>' + Q.a + '</b> \u2014 ' + Q.q;
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 decoded ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
-  $('btnHint').disabled = true;
-  $('btnGiveUp').disabled = true;
+  /* the day is decoded - the play UI goes quiet */
+  $('keynote').style.display = 'none';
+  $('playrow').style.display = 'none';
+  $('selinfo').style.display = 'none';
   kbd.blur();
   syncBoard(won ? S.hints : 7);
 }

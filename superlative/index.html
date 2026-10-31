@@ -30,7 +30,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .reveal{margin-top:16px; display:none;}
 .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
 .why{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--accent);
-    border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px;}
+    border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px; white-space:pre-line;}
+.why.held{color:var(--muted); font-style:italic;}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
 .bonusbox{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--green); border-radius:10px; padding:14px; margin-bottom:14px;}
@@ -101,7 +102,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="modal">
     <h2>How to play</h2>
     <p>Four lives from the people record, one question: who lived the longest, or who was born first or last. <b>Pick the one the record makes stand alone.</b></p>
-    <p>The reveal shows every span in years. A life only counts when the record dates both ends, and a group where the answer could tie never serves, so the one to pick is always settled alone.</p>
+    <p>The record's spans arrive once the bonus match is settled. A life only counts when the record dates both ends, and a group where the answer could tie never serves, so the one to pick is always settled alone.</p>
     <p>Some boards carry a bonus match: four superlatives, one for each life. Pick a superlative, then pick the life it belongs to. Every life tops the one it holds.</p>
     <p>One guess a day. Everyone gets the same board, so compare notes over coffee.</p>
     <button class="close" data-close>Got it</button>
@@ -200,11 +201,27 @@ function showReveal(){
     $('verdict').textContent = 'The record says ' + EV.opts[EV.a] + '.';
     $('verdict').style.color = 'var(--accent)';
   }
-  $('why').textContent = EV.w;
+  renderWhy();
   $('sharetext').textContent = shareText() + String.fromCharCode(10) + 'streak ' + st.streak + ' · played ' + st.played;
   $('reveal').classList.add('show');
   renderBonus();
   syncBoard(S.status === 'won' ? 1 : 2);
+}
+
+/* the fine print of the record waits for the bonus */
+function renderWhy(){
+  const box = $('why');
+  if (EV.b && !(S.bonus && S.bonus.done)){
+    box.classList.add('held');
+    box.textContent = 'The record\u2019s fine print arrives once the bonus match is settled.';
+    return;
+  }
+  box.classList.remove('held');
+  let w = EV.w; if (w.slice(-1) === '.') w = w.slice(0, -1);
+  box.textContent = w.split('; ').map(function(r){
+    const m = r.match(/^(.+?) (\d+) \((\d+)-(\d+)\)$/);
+    return m ? m[1] + ' \u00b7 ' + m[3] + '-' + m[4] + ' \u00b7 ' + m[2] + ' years' : r;
+  }).join(String.fromCharCode(10));
 }
 
 /* ---------------- bonus match ---------------- */
@@ -262,6 +279,7 @@ function tryAssign(j){
       $('sharetext').textContent = shareText() + String.fromCharCode(10) +
         'streak ' + S.stats.streak + ' · played ' + S.stats.played;
       toastMsg('Bonus matched.');
+      renderWhy();
     }
   } else {
     S.bonus.wrong++;

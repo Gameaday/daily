@@ -62,11 +62,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div class="plaque" id="plaque"></div>
 
-  <div class="guessrow">
+  <div class="guessrow" id="guessrow">
     <input id="guess" maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="name the artifact"/>
     <button class="btn" id="btnGuess">Name it</button>
   </div>
-  <div class="actions">
+  <div class="actions" id="clueacts">
     <button class="btn ghost" id="btnClue">Another clue</button>
   </div>
 
@@ -226,6 +226,8 @@ function showReveal(){
   $('btnClue').disabled = true;
   $('guess').disabled = true;
   $('btnGuess').disabled = true;
+  $('guessrow').style.display = 'none';
+  $('clueacts').style.display = 'none';
   syncBoard(won ? used : 6);
 }
 SHELL.wireShare(shareText);

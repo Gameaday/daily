@@ -56,8 +56,10 @@ async function run(h){
     h.eq(r.x.S.status, 'lost', 'superlative: a wrong life loses the board');
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, 2, 'superlative: curve value 2 on loss');
-    h.ok(r.env.els.why.textContent.indexOf(r.x.EV.opts[r.x.EV.a]) >= 0,
-      'superlative: the reveal names the one who stood alone');
+    h.ok(r.env.els.why.textContent.indexOf('fine print') >= 0,
+      'superlative: the fine print waits for the bonus');
+    h.ok(r.env.els.why.textContent.indexOf('(') === -1,
+      'superlative: no spans leak before the bonus');
 
     /* the bonus match: four superlatives, one per life */
     h.ok(Array.isArray(r.x.EV.b) && r.x.EV.b.length === 4,
@@ -71,6 +73,8 @@ async function run(h){
     }
     h.eq(r.x.S.bonus.done, true, 'superlative: all four superlatives assigned');
     h.eq(r.x.S.bonus.wrong, 0, 'superlative: the bonus match played clean');
+    h.ok(r.env.els.why.textContent.indexOf(r.x.EV.opts[r.x.EV.a]) >= 0,
+      'superlative: the settled bonus unlocks the record');
 
     /* the pre-launch clamp: before the epoch the shell reads No. 1, and a
        weekend win carries into the real Monday board */

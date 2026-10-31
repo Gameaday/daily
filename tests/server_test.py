@@ -67,10 +67,15 @@ def post(path, body, port=PORT):
 
 
 def main():
-    # both instances archive into a scratch dir: the test must never write
-    # snapshots into the repo's scores/archive
+    # every instance archives into its own scratch dir: the test must
+    # never write snapshots into the repo's scores/archive, and the warm
+    # start (which reloads today's snapshot on boot) must never carry one
+    # instance's plays into another's checks
     scratch = tempfile.mkdtemp()
-    # Both instances boot with --epoch <today's ET date>: inside them the
+    scratch2 = tempfile.mkdtemp()
+    scratch3 = tempfile.mkdtemp()
+    scratch4 = tempfile.mkdtemp()
+    # Every instance boots with --epoch <today's ET date>: inside them the
     # current day index is 0 no matter the real calendar and no matter whether
     # the committed epoch lies in the past or the future, so this suite never
     # depends on the wall clock.
@@ -273,7 +278,7 @@ def main():
     PORT2 = PORT + 1
     proc2 = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
-         "--port", str(PORT2), "--host", "127.0.0.1", "--archive-dir", scratch,
+         "--port", str(PORT2), "--host", "127.0.0.1", "--archive-dir", scratch2,
          "--epoch", str(ET_TODAY),
          "--max-gets-per-ip", "3", "--max-posts-per-ip", "2"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -316,7 +321,7 @@ def main():
     PORT3 = PORT + 2
     proc3 = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
-         "--port", str(PORT3), "--host", "127.0.0.1", "--archive-dir", scratch,
+         "--port", str(PORT3), "--host", "127.0.0.1", "--archive-dir", scratch3,
          "--epoch", str(ET_TODAY + timedelta(days=2))],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
@@ -352,6 +357,74 @@ def main():
             proc3.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc3.kill()
+    # --- warm start: a mid-day restart flushed today's partial board to
+    #     the archive on SIGTERM; a fresh boot brings it back, so
+    #     restarts never reset the day's live curve ---
+    PORT4 = PORT + 3
+    args4 = [sys.executable, str(ROOT / "scores" / "server.py"),
+             "--port", str(PORT4), "--host", "127.0.0.1", "--archive-dir", scratch4,
+             "--epoch", str(ET_TODAY)]
+    proc4 = subprocess.Popen(args4, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        up = False
+        for _ in range(50):
+            try:
+                s, _b = req("GET", "/health", port=PORT4)
+                if s == 200:
+                    up = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.1)
+        if not up:
+            check(False, "warm-start instance never came up on port %d" % PORT4)
+        else:
+            s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+                                        "value": 4, "better": "high", "id": "w1"},
+                        port=PORT4)
+            check(s == 200 and b.get("count") == 1,
+                  "warm start: the live instance tallies one play")
+            proc4.terminate()
+            proc4.wait(timeout=5)
+            check((Path(scratch4) / "fermi" / ("%d.json" % TODAY)).exists(),
+                  "warm start: SIGTERM flushed today's partial board")
+            proc4b = subprocess.Popen(args4, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            try:
+                up = False
+                for _ in range(50):
+                    try:
+                        s, _b = req("GET", "/health", port=PORT4)
+                        if s == 200:
+                            up = True
+                            break
+                    except Exception:
+                        pass
+                    time.sleep(0.1)
+                if not up:
+                    check(False, "restarted instance never came up on port %d" % PORT4)
+                else:
+                    s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY), port=PORT4)
+                    check(s == 200 and b.get("count") == 1,
+                          "warm start: the restarted instance serves the flushed partial day")
+                    s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+                                                "value": 6, "better": "high", "id": "w2"},
+                                port=PORT4)
+                    check(s == 200 and b.get("count") == 2,
+                          "warm start: new plays tally on top of the restored board")
+            finally:
+                proc4b.terminate()
+                try:
+                    proc4b.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    proc4b.kill()
+    finally:
+        if proc4.poll() is None:
+            proc4.terminate()
+            try:
+                proc4.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                proc4.kill()
+
     # --- archive handoff (unit): a finished day collapses into a static,
     #     read-only snapshot and leaves the live state ---
     spec = importlib.util.spec_from_file_location("warmup_server", ROOT / "scores" / "server.py")

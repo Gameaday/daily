@@ -15,6 +15,9 @@ Design rules (deliberate):
   the score distribution, and the aggregates needed to rebuild the
   weights. Written once, read-only forever. This is the only disk write
   anywhere in the service
+- warm start: on boot, today's archived partial board (a mid-day restart
+  flushed it) returns to the live curve, so a compose update or a host
+  reboot never resets the day
 - client ids are hashed to 8 bytes and kept only in a transient dedupe set:
   the first submission of the day stands; reloads get a personalized reply
   but do not retally
@@ -508,6 +511,16 @@ def main():
     MAX_POSTS_PER_IP = args.max_posts_per_ip
     if args.epoch:
         EPOCH_KEY = args.epoch
+
+    # warm start: a mid-day restart (compose update, host reboot) flushed
+    # today's partial boards to the archive on shutdown; bring them back
+    # so the live curve never resets mid-day
+    today = current_day_index()
+    with LOCK:
+        for game in SPECS:
+            st = archived_stats(load_archive(game, today))
+            if st:
+                STATS[(game, today)] = st
 
     def _stop(signum, frame):
         raise KeyboardInterrupt()

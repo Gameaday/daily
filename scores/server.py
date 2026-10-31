@@ -30,7 +30,7 @@ Endpoints (with or without the /api prefix):
     GET  /dist?game=&day=                           -> snapshot (today live, past days from the archive)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
-    GET  /health                                    -> {"ok": true}
+    GET  /health                                    -> {"ok": true, "day", "num"}
 
 Cache policy (deliberate): live numbers (/submit, /dist, /health) are
 no-store; the day's puzzle is immutable so it is public and cacheable
@@ -337,8 +337,12 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"error": "too many requests"}, 429)
             return
         if path == "/health":
+            today = current_day_index()
             with LOCK:
-                payload = {"ok": True, "boards": len(STATS)}
+                # day/num echo the clamped day math, so a curl shows exactly
+                # what the server thinks "today" is (the pre-launch bug class)
+                payload = {"ok": True, "boards": len(STATS),
+                           "day": today, "num": today + 1}
             self._json(payload)
         elif path == "/manifest":
             # the scoring truth (epoch, tz, per-game ledger) as plain JSON

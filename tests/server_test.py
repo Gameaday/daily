@@ -107,6 +107,8 @@ def main():
         # --- health ---
         s, b = req("GET", "/health")
         check(s == 200 and b.get("ok") is True, "GET /health -> ok:true")
+        check(b.get("day") == TODAY and b.get("num") == TODAY + 1,
+              "GET /health -> the clamped day index echoes (day/num)")
         s, b = req("GET", "/api/health")
         check(s == 200 and b.get("ok") is True, "GET /api/health (prefix stripped)")
         s, _b = req("OPTIONS", "/api/submit")

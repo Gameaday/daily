@@ -36,3 +36,4 @@ h1 .dot{color:var(--accent);}
 .you-mark{position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); font-size:9px; font-weight:700; color:var(--accent); letter-spacing:.05em; text-transform:uppercase; white-space:nowrap;}
 .curve-note{font-size:12px; color:var(--muted); margin-top:6px;}
 footer{margin-top:40px; text-align:center; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px;}
+footer a{color:var(--accent);}

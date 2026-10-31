@@ -12,7 +12,7 @@
         reverse_proxy {$SCORES_UPSTREAM}
     }
 
-    # cache policy: game HTML always revalidates (a rebuild is what ships
+    # cache policy: game HTML always revalidates (a new image is what ships
     # new content, and the URLs are unversioned), shared assets get a
     # modest public cache. The API sets its own Cache-Control per route.
     @assets path *.css *.js *.svg *.png *.ico *.woff2

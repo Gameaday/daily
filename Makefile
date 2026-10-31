@@ -1,8 +1,7 @@
-# daily warmup - Pi deployment helpers
-# Everything here is a convenience; the underlying commands are plain
-# git + docker compose, safe to run by hand.
+# daily warmup - convenience targets; the underlying commands are plain
+# node, python and docker compose, safe to run by hand.
 
-.PHONY: test build up down restart logs deploy
+.PHONY: test build up update down restart logs
 
 # full local gate: the same test layers CI runs, with the knowledge layer
 # verified against the committed stores first
@@ -17,8 +16,14 @@ test:
 build:
 	node tools/build-bundles.mjs
 
+# start (or restart into) the stack: pulls the published images
 up:
-	docker compose up -d --build
+	docker compose up -d
+
+# pick up the newest published release
+update:
+	docker compose pull
+	docker compose up -d
 
 down:
 	docker compose down
@@ -28,11 +33,3 @@ restart:
 
 logs:
 	docker compose logs -f --tail=100
-
-# The same thing the systemd timer runs: deploy the newest stable v* tag
-# once its validate run is green (fetch, CI check, checkout, rebuild),
-# smoke-test the loopback port, roll back on failure. Pushing a tag is
-# the deploy act - the Pi never tracks main. No SSH, no secrets - the
-# machine running it only makes outbound connections.
-deploy:
-	python3 deploy/pull.py

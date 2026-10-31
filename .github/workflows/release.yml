@@ -1,9 +1,12 @@
 name: release
 
-# A tag push is the release act: build the two bundles, attach them to a
-# GitHub release. validate.yml also runs on tag pushes (it triggers on
-# every push), so a tag is always fully validated; the Pi deploys a tag
-# only after its validate run is green.
+# A tag push is the release act, and it publishes everything: the offline
+# and online bundle zips on the GitHub release, and the web + scores
+# images on GHCR, tagged with the release (stable tags also move latest).
+# validate.yml runs on the same tag push; this workflow waits for that run
+# to finish green on the exact tag commit before publishing anything, so
+# a red release never reaches GHCR. The running stack picks a new release
+# up with: docker compose pull && docker compose up -d
 
 on:
   push:
@@ -11,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
@@ -25,6 +29,20 @@ jobs:
         run: |
           cd dist/offline && zip -rq ../../offline-bundle.zip .
           cd ../online && zip -rq ../../online-bundle.zip .
+      - name: wait for validate to finish green on this commit
+        run: |
+          for i in $(seq 1 60); do
+            state=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?per_page=20" --jq ".workflow_runs[] | select(.head_sha==\"$GITHUB_SHA\" and .name==\"validate\") | .status + \"/\" + (.conclusion // \"\")" | head -1)
+            echo "validate: ${state:-not registered yet}"
+            case "$state" in
+              completed/success) exit 0 ;;
+              completed/*) echo "validate red - publishing nothing"; exit 1 ;;
+            esac
+            sleep 20
+          done
+          echo "validate did not finish in time"; exit 1
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: create or update release
         run: |
           FLAGS="--generate-notes"
@@ -38,3 +56,45 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: decide the image tags
+        id: tags
+        run: |
+          OWNER="$(tr '[:upper:]' '[:lower:]' <<< "$GITHUB_REPOSITORY_OWNER")"
+          TAG="$GITHUB_REF_NAME"
+          LATEST=0
+          case "$TAG" in
+            *-*) ;;  # prerelease tags (anything with a hyphen) never move latest
+            *) LATEST=1 ;;
+          esac
+          {
+            echo "web<<WB"
+            echo "ghcr.io/$OWNER/daily-web:$TAG"
+            if [ "$LATEST" = 1 ]; then echo "ghcr.io/$OWNER/daily-web:latest"; fi
+            echo "WB"
+            echo "scores<<SB"
+            echo "ghcr.io/$OWNER/daily-scores:$TAG"
+            if [ "$LATEST" = 1 ]; then echo "ghcr.io/$OWNER/daily-scores:latest"; fi
+            echo "SB"
+          } >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: log in to GHCR
+        run: echo "${GH_TOKEN}" | docker login ghcr.io -u "${GITHUB_ACTOR}" --password-stdin
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.web
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.tags.outputs.web }}
+      - name: scores image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.scores
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.tags.outputs.scores }}

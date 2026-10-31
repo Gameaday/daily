@@ -85,8 +85,9 @@ That is plays plus the score distribution plus the aggregates needed to
 rebuild the weights. Written once, read-only forever, no per-player data.
 `GET /dist?game=&day=` serves today from memory and past days from the
 archive. The archive dir defaults to `scores/archive` and can be set with
-`--archive-dir` (the compose stack mounts a named volume there; the systemd
-unit wants one ReadWritePaths entry).
+`--archive-dir` (the compose stack
+points DATA_DIR there; the standalone systemd unit wants one ReadWritePaths
+entry).
 
 Endpoints (with or without the `/api` prefix): `POST /submit`,
 `GET /dist?game=&day=`, `GET /puzzle?game=&day=`, `GET /manifest`,
@@ -114,9 +115,9 @@ game's playthrough, `server-gated.js` the online-delivery tests,
 `tests/run.js` is only the orchestrator - dropping a game later means
 deleting its folder and its module, nothing else.
 
-CI (`.github/workflows/validate.yml`) runs the same layers on every push;
-the Pi deploys only the newest stable `v*` tag whose validate run is green
-(pushing a tag is the deploy act; see README).
+CI (`.github/workflows/validate.yml`) runs the same layers on every push; the
+release workflow publishes the GHCR images for a `v*` tag only once its
+validate run is green (pushing a tag is the release act; see README).
 
 ## Adding a game
 

@@ -3,20 +3,28 @@
 Design notes we are deliberately not building yet. Each is small once the
 shell is extracted (see common.js below).
 
-## Deploy state (2026-10)
+## Deploy state (2026-10-31)
 
-The repo now ships a Docker compose stack (Caddy web + scores, hardened) and
-pull-based, tag-gated CD: the Pi itself polls GitHub for the newest stable
-v* tag and deploys it once its validate run is green (deploy/pull.py + a
-systemd timer; see README). Pushing a tag is the deploy act, and a failed
-smoke test rolls the site back to the previous tag. There is no
-inbound access to the Pi and no SSH key stored anywhere - deliberately.
-Nothing in the notes below changes because of that - the scores service stays
-in-memory and consolidated only, whether it runs under systemd or in a
-container. When the archive idea below lands, note that the scores container
-is read_only: frozen snapshots would need a small writable volume mounted at
-scores/archive/ - the one deliberate disk write in the whole system, gated
-behind count >= 3.
+Simplified to the floor: the release workflow builds the web + scores
+images and pushes them to GHCR (ghcr.io/gameaday/daily-web and
+daily-scores, amd64 and arm64) on every v* tag, but only once the tag
+commit's validate run is green. The running stack is one compose file
+plus .env that pulls those images: copy both to any Docker machine and
+docker compose up -d. No repo checkout on the host, no systemd timer, no
+tokens (the packages are public, and package visibility is separate from
+repo visibility, so they stay pullable after the privacy flip).
+Persistent state is the end-of-day archive under DATA_DIR (default
+/opt/data/daily). The old tag-gated host-side updater and its systemd
+units are gone, and the image-per-release world keeps the safety the
+updater provided: a red validate publishes nothing, and a rollback is
+setting the previous tag in .env. Nothing in the notes below changes
+because of that - the scores service stays in-memory and consolidated
+only, whether it runs under systemd or in a container. When the archive
+idea below lands, note that the scores container is read_only: frozen
+snapshots would need a small writable volume mounted at
+scores/archive/ - the one deliberate disk write in the whole system,
+gated behind count >= 3.
+
 
 ## Curve representation cleanup
 
@@ -58,8 +66,7 @@ Trace/Recycle Grid/Sprint were deduplicated into assets/words-en.js. Games
 destructure what they need from SHELL, so the curve representation change
 above is now a one-file edit in shell/common.js (renderBoard moved there).
 Solo/offline mode came along for free: file:// or ?solo switches the curve
-off and never posts, which is also the air-gapped bundle story - the repo
-minus deploy/ is the bundle. Next: game 14 can be puzzle-only.
+off and never posts, which is also the air-gapped bundle story - the repo itself is the bundle. Next: game 14 can be puzzle-only.
 
 ## Word bank expansion (done 2026-10-27)
 

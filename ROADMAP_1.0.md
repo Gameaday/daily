@@ -12,7 +12,7 @@ kept its content.
 
 Nothing here is pending. Where the remaining 1.0 work lives now:
 
-- the tag-gated deploy loop and the go-live checklist: README.md
+- the release and deploy story plus the go-live checklist: README.md
 - content conventions and design notes: NOTES.md
 - the knowledge layer format reference: knowledge/SCHEMA.md
 - the privacy flip when 1.0 ships: Carl flips the repo private in GitHub

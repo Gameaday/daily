@@ -1,5 +1,7 @@
-# Docker deploy for the Pi (or any small host) - self-contained by design.
-#   docker compose up -d --build
+# Docker deploy for the Pi, another PC, or anywhere: this compose file plus
+# .env is the whole deployment. No repo checkout, no tokens, no host-side
+# update machinery.
+#   docker compose up -d
 #
 # web     - Caddy serving the online bundle baked into the image (no puzzle
 #           banks inside; puzzles are served by the scores service). Plain
@@ -9,19 +11,18 @@
 # scores  - the global-curve + puzzle-delivery service; internal network
 #           only, no capabilities, 64 MB cap. Only fresh-day plays count
 #           toward the live curve; each finished day collapses into a
-#           static archive snapshot on the scores-archive volume (written
-#           once, then read-only).
+#           static archive snapshot under DATA_DIR (default
+#           /opt/data/daily), the one writable path, so the stack survives
+#           host rebuilds and moves when that directory does.
 #
-# Updating: `make deploy` (or the update timer) deploys the newest stable
-# v* tag once its validate run is green on that exact commit and rebuilds
-# the containers - a rebuild is what ships new site content now that the
-# site is baked in. The Pi never tracks main; pushing a tag is the deploy act.
+# Images come from GHCR (ghcr.io/gameaday/daily-web, daily-scores); the
+# release workflow builds and pushes them for every green v* tag.
+#   Update to the newest release:   docker compose pull && docker compose up -d
+#   Pin or roll back to one release: set TAG=v1.0.0 in .env first.
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.web
+    image: ghcr.io/gameaday/daily-web:${TAG:-latest}
     restart: unless-stopped
     ports:
       # plain HTTP entry point - the edge proxy terminates TLS elsewhere
@@ -33,11 +34,9 @@ services:
         condition: service_healthy
 
   scores:
-    build:
-      context: .
-      dockerfile: Dockerfile.scores
+    image: ghcr.io/gameaday/daily-scores:${TAG:-latest}
     restart: unless-stopped
-    # hardened on purpose: read-only except the archive volume, no caps
+    # hardened on purpose: read-only except the archive dir, no caps
     read_only: true
     cap_drop:
       - ALL
@@ -46,7 +45,7 @@ services:
     mem_limit: 64m
     volumes:
       # the only writable path: end-of-day archive snapshots
-      - scores-archive:/app/archive
+      - ${DATA_DIR:-/opt/data/daily}/archive:/app/archive
     expose:
       - "8787"
     healthcheck:
@@ -57,6 +56,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
-
-volumes:
-  scores-archive:

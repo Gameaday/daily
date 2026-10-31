@@ -128,91 +128,90 @@ accepted anywhere, metric direction owned server-side per game. The only
 disk writes are the end-of-day archive snapshots, and the only writable
 path is the archive volume.
 
-## Deploy on the Pi with Docker (recommended)
+## Deploy with Docker (recommended)
 
 The whole stack, online site + Caddy + the scores service, runs as two
-containers with `docker compose`. The site is baked into the web image at
-build time (banks stripped, puzzles served at runtime), so a rebuild is
-what ships new site content.
+containers from one compose file. The images live on GHCR and the release
+workflow builds and pushes them on every green v* tag, so the compose file
+and its .env are the entire deployment: copy both to any machine with
+Docker (the Pi, another PC, anywhere) and start it there. No repo
+checkout, no cloning, no tokens; the images are public packages and stay
+pullable even after the repo goes private.
 
-One-time setup:
-
-    curl -fsSL https://get.docker.com | sh
-    sudo usermod -aG docker $USER     # log out/in after this
-    git clone https://github.com/Gameaday/daily.git ~/daily
-    cd ~/daily
-    docker compose up -d --build
+    docker compose up -d
     docker compose ps                 # web + scores should be Up
 
 Then point your edge proxy (Traefik, nginx, Caddy) at the web port
 (WEB_PORT in .env, default 8081) and terminate TLS there. The repo ships
-no domain or TLS config on purpose.
+no domain or TLS config on purpose. Persistent state is the end-of-day
+score archive, kept under DATA_DIR (default /opt/data/daily): everything
+else lives inside the images, so the stack survives host rebuilds, and
+moving it to another machine is copying the compose file, .env, and that
+one directory.
 
-- `web`: Caddy serving the online bundle (no puzzle banks inside),
-  proxying `/api/*` to the scores container
+- `web`: Caddy serving the online bundle baked into the image (no puzzle
+  banks inside), proxying `/api/*` to the scores container
 - `scores`: the stdlib Python service (curve + puzzle delivery),
   read-only filesystem, no capabilities, no-new-privileges, a 64 MB memory
-  cap, internal network only. The puzzle stores are committed under
-  `puzzles/`, so the container is self-contained. One named volume
-  (`scores-archive`) is mounted at /app/archive for the end-of-day
-  snapshots: the only writable path in the container
+  cap, internal network only. The puzzle stores are baked into the image
+  from the committed `puzzles/` at build time, so the container is
+  self-contained
 
-Releases are tag-gated: the Pi does not track main. deploy/pull.py deploys
-only the newest stable v* tag, and only once the validate run for that
-exact tag commit finished green. Pushing the tag is the deploy act:
+## Releases and updates
+
+Pushing a tag is the release act:
 
     git tag v1.0.0 && git push --tags
 
-The tag push also fires the release workflow (.github/workflows/release.yml),
-which builds the offline and online bundles and attaches both zips to the
-GitHub release for the tag. A red or still-running validate run means the
-Pi keeps serving the last known-good version and tries again next cycle;
-after a rebuild the loopback smoke test (/api/health and /) must pass, and
-on any failure the Pi rebuilds the previous tag, so a bad release cannot
-take the site down. Prerelease tags (v1.0.0-rc.1: anything with a hyphen)
-cut dogfood bundles but never auto-deploy.
+validate runs on the tag push; the release workflow waits for that run to
+finish green on the tag's exact commit, attaches the offline and online
+bundle zips to the GitHub release, and pushes the web + scores images to
+GHCR, tagged with the release tag and with latest. Prerelease tags
+(v1.0.0-rc.1: anything with a hyphen) publish images under their own tag
+but never move latest. A red validate run publishes nothing, and the
+stack keeps serving what it already has.
 
-Better: install the update timer and the Pi checks for a new green-tagged
-release every five minutes:
+On the host, updating is two commands:
 
-    sudo cp deploy/daily-update.service deploy/daily-update.timer /etc/systemd/system/
-    sudo systemctl daemon-reload
-    sudo systemctl enable --now daily-update.timer
+    docker compose pull && docker compose up -d
 
-When the repo goes private at 1.0, give the service a read-only GITHUB_TOKEN
-(the line is commented in daily-update.service); by hand,
-GITHUB_TOKEN=... python3 deploy/pull.py works the same way.
+`pull` grabs latest; to pin one release, or roll back to the previous one,
+set TAG=v1.0.0 in .env first. Every update is a whole-image swap, so a
+failed release simply never arrives.
 
 Non-Docker alternative: `scores/warmup-scores.service` runs the service
 under systemd with DynamicUser and a hardened sandbox. Give it one
 writable directory for the archive (ReadWritePaths=) and pass
 `--archive-dir` in ExecStart.
 
-The loop is: push to GitHub, Actions validates the push, the Pi deploys a
-tag only after its validate run goes green, and a failed smoke test rolls
-the site back to the previous tag. If tests fail, the site never moves.
+The loop is: push to GitHub, Actions validates the push, the tag's
+release workflow publishes the images only once its validate run is
+green, and the host picks them up with one compose pull. If tests fail,
+nothing publishes and the site never moves.
 
 ## Go-live checklist
 
-One-time on the Pi: install Docker, clone the repo,
-docker compose up -d --build, install the update timer, and point the edge
-proxy for daily.historylabs.dev at the web port (WEB_PORT in .env, default
-8081; TLS terminates at the edge; the repo ships no domain config on
-purpose). Then:
+One-time on the host: install Docker, copy docker-compose.yml and .env
+(there is .env.example to start from) to the host, and point the edge
+proxy for daily.historylabs.dev at the web port (WEB_PORT in .env,
+default 8081; TLS terminates at the edge; the repo ships no domain config
+on purpose). Then:
 
-1. push the first stable tag (git tag v1.0.0 && git push --tags); validate
-   runs on the tag push and the Pi deploys it once that run is green,
-   usually within ten minutes
-2. open the site: the landing page and one game should load, and
-   /api/health should answer ok
+1. push the first stable tag (git tag v1.0.0 && git push --tags); the
+   release workflow publishes the images once the tag's validate run is
+   green, usually within a few minutes
+2. on the host: docker compose pull && docker compose up -d; open the
+   site: the landing page and one game should load, and /api/health
+   should answer ok
 3. play one puzzle online: the served puzzle replaces the inline pick, so
    a win proves delivery end to end
-4. after ET midnight, confirm the first archive snapshot landed on the
-   scores-archive volume
+4. after ET midnight, confirm the first archive snapshot landed under
+   DATA_DIR (default /opt/data/daily/archive)
 
 Day numbering comes from the epoch in scores/manifest.json (CI
 cross-checks it against shell/common.js), so nothing on the server decides
 which puzzle serves on which day.
+
 
 ## CI and validation
 

@@ -137,13 +137,19 @@ const SHELL = (() => {
     if (!box) return;
     if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
     const maxBar = Math.max(...d.bins.map(b => b.count), 1);
+    /* the you-marker rides inside its own bar (absolute CSS anchor), and
+       bars cap at 44px so they fit the curve box instead of spilling out */
     const bars = d.bins.map(b =>
-      '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 60)) + 'px"></div>' +
-      (b.you ? '<div class="you-mark">you</div>' : '')
+      '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 44)) + 'px">' +
+      (b.you ? '<div class="you-mark">you</div>' : '') + '</div>'
     ).join('');
+    const tail = (typeof d.beat === 'number')
+      ? '<div class="curve-note">you beat ' + d.beat + (d.beat === 1 ? ' player' : ' players') +
+        (typeof d.mean === 'number' ? ' \u00b7 avg ' + d.mean : '') + '</div>'
+      : '';
     box.innerHTML =
-      '<div class="curve-head">global curve</div>' +
-      '<div class="curve-bars">' + bars + '</div>';
+      '<div class="curve-head">global curve \u00b7 ' + d.count + (d.count === 1 ? ' play' : ' plays') + ' today</div>' +
+      '<div class="curve-bars">' + bars + '</div>' + tail;
   }
 
   /* ---- is the global curve service reachable? ---- */

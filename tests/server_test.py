@@ -307,6 +307,49 @@ def main():
         except subprocess.TimeoutExpired:
             proc2.kill()
 
+    # --- pre-launch: before the epoch the day index clamps at 0 (the
+    #     client clamps the same way in shell/common.js), so the launch
+    #     weekend serves No. 1 and day-0 plays tally into the launch day's
+    #     board. This instance boots with a future epoch to pin that. ---
+    PORT3 = PORT + 2
+    proc3 = subprocess.Popen(
+        [sys.executable, str(ROOT / "scores" / "server.py"),
+         "--port", str(PORT3), "--host", "127.0.0.1", "--archive-dir", scratch,
+         "--epoch", str(ET_TODAY + timedelta(days=2))],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        up = False
+        for _ in range(50):
+            try:
+                s, _b = req("GET", "/health", port=PORT3)
+                if s == 200:
+                    up = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.1)
+        if not up:
+            check(False, "pre-launch instance never came up on port %d" % PORT3)
+        else:
+            s, b = req("GET", "/api/puzzle?game=bogus&day=0", port=PORT3)
+            check(s == 200 and b.get("puzzle", {}).get("l") == 5,
+                  "pre-epoch: day 0 (No. 1) is served, not future")
+            s, _b = req("GET", "/api/puzzle?game=bogus&day=1", port=PORT3)
+            check(s == 403, "pre-epoch: day 1 stays future")
+            s, b = post("/api/submit", {"game": "fermi", "day": 0,
+                                        "value": 3, "better": "high", "id": "pre"},
+                        port=PORT3)
+            check(s == 200 and b.get("count") == 1,
+                  "pre-epoch: day 0 submit tallies live")
+            s, b = req("GET", "/api/dist?game=fermi&day=0", port=PORT3)
+            check(s == 200 and b.get("count") == 1,
+                  "pre-epoch: day 0 dist is live")
+    finally:
+        proc3.terminate()
+        try:
+            proc3.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc3.kill()
     # --- archive handoff (unit): a finished day collapses into a static,
     #     read-only snapshot and leaves the live state ---
     spec = importlib.util.spec_from_file_location("warmup_server", ROOT / "scores" / "server.py")

@@ -111,13 +111,16 @@ def bin_index(value, edges):
 
 
 def current_day_index():
+    """Days since the epoch, clamped at 0: before launch the index never goes
+    negative, matching shell/common.js, so the pre-launch weekend serves
+    No. 1 and those plays tally into the launch day's board."""
     try:
         tz = ZoneInfo(TZ_NAME) if ZoneInfo else None
     except Exception:
         tz = None
     today = datetime.now(tz).date() if tz else date.today()
     epoch = date.fromisoformat(EPOCH_KEY)
-    return (today - epoch).days
+    return max(0, (today - epoch).days)
 
 
 def seconds_to_midnight():

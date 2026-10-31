@@ -83,7 +83,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
   </div>
 
-  <p class="lead">A limited budget of shifts, in two phases: <b>rows first, then columns</b>. Undo and restart are free while you explore — each shift spends the budget, rows lock when you move on, and <b>Bank It</b> scores the words on the board. The <b>best possible board is exact</b> — hit it for a perfect bank.</p>
+  <p class="lead">A limited budget of shifts, in two phases: <b>rows first, then columns</b>. Undo and restart are free while you explore — each shift spends the budget, rows lock when you move on, and <b>Bank It</b> scores the words on the board. The best possible board is exact and waits for your bank - hit it for a <b>perfect</b> bank.</p>
 
   <div class="modrow" id="modes"></div>
 
@@ -92,7 +92,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="scoreline">
     <span class="bignum"><span id="count">0</span> <span class="u">words on board</span></span>
     <span class="bignum"><span id="shifts">0</span><span class="u" id="shiftcap">of 5 shifts</span></span>
-    <span class="midnum"><span id="best">–</span><span class="u">best possible</span></span>
+    <span class="midnum" id="bestwrap"><span id="best">–</span><span class="u">best possible</span></span>
   </div>
 
   <p class="phasenote" id="phasenote">Phase 1 — rows. Columns unlock when you lock the rows.</p>
@@ -128,7 +128,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p><b>Three modes, three budgets:</b> <b>Practice · 4</b> — a fresh random board every time, validated instantly, nothing recorded. <b>Normal · 5</b> — the daily board; your one bank counts for your streak and the global curve. <b>Hard · 6</b> — the same daily board with one more shift, online only (the exact search is the heavy one), posting to its own bonus curve.</p>
     <p><b>Both directions are yours, in two phases:</b> first you shift <b>rows</b> only; the column arrows sit dashed until you press <b>Lock rows</b> (free), which unlocks the <b>columns</b> for good. Tap a dashed arrow any time and it tells you what it is waiting for.</p>
     <p><b>Undo</b> takes back your last shift and refunds its cost. <b>Restart</b> returns the board to its start with the budget untouched. Both are free — explore!</p>
-    <p><b>Best possible is exact:</b> before you play, the page has already tried every shift plan within your budget, so the "best possible" number is a fact. Match it and Bank It for a <b>perfect</b> bank.</p>
+    <p><b>Best possible is exact:</b> before you play, the page has already tried every shift plan within your budget, so the number is a fact. It stays hidden while a counted game is live (practice shows it as the target), and it appears with your result when you bank. Match it for a <b>perfect</b> bank.</p>
     <p><b>Bank It</b> locks in the words currently on the board. In Normal the first bank of the day counts; Hard banks its own bonus curve; Practice records nothing.</p>
     <p>Same letters for everyone in Normal and Hard, so compare banks at standup.</p>
     <button class="close" data-close>Got it</button>
@@ -419,6 +419,11 @@ function renderMeta(){
   const B = MODES[S.mode];
   $('shifts').textContent = S.used;
   $('shiftcap').textContent = 'of ' + B + ' shifts';
+  /* the day's ceiling stays hidden while a counted game is live: knowing
+     the exact target would settle the one real decision, when to bank.
+     practice is the sandbox and keeps it, and a banked board has nothing
+     left to spoil */
+  $('bestwrap').style.display = (S.banked || S.mode === 'practice') ? '' : 'none';
   $('best').textContent = curBest() || '\u2013';
   $('phasenote').textContent = S.banked ? 'banked — see you tomorrow'
     : (S.phase === 'rows'
@@ -582,13 +587,17 @@ function showReveal(words, perfect){
   lastPerfect = !!perfect;
   const st = S.stats;
   const avg = st.played ? (st.totalWords / st.played).toFixed(1) : '0';
-  $('verdict').textContent =
+  let verdict =
     lastPerfect ? 'A perfect bank — the best possible board.' :
     S.mode === 'practice' ? 'Practice banked — nothing recorded, try again.' :
     words >= 10 ? 'A fat bank — the grid is humming.' :
     words >= 7  ? 'Solid harvest — respectable banking.' :
     words >= 4  ? 'Banked with something to show for it.' :
                   'A lean bank — the budget got away.';
+  if (!lastPerfect && S.mode !== 'practice'){
+    verdict += ' The best possible was ' + curBest() + '.';
+  }
+  $('verdict').textContent = verdict;
   $('sharetext').textContent =
     shareText() + (S.mode === 'practice' ? '' :
       `\nstreak ${st.streak} \u00b7 best ${st.bestWords} \u00b7 avg ${avg} words \u00b7 ${st.perfect} perfect`);

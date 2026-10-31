@@ -43,6 +43,9 @@ async function run(h){
     h.eq(r.x.S.letters[5], L0[5], 'grid: a row arrow leaves the other rows alone');
     r.x.undo();
 
+    /* the ceiling: best possible hides while a counted game is live */
+    h.eq(r.env.els.bestwrap.style.display, 'none', 'grid: the ceiling hides while the daily game is live');
+
     /* phase + budget guards */
     r.x.doShift('col', 0, 1);
     h.eq(r.x.S.used, 0, 'grid: column shift rejected in the rows phase');
@@ -109,6 +112,8 @@ async function run(h){
     r3.env.els.btnBank.click();
     await h.flush();
     h.ok(r3.x.S.banked, 'grid: banked');
+    h.eq(r3.env.els.bestwrap.style.display, '', 'grid: banking reveals the ceiling');
+    h.ok(r3.env.els.verdict.textContent.indexOf('best possible was') < 0, 'grid: a perfect bank does not restate the ceiling');
     h.ok(r3.x.S.counted, 'grid: day stats counted once');
     h.eq(r3.x.S.stats.perfect, 1, 'grid: perfect bank counted');
     h.ok(r3.x.shareText().indexOf('perfect') >= 0, 'grid: share shows the perfect badge');
@@ -131,6 +136,8 @@ async function run(h){
     h.ok(PR.best >= 8, 'grid: practice optimum is fat (got ' + PR.best + ')');
     h.ok(PR.start.join('') !== daily, 'grid: practice board is its own random board');
     h.eq(rm.x.S.letters.join(''), PR.start.join(''), 'grid: practice plays the practice board');
+    h.eq(rm.env.els.bestwrap.style.display, '', 'grid: practice shows the ceiling live');
+    h.eq(String(rm.env.els.best.textContent), String(PR.best), 'grid: the ceiling tracks the practice board');
     for (let k = 0; k < 4; k++) rm.x.doShift('row', k % 5, 1);
     h.eq(rm.x.S.used, 4, 'grid: practice budget spent');
     rm.x.doShift('row', 0, 1);
@@ -156,6 +163,7 @@ async function run(h){
     await h.flush();
     h.eq(rh.x.getMode(), 'hard', 'grid: hard unlocked when the curve answers');
     h.eq(rh.x.getBudget(), 6, 'grid: hard = 6 shifts');
+    h.eq(rh.env.els.bestwrap.style.display, 'none', 'grid: hard hides the ceiling while it is live');
     h.eq(rh.x.S.letters.join(''), rh.x.getPuzzle().start.join(''), 'grid: hard plays the same daily board');
     h.ok(rh.x.curBest() >= rh.x.getPuzzle().best, 'grid: hard optimum at least the normal optimum');
     for (let k = 0; k < 6; k++) rh.x.doShift('row', k % 5, 1);
@@ -174,6 +182,7 @@ async function run(h){
     r4.env.els.btnBank.click();
     await h.flush();
     h.ok(r4.x.S.banked && r4.x.S.stats.streak === 1, 'grid: day 0 banked, streak 1');
+    h.ok(r4.env.els.verdict.textContent.indexOf('best possible was') >= 0, 'grid: a non-perfect bank names the ceiling');
     r4 = h.boot('recycle-grid', EXP, { now: T1, store: store2 });
     h.eq(r4.x.S.day, 1, 'grid: day rolled');
     h.eq(r4.x.S.stats.streak, 1, 'grid: streak preserved after a bank');

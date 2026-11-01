@@ -9,8 +9,10 @@ async function run(h){
     const store = {};
     let r = h.boot('lightbox', EXP, { now: T0, store });
     for (let i = 0; i < 7; i++) for (let j = 0; j < 7; j++) r.x.S.marks[i][j] = r.x.SOL[i][j] ? 1 : 0;
+    r.x.S.startAt = 1; /* a first tap happened long ago */
     r.env.els.btnDevelop.click();
     h.eq(r.x.S.status, 'won', 'lightbox: won clean');
+    h.ok(r.env.els.timenote.textContent.indexOf('your time') === 0, 'lightbox: the result carries the time');
     h.eq(r.x.S.mistakes, 0, 'lightbox: 0 mistakes');
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, 0, 'lightbox: curve value 0');

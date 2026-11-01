@@ -80,7 +80,6 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="metarow">
     <span>rungs <b id="steps">0</b></span>
     <span>par <b id="par">–</b></span>
-    <span id="clockwrap"><span id="clock">00:00</span></span>
   </div>
 
   <div class="chain" id="chain"></div>
@@ -91,10 +90,9 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <button class="btn ghost" id="btnGive">Reveal a path</button>
   </div>
 
-  <p class="clock" id="clocknote" style="font-size:12px;">the clock starts on your first climb</p>
-
   <div class="reveal" id="reveal">
     <p class="verdict" id="verdict"></p>
+    <p class="clock" id="timenote"></p>
     <div class="why" id="why"></div>
     <div class="sharebox" id="sharetext"></div>
     <div id="curve"></div>
@@ -115,7 +113,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p>Type a word that differs from your current word by <b>exactly one letter</b> (like COLD → CORD). Every rung must be a real word — the game knows the dictionary, so guess in good faith. You can’t reuse a word going up, but type one already on your ladder and you climb <b>back down</b> to it: the rungs above drop away, and the clock keeps running.</p>
     <p>Reach the target word and the ladder is solved. Your score is the number of <b>rungs</b> you used — the fewer the better. <b>Par</b> is the shortest ladder that exists (the game checked, so you don’t have to wonder).</p>
     <p>Stuck? <b>Reveal a path</b> ends the climb and shows one shortest solution.</p>
-    <p>There\u2019s no mistake limit — the score is efficiency, not survival. The clock starts on your first climb and never restarts; it\u2019s just for bragging.</p>
+    <p>There\u2019s no mistake limit — the score is efficiency, not survival. Time is kept quietly and only shows with your result.</p>
     <button class="close" data-close>Got it</button>
   </div>
 </div>
@@ -208,12 +206,6 @@ function fmtTime(ms){
   const s = Math.floor(ms / 1000);
   return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`;
 }
-function elapsed(){
-  if (S.status !== 'playing') return S.timeMs;
-  if (!S.startAt) return 0;
-  return Date.now() - S.startAt;
-}
-
 function renderChain(){
   const cur = S.chain[S.chain.length - 1];
   const chips = S.chain.map((w, i) => {
@@ -225,7 +217,6 @@ function renderChain(){
   if (S.status === 'playing' && cur !== LADDER.target) chips.push(`<span class="wchip tgtmark">${LADDER.target}</span>`);
   $('chain').innerHTML = chips.join('<span style="color:var(--muted)">·</span>');
   $('steps').textContent = steps();
-  $('clock').textContent = fmtTime(elapsed());
 }
 
 function shareText(){
@@ -247,6 +238,7 @@ function showReveal(){
     $('verdict').textContent = 'Path revealed — tomorrow is another ladder.';
     $('verdict').style.color = 'var(--accent)';
   }
+  $('timenote').textContent = S.timeMs ? 'your time: ' + fmtTime(S.timeMs) : '';
   $('why').innerHTML = `A shortest path: <span class="path">${LADDER.path.join(' \u2192 ')}</span>`;
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best != null ? st.best + ' rungs' : '\u2014'}`;
   $('reveal').classList.add('show');
@@ -324,15 +316,9 @@ function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
 
-/* ---------------- help / countdown / clock ---------------- */
+/* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
-
-function onTick(){  if (S.status === 'playing'){
-    $('clock').textContent = fmtTime(elapsed());
-    $('clocknote').textContent = S.startAt ? 'the clock is running \u2014 it does not restart' : 'the clock starts on your first climb';
-  }
-}
 
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
@@ -342,7 +328,7 @@ $('targetw').textContent = LADDER.target;
 $('par').textContent = LADDER.par;
 renderChain();
 if (S.status !== 'playing') showReveal();
-SHELL.startCountdown('countdown', 500, onTick);
+SHELL.startCountdown('countdown', 500);
 </script>
 </body>
 </html>

@@ -8,6 +8,7 @@ async function run(h){
     const EXP = ['S', 'LADDER', 'climb', 'steps', 'shareText'];
     const store = {};
     let r = h.boot('trace', EXP, { now: T0, store });
+    r.x.S.startAt = 1; /* a first climb happened long ago */
     h.ok(r.x.LADDER.path.length >= 5, 'trace: ladder generated');
     for (const w of r.x.LADDER.path.slice(1)){
       r.env.els.next.value = w;
@@ -17,6 +18,7 @@ async function run(h){
     h.eq(r.x.steps(), r.x.LADDER.par, 'trace: steps = par');
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, r.x.LADDER.par, 'trace: curve value = par');
+    h.ok(r.env.els.timenote.textContent.indexOf('your time') === 0, 'trace: the result carries the time');
     /* Regression: over <= 0 made "on par" unreachable; at exactly par the
        share text bragged "under par!". */
     h.ok(r.x.shareText().indexOf('on par') >= 0, 'trace: share "on par" (regression)');

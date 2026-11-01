@@ -31,7 +31,8 @@ Design rules (deliberate):
 
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
-    GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
+    GE
+T  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
     GET  /health                                    -> {"ok": true, "day", "num"}
@@ -76,7 +77,8 @@ IP_HITS = {}   # ip -> [day, gets, posts]
 # game). server.py loads it at boot, the client pages carry the same
 # timezone/epoch inline for offline play, and CI cross-checks both sides
 # against the manifest so neither can drift.
-with open(Path(__file__).parent / 'manifest.json', encoding='utf-8') as _mf:
+with open(Path(__file__
+).parent / 'manifest.json', encoding='utf-8') as _mf:
     _MANIFEST = json.load(_mf)
 TZ_NAME = _MANIFEST['tz']
 EPOCH_KEY = _MANIFEST['epoch']
@@ -130,6 +132,7 @@ def current_day_index():
 def seconds_to_midnight():
     """Seconds until the next ET midnight - the puzzle cache horizon: the
     day's puzzle is immutable, so it can be cached right up to rollover."""
+
     try:
         tz = ZoneInfo(TZ_NAME) if ZoneInfo else None
     except Exception:
@@ -158,6 +161,12 @@ def write_archive(game, day):
     it. The day's dedupe set rides along with the numbers so a warm start
     can never re-open the day. A failed write must never take the service
     down.
+
+    Returns True when a snapshot is on disk, False when there is nothing to
+    write or an existing snapshot already covers the tally (either way the
+    live board is safe to drop), and None only when the write itself
+    failed: the caller must keep the live board so the next flush retries
+    instead of silently losing the day.
     """
     st = STATS.get((game, day))
     if not st or st["n"] == 0:
@@ -183,13 +192,14 @@ def write_archive(game, day):
         p.write_text(json.dumps(payload, indent=2) + "\n", encoding='utf-8')
         return True
     except OSError:
-        return False
+        return None
 
 
 def load_archive(game, day):
     p = archive_path(game, day)
     try:
-        with p.open(encoding='utf-8') as f:
+        with p.open(encoding='utf-8') as 
+f:
             return json.load(f)
     except (OSError, ValueError):
         return None
@@ -208,15 +218,23 @@ def flush_stale(force=False):
 
     Runs lazily on every request (so the first request after midnight ET
     settles yesterday cleanly), and forced on shutdown (so a restart does
-    not silently drop the partial day).
+    not silently drop the partial day). A board whose snapshot write
+    failed stays in memory: the next flush retries it, so a full disk
+    costs a delayed archive, not the day's numbers.
     """
     today = current_day_index()
     for key in list(STATS.keys()):
         game, day = key
         if day == today and not force:
             continue
-        if write_archive(game, day):
+        ok = write_archive(game, day)
+        if ok:
             print("archived %s day %d (%d plays)" % (game, day, STATS[key]["n"]), flush=True)
+        if ok is None:
+            # the snapshot write failed (full disk, lost mount): keep the
+            # live board and its dedupe set so the next flush retries and
+            # stale submits still get answered, instead of losing the day
+            continue
         del STATS[key]
         SEEN.pop(key, None)
 
@@ -250,7 +268,8 @@ def beat_estimate(value, st, spec):
     """Roughly how many counted entries this value ranks strictly better than.
 
     Outside my own bin this is exact. Inside my bin we assume a uniform
-    spread - except for width <= 1 bins, which hold a single integer score,
+    spread - except f
+or width <= 1 bins, which hold a single integer score,
     so everyone in them ties and none of them count as beaten.
     """
     edges = spec["edges"]
@@ -300,7 +319,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def _json(self, payload, status=200, cache="no-store"):
         body = json.dumps(payload).encode("utf-8")
-        self.send_response(status)
+        self.send_response(status
+)
         self._cors()
         self.send_header("Content-Type", "application/json")
         self.send_header("Cache-Control", cache)
@@ -353,7 +373,8 @@ class Handler(BaseHTTPRequestHandler):
             self._json(payload)
         elif path == "/manifest":
             # the scoring truth (epoch, tz, per-game ledger) as plain JSON
-            self._json(_MANIFEST, cache="public, max-age=3600")
+            self._json(_MANIFEST, cache="pub
+lic, max-age=3600")
         elif path in ("/dist", "/distribution"):
             qs = parse_qs(urlparse(self.path).query)
             game = (qs.get("game") or [""])[0]
@@ -400,7 +421,8 @@ class Handler(BaseHTTPRequestHandler):
                 day = int((qs.get("day") or ["0"])[0])
             except ValueError:
                 self._json({"error": "bad day"}, 400)
-                return
+               
+ return
             if not (DAY_MIN <= day <= DAY_MAX):
                 self._json({"error": "bad day"}, 400)
                 return
@@ -439,7 +461,8 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 bank = entry["bank"]
                 events = [bank[i] for i in picks[day]]
-                self._json({"game": game, "day": day, "puzzle": {"events": events}, "today": today},
+               
+ self._json({"game": game, "day": day, "puzzle": {"events": events}, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
             else:
                 if not entry:
@@ -485,7 +508,8 @@ class Handler(BaseHTTPRequestHandler):
         value = data.get("value")
         if isinstance(value, bool) or not isinstance(value, (int, float)) \
                 or not math.isfinite(value) or abs(value) > MAX_ABS_VALUE:
-            self._json({"error": "bad value"}, 400)
+            self._json({"error": "bad valu
+e"}, 400)
             return
         pid = data.get("id")
         if not isinstance(pid, str) or not pid or len(pid) > 64:
@@ -527,7 +551,8 @@ def main():
     MAX_GETS_PER_IP = args.max_gets_per_ip
     MAX_POSTS_PER_IP = args.max_posts_per_ip
     if args.epoch:
-        EPOCH_KEY = args.epoch
+  
+      EPOCH_KEY = args.epoch
 
     # warm start: a mid-day restart (compose update, host reboot) flushed
     # today's partial boards to the archive on shutdown; bring them back

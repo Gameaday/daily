@@ -484,96 +484,24 @@
     "a": "John Milton"
   },
   {
-    "q": "I CANNOT LIVE WITHOUT BOOKS",
-    "a": "Thomas Jefferson"
-  },
-  {
-    "q": "THESE ARE THE TIMES THAT TRY MEN’S SOULS",
-    "a": "Thomas Paine"
-  },
-  {
     "q": "FACTS ARE STUBBORN THINGS",
     "a": "John Adams"
-  },
-  {
-    "q": "IN THIS WORLD NOTHING CAN BE SAID TO BE CERTAIN, EXCEPT DEATH AND TAXES",
-    "a": "Benjamin Franklin"
   },
   {
     "q": "LIBERTY, WHEN IT BEGINS TO TAKE ROOT, IS A PLANT OF RAPID GROWTH",
     "a": "George Washington"
   },
   {
-    "q": "INJUSTICE ANYWHERE IS A THREAT TO JUSTICE EVERYWHERE",
-    "a": "Martin Luther King Jr."
-  },
-  {
-    "q": "IF THERE IS NO STRUGGLE, THERE IS NO PROGRESS",
-    "a": "Frederick Douglass"
-  },
-  {
-    "q": "THE PROBLEM OF THE TWENTIETH CENTURY IS THE PROBLEM OF THE COLOR LINE",
-    "a": "W.E.B. Du Bois"
-  },
-  {
-    "q": "THE REPORT OF MY DEATH WAS AN EXAGGERATION",
-    "a": "Mark Twain"
-  },
-  {
     "q": "ALL THAT WE SEE OR SEEM IS BUT A DREAM WITHIN A DREAM",
     "a": "Edgar Allan Poe"
-  },
-  {
-    "q": "IT WAS THE BEST OF TIMES, IT WAS THE WORST OF TIMES",
-    "a": "Charles Dickens"
   },
   {
     "q": "I DECLARE AFTER ALL THERE IS NO ENJOYMENT LIKE READING",
     "a": "Jane Austen"
   },
   {
-    "q": "I AM NO BIRD; AND NO NET ENSNARES ME",
-    "a": "Charlotte Bronte"
-  },
-  {
     "q": "NO COWARD SOUL IS MINE",
     "a": "Emily Bronte"
-  },
-  {
-    "q": "NOTHING IS SO PAINFUL TO THE HUMAN MIND AS A GREAT AND SUDDEN CHANGE",
-    "a": "Mary Shelley"
-  },
-  {
-    "q": "I DO NOT WISH THEM TO HAVE POWER OVER MEN; BUT OVER THEMSELVES",
-    "a": "Mary Wollstonecraft"
-  },
-  {
-    "q": "HOPE IS THE THING WITH FEATHERS",
-    "a": "Emily Dickinson"
-  },
-  {
-    "q": "NOT ALL THOSE WHO WANDER ARE LOST",
-    "a": "J.R.R. Tolkien"
-  },
-  {
-    "q": "THE MIND IS ITS OWN PLACE, AND IN ITSELF CAN MAKE A HEAVEN OF HELL, A HELL OF HEAVEN",
-    "a": "John Milton"
-  },
-  {
-    "q": "WHEN A MAN IS TIRED OF LONDON, HE IS TIRED OF LIFE",
-    "a": "Samuel Johnson"
-  },
-  {
-    "q": "A LITTLE LEARNING IS A DANGEROUS THING",
-    "a": "Alexander Pope"
-  },
-  {
-    "q": "IF I HAVE SEEN FURTHER, IT IS BY STANDING ON THE SHOULDERS OF GIANTS",
-    "a": "Isaac Newton"
-  },
-  {
-    "q": "I THINK, THEREFORE I AM",
-    "a": "Rene Descartes"
   },
   {
     "q": "IN THE LAND OF THE BLIND, THE ONE-EYED MAN IS KING",
@@ -582,10 +510,6 @@
   {
     "q": "I WILL SEIZE FATE BY THE THROAT",
     "a": "Ludwig van Beethoven"
-  },
-  {
-    "q": "COWARDS DIE MANY TIMES BEFORE THEIR DEATHS; THE VALIANT NEVER TASTE OF DEATH BUT ONCE",
-    "a": "William Shakespeare"
   },
   {
     "q": "THE FOOL DOTH THINK HE IS WISE, BUT THE WISE MAN KNOWS HIMSELF TO BE A FOOL",
@@ -598,5 +522,81 @@
   {
     "q": "THE GREATEST THING IN THE WORLD IS TO KNOW HOW TO BELONG TO ONESELF",
     "a": "Michel de Montaigne"
+  },
+  {
+    "q": "IT IS NOT TIME OR OPPORTUNITY THAT IS TO DETERMINE INTIMACY; IT IS DISPOSITION ALONE",
+    "a": "Jane Austen"
+  },
+  {
+    "q": "THE SECRET SOURCE OF HUMOR ITSELF IS NOT JOY BUT SORROW",
+    "a": "Mark Twain"
+  },
+  {
+    "q": "WHAT WOULD LIFE BE IF WE HAD NO COURAGE TO ATTEMPT ANYTHING?",
+    "a": "Vincent van Gogh"
+  },
+  {
+    "q": "WASTE NO MORE TIME ARGUING WHAT A GOOD MAN SHOULD BE. BE ONE.",
+    "a": "Marcus Aurelius"
+  },
+  {
+    "q": "I DWELL IN POSSIBILITY",
+    "a": "Emily Dickinson"
+  },
+  {
+    "q": "NOTHING CAN BRING BACK THE HOUR OF SPLENDOR IN THE GRASS, OF GLORY IN THE FLOWER",
+    "a": "William Wordsworth"
+  },
+  {
+    "q": "HE PRAYETH BEST, WHO LOVETH BEST ALL THINGS BOTH GREAT AND SMALL",
+    "a": "Samuel Coleridge"
+  },
+  {
+    "q": "BEAUTY IS TRUTH, TRUTH BEAUTY",
+    "a": "John Keats"
+  },
+  {
+    "q": "ROLL ON, THOU DEEP AND DARK BLUE OCEAN, ROLL",
+    "a": "Lord Byron"
+  },
+  {
+    "q": "IF WINTER COMES, CAN SPRING BE FAR BEHIND?",
+    "a": "Percy Shelley"
+  },
+  {
+    "q": "IF ONE ADVANCES CONFIDENTLY IN THE DIRECTION OF HIS DREAMS, AND ENDEAVORS TO LIVE THE LIFE WHICH HE HAS IMAGINED, HE WILL MEET WITH A SUCCESS UNEXPECTED IN COMMON HOURS",
+    "a": "Henry David Thoreau"
+  },
+  {
+    "q": "THE HISTORY OF THE WORLD IS BUT THE BIOGRAPHY OF GREAT MEN",
+    "a": "Thomas Carlyle"
+  },
+  {
+    "q": "TO LOVE ONESELF IS THE BEGINNING OF A LIFELONG ROMANCE",
+    "a": "Oscar Wilde"
+  },
+  {
+    "q": "THE WORLD BREAKS EVERY ONE, AND AFTERWARD MANY ARE STRONG AT THE BROKEN PLACES",
+    "a": "Ernest Hemingway"
+  },
+  {
+    "q": "NOTHING GOLD CAN STAY",
+    "a": "Robert Frost"
+  },
+  {
+    "q": "I DIE THE KING’S GOOD SERVANT, BUT GOD’S FIRST",
+    "a": "Thomas More"
+  },
+  {
+    "q": "VISION IS THE ART OF SEEING THINGS INVISIBLE",
+    "a": "Jonathan Swift"
+  },
+  {
+    "q": "WITHOUT MUSIC, LIFE WOULD BE A MISTAKE",
+    "a": "Friedrich Nietzsche"
+  },
+  {
+    "q": "BIG BROTHER IS WATCHING YOU",
+    "a": "George Orwell"
   }
 ]

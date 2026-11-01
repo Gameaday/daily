@@ -926,35 +926,11 @@
     "provenance": "reviewed 2026-11-01"
   },
   {
-    "id": "jefferson-on-books",
-    "by": "jefferson",
-    "q": "I CANNOT LIVE WITHOUT BOOKS",
-    "y": 1815,
-    "via": "letter to John Adams, 1815",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "paine-trying-times",
-    "by": "paine",
-    "q": "THESE ARE THE TIMES THAT TRY MEN’S SOULS",
-    "y": 1776,
-    "via": "The American Crisis, 1776",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
     "id": "adams-stubborn-facts",
     "by": "adams",
     "q": "FACTS ARE STUBBORN THINGS",
     "y": 1770,
     "via": "defense of the Boston soldiers, 1770",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "franklin-death-and-taxes",
-    "by": "franklin",
-    "q": "IN THIS WORLD NOTHING CAN BE SAID TO BE CERTAIN, EXCEPT DEATH AND TAXES",
-    "y": 1789,
-    "via": "letter to Jean Baptiste Le Roy, 1789",
     "provenance": "reviewed 2026-11-01"
   },
   {
@@ -966,51 +942,11 @@
     "provenance": "reviewed 2026-11-01"
   },
   {
-    "id": "mlk-injustice-anywhere",
-    "by": "martin-luther-king",
-    "q": "INJUSTICE ANYWHERE IS A THREAT TO JUSTICE EVERYWHERE",
-    "y": 1963,
-    "via": "Letter from Birmingham Jail, 1963",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "douglass-no-struggle",
-    "by": "douglass",
-    "q": "IF THERE IS NO STRUGGLE, THERE IS NO PROGRESS",
-    "y": 1857,
-    "via": "West India emancipation speech, 1857",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "dubois-color-line",
-    "by": "du-bois",
-    "q": "THE PROBLEM OF THE TWENTIETH CENTURY IS THE PROBLEM OF THE COLOR LINE",
-    "y": 1903,
-    "via": "The Souls of Black Folk, 1903",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "twain-death-exaggerated",
-    "by": "twain",
-    "q": "THE REPORT OF MY DEATH WAS AN EXAGGERATION",
-    "y": 1897,
-    "via": "New York Journal remark, 1897",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
     "id": "poe-dream-within-dream",
     "by": "poe",
     "q": "ALL THAT WE SEE OR SEEM IS BUT A DREAM WITHIN A DREAM",
     "y": 1849,
     "via": "A Dream Within a Dream, 1849",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "dickens-best-of-times",
-    "by": "dickens",
-    "q": "IT WAS THE BEST OF TIMES, IT WAS THE WORST OF TIMES",
-    "y": 1859,
-    "via": "A Tale of Two Cities, 1859",
     "provenance": "reviewed 2026-11-01"
   },
   {
@@ -1022,91 +958,11 @@
     "provenance": "reviewed 2026-11-01"
   },
   {
-    "id": "charlotte-bronte-no-bird",
-    "by": "charlotte-bronte",
-    "q": "I AM NO BIRD; AND NO NET ENSNARES ME",
-    "y": 1847,
-    "via": "Jane Eyre, 1847",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
     "id": "emily-bronte-no-coward",
     "by": "emily-bronte",
     "q": "NO COWARD SOUL IS MINE",
     "y": 1845,
     "via": "No Coward Soul Is Mine, written 1845",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "mary-shelley-sudden-change",
-    "by": "mary-shelley",
-    "q": "NOTHING IS SO PAINFUL TO THE HUMAN MIND AS A GREAT AND SUDDEN CHANGE",
-    "y": 1818,
-    "via": "Frankenstein, 1818",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "wollstonecraft-power-over-self",
-    "by": "wollstonecraft",
-    "q": "I DO NOT WISH THEM TO HAVE POWER OVER MEN; BUT OVER THEMSELVES",
-    "y": 1792,
-    "via": "A Vindication of the Rights of Woman, 1792",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "dickinson-hope-feathers",
-    "by": "dickinson",
-    "q": "HOPE IS THE THING WITH FEATHERS",
-    "y": 1861,
-    "via": "poem, written about 1861, published 1891",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "tolkien-wander-lost",
-    "by": "tolkien",
-    "q": "NOT ALL THOSE WHO WANDER ARE LOST",
-    "y": 1954,
-    "via": "The Fellowship of the Ring, 1954",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "milton-mind-its-place",
-    "by": "milton",
-    "q": "THE MIND IS ITS OWN PLACE, AND IN ITSELF CAN MAKE A HEAVEN OF HELL, A HELL OF HEAVEN",
-    "y": 1667,
-    "via": "Paradise Lost, 1667",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "johnson-tired-of-london",
-    "by": "johnson",
-    "q": "WHEN A MAN IS TIRED OF LONDON, HE IS TIRED OF LIFE",
-    "y": 1777,
-    "via": "recorded by Boswell, 1777",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "pope-little-learning",
-    "by": "pope",
-    "q": "A LITTLE LEARNING IS A DANGEROUS THING",
-    "y": 1711,
-    "via": "An Essay on Criticism, 1711",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "newton-shoulders-giants",
-    "by": "newton",
-    "q": "IF I HAVE SEEN FURTHER, IT IS BY STANDING ON THE SHOULDERS OF GIANTS",
-    "y": 1675,
-    "via": "letter to Robert Hooke, 1675",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "descartes-i-think",
-    "by": "descartes",
-    "q": "I THINK, THEREFORE I AM",
-    "y": 1637,
-    "via": "Discourse on the Method, 1637",
     "provenance": "reviewed 2026-11-01"
   },
   {
@@ -1123,14 +979,6 @@
     "q": "I WILL SEIZE FATE BY THE THROAT",
     "y": 1801,
     "via": "letter to Franz Wegeler, 1801",
-    "provenance": "reviewed 2026-11-01"
-  },
-  {
-    "id": "shakespeare-cowards-die",
-    "by": "shakespeare",
-    "q": "COWARDS DIE MANY TIMES BEFORE THEIR DEATHS; THE VALIANT NEVER TASTE OF DEATH BUT ONCE",
-    "y": 1599,
-    "via": "Julius Caesar, 1599",
     "provenance": "reviewed 2026-11-01"
   },
   {
@@ -1155,6 +1003,158 @@
     "q": "THE GREATEST THING IN THE WORLD IS TO KNOW HOW TO BELONG TO ONESELF",
     "y": 1580,
     "via": "Essays, 1580",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "austen-disposition",
+    "by": "austen",
+    "q": "IT IS NOT TIME OR OPPORTUNITY THAT IS TO DETERMINE INTIMACY; IT IS DISPOSITION ALONE",
+    "y": 1811,
+    "via": "Sense and Sensibility, 1811",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "twain-humor-sorrow",
+    "by": "twain",
+    "q": "THE SECRET SOURCE OF HUMOR ITSELF IS NOT JOY BUT SORROW",
+    "y": 1897,
+    "via": "Following the Equator, 1897",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "vangogh-courage",
+    "by": "van-gogh",
+    "q": "WHAT WOULD LIFE BE IF WE HAD NO COURAGE TO ATTEMPT ANYTHING?",
+    "y": 1878,
+    "via": "a letter to Theo, about 1878",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "marcus-aurelius-be-one",
+    "by": "marcus-aurelius",
+    "q": "WASTE NO MORE TIME ARGUING WHAT A GOOD MAN SHOULD BE. BE ONE.",
+    "y": 175,
+    "via": "Meditations, in the classic translation",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "dickinson-possibility",
+    "by": "dickinson",
+    "q": "I DWELL IN POSSIBILITY",
+    "y": 1863,
+    "via": "poem, written about 1863, published 1929",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "wordsworth-splendor",
+    "by": "wordsworth",
+    "q": "NOTHING CAN BRING BACK THE HOUR OF SPLENDOR IN THE GRASS, OF GLORY IN THE FLOWER",
+    "y": 1804,
+    "via": "Ode: Intimations of Immortality, written 1804",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "coleridge-prayeth",
+    "by": "coleridge",
+    "q": "HE PRAYETH BEST, WHO LOVETH BEST ALL THINGS BOTH GREAT AND SMALL",
+    "y": 1798,
+    "via": "The Rime of the Ancient Mariner, 1798",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "keats-beauty-truth",
+    "by": "keats",
+    "q": "BEAUTY IS TRUTH, TRUTH BEAUTY",
+    "y": 1819,
+    "via": "Ode on a Grecian Urn, 1819",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "byron-roll-on",
+    "by": "byron",
+    "q": "ROLL ON, THOU DEEP AND DARK BLUE OCEAN, ROLL",
+    "y": 1818,
+    "via": "Childe Harold’s Pilgrimage, 1818",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "shelley-winter-spring",
+    "by": "shelley",
+    "q": "IF WINTER COMES, CAN SPRING BE FAR BEHIND?",
+    "y": 1820,
+    "via": "Ode to the West Wind, published 1820",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "thoreau-advance",
+    "by": "thoreau",
+    "q": "IF ONE ADVANCES CONFIDENTLY IN THE DIRECTION OF HIS DREAMS, AND ENDEAVORS TO LIVE THE LIFE WHICH HE HAS IMAGINED, HE WILL MEET WITH A SUCCESS UNEXPECTED IN COMMON HOURS",
+    "y": 1854,
+    "via": "Walden, 1854",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "carlyle-biography",
+    "by": "carlyle",
+    "q": "THE HISTORY OF THE WORLD IS BUT THE BIOGRAPHY OF GREAT MEN",
+    "y": 1840,
+    "via": "On Heroes and Hero-Worship, 1840",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "wilde-lifelong-romance",
+    "by": "wilde",
+    "q": "TO LOVE ONESELF IS THE BEGINNING OF A LIFELONG ROMANCE",
+    "y": 1895,
+    "via": "An Ideal Husband, 1895",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "hemingway-broken-places",
+    "by": "hemingway",
+    "q": "THE WORLD BREAKS EVERY ONE, AND AFTERWARD MANY ARE STRONG AT THE BROKEN PLACES",
+    "y": 1929,
+    "via": "A Farewell to Arms, 1929",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "frost-nothing-gold",
+    "by": "frost",
+    "q": "NOTHING GOLD CAN STAY",
+    "y": 1923,
+    "via": "Nothing Gold Can Stay, 1923",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "thomas-more-gods-first",
+    "by": "thomas-more",
+    "q": "I DIE THE KING’S GOOD SERVANT, BUT GOD’S FIRST",
+    "y": 1535,
+    "via": "his reported last words, 1535",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "swift-vision-invisible",
+    "by": "swift",
+    "q": "VISION IS THE ART OF SEEING THINGS INVISIBLE",
+    "y": 1711,
+    "via": "Thoughts on Various Subjects, 1711",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "nietzsche-music-mistake",
+    "by": "nietzsche",
+    "q": "WITHOUT MUSIC, LIFE WOULD BE A MISTAKE",
+    "y": 1889,
+    "via": "Twilight of the Idols, 1889",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "orwell-big-brother",
+    "by": "orwell",
+    "q": "BIG BROTHER IS WATCHING YOU",
+    "y": 1949,
+    "via": "Nineteen Eighty-Four, 1949",
     "provenance": "reviewed 2026-11-01"
   }
 ]

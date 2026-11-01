@@ -16,7 +16,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /bogus/ | Bogus! | A history passage where one phrase is a lie: spot it in 3 picks |
 | /well-actually/ | Well, Actually... | A statement with one wrong phrase: find it, then type the correction for a bonus point |
 | /recycle-rings/ | Recycle: Rings | Four letter wheels, one target word, one exact par; every move counts |
-| /recycle-grid/ | Recycle: Grid | Three modes, three budgets; nudge rows then columns, bank the best board |
+| /recycle-grid/ | Recycle: Grid | Three modes, three budgets; shift rows or columns in any order, bank the best board |
 | /fermi/ | Fermi | One estimation question per day, one guess, scored by closeness |
 | /sift/ | Sift | Twelve tiles, four hidden groups of three, four mistakes allowed |
 | /rounds/ | Rounds | Slide toward the year of a hidden event in six guesses |
@@ -29,6 +29,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
 | /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |
 | /superlative/ | Superlative | Four lives from the record; pick the one 
+
 the question asks for, one guess, then assign the bonus match |
 
 Each game is one self-contained index.html. The parts every game shares
@@ -66,7 +67,8 @@ container, read from the committed per-game stores
 - sprint, trace, recycle-grid and recycle-rings stay client-generated on
   purpose: their banks are generators the game needs during play, not
   answer keys
-- `node tools/build-knowledge.mjs` verifies the knowledge layer com
+- `node tools/build-knowledge.mjs` verifies the knowledge layer co
+m
 piles
   to the committed stores, and `node tools/export-puzzles.mjs` verifies
   every store against its client bank; to change a history game's
@@ -105,7 +107,8 @@ The scoring model, on purpose:
   this is what a normal morning looks like; nothing from the archive can
   ever churn today's numbers
 - the live day is held in memory only, as consolidated numbers per
-  (
+ 
+ (
 game, day): count, sum, sum of squares, min, max, and a small fixed
   histogram. No per-player records, no names, no text
 - client ids are hashed to 8 bytes and kept only in a transient dedupe set:
@@ -142,7 +145,8 @@ checkout, no cloning, no tokens; the images are public packages and stay
 pullable even after the repo goes private.
 
     docker compose up -d
-    docker compose ps                 # web
+    docker compose ps                 # 
+web
  + scores should be Up
 
 Then point your edge proxy (Traefik, nginx, Caddy) at the web port
@@ -187,7 +191,8 @@ set TAG=v1.0.0 in .env first. Every update is a whole-image swap, so a
 failed release simply never arrives.
 
 Non-Docker alternative: `scores/warmup-scores.service` runs the service
-under systemd with DynamicUser and a hardened sandbox. Give it one
+under systemd with Dyn
+amicUser and a hardened sandbox. Give it one
 writable directory for the archive (ReadWritePaths=) and pass
 `--archive-dir` in ExecStart.
 
@@ -233,6 +238,7 @@ all dependency-free (Node 20+ and Python 3):
 2. `node checks/games.js` compiles every game script, checks shell wiring,
    element ids, landing links and server-gating wiring
 3. `node tests/run.js` boots each game headless in a stubbed DOM, plays it
+
    to a win/loss, verifies the value posted to the curve, rolls the clock
    forward to prove streaks survive, then re-boots every bank game with the
    bank stripped 
@@ -251,7 +257,7 @@ seconds; only the bundle builds stay CI-side.
 Sprint is the only game on the clock: it starts on your first move and
 never restarts. Rings and Grid traded the clock for a budget of moves:
 Rings counts every spin and swap against an exact par, Grid banks a board
-after two phases of shifts (Practice generates fresh boards and records
+after one shared budget of shifts, any row or column, any order (Practice generates fresh boards and records
 nothing; Normal is the daily game; Hard replays the daily board with one
 more shift, online-only, on its own bonus curve). Pressure comes from
 scarcity of moves, not time.
@@ -275,7 +281,8 @@ scarcity of moves, not time.
 
     make build    # -> dist/offline (banks intact) + dist/online (banks stripped)
 
-`dist/offline` is the whole site and nothing else, with every inline bank
+`dist/offline` is the whole site and nothing else, wi
+th every inline bank
 intact. Open it over `file://` (or copy it to an air-gapped machine) and
 everything works: daily puzzle, state, streaks. Games run in solo mode:
 no

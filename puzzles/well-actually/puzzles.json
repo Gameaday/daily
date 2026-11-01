@@ -1662,5 +1662,919 @@
       "is Jupiter."
     ],
     "w": "It is Saturn. Jupiter has rings too, but they are thin, dark and almost invisible; Saturn’s are broad sheets of ice visible through small telescopes."
+  },
+  {
+    "t": "Math · The Number Zero",
+    "l": 1,
+    "c": "India",
+    "a": [
+      "India",
+      "Indian mathematicians"
+    ],
+    "s": [
+      "The number zero, written as a digit and used as a number you can calculate with,",
+      "was invented in",
+      "ancient Greece,",
+      "and reached Europe through Arabic translations of Greek texts."
+    ],
+    "w": "It’s India. Brahmagupta laid down the rules for calculating with zero in 628 CE, and Greek mathematics ran for centuries without any such symbol; the zero Europe adopted arrived in Arabic translations of Indian work."
+  },
+  {
+    "t": "Medicine · The First Vaccine",
+    "l": 2,
+    "c": "Edward Jenner",
+    "a": [
+      "Edward Jenner",
+      "Jenner",
+      "Dr. Edward Jenner"
+    ],
+    "s": [
+      "The first vaccine, the one for smallpox, was created in 1796",
+      "when",
+      "Louis Pasteur",
+      "took matter from a cowpox sore and scratched it into a boy’s arm."
+    ],
+    "w": "It was Edward Jenner, who inoculated eight-year-old James Phipps with cowpox and proved the boy immune to smallpox. Pasteur, born the year before Jenner died, later named the whole art vaccination in the country doctor’s honor."
+  },
+  {
+    "t": "Tech · The First Programmable Computer",
+    "l": 2,
+    "c": "Konrad Zuse",
+    "a": [
+      "Konrad Zuse",
+      "Zuse",
+      "Konrad Zuse the German engineer"
+    ],
+    "s": [
+      "The first working programmable computer ran in 1941,",
+      "built by",
+      "Alan Turing,",
+      "who used it at Bletchley Park to break German naval codes."
+    ],
+    "w": "It was Konrad Zuse, whose electromechanical Z3 ran programs in a Berlin apartment while the war went on around it. Turing’s codebreaking ran on electromechanical bombes, not stored-program computers, and the ENIAC, the machine usually named first, followed in 1945."
+  },
+  {
+    "t": "Space · The Moons of Jupiter",
+    "l": 1,
+    "c": "Galileo Galilei",
+    "a": [
+      "Galileo Galilei",
+      "Galileo"
+    ],
+    "s": [
+      "The four large moons of Jupiter were discovered by",
+      "Johannes Kepler,",
+      "with the telescope he built in 1610,",
+      "and named for the Medici family of Florence."
+    ],
+    "w": "It was Galileo Galilei, who turned an improved telescope on Jupiter in January 1610 and found four wandering stars. Kepler was a theorist who barely observed, and the moons were named for the Medici precisely because Galileo was courting a patron."
+  },
+  {
+    "t": "Literature · The Divine Comedy",
+    "l": 1,
+    "c": "Dante Alighieri",
+    "a": [
+      "Dante Alighieri",
+      "Dante"
+    ],
+    "s": [
+      "The Divine Comedy, the tour of Hell, Purgatory and Paradise, was written by",
+      "Giovanni Boccaccio,",
+      "in the Italian vernacular,",
+      "and finished in 1321, the year of its author’s death."
+    ],
+    "w": "It was Dante Alighieri, who finished the poem in exile from Florence in 1321; Boccaccio was then a child of eight, and grew up to lecture on Dante’s poem rather than write it."
+  },
+  {
+    "t": "Music · The Four Seasons",
+    "l": 1,
+    "c": "Antonio Vivaldi",
+    "a": [
+      "Antonio Vivaldi",
+      "Vivaldi"
+    ],
+    "s": [
+      "The Four Seasons, the violin concertos that paint birdsong and storms, were composed by",
+      "Johann Sebastian Bach,",
+      "and published in Amsterdam in 1725,",
+      "winning a contest among Italian virtuosos."
+    ],
+    "w": "It was Antonio Vivaldi, the Venetian priest, whose Opus 8 came out in Amsterdam in 1725; Bach studied Vivaldi’s concertos to learn the Italian style, and arranged several for harpsichord and organ."
+  },
+  {
+    "t": "Art · The Sistine Chapel",
+    "l": 2,
+    "c": "Michelangelo",
+    "a": [
+      "Michelangelo",
+      "Michelangelo Buonarroti"
+    ],
+    "s": [
+      "The Sistine Chapel ceiling, painted from 1508 to 1512,",
+      "was painted by",
+      "Leonardo da Vinci,",
+      "lying flat on his back on scaffolding of his own design."
+    ],
+    "w": "It was Michelangelo, who painted standing with his head tipped back on scaffolding he helped design, and who called himself a sculptor, not a painter. Leonardo had abandoned his own mural across town years before the first plank went up."
+  },
+  {
+    "t": "Geography · The Deepest Lake",
+    "l": 3,
+    "c": "Lake Baikal",
+    "a": [
+      "Lake Baikal",
+      "Baikal"
+    ],
+    "s": [
+      "The deepest lake on Earth, more than sixteen hundred meters to its floor,",
+      "holding a fifth of the planet’s fresh surface water,",
+      "sits in a rift valley of Siberia,",
+      "and is called Lake Tanganyika."
+    ],
+    "w": "It is Lake Baikal, the Siberian rift lake at 1,642 meters; Tanganyika in Africa is the second deepest, and the longer of the two."
+  },
+  {
+    "t": "History · The Norman Conquest",
+    "l": 3,
+    "c": "1066",
+    "a": [
+      "1066",
+      "ten sixty-six"
+    ],
+    "s": [
+      "The Norman Conquest of England, when Duke William crossed the Channel,",
+      "took the kingdom at Hastings with an arrow to the king’s eye,",
+      "and ended Anglo-Saxon rule,",
+      "in the year 1016."
+    ],
+    "w": "It was 1066, the one date every English schoolchild carries. 1016 belongs to Cnut, whose Danish conquest had come and gone half a century before the Normans landed."
+  },
+  {
+    "t": "Food · The Sandwich",
+    "l": 2,
+    "c": "John Montagu",
+    "a": [
+      "John Montagu",
+      "the Earl of Sandwich",
+      "the fourth Earl of Sandwich"
+    ],
+    "s": [
+      "The sandwich, as the story goes, took its name in the 1760s",
+      "from",
+      "the Duke of Wellington,",
+      "who ordered meat between bread so he could keep gambling without leaving the table."
+    ],
+    "w": "It was John Montagu, the fourth Earl of Sandwich, whose gambling table the story belongs to. Wellington gives his name to the boot and the beef dish, a generation later and a different table entirely."
+  },
+  {
+    "t": "Sports · The First World Cup",
+    "l": 3,
+    "c": "1930",
+    "a": [
+      "1930",
+      "nineteen thirty"
+    ],
+    "s": [
+      "The first World Cup of association football,",
+      "won outright by the host country in its new Centenario stadium,",
+      "with thirteen teams, several of whom crossed the Atlantic on the same steamship,",
+      "took place in 1926."
+    ],
+    "w": "It took place in 1930, in Uruguay, which built the Centenario for the occasion and won it without needing a playoff. 1926 is four years and a world of argument early; FIFA had not even voted to hold the thing yet."
+  },
+  {
+    "t": "Mythology · Thor’s Hammer",
+    "l": 3,
+    "c": "Mjolnir",
+    "a": [
+      "Mjolnir",
+      "Mjölnir",
+      "Mjollnir"
+    ],
+    "s": [
+      "In Norse myth, the thunder god’s hammer,",
+      "forged by dwarven smiths and short one hand’s width of handle,",
+      "returns to the thrower’s grip and levels mountains,",
+      "and its name is Gram."
+    ],
+    "w": "It is Mjolnir, the crusher; Gram is the sword of Sigurd the dragon slayer, a different treasure from a different legend, and the two never share a saga."
+  },
+  {
+    "t": "Math · The Pythagorean Theorem",
+    "l": 3,
+    "c": "the Babylonians",
+    "a": [
+      "the Babylonians",
+      "Babylonians",
+      "Babylonian scribes"
+    ],
+    "s": [
+      "The theorem about the squares on the sides of a right triangle,",
+      "which schoolchildren learn under the name of Pythagoras,",
+      "was in use long before the Greek was born,",
+      "having been discovered by medieval algebraists around the year 1300."
+    ],
+    "w": "It was the Babylonians. The tablet Plimpton 322, written around 1800 BCE, lists whole-number triples fitting the theorem more than a thousand years before Pythagoras; the Greeks supplied the proof, not the discovery."
+  },
+  {
+    "t": "Medicine · Blood Circulation",
+    "l": 0,
+    "c": "William Harvey",
+    "a": [
+      "William Harvey",
+      "Harvey",
+      "Dr. William Harvey"
+    ],
+    "s": [
+      "Galen,",
+      "the physician of the second century,",
+      "proved that blood circulates in a closed loop",
+      "pumped around by the heart."
+    ],
+    "w": "It was William Harvey, whose 1628 treatise measured how much blood the heart moves and argued that it must go round and round. Galen taught that blood was made in the liver and burned up like fuel, and medicine stood by him for fourteen hundred years."
+  },
+  {
+    "t": "Tech · The QWERTY Keyboard",
+    "l": 1,
+    "c": "Christopher Latham Sholes",
+    "a": [
+      "Christopher Latham Sholes",
+      "Sholes",
+      "C. Latham Sholes"
+    ],
+    "s": [
+      "The QWERTY keyboard layout was created by",
+      "Henry Dreyfuss,",
+      "the American industrial designer,",
+      "for the typewriter of the 1870s."
+    ],
+    "w": "It was Christopher Latham Sholes, the Milwaukee newspaperman who invented the typewriter, tuning the layout through the 1870s as the machine evolved. Dreyfuss, born in 1904, redesigned telephones and thermostats; he never touched a keyboard."
+  },
+  {
+    "t": "Space · The Big Bang",
+    "l": 1,
+    "c": "Georges Lemaître",
+    "a": [
+      "Georges Lemaître",
+      "Georges Henri Lemaître",
+      "Lemaître",
+      "Lemaitre"
+    ],
+    "s": [
+      "The expanding-universe theory now called the Big Bang was first proposed by",
+      "Edwin Hubble,",
+      "after measuring the recession of the galaxies",
+      "at Mount Wilson in 1929."
+    ],
+    "w": "It was Georges Lemaître, a Belgian priest and physicist, who derived the expanding universe from Einstein’s equations in 1927 and called its origin the primeval atom. Hubble supplied the measurements that convinced the world, two years after the physics."
+  },
+  {
+    "t": "Literature · Don Quixote",
+    "l": 1,
+    "c": "Miguel de Cervantes",
+    "a": [
+      "Miguel de Cervantes",
+      "Cervantes",
+      "Miguel Cervantes"
+    ],
+    "s": [
+      "Don Quixote, the first great novel of the modern kind, was written by",
+      "Lope de Vega,",
+      "Spain’s phenomenally prolific playwright,",
+      "who began it in a Seville jail in 1597."
+    ],
+    "w": "It was Miguel de Cervantes, who likely conceived the book during a Seville imprisonment and published it in 1605. Lope de Vega, his rival with plays by the hundred, mocked the aging soldier in verse and never wrote the book that invented the modern novel."
+  },
+  {
+    "t": "Music · Aida",
+    "l": 2,
+    "c": "Giuseppe Verdi",
+    "a": [
+      "Giuseppe Verdi",
+      "Verdi"
+    ],
+    "s": [
+      "The opera Aida, set in ancient Egypt, premiered in Cairo in 1871",
+      "and was composed by",
+      "Richard Wagner,",
+      "for the celebrations that opened the Suez Canal."
+    ],
+    "w": "It was Giuseppe Verdi, writing for the khedive’s new opera house in Cairo. The Suez Canal opened in 1869 without an opera, and Wagner never set a note in Egypt; he was in Germany at work on his Ring."
+  },
+  {
+    "t": "Art · The School of Athens",
+    "l": 2,
+    "c": "Raphael",
+    "a": [
+      "Raphael",
+      "Raffaello Sanzio",
+      "Raffaello"
+    ],
+    "s": [
+      "The School of Athens, the fresco that gathers Plato and Aristotle under a great arch,",
+      "was painted by",
+      "Michelangelo,",
+      "in the Pope’s own apartments in the Vatican."
+    ],
+    "w": "It was Raphael, who frescoed the papal rooms between 1509 and 1511 while Michelangelo was vaulting the Sistine Chapel a corridor away. Raphael peeked at the sealed chapel, and slipped the grumbling master into his scene as the sulking Heraclitus."
+  },
+  {
+    "t": "Geography · The Highest Waterfall",
+    "l": 3,
+    "c": "Angel Falls",
+    "a": [
+      "Angel Falls",
+      "Angel Falls in Venezuela",
+      "Salto Ángel"
+    ],
+    "s": [
+      "The highest uninterrupted waterfall on Earth, dropping almost a kilometer from a table mountain,",
+      "named for an American pilot who scouted it from the air in the 1930s,",
+      "lies in the rainforest of Venezuela,",
+      "and is called Niagara Falls."
+    ],
+    "w": "It is Angel Falls, the Salto Ángel, which drops 979 meters from the Auyán Tepui. Niagara is the famous waterfall, but its sheer drop is about fifty meters, and its fame is volume, not height."
+  },
+  {
+    "t": "History · The Hundred Years War",
+    "l": 3,
+    "c": "116 years",
+    "a": [
+      "116 years",
+      "one hundred sixteen years",
+      "a hundred sixteen years"
+    ],
+    "s": [
+      "The Hundred Years War between England and France,",
+      "fought from the sea battle of Sluys to the fall of Bordeaux,",
+      "ran on and off across five generations,",
+      "and lasted exactly one hundred years."
+    ],
+    "w": "It lasted 116 years, from 1337 to 1453. The round number was never a stopwatch; the name was a chronicler’s shorthand that stuck, and the war outlived many of its soldiers."
+  },
+  {
+    "t": "Food · Tea",
+    "l": 3,
+    "c": "China",
+    "a": [
+      "China",
+      "ancient China",
+      "southeastern China"
+    ],
+    "s": [
+      "The tea plant, source of the most drunk beverage on Earth after water,",
+      "first cultivated in the hills where its wild trees still stand,",
+      "carried out along caravan and ocean routes to every country,",
+      "originated in India."
+    ],
+    "w": "It originated in China, in the hill country of Yunnan where wild tea trees still grow. India’s vast plantations are a nineteenth-century British creation, seeded with Chinese plants shipped out in secret, along with Chinese growers to teach the craft."
+  },
+  {
+    "t": "Sports · The Tour de France",
+    "l": 3,
+    "c": "1903",
+    "a": [
+      "1903",
+      "nineteen three",
+      "nineteen oh three"
+    ],
+    "s": [
+      "The Tour de France, the three-week race around the country,",
+      "launched by a struggling sports paper to sell copies,",
+      "and won by Maurice Garin by nearly three hours in its first running,",
+      "began in 1919."
+    ],
+    "w": "It began in 1903, as a circulation stunt for the newspaper L’Auto; 1919 is the year the race first dressed its leader in yellow, after the war had silenced it for five seasons."
+  },
+  {
+    "t": "Math · Calculus",
+    "l": 1,
+    "c": "Gottfried Wilhelm Leibniz",
+    "a": [
+      "Gottfried Wilhelm Leibniz",
+      "Leibniz",
+      "Wilhelm Leibniz"
+    ],
+    "s": [
+      "Calculus was first published by",
+      "Isaac Newton,",
+      "who put it in the Principia of 1687",
+      "and defended his priority against every rival."
+    ],
+    "w": "It was Gottfried Wilhelm Leibniz, whose 1684 paper on differentials reached print three years before the Principia and two decades before Newton let his fluxions see daylight. Newton had the ideas early but kept them to himself; the priority war that followed set English mathematics back a century."
+  },
+  {
+    "t": "Medicine · Handwashing",
+    "l": 1,
+    "c": "Ignaz Semmelweis",
+    "a": [
+      "Ignaz Semmelweis",
+      "Semmelweis",
+      "Dr. Ignaz Semmelweis"
+    ],
+    "s": [
+      "That doctors should wash their hands between patients, with mortality figures to prove it, was first urged by",
+      "Florence Nightingale,",
+      "the reformer of battlefield nursing,",
+      "during the Crimean War of the 1850s."
+    ],
+    "w": "It was Ignaz Semmelweis, at a Vienna hospital in 1847, who showed that washing in chlorinated lime cut the childbed fever that killed new mothers, after noticing that wards run by students straight from autopsies fared worst. Nightingale, campaigning a decade later, made cleanliness a creed, but the data came first from Vienna."
+  },
+  {
+    "t": "Tech · The First Text Message",
+    "l": 3,
+    "c": "1992",
+    "a": [
+      "1992",
+      "nineteen ninety-two"
+    ],
+    "s": [
+      "The first SMS text message, reading simply Merry Christmas,",
+      "was sent from a computer to a telephone",
+      "over a test network in Britain,",
+      "in 1973."
+    ],
+    "w": "It was 1992, when Neil Papworth typed the greeting to an Orbitel phone three days before Christmas. 1973 was the year of the first handheld mobile call, two decades before a phone could carry anything but voice."
+  },
+  {
+    "t": "Space · Halley’s Comet",
+    "l": 2,
+    "c": "Edmond Halley",
+    "a": [
+      "Edmond Halley",
+      "Halley",
+      "Edmund Halley"
+    ],
+    "s": [
+      "Halley’s Comet, which returns to our skies every seventy-six years or so,",
+      "was predicted to return by",
+      "Isaac Newton,",
+      "who spotted the pattern in the records of 1531, 1607 and 1682."
+    ],
+    "w": "It was Edmond Halley, who identified three recorded comets as one visitor and staked his reputation on a 1758 return he did not live to see. Newton supplied the mathematics of orbits; the daring leap of the prediction belongs to his friend."
+  },
+  {
+    "t": "Literature · War and Peace",
+    "l": 2,
+    "c": "Leo Tolstoy",
+    "a": [
+      "Leo Tolstoy",
+      "Tolstoy",
+      "Lev Tolstoy",
+      "Count Tolstoy"
+    ],
+    "s": [
+      "War and Peace, published in installments through the 1860s,",
+      "was written by",
+      "Fyodor Dostoevsky,",
+      "who filled it with the salons of St Petersburg and the battlefields of 1812."
+    ],
+    "w": "It was Leo Tolstoy, who set his epic against Napoleon’s invasion and rewrote it for years; Dostoevsky’s Russia was the Petersburg of schemers and students, the world of Crime and Punishment, which he was writing at the same time."
+  },
+  {
+    "t": "Music · The Magic Flute",
+    "l": 1,
+    "c": "Wolfgang Amadeus Mozart",
+    "a": [
+      "Wolfgang Amadeus Mozart",
+      "Mozart",
+      "W. A. Mozart"
+    ],
+    "s": [
+      "The opera The Magic Flute, with the Queen of the Night’s impossible high notes, was composed by",
+      "Joseph Haydn,",
+      "and premiered in Vienna in 1791,",
+      "weeks before its composer’s death."
+    ],
+    "w": "It was Wolfgang Amadeus Mozart, who conducted the premiere and died that December. Haydn, his older friend, was in London through most of that year, and the opera’s jokes belong to Mozart’s own Masonic lodge in Vienna."
+  },
+  {
+    "t": "Art · Impression, Sunrise",
+    "l": 1,
+    "c": "Claude Monet",
+    "a": [
+      "Claude Monet",
+      "Monet"
+    ],
+    "s": [
+      "Impression, Sunrise, the harbor view that gave Impressionism its name, was painted by",
+      "Édouard Manet,",
+      "and hung in the 1874 Paris exhibition",
+      "where a critic’s sneer named the movement."
+    ],
+    "w": "It was Claude Monet, whose 1872 view of boats at Le Havre hung in that first show; a critic seized on its title to mock a whole exhibition of impressionist painting. Manet, the movement’s forerunner, kept his distance and kept sending works to the official Salon."
+  },
+  {
+    "t": "Geography · The Largest Country",
+    "l": 3,
+    "c": "Russia",
+    "a": [
+      "Russia",
+      "the Russian Federation"
+    ],
+    "s": [
+      "The largest country on Earth, spanning eleven time zones,",
+      "covering more than a tenth of the world’s land,",
+      "stretching from the Baltic to the Bering Strait,",
+      "is Canada."
+    ],
+    "w": "It is Russia, at almost twice Canada’s area. Canada is the second largest, the giant of the Western Hemisphere, and holds the longest coastline on the planet."
+  },
+  {
+    "t": "History · China’s First Emperor",
+    "l": 3,
+    "c": "Qin Shi Huang",
+    "a": [
+      "Qin Shi Huang",
+      "Qin Shihuangdi",
+      "Shi Huangdi",
+      "Ying Zheng"
+    ],
+    "s": [
+      "The first emperor of a unified China,",
+      "who standardized the script, the coinage and the axle widths,",
+      "and was buried beside an army of clay soldiers,",
+      "was Kublai Khan."
+    ],
+    "w": "It was Qin Shi Huang, who unified the warring states by 221 BCE and left his name to the country; Kublai Khan conquered China from Mongolia a millennium and a half later, founding a foreign dynasty on top of an old story."
+  },
+  {
+    "t": "Sports · The First Super Bowl",
+    "l": 3,
+    "c": "1967",
+    "a": [
+      "1967",
+      "nineteen sixty-seven"
+    ],
+    "s": [
+      "The first Super Bowl, then billed as the AFL-NFL World Championship Game,",
+      "between Green Bay and Kansas City,",
+      "televised by two networks at once,",
+      "was played in 1957."
+    ],
+    "w": "It was played in January 1967, when the Packers won in Los Angeles, a decade before the leagues merged. The name came later, borrowed, so the story goes, from a child’s bouncy Super Ball, and it never left."
+  },
+  {
+    "t": "Space · The First Woman in Space",
+    "l": 1,
+    "c": "Valentina Tereshkova",
+    "a": [
+      "Valentina Tereshkova",
+      "Tereshkova"
+    ],
+    "s": [
+      "The first woman to fly in space was",
+      "Sally Ride,",
+      "who orbited the Earth for three days",
+      "aboard Vostok 6 in 1963."
+    ],
+    "w": "It was Valentina Tereshkova, a Soviet factory worker and amateur parachutist, who spent almost three days in orbit in June 1963. Sally Ride flew on the space shuttle in 1983, twenty years later, as the first American woman in space."
+  },
+  {
+    "t": "Literature · The Raven",
+    "l": 1,
+    "c": "Edgar Allan Poe",
+    "a": [
+      "Edgar Allan Poe",
+      "Edgar Allen Poe",
+      "Poe"
+    ],
+    "s": [
+      "The poem The Raven, with its midnight visitor and its one repeated word, was written by",
+      "Henry Wadsworth Longfellow,",
+      "and published in 1845,",
+      "making its author famous across America overnight."
+    ],
+    "w": "It was Edgar Allan Poe, who sold the poem for a few dollars in 1845 and watched it make his name in weeks. Longfellow was the respectable poet of the age, whom Poe accused in print of plagiarism while never matching the raven’s grip."
+  },
+  {
+    "t": "Music · The 1812 Overture",
+    "l": 1,
+    "c": "Pyotr Ilyich Tchaikovsky",
+    "a": [
+      "Pyotr Ilyich Tchaikovsky",
+      "Tchaikovsky",
+      "Peter Tchaikovsky"
+    ],
+    "s": [
+      "The 1812 Overture, with its cannon fire and ringing bells, was composed by",
+      "Dmitri Shostakovich,",
+      "for the commemoration of Napoleon’s retreat,",
+      "in the middle of the Second World War."
+    ],
+    "w": "It was Pyotr Ilyich Tchaikovsky, who wrote it in 1880 for the consecration of a Moscow cathedral and privately called the piece loud and noisy without much artistic merit. Shostakovich was born in 1906, a dozen years after Tchaikovsky died."
+  },
+  {
+    "t": "Art · The Birth of Venus",
+    "l": 1,
+    "c": "Sandro Botticelli",
+    "a": [
+      "Sandro Botticelli",
+      "Botticelli",
+      "Alessandro Filipepi"
+    ],
+    "s": [
+      "The Birth of Venus, the goddess standing on a shell in the sea wind, was painted by",
+      "Titian,",
+      "for the Medici circle in Florence,",
+      "in the early 1480s."
+    ],
+    "w": "It was Sandro Botticelli, painting for the Medici’s circle around 1485; Titian was not yet born, and his Venuses belong to Venice a lifetime later, fuller figures in richer color."
+  },
+  {
+    "t": "Geography · The Most Populous Country",
+    "l": 3,
+    "c": "India",
+    "a": [
+      "India",
+      "the Republic of India"
+    ],
+    "s": [
+      "The most populous country on Earth,",
+      "past one point four billion people,",
+      "counted past its great rival by United Nations estimates in 2023,",
+      "is China."
+    ],
+    "w": "It is India, which passed China in 2023 by the UN count, ending China’s long run at the top. India’s population is still climbing while China’s has begun to shrink, so the gap only grows."
+  },
+  {
+    "t": "History · The Fall of Constantinople",
+    "l": 3,
+    "c": "1453",
+    "a": [
+      "1453",
+      "fourteen fifty-three"
+    ],
+    "s": [
+      "The fall of Constantinople to the Ottoman siege,",
+      "when a great cannon opened the Theodosian walls,",
+      "ended the Byzantine Empire after eleven centuries,",
+      "in the year 1492."
+    ],
+    "w": "It was 1453. 1492 is the year of Columbus and Granada; by then Constantinople had been Ottoman for a generation, and its Greek scholars had long carried their books west into Italy."
+  },
+  {
+    "t": "Tech · Linux",
+    "l": 2,
+    "c": "Linus Torvalds",
+    "a": [
+      "Linus Torvalds",
+      "Torvalds"
+    ],
+    "s": [
+      "The Linux kernel was released in 1991",
+      "by",
+      "Richard Stallman,",
+      "who announced it as a hobby project from a student’s room."
+    ],
+    "w": "It was Linus Torvalds, a Finnish student whose hobby announcement became the kernel at the heart of nearly everything. Stallman launched GNU, whose tools and licence Linux adopted, and he has policed the distinction ever since."
+  },
+  {
+    "t": "Space · Measuring Light",
+    "l": 1,
+    "c": "Ole Rømer",
+    "a": [
+      "Ole Rømer",
+      "Ole Roemer",
+      "Rømer",
+      "Romer"
+    ],
+    "s": [
+      "The speed of light was first measured, using the moons of Jupiter, by",
+      "Galileo Galilei,",
+      "who clocked it with lantern signals",
+      "between hills outside Florence."
+    ],
+    "w": "It was Ole Rømer, a Danish astronomer who noticed in 1676 that Jupiter’s moon Io ran late as Earth moved farther away, and turned the lag into a speed. Galileo did try lanterns on hills and honestly concluded light was too fast to catch."
+  },
+  {
+    "t": "Literature · The Odyssey",
+    "l": 0,
+    "c": "Homer",
+    "a": [
+      "Homer",
+      "Homer the bard"
+    ],
+    "s": [
+      "Virgil,",
+      "the blind bard of the Greek islands, is credited with the Odyssey,",
+      "the long journey home from Troy,",
+      "which singers carried for centuries before it was written down."
+    ],
+    "w": "It is Homer, the Greek bard of the tradition; Virgil was a Roman poet, born seven centuries later, who deliberately answered the Greek epics with his Aeneid."
+  },
+  {
+    "t": "Music · The Entertainer",
+    "l": 1,
+    "c": "Scott Joplin",
+    "a": [
+      "Scott Joplin",
+      "Joplin"
+    ],
+    "s": [
+      "The ragtime piano piece The Entertainer was written by",
+      "Duke Ellington,",
+      "and published in 1902,",
+      "long before it resurfaced in the saloons of New Orleans."
+    ],
+    "w": "It was Scott Joplin, the king of ragtime, who published it in 1902; Ellington was a toddler of three that year. The piece resurfaced not in New Orleans but on movie screens of the 1970s, when its sheet music again outsold nearly everything."
+  },
+  {
+    "t": "Art · The Starry Night",
+    "l": 1,
+    "c": "Vincent van Gogh",
+    "a": [
+      "Vincent van Gogh",
+      "Van Gogh",
+      "van Gogh"
+    ],
+    "s": [
+      "The Starry Night, the swirling sky over a sleeping town, was painted by",
+      "Paul Gauguin,",
+      "from a window at the asylum at Saint-Rémy,",
+      "in 1889, a year before the painter’s death."
+    ],
+    "w": "It was Vincent van Gogh, who painted the view, partly from memory, at Saint-Rémy in June 1889. Gauguin had stayed with him in Arles the winter before, the visit that ended in van Gogh’s breakdown, but by that June he was painting in Brittany."
+  },
+  {
+    "t": "Geography · The Source of the Nile",
+    "l": 3,
+    "c": "Lake Victoria",
+    "a": [
+      "Lake Victoria",
+      "Victoria",
+      "the Victoria Nyanza"
+    ],
+    "s": [
+      "The White Nile, the longest branch of the longest river on Earth,",
+      "traced at last by European expeditions in the nineteenth century,",
+      "is counted as beginning at",
+      "Lake Chad."
+    ],
+    "w": "It is Lake Victoria, the outflow at Jinja in Uganda, honored since the expeditions of the 1860s. Hydrologists still argue for more distant springs in Burundi and Rwanda that feed the lake itself, but the classic answer stands on the maps."
+  },
+  {
+    "t": "History · The French Revolution",
+    "l": 3,
+    "c": "1789",
+    "a": [
+      "1789",
+      "seventeen eighty-nine"
+    ],
+    "s": [
+      "The French Revolution, the storming of the Bastille and the fall of the old order,",
+      "sparked by bread riots and a bankrupt treasury,",
+      "toppled the monarchy and shook every throne in Europe,",
+      "and began in the year 1804."
+    ],
+    "w": "It began in 1789, with the Bastille falling on the fourteenth of July. 1804 is the year Napoleon crowned himself emperor, which is what the revolution ended up producing at the far end of its story."
+  },
+  {
+    "t": "Tech · The Transistor",
+    "l": 3,
+    "c": "1947",
+    "a": [
+      "1947",
+      "nineteen forty-seven"
+    ],
+    "s": [
+      "The transistor, the switch at the heart of every chip,",
+      "was demonstrated at Bell Laboratories in New Jersey,",
+      "by Bardeen, Brattain and Shockley,",
+      "in 1937."
+    ],
+    "w": "It was 1947, in the week before Christmas, that the first point-contact transistor amplified a signal. 1937 belongs to earlier patents that never built a working device; the integrated circuit, which wired transistors together, came a decade later."
+  },
+  {
+    "t": "Space · The Planet Past Neptune",
+    "l": 1,
+    "c": "Clyde Tombaugh",
+    "a": [
+      "Clyde Tombaugh",
+      "Tombaugh"
+    ],
+    "s": [
+      "The world now called Pluto, once counted as the ninth planet, was discovered by",
+      "Percival Lowell,",
+      "who spent his last years",
+      "scanning photographic plates under Arizona skies."
+    ],
+    "w": "It was Clyde Tombaugh, a Kansas farm boy hired for the plate work, who found Pluto in 1930, fourteen years after Lowell died. Lowell had predicted a planet several times heavier than Earth; the found object was far too small to be his Planet X, a coincidence later generations proved."
+  },
+  {
+    "t": "Literature · Paradise Lost",
+    "l": 0,
+    "c": "John Milton",
+    "a": [
+      "John Milton",
+      "Milton"
+    ],
+    "s": [
+      "William Shakespeare",
+      "wrote Paradise Lost, the epic of Adam and Eve’s fall,",
+      "dictating it after losing his sight,",
+      "and published it in 1667."
+    ],
+    "w": "It was John Milton, who composed the poem largely in his head and dictated it to helpers, publishing in 1667 half a century after Shakespeare died in 1616."
+  },
+  {
+    "t": "Music · West Side Story",
+    "l": 1,
+    "c": "Leonard Bernstein",
+    "a": [
+      "Leonard Bernstein",
+      "Bernstein",
+      "Lenny Bernstein"
+    ],
+    "s": [
+      "The musical West Side Story, Romeo and Juliet set in New York, was written by",
+      "Cole Porter,",
+      "with dances by Jerome Robbins,",
+      "and premiered on Broadway in 1957."
+    ],
+    "w": "It was Leonard Bernstein, who wrote the 1957 score, with the young Stephen Sondheim supplying the lyrics in his Broadway debut. Porter’s golden era was the 1930s, and he had written little for years when it opened."
+  },
+  {
+    "t": "Literature · Les Misérables",
+    "l": 1,
+    "c": "Victor Hugo",
+    "a": [
+      "Victor Hugo",
+      "Hugo"
+    ],
+    "s": [
+      "Les Misérables was written by",
+      "Émile Zola,",
+      "the French novelist of the slums,",
+      "and published from exile on Guernsey in 1862."
+    ],
+    "w": "It was Victor Hugo, who wrote it on Guernsey, where he had fled the regime of Napoleon the Third. Zola was twenty-two when it appeared, still writing reviews; the novels it gets confused with came a decade later."
+  },
+  {
+    "t": "Geography · The Oldest Republic",
+    "l": 3,
+    "c": "San Marino",
+    "a": [
+      "San Marino",
+      "the Republic of San Marino"
+    ],
+    "s": [
+      "The oldest republic still standing in the world,",
+      "founded, by its own tradition, by a stonecutter fleeing persecution in Rome,",
+      "governed by statutes dating to the year 1600,",
+      "is the United States of America."
+    ],
+    "w": "It is San Marino, the mountain republic whose founding tradition reaches to 301 CE and whose statutes of 1600 read like a constitution. The American republic is a mere quarter of a millennium old, though it does hold the oldest single written constitution still in force."
+  },
+  {
+    "t": "History · The Oldest University",
+    "l": 3,
+    "c": "Bologna",
+    "a": [
+      "Bologna",
+      "the University of Bologna",
+      "Bologna in Italy"
+    ],
+    "s": [
+      "The oldest university in continuous operation,",
+      "teaching law to students who elected their own professors,",
+      "with a founding tradition of 1088,",
+      "stands in Paris."
+    ],
+    "w": "It is Bologna, the Italian studium where the students formed the guild and hired their masters; Paris and Oxford are of comparable antiquity, but Bologna kept the records that made the university a self-governing thing."
+  },
+  {
+    "t": "Tech · The Computer Mouse",
+    "l": 1,
+    "c": "Douglas Engelbart",
+    "a": [
+      "Douglas Engelbart",
+      "Engelbart",
+      "Doug Engelbart"
+    ],
+    "s": [
+      "The computer mouse was invented and demonstrated by",
+      "Steve Wozniak,",
+      "who built the first one",
+      "in the garage where Apple began."
+    ],
+    "w": "It was Douglas Engelbart, who showed the mouse in his 1968 demonstration of windows, links and screensharing, an hour of the future in one sitting. Wozniak’s garage belongs to Apple, founded in 1976; the mouse Engelbart’s team carved had existed since 1964."
+  },
+  {
+    "t": "Literature · The First Novel",
+    "l": 0,
+    "c": "Murasaki Shikibu",
+    "a": [
+      "Murasaki Shikibu",
+      "Murasaki",
+      "Lady Murasaki"
+    ],
+    "s": [
+      "A Chinese court official",
+      "wrote the Tale of Genji, often called the world’s first novel,",
+      "around the year 1000,",
+      "in classical Chinese for the emperor’s reading."
+    ],
+    "w": "It was Murasaki Shikibu, a Japanese court lady writing in her own vernacular around 1008, whose long story of a shining prince stands alone for centuries before anything like it in Europe."
   }
 ]

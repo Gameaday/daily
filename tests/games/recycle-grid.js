@@ -7,7 +7,7 @@ const { T0, T1, T10 } = require('./_lib');
 async function run(h){
     const EXP = ['S', 'PUZZLE', 'MODES', 'bestPossible', 'doShift', 'undo', 'restart',
       'lockRows', 'setMode', 'applyRows', 'applyCols', 'VEC_BY_COST', 'shareText', 'findWords',
-      'getPuzzle', 'getPractice', 'getBudget', 'getMode', 'curBest', 'rotRow', 'rotCol'];
+      'getPuzzle', 'getPractice', 'getBudget', 'getMode', 'curBest', 'rotRow', 'rotCol', 'revertBest'];
     const store = {};
     let r = h.boot('recycle-grid', EXP, { now: T0, store });
     h.eq(r.x.MODES.practice, 4, 'grid: practice = 4 shifts');
@@ -45,6 +45,16 @@ async function run(h){
 
     /* the ceiling: best possible hides while a counted game is live */
     h.eq(r.env.els.bestwrap.style.display, 'none', 'grid: the ceiling hides while the daily game is live');
+
+    /* the auto-stash: the best board is never more than one click away */
+    const peak = r.x.S.bestSnap.words;
+    r.x.doShift('row', 4, 1);
+    h.ok(r.x.S.bestSnap.words >= peak, 'grid: the stash never goes down');
+    r.x.revertBest();
+    h.eq(r.x.S.letters.join(''), r.x.S.bestSnap.letters.join(''), 'grid: revert lands on the stashed board');
+    h.eq(r.x.S.moves.length, r.x.S.bestSnap.moves.length, 'grid: revert restores the move list');
+    h.eq(r.x.S.used, r.x.S.moves.length, 'grid: used follows the restored moves');
+    r.x.restart();
 
     /* phase + budget guards */
     r.x.doShift('col', 0, 1);
@@ -138,6 +148,7 @@ async function run(h){
     h.eq(rm.x.S.letters.join(''), PR.start.join(''), 'grid: practice plays the practice board');
     h.eq(rm.env.els.bestwrap.style.display, '', 'grid: practice shows the ceiling live');
     h.eq(String(rm.env.els.best.textContent), String(PR.best), 'grid: the ceiling tracks the practice board');
+    h.ok(rm.x.S.bestSnap && rm.x.S.bestSnap.letters.join('') === PR.start.join(''), 'grid: the stash resets with the practice board');
     for (let k = 0; k < 4; k++) rm.x.doShift('row', k % 5, 1);
     h.eq(rm.x.S.used, 4, 'grid: practice budget spent');
     rm.x.doShift('row', 0, 1);

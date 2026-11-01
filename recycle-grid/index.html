@@ -91,6 +91,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
   <div class="scoreline">
     <span class="bignum"><span id="count">0</span> <span class="u">words on board</span></span>
+    <span class="midnum"><span id="seen">–</span><span class="u">best seen</span></span>
     <span class="bignum"><span id="shifts">0</span><span class="u" id="shiftcap">of 5 shifts</span></span>
     <span class="midnum" id="bestwrap"><span id="best">–</span><span class="u">best possible</span></span>
   </div>
@@ -104,6 +105,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <button class="btn ghost" id="btnLock">Lock rows →</button>
     <button class="btn ghost" id="btnUndo">↩ Undo</button>
     <button class="btn ghost" id="btnRestart">↻ Restart</button>
+    <button class="btn ghost" id="btnBest">Return to best</button>
   </div>
 
   <div class="reveal" id="reveal">
@@ -129,6 +131,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p><b>Both directions are yours, in two phases:</b> first you shift <b>rows</b> only; the column arrows sit dashed until you press <b>Lock rows</b> (free), which unlocks the <b>columns</b> for good. Tap a dashed arrow any time and it tells you what it is waiting for.</p>
     <p><b>Undo</b> takes back your last shift and refunds its cost. <b>Restart</b> returns the board to its start with the budget untouched. Both are free — explore!</p>
     <p><b>Best possible is exact:</b> before you play, the page has already tried every shift plan within your budget, so the number is a fact. It stays hidden while a counted game is live (practice shows it as the target), and it appears with your result when you bank. Match it for a <b>perfect</b> bank.</p>
+    <p><b>Your best board is stashed:</b> keep exploring past a good board, and <b>Return to best</b> jumps straight back to the most words you have seen. Undo already refunds the budget; the stash just saves you the walk.</p>
     <p><b>Bank It</b> locks in the words currently on the board. In Normal the first bank of the day counts; Hard banks its own bonus curve; Practice records nothing.</p>
     <p>Same letters for everyone in Normal and Hard, so compare banks at standup.</p>
     <button class="close" data-close>Got it</button>
@@ -357,7 +360,7 @@ if (!S || S.day !== dayIndex || !PUZZLE){
   S = { day: dayIndex, mode: DEFAULT_MODE,
         letters: PUZZLE.start.slice(), start: PUZZLE.start.slice(),
         used:0, phase:'rows', moves:[], banked:false, counted:false, hardCounted:false,
-        normalWords:0, hardWords:0, bestHard:null, practice:null, stats };
+        normalWords:0, hardWords:0, bestSnap:null, practice:null, stats };
 }
 if (!S.start) S.start = PUZZLE.start.slice();
 if (typeof S.stats.totalWords !== 'number'){ S.stats.totalWords = 0; }
@@ -366,6 +369,7 @@ if (typeof S.stats.perfect !== 'number'){ S.stats.perfect = 0; }
 /* coming back to a hard-mode session: the heavy best-possible for six is
    cached in state after the first time it is computed */
 if (S.mode === 'hard' && typeof S.bestHard !== 'number'){ S.bestHard = bestPossible(PUZZLE.start, MODES.hard); }
+if (!S.bestSnap) noteBest(findWords(S.letters).length);
 saveState();
 
 function getPuzzle(){ return PUZZLE; }
@@ -377,6 +381,24 @@ function curBest(){
   if (S.mode === 'practice') return (S.practice && typeof S.practice.best === 'number') ? S.practice.best : 0;
   if (S.mode === 'hard') return (typeof S.bestHard === 'number') ? S.bestHard : PUZZLE.best;
   return PUZZLE.best;
+}
+/* auto-stash: the best board seen on the current board, so wandering
+   past a peak is never a one-way trip. every state change records it;
+   undo already refunds the budget, so this is just a mass undo that
+   saves the walk back */
+function noteBest(words){
+  if (!S.bestSnap || words >= S.bestSnap.words){
+    S.bestSnap = { letters: S.letters.slice(), moves: S.moves.slice(), phase: S.phase, words };
+  }
+}
+function revertBest(){
+  if (!S.bestSnap || S.banked) return;
+  S.letters = S.bestSnap.letters.slice();
+  S.moves = S.bestSnap.moves.slice();
+  S.phase = S.bestSnap.phase;
+  S.used = S.moves.length;
+  saveState(); renderAll();
+  SHELL.toast('back to your best board \u00b7 ' + S.bestSnap.words + ' words');
 }
 
 /* ---------------- dom ---------------- */
@@ -440,6 +462,10 @@ function renderMeta(){
   $('grid').style.pointerEvents = S.banked ? 'none' : '';
   $('grid').style.opacity = S.banked ? '.55' : '';
   $('playrow').style.display = S.banked ? 'none' : '';
+  /* the auto-stash readouts: what you peaked at, and the way back */
+  $('seen').textContent = (S.bestSnap && typeof S.bestSnap.words === 'number') ? S.bestSnap.words : '–';
+  $('btnBest').disabled = S.banked || !S.bestSnap || S.bestSnap.letters.join('') === S.letters.join('');
+  $('btnBest').textContent = 'Return to best' + (S.bestSnap ? ' (' + S.bestSnap.words + ')' : '');
 }
 
 function renderModes(){
@@ -460,6 +486,7 @@ function doShift(axis, i, d){
   if (axis === 'row') rotRow(S.letters, i, d); else rotCol(S.letters, i, d);
   S.used++;
   S.moves.push({ axis, i, d });
+  noteBest(findWords(S.letters).length);
   saveState();
   renderAll();
 }
@@ -469,6 +496,7 @@ function undo(){
   const m = S.moves.pop();
   if (m.axis === 'row') rotRow(S.letters, m.i, -m.d); else rotCol(S.letters, m.i, -m.d);
   S.used--;
+  noteBest(findWords(S.letters).length);
   saveState();
   renderAll();
 }
@@ -478,6 +506,7 @@ function restart(){
   S.letters = S.start.slice();
   S.used = 0;
   S.moves = [];
+  noteBest(findWords(S.letters).length);
   saveState();
   renderAll();
   SHELL.toast('Board reset \u2014 the budget is untouched');
@@ -486,6 +515,7 @@ function restart(){
 function lockRows(){
   if (S.banked || S.phase !== 'rows') return;
   S.phase = 'cols';
+  noteBest(findWords(S.letters).length);
   saveState();
   renderAll();
   SHELL.toast('Rows locked \u2014 columns unlocked');
@@ -521,6 +551,8 @@ function setMode(m){
   S.used = 0;
   S.phase = 'rows';
   S.moves = [];
+  S.bestSnap = null;
+  noteBest(findWords(pz.start).length);
   const done = (m === 'normal' && S.counted) || (m === 'hard' && S.hardCounted);
   S.banked = done;
   saveState();
@@ -544,6 +576,7 @@ $('modes').addEventListener('click', e => {
 
 $('btnUndo').addEventListener('click', undo);
 $('btnRestart').addEventListener('click', restart);
+$('btnBest').addEventListener('click', revertBest);
 $('btnLock').addEventListener('click', lockRows);
 
 $('btnBank').addEventListener('click', () => {

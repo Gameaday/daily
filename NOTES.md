@@ -471,3 +471,19 @@ twelve people-derived boards and repeats from late February; lifting it
 means growing the people layer, which deliberately waits. The recipe
 banks append in file order as before, day pins hold, and the stores and
 banks were mirrored by hand and compiler-verified.
+
+## Depth pass, November 2026
+
+This pass grew the daily banks to one hundred fifty entries each so the
+rotation stays fresh well past the end of March 2027. The schedule counts
+from November 2, 2026 as day zero, so a bank of one hundred fifty first
+repeats on or about April 1, 2027. Every bank now meets that bar except
+superlative, which stays hard capped at one hundred twelve as a pure
+function of people.json; its questions will begin repeating around
+February 22, 2027 until the people layer grows.
+
+The additions lean on the knowledge layers: forty nine new sift boards,
+thirty fermi facts, twenty nine cipher quotes, and fifty museum artifacts
+across two pushes. Questions that threatened to echo earlier material were
+reworked toward new categories and lie positions, and every new entry was
+reviewed against its source on 2026-11-01.

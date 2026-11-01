@@ -52,8 +52,7 @@ def req(method, path, body=None, port=PORT):
     url = "http://127.0.0.1:%d%s" % (port, path)
     data = json.dumps(body).encode() if body is not None else None
     r = urllib.request.Request(url, data=data, method=method)
-    
-if data:
+    if data:
         r.add_header("Content-Type", "application/json")
     try:
         with urllib.request.urlopen(r, timeout=5) as resp:
@@ -108,8 +107,7 @@ def main():
                 pass
             time.sleep(0.1)
         if not up:
-            print("FAIL
-: server never came up on port %d" % PORT)
+            print("FAIL: server never came up on port %d" % PORT)
             return 1
 
         # --- health ---
@@ -150,8 +148,7 @@ def main():
         # --- puzzle delivery (server-gated games; needs the committed
         #     per-game stores under puzzles/<game>/puzzles.json) ---
         if not (ROOT / "puzzles" / "bogus" / "puzzles.json").exists():
-      
-      check(False, "puzzles/bogus/puzzles.json missing")
+            check(False, "puzzles/bogus/puzzles.json missing")
         else:
             s, b = req("GET", "/api/puzzle?game=bogus&day=0")
             check(s == 200 and b.get("puzzle", {}).get("l") == 5,
@@ -180,8 +177,7 @@ def main():
                   and [n["id"] for n in pz["m"]] == tp["m"]
                   and [n["id"] for n in pz["d"]] == tp["d"],
                   "GET /puzzle thread matches the committed picks")
-            s, b 
-= req("GET", "/api/puzzle?game=timeline&day=-1")
+            s, b = req("GET", "/api/puzzle?game=timeline&day=-1")
             check(s == 404, "GET /puzzle windowed negative day -> 404")
             s, b = req("GET", "/api/puzzle?game=nosuchgame&day=0")
             check(s == 400, "GET /puzzle unknown game -> 400")
@@ -212,8 +208,7 @@ def main():
         s, b = post("/api/submit", {"game": "fermi", "day": TODAY - 1,
                                     "value": 0, "better": "high", "id": "stale"})
         check(s == 200 and b.get("archived") is True and b.get("count") == 0,
-          
-    "stale submit -> archived snapshot, no live tally")
+              "stale submit -> archived snapshot, no live tally")
         s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "stale submit did not touch today's curve")
         s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY - 1))
@@ -244,8 +239,7 @@ def main():
         check(s == 400, "unknown game rejected")
         s, _b = post("/api/submit", {"game": "fermi", "day": "x", "value": 3,
                                      "better": "high", "id": "d"})
-        check(s == 400, "n
-on-integer day rejected")
+        check(s == 400, "non-integer day rejected")
         s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": "3",
                                      "better": "high", "id": "e"})
         check(s == 400, "string value rejected")
@@ -276,8 +270,7 @@ on-integer day rejected")
         # stale tallies live per game: another game's stale submit is archived too
         s, b = post("/api/submit", {"game": "rounds", "day": TODAY - 1,
                                     "value": 2, "better": "low", "id": "old"})
-        check(s == 200 and b.get("archived") is True, "stale submit
- in another game also archived")
+        check(s == 200 and b.get("archived") is True, "stale submit in another game also archived")
         s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "other games' stale days do not touch fermi")
     finally:
@@ -327,7 +320,6 @@ on-integer day rejected")
         except subprocess.TimeoutExpired:
             proc2.kill()
 
-
     # --- pre-launch: before the epoch the day index clamps at 0 (the
     #     client clamps the same way in shell/common.js), so the launch
     #     weekend serves No. 1 and day-0 plays tally into the launch day's
@@ -371,8 +363,7 @@ on-integer day rejected")
             proc3.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc3.kill()
-    # --- warm start
-: a mid-day restart flushed today's partial board to
+    # --- warm start: a mid-day restart flushed today's partial board to
     #     the archive on SIGTERM; a fresh boot brings it back, so
     #     restarts never reset the day's live curve ---
     PORT4 = PORT + 3
@@ -416,8 +407,7 @@ on-integer day rejected")
                         pass
                     time.sleep(0.1)
                 if not up:
-                    check(False, "restarted instance never came up on port %d" % PORT
-4)
+                    check(False, "restarted instance never came up on port %d" % PORT4)
                 else:
                     s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY), port=PORT4)
                     check(s == 200 and b.get("count") == 1,
@@ -456,8 +446,7 @@ on-integer day rejected")
         srv.STATS.clear()
         srv.SEEN.clear()
         day = srv.current_day_index()
-        check(srv.tally("rounds", day, 2, "d1") and srv.tally("rounds", day, 3, "
-d2"),
+        check(srv.tally("rounds", day, 2, "d1") and srv.tally("rounds", day, 3, "d2"),
               "unit: two fresh-day plays tallied")
         check(srv.write_archive("rounds", day) is True, "unit: snapshot written")
         p = Path(td) / "rounds" / ("%d.json" % day)

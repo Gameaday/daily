@@ -487,3 +487,25 @@ thirty fermi facts, twenty nine cipher quotes, and fifty museum artifacts
 across two pushes. Questions that threatened to echo earlier material were
 reworked toward new categories and lie positions, and every new entry was
 reviewed against its source on 2026-11-01.
+
+## Superlative expansion (done 2026-11-01)
+
+Fifty five worldwide lives joined the people layer: Chinese
+sovereigns from Wu Zetian to Qianlong, Japan's unifiers and Edo
+masters, Sejong and Yi Sun-sin, the Indian mathematicians from
+Aryabhata to Ramanujan and the reformers, Mughal court women,
+African scholars and chroniclers, and Pakal, Sor Juana and Frida
+Kahlo from the Americas; lives the record cannot date at both
+ends, the BCE ones, stayed out. The superlative recipe learned
+thirty seven themed cohorts, and a well documented life can serve
+a second time when a different cohort asks a different question
+of it. Eight questions now rotate by board, the longest or
+shortest life, the first or last birth, and the measured ones,
+reign, voyages, works and height, which only count the lives a
+source actually measured and never serve a tie, the voyages dim
+joined the bonus match, and the fine print carries a piece of
+trivia per life. Fifteen new relations joined the graph. The bank
+grew from 112 to 163 boards, so the first repeat moves from
+February to mid April 2027, the thread game regenerated as a side
+effect (all its picks change, fine before launch), and day 0
+still seats John Adams. Brunch was checked and stayed identical.

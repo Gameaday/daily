@@ -86,9 +86,10 @@ every file, lint and recipe. lightbox stays hand-banked by
 design: picture clues are not shared entities, so its page remains its
 own source. fermi's questions live in the layer as facts, keyed to the
 graph when the layer knows the subject. superlative's boards are the
-people layer itself, cut by the compiler into groups of four, and the
-person numbers (heights, catalogue counts, reign years) feed its bonus
-match.
+people layer itself, cut by the compiler into groups of four and
+followed by the themed cohorts its recipe seats, and the person
+numbers (heights, catalogue counts, reign years, voyages) feed its
+questions and its bonus match.
 
 ## The global curve
 

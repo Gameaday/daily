@@ -23,9 +23,12 @@ schedule that the first post-flip bank change reshuffles.
   years the descriptor states, recorded only for CE ranges; a c. in d
   means the year is approximate), plus optional numbers a reputable
   source states: h (height in centimeters), works (the count a
-  standard catalogue gives, BWV for Bach, K for Mozart), and reign
+  standard catalogue gives, BWV for Bach, K for Mozart), voy (the
+  voyages a source credits an expedition leader with), and reign
   (whole years of the headline reign as a sovereign; presidents and
-  consorts never carry it, and the games read its absence as zero).
+  consorts never carry it, and the games read its absence as zero),
+  plus k (a one-line piece of trivia the superlative fine print
+  carries once the bonus settles).
 - events.json - dated occurrences (battles, plots, fires, revolutions,
   congresses, councils). Fields: id, n, plus d (the terse descriptor
   the thread page shows), q (the canonical one-line description the
@@ -163,12 +166,18 @@ Every entity may also carry (nothing requires them yet):
   ever moves a question. Only the question fields compile; the
   ids and the about keys stay in the layer. Output:
   puzzles/fermi/puzzles.json and its bank file.
-- superlative: no recipe file; the people layer is the pool, every
-  life it dates at both ends in canonical id order, cut into
-  groups of four. Each group serves the question its own numbers
-  can settle alone, the longest life or the first or last birth,
-  the three questions rotate by group, and a group no question
-  can decide never serves. When the numbers let every life top
+- superlative: puzzles/superlative/recipe.json holds the themed
+  cohorts, each four ids and an optional hint question. The people
+  layer is the pool, every life it dates at both ends in canonical
+  id order, cut into groups of four, and the recipe's cohorts
+  follow the pool, so a well documented life can serve twice when
+  a second cohort asks a different question of it. Eight questions
+  rotate by board, the longest or shortest life, the first or last
+  birth, and the measured ones, reign, voyages, works and height,
+  which only count the lives a source actually measured, at least
+  two, with the maximum unique, so a tie or a lone number never
+  decides, and a cohort hint the numbers cannot settle falls
+  through to the rotation. When the numbers let every life top
   something, the board also carries a bonus match: four
   superlatives, one per life, that the player assigns. Output:
   puzzles/superlative/puzzles.json and its bank file.

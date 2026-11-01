@@ -18,7 +18,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /recycle-rings/ | Recycle: Rings | Four letter wheels, one target word, one exact par; every move counts |
 | /recycle-grid/ | Recycle: Grid | Three modes, three budgets; shift rows or columns in any order, bank the best board |
 | /fermi/ | Fermi | One estimation question per day, one guess, scored by closeness |
-| /sift/ | Sift | Twelve tiles, four hidden groups of three, four mistakes allowed |
+| /sift/ | Sift | Twelve tiles, four hidden groups of three, three mistakes allowed |
 | /rounds/ | Rounds | Slide toward the year of a hidden event in six guesses |
 | /trace/ | Trace | A daily word ladder, one letter at a time, par five rungs |
 | /lightbox/ | Lightbox | A 7x7 nonogram; four bad developments fog the film |

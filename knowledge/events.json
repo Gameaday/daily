@@ -22,7 +22,7 @@
   {
     "id": "antietam",
     "n": "The Battle of Antietam",
-    "q": "The bloodiest day of the war ends Lee s first invasion at Antietam.",
+    "q": "The bloodiest day of the war ends Lee’s first invasion at Antietam.",
     "y": 1862,
     "month": 9,
     "day": 17
@@ -98,7 +98,7 @@
   {
     "id": "austerlitz",
     "n": "The Battle of Austerlitz",
-    "q": "Napoleon s masterpiece breaks the Austrians and Russians at Austerlitz.",
+    "q": "Napoleon’s masterpiece breaks the Austrians and Russians at Austerlitz.",
     "y": 1805,
     "month": 12
   },
@@ -217,8 +217,8 @@
   },
   {
     "id": "childrens-crusade",
-    "n": "The Children s Crusade",
-    "q": "The children s crusade sets out for the Mediterranean and vanishes.",
+    "n": "The Children’s Crusade",
+    "q": "The children’s crusade sets out for the Mediterranean and vanishes.",
     "y": 1212
   },
   {
@@ -320,7 +320,7 @@
   {
     "id": "emancipation-proclamation",
     "n": "The Emancipation Proclamation",
-    "q": "Lincoln s proclamation frees the enslaved in the rebellious states.",
+    "q": "Lincoln’s proclamation frees the enslaved in the rebellious states.",
     "y": 1863,
     "month": 1,
     "day": 1
@@ -388,7 +388,7 @@
   },
   {
     "id": "first-japanese-railway",
-    "n": "Japan s First Railway",
+    "n": "Japan’s First Railway",
     "q": "The first railway opens between Tokyo and Yokohama.",
     "y": 1872
   },
@@ -583,7 +583,7 @@
   {
     "id": "harrying-of-the-north",
     "n": "The Harrying of the North",
-    "q": "William s army burns Yorkshire from the Humber to the Tees.",
+    "q": "William’s army burns Yorkshire from the Humber to the Tees.",
     "y": 1069
   },
   {
@@ -786,7 +786,7 @@
   {
     "id": "march-to-the-sea",
     "n": "The March to the Sea",
-    "q": "Sherman s columns cut a path from Atlanta to the sea.",
+    "q": "Sherman’s columns cut a path from Atlanta to the sea.",
     "y": 1864
   },
   {
@@ -806,7 +806,7 @@
   {
     "id": "meiji-constitution",
     "n": "The Meiji Constitution",
-    "q": "The Meiji constitution creates Japan s first modern parliament.",
+    "q": "The Meiji constitution creates Japan’s first modern parliament.",
     "y": 1889
   },
   {
@@ -894,7 +894,7 @@
   {
     "id": "plassey",
     "n": "The Battle of Plassey",
-    "q": "Clive s victory at Plassey hands Bengal to the East India Company.",
+    "q": "Clive’s victory at Plassey hands Bengal to the East India Company.",
     "y": 1757,
     "month": 6,
     "day": 23
@@ -997,7 +997,7 @@
   {
     "id": "satsuma-rebellion",
     "n": "The Satsuma Rebellion",
-    "q": "Saigo s last stand at Shiroyama ends the samurai era.",
+    "q": "Saigo’s last stand at Shiroyama ends the samurai era.",
     "y": 1877
   },
   {
@@ -1032,14 +1032,14 @@
   },
   {
     "id": "shays-rebellion",
-    "n": "Shays Rebellion",
-    "q": "Shays indebted farmers close the courts of Massachusetts.",
+    "n": "Shays’ Rebellion",
+    "q": "Shays’ indebted farmers close the courts of Massachusetts.",
     "y": 1786
   },
   {
     "id": "sino-japanese-war",
     "n": "The First Sino-Japanese War",
-    "q": "Japan s victory over China redraws the map of East Asia.",
+    "q": "Japan’s victory over China redraws the map of East Asia.",
     "y": 1894
   },
   {
@@ -1271,7 +1271,7 @@
   {
     "id": "war-of-the-worlds-broadcast",
     "n": "The War of the Worlds Broadcast",
-    "q": "The Mercury Theater s Martians panic the Halloween radio audience.",
+    "q": "The Mercury Theater’s Martians panic the Halloween radio audience.",
     "y": 1938,
     "month": 10,
     "day": 30
@@ -1295,7 +1295,7 @@
   {
     "id": "woodstock",
     "n": "The Woodstock Festival",
-    "q": "The Woodstock festival gathers half a million on Max Yasgur s farm.",
+    "q": "The Woodstock festival gathers half a million on Max Yasgur’s farm.",
     "y": 1969,
     "month": 8
   },

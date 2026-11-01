@@ -870,5 +870,215 @@
     "q": "Roughly how many hours was Lindbergh airborne crossing the Atlantic?",
     "a": 33,
     "w": "Thirty-three and a half hours from New York to Paris without a copilot, a radio, or a parachute, awake on sandwiches."
+  },
+  {
+    "id": "antarctic-ice-volume",
+    "t": "Ice",
+    "q": "Roughly how many cubic kilometers of ice does Antarctica hold?",
+    "a": 26500000,
+    "w": "About 26.5 million, roughly 90 percent of the world’s ice and most of its fresh water. Melted, it would lift global sea level around 58 meters."
+  },
+  {
+    "id": "muscles-in-the-body",
+    "t": "The Human Body",
+    "q": "Roughly how many muscles are in the human body?",
+    "a": 600,
+    "w": "Textbooks usually say about 600 skeletal muscles, and meticulous counts that split compound muscles reach past 800. The gluteus maximus is the bulkiest of them."
+  },
+  {
+    "id": "heartbeats-per-day",
+    "t": "The Heart",
+    "q": "Roughly how many times does the average heart beat in a single day?",
+    "a": 100000,
+    "w": "About 70 beats a minute across 1,440 minutes comes to roughly 100,000 a day, and over two and a half billion in an average lifetime."
+  },
+  {
+    "id": "blood-liters",
+    "t": "The Human Body",
+    "q": "Roughly how many liters of blood does an adult human body hold?",
+    "a": 5,
+    "w": "Around five liters, about seven percent of body weight. A blood donation takes roughly half a liter, which the body refills within days."
+  },
+  {
+    "id": "jupiter-moons",
+    "t": "Space",
+    "q": "Roughly how many confirmed moons does Jupiter have?",
+    "a": 95,
+    "w": "Surveys in 2023 pushed the confirmed count to 95, and fainter finds keep trickling in. Saturn answered with a still bigger haul two years later."
+  },
+  {
+    "id": "observable-galaxies",
+    "t": "Deep Space",
+    "q": "Roughly how many galaxies are in the observable universe?",
+    "a": 2000000000000,
+    "w": "About two trillion by the widely cited 2016 estimate, most of them small faint dwarfs. The count keeps falling across cosmic time as galaxies merge."
+  },
+  {
+    "id": "countries-in-the-world",
+    "t": "The World",
+    "q": "Roughly how many countries are there in the world?",
+    "a": 195,
+    "w": "One hundred ninety five: the 193 UN member states plus the Holy See and Palestine as permanent observers. Dozens more would like to make the list."
+  },
+  {
+    "id": "russia-time-zones",
+    "t": "The World",
+    "q": "Roughly how many time zones does Russia span?",
+    "a": 11,
+    "w": "Eleven, from Kaliningrad to Kamchatka, more than any other country. Neighboring China, nearly as wide, keeps every clock on a single zone."
+  },
+  {
+    "id": "islands-of-finland",
+    "t": "The North",
+    "q": "Roughly how many islands does Finland have?",
+    "a": 180000,
+    "w": "Roughly 180,000 islands, most of them uninhabited specks, and about the same number of lakes. The two together explain the sauna."
+  },
+  {
+    "id": "eight-thousanders",
+    "t": "The Himalayas",
+    "q": "Roughly how many mountains on Earth rise above 8,000 meters?",
+    "a": 14,
+    "w": "Only fourteen, all in the Himalaya and Karakoram, and all of them climbed by 1964. Reinhold Messner later climbed the whole set without bottled oxygen."
+  },
+  {
+    "id": "pyramids-in-egypt",
+    "t": "Archaeology",
+    "q": "Roughly how many pyramids have been found in Egypt?",
+    "a": 118,
+    "w": "About 118 known so far, scattered from Giza out to the Fayum and far upriver. Tourists meet only the handful at Giza and rarely guess at the rest."
+  },
+  {
+    "id": "black-death-europe",
+    "t": "History",
+    "q": "Roughly how many Europeans died in the Black Death of 1347 to 1351?",
+    "a": 25000000,
+    "w": "A third of the continent: 25 to 30 million of about 80 million. It remains the deadliest outbreak in recorded history."
+  },
+  {
+    "id": "apollo-11-audience",
+    "t": "Spaceflight",
+    "q": "Roughly how many people watched the Apollo 11 Moon landing live?",
+    "a": 600000000,
+    "w": "About 600 million, roughly a sixth of everyone alive in 1969, the largest audience any broadcast had drawn to that point."
+  },
+  {
+    "id": "nyc-subway-rides",
+    "t": "Cities",
+    "q": "Roughly how many rides does the New York subway give on an average weekday?",
+    "a": 3500000,
+    "w": "About three to 3.5 million weekday rides across 472 stations, more than any other metro in the Western Hemisphere."
+  },
+  {
+    "id": "quran-verses",
+    "t": "Sacred Texts",
+    "q": "Roughly how many verses are in the Quran?",
+    "a": 6236,
+    "w": "Six thousand two hundred thirty six verses across 114 chapters by the standard count, a number fixed by tradition down the centuries."
+  },
+  {
+    "id": "constellations-modern",
+    "t": "The Night Sky",
+    "q": "Roughly how many constellations does modern astronomy recognize?",
+    "a": 88,
+    "w": "The International Astronomical Union fixed the sky at 88 official constellations in 1922, giving every star exactly one address."
+  },
+  {
+    "id": "bird-species",
+    "t": "Wildlife",
+    "q": "Roughly how many bird species are there on Earth?",
+    "a": 11000,
+    "w": "About 11,000 living species, and roughly one in eight of them sits on the threatened list. The island birds are disappearing fastest."
+  },
+  {
+    "id": "corn-kernels",
+    "t": "The Kitchen",
+    "q": "Roughly how many kernels are on a typical ear of corn?",
+    "a": 800,
+    "w": "Around 800 in about 16 rows, and the row count is nearly always even, a botanical quirk of paired spikelets."
+  },
+  {
+    "id": "thunderstorms-now",
+    "t": "Earth",
+    "q": "Roughly how many thunderstorms are in progress on Earth at any given moment?",
+    "a": 2000,
+    "w": "About 2,000 at once, which works out to some 14 million a year, overwhelmingly over land in the tropics."
+  },
+  {
+    "id": "niagara-flow",
+    "t": "Big Water",
+    "q": "Roughly how many liters of water flow over Niagara Falls each second?",
+    "a": 2400000,
+    "w": "About 2.4 million liters a second on average, an Olympic pool roughly every second. Half the river is diverted at night for hydropower."
+  },
+  {
+    "id": "nyc-marathon-finishers",
+    "t": "Sports",
+    "q": "Roughly how many runners finish the New York City Marathon in a typical year?",
+    "a": 50000,
+    "w": "Around 50,000 finishers in recent years, the largest field in the sport. The first running in 1970 saw just 55 cross the line."
+  },
+  {
+    "id": "baseball-stitches",
+    "t": "Sports",
+    "q": "Roughly how many stitches are on a regulation baseball?",
+    "a": 108,
+    "w": "Exactly 108 double stitches, 216 single, every one of them sewn by hand with two needles and red thread."
+  },
+  {
+    "id": "van-gogh-paintings",
+    "t": "Art",
+    "q": "Roughly how many oil paintings did Van Gogh complete in his career?",
+    "a": 900,
+    "w": "About 900 oils in a single decade, nearly one canvas every four days, plus more than 1,100 works on paper. He sold a handful in his lifetime."
+  },
+  {
+    "id": "haydn-symphonies",
+    "t": "Music",
+    "q": "Roughly how many symphonies did Joseph Haydn compose?",
+    "a": 104,
+    "w": "One hundred four numbered symphonies, plus a few strays scholars still squabble over. He did more than anyone to define what a symphony is."
+  },
+  {
+    "id": "sophocles-plays",
+    "t": "The Theater",
+    "q": "Roughly how many plays did Sophocles write in his long career?",
+    "a": 123,
+    "w": "Ancient tallies credit him with about 123 plays, of which exactly seven survive complete. Oedipus was his, and so was the third actor on stage."
+  },
+  {
+    "id": "christie-detective-novels",
+    "t": "Letters",
+    "q": "Roughly how many detective novels did Agatha Christie write?",
+    "a": 66,
+    "w": "Sixty six, plus six romances under the name Mary Westmacott and the longest running play in theater history. Only Shakespeare sells more books."
+  },
+  {
+    "id": "green-eggs-words",
+    "t": "Letters",
+    "q": "Roughly how many different words did Dr Seuss use in Green Eggs and Ham?",
+    "a": 50,
+    "w": "Exactly fifty, after his publisher bet fifty dollars that a whole book could not be carried by so small a vocabulary. Seuss won the bet."
+  },
+  {
+    "id": "white-house-rooms",
+    "t": "America",
+    "q": "Roughly how many rooms are in the White House?",
+    "a": 132,
+    "w": "One hundred thirty two rooms and 35 bathrooms across six levels, kept running by a residence staff of about ninety."
+  },
+  {
+    "id": "eiffel-rivets",
+    "t": "Monuments",
+    "q": "Roughly how many rivets hold the Eiffel Tower together?",
+    "a": 2500000,
+    "w": "About 2.5 million rivets, each driven hot in 1889 by four man crews who assembled 18,000 iron pieces in a little over two years."
+  },
+  {
+    "id": "burj-khalifa-floors",
+    "t": "Buildings",
+    "q": "Roughly how many floors does the Burj Khalifa have?",
+    "a": 163,
+    "w": "One hundred sixty three usable floors stacked 828 meters high, the tallest structure on Earth since 2009."
   }
 ]

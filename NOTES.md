@@ -565,3 +565,18 @@ byte-identical before and after, a superlative replay of the opening
 table played through all rounds with zero submits and an empty store,
 and the frozen curve copy versus the live one. The harness grew one
 knob for it, location.search per boot; everything else is untouched.
+
+## Points read like points (done 2026-11-01)
+
+Players talked about the curve bins as if they were scores, and two
+games read backwards: a clean superlative sweep posted 1 (rounds missed
+plus one) and a brunch win posted 1 with a loss at 2. Both now post what
+a player would say out loud. Superlative posts the round count, so five
+of five reads 5, and the histogram grows an edge at 7 for the longest
+sessions. Brunch posts 1 for the seat and 0 for missing it. The manifest
+flips both to better: high and widens the edges to start at 0, the page
+pins (SYNC_BETTER) flip with them, and the cost-like games keep their
+low-is-better framing: mistakes, moves, clues, hints and checks are
+things you spend, not things you earn. The scores archive was wiped the
+same evening, so no board carries a value recorded under the old
+direction.

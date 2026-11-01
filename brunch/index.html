@@ -182,12 +182,12 @@ function showReveal(){
   $('why').textContent = EV.w;
   $('sharetext').textContent = shareText() + String.fromCharCode(10) + 'streak ' + st.streak + ' · played ' + st.played;
   $('reveal').classList.add('show');
-  syncBoard(S.status === 'won' ? 1 : 2);
+  syncBoard(S.status === 'won' ? 1 : 0);
 }
 
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'brunch';
-const SYNC_BETTER = 'low';
+const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 
 /* ---------------- share / toast ---------------- */

@@ -14,7 +14,7 @@ async function run(h){
     r.env.els['opt' + r.x.EV.a].click();
     h.eq(r.x.S.status, 'won', 'brunch: picked the impostor first try');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 1, 'brunch: curve value 1');
+    h.eq(h.lastPost(r.env).body.value, 1, 'brunch: curve value 1 on the win');
     r = h.boot('brunch', EXP, { now: T1, store });
     await h.flush();
     h.eq(r.x.S.day, 1, 'brunch: day rolled');
@@ -26,7 +26,7 @@ async function run(h){
     r.env.els['opt' + wrong].click();
     h.eq(r.x.S.status, 'lost', 'brunch: a wrong name loses the seat');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 2, 'brunch: curve value 2 on loss');
+    h.eq(h.lastPost(r.env).body.value, 0, 'brunch: curve value 0 on loss');
     h.ok(r.env.els.why.textContent.indexOf(r.x.EV.opts[r.x.EV.a]) >= 0,
       'brunch: the reveal names the impostor');
 }

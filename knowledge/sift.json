@@ -5800,5 +5800,917 @@
         ]
       }
     ]
+  },
+  {
+    "id": "the-great-exhibitions",
+    "t": "The Great Exhibitions",
+    "cats": [
+      {
+        "n": "The Crystal Palace moment",
+        "i": [
+          "great-exhibition",
+          "crystal-palace",
+          "victoria"
+        ]
+      },
+      {
+        "n": "Belle Epoque icons",
+        "i": [
+          "eiffel-tower-opens",
+          "the-eiffel-tower",
+          "orient-express"
+        ]
+      },
+      {
+        "n": "New York rising",
+        "i": [
+          "statue-of-liberty-dedicated",
+          "brooklyn-bridge-opened",
+          "empire-state-opened"
+        ]
+      },
+      {
+        "n": "Patents that changed daily life",
+        "i": [
+          "bessemer-converter-patent",
+          "sewing-machine",
+          "telephone-patent"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-coffee-house",
+    "t": "The Coffee House",
+    "cats": [
+      {
+        "n": "What they poured",
+        "i": [
+          "chocolate",
+          "coffee",
+          "tea"
+        ]
+      },
+      {
+        "n": "Conveniences of the age",
+        "i": [
+          "penny-post",
+          "tea-bag",
+          "crown-cork"
+        ]
+      },
+      {
+        "n": "Cities of the first cafes",
+        "i": [
+          "vienna",
+          "london",
+          "paris"
+        ]
+      },
+      {
+        "n": "Minds of the coffee house",
+        "i": [
+          "johnson",
+          "pope",
+          "royal-society-chartered"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-great-crossings",
+    "t": "The Great Crossings",
+    "cats": [
+      {
+        "n": "Bridges and rails across America",
+        "i": [
+          "brooklyn-bridge-opened",
+          "golden-gate-opened",
+          "transcontinental-railroad"
+        ]
+      },
+      {
+        "n": "Crossings under the waves",
+        "i": [
+          "channel-tunnel-opened",
+          "hunley",
+          "trieste"
+        ]
+      },
+      {
+        "n": "Ranges in the way",
+        "i": [
+          "andes",
+          "k2",
+          "mount-everest"
+        ]
+      },
+      {
+        "n": "Crossing by air",
+        "i": [
+          "lindbergh-flight",
+          "boeing-707",
+          "pan-am"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-worlds-walls",
+    "t": "Walls of the World",
+    "cats": [
+      {
+        "n": "Walls that held",
+        "i": [
+          "great-wall",
+          "theodosian-walls",
+          "berlin-wall-built"
+        ]
+      },
+      {
+        "n": "Walls that fell",
+        "i": [
+          "berlin-wall-falls",
+          "fall-of-constantinople",
+          "genghis-khan"
+        ]
+      },
+      {
+        "n": "The holy city fought over",
+        "i": [
+          "first-crusade-jerusalem",
+          "jerusalem",
+          "saladin"
+        ]
+      },
+      {
+        "n": "The cities the walls guarded",
+        "i": [
+          "constantinople",
+          "berlin",
+          "rome"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-the-sword",
+    "t": "The Age of the Sword",
+    "cats": [
+      {
+        "n": "Legendary blades",
+        "i": [
+          "the-sword-of-joyeuse",
+          "the-sword-of-goujian",
+          "morte-darthur"
+        ]
+      },
+      {
+        "n": "Helmets and shields of the North",
+        "i": [
+          "sutton-hoo-helmet",
+          "the-coppergate-helmet",
+          "the-battersea-shield"
+        ]
+      },
+      {
+        "n": "What made blades obsolete",
+        "i": [
+          "composite-bow",
+          "gunpowder",
+          "tank"
+        ]
+      },
+      {
+        "n": "The rivals of 1066",
+        "i": [
+          "harald-hardrada",
+          "harold-godwinson",
+          "william-the-conqueror"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-golden-age-of-spain",
+    "t": "The Golden Age of Spain",
+    "cats": [
+      {
+        "n": "The Spanish masters",
+        "i": [
+          "velazquez",
+          "goya",
+          "cervantes"
+        ]
+      },
+      {
+        "n": "Empire and armada",
+        "i": [
+          "philip-ii",
+          "cortes",
+          "spanish-armada"
+        ]
+      },
+      {
+        "n": "The sponsors of empire",
+        "i": [
+          "isabella",
+          "columbus",
+          "charles-v"
+        ]
+      },
+      {
+        "n": "Cargo of the Indies",
+        "i": [
+          "gold",
+          "chocolate",
+          "silk"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-the-detective",
+    "t": "The Age of the Detective",
+    "cats": [
+      {
+        "n": "The world of Sherlock Holmes",
+        "i": [
+          "sherlock-holmes",
+          "victoria",
+          "london"
+        ]
+      },
+      {
+        "n": "Writers of the age",
+        "i": [
+          "poe",
+          "dickens",
+          "twain"
+        ]
+      },
+      {
+        "n": "Tools of deduction",
+        "i": [
+          "microscope",
+          "daguerreotype",
+          "lancet"
+        ]
+      },
+      {
+        "n": "Spies and codebreakers",
+        "i": [
+          "mata-hari",
+          "virginia-hall",
+          "elizebeth-friedman"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-instruments-of-discovery",
+    "t": "The Instruments of Discovery",
+    "cats": [
+      {
+        "n": "Finding the way",
+        "i": [
+          "astrolabe",
+          "kamal",
+          "sextant"
+        ]
+      },
+      {
+        "n": "The men who mapped",
+        "i": [
+          "al-idrisi",
+          "mercator",
+          "vespucci"
+        ]
+      },
+      {
+        "n": "Lines across the globe",
+        "i": [
+          "john-harrison",
+          "greenwich-meridian",
+          "equator"
+        ]
+      },
+      {
+        "n": "Voyages of the age",
+        "i": [
+          "magellan-departs",
+          "ibn-battuta-departs",
+          "zheng-he-first-voyage"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-robot-explorers",
+    "t": "The Robot Explorers",
+    "cats": [
+      {
+        "n": "Eyes and outposts above",
+        "i": [
+          "hubble-telescope",
+          "jwst",
+          "the-international-space-station"
+        ]
+      },
+      {
+        "n": "First arrivals",
+        "i": [
+          "luna-2",
+          "apollo-11-landing",
+          "curiosity-landing"
+        ]
+      },
+      {
+        "n": "Echoes of the beginning",
+        "i": [
+          "cmb",
+          "gravitational-waves-detected",
+          "expanding-universe"
+        ]
+      },
+      {
+        "n": "Where the robots roam",
+        "i": [
+          "exoplanets",
+          "the-milky-way",
+          "lagrange-points"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-norse-pantheon",
+    "t": "The Norse Pantheon",
+    "cats": [
+      {
+        "n": "Gods of two pantheons",
+        "i": [
+          "odin",
+          "thor",
+          "zeus"
+        ]
+      },
+      {
+        "n": "Verse and far shores",
+        "i": [
+          "old-norse",
+          "beowulf",
+          "vinland"
+        ]
+      },
+      {
+        "n": "Kings of the North Sea",
+        "i": [
+          "harald-bluetooth",
+          "cnut",
+          "william-the-conqueror"
+        ]
+      },
+      {
+        "n": "Stones, ships and raids",
+        "i": [
+          "jelling-stones",
+          "oseberg-ship",
+          "lindisfarne"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-extremes-of-the-earth",
+    "t": "The Extremes of the Earth",
+    "cats": [
+      {
+        "n": "The roof of the world",
+        "i": [
+          "mount-everest",
+          "himalayas",
+          "death-zone"
+        ]
+      },
+      {
+        "n": "The deepest point",
+        "i": [
+          "mariana-trench",
+          "the-challenger-deep",
+          "jacques-piccard"
+        ]
+      },
+      {
+        "n": "Extremes of water",
+        "i": [
+          "lake-superior",
+          "lake-titicaca",
+          "tsunami"
+        ]
+      },
+      {
+        "n": "Rivals for the poles",
+        "i": [
+          "amundsen",
+          "cook",
+          "peary"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-climbers",
+    "t": "The Climbers",
+    "cats": [
+      {
+        "n": "Everest, 1953",
+        "i": [
+          "first-everest-ascent",
+          "hillary",
+          "tenzing"
+        ]
+      },
+      {
+        "n": "Peaks of legend",
+        "i": [
+          "mount-everest",
+          "eiger",
+          "matterhorn"
+        ]
+      },
+      {
+        "n": "Himalayan giants",
+        "i": [
+          "k2",
+          "annapurna",
+          "messner"
+        ]
+      },
+      {
+        "n": "Of the poles",
+        "i": [
+          "scott",
+          "shackleton",
+          "byrd"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-founding-generation",
+    "t": "The Founding Generation",
+    "cats": [
+      {
+        "n": "Writers of revolution",
+        "i": [
+          "jefferson",
+          "paine",
+          "franklin"
+        ]
+      },
+      {
+        "n": "Architects of the government",
+        "i": [
+          "adams",
+          "madison",
+          "hamilton"
+        ]
+      },
+      {
+        "n": "Milestones of the republic",
+        "i": [
+          "declaration-of-independence",
+          "constitutional-convention",
+          "treaty-of-paris-1783"
+        ]
+      },
+      {
+        "n": "The general and his cause",
+        "i": [
+          "washington",
+          "lafayette",
+          "valley-forge"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-second-founding",
+    "t": "The Second Founding",
+    "cats": [
+      {
+        "n": "Freedom declared",
+        "i": [
+          "emancipation-proclamation",
+          "thirteenth-amendment",
+          "gettysburg"
+        ]
+      },
+      {
+        "n": "Rights reclaimed",
+        "i": [
+          "brown-v-board",
+          "civil-rights-act",
+          "reconstruction"
+        ]
+      },
+      {
+        "n": "Voices of the movement",
+        "i": [
+          "douglass",
+          "du-bois",
+          "martin-luther-king"
+        ]
+      },
+      {
+        "n": "Turning points of the war",
+        "i": [
+          "fort-sumter",
+          "antietam",
+          "vicksburg"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-treasury-of-empires",
+    "t": "The Treasury of Empires",
+    "cats": [
+      {
+        "n": "Russian splendor",
+        "i": [
+          "imperial-faberge-eggs",
+          "amber-room",
+          "catherine"
+        ]
+      },
+      {
+        "n": "Jewels of the Mughals",
+        "i": [
+          "peacock-throne",
+          "koh-i-noor",
+          "taj-mahal"
+        ]
+      },
+      {
+        "n": "Famous diamonds",
+        "i": [
+          "the-regent-diamond",
+          "hope-diamond",
+          "cullinan-diamond"
+        ]
+      },
+      {
+        "n": "Symbols of the Revolution",
+        "i": [
+          "guillotine",
+          "bastille-stormed",
+          "tricolor"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-first-steps",
+    "t": "The First Steps",
+    "cats": [
+      {
+        "n": "The ice age world",
+        "i": [
+          "woolly-mammoth",
+          "woolly-rhino",
+          "neanderthals"
+        ]
+      },
+      {
+        "n": "Art of the ice age",
+        "i": [
+          "venus-of-willendorf",
+          "chauvet",
+          "altamira"
+        ]
+      },
+      {
+        "n": "From stone to script",
+        "i": [
+          "handaxe",
+          "bone-needle",
+          "cuneiform"
+        ]
+      },
+      {
+        "n": "The preserved dead",
+        "i": [
+          "otzi-the-iceman",
+          "tollund-man",
+          "the-bocksten-man"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "archaeology-and-the-bible",
+    "t": "Archaeology and the Bible",
+    "cats": [
+      {
+        "n": "Inscribed witnesses",
+        "i": [
+          "the-merneptah-stele",
+          "the-mesha-stele",
+          "the-tel-dan-stele"
+        ]
+      },
+      {
+        "n": "Texts from the earth",
+        "i": [
+          "dead-sea-scrolls",
+          "nag-hammadi-codices",
+          "cyrus-cylinder"
+        ]
+      },
+      {
+        "n": "The Word in English",
+        "i": [
+          "king-james-bible",
+          "tyndale",
+          "wycliffe"
+        ]
+      },
+      {
+        "n": "Famous finds and fakes",
+        "i": [
+          "rosetta-stone-found",
+          "tutankhamun-tomb",
+          "piltdown-man"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-the-message",
+    "t": "The Age of the Message",
+    "cats": [
+      {
+        "n": "The telegraph era",
+        "i": [
+          "electric-telegraph",
+          "morse-first-message",
+          "atlantic-cable-1858"
+        ]
+      },
+      {
+        "n": "Sound over distance",
+        "i": [
+          "telephone-patent",
+          "crystal-set",
+          "vacuum-tube"
+        ]
+      },
+      {
+        "n": "The broadcast breakthroughs",
+        "i": [
+          "orson-welles",
+          "war-of-the-worlds-broadcast",
+          "baird-television"
+        ]
+      },
+      {
+        "n": "The network is born",
+        "i": [
+          "arpanet-first-message",
+          "www-first-website",
+          "internet"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-society-and-its-circle",
+    "t": "The Society and Its Circle",
+    "cats": [
+      {
+        "n": "The age of Newton",
+        "i": [
+          "royal-society-chartered",
+          "principia-mathematica",
+          "newton"
+        ]
+      },
+      {
+        "n": "Curious minds of London",
+        "i": [
+          "hooke",
+          "boyle",
+          "halley"
+        ]
+      },
+      {
+        "n": "The continental savants",
+        "i": [
+          "huygens",
+          "leibniz",
+          "leeuwenhoek"
+        ]
+      },
+      {
+        "n": "Students of matter",
+        "i": [
+          "priestley",
+          "lavoisier",
+          "franklin"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-jet-age",
+    "t": "The Jet Age",
+    "cats": [
+      {
+        "n": "The famous names of the sky",
+        "i": [
+          "pan-am",
+          "twa",
+          "concorde"
+        ]
+      },
+      {
+        "n": "The jets and the barrier",
+        "i": [
+          "the-bell-x-1",
+          "dh-comet",
+          "boeing-707"
+        ]
+      },
+      {
+        "n": "The fast trains",
+        "i": [
+          "shinkansen",
+          "tgv",
+          "orient-express"
+        ]
+      },
+      {
+        "n": "Destinations of the jet set",
+        "i": [
+          "hawaii",
+          "los-angeles",
+          "tokyo"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-grand-tour",
+    "t": "The Grand Tour",
+    "cats": [
+      {
+        "n": "The Italian itinerary",
+        "i": [
+          "rome",
+          "florence",
+          "venice"
+        ]
+      },
+      {
+        "n": "Antiquities on display",
+        "i": [
+          "venus-de-milo",
+          "laocoon-unearthed",
+          "parthenon-marbles"
+        ]
+      },
+      {
+        "n": "The Italian masters",
+        "i": [
+          "raphael",
+          "titian",
+          "sistine-ceiling-unveiled"
+        ]
+      },
+      {
+        "n": "Travelers of the quill",
+        "i": [
+          "goethe",
+          "montaigne",
+          "byron"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-birth-of-the-movies",
+    "t": "The Birth of the Movies",
+    "cats": [
+      {
+        "n": "From the still to the reel",
+        "i": [
+          "daguerreotype",
+          "roll-film",
+          "kodak-brownie"
+        ]
+      },
+      {
+        "n": "The studio era",
+        "i": [
+          "mgm",
+          "paramount",
+          "gone-with-the-wind"
+        ]
+      },
+      {
+        "n": "Masters of the golden age",
+        "i": [
+          "hitchcock",
+          "orson-welles",
+          "citizen-kane"
+        ]
+      },
+      {
+        "n": "The broadcast rivals",
+        "i": [
+          "war-of-the-worlds-broadcast",
+          "baird-television",
+          "transistor-radio"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-marble-and-the-bronze",
+    "t": "The Marble and the Bronze",
+    "cats": [
+      {
+        "n": "Bronzes of the ancients",
+        "i": [
+          "the-artemision-bronze",
+          "the-charioteer-of-delphi",
+          "the-boxer-at-rest"
+        ]
+      },
+      {
+        "n": "Rulers in stone",
+        "i": [
+          "augustus-of-prima-porta",
+          "the-younger-memnon",
+          "lamassu"
+        ]
+      },
+      {
+        "n": "Marble made flesh",
+        "i": [
+          "michelangelos-david",
+          "pieta",
+          "the-ecstasy-of-saint-teresa"
+        ]
+      },
+      {
+        "n": "Faces from deep time",
+        "i": [
+          "venus-of-willendorf",
+          "standard-of-ur",
+          "the-mask-of-warka"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-relics",
+    "t": "The Age of Relics",
+    "cats": [
+      {
+        "n": "Relics of the Passion",
+        "i": [
+          "the-crown-of-thorns",
+          "the-holy-lance",
+          "shroud-of-turin"
+        ]
+      },
+      {
+        "n": "Houses of the sacred",
+        "i": [
+          "shrine-of-the-three-kings",
+          "westminster-abbey",
+          "hagia-sophia"
+        ]
+      },
+      {
+        "n": "Illuminated gospels",
+        "i": [
+          "book-of-kells",
+          "book-of-durrow",
+          "the-st-cuthbert-gospel"
+        ]
+      },
+      {
+        "n": "The great rediscoveries",
+        "i": [
+          "tutankhamun-tomb",
+          "rosetta-stone-found",
+          "parthenon-marbles"
+        ]
+      }
+    ]
   }
 ]

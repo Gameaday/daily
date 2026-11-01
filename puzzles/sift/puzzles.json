@@ -2958,5 +2958,42 @@
         ]
       }
     ]
+  },
+  {
+    "t": "The Romantic Age",
+    "cats": [
+      {
+        "n": "English Romantic poets",
+        "i": [
+          "Lord Byron",
+          "Percy Shelley",
+          "Samuel Coleridge"
+        ]
+      },
+      {
+        "n": "Romantic composers",
+        "i": [
+          "Frederic Chopin",
+          "Franz Liszt",
+          "Hector Berlioz"
+        ]
+      },
+      {
+        "n": "Romantic painters",
+        "i": [
+          "Eugene Delacroix",
+          "J.M.W. Turner",
+          "John Constable"
+        ]
+      },
+      {
+        "n": "Continental men of letters",
+        "i": [
+          "Johann Goethe",
+          "Victor Hugo",
+          "Alexandre Dumas"
+        ]
+      }
+    ]
   }
 ]

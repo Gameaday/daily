@@ -466,5 +466,17 @@
     "q": "Roughly how many leaves are on a large mature oak tree?",
     "a": 200000,
     "w": "Estimates for a full-grown oak run around 200,000 leaves, which the tree sheds and regrows every year. Laid end to end, one tree’s summer canopy would cover a marathon."
+  },
+  {
+    "t": "Low Orbit",
+    "q": "Roughly how many working satellites are orbiting the Earth right now?",
+    "a": 15000,
+    "w": "Live catalogs counted about 15,000 active satellites in late 2026, more than two-thirds of them Starlink broadband relays. The figure passed 1,000 only a decade ago."
+  },
+  {
+    "t": "Wildlife",
+    "q": "Roughly how many wild tigers are left in the world?",
+    "a": 5600,
+    "w": "The Global Tiger Forum’s 2023 estimate counts about 5,574, with the IUCN Red List carrying 3,726 to 5,578. A century ago the wild population was reckoned near 100,000."
   }
 ]

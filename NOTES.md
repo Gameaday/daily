@@ -441,3 +441,17 @@ SCHEMA.md in knowledge/ is the format reference.
 Deferred on purpose: wiki/sameAs alias matching, a sift board
 auto-generator (the boards are authored for now), and the Batch 4 games
 (Dig, Almanac, Follow) - all natural future recipes over the layer.
+
+## Content batch (done 2026-11-01)
+
+The first content growth since the audit lands at the tail of four
+banks: museum takes the Gundestrup cauldron and the Nag Hammadi
+codices, cipher takes Nelson's Trafalgar signal, Lovelace's Note A
+(kept in the algebraical spelling the 1843 original printed) and
+Turing closing his Mind paper, fermi takes the active satellite
+fleet and the wild tiger count, and sift takes The Romantic Age,
+seating twelve figures the eighty boards had left untouched. All
+four games are whole-file recipes that compile in file order, so
+the files grow at the end and no day rotation moves; the stores and
+banks were mirrored by hand to the byte and the compiler verified
+the result.

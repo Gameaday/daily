@@ -582,5 +582,29 @@
     "q": "THE SOUL BECOMES DYED WITH THE COLOR OF ITS THOUGHTS.",
     "via": "Meditations",
     "provenance": "reviewed 2026-10-30"
+  },
+  {
+    "id": "england-expects",
+    "by": "nelson",
+    "q": "ENGLAND EXPECTS THAT EVERY MAN WILL DO HIS DUTY.",
+    "y": 1805,
+    "via": "his last signal before Trafalgar, hoisted in Popham’s code",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "the-analytical-engine-weaves",
+    "by": "ada",
+    "q": "THE ANALYTICAL ENGINE WEAVES ALGEBRAICAL PATTERNS JUST AS THE JACQUARD-LOOM WEAVES FLOWERS AND LEAVES.",
+    "y": 1843,
+    "via": "her Note A to the Sketch of the Analytical Engine",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "a-short-distance-ahead",
+    "by": "turing",
+    "q": "WE CAN ONLY SEE A SHORT DISTANCE AHEAD, BUT WE CAN SEE PLENTY THERE THAT NEEDS TO BE DONE.",
+    "y": 1950,
+    "via": "the close of Computing Machinery and Intelligence",
+    "provenance": "reviewed 2026-11-01"
   }
 ]

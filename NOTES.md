@@ -458,13 +458,15 @@ the result.
 
 ## Runway batch (done 2026-11-01)
 
-A second growth pass, sized so no bank repeats before the end of March:
-brunch seats one hundred fifty moments, lightbox banks one hundred fifty
-designs, rounds walks one hundred fifty events, fermi asks one hundred
-twenty figures, cipher hides one hundred twenty-one quotes, museum
-displays one hundred artifacts, sift sorts one hundred and one boards,
-and the twist banks grow by fifteen tellings each (bogus ninety-seven,
-well-actually ninety-five). Superlative stays capped at its one hundred
+A second growth pass for the winter: brunch seats one hundred fifty
+moments, lightbox banks one hundred fifty designs, rounds walks one
+hundred fifty events, and those three stay fresh past the end of
+March. Fermi asks one hundred twenty figures, cipher hides one
+hundred twenty-one quotes, museum displays one hundred artifacts,
+sift sorts one hundred and one boards, and the twist banks grow by
+fifteen tellings each (bogus ninety-seven, well-actually ninety-
+five), so every bank is new to every player through the new year and
+well into February. Superlative stays capped at its one hundred
 twelve people-derived boards and repeats from late February; lifting it
 means growing the people layer, which deliberately waits. The recipe
 banks append in file order as before, day pins hold, and the stores and

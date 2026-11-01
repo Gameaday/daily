@@ -4090,5 +4090,765 @@
         ]
       }
     ]
+  },
+  {
+    "id": "the-tudor-court",
+    "t": "The Tudor Court",
+    "cats": [
+      {
+        "n": "Monarchs of the Tudor line",
+        "i": [
+          "henry-vii",
+          "henry-viii",
+          "elizabeth-i"
+        ]
+      },
+      {
+        "n": "Wives of Henry VIII",
+        "i": [
+          "anne-boleyn",
+          "jane-seymour",
+          "catherine-parr"
+        ]
+      },
+      {
+        "n": "Ministers and spymasters",
+        "i": [
+          "thomas-cromwell",
+          "thomas-more",
+          "walsingham"
+        ]
+      },
+      {
+        "n": "Queens and rivals abroad",
+        "i": [
+          "mary-queen-of-scots",
+          "catherine-de-medici",
+          "philip-ii"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-scientific-revolution",
+    "t": "The Scientific Revolution",
+    "cats": [
+      {
+        "n": "Astronomers who moved the Earth",
+        "i": [
+          "copernicus",
+          "kepler",
+          "galileo"
+        ]
+      },
+      {
+        "n": "Fellows of the Royal Society",
+        "i": [
+          "newton",
+          "hooke",
+          "halley"
+        ]
+      },
+      {
+        "n": "Natural philosophers",
+        "i": [
+          "descartes",
+          "huygens",
+          "boyle"
+        ]
+      },
+      {
+        "n": "Books and trials",
+        "i": [
+          "de-revolutionibus",
+          "galileo-condemned",
+          "principia-mathematica"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-discovery",
+    "t": "The Age of Discovery",
+    "cats": [
+      {
+        "n": "Ocean captains",
+        "i": [
+          "columbus",
+          "da-gama",
+          "magellan"
+        ]
+      },
+      {
+        "n": "Conquistadors",
+        "i": [
+          "cortes",
+          "pizarro",
+          "de-soto"
+        ]
+      },
+      {
+        "n": "Sponsors and mapmakers",
+        "i": [
+          "isabella",
+          "mercator",
+          "vespucci"
+        ]
+      },
+      {
+        "n": "Landfall and firsts",
+        "i": [
+          "columbus-landfall",
+          "magellan-departs",
+          "circumnavigation-completed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-enlightenment",
+    "t": "The Enlightenment",
+    "cats": [
+      {
+        "n": "The French philosophes",
+        "i": [
+          "voltaire",
+          "rousseau",
+          "diderot"
+        ]
+      },
+      {
+        "n": "The Scottish Enlightenment",
+        "i": [
+          "hume",
+          "smith",
+          "watt"
+        ]
+      },
+      {
+        "n": "Pamphleteers and reformers",
+        "i": [
+          "paine",
+          "wollstonecraft",
+          "jefferson"
+        ]
+      },
+      {
+        "n": "Sciences of the age",
+        "i": [
+          "lavoisier",
+          "franklin",
+          "linnaeus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "florence-of-the-medici",
+    "t": "Florence of the Medici",
+    "cats": [
+      {
+        "n": "The family",
+        "i": [
+          "cosimo",
+          "lorenzo",
+          "catherine-de-medici"
+        ]
+      },
+      {
+        "n": "Painters they knew",
+        "i": [
+          "botticelli",
+          "leonardo",
+          "michelangelo"
+        ]
+      },
+      {
+        "n": "Florentine pens",
+        "i": [
+          "dante",
+          "machiavelli",
+          "savonarola"
+        ]
+      },
+      {
+        "n": "In bronze and marble",
+        "i": [
+          "donatello",
+          "verrocchio",
+          "michelangelos-david"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "crowned-england",
+    "t": "Crowned England",
+    "cats": [
+      {
+        "n": "Normans and Plantagenets",
+        "i": [
+          "william-the-conqueror",
+          "henry-iii",
+          "edward-i"
+        ]
+      },
+      {
+        "n": "The Tudors",
+        "i": [
+          "henry-vii",
+          "henry-viii",
+          "elizabeth-i"
+        ]
+      },
+      {
+        "n": "The Stuarts",
+        "i": [
+          "james-i",
+          "charles-i",
+          "charles-ii"
+        ]
+      },
+      {
+        "n": "Hanoverians and after",
+        "i": [
+          "george-ii",
+          "george-iii",
+          "victoria"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-revolutions",
+    "t": "The Age of Revolutions",
+    "cats": [
+      {
+        "n": "American revolutionaries",
+        "i": [
+          "washington",
+          "jefferson",
+          "adams"
+        ]
+      },
+      {
+        "n": "French revolutionaries",
+        "i": [
+          "robespierre",
+          "danton",
+          "marat"
+        ]
+      },
+      {
+        "n": "Revolutions in the Americas",
+        "i": [
+          "haitian-revolution-begins",
+          "mexican-independence",
+          "brazil-independence"
+        ]
+      },
+      {
+        "n": "Kings who lost",
+        "i": [
+          "louis-xvi",
+          "george-iii",
+          "charles-i"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-medieval-horizon",
+    "t": "The Medieval Horizon",
+    "cats": [
+      {
+        "n": "Travelers east and west",
+        "i": [
+          "marco-polo",
+          "ibn-battuta",
+          "xuanzang"
+        ]
+      },
+      {
+        "n": "Men of learning",
+        "i": [
+          "al-idrisi",
+          "ibn-sina",
+          "omar-khayyam"
+        ]
+      },
+      {
+        "n": "Warriors of the steppe",
+        "i": [
+          "genghis-khan",
+          "kublai-khan",
+          "ogedei-khan"
+        ]
+      },
+      {
+        "n": "Pilgrimages and campaigns",
+        "i": [
+          "ibn-battuta-departs",
+          "mansa-musa-pilgrimage",
+          "first-crusade-jerusalem"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "athens-at-its-height",
+    "t": "Athens at Its Height",
+    "cats": [
+      {
+        "n": "Tragic poets",
+        "i": [
+          "aeschylus",
+          "sophocles",
+          "euripides"
+        ]
+      },
+      {
+        "n": "The philosopher’s line",
+        "i": [
+          "socrates",
+          "plato",
+          "aristotle"
+        ]
+      },
+      {
+        "n": "Wars against Persia",
+        "i": [
+          "marathon",
+          "thermopylae",
+          "salamis"
+        ]
+      },
+      {
+        "n": "Greek minds abroad",
+        "i": [
+          "euclid",
+          "archimedes",
+          "ptolemy"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-computing-pioneers",
+    "t": "The Computing Pioneers",
+    "cats": [
+      {
+        "n": "The engine’s architects",
+        "i": [
+          "babbage",
+          "ada",
+          "turing"
+        ]
+      },
+      {
+        "n": "Minds of logic",
+        "i": [
+          "boole",
+          "de-morgan",
+          "leibniz"
+        ]
+      },
+      {
+        "n": "Machines of the century",
+        "i": [
+          "eniac-unveiled",
+          "arpanet-first-message",
+          "ibm-pc"
+        ]
+      },
+      {
+        "n": "The war of codes",
+        "i": [
+          "rejewski",
+          "elizebeth-friedman",
+          "noor-inayat-khan"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-secret-war",
+    "t": "The Secret War",
+    "cats": [
+      {
+        "n": "The Cambridge ring",
+        "i": [
+          "kim-philby",
+          "donald-maclean",
+          "guy-burgess"
+        ]
+      },
+      {
+        "n": "Women of the secret war",
+        "i": [
+          "virginia-hall",
+          "noor-inayat-khan",
+          "mata-hari"
+        ]
+      },
+      {
+        "n": "Codes and their breakers",
+        "i": [
+          "rejewski",
+          "elizebeth-friedman",
+          "walsingham"
+        ]
+      },
+      {
+        "n": "Writings no one can read",
+        "i": [
+          "voynich-manuscript",
+          "phaistos-disc",
+          "quipu"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-the-novel",
+    "t": "The Age of the Novel",
+    "cats": [
+      {
+        "n": "The Brontes",
+        "i": [
+          "charlotte-bronte",
+          "emily-bronte",
+          "anne-bronte"
+        ]
+      },
+      {
+        "n": "Novelists of the age",
+        "i": [
+          "dickens",
+          "thackeray",
+          "trollope"
+        ]
+      },
+      {
+        "n": "Women of the English novel",
+        "i": [
+          "austen",
+          "george-eliot",
+          "gaskell"
+        ]
+      },
+      {
+        "n": "Across the Atlantic",
+        "i": [
+          "poe",
+          "melville",
+          "twain"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-empire-of-rome",
+    "t": "The Roman Empire",
+    "cats": [
+      {
+        "n": "Emperors of the early empire",
+        "i": [
+          "augustus",
+          "nero",
+          "trajan"
+        ]
+      },
+      {
+        "n": "Writers of the city",
+        "i": [
+          "virgil",
+          "ovid",
+          "cicero"
+        ]
+      },
+      {
+        "n": "Healers and chroniclers of the empire",
+        "i": [
+          "galen",
+          "ptolemy",
+          "plutarch"
+        ]
+      },
+      {
+        "n": "Crisis and fall",
+        "i": [
+          "antonine-plague",
+          "fall-of-western-rome",
+          "plague-of-justinian"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-quantum-century",
+    "t": "The Quantum Century",
+    "cats": [
+      {
+        "n": "Relativity and quanta",
+        "i": [
+          "einstein",
+          "planck",
+          "bohr"
+        ]
+      },
+      {
+        "n": "Inside the atom",
+        "i": [
+          "jj-thomson",
+          "rutherford",
+          "fermi"
+        ]
+      },
+      {
+        "n": "The bomb and its aftermath",
+        "i": [
+          "trinity-test",
+          "chernobyl-disaster",
+          "gravitational-waves-detected"
+        ]
+      },
+      {
+        "n": "Women of physics",
+        "i": [
+          "curie",
+          "leavitt",
+          "vera-rubin"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-renaissance-workshop",
+    "t": "The Renaissance Workshop",
+    "cats": [
+      {
+        "n": "The masters",
+        "i": [
+          "leonardo",
+          "michelangelo",
+          "raphael"
+        ]
+      },
+      {
+        "n": "Patrons and princes",
+        "i": [
+          "lorenzo",
+          "julius-ii",
+          "francis-i"
+        ]
+      },
+      {
+        "n": "Venice and the north",
+        "i": [
+          "titian",
+          "giovanni-bellini",
+          "gentile-bellini"
+        ]
+      },
+      {
+        "n": "In bronze and marble",
+        "i": [
+          "donatello",
+          "verrocchio",
+          "michelangelos-david"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-age-of-engineers",
+    "t": "The Age of Engineers",
+    "cats": [
+      {
+        "n": "Masters of steam",
+        "i": [
+          "watt",
+          "stephenson",
+          "brunel"
+        ]
+      },
+      {
+        "n": "Motor men of two continents",
+        "i": [
+          "benz",
+          "daimler",
+          "henry-ford"
+        ]
+      },
+      {
+        "n": "Sparks and wires",
+        "i": [
+          "telephone-patent",
+          "edison-lamp",
+          "baird-television"
+        ]
+      },
+      {
+        "n": "Time on the ocean",
+        "i": [
+          "john-harrison",
+          "cook",
+          "flinders"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-naturalists",
+    "t": "The Naturalists",
+    "cats": [
+      {
+        "n": "Naturalists of the voyage",
+        "i": [
+          "darwin",
+          "humboldt",
+          "banks"
+        ]
+      },
+      {
+        "n": "Botanists and systematists",
+        "i": [
+          "linnaeus",
+          "solander",
+          "hooker"
+        ]
+      },
+      {
+        "n": "Men of anatomy",
+        "i": [
+          "galen",
+          "vesalius",
+          "harvey"
+        ]
+      },
+      {
+        "n": "Medicine’s turning points",
+        "i": [
+          "first-vaccination",
+          "penicillin-discovery",
+          "smallpox-eradicated"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "around-the-world",
+    "t": "Around the World",
+    "cats": [
+      {
+        "n": "Round the world by sail",
+        "i": [
+          "magellan",
+          "drake",
+          "cook"
+        ]
+      },
+      {
+        "n": "The stratosphere and the deep",
+        "i": [
+          "auguste-piccard",
+          "jacques-piccard",
+          "cousteau"
+        ]
+      },
+      {
+        "n": "Orbit",
+        "i": [
+          "gagarin-flight",
+          "apollo-11-landing",
+          "luna-2"
+        ]
+      },
+      {
+        "n": "The maps they filled in",
+        "i": [
+          "mercator",
+          "al-idrisi",
+          "tasman"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "the-impressionists-paris",
+    "t": "The Impressionists’ Paris",
+    "cats": [
+      {
+        "n": "The impressionists",
+        "i": [
+          "monet",
+          "renoir",
+          "pissarro"
+        ]
+      },
+      {
+        "n": "The circle at the cafe",
+        "i": [
+          "manet",
+          "degas",
+          "cassatt"
+        ]
+      },
+      {
+        "n": "Their forerunners",
+        "i": [
+          "delacroix",
+          "turner",
+          "constable"
+        ]
+      },
+      {
+        "n": "The city on display",
+        "i": [
+          "louvre-opens",
+          "eiffel-tower-opens",
+          "first-modern-olympics"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "crown-jewels",
+    "t": "Crown Jewels",
+    "cats": [
+      {
+        "n": "Famous diamonds",
+        "i": [
+          "hope-diamond",
+          "koh-i-noor",
+          "cullinan-diamond"
+        ]
+      },
+      {
+        "n": "Regalia of the realms",
+        "i": [
+          "iron-crown-of-lombardy",
+          "stone-of-scone",
+          "imperial-faberge-eggs"
+        ]
+      },
+      {
+        "n": "Men of fabulous wealth",
+        "i": [
+          "mansa-musa",
+          "shah-jahan",
+          "nader-shah"
+        ]
+      },
+      {
+        "n": "Relics of state",
+        "i": [
+          "magna-carta",
+          "star-spangled-banner",
+          "liberty-bell"
+        ]
+      }
+    ]
   }
 ]

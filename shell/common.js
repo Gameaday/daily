@@ -117,18 +117,44 @@ const SHELL = (() => {
         return;
       }
       box.innerHTML = '<div class="curve-note">checking the global curve\u2026</div>';
+      /* One tally per game-day: the first sync submits the result, a later
+         visit of the same day reads the curve back with a GET, so a reload
+         never moves the day count twice. The flag is written only after a
+         live reply, so a play made offline still submits on a later visit. */
       let id = '';
+      let stored = null;
       try {
         id = localStorage.getItem('warmup.id');
         if (!id){ id = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('warmup.id', id); }
+        stored = JSON.parse(localStorage.getItem('warmup.sync.' + game));
       } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
+      const synced = !!(stored && typeof stored === 'object' && stored.ok === 1
+        && stored.d === dayIndex && typeof stored.v === 'number');
+      const bases = ['/api', 'http://localhost:8787', 'http://127.0.0.1:8787'];
+      const tryBases = (makeReq) => {
+        const attempt = (i) => (i >= bases.length ? Promise.reject(new Error('unreachable'))
+          : makeReq(bases[i]).catch(() => attempt(i + 1)));
+        return attempt(0);
+      };
+      if (synced){
+        const get = (base) => fetch(base + '/dist?game=' + encodeURIComponent(game)
+          + '&day=' + dayIndex + '&v=' + encodeURIComponent(stored.v))
+          .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+        tryBases(get)
+          .then(d => renderBoard(d))
+          .catch(() => { box.innerHTML = ''; });
+        return;
+      }
       const payload = JSON.stringify({ game: game, day: dayIndex, value: value, id: id });
       const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
         .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
-      post('/api')
-        .catch(() => post('http://localhost:8787'))
-        .catch(() => post('http://127.0.0.1:8787'))
-        .then(d => renderBoard(d))
+      tryBases(post)
+        .then(d => {
+          if (!d || d.archived !== true){
+            try { localStorage.setItem('warmup.sync.' + game, JSON.stringify({ d: dayIndex, ok: 1, v: value })); } catch(e){}
+          }
+          renderBoard(d);
+        })
         .catch(() => { box.innerHTML = '<div class="curve-note">global curve offline \u2014 playing solo today</div>'; });
     };
   }

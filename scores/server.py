@@ -16,11 +16,12 @@ Design rules (deliberate):
   weights. Written once, read-only forever. This is the only disk write
   anywhere in the service
 - warm start: on boot, today's archived partial board (a mid-day restart
-  flushed it) returns to the live curve, so a compose update or a host
-  reboot never resets the day
-- client ids are hashed to 8 bytes and kept only in a transient dedupe set:
-  the first submission of the day stands; reloads get a personalized reply
-  but do not retally
+  flushed it) returns to the live curve together with its dedupe set, so
+  a compose update or a host reboot neither resets nor re-opens the day
+- client ids are hashed to 8 bytes and kept in a per-day dedupe set that
+  travels with the archive snapshot: the first submission of the day
+  stands, reloads get a personalized reply but do not retally, and a
+  mid-day restart restores the set so revisits cannot re-open the day
 - per-IP daily request caps keep scripted flooding from doing damage:
   /health is exempt (the container healthcheck must never trip them) and
   the caps sit orders of magnitude above human play
@@ -30,7 +31,7 @@ Design rules (deliberate):
 
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
-    GET  /dist?game=&day=                           -> snapshot (today live, past days from the archive)
+    GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
     GET  /health                                    -> {"ok": true, "day", "num"}
@@ -154,7 +155,9 @@ def write_archive(game, day):
 
     Written once and then read-only: if a snapshot already exists (a mid-day
     restart archived a partial day), only a strictly larger tally replaces
-    it. A failed write must never take the service down.
+    it. The day's dedupe set rides along with the numbers so a warm start
+    can never re-open the day. A failed write must never take the service
+    down.
     """
     st = STATS.get((game, day))
     if not st or st["n"] == 0:
@@ -172,6 +175,7 @@ def write_archive(game, day):
         "game": game, "day": day, "date": day_date(day),
         "n": st["n"], "sum": st["sum"], "sumsq": st["sumsq"],
         "min": st["min"], "max": st["max"], "bins": st["bins"],
+        "seen": sorted(SEEN.get((game, day), ())),
         "edges": SPECS[game]["edges"], "better": SPECS[game]["better"],
     }
     try:
@@ -284,7 +288,7 @@ def snapshot(game, day, value=None, st=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.0"
+    server_version = "warmup-curve/4.1"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -361,6 +365,19 @@ class Handler(BaseHTTPRequestHandler):
             except ValueError:
                 self._json({"error": "bad day"}, 400)
                 return
+            # optional value: a revisit that already synced for the day
+            # fetches its personalized snapshot here without tallying
+            value = None
+            raw_v = (qs.get("v") or [None])[0]
+            if raw_v is not None:
+                try:
+                    value = float(raw_v)
+                except ValueError:
+                    self._json({"error": "bad value"}, 400)
+                    return
+                if not math.isfinite(value) or abs(value) > MAX_ABS_VALUE:
+                    self._json({"error": "bad value"}, 400)
+                    return
             today = current_day_index()
             with LOCK:
                 flush_stale()
@@ -368,9 +385,9 @@ class Handler(BaseHTTPRequestHandler):
                     self._json({"error": "future day not available"}, 403)
                     return
                 if day == today:
-                    payload = snapshot(game, day)
+                    payload = snapshot(game, day, value)
                 else:
-                    payload = snapshot(game, day, st=archived_stats(load_archive(game, day)))
+                    payload = snapshot(game, day, value, st=archived_stats(load_archive(game, day)))
                     payload["archived"] = True
             self._json(payload)
         elif path == "/puzzle":
@@ -518,9 +535,16 @@ def main():
     today = current_day_index()
     with LOCK:
         for game in SPECS:
-            st = archived_stats(load_archive(game, today))
+            rec = load_archive(game, today)
+            st = archived_stats(rec)
             if st:
                 STATS[(game, today)] = st
+                # the dedupe set rides along with the snapshot: without it
+                # a restart would re-open the day and re-count every revisit
+                seen = rec.get("seen") if isinstance(rec, dict) else None
+                if isinstance(seen, list):
+                    SEEN.setdefault((game, today), set()).update(
+                        d for d in seen if isinstance(d, str) and len(d) <= 16)
 
     def _stop(signum, frame):
         raise KeyboardInterrupt()

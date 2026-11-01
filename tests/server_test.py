@@ -3,9 +3,10 @@
 
 Spawns the real server on a scratch port and exercises the API with urllib:
 health (bare and /api-prefixed), submit + dedupe (first submission of the day
-stands), the /dist snapshot, strict input validation, fresh-day counting
-(stale submits answered from the archive, future days rejected), and the
-archive handoff itself (a unit section that imports the module and walks a
+stands), the /dist snapshot (with and without a personalizing value), strict
+input validation, fresh-day counting (stale submits answered from the
+archive, future days rejected), and the archive handoff itself, including
+the dedupe set that survives a restart (a unit section that imports the module and walks a
 day over midnight). Stdlib only - no pytest, no requests, no docker needed.
 
 Run: python3 tests/server_test.py   (exit 0 = pass, 1 = fail)
@@ -226,6 +227,11 @@ def main():
               "dist returns histogram bins")
         s, b = req("GET", "/dist?game=fermi&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "GET /dist (no prefix) works")
+        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY) + "&v=3")
+        check(s == 200 and b.get("count") == 2 and b.get("beat") in (0, 1, 2),
+              "GET /dist with a value personalizes without tallying")
+        s, _b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY) + "&v=abc")
+        check(s == 400, "GET /dist with a bad value is rejected")
 
         # --- validation: the server is the source of truth ---
         s, _b = post("/api/submit", {"game": "nope", "day": TODAY, "value": 1,
@@ -411,6 +417,11 @@ def main():
                                 port=PORT4)
                     check(s == 200 and b.get("count") == 2,
                           "warm start: new plays tally on top of the restored board")
+                    s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+                                                "value": 9, "better": "high", "id": "w1"},
+                                port=PORT4)
+                    check(s == 200 and b.get("count") == 2 and b.get("mean") == 5,
+                          "warm start: a pre-restart id stays deduped (no re-tally on revisit)")
             finally:
                 proc4b.terminate()
                 try:
@@ -443,6 +454,8 @@ def main():
         rec = srv.load_archive("rounds", day)
         check(rec and rec["n"] == 2 and rec["sum"] == 5, "unit: snapshot keeps plays + distribution")
         check(rec.get("date") == srv.day_date(day), "unit: snapshot labels the ET date")
+        check(isinstance(rec.get("seen"), list) and len(rec["seen"]) == 2,
+              "unit: the snapshot carries the day's dedupe set")
         # the day rolls over: the stale board flushes to the archive and dies
         real_today = srv.current_day_index
         srv.current_day_index = lambda: day + 1

@@ -18,11 +18,15 @@ async function run(h){
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, 4, 'well-actually: curve value 4');
     /* Regression: a reload used to lose the curve because syncBoard only
-       fired from finish(), which does not run again for a finished day. */
+       fired from finish(), which does not run again for a finished day.
+       Now the reload reads the curve back with a GET instead of posting,
+       so the count for the day never moves twice. */
     r = h.boot('well-actually', EXP, { now: T0, store });
     await h.flush();
-    h.ok(r.env.fetchLog.length >= 1 && h.lastPost(r.env).body.value === 4,
-      'well-actually: curve re-fires on reload (regression)');
+    h.ok(r.env.fetchLog.length === 0,
+      'well-actually: a reload re-tallies nothing (regression)');
+    h.ok(String(r.env.els.curve.innerHTML).indexOf('you-mark') >= 0,
+      'well-actually: the reload still renders the curve');
     r = h.boot('well-actually', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'well-actually: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'well-actually: streak preserved');

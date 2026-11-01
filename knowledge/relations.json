@@ -4373,4 +4373,104 @@
     "w": "The Sherpa who pressed an offering into the highest snow",
     "t": "participant"
   }
+,
+  {
+    "a": "oda-nobunaga",
+    "b": "toyotomi-hideyoshi",
+    "y": 1582,
+    "w": "The sandal bearer who rose to finish his lord’s unification",
+    "t": "successor"
+  },
+  {
+    "a": "toyotomi-hideyoshi",
+    "b": "tokugawa-ieyasu",
+    "y": 1598,
+    "w": "The ally who took the last step of the unification after he died",
+    "t": "successor"
+  },
+  {
+    "a": "li-bai",
+    "b": "du-fu",
+    "y": 744,
+    "w": "The elder poet Du Fu kept addressing from his own quiet exile",
+    "t": "friend"
+  },
+  {
+    "a": "ramanujan",
+    "b": "godfrey-hardy",
+    "y": 1914,
+    "w": "The Cambridge mathematician who read the letters from Madras and answered",
+    "t": "colleague"
+  },
+  {
+    "a": "tagore",
+    "b": "gandhi",
+    "y": 1921,
+    "w": "The open letters the two exchanged on what freedom should mean",
+    "t": "correspondent"
+  },
+  {
+    "a": "al-biruni",
+    "b": "ibn-sina",
+    "w": "The questions that drew from the younger man a famous defense of Aristotle",
+    "t": "correspondent"
+  },
+  {
+    "a": "ramakrishna",
+    "b": "vivekananda",
+    "w": "The mystic of Dakshineswar and the disciple who carried him west",
+    "t": "teacher"
+  },
+  {
+    "a": "moctezuma-ii",
+    "b": "cortes",
+    "y": 1519,
+    "w": "The hostage the conquistador walked out of his own capital",
+    "t": "opposed"
+  },
+  {
+    "a": "shivaji",
+    "b": "aurangzeb",
+    "y": 1670,
+    "w": "The Deccan raids the Mughal emperor could never quite answer",
+    "t": "opposed"
+  },
+  {
+    "a": "usman-dan-fodio",
+    "b": "nana-asmau",
+    "w": "The founder of Sokoto and the daughter who kept its history in verse",
+    "t": "family"
+  },
+  {
+    "a": "confucius",
+    "b": "zhu-xi",
+    "w": "The Analects this late reader set at the heart of the examinations",
+    "t": "influence"
+  },
+  {
+    "a": "yongle",
+    "b": "zheng-he",
+    "y": 1405,
+    "w": "The emperor whose orders sent the treasure fleets to the Swahili coast",
+    "t": "patron"
+  },
+  {
+    "a": "sarojini-naidu",
+    "b": "gandhi",
+    "y": 1925,
+    "w": "The poet who presided over the Congress and marched beside him",
+    "t": "colleague"
+  },
+  {
+    "a": "akbar",
+    "b": "aurangzeb",
+    "w": "The great grandson who turned against the policy of accommodation",
+    "t": "family"
+  },
+  {
+    "a": "kangxi",
+    "b": "qianlong",
+    "w": "The grandson who grew up in the peace the longest reign had won",
+    "t": "family"
+  }
 ]

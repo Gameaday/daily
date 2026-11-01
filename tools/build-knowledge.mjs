@@ -49,14 +49,20 @@
 
    - superlative is a recipe over people: every life the layer dates
      at both ends joins the pool in canonical id order, the pool cuts
-     into groups of four, and each group serves the question its own
-     numbers can settle alone, the longest life or the first or last
-     birth; the three questions rotate by group and a group no
-     question can decide never serves. When the numbers seat every
-     life a superlative it tops, longest, shortest or nearest the
+     into groups of four, and the recipe's themed cohorts follow, so
+     a well documented life can serve a second time when a different
+     cohort asks a different question of it. Eight questions rotate
+     by board, the longest or shortest life, the first or last
+     birth, and the measured ones, reign, voyages, works and height,
+     which only count the lives a source actually measured, at
+     least two, with the maximum unique, so a tie or a lone number
+     never decides; a cohort whose hint cannot settle falls through
+     to the rotation. When the numbers seat every life a
+     superlative it tops, longest, shortest or nearest the
      middle, the board also carries a bonus match: four chips, one
      per life, that the player assigns; the one life no dim tops
-     takes the most-average chip
+     takes the most-average chip, and the fine print carries the
+     trivia the k field records
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -644,26 +650,70 @@ function compileFermi(){
 /* ---------------- recipe: superlative ---------------- */
 function compileSuperlative(){
   if (!Array.isArray(people)) return null;
+  const byId = {};
+  for (const p of people) byId[p.id] = p;
+  /* a measured question only counts the lives a source actually
+     measured: at least two measured, and the maximum must be
+     unique, so a tie never decides and one number never serves */
+  function measuredPick(vals){
+    const pairs = [];
+    vals.forEach((x, i) => { if (x !== undefined) pairs.push({ i, x }); });
+    if (pairs.length < 2) return -1;
+    const best = Math.max(...pairs.map(o => o.x));
+    if (pairs.filter(o => o.x === best).length !== 1) return -1;
+    return pairs.find(o => o.x === best).i;
+  }
   const TYPES = [
     { t: 'Longevity', q: 'Four lives from the record. Who lived the longest life?',
-      pick: g => {
-        const spans = g.map(p => p.died - p.born);
-        const best = Math.max(...spans);
-        return spans.filter(s => s === best).length === 1 ? spans.indexOf(best) : -1;
-      } },
+      pick: g => { const spans = g.map(p => p.died - p.born); const best = Math.max(...spans); return spans.filter(s => s === best).length === 1 ? spans.indexOf(best) : -1; } },
+    { t: 'Reign', q: 'Four lives from the record. Who reigned the longest?',
+      pick: g => measuredPick(g.map(p => p.reign)) },
     { t: 'Birth Order', q: 'Four lives from the record. Who was born first?',
-      pick: g => {
-        const borns = g.map(p => p.born);
-        const best = Math.min(...borns);
-        return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1;
-      } },
+      pick: g => { const borns = g.map(p => p.born); const best = Math.min(...borns); return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1; } },
+    { t: 'Voyages', q: 'Four lives from the record. Who led the most voyages?',
+      pick: g => measuredPick(g.map(p => p.voy)) },
     { t: 'Birth Order', q: 'Four lives from the record. Who was born last?',
-      pick: g => {
-        const borns = g.map(p => p.born);
-        const best = Math.max(...borns);
-        return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1;
-      } }
+      pick: g => { const borns = g.map(p => p.born); const best = Math.max(...borns); return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1; } },
+    { t: 'Works', q: 'Four lives from the record. Who left the most works?',
+      pick: g => measuredPick(g.map(p => p.works)) },
+    { t: 'Longevity', q: 'Four lives from the record. Who lived the shortest life?',
+      pick: g => { const spans = g.map(p => p.died - p.born); const best = Math.min(...spans); return spans.filter(s => s === best).length === 1 ? spans.indexOf(best) : -1; } },
+    { t: 'Height', q: 'Four lives from the record. Who stood the tallest?',
+      pick: g => measuredPick(g.map(p => p.h)) }
   ];
+  /* the themed cohorts: the recipe seats well documented lives a
+     second time when a different cohort can ask a different
+     question of them; a hint the numbers cannot settle falls
+     through to the rotation like any pool board */
+  const recipe = readRecipe('superlative');
+  if (!Array.isArray(recipe)){
+    fail('superlative recipe must be an array of { ids, h } cohorts');
+    return null;
+  }
+  const cohorts = [];
+  for (const c of recipe){
+    if (!c || !Array.isArray(c.ids) || c.ids.length !== 4 || c.ids.some(id => !byId[id])){
+      fail('superlative recipe cohort needs four known lives: ' + JSON.stringify(c).slice(0, 80));
+      continue;
+    }
+    if (c.h !== undefined && !TYPES.some(x => x.t === c.h)){
+      fail('superlative recipe hint names no question: ' + c.h);
+      continue;
+    }
+    cohorts.push({ group: c.ids.map(id => byId[id]), hint: c.h });
+  }
+  function serve(group, rot0, hint){
+    if (hint){
+      const h = TYPES.find(x => x.t === hint);
+      if (h){ const a = h.pick(group); if (a >= 0) return { kind: h, a }; }
+    }
+    for (let k = 0; k < TYPES.length; k++){
+      const next = TYPES[(rot0 + k) % TYPES.length];
+      const a = next.pick(group);
+      if (a >= 0) return { kind: next, a };
+    }
+    return null;
+  }
   /* the bonus dims: every number now counts from both ends, so a
      middle life can top the shortest reign or the shortest life the
      way an extreme one tops the longest. The dates settle four dims
@@ -685,7 +735,8 @@ function compileSuperlative(){
     { q: 'was the most prolific', val: p => p.works, v: p => p.works + ' works' },
     { q: 'was the least prolific', val: p => -p.works, v: p => p.works + ' works', some: true },
     { q: 'reigned the longest', val: p => p.reign, v: p => p.reign + ' years' },
-    { q: 'reigned the shortest', val: p => -p.reign, v: p => p.reign + ' years', some: true }
+    { q: 'reigned the shortest', val: p => -p.reign, v: p => p.reign + ' years', some: true },
+    { q: 'sailed the most voyages', val: p => p.voy, v: p => p.voy + ' voyages', some: true }
   ];
   /* seat every life one superlative it tops, the fewest options
      first; a group nobody can seat whole serves no bonus, unless a
@@ -759,23 +810,37 @@ function compileSuperlative(){
     .filter(p => p && Number.isInteger(p.born) && Number.isInteger(p.died) && p.died >= p.born)
     .sort((p, q) => p.id < q.id ? -1 : p.id > q.id ? 1 : 0);
   const bank = [];
-  for (let i = 0; i + 4 <= pool.length; i += 4){
-    const group = pool.slice(i, i + 4);
-    if (new Set(group.map(p => p.n)).size !== 4) continue;
-    let kind = null, a = -1;
-    for (let k = 0; k < 3 && a < 0; k++){
-      const next = TYPES[(i / 4 + k) % 3];
-      const pick = next.pick(group);
-      if (pick >= 0){ kind = next; a = pick; }
-    }
-    if (a < 0) continue;
-    const entry = {
-      t: kind.t, q: kind.q, opts: group.map(p => p.n), a,
-      w: group.map(p => p.n + ' ' + (p.died - p.born) + ' (' + p.born + '-' + p.died + ')').join('; ') + '.'
+  function entry(group, served){
+    const e = {
+      t: served.kind.t, q: served.kind.q, opts: group.map(p => p.n), a: served.a,
+      w: group.map(p => p.n + ' ' + (p.died - p.born) + ' (' + p.born + '-' + p.died + ')' +
+        (p.k ? ' - ' + p.k : '')).join('; ') + '.'
     };
     const b = bonusFor(group);
-    if (b) entry.b = b;
-    bank.push(entry);
+    if (b) e.b = b;
+    return e;
+  }
+  for (let i = 0; i + 4 <= pool.length; i += 4){
+    const group = pool.slice(i, i + 4);
+    if (new Set(group.map(p => p.n)).size !== 4){
+      fail('superlative pool group seats a name twice: ' + group.map(p => p.id).join('/'));
+      continue;
+    }
+    const served = serve(group, bank.length, null);
+    if (!served) continue;
+    bank.push(entry(group, served));
+  }
+  for (const c of cohorts){
+    if (new Set(c.group.map(p => p.n)).size !== 4){
+      fail('superlative recipe cohort seats a name twice: ' + c.group.map(p => p.id).join('/'));
+      continue;
+    }
+    const served = serve(c.group, bank.length, c.hint);
+    if (!served){
+      fail('superlative recipe cohort serves no question: ' + c.group.map(p => p.id).join('/'));
+      continue;
+    }
+    bank.push(entry(c.group, served));
   }
   if (bank.length < LIST.minBank)
     fail('knowledge: superlative bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');

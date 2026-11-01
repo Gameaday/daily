@@ -1,0 +1,43 @@
+{
+  "order": ["bogus", "well-actually", "recycle-rings", "recycle-grid", "fermi",
+            "sift", "rounds", "trace", "lightbox", "sprint", "cipher",
+            "timeline", "museum", "thread", "brunch", "superlative"],
+  "gated": {
+    "bogus": "PUZZLES",
+    "well-actually": "PUZZLES",
+    "rounds": "EVENTS",
+    "fermi": "QS",
+    "cipher": "QUOTES",
+    "museum": "MUSEUM",
+    "lightbox": "DESIGNS",
+    "sift": "BOARDS",
+    "timeline": "EVENTS",
+    "brunch": "BRUNCH",
+    "superlative": "SUPERLATIVES"
+  },
+  "generator": ["sprint", "trace", "recycle-grid", "recycle-rings"],
+  "ledger": {
+    "bogus": ["bogus"],
+    "well-actually": ["well-actually"],
+    "recycle-rings": ["rings"],
+    "recycle-grid": ["grid", "grid-hard"],
+    "fermi": ["fermi"],
+    "sift": ["sift"],
+    "rounds": ["rounds"],
+    "trace": ["trace"],
+    "lightbox": ["lightbox"],
+    "sprint": ["sprint"],
+    "cipher": ["cipher"],
+    "timeline": ["timeline"],
+    "museum": ["museum"],
+    "thread": ["thread"],
+    "brunch": ["brunch"],
+    "superlative": ["superlative"]
+  },
+  "wordBank": ["recycle-grid", "recycle-rings", "trace"],
+  "minBank": 15,
+  "minTimelineBank": 40,
+  "timelineDays": 1000,
+  "minThreadNodes": 40,
+  "threadDays": 1000
+}

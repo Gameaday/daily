@@ -4,7 +4,8 @@
     "n": "Ada Lovelace",
     "d": "Mathematician, 1815-1852",
     "born": 1815,
-    "died": 1852
+    "died": 1852,
+    "k": "Her Note G saw the first published program"
   },
   {
     "id": "adams",
@@ -28,11 +29,27 @@
     "reign": 49
   },
   {
+    "id": "al-biruni",
+    "n": "Al-Biruni",
+    "d": "Polymath of Khwarazm, 973-1048",
+    "born": 973,
+    "died": 1048,
+    "k": "Measured the earth's size from an Indian fort"
+  },
+  {
     "id": "al-idrisi",
     "n": "Al-Idrisi",
     "d": "Geographer of the Norman court, 1100-1165",
     "born": 1100,
     "died": 1165
+  },
+  {
+    "id": "al-jazari",
+    "n": "Al-Jazari",
+    "d": "Engineer of the Artuqid court, 1136-1206",
+    "born": 1136,
+    "died": 1206,
+    "k": "His elephant water clock automated the hours"
   },
   {
     "id": "al-khwarizmi",
@@ -140,7 +157,8 @@
   {
     "id": "aristotle",
     "n": "Aristotle",
-    "d": "Philosopher and tutor of conquerors, 384-322 BCE"
+    "d": "Philosopher and tutor of conquerors, 384-322 BCE",
+    "k": "Tutored Alexander and founded the Lyceum"
   },
   {
     "id": "arkwright",
@@ -155,6 +173,14 @@
     "d": "Astronaut, 1930-2012",
     "born": 1930,
     "died": 2012
+  },
+  {
+    "id": "aryabhata",
+    "n": "Aryabhata",
+    "d": "Mathematician of the Gupta age, 476-550",
+    "born": 476,
+    "died": 550,
+    "k": "Gave pi to four decimals and the earth its spin"
   },
   {
     "id": "askia",
@@ -210,7 +236,8 @@
     "d": "Composer, 1685-1750",
     "born": 1685,
     "died": 1750,
-    "works": 1080
+    "works": 1080,
+    "k": "The BWV catalogue counts his works at 1080"
   },
   {
     "id": "bacon",
@@ -218,6 +245,14 @@
     "d": "Essayist and philosopher, 1561-1626",
     "born": 1561,
     "died": 1626
+  },
+  {
+    "id": "ban-zhao",
+    "n": "Ban Zhao",
+    "d": "Historian and tutor of the Han court, c. 45-117",
+    "born": 45,
+    "died": 117,
+    "k": "Finished the Book of Han and tutored the empress"
   },
   {
     "id": "banks",
@@ -232,6 +267,14 @@
     "d": "President, born 1961",
     "born": 1961,
     "h": 187
+  },
+  {
+    "id": "basho",
+    "n": "Basho",
+    "d": "Master of the travel haiku, 1644-1694",
+    "born": 1644,
+    "died": 1694,
+    "k": "The Narrow Road to the Deep North made walking a poem"
   },
   {
     "id": "baudelaire",
@@ -252,7 +295,8 @@
     "n": "Ludwig van Beethoven",
     "d": "Composer, 1770-1827",
     "born": 1770,
-    "died": 1827
+    "died": 1827,
+    "k": "Kept composing after the deafness took the halls"
   },
   {
     "id": "benedict-arnold",
@@ -303,6 +347,14 @@
     "d": "Actor of Warner’s marquee, 1908-1989",
     "born": 1908,
     "died": 1989
+  },
+  {
+    "id": "bhaskara-ii",
+    "n": "Bhaskara II",
+    "d": "Astronomer of the late golden age, 1114-1185",
+    "born": 1114,
+    "died": 1185,
+    "k": "His Siddhanta Shiromani weighed the earth's year"
   },
   {
     "id": "billy-the-kid",
@@ -393,6 +445,14 @@
     "died": 1691
   },
   {
+    "id": "brahmagupta",
+    "n": "Brahmagupta",
+    "d": "Astronomer of Ujjain, 598-668",
+    "born": 598,
+    "died": 668,
+    "k": "First to write down rules for zero"
+  },
+  {
     "id": "brahms",
     "n": "Johannes Brahms",
     "d": "Composer, 1833-1897",
@@ -451,7 +511,8 @@
   {
     "id": "caesar",
     "n": "Julius Caesar",
-    "d": "Roman general and dictator, 100-44 BCE"
+    "d": "Roman general and dictator, 100-44 BCE",
+    "k": "Crossed the Rubicon and never looked back"
   },
   {
     "id": "cagney",
@@ -618,6 +679,14 @@
     "d": "Roman orator and consul, 106-43 BCE"
   },
   {
+    "id": "cixi",
+    "n": "Cixi",
+    "d": "Empress dowager of the late Qing, 1835-1908",
+    "born": 1835,
+    "died": 1908,
+    "k": "Ruled from behind the curtain for half a century"
+  },
+  {
     "id": "clara-barton",
     "n": "Clara Barton",
     "d": "Founder of the American Red Cross, 1821-1912",
@@ -634,7 +703,8 @@
   {
     "id": "cleopatra",
     "n": "Cleopatra",
-    "d": "Last queen of Egypt, 69-30 BCE"
+    "d": "Last queen of Egypt, 69-30 BCE",
+    "k": "Egypt's last pharaoh charmed two Romans"
   },
   {
     "id": "cnut",
@@ -654,7 +724,9 @@
     "n": "Christopher Columbus",
     "d": "Explorer, 1451-1506",
     "born": 1451,
-    "died": 1506
+    "died": 1506,
+    "voy": 4,
+    "k": "Never knew he had found two new continents"
   },
   {
     "id": "commodus",
@@ -667,7 +739,8 @@
   {
     "id": "confucius",
     "n": "Confucius",
-    "d": "Teacher of Lu, 551-479 BCE"
+    "d": "Teacher of Lu, 551-479 BCE",
+    "k": "His sayings live on as the Analects"
   },
   {
     "id": "constable",
@@ -696,7 +769,9 @@
     "n": "James Cook",
     "d": "Explorer, 1728-1779",
     "born": 1728,
-    "died": 1779
+    "died": 1779,
+    "voy": 3,
+    "k": "Mapped more coastline than any navigator"
   },
   {
     "id": "copernicus",
@@ -752,14 +827,17 @@
     "n": "Marie Curie",
     "d": "Chemist of the radioactive elements, 1867-1934",
     "born": 1867,
-    "died": 1934
+    "died": 1934,
+    "k": "The only Nobel in two different sciences"
   },
   {
     "id": "da-gama",
     "n": "Vasco da Gama",
     "d": "Explorer, c. 1469-1524",
     "born": 1469,
-    "died": 1524
+    "died": 1524,
+    "voy": 3,
+    "k": "Found the sea road to India around the Cape"
   },
   {
     "id": "daguerre",
@@ -794,7 +872,8 @@
     "n": "Charles Darwin",
     "d": "Naturalist, 1809-1882",
     "born": 1809,
-    "died": 1882
+    "died": 1882,
+    "k": "Sat on the species book until Wallace wrote"
   },
   {
     "id": "david",
@@ -930,7 +1009,9 @@
     "n": "Francis Drake",
     "d": "Privateer and explorer, c. 1540-1596",
     "born": 1540,
-    "died": 1596
+    "died": 1596,
+    "voy": 1,
+    "k": "Singed the King of Spain's beard at Cadiz"
   },
   {
     "id": "du-bois",
@@ -938,6 +1019,14 @@
     "d": "Sociologist and writer, 1868-1963",
     "born": 1868,
     "died": 1963
+  },
+  {
+    "id": "du-fu",
+    "n": "Du Fu",
+    "d": "Poet historian of the An Lushan years, 712-770",
+    "born": 712,
+    "died": 770,
+    "k": "Later centuries call him the poet sage"
   },
   {
     "id": "duke-ellington",
@@ -971,7 +1060,8 @@
     "n": "Thomas Edison",
     "d": "Inventor, 1847-1931",
     "born": 1847,
-    "died": 1931
+    "died": 1931,
+    "k": "Held 1093 patents, an American record"
   },
   {
     "id": "edward-i",
@@ -1001,7 +1091,8 @@
     "n": "Albert Einstein",
     "d": "Theorist of relativity, 1879-1955",
     "born": 1879,
-    "died": 1955
+    "died": 1955,
+    "k": "Nobel for the photoelectric effect, not relativity"
   },
   {
     "id": "eisenhower",
@@ -1031,7 +1122,8 @@
     "d": "Queen of England, 1533-1603",
     "born": 1533,
     "died": 1603,
-    "reign": 45
+    "reign": 45,
+    "k": "The armada year made her Tilbury speech"
   },
   {
     "id": "elizebeth-friedman",
@@ -1180,11 +1272,27 @@
     "died": 1940
   },
   {
+    "id": "frida-kahlo",
+    "n": "Frida Kahlo",
+    "d": "Painter of Mexico City, 1907-1954",
+    "born": 1907,
+    "died": 1954,
+    "k": "Turned the bus crash and the corset into self portraits"
+  },
+  {
     "id": "frost",
     "n": "Robert Frost",
     "d": "Poet, 1874-1963",
     "born": 1874,
     "died": 1963
+  },
+  {
+    "id": "fukuzawa-yukichi",
+    "n": "Fukuzawa Yukichi",
+    "d": "Educator of Meiji Japan, 1835-1901",
+    "born": 1835,
+    "died": 1901,
+    "k": "Founded Keio and fronts the ten thousand yen note"
   },
   {
     "id": "fulton",
@@ -1212,7 +1320,8 @@
     "n": "Mahatma Gandhi",
     "d": "Leader of Indian independence, 1869-1948",
     "born": 1869,
-    "died": 1948
+    "died": 1948,
+    "k": "The salt march walked two hundred forty miles"
   },
   {
     "id": "garfield",
@@ -1256,7 +1365,8 @@
     "d": "Founder of the Mongol empire, 1162-1227",
     "born": 1162,
     "died": 1227,
-    "reign": 21
+    "reign": 21,
+    "k": "Founded the largest land empire in history"
   },
   {
     "id": "gentile-bellini",
@@ -1318,6 +1428,14 @@
     "died": 1516
   },
   {
+    "id": "godfrey-hardy",
+    "n": "G. H. Hardy",
+    "d": "Mathematician of Cambridge, 1877-1947",
+    "born": 1877,
+    "died": 1947,
+    "k": "Wrote A Mathematician's Apology"
+  },
+  {
     "id": "godfrey-of-bouillon",
     "n": "Godfrey of Bouillon",
     "d": "First ruler of crusader Jerusalem, died 1100",
@@ -1370,7 +1488,8 @@
     "id": "gutenberg",
     "n": "Johannes Gutenberg",
     "d": "Printer of Mainz, died 1468",
-    "died": 1468
+    "died": 1468,
+    "k": "The forty two line Bible started it all"
   },
   {
     "id": "guy-burgess",
@@ -1549,6 +1668,14 @@
     "d": "Physician of Cos, c. 460-370 BCE"
   },
   {
+    "id": "hiroshige",
+    "n": "Hiroshige",
+    "d": "Printmaker of the fifty three stations, 1797-1858",
+    "born": 1797,
+    "died": 1858,
+    "k": "His Tokaido stations framed the floating world"
+  },
+  {
     "id": "hitchcock",
     "n": "Alfred Hitchcock",
     "d": "The master of suspense, 1899-1980",
@@ -1563,6 +1690,14 @@
     "died": 1679
   },
   {
+    "id": "hokusai",
+    "n": "Hokusai",
+    "d": "Printmaker of Edo, 1760-1849",
+    "born": 1760,
+    "died": 1849,
+    "k": "The Great Wave off Kanagawa is his"
+  },
+  {
     "id": "holbein",
     "n": "Hans Holbein the Younger",
     "d": "Portraitist of the Tudor court, c. 1497-1543",
@@ -1575,6 +1710,15 @@
     "d": "Father of the modern submarine, 1841-1914",
     "born": 1841,
     "died": 1914
+  },
+  {
+    "id": "hongwu",
+    "n": "Hongwu",
+    "d": "Founding emperor of the Ming, 1328-1398",
+    "born": 1328,
+    "died": 1398,
+    "reign": 30,
+    "k": "The peasant monk who founded the Ming"
   },
   {
     "id": "hooke",
@@ -1616,7 +1760,8 @@
     "n": "Thomas Huxley",
     "d": "Biologist, 1825-1895",
     "born": 1825,
-    "died": 1895
+    "died": 1895,
+    "k": "Darwin's bulldog in the Oxford debate"
   },
   {
     "id": "huygens",
@@ -1633,6 +1778,14 @@
     "died": 1369
   },
   {
+    "id": "ibn-khaldun",
+    "n": "Ibn Khaldun",
+    "d": "Historian of the Maghreb, 1332-1406",
+    "born": 1332,
+    "died": 1406,
+    "k": "Wrote the first theory of the rise and fall of states"
+  },
+  {
     "id": "ibn-rushd",
     "n": "Ibn Rushd",
     "d": "The Commentator of Cordoba, 1126-1198",
@@ -1644,7 +1797,8 @@
     "n": "Ibn Sina",
     "d": "Physician of the canon, 980-1037",
     "born": 980,
-    "died": 1037
+    "died": 1037,
+    "k": "The Canon of Medicine taught Europe for centuries"
   },
   {
     "id": "isabella",
@@ -1772,7 +1926,8 @@
     "n": "Steve Jobs",
     "d": "Co-founder of Apple, 1955-2011",
     "born": 1955,
-    "died": 2011
+    "died": 2011,
+    "k": "The two Steves started in a garage"
   },
   {
     "id": "john-brown",
@@ -1868,6 +2023,15 @@
     "born": 482,
     "died": 565,
     "reign": 38
+  },
+  {
+    "id": "kangxi",
+    "n": "Kangxi",
+    "d": "Second emperor of the Qing, 1654-1722",
+    "born": 1654,
+    "died": 1722,
+    "reign": 61,
+    "k": "The longest verified reign in Chinese history"
   },
   {
     "id": "keats",
@@ -2008,7 +2172,8 @@
     "n": "Leonardo da Vinci",
     "d": "Painter and engineer, 1452-1519",
     "born": 1452,
-    "died": 1519
+    "died": 1519,
+    "k": "The notebooks run thirteen thousand pages"
   },
   {
     "id": "lewes",
@@ -2025,12 +2190,21 @@
     "died": 1809
   },
   {
+    "id": "li-bai",
+    "n": "Li Bai",
+    "d": "Poet of the Tang golden age, 701-762",
+    "born": 701,
+    "died": 762,
+    "k": "The court called him the Banished Immortal"
+  },
+  {
     "id": "lincoln",
     "n": "Abraham Lincoln",
     "d": "President, 1809-1865",
     "born": 1809,
     "died": 1865,
-    "h": 193
+    "h": 193,
+    "k": "The Gettysburg address ran two minutes"
   },
   {
     "id": "lindbergh",
@@ -2087,7 +2261,8 @@
     "d": "King of France, 1638-1715",
     "born": 1638,
     "died": 1715,
-    "reign": 72
+    "reign": 72,
+    "k": "Moved the court to Versailles"
   },
   {
     "id": "louis-xv",
@@ -2104,6 +2279,14 @@
     "born": 1754,
     "died": 1793,
     "reign": 18
+  },
+  {
+    "id": "lu-xun",
+    "n": "Lu Xun",
+    "d": "Founder of modern Chinese fiction, 1881-1936",
+    "born": 1881,
+    "died": 1936,
+    "k": "His True Story of Ah Q skewered the old order"
   },
   {
     "id": "ludwig-ii",
@@ -2147,7 +2330,9 @@
     "n": "Ferdinand Magellan",
     "d": "Explorer, c. 1480-1521",
     "born": 1480,
-    "died": 1521
+    "died": 1521,
+    "voy": 1,
+    "k": "Led the first voyage around the world and never finished it"
   },
   {
     "id": "malcolm-x",
@@ -2161,7 +2346,8 @@
     "n": "Nelson Mandela",
     "d": "President of South Africa, 1918-2013",
     "born": 1918,
-    "died": 2013
+    "died": 2013,
+    "k": "Twenty seven years a prisoner, one term a president"
   },
   {
     "id": "manet",
@@ -2174,7 +2360,8 @@
     "id": "mansa-musa",
     "n": "Mansa Musa",
     "d": "Emperor of Mali, died 1337",
-    "died": 1337
+    "died": 1337,
+    "k": "His hajj spent so much gold it moved its price"
   },
   {
     "id": "manuel-i",
@@ -2202,7 +2389,8 @@
     "n": "Marco Polo",
     "d": "Venetian traveller to the Yuan court, c. 1254-1324",
     "born": 1254,
-    "died": 1324
+    "died": 1324,
+    "k": "Dictated his book of marvels in a Genoese jail"
   },
   {
     "id": "marconi",
@@ -2370,7 +2558,8 @@
     "n": "Michelangelo",
     "d": "Sculptor and painter, 1475-1564",
     "born": 1475,
-    "died": 1564
+    "died": 1564,
+    "k": "Painted the Sistine standing on his own scaffold"
   },
   {
     "id": "mill",
@@ -2401,6 +2590,15 @@
     "died": 1674
   },
   {
+    "id": "moctezuma-ii",
+    "n": "Moctezuma II",
+    "d": "Ninth emperor of the Mexica, 1466-1520",
+    "born": 1466,
+    "died": 1520,
+    "reign": 18,
+    "k": "Met Cortes at the causeways of Tenochtitlan"
+  },
+  {
     "id": "moliere",
     "n": "Moliere",
     "d": "Playwright and actor, 1622-1673",
@@ -2427,7 +2625,8 @@
     "d": "Composer, 1756-1791",
     "born": 1756,
     "died": 1791,
-    "works": 626
+    "works": 626,
+    "k": "Buried in a common grave at thirty five"
   },
   {
     "id": "nader-shah",
@@ -2436,6 +2635,14 @@
     "born": 1688,
     "died": 1747,
     "reign": 11
+  },
+  {
+    "id": "nana-asmau",
+    "n": "Nana Asmau",
+    "d": "Scholar and poet of Sokoto, 1793-1864",
+    "born": 1793,
+    "died": 1864,
+    "k": "Her father's historian, she taught women in verse"
   },
   {
     "id": "nansen",
@@ -2451,7 +2658,8 @@
     "born": 1769,
     "died": 1821,
     "reign": 10,
-    "h": 168
+    "h": 168,
+    "k": "Crowned himself in Notre Dame"
   },
   {
     "id": "napoleon-iii",
@@ -2488,7 +2696,8 @@
     "n": "Isaac Newton",
     "d": "Mathematician and physicist, 1643-1727",
     "born": 1643,
-    "died": 1727
+    "died": 1727,
+    "k": "Wrote the Principia in eighteen months"
   },
   {
     "id": "ney",
@@ -2496,6 +2705,15 @@
     "d": "The bravest of the brave, 1769-1815",
     "born": 1769,
     "died": 1815
+  },
+  {
+    "id": "nezahualcoyotl",
+    "n": "Nezahualcoyotl",
+    "d": "Poet king of Texcoco, 1402-1472",
+    "born": 1402,
+    "died": 1472,
+    "reign": 41,
+    "k": "His poems survive in the Cantares Mexicanos"
   },
   {
     "id": "niepce",
@@ -2516,7 +2734,8 @@
     "n": "Florence Nightingale",
     "d": "Founder of modern nursing, 1820-1910",
     "born": 1820,
-    "died": 1910
+    "died": 1910,
+    "k": "The Lady with the Lamp made nursing a profession"
   },
   {
     "id": "noah-webster",
@@ -2531,6 +2750,22 @@
     "d": "The wireless operator of the SOE, 1914-1944",
     "born": 1914,
     "died": 1944
+  },
+  {
+    "id": "nur-jahan",
+    "n": "Nur Jahan",
+    "d": "Empress of the Mughal court, 1577-1645",
+    "born": 1577,
+    "died": 1645,
+    "k": "Coins were struck in her own name"
+  },
+  {
+    "id": "oda-nobunaga",
+    "n": "Oda Nobunaga",
+    "d": "First unifier of Japan, 1534-1582",
+    "born": 1534,
+    "died": 1582,
+    "k": "Ushered in the end of the warring states"
   },
   {
     "id": "odo",
@@ -2602,6 +2837,15 @@
     "died": 1809
   },
   {
+    "id": "pakal",
+    "n": "Pakal",
+    "d": "King of Palenque, 603-683",
+    "born": 603,
+    "died": 683,
+    "reign": 68,
+    "k": "His sarcophagus lid is the Maya masterpiece"
+  },
+  {
     "id": "pankhurst",
     "n": "Emmeline Pankhurst",
     "d": "Founder of the WSPU, 1858-1928",
@@ -2635,6 +2879,15 @@
     "d": "Claimant of the North Pole, 1856-1920",
     "born": 1856,
     "died": 1920
+  },
+  {
+    "id": "pedro-ii",
+    "n": "Pedro II",
+    "d": "Second and last emperor of Brazil, 1825-1891",
+    "born": 1825,
+    "died": 1891,
+    "reign": 58,
+    "k": "Won a war, freed the slaves, still lost the throne"
   },
   {
     "id": "pepys",
@@ -2761,6 +3014,23 @@
     "died": 1837
   },
   {
+    "id": "qianlong",
+    "n": "Qianlong",
+    "d": "Fourth emperor of the Qing, 1711-1799",
+    "born": 1711,
+    "died": 1799,
+    "reign": 60,
+    "k": "The Siku Quanshu abridged all Chinese letters"
+  },
+  {
+    "id": "qiu-jin",
+    "n": "Qiu Jin",
+    "d": "Revolutionary and poet of the late Qing, 1875-1907",
+    "born": 1875,
+    "died": 1907,
+    "k": "Beheaded for plotting the fall of the Qing"
+  },
+  {
     "id": "racine",
     "n": "Jean Racine",
     "d": "Tragedian, 1639-1699",
@@ -2775,9 +3045,41 @@
     "died": 1618
   },
   {
+    "id": "ramakrishna",
+    "n": "Ramakrishna",
+    "d": "Mystic of Dakshineswar, 1836-1886",
+    "born": 1836,
+    "died": 1886,
+    "k": "His sayings became a gospel a disciple wrote"
+  },
+  {
+    "id": "ramanujan",
+    "n": "Ramanujan",
+    "d": "Mathematician of Madras and Cambridge, 1887-1920",
+    "born": 1887,
+    "died": 1920,
+    "k": "Self taught, his notebooks still feed number theory"
+  },
+  {
+    "id": "rammohan-roy",
+    "n": "Rammohan Roy",
+    "d": "Reformer of Bengal, 1772-1833",
+    "born": 1772,
+    "died": 1833,
+    "k": "Founded the Brahmo movement and opposed sati"
+  },
+  {
     "id": "ramses-ii",
     "n": "Ramses II",
     "d": "Pharaoh of Kadesh, c. 1279-1213 BCE"
+  },
+  {
+    "id": "rani-lakshmibai",
+    "n": "Rani Lakshmibai",
+    "d": "Queen of Jhansi, 1828-1858",
+    "born": 1828,
+    "died": 1858,
+    "k": "Died in battle fighting the East India Company"
   },
   {
     "id": "raphael",
@@ -2785,6 +3087,15 @@
     "d": "Painter, 1483-1520",
     "born": 1483,
     "died": 1520
+  },
+  {
+    "id": "razia-sultana",
+    "n": "Razia Sultana",
+    "d": "First female sultan of Delhi, 1205-1240",
+    "born": 1205,
+    "died": 1240,
+    "reign": 4,
+    "k": "Ruled Delhi from her own throne, not behind a veil"
   },
   {
     "id": "reagan",
@@ -2908,6 +3219,14 @@
     "died": 1987
   },
   {
+    "id": "rumi",
+    "n": "Rumi",
+    "d": "Sufi poet of Konya, 1207-1273",
+    "born": 1207,
+    "died": 1273,
+    "k": "His whirling dervishes still turn in Konya"
+  },
+  {
     "id": "ruskin",
     "n": "John Ruskin",
     "d": "Critic, 1819-1900",
@@ -2966,6 +3285,14 @@
     "died": 1876
   },
   {
+    "id": "sarojini-naidu",
+    "n": "Sarojini Naidu",
+    "d": "Poet and nationalist of India, 1879-1949",
+    "born": 1879,
+    "died": 1949,
+    "k": "The nightingale of India, later a state governor"
+  },
+  {
     "id": "savonarola",
     "n": "Girolamo Savonarola",
     "d": "Preacher of Florence, 1452-1498",
@@ -3001,6 +3328,15 @@
     "died": 1912
   },
   {
+    "id": "sejong",
+    "n": "Sejong",
+    "d": "Fourth king of Joseon, 1397-1450",
+    "born": 1397,
+    "died": 1450,
+    "reign": 32,
+    "k": "His scholars shaped hangul, the Korean alphabet"
+  },
+  {
     "id": "shackleton",
     "n": "Ernest Shackleton",
     "d": "Commander of the Endurance, 1874-1922",
@@ -3027,7 +3363,8 @@
     "n": "William Shakespeare",
     "d": "Playwright, 1564-1616",
     "born": 1564,
-    "died": 1616
+    "died": 1616,
+    "k": "The First Folio saved half his plays from loss"
   },
   {
     "id": "shaw",
@@ -3042,6 +3379,23 @@
     "d": "Poet, 1792-1822",
     "born": 1792,
     "died": 1822
+  },
+  {
+    "id": "shen-kuo",
+    "n": "Shen Kuo",
+    "d": "Polymath of the Song dynasty, 1031-1095",
+    "born": 1031,
+    "died": 1095,
+    "k": "His Dream Pool Essays describe the compass needle"
+  },
+  {
+    "id": "shivaji",
+    "n": "Shivaji",
+    "d": "Founder of the Marathas, 1630-1680",
+    "born": 1630,
+    "died": 1680,
+    "reign": 6,
+    "k": "Crowned himself against the Mughal tide"
   },
   {
     "id": "sitting-bull",
@@ -3085,6 +3439,14 @@
     "d": "Tragic poet of Thebes, c. 497-406 BCE"
   },
   {
+    "id": "sor-juana",
+    "n": "Sor Juana",
+    "d": "Nun and scholar of New Spain, 1648-1695",
+    "born": 1648,
+    "died": 1695,
+    "k": "Her Reply defends a woman's right to learn"
+  },
+  {
     "id": "spencer",
     "n": "Herbert Spencer",
     "d": "Philosopher of evolution, 1820-1903",
@@ -3120,6 +3482,14 @@
     "died": 1794
   },
   {
+    "id": "su-song",
+    "n": "Su Song",
+    "d": "Astronomer and engineer of the Song, 1020-1101",
+    "born": 1020,
+    "died": 1101,
+    "k": "Built the water driven astronomical clock tower"
+  },
+  {
     "id": "suleiman",
     "n": "Suleiman the Magnificent",
     "d": "Ottoman sultan, 1494-1566",
@@ -3133,11 +3503,27 @@
     "d": "Strategist, c. 544-496 BCE"
   },
   {
+    "id": "sun-yat-sen",
+    "n": "Sun Yat-sen",
+    "d": "First president of the Chinese republic, 1866-1925",
+    "born": 1866,
+    "died": 1925,
+    "k": "Honored as the father of modern China"
+  },
+  {
     "id": "swift",
     "n": "Jonathan Swift",
     "d": "Satirist, 1667-1745",
     "born": 1667,
     "died": 1745
+  },
+  {
+    "id": "tagore",
+    "n": "Tagore",
+    "d": "Poet of Bengal, 1861-1941",
+    "born": 1861,
+    "died": 1941,
+    "k": "The first non European Nobel laureate, for Gitanjali"
   },
   {
     "id": "talbot",
@@ -3158,7 +3544,9 @@
     "n": "Abel Tasman",
     "d": "Navigator of the South Seas, 1603-1659",
     "born": 1603,
-    "died": 1659
+    "died": 1659,
+    "voy": 2,
+    "k": "Tasmania still carries his name"
   },
   {
     "id": "temple",
@@ -3230,6 +3618,15 @@
     "d": "Historian, c. 460-400 BCE"
   },
   {
+    "id": "tipu-sultan",
+    "n": "Tipu Sultan",
+    "d": "Sultan of Mysore, 1751-1799",
+    "born": 1751,
+    "died": 1799,
+    "reign": 17,
+    "k": "The tiger of Mysore fought the Company twice"
+  },
+  {
     "id": "titian",
     "n": "Titian",
     "d": "Painter, c. 1488-1576",
@@ -3237,11 +3634,20 @@
     "died": 1576
   },
   {
+    "id": "tokugawa-ieyasu",
+    "n": "Tokugawa Ieyasu",
+    "d": "Third unifier of Japan, 1543-1616",
+    "born": 1543,
+    "died": 1616,
+    "k": "Founded the shogunate that closed Japan"
+  },
+  {
     "id": "tolkien",
     "n": "J.R.R. Tolkien",
     "d": "Novelist and philologist, 1892-1973",
     "born": 1892,
-    "died": 1973
+    "died": 1973,
+    "k": "Drafted the OED's W words while mapping Middle-earth"
   },
   {
     "id": "tolstoy",
@@ -3249,6 +3655,14 @@
     "d": "Novelist, 1828-1910",
     "born": 1828,
     "died": 1910
+  },
+  {
+    "id": "toyotomi-hideyoshi",
+    "n": "Toyotomi Hideyoshi",
+    "d": "Second unifier of Japan, 1537-1598",
+    "born": 1537,
+    "died": 1598,
+    "k": "Rose from sandal bearer to ruler of all Japan"
   },
   {
     "id": "trajan",
@@ -3266,6 +3680,14 @@
     "died": 1882
   },
   {
+    "id": "tupac-amaru-ii",
+    "n": "Tupac Amaru II",
+    "d": "Leader of the Andean rising, 1738-1781",
+    "born": 1738,
+    "died": 1781,
+    "k": "Claimed the Inca throne to lead the revolt"
+  },
+  {
     "id": "turgenev",
     "n": "Ivan Turgenev",
     "d": "Novelist, 1818-1883",
@@ -3277,7 +3699,8 @@
     "n": "Alan Turing",
     "d": "Codebreaker and computer scientist, 1912-1954",
     "born": 1912,
-    "died": 1954
+    "died": 1954,
+    "k": "Broke Enigma and named the thinking machine's test"
   },
   {
     "id": "turner",
@@ -3317,6 +3740,14 @@
     "n": "Usain Bolt",
     "d": "The fastest man measured, born 1986",
     "born": 1986
+  },
+  {
+    "id": "usman-dan-fodio",
+    "n": "Usman dan Fodio",
+    "d": "Founder of the Sokoto caliphate, 1754-1817",
+    "born": 1754,
+    "died": 1817,
+    "k": "A scholar who raised an empire in the Hausa lands"
   },
   {
     "id": "van-gogh",
@@ -3386,7 +3817,8 @@
     "born": 1819,
     "died": 1901,
     "reign": 63,
-    "h": 152
+    "h": 152,
+    "k": "Gave her name to an age of steam and empire"
   },
   {
     "id": "virgil",
@@ -3406,6 +3838,14 @@
     "d": "Composer, 1678-1741",
     "born": 1678,
     "died": 1741
+  },
+  {
+    "id": "vivekananda",
+    "n": "Vivekananda",
+    "d": "Monk who carried Vedanta west, 1863-1902",
+    "born": 1863,
+    "died": 1902,
+    "k": "Addressed the world parliament of religions in Chicago"
   },
   {
     "id": "voltaire",
@@ -3537,6 +3977,15 @@
     "died": 1723
   },
   {
+    "id": "wu-zetian",
+    "n": "Wu Zetian",
+    "d": "The only female emperor of China, 624-705",
+    "born": 624,
+    "died": 705,
+    "reign": 15,
+    "k": "Founded a dynasty and ran the examinations herself"
+  },
+  {
     "id": "wyatt-earp",
     "n": "Wyatt Earp",
     "d": "Lawman of the O.K. Corral, 1848-1929",
@@ -3557,6 +4006,23 @@
     "died": 664
   },
   {
+    "id": "yi-sun-sin",
+    "n": "Yi Sun-sin",
+    "d": "Admiral of the Joseon navy, 1545-1598",
+    "born": 1545,
+    "died": 1598,
+    "k": "Undefeated at sea, died winning his last battle"
+  },
+  {
+    "id": "yongle",
+    "n": "Yongle",
+    "d": "Third emperor of the Ming, 1360-1424",
+    "born": 1360,
+    "died": 1424,
+    "reign": 22,
+    "k": "Raised the Forbidden City and sent the treasure fleets"
+  },
+  {
     "id": "yves-saint-laurent",
     "n": "Yves Saint Laurent",
     "d": "Couturier of the tuxedo dress, 1936-2008",
@@ -3564,11 +4030,44 @@
     "died": 2008
   },
   {
+    "id": "zhang-heng",
+    "n": "Zhang Heng",
+    "d": "Astronomer of the Han court, 78-139",
+    "born": 78,
+    "died": 139,
+    "k": "Built the first seismoscope to point at earthquakes"
+  },
+  {
+    "id": "zheng-he",
+    "n": "Zheng He",
+    "d": "Admiral of the Ming treasure fleets, 1371-1433",
+    "born": 1371,
+    "died": 1433,
+    "voy": 7,
+    "k": "His seven voyages reached the Swahili coast"
+  },
+  {
+    "id": "zhu-xi",
+    "n": "Zhu Xi",
+    "d": "Neo Confucian master of the Song, 1130-1200",
+    "born": 1130,
+    "died": 1200,
+    "k": "His Four Books shaped examinations for six centuries"
+  },
+  {
     "id": "zola",
     "n": "Emile Zola",
     "d": "Novelist, 1840-1902",
     "born": 1840,
     "died": 1902
+  },
+  {
+    "id": "zu-chongzhi",
+    "n": "Zu Chongzhi",
+    "d": "Mathematician and astronomer, 429-500",
+    "born": 429,
+    "died": 500,
+    "k": "Pinned pi between 3.1415926 and 3.1415927"
   },
   {
     "id": "zwingli",

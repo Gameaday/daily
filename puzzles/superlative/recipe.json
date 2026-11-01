@@ -1,0 +1,310 @@
+[
+  {
+    "ids": [
+      "kangxi",
+      "sejong",
+      "akbar",
+      "suleiman"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "wu-zetian",
+      "razia-sultana",
+      "elizabeth-i",
+      "cixi"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "zheng-he",
+      "columbus",
+      "magellan",
+      "cook"
+    ],
+    "h": "Voyages"
+  },
+  {
+    "ids": [
+      "bach",
+      "mozart",
+      "handel",
+      "haydn"
+    ],
+    "h": "Works"
+  },
+  {
+    "ids": [
+      "jefferson",
+      "adams",
+      "madison",
+      "lincoln"
+    ],
+    "h": "Height"
+  },
+  {
+    "ids": [
+      "babur",
+      "akbar",
+      "shah-jahan",
+      "aurangzeb"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "leonardo",
+      "michelangelo",
+      "raphael",
+      "titian"
+    ]
+  },
+  {
+    "ids": [
+      "aryabhata",
+      "brahmagupta",
+      "bhaskara-ii",
+      "ramanujan"
+    ]
+  },
+  {
+    "ids": [
+      "li-bai",
+      "du-fu",
+      "basho",
+      "tagore"
+    ]
+  },
+  {
+    "ids": [
+      "wu-zetian",
+      "ban-zhao",
+      "nur-jahan",
+      "rani-lakshmibai"
+    ]
+  },
+  {
+    "ids": [
+      "ibn-khaldun",
+      "ibn-battuta",
+      "usman-dan-fodio",
+      "nana-asmau"
+    ]
+  },
+  {
+    "ids": [
+      "louis-xiv",
+      "kangxi",
+      "pedro-ii",
+      "pakal"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "gandhi",
+      "mandela",
+      "sun-yat-sen",
+      "martin-luther-king"
+    ]
+  },
+  {
+    "ids": [
+      "hongwu",
+      "yongle",
+      "wu-zetian",
+      "kangxi"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "trajan",
+      "marcus-aurelius",
+      "justinian",
+      "constantine"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "aldus-manutius",
+      "caxton",
+      "erasmus",
+      "thomas-more"
+    ]
+  },
+  {
+    "ids": [
+      "magellan",
+      "drake",
+      "tasman",
+      "cook"
+    ],
+    "h": "Voyages"
+  },
+  {
+    "ids": [
+      "auguste-piccard",
+      "amelia-earhart",
+      "lindbergh",
+      "armstrong"
+    ]
+  },
+  {
+    "ids": [
+      "ibn-sina",
+      "nightingale",
+      "clara-barton",
+      "elizabeth-blackwell"
+    ]
+  },
+  {
+    "ids": [
+      "zhang-heng",
+      "zu-chongzhi",
+      "shen-kuo",
+      "su-song"
+    ]
+  },
+  {
+    "ids": [
+      "marat",
+      "danton",
+      "robespierre",
+      "napoleon"
+    ]
+  },
+  {
+    "ids": [
+      "millicent-fawcett",
+      "pankhurst",
+      "alice-paul",
+      "qiu-jin"
+    ]
+  },
+  {
+    "ids": [
+      "rammohan-roy",
+      "ramakrishna",
+      "tagore",
+      "vivekananda"
+    ]
+  },
+  {
+    "ids": [
+      "copernicus",
+      "tycho",
+      "galileo",
+      "kepler"
+    ]
+  },
+  {
+    "ids": [
+      "watt",
+      "stephenson",
+      "brunel",
+      "edison"
+    ]
+  },
+  {
+    "ids": [
+      "pissarro",
+      "monet",
+      "cezanne",
+      "renoir"
+    ]
+  },
+  {
+    "ids": [
+      "rembrandt",
+      "huygens",
+      "vermeer",
+      "spinoza"
+    ]
+  },
+  {
+    "ids": [
+      "douglass",
+      "du-bois",
+      "malcolm-x",
+      "martin-luther-king"
+    ]
+  },
+  {
+    "ids": [
+      "newton",
+      "maxwell",
+      "einstein",
+      "turing"
+    ]
+  },
+  {
+    "ids": [
+      "twain",
+      "hemingway",
+      "huxley",
+      "orwell"
+    ]
+  },
+  {
+    "ids": [
+      "sor-juana",
+      "frida-kahlo",
+      "cassatt",
+      "elizabeth-blackwell"
+    ]
+  },
+  {
+    "ids": [
+      "xuanzang",
+      "ibn-battuta",
+      "marco-polo",
+      "zheng-he"
+    ]
+  },
+  {
+    "ids": [
+      "al-biruni",
+      "al-jazari",
+      "ibn-sina",
+      "rumi"
+    ]
+  },
+  {
+    "ids": [
+      "tokugawa-ieyasu",
+      "basho",
+      "hokusai",
+      "fukuzawa-yukichi"
+    ]
+  },
+  {
+    "ids": [
+      "hongwu",
+      "yongle",
+      "sejong",
+      "yi-sun-sin"
+    ],
+    "h": "Reign"
+  },
+  {
+    "ids": [
+      "shivaji",
+      "tipu-sultan",
+      "tupac-amaru-ii",
+      "rani-lakshmibai"
+    ]
+  },
+  {
+    "ids": [
+      "kangxi",
+      "qianlong",
+      "cixi",
+      "sun-yat-sen"
+    ],
+    "h": "Reign"
+  }
+]

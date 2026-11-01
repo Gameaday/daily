@@ -1,11 +1,15 @@
 /* superlative - headless playthrough (win, loss, day rollover) plus
-   the bonus match. The boards cut from the people layer: day 0 seats
-   Ada Lovelace, John Adams, Akbar and Al-Idrisi, asks for the longest
-   life, and its bonus seats all four. Every dim counts from both
-   ends, and the dates calculate two more, the most average life and
-   the middle birth: day 1 seats Al-Razi on hers, day 13 seats on the
-   calculated middles, day 48 keeps the most-average chip, and the
-   bank check pins full coverage. */
+   the bonus match. The boards cut from the people layer and the
+   themed cohorts the recipe seats: day 0 seats Ada Lovelace, John
+   Adams, Akbar and Al-Biruni, asks for the longest life, and its
+   bonus seats all four. Eight questions rotate by board, and the
+   measured ones, reign, voyages, works and height, only count the
+   lives a source actually measured, at least two, and never serve
+   a tie: day 1 seats Al-Khwarizmi on the birth order and hands
+   Al-Jazari the born-last chip, day 13 seats Leonid Brezhnev on
+   the longest life with the middle birth on Robert Boyle, day 48
+   keeps the most-average chip on Joseph Haydn, and the bank check
+   pins the pool boards and every recipe cohort. */
 'use strict';
 const { T0, T1, TPRE } = require('./_lib');
 
@@ -26,25 +30,34 @@ async function run(h){
     await h.flush();
     h.eq(r.x.S.day, 1, 'superlative: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'superlative: streak preserved');
+    h.eq(r.x.EV.t, 'Birth Order', 'superlative: day 1 asks for the birth order');
+    h.eq(r.x.EV.opts[r.x.EV.a], 'Al-Khwarizmi', 'superlative: day 1 first birth is Al-Khwarizmi');
     h.ok(Array.isArray(r.x.EV.b) && r.x.EV.b.length === 4,
       'superlative: day 1 seats its bonus through the inversions');
-    h.ok(r.x.EV.b.some(x => x.q === 'was born closest to the middle' &&
-      r.x.EV.opts[x.a] === 'Al-Razi'),
-      'superlative: the calculated middle birth is a chip in its own right');
+    h.ok(r.x.EV.b.some(x => x.q === 'was born last' &&
+      r.x.EV.opts[x.a] === 'Al-Jazari'),
+      'superlative: day 1 hands the born-last chip to Al-Jazari');
     const T13 = T0 + 13 * 86400000;
     const nb = {};
     r = h.boot('superlative', EXP, { now: T13, store: nb });
     await h.flush();
-    h.ok(r.x.EV.b.some(x => x.q === 'lived the most average life' &&
-      r.x.EV.opts[x.a] === 'Richard Byrd'),
-      'superlative: the calculated middles seat the group that once served no bonus');
+    h.eq(r.x.EV.opts[r.x.EV.a], 'Leonid Brezhnev',
+      'superlative: day 13 longest life is Leonid Brezhnev');
+    h.ok(r.x.EV.b.some(x => x.q === 'was born closest to the middle' &&
+      r.x.EV.opts[x.a] === 'Robert Boyle'),
+      'superlative: the calculated middle birth is a chip in its own right');
+    h.ok(r.x.EV.b.some(x => x.q === 'was the most average' && x.v === 'nothing special'),
+      'superlative: the one life no dim tops still takes the most average');
     const T48 = T0 + 48 * 86400000;
     const fbs = {};
     r = h.boot('superlative', EXP, { now: T48, store: fbs });
     await h.flush();
-    h.ok(r.x.EV.b.some(x => x.q === 'was the most average' && x.v === 'nothing special'),
-      'superlative: the one life no dim tops still takes the most average');
+    h.ok(r.x.EV.b.some(x => x.q === 'lived the most average life' &&
+      r.x.EV.opts[x.a] === 'Joseph Haydn'),
+      'superlative: the most average chip lands on Joseph Haydn');
     const bankBoards = require('../../puzzles/superlative/puzzles.json');
+    h.ok(bankBoards.length === 163,
+      'superlative: the bank holds the 126 pool boards and the 37 recipe cohorts');
     h.ok(bankBoards.every(e => Array.isArray(e.b) && e.b.length === 4 &&
       new Set(e.b.map(x => x.a)).size === 4),
       'superlative: every board seats a bonus chip for every life');
@@ -75,6 +88,8 @@ async function run(h){
     h.eq(r.x.S.bonus.wrong, 0, 'superlative: the bonus match played clean');
     h.ok(r.env.els.why.textContent.indexOf(r.x.EV.opts[r.x.EV.a]) >= 0,
       'superlative: the settled bonus unlocks the record');
+    h.ok(r.env.els.why.textContent.indexOf('Note G') >= 0,
+      'superlative: the fine print carries the trivia the k field records');
 
     /* the pre-launch clamp: before the epoch the shell reads No. 1, and a
        weekend win carries into the real Monday board */

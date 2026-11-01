@@ -245,14 +245,25 @@ $('quote').addEventListener('click', e => {
   saveState(); render();
   kbd.focus();
 });
+/* the next unfilled space to the right of cipher letter c (wrapping to
+   the start), so typing follows the quote the player is reading */
+function nextOpen(c){
+  const start = CIPHER.indexOf(c);
+  for (let k = 1; k <= CIPHER.length; k++){
+    const i = (start + k) % CIPHER.length;
+    if (/[A-Z]/.test(Q.q[i]) && !S.map[CIPHER[i]]) return CIPHER[i];
+  }
+  return null;
+}
 function assign(p){
   S.started = true;
   for (const k in S.map){ if (S.map[k] === p) delete S.map[k]; }  /* keep it a bijection */
   S.map[S.sel] = p;
-  /* advance to the next unfilled letter; once every letter holds a guess,
-     advance to the next wrong one instead of dropping the selection, so
-     typing keeps flowing until the board is actually solved */
-  const next = FREQ_ORDER.find(c => !S.map[c]) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]);
+  /* advance to the next unfilled space to the right of the letter just
+     filled (the quote sets the order, not the frequency table); once every
+     space holds a guess, advance to the next wrong one instead of dropping
+     the selection, so typing keeps flowing until the board is solved */
+  const next = nextOpen(S.sel) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]);
   S.sel = next || null;
   if (!S.sel) kbd.blur();
   saveState(); render();
@@ -295,7 +306,7 @@ $('btnHint').addEventListener('click', () => {
   for (const k in S.map){ if (S.map[k] === SUB.dec[cand]) delete S.map[k]; }
   S.map[cand] = SUB.dec[cand];
   S.hints++;
-  S.sel = FREQ_ORDER.find(c => !S.map[c]) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]) || null;
+  S.sel = nextOpen(cand) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]) || null;
   saveState(); render();
   if (S.sel) kbd.focus();
 });

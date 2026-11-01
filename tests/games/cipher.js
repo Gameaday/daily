@@ -9,6 +9,19 @@ async function run(h){
     const store = {};
     let r = h.boot('cipher', EXP, { now: T0, store });
     h.eq(r.x.Q.a, 'Franklin D. Roosevelt', 'cipher: day 0 author');
+    /* typing flows to the next unfilled space to the right, not to the
+       most frequent letter elsewhere in the quote */
+    const q = r.x.Q.q;
+    const enc2 = ch => (/[A-Z]/.test(ch) ? r.x.SUB.enc[ch] : null);
+    const firstC = enc2(q[0]);
+    r.x.S.sel = firstC;
+    r.x.assign(r.x.SUB.dec[firstC]);
+    let wantNext = null;
+    for (let i = 1; i < q.length; i++){
+      const c2 = enc2(q[i]);
+      if (c2 && !r.x.S.map[c2]){ wantNext = c2; break; }
+    }
+    h.eq(r.x.S.sel, wantNext, 'cipher: typing advances to the next unfilled space to the right');
     for (const c of Object.keys(r.x.SUB.dec)){
       r.x.S.sel = c;
       r.x.assign(r.x.SUB.dec[c]);

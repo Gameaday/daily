@@ -1411,5 +1411,256 @@
       "five."
     ],
     "w": "Balance, temperature, pain, body position, and the sense of your own joints all report without touching anything; researchers count anywhere from nine to twenty-one senses. Aristotle’s tidy five survive because they are the ones with obvious organs."
+  },
+  {
+    "t": "Science · Physics",
+    "l": 1,
+    "c": "Isaac Newton",
+    "a": [
+      "Isaac Newton",
+      "Newton",
+      "Sir Isaac Newton"
+    ],
+    "s": [
+      "The three laws of motion were formulated by",
+      "Albert Einstein",
+      "and published in 1687 in the Principia Mathematica,",
+      "the most influential physics book ever written."
+    ],
+    "w": "It was Isaac Newton. Einstein was born in 1879, nearly two centuries after the Principia; his own revolution came with relativity in 1905."
+  },
+  {
+    "t": "Music · Opera",
+    "l": 1,
+    "c": "Georges Bizet",
+    "a": [
+      "Georges Bizet",
+      "Bizet"
+    ],
+    "s": [
+      "The opera Carmen was composed by",
+      "Richard Wagner",
+      "and premiered in Paris in 1875,",
+      "where its first audiences were cool to it."
+    ],
+    "w": "It was Georges Bizet, who died three months after the premiere, at thirty-six, believing the work a failure."
+  },
+  {
+    "t": "Art · Baroque",
+    "l": 1,
+    "c": "Rembrandt",
+    "a": [
+      "Rembrandt",
+      "Rembrandt van Rijn",
+      "Rembrandt Harmenszoon van Rijn"
+    ],
+    "s": [
+      "The Night Watch was painted by",
+      "Peter Paul Rubens",
+      "in 1642,",
+      "and hangs today in the Rijksmuseum in Amsterdam."
+    ],
+    "w": "It was Rembrandt, in 1642. Rubens was painting in Antwerp and died two years before it was finished."
+  },
+  {
+    "t": "Literature · Novels",
+    "l": 1,
+    "c": "Jane Austen",
+    "a": [
+      "Jane Austen",
+      "Austen"
+    ],
+    "s": [
+      "Pride and Prejudice was written by",
+      "Charlotte Brontë",
+      "and published in 1813,",
+      "when novels still traveled under pen names."
+    ],
+    "w": "It was Jane Austen, published anonymously at first, as by a lady. Charlotte Brontë was born two years after it came out."
+  },
+  {
+    "t": "Science · Genetics",
+    "l": 1,
+    "c": "Gregor Mendel",
+    "a": [
+      "Gregor Mendel",
+      "Mendel",
+      "Gregor Johann Mendel"
+    ],
+    "s": [
+      "The laws of heredity were first worked out by",
+      "Charles Darwin",
+      "from experiments breeding pea plants in a monastery garden,",
+      "years before the gene had a name."
+    ],
+    "w": "It was Gregor Mendel, counting pea plants in Brno between 1856 and 1863. Darwin published On the Origin of Species without ever knowing the mathematics that would one day ground it."
+  },
+  {
+    "t": "Geography · Rivers",
+    "l": 2,
+    "c": "the Atlantic Ocean",
+    "a": [
+      "the Atlantic Ocean",
+      "the Atlantic",
+      "Atlantic Ocean"
+    ],
+    "s": [
+      "The Amazon, the largest river by volume on Earth, flows east across a continent",
+      "and empties into",
+      "the Pacific Ocean,",
+      "where its mouth at Belem is so wide that ocean-going ships sail inland."
+    ],
+    "w": "It empties into the Atlantic. The Pacific is on the other side of the continent; Belem sits near the Amazon’s mouth facing the Atlantic."
+  },
+  {
+    "t": "History · Rome",
+    "l": 3,
+    "c": "Nero",
+    "a": [
+      "Nero",
+      "Emperor Nero"
+    ],
+    "s": [
+      "In July of 64 CE, a fire broke out near the Circus Maximus and burned for six days,",
+      "and the emperor who, legend says, fiddled while the city burned,",
+      "though the tale is doubted and the fiddle had not been invented,",
+      "was Julius Caesar."
+    ],
+    "w": "It was Nero, who was emperor from 54 to 68. Caesar had been dead for nearly a century, and the fiddle itself would not exist for another thousand years; the whole tale is a later rumor."
+  },
+  {
+    "t": "Aviation · Firsts",
+    "l": 1,
+    "c": "Charles Lindbergh",
+    "a": [
+      "Charles Lindbergh",
+      "Lindbergh",
+      "Charles A. Lindbergh"
+    ],
+    "s": [
+      "The first solo nonstop flight across the Atlantic was made by",
+      "Amelia Earhart",
+      "in 1927, flying from New York to Paris",
+      "against a field of rival aviators."
+    ],
+    "w": "It was Charles Lindbergh, in the Spirit of St. Louis, May 1927. Earhart became the first woman to fly solo across the Atlantic five years later."
+  },
+  {
+    "t": "Science · Chemistry",
+    "l": 1,
+    "c": "Dmitri Mendeleev",
+    "a": [
+      "Dmitri Mendeleev",
+      "Mendeleev",
+      "Dmitri Ivanovich Mendeleev",
+      "Dmitri Mendeleyev"
+    ],
+    "s": [
+      "The periodic table of the elements was first published by",
+      "Antoine Lavoisier",
+      "in 1869, arranging the elements by atomic weight,",
+      "in a form chemists still recognize."
+    ],
+    "w": "It was Dmitri Mendeleev. Lavoisier, guillotined in 1794, gave chemistry its naming rules and the conservation of mass, but died decades before anyone could count the elements well enough to sort them."
+  },
+  {
+    "t": "Literature · Drama",
+    "l": 1,
+    "c": "William Shakespeare",
+    "a": [
+      "William Shakespeare",
+      "Shakespeare"
+    ],
+    "s": [
+      "The play Hamlet was written by",
+      "Christopher Marlowe",
+      "around 1600 and set in the court of Denmark,",
+      "its prince among the most quoted figures in literature."
+    ],
+    "w": "It was William Shakespeare. Marlowe had been dead since 1593, and his Edward II is the closest his hand got to Hamlet’s Denmark."
+  },
+  {
+    "t": "History · America",
+    "l": 1,
+    "c": "Thomas Jefferson",
+    "a": [
+      "Thomas Jefferson",
+      "Jefferson"
+    ],
+    "s": [
+      "The Declaration of Independence was drafted chiefly by",
+      "John Adams",
+      "as part of a committee of five appointed in June 1776,",
+      "with editing by the whole Congress."
+    ],
+    "w": "It was Thomas Jefferson, at thirty-three the youngest of the five. Adams chose him for it, pushed the resolution that made it necessary, and said so for the rest of his life."
+  },
+  {
+    "t": "Music · Symphonies",
+    "l": 1,
+    "c": "Ludwig van Beethoven",
+    "a": [
+      "Ludwig van Beethoven",
+      "Beethoven",
+      "Ludwig Beethoven",
+      "van Beethoven"
+    ],
+    "s": [
+      "The Ninth Symphony, the Choral, with its setting of the Ode to Joy was composed by",
+      "Joseph Haydn",
+      "and premiered in Vienna in 1824,",
+      "its finale a hymn to human brotherhood."
+    ],
+    "w": "It was Beethoven, deaf and unable to hear the applause he had to be turned around to see. Haydn died in 1809, fifteen years before that premiere."
+  },
+  {
+    "t": "Geography · Mountains",
+    "l": 3,
+    "c": "Mount Everest",
+    "a": [
+      "Mount Everest",
+      "Everest",
+      "Mt Everest",
+      "Mt. Everest"
+    ],
+    "s": [
+      "The tallest mountain above sea level on Earth,",
+      "at 8,849 meters,",
+      "on the border of Nepal and China,",
+      "is K2."
+    ],
+    "w": "It is Everest, at 8,849 meters in the 2020 survey. K2, the second mountain, is more than two hundred meters shorter."
+  },
+  {
+    "t": "History · Exploration",
+    "l": 1,
+    "c": "Vasco da Gama",
+    "a": [
+      "Vasco da Gama",
+      "Vasco de Gama",
+      "da Gama"
+    ],
+    "s": [
+      "The first European to reach India by sailing around Africa was",
+      "Christopher Columbus",
+      "landing at Calicut in 1498,",
+      "at the close of a decade of ocean voyages."
+    ],
+    "w": "It was Vasco da Gama, who reached Calicut in May 1498. Columbus, sailing west the same decade, went to his grave insisting he had found the Indies himself."
+  },
+  {
+    "t": "Science · Astronomy",
+    "l": 3,
+    "c": "Saturn",
+    "a": [
+      "Saturn"
+    ],
+    "s": [
+      "The planet famous for its broad, bright rings,",
+      "most of them ice fragments orbiting in a wide sheet,",
+      "visited by the Cassini spacecraft for over a decade,",
+      "is Jupiter."
+    ],
+    "w": "It is Saturn. Jupiter has rings too, but they are thin, dark and almost invisible; Saturn’s are broad sheets of ice visible through small telescopes."
   }
 ]

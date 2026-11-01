@@ -455,3 +455,17 @@ four games are whole-file recipes that compile in file order, so
 the files grow at the end and no day rotation moves; the stores and
 banks were mirrored by hand to the byte and the compiler verified
 the result.
+
+## Runway batch (done 2026-11-01)
+
+A second growth pass, sized so no bank repeats before the end of March:
+brunch seats one hundred fifty moments, lightbox banks one hundred fifty
+designs, rounds walks one hundred fifty events, fermi asks one hundred
+twenty figures, cipher hides one hundred twenty-one quotes, museum
+displays one hundred artifacts, sift sorts one hundred and one boards,
+and the twist banks grow by fifteen tellings each (bogus ninety-seven,
+well-actually ninety-five). Superlative stays capped at its one hundred
+twelve people-derived boards and repeats from late February; lifting it
+means growing the people layer, which deliberately waits. The recipe
+banks append in file order as before, day pins hold, and the stores and
+banks were mirrored by hand and compiler-verified.

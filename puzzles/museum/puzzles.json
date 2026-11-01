@@ -2077,5 +2077,414 @@
       "They should outlast the pyramids, drifting intact for perhaps a billion years."
     ],
     "w": "The human race’s mixtape, thrown at the stars with a needle and instructions, the longest-lived thing we have made."
+  },
+  {
+    "a": "The Pioneer Plaque",
+    "al": [
+      "pioneer plaque",
+      "the pioneer plaque",
+      "pioneer 10 plaque",
+      "pioneer 11 plaque"
+    ],
+    "c": [
+      "A small plaque of gold-anodised aluminium bolted to the Pioneer 10 and 11 probes of the early 1970s.",
+      "Carl Sagan’s committee designed it as a message to whatever might find the craft.",
+      "It shows a naked man and woman, with the silhouette of the ship to give them scale.",
+      "A map of pulsars gives the sun’s address in the galaxy, keyed to the spin of the hydrogen atom.",
+      "Humanity’s first physical message sent beyond the solar system."
+    ],
+    "w": "A gold calling card with a return address in pulsar light, still drifting toward the stars."
+  },
+  {
+    "a": "The Enola Gay",
+    "al": [
+      "enola gay",
+      "the enola gay"
+    ],
+    "c": [
+      "A US Army Air Forces B-29 bomber, named by its pilot after his mother.",
+      "On August 6, 1945, it dropped the uranium bomb on Hiroshima, the first atomic attack in history.",
+      "Colonel Paul Tibbets and a crew of eleven flew the mission from the island of Tinian.",
+      "The Smithsonian spent two decades restoring it from parts in storage.",
+      "It now stands in the museum annex at Dulles Airport, the most argued-about airplane ever built."
+    ],
+    "w": "The machine that opened the atomic age in one morning, and a mirror the twentieth century still looks into."
+  },
+  {
+    "a": "The Spruce Goose",
+    "al": [
+      "spruce goose",
+      "the spruce goose",
+      "hughes h-4 hercules",
+      "h-4 hercules"
+    ],
+    "c": [
+      "A flying boat with the widest wingspan of its era, built almost entirely of wood.",
+      "It was commissioned to fly troops across the Atlantic beyond the reach of submarines.",
+      "By the time it was finished the war was over, and Congress called it a waste of birch.",
+      "Howard Hughes flew it himself in November 1947, about a mile at seventy feet above Long Beach harbor, its only flight.",
+      "It rests today in a museum in Oregon, the trophy of a billionaire’s stubbornness."
+    ],
+    "w": "The largest flying boat ever built, aloft once for a minute, famous forever for that minute."
+  },
+  {
+    "a": "The Stanley Cup",
+    "al": [
+      "stanley cup",
+      "the stanley cup",
+      "lord stanley’s cup"
+    ],
+    "c": [
+      "A silver bowl bought in London in 1892 by Lord Stanley of Preston, Canada’s governor general.",
+      "The oldest trophy in North American professional sport still competed for.",
+      "Every member of the winning club is engraved on it, from superstars to assistant trainers.",
+      "When a band fills, the oldest ring is retired to the Hockey Hall of Fame.",
+      "Its misspelled names are part of the legend, and it travels everywhere with its own keeper."
+    ],
+    "w": "Hockey’s holy grail: a bowl of silver that every player dreams of drinking from."
+  },
+  {
+    "a": "The First Folio",
+    "al": [
+      "first folio",
+      "the first folio",
+      "shakespeare first folio",
+      "mr william shakespeares comedies histories and tragedies"
+    ],
+    "c": [
+      "A folio volume of 1623 gathering thirty-six of Shakespeare’s plays, printed seven years after his death.",
+      "Two fellow actors, John Heminges and Henry Condell, compiled it so his work would not be lost.",
+      "Eighteen of the plays, among them Macbeth and The Tempest, had never been printed before.",
+      "About seven hundred and fifty copies were made, and some two hundred and thirty survive.",
+      "Without it, half the greatest plays in English would exist only in rumor."
+    ],
+    "w": "The book that saved Shakespeare: his friends’ memorial that became the most valuable volume in English."
+  },
+  {
+    "a": "The Exeter Book",
+    "al": [
+      "exeter book",
+      "the exeter book",
+      "exeter codex"
+    ],
+    "c": [
+      "The largest surviving book of Old English poetry, compiled in the tenth century.",
+      "Bishop Leofric left it to Exeter Cathedral, where it has stayed for nearly a thousand years.",
+      "It holds some ninety riddles, from a bookworm to a storm, some bawdy and some pious.",
+      "It also carries The Wanderer, The Seafarer and The Ruin, poems that anchor English literature.",
+      "One of the four great Old English codices, and the riddle book of a whole language."
+    ],
+    "w": "A tenth-century anthology that keeps half of all surviving Old English verse under one roof."
+  },
+  {
+    "a": "The Vienna Genesis",
+    "al": [
+      "vienna genesis",
+      "the vienna genesis"
+    ],
+    "c": [
+      "The oldest well-preserved illustrated manuscript of the Bible, made in the sixth century.",
+      "Its pages are vellum dyed imperial purple, then as costly as gold.",
+      "The Greek text of Genesis is written in silver, blackened now by the centuries.",
+      "Forty-eight miniatures run along the bottom of the pages, like a film strip of scripture.",
+      "It is kept in the Austrian National Library in Vienna."
+    ],
+    "w": "Scripture on imperial purple with pictures: the luxury book of late antiquity, saved whole."
+  },
+  {
+    "a": "The Emerald Buddha",
+    "al": [
+      "emerald buddha",
+      "the emerald buddha",
+      "phra kaew morakot"
+    ],
+    "c": [
+      "The palladium of Thailand: a figure of green jadeite about sixty-six centimetres tall.",
+      "Despite the name, there is no emerald in it.",
+      "Legend says lightning cracked a stupa in Chiang Rai in 1434 and revealed it hidden inside.",
+      "Kings carried it from city to city for centuries before it reached Bangkok in the eighteenth century.",
+      "The king of Thailand changes its golden costume at the turn of each of the three seasons."
+    ],
+    "w": "A small green stone that kings have warred over, the one object Thailand treats as its soul."
+  },
+  {
+    "a": "The Sword of Joyeuse",
+    "al": [
+      "sword of joyeuse",
+      "the sword of joyeuse",
+      "joyeuse",
+      "charlemagne’s sword"
+    ],
+    "c": [
+      "The coronation sword of the kings of France, named the Joyful.",
+      "Legend gives it to Charlemagne, and the Song of Roland names a sword of his by this name.",
+      "Its actual blade is centuries younger than the emperor, a medieval rebuild.",
+      "French kings carried it at their coronations for five hundred years.",
+      "It hung in the royal abbey of Saint-Denis until the Revolution, and now hangs in the Louvre."
+    ],
+    "w": "The Joyful sword of France: legend of Charlemagne at one end, crown jewellers’ work at the other."
+  },
+  {
+    "a": "The Crown of Saint Wenceslas",
+    "al": [
+      "crown of saint wenceslas",
+      "the crown of saint wenceslas",
+      "wenceslas crown",
+      "crown of bohemia"
+    ],
+    "c": [
+      "The crown of the Bohemian kings, made in 1347 for Charles IV.",
+      "A little over two kilograms of gold, set with sapphires, rubies, spinels and pearls.",
+      "It is kept with the Bohemian coronation jewels inside Saint Vitus’s Cathedral in Prague.",
+      "Legend says whoever wears it unlawfully will die within a year.",
+      "The tale attached itself even to Reinhard Heydrich, the Nazi protector killed in 1942."
+    ],
+    "w": "The crown of Good King Wenceslas, under a curse that has outlived every king who wore it."
+  },
+  {
+    "a": "The Bocksten Man",
+    "al": [
+      "bocksten man",
+      "the bocksten man"
+    ],
+    "c": [
+      "A bog body dug from a Swedish peat bog in 1936, one of the best-preserved medieval men anywhere.",
+      "Two wooden poles were driven through his body to pin him under the peat.",
+      "He lived in the fourteenth century and died by violence.",
+      "His wool hose, tunic, cloak and hood survive nearly complete, a whole medieval wardrobe.",
+      "He wears the most famous haircut of the Middle Ages, long at the back like a modern mullet."
+    ],
+    "w": "A murdered man pinned under a bog for six hundred years, wearing the best-preserved medieval clothing on Earth."
+  },
+  {
+    "a": "The Lindow Man",
+    "al": [
+      "lindow man",
+      "the lindow man",
+      "pete marsh",
+      "lindow bog body"
+    ],
+    "c": [
+      "A bog body dug from Lindow Moss in Cheshire in 1984.",
+      "He died in the Iron Age, about two thousand years ago.",
+      "He was killed in stages: a blow to the head, then a cut throat, perhaps a garrote as well.",
+      "His stomach held the burned remains of a griddle cake, his last meal.",
+      "Wags nicknamed him Pete Marsh, and he lies today in the British Museum."
+    ],
+    "w": "A twice-killed man from a Cheshire peat bog, the best witness Britain has to Celtic ritual killing."
+  },
+  {
+    "a": "The Jade Burial Suit",
+    "al": [
+      "jade burial suit",
+      "the jade burial suit",
+      "jade suit",
+      "jade armor of the han dynasty"
+    ],
+    "c": [
+      "A full body suit of jade plates from China’s Han dynasty, made for a prince.",
+      "Liu Sheng, Prince of Zhongshan, was buried in one, dug from his mountain tomb in 1968.",
+      "More than two thousand plates of jade, wired together with gold thread.",
+      "Chinese belief held that jade would keep a royal body from decay.",
+      "It did not save the prince’s body, but it saved his name."
+    ],
+    "w": "A suit of jade and gold built to cheat the grave, two thousand years old and still gapless."
+  },
+  {
+    "a": "The Silla Gold Crown",
+    "al": [
+      "silla gold crown",
+      "the silla gold crown",
+      "cheonmachong crown",
+      "golden crown of silla"
+    ],
+    "c": [
+      "A crown of sheet gold from a royal tomb in Gyeongju, Korea, opened in 1973.",
+      "Three tree-like prongs and two stag’s antlers rise from its gold band.",
+      "Curved beads of jade hang from it in rows, trembling at any movement.",
+      "It was made in the Silla kingdom some fifteen hundred years ago.",
+      "It stands now in the museum at Gyeongju, the emblem of Korean antiquity."
+    ],
+    "w": "A gold tree with antlers, the crown of a Korean kingdom that dressed its kings like sacred groves."
+  },
+  {
+    "a": "The Ram in a Thicket",
+    "al": [
+      "ram in a thicket",
+      "the ram in a thicket",
+      "goat in a thicket",
+      "ur ram"
+    ],
+    "c": [
+      "A little goat of gold and lapis, rising on its hind legs to nibble a golden tree.",
+      "Made in the city of Ur about four and a half thousand years ago.",
+      "Leonard Woolley found a pair of them in a royal death pit in the 1920s.",
+      "He named them for the ram caught by its horns in a thicket in the Book of Genesis.",
+      "One stands in the British Museum and its twin in Philadelphia."
+    ],
+    "w": "Sumer’s goats standing in their golden bushes, dug from a death pit and named from Genesis."
+  },
+  {
+    "a": "The Rongorongo Tablets",
+    "al": [
+      "rongorongo tablets",
+      "the rongorongo tablets",
+      "rongorongo",
+      "easter island script"
+    ],
+    "c": [
+      "The undeciphered script of Easter Island, cut into wooden tablets.",
+      "Barely two dozen genuine pieces survive, scattered through the world’s museums.",
+      "Each line of glyphs runs backwards on alternate rows, plough-fashion, so the reader turns the tablet as he goes.",
+      "The islanders lost the art of reading it within a century of European contact, after slave raids and epidemics gutted the population.",
+      "No one has read it since, though many have claimed to."
+    ],
+    "w": "A whole writing system stranded without a reader: the only indigenous script of Polynesia, and its secret kept."
+  },
+  {
+    "a": "The Vix Krater",
+    "al": [
+      "vix krater",
+      "the vix krater",
+      "vix crater",
+      "krater of vix"
+    ],
+    "c": [
+      "The largest metal vessel to survive from the ancient world: 1.63 metres tall, 208 kilograms.",
+      "A Greek volute krater for mixing wine, shipped north across the Mediterranean.",
+      "It stood in the tomb of a Celtic princess buried at Vix in Burgundy, found in 1953.",
+      "The Lady of Vix wore a golden diadem and was buried with a chariot and a great gold torc.",
+      "Its frieze of Greek soldiers and chariots marks the far end of a trade route running from Greece to the Celtic heartland."
+    ],
+    "w": "A Greek giant standing over a Celtic princess: the clearest proof that Iron Age Europe was one trading world."
+  },
+  {
+    "a": "The Mold Cape",
+    "al": [
+      "mold cape",
+      "the mold cape",
+      "mold gold cape"
+    ],
+    "c": [
+      "A collar of beaten gold in the shape of a short cape, from the Bronze Age.",
+      "Quarrymen found it in 1833 under a barrow at Mold in north Wales.",
+      "Hammered from a single ingot, its ribs and bosses catch the light like scales.",
+      "It was the chest ornament of a person buried with bronze and amber, a priest or a chief.",
+      "It is the finest piece of prehistoric goldwork from Wales, kept today in the British Museum."
+    ],
+    "w": "A cape of solid light from Bronze Age Wales, beaten from one gold bar four thousand years ago."
+  },
+  {
+    "a": "The Ecstasy of Saint Teresa",
+    "al": [
+      "ecstasy of saint teresa",
+      "the ecstasy of saint teresa",
+      "saint teresa in ecstasy",
+      "bernini’s teresa"
+    ],
+    "c": [
+      "Gian Lorenzo Bernini carved it in marble between 1647 and 1652.",
+      "It shows Saint Teresa of Avila in the moment of her vision, rapt as a seraph aims a golden dart.",
+      "A hidden window pours light down on the pair through rays of gilt wood.",
+      "Members of the Cornaro family watch from opera boxes carved into the chapel walls.",
+      "It anchors the Cornaro Chapel in the Roman church of Santa Maria della Vittoria, the summit of the Baroque."
+    ],
+    "w": "Marble turned to mist and fire: the sculpture where stone stopped being furniture and became theatre."
+  },
+  {
+    "a": "The Coppergate Helmet",
+    "al": [
+      "coppergate helmet",
+      "the coppergate helmet",
+      "york helmet",
+      "oshere’s helmet"
+    ],
+    "c": [
+      "An Anglo-Saxon helmet dug from a backyard pit in York in 1982.",
+      "Made around 750, of iron with a brass crest ending in an animal head.",
+      "A Latin inscription asks the Holy Trinity to protect its owner, named Oshere.",
+      "It was found in a pit with other metalwork, cut and battered before burial.",
+      "It is the finest Anglian helmet ever found, and sits in York Castle Museum."
+    ],
+    "w": "A prayer in iron and brass: the best-preserved helmet of Anglo-Saxon England, dug from a Viking-age street."
+  },
+  {
+    "a": "Newton’s Reflecting Telescope",
+    "al": [
+      "newton’s telescope",
+      "newton’s reflecting telescope",
+      "newtonian telescope",
+      "newton reflector"
+    ],
+    "c": [
+      "The reflector Isaac Newton built in 1668 to beat a fault of every lens telescope.",
+      "Lenses split starlight into colours; a curved mirror does not, so Newton replaced the lens with polished bronze.",
+      "His second little tube, barely six inches long, went to the Royal Society in 1672 and made his name.",
+      "The Royal Society still keeps it, the oldest surviving telescope of its kind.",
+      "Every backyard dobsonian today is his design, little changed from that drawing."
+    ],
+    "w": "The little bronze-barrelled tube that ended two centuries of chromatic smears and gave astronomy its modern eye."
+  },
+  {
+    "a": "The Codex Amiatinus",
+    "al": [
+      "codex amiatinus",
+      "the codex amiatinus"
+    ],
+    "c": [
+      "The earliest complete Latin Bible in one volume, finished in England in the early eighth century.",
+      "Monks of Wearmouth-Jarrow made three of these giant copies; this is the sole survivor.",
+      "Its thousand leaves of vellum took the hides of well over a thousand calves.",
+      "Abbot Ceolfrith set out to carry it to the pope in Rome and died on the road in 716.",
+      "It takes its name from the Tuscan abbey of Monte Amiata, where it rested for centuries before Florence claimed it."
+    ],
+    "w": "The oldest complete Latin Bible on Earth: a book too heavy to lift, carried for a thousand miles to a pope."
+  },
+  {
+    "a": "The Gemma Augustea",
+    "al": [
+      "gemma augustea",
+      "the gemma augustea"
+    ],
+    "c": [
+      "A Roman cameo cut from a slab of two-layered sardonyx, finished around 10 CE.",
+      "Above, Augustus sits enthroned with the eagle of Jupiter, and the goddess Roma sits beside him.",
+      "Sky, sea and earth send their gods to underwrite his rule.",
+      "Below, soldiers of Tiberius raise a victory trophy over captive barbarians.",
+      "One of the masterpieces of Roman gem-cutting, kept today in Vienna."
+    ],
+    "w": "Imperial propaganda in an inch of layered stone: Augustus as Jupiter, cut by the best hands in Rome."
+  },
+  {
+    "a": "The Book of Durrow",
+    "al": [
+      "book of durrow",
+      "the book of durrow",
+      "durrow book"
+    ],
+    "c": [
+      "An illuminated Gospel book of the seventh century, among the oldest of the great insular books.",
+      "Made by monks of the Columban tradition, probably in Ireland or Iona.",
+      "Its carpet pages knot and spiral like metalwork, older in feel than anything on the continent.",
+      "Each evangelist gets a full-page symbol: a man, a lion, an ox and an eagle.",
+      "It has rested at Trinity College Dublin for three hundred years, the forerunner of the Book of Kells."
+    ],
+    "w": "The elder sibling of Kells: the first great Gospel book of the Celtic west, still glowing after thirteen centuries."
+  },
+  {
+    "a": "The Americas Cup",
+    "al": [
+      "americas cup",
+      "america’s cup",
+      "auld mug"
+    ],
+    "c": [
+      "A silver ewer first raced for in 1851, when the schooner America beat a fleet of British yachts around the Isle of Wight.",
+      "The oldest international sporting trophy still competed for.",
+      "Nicknamed the Auld Mug, it was made by a London silversmith in 1848, before it ever had a sport.",
+      "The New York Yacht Club defended it for a hundred and thirty-two years.",
+      "Australia II finally took it in 1983, and it has crossed oceans ever since."
+    ],
+    "w": "The oldest trophy in international sport: a Victorian ewer that nations spend fortunes chasing."
   }
 ]

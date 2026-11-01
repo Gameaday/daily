@@ -606,5 +606,323 @@
     "y": 1950,
     "via": "the close of Computing Machinery and Intelligence",
     "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "the-best-is-the-enemy",
+    "by": "voltaire",
+    "q": "THE BEST IS THE ENEMY OF THE GOOD.",
+    "y": 1772,
+    "via": "his poem La Bégueule",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "the-owl-of-minerva",
+    "by": "hegel",
+    "q": "THE OWL OF MINERVA SPREADS ITS WINGS ONLY WITH THE FALLING OF THE DUSK.",
+    "y": 1821,
+    "via": "the preface to his Philosophy of Right",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "proportion-belief-to-evidence",
+    "by": "hume",
+    "q": "A WISE MAN PROPORTIONS HIS BELIEF TO THE EVIDENCE.",
+    "y": 1748,
+    "via": "his Enquiry Concerning Human Understanding",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "power-over-themselves",
+    "by": "wollstonecraft",
+    "q": "I DO NOT WISH WOMEN TO HAVE POWER OVER MEN; BUT OVER THEMSELVES.",
+    "y": 1792,
+    "via": "A Vindication of the Rights of Woman",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "great-and-sudden-change",
+    "by": "mary-shelley",
+    "q": "NOTHING IS SO PAINFUL TO THE HUMAN MIND AS A GREAT AND SUDDEN CHANGE.",
+    "y": 1818,
+    "via": "Frankenstein",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "best-of-times",
+    "by": "dickens",
+    "q": "IT WAS THE BEST OF TIMES, IT WAS THE WORST OF TIMES.",
+    "y": 1859,
+    "via": "the opening of A Tale of Two Cities",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "quoth-the-raven",
+    "by": "poe",
+    "q": "QUOTH THE RAVEN, NEVERMORE.",
+    "y": 1845,
+    "via": "The Raven",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "true-places-never-are",
+    "by": "melville",
+    "q": "IT IS NOT DOWN ON ANY MAP; TRUE PLACES NEVER ARE.",
+    "y": 1851,
+    "via": "Moby-Dick",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "happy-families",
+    "by": "tolstoy",
+    "q": "ALL HAPPY FAMILIES ARE ALIKE; EACH UNHAPPY FAMILY IS UNHAPPY IN ITS OWN WAY.",
+    "y": 1878,
+    "via": "the opening of Anna Karenina",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "no-bird-and-no-net",
+    "by": "charlotte-bronte",
+    "q": "I AM NO BIRD; AND NO NET ENSNARES ME. I AM A FREE HUMAN BEING WITH AN INDEPENDENT WILL.",
+    "y": 1847,
+    "via": "Jane Eyre",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "what-does-not-kill-me",
+    "by": "nietzsche",
+    "q": "WHAT DOES NOT KILL ME MAKES ME STRONGER.",
+    "y": 1889,
+    "via": "Twilight of the Idols",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "endless-forms",
+    "by": "darwin",
+    "q": "ENDLESS FORMS MOST BEAUTIFUL AND MOST WONDERFUL HAVE BEEN, AND ARE BEING, EVOLVED.",
+    "y": 1859,
+    "via": "the closing of On the Origin of Species",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "lost-time-is-never-found",
+    "by": "franklin",
+    "q": "LOST TIME IS NEVER FOUND AGAIN.",
+    "y": 1758,
+    "via": "Poor Richard’s Almanack",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "chance-favors-the-prepared-mind",
+    "by": "pasteur",
+    "q": "IN THE FIELDS OF OBSERVATION, CHANCE FAVORS ONLY THE PREPARED MIND.",
+    "y": 1854,
+    "via": "his inaugural lecture at Lille",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "fortune-favors-the-bold",
+    "by": "virgil",
+    "q": "FORTUNE FAVORS THE BOLD.",
+    "via": "the Aeneid",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "journey-of-a-thousand-miles",
+    "by": "lao-tzu",
+    "q": "A JOURNEY OF A THOUSAND MILES BEGINS WITH A SINGLE STEP.",
+    "via": "the Tao Te Ching",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "to-be-or-not-to-be",
+    "by": "shakespeare",
+    "q": "TO BE, OR NOT TO BE, THAT IS THE QUESTION.",
+    "y": 1600,
+    "via": "Hamlet",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "all-the-worlds-a-stage",
+    "by": "shakespeare",
+    "q": "ALL THE WORLD’S A STAGE, AND ALL THE MEN AND WOMEN MERELY PLAYERS.",
+    "y": 1600,
+    "via": "As You Like It",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "a-little-learning",
+    "by": "pope",
+    "q": "A LITTLE LEARNING IS A DANGEROUS THING.",
+    "y": 1711,
+    "via": "An Essay on Criticism",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "a-thing-of-beauty",
+    "by": "keats",
+    "q": "A THING OF BEAUTY IS A JOY FOR EVER.",
+    "y": 1818,
+    "via": "the opening of Endymion",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "i-want-a-hero",
+    "by": "byron",
+    "q": "I WANT A HERO: AN UNCOMMON WANT.",
+    "y": 1819,
+    "via": "the opening of Don Juan",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "unacknowledged-legislators",
+    "by": "shelley",
+    "q": "POETS ARE THE UNACKNOWLEDGED LEGISLATORS OF THE WORLD.",
+    "y": 1821,
+    "via": "A Defence of Poetry",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "the-child-is-father",
+    "by": "wordsworth",
+    "q": "THE CHILD IS FATHER OF THE MAN.",
+    "y": 1802,
+    "via": "My Heart Leaps Up",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "water-water-everywhere",
+    "by": "coleridge",
+    "q": "WATER, WATER, EVERY WHERE, NOR ANY DROP TO DRINK.",
+    "y": 1798,
+    "via": "The Rime of the Ancient Mariner",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "the-moving-finger",
+    "by": "omar-khayyam",
+    "q": "THE MOVING FINGER WRITES; AND, HAVING WRIT, MOVES ON.",
+    "y": 1100,
+    "via": "the Rubaiyat",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "freedom-worth-the-name",
+    "by": "mill",
+    "q": "THE ONLY FREEDOM WHICH DESERVES THE NAME, IS THAT OF PURSUING OUR OWN GOOD IN OUR OWN WAY.",
+    "y": 1859,
+    "via": "On Liberty",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "simplify-simplify",
+    "by": "thoreau",
+    "q": "SIMPLIFY, SIMPLIFY.",
+    "y": 1854,
+    "via": "Walden",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "trust-thyself",
+    "by": "emerson",
+    "q": "TRUST THYSELF: EVERY HEART VIBRATES TO THAT IRON STRING.",
+    "y": 1841,
+    "via": "Self-Reliance",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "courage-is-mastery-of-fear",
+    "by": "twain",
+    "q": "COURAGE IS RESISTANCE TO FEAR, MASTERY OF FEAR, NOT ABSENCE OF FEAR.",
+    "y": 1894,
+    "via": "Pudd’nhead Wilson",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "all-in-the-gutter",
+    "by": "wilde",
+    "q": "WE ARE ALL IN THE GUTTER, BUT SOME OF US ARE LOOKING AT THE STARS.",
+    "y": 1892,
+    "via": "Lady Windermere’s Fan",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "all-progress-unreasonable",
+    "by": "shaw",
+    "q": "THE REASONABLE MAN ADAPTS HIMSELF TO THE WORLD: THE UNREASONABLE ONE PERSISTS IN TRYING TO ADAPT THE WORLD TO HIMSELF. THEREFORE ALL PROGRESS DEPENDS ON THE UNREASONABLE MAN.",
+    "y": 1903,
+    "via": "The Revolutionist’s Handbook, in Man and Superman",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "war-is-peace",
+    "by": "orwell",
+    "q": "WAR IS PEACE. FREEDOM IS SLAVERY. IGNORANCE IS STRENGTH.",
+    "y": 1949,
+    "via": "Nineteen Eighty-Four",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "heart-and-stomach-of-a-king",
+    "by": "elizabeth-i",
+    "q": "I KNOW I HAVE THE BODY OF A WEAK AND FEEBLE WOMAN, BUT I HAVE THE HEART AND STOMACH OF A KING.",
+    "y": 1588,
+    "via": "her speech at Tilbury",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "here-i-stand",
+    "by": "luther",
+    "q": "HERE I STAND; I CAN DO NO OTHER.",
+    "y": 1521,
+    "via": "the Diet of Worms",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "now-i-am-become-death",
+    "by": "oppenheimer",
+    "q": "NOW I AM BECOME DEATH, THE DESTROYER OF WORLDS.",
+    "y": 1965,
+    "via": "a television interview, quoting the Bhagavad Gita",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "two-souls",
+    "by": "goethe",
+    "q": "TWO SOULS, ALAS, DWELL IN MY BREAST.",
+    "y": 1808,
+    "via": "Faust, Part One",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "the-blockhead",
+    "by": "johnson",
+    "q": "NO MAN BUT A BLOCKHEAD EVER WROTE EXCEPT FOR MONEY.",
+    "y": 1776,
+    "via": "Boswell’s Life of Johnson",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "register-of-crimes",
+    "by": "gibbon",
+    "q": "HISTORY IS INDEED LITTLE MORE THAN THE REGISTER OF THE CRIMES, FOLLIES, AND MISFORTUNES OF MANKIND.",
+    "y": 1776,
+    "via": "The Decline and Fall of the Roman Empire",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "actions-of-men",
+    "by": "locke",
+    "q": "I HAVE ALWAYS THOUGHT THE ACTIONS OF MEN THE BEST INTERPRETERS OF THEIR THOUGHTS.",
+    "y": 1689,
+    "via": "An Essay Concerning Human Understanding",
+    "provenance": "reviewed 2026-11-01"
+  },
+  {
+    "id": "mind-is-its-own-place",
+    "by": "milton",
+    "q": "THE MIND IS ITS OWN PLACE, AND IN ITSELF CAN MAKE A HEAVEN OF HELL, A HELL OF HEAVEN.",
+    "y": 1667,
+    "via": "Paradise Lost",
+    "provenance": "reviewed 2026-11-01"
   }
 ]

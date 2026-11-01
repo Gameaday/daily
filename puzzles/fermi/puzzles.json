@@ -478,5 +478,245 @@
     "q": "Roughly how many wild tigers are left in the world?",
     "a": 5600,
     "w": "The Global Tiger Forum’s 2023 estimate counts about 5,574, with the IUCN Red List carrying 3,726 to 5,578. A century ago the wild population was reckoned near 100,000."
+  },
+  {
+    "t": "Music",
+    "q": "Roughly how many keys does a full-size piano have?",
+    "a": 88,
+    "w": "Fifty-two white and thirty-six black, 88 in all; the count has been stable since the late nineteenth century."
+  },
+  {
+    "t": "Science",
+    "q": "Roughly how many chemical elements are in the periodic table?",
+    "a": 118,
+    "w": "The table filled its seventh row in 2016 when oganesson was named; new elements now have to be made one atom at a time."
+  },
+  {
+    "t": "Letters",
+    "q": "Roughly how many sonnets did Shakespeare write?",
+    "a": 154,
+    "w": "Published together in 1609, and the whole set fits in a pamphlet."
+  },
+  {
+    "t": "Music",
+    "q": "Roughly how many symphonies did Beethoven complete?",
+    "a": 9,
+    "w": "The ninth broke the form open with a choir; the tenth survives only in sketches and rumors."
+  },
+  {
+    "t": "Music",
+    "q": "Roughly how many works are in Mozart’s catalog by Köchel number?",
+    "a": 626,
+    "w": "Ludwig Köchel numbered everything K. 1 to K. 626 in 1862, from a minuet written at age five to the Requiem left undone."
+  },
+  {
+    "t": "Music",
+    "q": "Roughly how many children did Johann Sebastian Bach have?",
+    "a": 20,
+    "w": "Seven with Maria Barbara and thirteen with Anna Magdalena; four of his sons became well-known composers themselves."
+  },
+  {
+    "t": "Antiquity",
+    "q": "Roughly how many spectators could the Colosseum hold?",
+    "a": 50000,
+    "w": "Ancient claims ran far higher, but modern archaeology puts the true figure near fifty thousand, about the size of a modern stadium."
+  },
+  {
+    "t": "Sea",
+    "q": "Roughly how many people were aboard the Titanic’s maiden voyage?",
+    "a": 2224,
+    "w": "About 2,224 passengers and crew left Southampton, and 710 survived in lifeboats rated for 1,178."
+  },
+  {
+    "t": "Letters",
+    "q": "Roughly how many lines are in Homer’s Odyssey?",
+    "a": 12110,
+    "w": "The standard text runs to about twelve thousand hexameter lines, recited aloud for centuries before anyone wrote it down."
+  },
+  {
+    "t": "America",
+    "q": "Roughly how many men signed the Declaration of Independence?",
+    "a": 56,
+    "w": "Fifty-six, drawn from thirteen colonies, signing a document that was itself treason."
+  },
+  {
+    "t": "England",
+    "q": "Roughly how many monarchs have ruled England since 1066?",
+    "a": 42,
+    "w": "From William the Conqueror to Charles III comes to forty-two if you count the nine-day queen, and forty-one if you do not."
+  },
+  {
+    "t": "Archaeology",
+    "q": "Roughly how many objects were found in Tutankhamun’s tomb?",
+    "a": 5398,
+    "w": "Howard Carter spent ten years cataloguing them: thrones, trumpets, sandals, and 5,398 entries later the work was done."
+  },
+  {
+    "t": "Art",
+    "q": "Roughly how tall is the Venus de Milo, in centimeters?",
+    "a": 204,
+    "w": "She stands a little over two meters, carved from marble and missing her arms since antiquity."
+  },
+  {
+    "t": "Art",
+    "q": "Roughly how tall is the Mona Lisa, in centimeters?",
+    "a": 77,
+    "w": "About 77 by 53 centimeters; the most famous painting on Earth is smaller than a tabloid page."
+  },
+  {
+    "t": "Monuments",
+    "q": "Roughly how many years did the Taj Mahal take to build?",
+    "a": 22,
+    "w": "The mausoleum itself rose from 1632 to about 1643, with the whole riverside complex finished about a decade later."
+  },
+  {
+    "t": "Monuments",
+    "q": "Roughly how tall is the Eiffel Tower today, in meters?",
+    "a": 330,
+    "w": "Three hundred and thirty meters with its modern antennas; when new it was the tallest thing humans had ever built."
+  },
+  {
+    "t": "Antiquity",
+    "q": "Roughly how tall was the Great Pyramid when new, in meters?",
+    "a": 147,
+    "w": "About 147 meters, the tallest building on Earth for thirty-eight centuries; it has since lost its casing and nine meters."
+  },
+  {
+    "t": "Antiquity",
+    "q": "Roughly how old is Stonehenge, in years?",
+    "a": 5000,
+    "w": "The first stones were raised around 3000 BC; the bank and ditch are older still."
+  },
+  {
+    "t": "Earth",
+    "q": "Roughly how many millimeters does Mount Everest grow each year?",
+    "a": 4,
+    "w": "India still shoves Asia at a few millimeters a year, and surveyors now measure the mountain moving."
+  },
+  {
+    "t": "Earth",
+    "q": "Roughly how long is the Nile River, in kilometers?",
+    "a": 6650,
+    "w": "Six thousand six hundred and fifty kilometers, give or take a swamp; whether it or the Amazon is longer is still argued."
+  },
+  {
+    "t": "Sea",
+    "q": "Roughly what percentage of an iceberg sits below the waterline?",
+    "a": 90,
+    "w": "About ninety percent, because ice is only slightly lighter than the water it floats in."
+  },
+  {
+    "t": "Earth",
+    "q": "Roughly how many times does lightning strike the Earth every second?",
+    "a": 100,
+    "w": "Around a hundred flashes a second, more than eight million a day, most of them over land in the tropics."
+  },
+  {
+    "t": "Earth",
+    "q": "Roughly how many volcanoes have erupted in the last ten thousand years?",
+    "a": 1500,
+    "w": "The Smithsonian’s count runs near fifteen hundred with eruptions in living geological memory; some twenty are erupting on any given day."
+  },
+  {
+    "t": "Space",
+    "q": "Roughly how long is one day on Venus, in Earth days?",
+    "a": 243,
+    "w": "Venus turns once in 243 Earth days, backwards, so its year is shorter than its day."
+  },
+  {
+    "t": "Space",
+    "q": "Roughly how many minutes longer than an Earth day is a day on Mars?",
+    "a": 37,
+    "w": "A Martian day, called a sol, runs twenty-four hours and thirty-seven minutes; missions just live with the drift."
+  },
+  {
+    "t": "Space",
+    "q": "Roughly how many light-years away is the nearest star system?",
+    "a": 4,
+    "w": "Proxima Centauri lies just over four light-years off; at airliner speed the trip would take about five million years."
+  },
+  {
+    "t": "Space",
+    "q": "Roughly how old is the Earth, in years?",
+    "a": 4540000000,
+    "w": "Four and a half billion years, read from meteorites that formed alongside it; the oldest terrestrial rocks barely reach a tenth of that."
+  },
+  {
+    "t": "Space",
+    "q": "Roughly how many centimeters does the Moon drift away from Earth each year?",
+    "a": 4,
+    "w": "About three point eight centimeters a year, measured with the laser reflectors Apollo left behind."
+  },
+  {
+    "t": "The Human Body",
+    "q": "Roughly how many chemical letters are in a complete set of human DNA?",
+    "a": 3200000000,
+    "w": "About three billion base pairs per genome; printed as books, the sequence would fill a small library."
+  },
+  {
+    "t": "The Human Body",
+    "q": "Roughly how many protein-coding genes does a human genome contain?",
+    "a": 20000,
+    "w": "Around twenty thousand, roughly the same as a roundworm; the count kept shrinking as the annotations improved."
+  },
+  {
+    "t": "The Human Body",
+    "q": "Roughly how many bacterial cells live in and on a human body?",
+    "a": 38000000000000,
+    "w": "About thirty-eight trillion, slightly outnumbering the thirty trillion human cells we carry."
+  },
+  {
+    "t": "Letters",
+    "q": "Roughly how many words is a typical novel?",
+    "a": 90000,
+    "w": "Somewhere between eighty and a hundred thousand words, about a long weekend’s reading."
+  },
+  {
+    "t": "Archaeology",
+    "q": "Roughly how many scrolls were found in the caves near the Dead Sea?",
+    "a": 900,
+    "w": "About nine hundred manuscripts came out of eleven caves between 1947 and 1956, some in pieces the size of stamps."
+  },
+  {
+    "t": "Archaeology",
+    "q": "Roughly how many soldiers stand in the Terracotta Army?",
+    "a": 8000,
+    "w": "More than eight thousand life-size figures, each with a different face, guarding a tomb still unopened."
+  },
+  {
+    "t": "Transport",
+    "q": "Roughly how many ships pass through the Panama Canal each year?",
+    "a": 14000,
+    "w": "About fourteen thousand transits a year, or one ship every forty minutes, day and night."
+  },
+  {
+    "t": "Transport",
+    "q": "Roughly how many ships pass through the Suez Canal on an average day?",
+    "a": 50,
+    "w": "Around fifty a day, sometimes sixty; when one runs aground, a tenth of world trade waits in line."
+  },
+  {
+    "t": "Internet",
+    "q": "Roughly how many people use the internet worldwide?",
+    "a": 5500000000,
+    "w": "About five and a half billion people are online, leaving roughly a third of humanity still off it."
+  },
+  {
+    "t": "Internet",
+    "q": "Roughly how many articles does English Wikipedia hold?",
+    "a": 7000000,
+    "w": "The English edition crossed seven million articles in 2025, and volunteer editors still argue over every comma."
+  },
+  {
+    "t": "Aviation",
+    "q": "Roughly how many meters did the Wright brothers’ first powered flight cover?",
+    "a": 36,
+    "w": "Thirty-six meters, shorter than a modern airliner’s fuselage; the fourth flight of the day was the one that made history."
+  },
+  {
+    "t": "Aviation",
+    "q": "Roughly how many hours was Lindbergh airborne crossing the Atlantic?",
+    "a": 33,
+    "w": "Thirty-three and a half hours from New York to Paris without a copilot, a radio, or a parachute, awake on sandwiches."
   }
 ]

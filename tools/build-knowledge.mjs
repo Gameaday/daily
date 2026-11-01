@@ -48,21 +48,23 @@
      the day rotation
 
    - superlative is a recipe over people: every life the layer dates
-     at both ends joins the pool in canonical id order, the pool cuts
-     into groups of four, and the recipe's themed cohorts follow, so
-     a well documented life can serve a second time when a different
-     cohort asks a different question of it. Eight questions rotate
-     by board, the longest or shortest life, the first or last
-     birth, and the measured ones, reign, voyages, works and height,
-     which only count the lives a source actually measured, at
-     least two, with the maximum unique, so a tie or a lone number
-     never decides; a cohort whose hint cannot settle falls through
-     to the rotation. When the numbers seat every life a
-     superlative it tops, longest, shortest or nearest the
-     middle, the board also carries a bonus match: four chips, one
-     per life, that the player assigns; the one life no dim tops
-     takes the most-average chip, and the fine print carries the
-     trivia the k field records
+     at both ends may serve. One session lands a day: a cohort of
+     four or five lives and the four to six questions the numbers
+     settle for that cohort, asked one at a time, where the same
+     life may answer more than one question but at most two, so an
+     outlier teaches and the rest still get their turn. A new
+     cohort may never seat a majority that served together before,
+     at most two lives shared with any earlier cohort for five, one
+     for four, so lives return in new company instead of repeating.
+     Weekdays draw five lives from one era bucket and carry the
+     era as their title; weekends seat a themed pool the recipe
+     curates, four or five lives, and carry the theme's name. The
+     questions read the record: the longest or shortest life, the
+     first or last or middle birth, the most average life, and the
+     measured ones, reign, voyages, works and height, which only
+     count the lives a source actually measured, at least two,
+     never a tie. Every draw comes from one seeded PRNG, so the
+     layer compiles byte-identical on every machine
 
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
@@ -648,203 +650,273 @@ function compileFermi(){
 }
 
 /* ---------------- recipe: superlative ---------------- */
-function compileSuperlative(){
-  if (!Array.isArray(people)) return null;
-  const byId = {};
-  for (const p of people) byId[p.id] = p;
-  /* a measured question only counts the lives a source actually
-     measured: at least two measured, and the maximum must be
-     unique, so a tie never decides and one number never serves */
-  function measuredPick(vals){
-    const pairs = [];
-    vals.forEach((x, i) => { if (x !== undefined) pairs.push({ i, x }); });
-    if (pairs.length < 2) return -1;
-    const best = Math.max(...pairs.map(o => o.x));
-    if (pairs.filter(o => o.x === best).length !== 1) return -1;
-    return pairs.find(o => o.x === best).i;
-  }
-  const TYPES = [
-    { t: 'Longevity', q: 'Four lives from the record. Who lived the longest life?',
-      pick: g => { const spans = g.map(p => p.died - p.born); const best = Math.max(...spans); return spans.filter(s => s === best).length === 1 ? spans.indexOf(best) : -1; } },
-    { t: 'Reign', q: 'Four lives from the record. Who reigned the longest?',
-      pick: g => measuredPick(g.map(p => p.reign)) },
-    { t: 'Birth Order', q: 'Four lives from the record. Who was born first?',
-      pick: g => { const borns = g.map(p => p.born); const best = Math.min(...borns); return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1; } },
-    { t: 'Voyages', q: 'Four lives from the record. Who led the most voyages?',
-      pick: g => measuredPick(g.map(p => p.voy)) },
-    { t: 'Birth Order', q: 'Four lives from the record. Who was born last?',
-      pick: g => { const borns = g.map(p => p.born); const best = Math.max(...borns); return borns.filter(s => s === best).length === 1 ? borns.indexOf(best) : -1; } },
-    { t: 'Works', q: 'Four lives from the record. Who left the most works?',
-      pick: g => measuredPick(g.map(p => p.works)) },
-    { t: 'Longevity', q: 'Four lives from the record. Who lived the shortest life?',
-      pick: g => { const spans = g.map(p => p.died - p.born); const best = Math.min(...spans); return spans.filter(s => s === best).length === 1 ? spans.indexOf(best) : -1; } },
-    { t: 'Height', q: 'Four lives from the record. Who stood the tallest?',
-      pick: g => measuredPick(g.map(p => p.h)) }
-  ];
-  /* the themed cohorts: the recipe seats well documented lives a
-     second time when a different cohort can ask a different
-     question of them; a hint the numbers cannot settle falls
-     through to the rotation like any pool board */
-  const recipe = readRecipe('superlative');
-  if (!Array.isArray(recipe)){
-    fail('superlative recipe must be an array of { ids, h } cohorts');
-    return null;
-  }
-  const cohorts = [];
-  for (const c of recipe){
-    if (!c || !Array.isArray(c.ids) || c.ids.length !== 4 || c.ids.some(id => !byId[id])){
-      fail('superlative recipe cohort needs four known lives: ' + JSON.stringify(c).slice(0, 80));
-      continue;
-    }
-    if (c.h !== undefined && !TYPES.some(x => x.t === c.h)){
-      fail('superlative recipe hint names no question: ' + c.h);
-      continue;
-    }
-    cohorts.push({ group: c.ids.map(id => byId[id]), hint: c.h });
-  }
-  function serve(group, rot0, hint){
-    if (hint){
-      const h = TYPES.find(x => x.t === hint);
-      if (h){ const a = h.pick(group); if (a >= 0) return { kind: h, a }; }
-    }
-    for (let k = 0; k < TYPES.length; k++){
-      const next = TYPES[(rot0 + k) % TYPES.length];
-      const a = next.pick(group);
-      if (a >= 0) return { kind: next, a };
-    }
-    return null;
-  }
-  /* the bonus dims: every number now counts from both ends, so a
-     middle life can top the shortest reign or the shortest life the
-     way an extreme one tops the longest. The dates settle four dims
-     outright and two more by calculation, the life nearest the
-     group's mean span and the birth nearest the group's middle year,
-     both computable for every pool member; a measured dim (height)
-     only counts when every life is measured; a counting dim (works,
-     reign) reads a missing number as zero at the top end, while the
-     bottom end compares only the lives a source actually measured */
-  const DIMS = [
-    { q: 'lived the longest', val: p => p.died - p.born, v: p => (p.died - p.born) + ' years' },
-    { q: 'lived the shortest', val: p => -(p.died - p.born), v: p => (p.died - p.born) + ' years' },
-    { q: 'was born first', val: p => -p.born, v: p => 'born ' + p.born },
-    { q: 'was born last', val: p => p.born, v: p => 'born ' + p.born },
-    { q: 'lived the most average life', mean: 'span', v: p => (p.died - p.born) + ' years' },
-    { q: 'was born closest to the middle', mean: 'born', v: p => 'born ' + p.born },
-    { q: 'stood the tallest', val: p => p.h, v: p => p.h + ' cm', need: true },
-    { q: 'stood the shortest', val: p => -p.h, v: p => p.h + ' cm', need: true },
-    { q: 'was the most prolific', val: p => p.works, v: p => p.works + ' works' },
-    { q: 'was the least prolific', val: p => -p.works, v: p => p.works + ' works', some: true },
-    { q: 'reigned the longest', val: p => p.reign, v: p => p.reign + ' years' },
-    { q: 'reigned the shortest', val: p => -p.reign, v: p => p.reign + ' years', some: true },
-    { q: 'sailed the most voyages', val: p => p.voy, v: p => p.voy + ' voyages', some: true }
-  ];
-  /* seat every life one superlative it tops, the fewest options
-     first; a group nobody can seat whole serves no bonus, unless a
-     single life is all that stays untopped, and it takes the
-     most-average chip so the group serves anyway */
-  function bonusFor(group){
-    const tops = [];
-    DIMS.forEach((dim, di) => {
-      if (dim.mean){
-        const xs = group.map(p => dim.mean === 'born' ? p.born : p.died - p.born);
-        const avg = xs.reduce((a, b) => a + b, 0) / xs.length;
-        const dists = xs.map(x => Math.abs(x - avg));
-        const best = Math.min(...dists);
-        if (dists.filter(d => d === best).length === 1)
-          tops.push({ di, p: dists.indexOf(best) });
-        return;
-      }
-      if (dim.some){
-        const pairs = [];
-        group.forEach((p, pi) => { const x = dim.val(p); if (x !== undefined) pairs.push({ pi, x }); });
-        if (pairs.length < 2) return;
-        const best = Math.max(...pairs.map(o => o.x));
-        if (pairs.filter(o => o.x === best).length === 1)
-          tops.push({ di, p: pairs.find(o => o.x === best).pi });
-        return;
-      }
-      let vals = group.map(p => dim.val(p));
-      if (vals.some(x => x === undefined)){
-        if (dim.need) return;
-        vals = vals.map(x => x === undefined ? 0 : x);
-      }
-      const best = Math.max(...vals);
-      if (vals.filter(x => x === best).length === 1) tops.push({ di, p: vals.indexOf(best) });
-    });
-    function seatAll(skip){
-      const idx = group.map((_, pi) => pi).filter(pi => pi !== skip);
-      const per = idx.map(pi => tops.filter(t => t.p === pi).map(t => t.di));
-      const order = per.map((x, k) => ({ pi: idx[k], k, n: x.length }))
-        .sort((a, b) => a.n - b.n || a.pi - b.pi).map(o => o.k);
-      const pick = [];
-      function seat(i){
-        if (i === order.length) return true;
-        for (const di of per[order[i]]){
-          if (pick.indexOf(di) < 0){
-            pick[order[i]] = di;
-            if (seat(i + 1)) return true;
-            pick[order[i]] = undefined;
-          }
-        }
-        return false;
-      }
-      return seat(0) ? idx.map(pi => ({ pi, di: pick[idx.indexOf(pi)] })) : null;
-    }
-    let seated = seatAll(-1), average = -1;
-    if (!seated){
-      for (let pi = 0; pi < group.length; pi++){
-        seated = seatAll(pi);
-        if (seated){ average = pi; break; }
-      }
-    }
-    if (!seated) return null;
-    const chips = DIMS.map((dim, di) => {
-      const s = seated.find(o => o.di === di);
-      return s ? { q: dim.q, a: s.pi, v: dim.v(group[s.pi]) } : null;
-    }).filter(Boolean);
-    if (average >= 0)
-      chips.push({ q: 'was the most average', a: average, v: 'nothing special' });
-    return chips.length === group.length ? chips : null;
-  }
-  const pool = people
+/* superlative v2: one session a day - a cohort of lives and a run of
+   questions the record settles one at a time. A cohort may seat a
+   life that served before, but never a majority that served together:
+   a new cohort may overlap any earlier one by at most its size minus
+   its majority (two for five, one for four). Weekdays draw five lives
+   from one era bucket; weekends seat a themed pool the recipe
+   curates. Each session asks four to six questions from the dims the
+   numbers settle - the longest or shortest life, the first or last or
+   middle birth, the most average life, and the measured ones, reign,
+   voyages, works and height, which only count the lives a source
+   actually measured, at least two, never a tie - and one life may
+   answer at most two of them, so an outlier teaches and the rest
+   still get their turn. Everything is drawn from one seeded PRNG, so
+   the layer compiles byte-identical on every machine. */
+function superlativeSessions(people, recipe){
+  const problems = [];
+  const say = msg => { if (problems.length < 5) problems.push(msg); };
+
+  /* ---- lint the recipe ---- */
+  if (!recipe || typeof recipe !== 'object') return null;
+  if (recipe.v !== 2) say('must carry v: 2');
+  if (!Number.isInteger(recipe.days) || recipe.days < 280 || recipe.days > 400 || recipe.days % 7 !== 0)
+    say('days must be a whole number of weeks between 280 and 400');
+  if (!Number.isInteger(recipe.seed)) say('seed must be an integer');
+  if (!Array.isArray(recipe.opening) || recipe.opening.length < 4 || recipe.opening.length > 6)
+    say('opening must seat four to six lives');
+  if (!Array.isArray(recipe.themes) || recipe.themes.length < 20)
+    say('needs at least twenty themes');
+  if (problems.length) throw new Error('superlative recipe: ' + problems.join('; '));
+
+  const dated = people
     .filter(p => p && Number.isInteger(p.born) && Number.isInteger(p.died) && p.died >= p.born)
     .sort((p, q) => p.id < q.id ? -1 : p.id > q.id ? 1 : 0);
-  const bank = [];
-  function entry(group, served){
-    const e = {
-      t: served.kind.t, q: served.kind.q, opts: group.map(p => p.n), a: served.a,
-      w: group.map(p => p.n + ' ' + (p.died - p.born) + ' (' + p.born + '-' + p.died + ')' +
-        (p.k ? ' - ' + p.k : '')).join('; ') + '.'
+  const byId = {};
+  for (const p of dated) byId[p.id] = p;
+
+  if (recipe.opening.some(id => !byId[id]))
+    throw new Error('superlative recipe: the opening table seats a life the layer does not date');
+  if (new Set(recipe.opening.map(id => byId[id].n)).size !== recipe.opening.length)
+    throw new Error('superlative recipe: the opening table seats a name twice');
+  const themeNames = new Set();
+  for (const t of recipe.themes){
+    if (!t || typeof t.n !== 'string' || !t.n || themeNames.has(t.n))
+      throw new Error('superlative recipe: every theme needs a unique name');
+    themeNames.add(t.n);
+    if (!Array.isArray(t.ids) || t.ids.length < 8 || t.ids.length > 20)
+      throw new Error('superlative recipe: theme ' + t.n + ' needs eight to twenty lives');
+    if (new Set(t.ids).size !== t.ids.length)
+      throw new Error('superlative recipe: theme ' + t.n + ' seats a life twice');
+    if (t.ids.some(id => !byId[id]))
+      throw new Error('superlative recipe: theme ' + t.n + ' seats a life the layer does not date');
+  }
+
+  /* ---- the dims: a question only serves when the numbers settle it ---- */
+  function pickMax(vals){
+    const best = Math.max.apply(null, vals);
+    return vals.filter(x => x === best).length === 1 ? vals.indexOf(best) : -1;
+  }
+  function pickMin(vals){
+    const best = Math.min.apply(null, vals);
+    return vals.filter(x => x === best).length === 1 ? vals.indexOf(best) : -1;
+  }
+  function measuredPairs(vals){
+    const pairs = [];
+    vals.forEach((x, i) => { if (x !== undefined) pairs.push({ x, i }); });
+    return pairs;
+  }
+  function pickMeasuredMax(vals){
+    const pairs = measuredPairs(vals);
+    if (pairs.length < 2) return -1;
+    const best = Math.max.apply(null, pairs.map(o => o.x));
+    return pairs.filter(o => o.x === best).length === 1 ? pairs.find(o => o.x === best).i : -1;
+  }
+  function pickMeasuredMin(vals){
+    const pairs = measuredPairs(vals);
+    if (pairs.length < 2) return -1;
+    const best = Math.min.apply(null, pairs.map(o => o.x));
+    return pairs.filter(o => o.x === best).length === 1 ? pairs.find(o => o.x === best).i : -1;
+  }
+  function pickNearMean(vals){
+    if (vals.some(x => x === undefined)) return -1;
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    return pickMin(vals.map(x => Math.abs(x - avg)));
+  }
+  /* rarity first: the measured questions lead, the dates fill */
+  const DIMS = [
+    { c: 'voy', f: 'voy',   q: 'led the most voyages',
+      t: g => pickMeasuredMax(g.map(p => p.voy)), v: p => p.voy + ' voyages' },
+    { c: 'rsh', f: 'reg',   q: 'reigned the shortest',
+      t: g => pickMeasuredMin(g.map(p => p.reign)), v: p => p.reign + ' years' },
+    { c: 'reg', f: 'reg',   q: 'reigned the longest',
+      t: g => pickMax(g.map(p => p.reign || 0)), v: p => p.reign + ' years' },
+    { c: 'wrk', f: 'works', q: 'left the most works',
+      t: g => pickMax(g.map(p => p.works || 0)), v: p => p.works + ' works' },
+    { c: 'wls', f: 'works', q: 'left the fewest works',
+      t: g => pickMeasuredMin(g.map(p => p.works)), v: p => p.works + ' works' },
+    { c: 'tall', f: 'size', q: 'stood the tallest',
+      t: g => g.every(p => p.h !== undefined) ? pickMax(g.map(p => p.h)) : -1, v: p => p.h + ' cm' },
+    { c: 'tiny', f: 'size', q: 'stood the shortest',
+      t: g => g.every(p => p.h !== undefined) ? pickMin(g.map(p => p.h)) : -1, v: p => p.h + ' cm' },
+    { c: 'avg', f: 'span',  q: 'lived the most average life',
+      t: g => pickNearMean(g.map(p => p.died - p.born)), v: p => (p.died - p.born) + ' years' },
+    { c: 'bmid', f: 'born', q: 'was born closest to the middle',
+      t: g => pickNearMean(g.map(p => p.born)), v: p => 'born ' + p.born },
+    { c: 'lon', f: 'span',  q: 'lived the longest life',
+      t: g => pickMax(g.map(p => p.died - p.born)), v: p => (p.died - p.born) + ' years' },
+    { c: 'sht', f: 'span',  q: 'lived the shortest life',
+      t: g => pickMin(g.map(p => p.died - p.born)), v: p => (p.died - p.born) + ' years' },
+    { c: 'bfr', f: 'born',  q: 'was born first',
+      t: g => pickMin(g.map(p => p.born)), v: p => 'born ' + p.born },
+    { c: 'bla', f: 'born',  q: 'was born last',
+      t: g => pickMax(g.map(p => p.born)), v: p => 'born ' + p.born }
+  ];
+  function candidates(group){
+    const out = [];
+    for (const d of DIMS){
+      const a = d.t(group);
+      if (a >= 0) out.push({ c: d.c, f: d.f, a, v: d.v(group[a]) });
+    }
+    return out;
+  }
+  /* seat four to six questions: at most two per dim family, at most
+     two answered by the same life, rarest first, so the measured
+     questions always lead when they can */
+  function seat(cands){
+    for (let target = Math.min(6, cands.length); target >= 4; target--){
+      const fam = {}, ans = {}, chosen = [];
+      function go(i){
+        if (chosen.length === target) return true;
+        if (cands.length - i < target - chosen.length) return false;
+        const q = cands[i];
+        if ((fam[q.f] || 0) < 2 && (ans[q.a] || 0) < 2){
+          fam[q.f] = (fam[q.f] || 0) + 1; ans[q.a] = (ans[q.a] || 0) + 1; chosen.push(q);
+          if (go(i + 1)) return true;
+          chosen.pop(); fam[q.f]--; ans[q.a]--;
+        }
+        return go(i + 1);
+      }
+      if (go(0)) return chosen.slice();
+    }
+    return null;
+  }
+
+  /* ---- one seeded PRNG drives every draw ---- */
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
-    const b = bonusFor(group);
-    if (b) e.b = b;
-    return e;
   }
-  for (let i = 0; i + 4 <= pool.length; i += 4){
-    const group = pool.slice(i, i + 4);
-    if (new Set(group.map(p => p.n)).size !== 4){
-      fail('superlative pool group seats a name twice: ' + group.map(p => p.id).join('/'));
+  const rng = mulberry32(recipe.seed);
+  function shuffle(arr){
+    for (let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(rng() * (i + 1));
+      const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+  function drawIds(pool, size){
+    const ids = [];
+    let guard = 0;
+    while (ids.length < size && guard++ < 200){
+      const id = pool[Math.floor(rng() * pool.length)];
+      if (ids.indexOf(id) < 0) ids.push(id);
+    }
+    return ids;
+  }
+
+  /* ---- majority fresh: a cohort never seats a majority that served together ---- */
+  function freshOk(ids, priors){
+    const allow = ids.length - (Math.floor(ids.length / 2) + 1);
+    const set = new Set(ids);
+    for (const pr of priors){
+      let shared = 0;
+      for (const id of pr) if (set.has(id)) shared++;
+      if (shared > allow) return false;
+    }
+    return true;
+  }
+  function memberOf(p){
+    const m = { n: p.n, b: p.born, d: p.died };
+    if (p.k) m.k = p.k;
+    return m;
+  }
+
+  /* ---- weekdays draw one era bucket; weekends seat a theme ---- */
+  const ERAS = [
+    { n: 'The Ancient World', lo: 0, hi: 999 },
+    { n: 'The Middle Ages', lo: 1000, hi: 1349 },
+    { n: 'The Renaissance', lo: 1350, hi: 1549 },
+    { n: 'The Early Modern', lo: 1550, hi: 1699 },
+    { n: 'The 18th Century', lo: 1700, hi: 1799 },
+    { n: 'The 19th Century', lo: 1800, hi: 1899 },
+    { n: 'The 20th Century', lo: 1900, hi: 99999 }
+  ];
+  const eras = ERAS
+    .map(e => ({ e, pool: dated.filter(p => p.born >= e.lo && p.born <= e.hi) }))
+    .filter(x => x.pool.length >= 5);
+  const themeOrder = shuffle(recipe.themes.map((t, i) => i));
+  let cursor = 0;
+
+  const sessions = [];
+  const priors = [];
+  function pushSession(title, group, qs){
+    sessions.push({ t: title, m: group.map(memberOf), q: shuffle(qs) });
+    priors.push(group.map(p => p.id));
+  }
+  for (let day = 0; day < recipe.days; day++){
+    let made = null;
+    if (day === 0){
+      const group = recipe.opening.map(id => byId[id]);
+      const qs = seat(candidates(group));
+      if (!qs) throw new Error('superlative: the opening table seats no session');
+      pushSession('The Opening Table', group, qs);
       continue;
     }
-    const served = serve(group, bank.length, null);
-    if (!served) continue;
-    bank.push(entry(group, served));
-  }
-  for (const c of cohorts){
-    if (new Set(c.group.map(p => p.n)).size !== 4){
-      fail('superlative recipe cohort seats a name twice: ' + c.group.map(p => p.id).join('/'));
-      continue;
+    if (day % 7 === 5 || day % 7 === 6){
+      for (let t = 0; t < recipe.themes.length && !made; t++){
+        const theme = recipe.themes[themeOrder[(cursor + t) % recipe.themes.length]];
+        const size = theme.ids.length >= 10 ? 5 : 4;
+        for (let a = 0; a < 24 && !made; a++){
+          const ids = drawIds(theme.ids, size);
+          const group = ids.map(id => byId[id]);
+          if (new Set(group.map(p => p.n)).size !== size) continue;
+          if (!freshOk(ids, priors)) continue;
+          const qs = seat(candidates(group));
+          if (!qs) continue;
+          made = { theme, group, qs, at: t };
+        }
+      }
+      if (made){
+        pushSession(made.theme.n, made.group, made.qs);
+        cursor = (cursor + made.at + 1) % recipe.themes.length;
+      }
+    } else {
+      const total = eras.reduce((s, x) => s + x.pool.length, 0);
+      for (let a = 0; a < 80 && !made; a++){
+        let r = rng() * total, k = 0;
+        while (k < eras.length - 1 && r >= eras[k].pool.length){ r -= eras[k].pool.length; k++; }
+        const ids = drawIds(eras[k].pool.map(p => p.id), 5);
+        const group = ids.map(id => byId[id]);
+        if (new Set(group.map(p => p.n)).size !== 5) continue;
+        if (!freshOk(ids, priors)) continue;
+        const qs = seat(candidates(group));
+        if (!qs) continue;
+        made = { group: group, title: eras[k].e.n, qs };
+      }
+      if (made) pushSession(made.title, made.group, made.qs);
     }
-    const served = serve(c.group, bank.length, c.hint);
-    if (!served){
-      fail('superlative recipe cohort serves no question: ' + c.group.map(p => p.id).join('/'));
-      continue;
-    }
-    bank.push(entry(c.group, served));
+    if (!made) throw new Error('superlative: day ' + day + ' seats no session');
   }
-  if (bank.length < LIST.minBank)
-    fail('knowledge: superlative bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
-  return JSON.stringify(bank, null, 2) + '\n';
+  return JSON.stringify(sessions, null, 2) + '\n';
+}
+
+function compileSuperlative(){
+  if (!Array.isArray(people)) return null;
+  const recipe = readRecipe('superlative');
+  let text;
+  try { text = superlativeSessions(people, recipe); }
+  catch (e){ fail('superlative: ' + e.message); return null; }
+  if (text === null) return null;
+  const sessions = JSON.parse(text);
+  if (sessions.length < LIST.minBank)
+    fail('knowledge: superlative bank below the minimum (' + sessions.length + ' < ' + LIST.minBank + ')');
+  return text;
 }
 
 function checkStore(game, text){

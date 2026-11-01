@@ -113,17 +113,22 @@ async function run(h, ctx){
     r.env.els['opt' + served.puzzle.a].click();
     h.eq(r.x.S.status, 'won', 'gated: brunch won on the served table');
   }
-  /* superlative: the served board plays through */
+  /* superlative: the served session plays through */
   {
     const live = h.boot('superlative', ['S', 'EV'], { now: T0, store: {} });
     const served = serve('superlative', live.x.EV);
     const r = h.boot('superlative', ['S', 'EV', 'SUPERLATIVES'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
     h.ok(r.x.SUPERLATIVES === undefined, 'gated: superlative online boot has no bank');
     await h.flush();
-    r.env.els['opt' + served.puzzle.a].click();
-    h.eq(r.x.S.status, 'won', 'gated: superlative won on the served board');
-    h.ok(Array.isArray(served.puzzle.b) && served.puzzle.b.length === 4,
-      'gated: the served board carries its bonus match');
+    h.ok(Array.isArray(served.puzzle.m) && served.puzzle.m.length >= 4 &&
+      Array.isArray(served.puzzle.q) && served.puzzle.q.length >= 4,
+      'gated: the served session carries a cohort and its rounds');
+    for (let i = 0; i < served.puzzle.q.length; i++){
+      r.env.els['opt' + served.puzzle.q[i].a].click();
+      if (i < served.puzzle.q.length - 1) r.env.els.btnNext.click();
+    }
+    r.env.els.btnNext.click();
+    h.eq(r.x.S.status, 'won', 'gated: superlative won on the served session');
   }
   /* thread: the served chain plays through */
   {

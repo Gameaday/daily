@@ -526,5 +526,377 @@
     "q": "Fidel Castro’s rebels enter Havana.",
     "y": 1959,
     "w": "January 1959: Batista fled at dawn on New Year’s Day, and Castro’s column took a week to walk the island’s length, cheered the whole way. The revolution’s turn toward the Soviet bloc came within two years."
+  },
+  {
+    "t": "Faith",
+    "q": "The Council of Nicaea settles the creed of the Christian church.",
+    "y": 325,
+    "w": "Summer 325: some three hundred bishops gathered at the emperor’s summons to argue over a single Greek letter, the difference between like and same. The creed they issued still repeats that argument every Sunday."
+  },
+  {
+    "t": "Byzantium",
+    "q": "Justinian’s vast cathedral, the Hagia Sophia, is consecrated in Constantinople.",
+    "y": 537,
+    "w": "December 27, 537: the dome Justinian’s architects floated over a ring of windows stunned pilgrims for a thousand years. It was the largest interior space on earth and it took five years to build."
+  },
+  {
+    "t": "Learning",
+    "q": "Bologna’s law school becomes Europe’s first university.",
+    "y": 1088,
+    "w": "1088, by tradition: students hired the professors there, a reversal that has kept the rector student-elected ever since. The city has fed, taxed and quarreled with its scholars for nine centuries and counting."
+  },
+  {
+    "t": "Steppe",
+    "q": "A kurultai on the Onon proclaims Temujin as Genghis Khan.",
+    "y": 1206,
+    "w": "1206: the man who had spent his youth enslaved and hunted was raised on a felt mat and given a new name, ruler of all who dwell in felt tents. Within twenty years his horsemen had taken most of the capitals of the known world."
+  },
+  {
+    "t": "Mali",
+    "q": "Mansa Musa’s gold-heavy pilgrimage stops traffic in Cairo.",
+    "y": 1324,
+    "w": "1324: the king of Mali gave away so much gold on his way to Mecca that the price of the metal sagged in Cairo for years. One chronicler simply gave up trying to count his camels."
+  },
+  {
+    "t": "China",
+    "q": "Zheng He’s treasure fleet sails from the Yangtze for the western oceans.",
+    "y": 1405,
+    "w": "July 1405: more than three hundred ships left the Longjiang yards under a Muslim eunuch admiral, some with crews counted in the hundreds. Seven voyages later the court lost interest and the ocean went quiet."
+  },
+  {
+    "t": "France",
+    "q": "Joan of Arc’s relief column breaks the English siege of Orléans.",
+    "y": 1429,
+    "w": "May 1429: a teenage shepherd girl talked a king into an army and broke the longest siege of the war in nine days. The town’s bells have rung for her every May 8 since."
+  },
+  {
+    "t": "Art",
+    "q": "Leonardo finishes The Last Supper for the refectory of Santa Maria delle Grazie.",
+    "y": 1498,
+    "w": "1498: Leonardo painted a wall with the tempera technique of a panel and predicted it would fail; within twenty years the paint was flaking. It has been under repair more or less ever since."
+  },
+  {
+    "t": "Art",
+    "q": "Michelangelo’s colossal David is set up outside the Palazzo Vecchio.",
+    "y": 1504,
+    "w": "September 1504: a block of marble two other sculptors had already abandoned lay weathering in a cathedral yard for decades before Michelangelo claimed it. The committee that chose its street corner included Leonardo and Botticelli."
+  },
+  {
+    "t": "Archaeology",
+    "q": "The Laocoön is dug from a Roman vineyard on the Esquiline.",
+    "y": 1506,
+    "w": "January 14, 1506: a farmer hit marble, and Michelangelo was sent to verify the find before the pope bought it. Michelangelo himself was accused of forging it."
+  },
+  {
+    "t": "Art",
+    "q": "Michelangelo’s painted Sistine ceiling is unveiled in Rome.",
+    "y": 1512,
+    "w": "October 31, 1512: four years on scaffolding with his neck bent back and paint in his eyes, and he insisted he was no painter at all. The scaffolding came down two days later, and Rome has looked up ever since."
+  },
+  {
+    "t": "Conquest",
+    "q": "Cortés and his native allies take Tenochtitlan after a siege.",
+    "y": 1521,
+    "w": "August 13, 1521: the conquistadors took the lake city only because tens of thousands of indigenous enemies of the Aztecs helped them. The causeways became the streets of Mexico City, which still sinks."
+  },
+  {
+    "t": "Conquest",
+    "q": "Pizarro seizes the Inca emperor Atahualpa at Cajamarca.",
+    "y": 1532,
+    "w": "November 1532: fewer than two hundred men ambushed an emperor at a peaceful meeting and held him for the largest ransom in history. The Incas filled a room with gold, and the Spaniards killed him anyway."
+  },
+  {
+    "t": "Letters",
+    "q": "The first part of Don Quixote appears in Madrid bookshops.",
+    "y": 1605,
+    "w": "January 1605: the funny book about a mad knight sold out its first printing in weeks and made a broke old soldier the father of the modern novel. Part two followed a decade later and invented the sequel."
+  },
+  {
+    "t": "Science",
+    "q": "Galileo is condemned by the Roman Inquisition and made to recant.",
+    "y": 1633,
+    "w": "June 1633: the old man in the dock had taught half the Tuscan court, and he was shown the instruments twice before he knelt. He said the earth stands still, and spent his last nine years under house arrest with the moons of Jupiter in his telescope."
+  },
+  {
+    "t": "Science",
+    "q": "Charles II charters the Royal Society for improving natural knowledge.",
+    "y": 1662,
+    "w": "1662: a club of experimenters got a royal seal and, soon after, a motto that refuses to take anybody’s word for anything. Its journal, the Philosophical Transactions, is the oldest science journal still running."
+  },
+  {
+    "t": "Letters",
+    "q": "The first volume of the Encyclopédie appears in Paris.",
+    "y": 1751,
+    "w": "July 1751: Diderot and d’Alembert set out to index every craft and idea in one alphabet; the engravers’ plates of the trades are now the best record of how things were made. The pope put it on the Index."
+  },
+  {
+    "t": "Science",
+    "q": "Franklin’s account of the kite and the thunderstorm is published.",
+    "y": 1752,
+    "w": "October 1752: a Philadelphia printer’s newspaper letter described flying a kite into a thundercloud to show lightning was electricity. French experimenters had already confirmed his pointed-rod idea; the kite made the better story."
+  },
+  {
+    "t": "Industry",
+    "q": "Watt patents the separate condenser, remaking the steam engine.",
+    "y": 1769,
+    "w": "January 1769: a repair job on a lecture-hall model engine led an instrument maker to see that the waste was in the cooling itself. The patent he filed held the idea for a quarter century and powered the industrial revolution."
+  },
+  {
+    "t": "Revolution",
+    "q": "Paris crowds storm the Bastille in search of powder and prisoners.",
+    "y": 1789,
+    "w": "July 14, 1789: the great prison held seven inmates, four forgers, two madmen and a noble, but its gunpowder mattered. The king’s hunting diary for that day records a single word: nothing."
+  },
+  {
+    "t": "Revolution",
+    "q": "France’s law of 1795 introduces the metre and the gram.",
+    "y": 1795,
+    "w": "April 1795: the law fixed the metre as a ten-millionth of the earth’s quarter meridian, replacing every feudal perch and toise with an earth-sized standard. Two astronomers were still out measuring it through a war zone."
+  },
+  {
+    "t": "Letters",
+    "q": "Pride and Prejudice is published, the second of Austen’s novels in print.",
+    "y": 1813,
+    "w": "January 1813: a parson’s daughter who had first drafted it as First Impressions at twenty sold it outright for one hundred and ten pounds and kept no copyright. The publishers have done rather better since."
+  },
+  {
+    "t": "Music",
+    "q": "Beethoven’s Ninth premieres in Vienna with the deaf composer on stage.",
+    "y": 1824,
+    "w": "May 7, 1824: the deaf man on stage could not hear the applause behind him until a singer turned him around to see it. The choral finale is now the anthem of Europe and the year-end ritual of Japan."
+  },
+  {
+    "t": "America",
+    "q": "Mexico secures independence from Spain under the Plan of Iguala.",
+    "y": 1821,
+    "w": "September 1821: eleven years of war ended not in a republic but in an empire led by the conservative general who had been sent to crush the rebellion. Iturbide’s throne lasted less than a year."
+  },
+  {
+    "t": "America",
+    "q": "Pedro declares the independence of Brazil on the banks of the Ipiranga.",
+    "y": 1822,
+    "w": "September 7, 1822: the Portuguese prince told his father’s ministers no, with a sword, in a streambed near São Paulo. Brazil kept a crown and kept its unity while Spanish America broke into a dozen pieces."
+  },
+  {
+    "t": "Revolution",
+    "q": "The Communist Manifesto is printed in London as revolutions sweep Europe.",
+    "y": 1848,
+    "w": "February 1848: a pamphlet by two obscure Germans was a footnote to that year’s revolutions, printed in an edition too small to matter. Within a lifetime it was the most-printed political text on earth."
+  },
+  {
+    "t": "America",
+    "q": "Gold is found in a sawmill ditch on the American River.",
+    "y": 1848,
+    "w": "January 24, 1848: a contractor checking a millrace found flakes the size of a thumbnail, and the man who owned the mill tried to keep it quiet. His whole work force walked off within weeks, and the forty-niners followed."
+  },
+  {
+    "t": "Invention",
+    "q": "Morse taps the first telegraph message from Washington to Baltimore.",
+    "y": 1844,
+    "w": "May 24, 1844: a biblical phrase tapped along thirty-eight miles of wire reached Baltimore in an instant, and Morse let a young girl choose it. Within a decade and a half a cable lay under the Atlantic."
+  },
+  {
+    "t": "Industry",
+    "q": "Bessemer patents a converter that makes cheap steel by the ton.",
+    "y": 1856,
+    "w": "1856: blowing cold air through molten iron burned away the carbon and made steel cheap enough to rail a continent. Bessemer retired rich; the American who had the same idea got little."
+  },
+  {
+    "t": "Italy",
+    "q": "Victor Emmanuel II is proclaimed king of a united Italy.",
+    "y": 1861,
+    "w": "March 17, 1861: a kingdom stitched from a dozen states was still missing Rome and Venice, and the new parliament simply declared the king of Sardinia king of Italy. Cavour, the man who had planned it, died three months later."
+  },
+  {
+    "t": "Humanity",
+    "q": "The Geneva conference founds the International Red Cross.",
+    "y": 1863,
+    "w": "October 1863: a Swiss businessman who had seen the aftermath of Solferino called a conference to organize care for wounded soldiers, whoever they were. Every national society since has worn his city’s flag with the colors reversed."
+  },
+  {
+    "t": "Science",
+    "q": "Mendel presents his pea experiments to the natural history society of Brno.",
+    "y": 1865,
+    "w": "February and March 1865: an abbot with a garden and arithmetic counted seven traits across twenty-nine thousand pea plants. The society’s minutes record no questions after either talk, and biology waited thirty-five years to notice."
+  },
+  {
+    "t": "Japan",
+    "q": "The shogunate falls and the young emperor is restored in Japan.",
+    "y": 1868,
+    "w": "January 3, 1868: samurai from the southwest handed a fifteen-year-old emperor his ancestors’ powers back, then used them to build railways, conscripts and a national school system in a single generation."
+  },
+  {
+    "t": "Sport",
+    "q": "The All England Club holds the first lawn tennis championship at Wimbledon.",
+    "y": 1877,
+    "w": "July 1877: twenty-two players paid a guinea each to enter, and the final was postponed three days so the gentry could watch the Eton and Harrow cricket match. Spencer Gore won it and called the whole game boring."
+  },
+  {
+    "t": "Invention",
+    "q": "Edison demonstrates a practical incandescent lamp in Menlo Park.",
+    "y": 1879,
+    "w": "October 1879: after months of filament failures the lab’s carbon lamp burned for thirteen and a half hours. Newspapers called the inventor the wizard of Menlo Park, and lower Manhattan glowed on his wires within two years."
+  },
+  {
+    "t": "Engineering",
+    "q": "The Brooklyn Bridge opens after thirteen years of construction.",
+    "y": 1883,
+    "w": "May 24, 1883: the elder Roebling died of the caisson disease before a stone was laid, and his son was crippled by the same bends while his wife ran the site. Six days after the opening, a stampede on the bridge killed twelve people."
+  },
+  {
+    "t": "America",
+    "q": "The Statue of Liberty is dedicated in New York harbor.",
+    "y": 1886,
+    "w": "October 28, 1886: a French sculptor’s copper colossus rose on a pedestal paid for partly by schoolchildren’s coins after the rich refused. The fireworks went up through a fog so thick that only the harbor saw them."
+  },
+  {
+    "t": "Science",
+    "q": "Röntgen discovers a ray that photographs the bones inside a hand.",
+    "y": 1895,
+    "w": "November 8, 1895: a Bavarian physicist noticed a screen glowing across the lab from a covered tube and spent weeks chasing the unknown ray in secret. His picture of his wife’s hand, ring and all, ran in every newspaper on earth."
+  },
+  {
+    "t": "Engineering",
+    "q": "The Panama Canal opens to its first ship.",
+    "y": 1914,
+    "w": "August 15, 1914: the Ancon’s passage ended three decades in which a French company had gone bankrupt and an American president had taken a province to get the job done. Yellow fever was beaten before the canal was."
+  },
+  {
+    "t": "India",
+    "q": "Gandhi begins the march to the sea to break the salt law.",
+    "y": 1930,
+    "w": "March 12, 1930: a sixty-one-year-old in a homespun dhoti walked 240 miles to the sea and picked up a lump of natural salt, breaking the empire’s monopoly. Within a month the salt laws were publicly shattered down the whole coastline and sixty thousand people were in jail."
+  },
+  {
+    "t": "Sport",
+    "q": "Uruguay hosts and wins the first football World Cup.",
+    "y": 1930,
+    "w": "July 1930: thirteen teams came, four of them from Europe after a fortnight at sea. The hosts beat Argentina 4-2 in the final, and the trophy was a French sculptor’s gold-plated idea of winged victory."
+  },
+  {
+    "t": "America",
+    "q": "The Empire State Building opens in New York.",
+    "y": 1931,
+    "w": "May 1, 1931: the steel went up at four and a half floors a week, and President Hoover switched the lights on from Washington. Built in fourteen months in a depression, it stood so empty that New Yorkers called it the Empty State Building."
+  },
+  {
+    "t": "China",
+    "q": "Mao’s column of marchers reaches Shaanxi after a year on the move.",
+    "y": 1935,
+    "w": "October 1935: some eighty-six thousand had left Jiangxi a year earlier; the column that reached Shaanxi was a fraction of that. The walk became the founding legend of the People’s Republic, and most of its leaders had made it on foot."
+  },
+  {
+    "t": "Engineering",
+    "q": "The Golden Gate Bridge opens to a walking crowd of thousands.",
+    "y": 1937,
+    "w": "May 27, 1937: some two hundred thousand people paid a nickel each to walk the span before a single car was allowed. The chief engineer’s safety net saved nineteen men, who called themselves the halfway to hell club."
+  },
+  {
+    "t": "Computing",
+    "q": "The ENIAC, the first general-purpose electronic computer, is unveiled in Philadelphia.",
+    "y": 1946,
+    "w": "February 1946: thirty tons of tubes and switches computed a shell’s arc faster than the shell flew. The six women who programmed it by patch cable went unnamed for half a century."
+  },
+  {
+    "t": "Computing",
+    "q": "The transistor is demonstrated at Bell Labs in New Jersey.",
+    "y": 1947,
+    "w": "December 23, 1947: a sliver of germanium amplified without a filament or a vacuum. Bardeen and Brattain took a Nobel with their tempestuous group lead, and the invention quietly took everything else."
+  },
+  {
+    "t": "India",
+    "q": "India and Pakistan become independent as the Raj is partitioned.",
+    "y": 1947,
+    "w": "August 1947: the midnight handover came with borders drawn by a lawyer who had never been east of Paris, and some twelve million people moved within weeks. It was the largest migration in history, in the worst month of the year to be fleeing."
+  },
+  {
+    "t": "America",
+    "q": "The Supreme Court rules school segregation unconstitutional.",
+    "y": 1954,
+    "w": "May 17, 1954: a unanimous court ended legal school segregation in nine paragraphs, overruling half a century of separate but equal. The case carried a Topeka welder’s name and was argued by the lawyer who would become the first Black justice."
+  },
+  {
+    "t": "Science",
+    "q": "The structure of DNA is published as a double helix in Nature.",
+    "y": 1953,
+    "w": "April 25, 1953: a single page in Nature proposed two backbones wound around each other. The photograph that settled the shape was made by Rosalind Franklin, who was not on the paper; she died at thirty-seven, four years before a Nobel she could not have been given."
+  },
+  {
+    "t": "Africa",
+    "q": "Ghana becomes the first British colony in Africa south of the Sahara to become independent.",
+    "y": 1957,
+    "w": "March 6, 1957: the colony took the name of an old empire, and a prime minister who had been a political prisoner seven years earlier stood up in the parliament his jailers had built. Within a decade nearly all of Africa had followed."
+  },
+  {
+    "t": "Medicine",
+    "q": "The contraceptive pill is approved in the United States.",
+    "y": 1960,
+    "w": "1960: a biology teacher and a philanthropist funded the research, a Catholic obstetrician ran the trials in Puerto Rico, and the regulators approved it in June. Sanger was in her eighties and had been demanding it since before women could vote."
+  },
+  {
+    "t": "Germany",
+    "q": "Barbed wire rises across Berlin overnight, sealing the sector border.",
+    "y": 1961,
+    "w": "August 13, 1961: Sunday-morning Berlin woke to barbed wire across its streets. The wire stopped the exodus that was bankrupting the East; the concrete followed, and the city spent twenty-eight years learning to live around it."
+  },
+  {
+    "t": "America",
+    "q": "The Civil Rights Act is signed into law after a Senate filibuster.",
+    "y": 1964,
+    "w": "July 2, 1964: the filibuster lasted fifty-four working days and was broken by cloture, the first ever voted on a civil rights bill. Johnson signed with dozens of pens, and the public accommodations clause reached every lunch counter at once."
+  },
+  {
+    "t": "Environment",
+    "q": "Millions mark the first Earth Day across the United States.",
+    "y": 1970,
+    "w": "April 22, 1970: twenty million people, a tenth of the country, came out for a teach-in a Wisconsin senator had staffed with twenty-somethings. The Environmental Protection Agency existed by the end of the year."
+  },
+  {
+    "t": "Computing",
+    "q": "Atari releases Pong, the first arcade game to hit.",
+    "y": 1972,
+    "w": "November 1972: the test cabinet in a Sunnyvale bar broke because its coin slot had jammed solid with quarters. Two paddles and a square ball had built an industry, and the repair slip became video games’ first bug report."
+  },
+  {
+    "t": "Medicine",
+    "q": "The World Health Organization declares smallpox eradicated.",
+    "y": 1980,
+    "w": "May 8, 1980: the disease that killed more people than every war combined was declared extinct after an eleven-year hunt for its last hiding places. The final natural case had been a hospital cook in Somalia, and he survived."
+  },
+  {
+    "t": "Computing",
+    "q": "The first website goes live at CERN.",
+    "y": 1991,
+    "w": "August 6, 1991: a physicist’s page about the web itself went up on a NeXT machine with a hand-written label warning not to power it down. CERN put the code into the public domain two years later and took no royalty on the invention of the age."
+  },
+  {
+    "t": "Engineering",
+    "q": "The Channel Tunnel opens between Britain and France.",
+    "y": 1994,
+    "w": "May 6, 1994: an idea older than Napoleon finally connected, and the queen and the president opened it in person. Trains cross twenty-three miles of chalk in thirty-five minutes; the Victorians who tried first got two miles and lost the money."
+  },
+  {
+    "t": "Science",
+    "q": "A lamb is born cloned from an adult sheep cell at Roslin.",
+    "y": 1996,
+    "w": "July 5, 1996: a lamb grown from a mammary cell carried DNA from one sheep, an egg from another and was carried by a third, so she had no father and three mothers. Named after Dolly Parton for the obvious reason, she stands stuffed in the National Museum of Scotland."
+  },
+  {
+    "t": "Computing",
+    "q": "Wikipedia goes live as a free encyclopedia anyone can edit.",
+    "y": 2001,
+    "w": "January 15, 2001: the serious encyclopedia project had been a failure, and its leftover volunteer pages were opened to anyone who showed up. A month later it had a thousand articles; the serious project closed with two dozen."
+  },
+  {
+    "t": "Science",
+    "q": "CERN announces the discovery of the Higgs boson.",
+    "y": 2012,
+    "w": "July 4, 2012: two rival detectors saw the same faint bump, forty-eight years after the Edinburgh physicist whose name it carries had proposed it. The man himself, eighty-three, was in the audience and was seen to weep."
+  },
+  {
+    "t": "Space",
+    "q": "LIGO detects gravitational waves from two merging black holes.",
+    "y": 2015,
+    "w": "September 14, 2015: two laser arms felt a shiver a ten-thousandth of a proton wide, from two black holes that had merged over a billion years earlier. Einstein had priced the effect a century before and doubted anyone would ever measure it."
   }
 ]

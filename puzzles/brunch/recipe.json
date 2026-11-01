@@ -314,5 +314,289 @@
   {
     "id": "paris",
     "y": 1895
+  },
+  {
+    "id": "florence",
+    "y": 1466
+  },
+  {
+    "id": "florence",
+    "y": 1467
+  },
+  {
+    "id": "florence",
+    "y": 1468
+  },
+  {
+    "id": "florence",
+    "y": 1470
+  },
+  {
+    "id": "florence",
+    "y": 1471
+  },
+  {
+    "id": "florence",
+    "y": 1472
+  },
+  {
+    "id": "florence",
+    "y": 1473
+  },
+  {
+    "id": "venice",
+    "y": 1484
+  },
+  {
+    "id": "venice",
+    "y": 1485
+  },
+  {
+    "id": "venice",
+    "y": 1487
+  },
+  {
+    "id": "lisbon",
+    "y": 1506
+  },
+  {
+    "id": "lisbon",
+    "y": 1508
+  },
+  {
+    "id": "lisbon",
+    "y": 1509
+  },
+  {
+    "id": "rome",
+    "y": 1509
+  },
+  {
+    "id": "rome",
+    "y": 1510
+  },
+  {
+    "id": "lisbon",
+    "y": 1511
+  },
+  {
+    "id": "rome",
+    "y": 1511
+  },
+  {
+    "id": "lisbon",
+    "y": 1512
+  },
+  {
+    "id": "lisbon",
+    "y": 1514
+  },
+  {
+    "id": "rome",
+    "y": 1514
+  },
+  {
+    "id": "london",
+    "y": 1533
+  },
+  {
+    "id": "london",
+    "y": 1534
+  },
+  {
+    "id": "london",
+    "y": 1535
+  },
+  {
+    "id": "london",
+    "y": 1536
+  },
+  {
+    "id": "london",
+    "y": 1537
+  },
+  {
+    "id": "london",
+    "y": 1538
+  },
+  {
+    "id": "london",
+    "y": 1539
+  },
+  {
+    "id": "london",
+    "y": 1540
+  },
+  {
+    "id": "london",
+    "y": 1587
+  },
+  {
+    "id": "london",
+    "y": 1589
+  },
+  {
+    "id": "london",
+    "y": 1590
+  },
+  {
+    "id": "london",
+    "y": 1593
+  },
+  {
+    "id": "madrid",
+    "y": 1629
+  },
+  {
+    "id": "london",
+    "y": 1662
+  },
+  {
+    "id": "london",
+    "y": 1663
+  },
+  {
+    "id": "london",
+    "y": 1664
+  },
+  {
+    "id": "london",
+    "y": 1665
+  },
+  {
+    "id": "london",
+    "y": 1666
+  },
+  {
+    "id": "london",
+    "y": 1667
+  },
+  {
+    "id": "london",
+    "y": 1668
+  },
+  {
+    "id": "london",
+    "y": 1669
+  },
+  {
+    "id": "london",
+    "y": 1671
+  },
+  {
+    "id": "london",
+    "y": 1673
+  },
+  {
+    "id": "london",
+    "y": 1675
+  },
+  {
+    "id": "london",
+    "y": 1676
+  },
+  {
+    "id": "london",
+    "y": 1677
+  },
+  {
+    "id": "london",
+    "y": 1678
+  },
+  {
+    "id": "london",
+    "y": 1679
+  },
+  {
+    "id": "london",
+    "y": 1680
+  },
+  {
+    "id": "london",
+    "y": 1682
+  },
+  {
+    "id": "london",
+    "y": 1683
+  },
+  {
+    "id": "london",
+    "y": 1684
+  },
+  {
+    "id": "london",
+    "y": 1686
+  },
+  {
+    "id": "london",
+    "y": 1689
+  },
+  {
+    "id": "london",
+    "y": 1691
+  },
+  {
+    "id": "london",
+    "y": 1692
+  },
+  {
+    "id": "london",
+    "y": 1693
+  },
+  {
+    "id": "versailles",
+    "y": 1774
+  },
+  {
+    "id": "versailles",
+    "y": 1777
+  },
+  {
+    "id": "vienna",
+    "y": 1810
+  },
+  {
+    "id": "vienna",
+    "y": 1811
+  },
+  {
+    "id": "vienna",
+    "y": 1812
+  },
+  {
+    "id": "vienna",
+    "y": 1813
+  },
+  {
+    "id": "vienna",
+    "y": 1815
+  },
+  {
+    "id": "vienna",
+    "y": 1816
+  },
+  {
+    "id": "vienna",
+    "y": 1817
+  },
+  {
+    "id": "vienna",
+    "y": 1818
+  },
+  {
+    "id": "berlin",
+    "y": 1825
+  },
+  {
+    "id": "berlin",
+    "y": 1826
+  },
+  {
+    "id": "berlin",
+    "y": 1828
+  },
+  {
+    "id": "st-petersburg",
+    "y": 1834
   }
 ]

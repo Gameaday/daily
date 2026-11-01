@@ -1025,5 +1025,928 @@
     ],
     "a": 2,
     "w": "In Paris then: Edgar Degas (1855-1917), Emile Zola (1858-1897), Marie Curie (1891-1934). John Millais was in London (1846-1896)."
+  },
+  {
+    "t": "Florence",
+    "y": 1466,
+    "q": "Florence, 1466. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Andrea del Verrocchio",
+      "Leonardo da Vinci",
+      "Mehmed II",
+      "Lorenzo de Medici"
+    ],
+    "a": 2,
+    "w": "In Florence then: Andrea del Verrocchio (1435-1482), Leonardo da Vinci (1466-1482), Lorenzo de Medici (1449-1492). Mehmed II was in Constantinople (1453-1481)."
+  },
+  {
+    "t": "Florence",
+    "y": 1467,
+    "q": "Florence, 1467. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Gentile Bellini",
+      "Lorenzo de Medici",
+      "Andrea del Verrocchio"
+    ],
+    "a": 1,
+    "w": "In Florence then: Leonardo da Vinci (1466-1482), Lorenzo de Medici (1449-1492), Andrea del Verrocchio (1435-1482). Gentile Bellini was in Venice (1454-1507)."
+  },
+  {
+    "t": "Florence",
+    "y": 1468,
+    "q": "Florence, 1468. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Giovanni Bellini",
+      "Lorenzo de Medici",
+      "Andrea del Verrocchio",
+      "Leonardo da Vinci"
+    ],
+    "a": 0,
+    "w": "In Florence then: Lorenzo de Medici (1449-1492), Andrea del Verrocchio (1435-1482), Leonardo da Vinci (1466-1482). Giovanni Bellini was in Venice (1459-1516)."
+  },
+  {
+    "t": "Florence",
+    "y": 1470,
+    "q": "Florence, 1470. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Andrea del Verrocchio",
+      "Leonardo da Vinci",
+      "Giovanni Bellini",
+      "Botticelli"
+    ],
+    "a": 2,
+    "w": "In Florence then: Andrea del Verrocchio (1435-1482), Leonardo da Vinci (1466-1482), Botticelli (1470-1510). Giovanni Bellini was in Venice (1459-1516)."
+  },
+  {
+    "t": "Florence",
+    "y": 1471,
+    "q": "Florence, 1471. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Lorenzo de Medici",
+      "Mehmed II",
+      "Andrea del Verrocchio",
+      "Leonardo da Vinci"
+    ],
+    "a": 1,
+    "w": "In Florence then: Lorenzo de Medici (1449-1492), Andrea del Verrocchio (1435-1482), Leonardo da Vinci (1466-1482). Mehmed II was in Constantinople (1453-1481)."
+  },
+  {
+    "t": "Florence",
+    "y": 1472,
+    "q": "Florence, 1472. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Gentile Bellini",
+      "Botticelli",
+      "Lorenzo de Medici",
+      "Andrea del Verrocchio"
+    ],
+    "a": 0,
+    "w": "In Florence then: Botticelli (1470-1510), Lorenzo de Medici (1449-1492), Andrea del Verrocchio (1435-1482). Gentile Bellini was in Venice (1454-1507)."
+  },
+  {
+    "t": "Florence",
+    "y": 1473,
+    "q": "Florence, 1473. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Botticelli",
+      "Lorenzo de Medici",
+      "Giovanni Bellini"
+    ],
+    "a": 3,
+    "w": "In Florence then: Leonardo da Vinci (1466-1482), Botticelli (1470-1510), Lorenzo de Medici (1449-1492). Giovanni Bellini was in Venice (1459-1516)."
+  },
+  {
+    "t": "Venice",
+    "y": 1484,
+    "q": "Venice, 1484. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Gentile Bellini",
+      "Giovanni Bellini",
+      "Leonardo da Vinci",
+      "Andrea del Verrocchio"
+    ],
+    "a": 2,
+    "w": "In Venice then: Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516), Andrea del Verrocchio (1483-1488). Leonardo da Vinci was in Milan (1482-1499)."
+  },
+  {
+    "t": "Venice",
+    "y": 1485,
+    "q": "Venice, 1485. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Giovanni Bellini",
+      "Leonardo da Vinci",
+      "Andrea del Verrocchio",
+      "Gentile Bellini"
+    ],
+    "a": 1,
+    "w": "In Venice then: Giovanni Bellini (1459-1516), Andrea del Verrocchio (1483-1488), Gentile Bellini (1454-1507). Leonardo da Vinci was in Milan (1482-1499)."
+  },
+  {
+    "t": "Venice",
+    "y": 1487,
+    "q": "Venice, 1487. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Gentile Bellini",
+      "Giovanni Bellini",
+      "Andrea del Verrocchio",
+      "Leonardo da Vinci"
+    ],
+    "a": 3,
+    "w": "In Venice then: Gentile Bellini (1454-1507), Giovanni Bellini (1459-1516), Andrea del Verrocchio (1483-1488). Leonardo da Vinci was in Milan (1482-1499)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1506,
+    "q": "Lisbon, 1506. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Thomas More",
+      "Ferdinand Magellan",
+      "Manuel I",
+      "Vasco da Gama"
+    ],
+    "a": 0,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Thomas More was in London (1478-1518)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1508,
+    "q": "Lisbon, 1508. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Vasco da Gama",
+      "Ferdinand Magellan",
+      "Niccolo Machiavelli",
+      "Manuel I"
+    ],
+    "a": 2,
+    "w": "In Lisbon then: Vasco da Gama (1497-1524), Ferdinand Magellan (1505-1517), Manuel I (1495-1521). Niccolo Machiavelli was in Florence (1498-1512)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1509,
+    "q": "Lisbon, 1509. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ferdinand Magellan",
+      "Botticelli",
+      "Manuel I",
+      "Vasco da Gama"
+    ],
+    "a": 1,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Botticelli was in Florence (1470-1510)."
+  },
+  {
+    "t": "Rome",
+    "y": 1509,
+    "q": "Rome, 1509. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Pope Julius II",
+      "Raphael",
+      "Michelangelo",
+      "Leonardo da Vinci"
+    ],
+    "a": 3,
+    "w": "In Rome then: Pope Julius II (1503-1513), Raphael (1508-1520), Michelangelo (1508-1516). Leonardo da Vinci was in Milan (1506-1513)."
+  },
+  {
+    "t": "Rome",
+    "y": 1510,
+    "q": "Rome, 1510. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Raphael",
+      "Michelangelo",
+      "Leonardo da Vinci",
+      "Pope Julius II"
+    ],
+    "a": 2,
+    "w": "In Rome then: Raphael (1508-1520), Michelangelo (1508-1516), Pope Julius II (1503-1513). Leonardo da Vinci was in Milan (1506-1513)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1511,
+    "q": "Lisbon, 1511. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Vasco da Gama",
+      "Ferdinand Magellan",
+      "Manuel I",
+      "Michelangelo"
+    ],
+    "a": 3,
+    "w": "In Lisbon then: Vasco da Gama (1497-1524), Ferdinand Magellan (1505-1517), Manuel I (1495-1521). Michelangelo was in Rome (1508-1516)."
+  },
+  {
+    "t": "Rome",
+    "y": 1511,
+    "q": "Rome, 1511. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Michelangelo",
+      "Leonardo da Vinci",
+      "Pope Julius II",
+      "Raphael"
+    ],
+    "a": 1,
+    "w": "In Rome then: Michelangelo (1508-1516), Pope Julius II (1503-1513), Raphael (1508-1520). Leonardo da Vinci was in Milan (1506-1513)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1512,
+    "q": "Lisbon, 1512. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ferdinand Magellan",
+      "Manuel I",
+      "Leonardo da Vinci",
+      "Vasco da Gama"
+    ],
+    "a": 2,
+    "w": "In Lisbon then: Ferdinand Magellan (1505-1517), Manuel I (1495-1521), Vasco da Gama (1497-1524). Leonardo da Vinci was in Milan (1506-1513)."
+  },
+  {
+    "t": "Lisbon",
+    "y": 1514,
+    "q": "Lisbon, 1514. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Titian",
+      "Vasco da Gama",
+      "Ferdinand Magellan",
+      "Manuel I"
+    ],
+    "a": 0,
+    "w": "In Lisbon then: Vasco da Gama (1497-1524), Ferdinand Magellan (1505-1517), Manuel I (1495-1521). Titian was in Venice (1510-1576)."
+  },
+  {
+    "t": "Rome",
+    "y": 1514,
+    "q": "Rome, 1514. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Manuel I",
+      "Raphael"
+    ],
+    "a": 2,
+    "w": "In Rome then: Leonardo da Vinci (1513-1516), Michelangelo (1508-1516), Raphael (1508-1520). Manuel I was in Lisbon (1495-1521)."
+  },
+  {
+    "t": "London",
+    "y": 1533,
+    "q": "London, 1533. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Henry VIII",
+      "Titian",
+      "Anne Boleyn",
+      "Thomas Cromwell"
+    ],
+    "a": 1,
+    "w": "In London then: Henry VIII (1509-1547), Anne Boleyn (1533-1536), Thomas Cromwell (1530-1540). Titian was in Venice (1510-1576)."
+  },
+  {
+    "t": "London",
+    "y": 1534,
+    "q": "London, 1534. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Suleiman the Magnificent",
+      "Thomas Cromwell",
+      "Hans Holbein the Younger",
+      "Henry VIII"
+    ],
+    "a": 0,
+    "w": "In London then: Thomas Cromwell (1530-1540), Hans Holbein the Younger (1532-1543), Henry VIII (1509-1547). Suleiman the Magnificent was in Constantinople (1520-1566)."
+  },
+  {
+    "t": "London",
+    "y": 1535,
+    "q": "London, 1535. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Henry VIII",
+      "Thomas More",
+      "Anne Boleyn",
+      "Titian"
+    ],
+    "a": 3,
+    "w": "In London then: Henry VIII (1509-1547), Thomas More (1534-1535), Anne Boleyn (1533-1536). Titian was in Venice (1510-1576)."
+  },
+  {
+    "t": "London",
+    "y": 1536,
+    "q": "London, 1536. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Anne Boleyn",
+      "Thomas Cromwell",
+      "Michelangelo",
+      "Hans Holbein the Younger"
+    ],
+    "a": 2,
+    "w": "In London then: Anne Boleyn (1533-1536), Thomas Cromwell (1530-1540), Hans Holbein the Younger (1532-1543). Michelangelo was in Rome (1534-1564)."
+  },
+  {
+    "t": "London",
+    "y": 1537,
+    "q": "London, 1537. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Hans Holbein the Younger",
+      "Suleiman the Magnificent",
+      "Henry VIII",
+      "Thomas Cromwell"
+    ],
+    "a": 1,
+    "w": "In London then: Hans Holbein the Younger (1532-1543), Henry VIII (1509-1547), Thomas Cromwell (1530-1540). Suleiman the Magnificent was in Constantinople (1520-1566)."
+  },
+  {
+    "t": "London",
+    "y": 1538,
+    "q": "London, 1538. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Titian",
+      "Henry VIII",
+      "Thomas Cromwell",
+      "Hans Holbein the Younger"
+    ],
+    "a": 0,
+    "w": "In London then: Henry VIII (1509-1547), Thomas Cromwell (1530-1540), Hans Holbein the Younger (1532-1543). Titian was in Venice (1510-1576)."
+  },
+  {
+    "t": "London",
+    "y": 1539,
+    "q": "London, 1539. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Thomas Cromwell",
+      "Hans Holbein the Younger",
+      "Henry VIII",
+      "Michelangelo"
+    ],
+    "a": 3,
+    "w": "In London then: Thomas Cromwell (1530-1540), Hans Holbein the Younger (1532-1543), Henry VIII (1509-1547). Michelangelo was in Rome (1534-1564)."
+  },
+  {
+    "t": "London",
+    "y": 1540,
+    "q": "London, 1540. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Hans Holbein the Younger",
+      "Henry VIII",
+      "Suleiman the Magnificent",
+      "Thomas Cromwell"
+    ],
+    "a": 2,
+    "w": "In London then: Hans Holbein the Younger (1532-1543), Henry VIII (1509-1547), Thomas Cromwell (1530-1540). Suleiman the Magnificent was in Constantinople (1520-1566)."
+  },
+  {
+    "t": "London",
+    "y": 1587,
+    "q": "London, 1587. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Elizabeth I",
+      "Christopher Marlowe",
+      "Francis Walsingham",
+      "Philip II"
+    ],
+    "a": 3,
+    "w": "In London then: Elizabeth I (1558-1603), Christopher Marlowe (1587-1593), Francis Walsingham (1573-1590). Philip II was in Madrid (1561-1598)."
+  },
+  {
+    "t": "London",
+    "y": 1589,
+    "q": "London, 1589. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Francis Walsingham",
+      "Philip II",
+      "Elizabeth I",
+      "Christopher Marlowe"
+    ],
+    "a": 1,
+    "w": "In London then: Francis Walsingham (1573-1590), Elizabeth I (1558-1603), Christopher Marlowe (1587-1593). Philip II was in Madrid (1561-1598)."
+  },
+  {
+    "t": "London",
+    "y": 1590,
+    "q": "London, 1590. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Philip II",
+      "Elizabeth I",
+      "Christopher Marlowe",
+      "Francis Walsingham"
+    ],
+    "a": 0,
+    "w": "In London then: Elizabeth I (1558-1603), Christopher Marlowe (1587-1593), Francis Walsingham (1573-1590). Philip II was in Madrid (1561-1598)."
+  },
+  {
+    "t": "London",
+    "y": 1593,
+    "q": "London, 1593. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Elizabeth I",
+      "Philip II",
+      "Christopher Marlowe",
+      "William Shakespeare"
+    ],
+    "a": 1,
+    "w": "In London then: Elizabeth I (1558-1603), Christopher Marlowe (1587-1593), William Shakespeare (1592-1613). Philip II was in Madrid (1561-1598)."
+  },
+  {
+    "t": "Madrid",
+    "y": 1629,
+    "q": "Madrid, 1629. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Peter Paul Rubens",
+      "Gian Lorenzo Bernini",
+      "Diego Velazquez",
+      "Philip IV"
+    ],
+    "a": 1,
+    "w": "In Madrid then: Peter Paul Rubens (1628-1629), Diego Velazquez (1623-1660), Philip IV (1621-1665). Gian Lorenzo Bernini was in Rome (1606-1680)."
+  },
+  {
+    "t": "London",
+    "y": 1662,
+    "q": "London, 1662. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Philip IV",
+      "Robert Hooke",
+      "Samuel Pepys",
+      "Charles II"
+    ],
+    "a": 0,
+    "w": "In London then: Robert Hooke (1662-1703), Samuel Pepys (1660-1703), Charles II (1660-1685). Philip IV was in Madrid (1621-1665)."
+  },
+  {
+    "t": "London",
+    "y": 1663,
+    "q": "London, 1663. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Samuel Pepys",
+      "Charles II",
+      "Robert Hooke",
+      "Christina of Sweden"
+    ],
+    "a": 3,
+    "w": "In London then: Samuel Pepys (1660-1703), Charles II (1660-1685), Robert Hooke (1662-1703). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1664,
+    "q": "London, 1664. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Charles II",
+      "Robert Hooke",
+      "Gian Lorenzo Bernini",
+      "Samuel Pepys"
+    ],
+    "a": 2,
+    "w": "In London then: Charles II (1660-1685), Robert Hooke (1662-1703), Samuel Pepys (1660-1703). Gian Lorenzo Bernini was in Rome (1606-1680)."
+  },
+  {
+    "t": "London",
+    "y": 1665,
+    "q": "London, 1665. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Hooke",
+      "Rembrandt",
+      "Samuel Pepys",
+      "Charles II"
+    ],
+    "a": 1,
+    "w": "In London then: Robert Hooke (1662-1703), Samuel Pepys (1660-1703), Charles II (1660-1685). Rembrandt was in Amsterdam (1631-1669)."
+  },
+  {
+    "t": "London",
+    "y": 1666,
+    "q": "London, 1666. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Rembrandt",
+      "Samuel Pepys",
+      "Christopher Wren",
+      "Charles II"
+    ],
+    "a": 0,
+    "w": "In London then: Samuel Pepys (1660-1703), Christopher Wren (1666-1723), Charles II (1660-1685). Rembrandt was in Amsterdam (1631-1669)."
+  },
+  {
+    "t": "London",
+    "y": 1667,
+    "q": "London, 1667. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Christopher Wren",
+      "John Locke",
+      "Charles II",
+      "Gian Lorenzo Bernini"
+    ],
+    "a": 3,
+    "w": "In London then: Christopher Wren (1666-1723), John Locke (1667-1675), Charles II (1660-1685). Gian Lorenzo Bernini was in Rome (1606-1680)."
+  },
+  {
+    "t": "London",
+    "y": 1668,
+    "q": "London, 1668. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Samuel Pepys",
+      "Christopher Wren",
+      "Christina of Sweden",
+      "John Locke"
+    ],
+    "a": 2,
+    "w": "In London then: Samuel Pepys (1660-1703), Christopher Wren (1666-1723), John Locke (1667-1675). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1669,
+    "q": "London, 1669. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Christopher Wren",
+      "Rembrandt",
+      "John Locke",
+      "Robert Boyle"
+    ],
+    "a": 1,
+    "w": "In London then: Christopher Wren (1666-1723), John Locke (1667-1675), Robert Boyle (1668-1691). Rembrandt was in Amsterdam (1631-1669)."
+  },
+  {
+    "t": "London",
+    "y": 1671,
+    "q": "London, 1671. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Boyle",
+      "Charles II",
+      "Robert Hooke",
+      "Christina of Sweden"
+    ],
+    "a": 3,
+    "w": "In London then: Robert Boyle (1668-1691), Charles II (1660-1685), Robert Hooke (1662-1703). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1673,
+    "q": "London, 1673. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Hooke",
+      "Christina of Sweden",
+      "Samuel Pepys",
+      "Christopher Wren"
+    ],
+    "a": 1,
+    "w": "In London then: Robert Hooke (1662-1703), Samuel Pepys (1660-1703), Christopher Wren (1666-1723). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1675,
+    "q": "London, 1675. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Christopher Wren",
+      "John Locke",
+      "Robert Boyle",
+      "Christina of Sweden"
+    ],
+    "a": 3,
+    "w": "In London then: Christopher Wren (1666-1723), John Locke (1667-1675), Robert Boyle (1668-1691). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1676,
+    "q": "London, 1676. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Hooke",
+      "Samuel Pepys",
+      "Gian Lorenzo Bernini",
+      "Christopher Wren"
+    ],
+    "a": 2,
+    "w": "In London then: Robert Hooke (1662-1703), Samuel Pepys (1660-1703), Christopher Wren (1666-1723). Gian Lorenzo Bernini was in Rome (1606-1680)."
+  },
+  {
+    "t": "London",
+    "y": 1677,
+    "q": "London, 1677. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Christopher Wren",
+      "Christina of Sweden",
+      "Robert Boyle",
+      "Charles II"
+    ],
+    "a": 1,
+    "w": "In London then: Christopher Wren (1666-1723), Robert Boyle (1668-1691), Charles II (1660-1685). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1678,
+    "q": "London, 1678. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Gian Lorenzo Bernini",
+      "Charles II",
+      "Robert Hooke",
+      "Samuel Pepys"
+    ],
+    "a": 0,
+    "w": "In London then: Charles II (1660-1685), Robert Hooke (1662-1703), Samuel Pepys (1660-1703). Gian Lorenzo Bernini was in Rome (1606-1680)."
+  },
+  {
+    "t": "London",
+    "y": 1679,
+    "q": "London, 1679. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Samuel Pepys",
+      "Christopher Wren",
+      "Robert Boyle",
+      "Christina of Sweden"
+    ],
+    "a": 3,
+    "w": "In London then: Samuel Pepys (1660-1703), Christopher Wren (1666-1723), Robert Boyle (1668-1691). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1680,
+    "q": "London, 1680. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Boyle",
+      "Charles II",
+      "Gian Lorenzo Bernini",
+      "Robert Hooke"
+    ],
+    "a": 2,
+    "w": "In London then: Robert Boyle (1668-1691), Charles II (1660-1685), Robert Hooke (1662-1703). Gian Lorenzo Bernini was in Rome (1606-1680)."
+  },
+  {
+    "t": "London",
+    "y": 1682,
+    "q": "London, 1682. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Christina of Sweden",
+      "Christopher Wren",
+      "Robert Boyle",
+      "Charles II"
+    ],
+    "a": 0,
+    "w": "In London then: Christopher Wren (1666-1723), Robert Boyle (1668-1691), Charles II (1660-1685). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1683,
+    "q": "London, 1683. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Charles II",
+      "Robert Hooke",
+      "Samuel Pepys",
+      "Louis XIV"
+    ],
+    "a": 3,
+    "w": "In London then: Charles II (1660-1685), Robert Hooke (1662-1703), Samuel Pepys (1660-1703). Louis XIV was in Versailles (1682-1715)."
+  },
+  {
+    "t": "London",
+    "y": 1684,
+    "q": "London, 1684. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Samuel Pepys",
+      "Christopher Wren",
+      "Christina of Sweden",
+      "Robert Boyle"
+    ],
+    "a": 2,
+    "w": "In London then: Samuel Pepys (1660-1703), Christopher Wren (1666-1723), Robert Boyle (1668-1691). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1686,
+    "q": "London, 1686. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Louis XIV",
+      "Christopher Wren",
+      "Robert Boyle",
+      "Robert Hooke"
+    ],
+    "a": 0,
+    "w": "In London then: Christopher Wren (1666-1723), Robert Boyle (1668-1691), Robert Hooke (1662-1703). Louis XIV was in Versailles (1682-1715)."
+  },
+  {
+    "t": "London",
+    "y": 1689,
+    "q": "London, 1689. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Boyle",
+      "Christina of Sweden",
+      "Robert Hooke",
+      "Samuel Pepys"
+    ],
+    "a": 1,
+    "w": "In London then: Robert Boyle (1668-1691), Robert Hooke (1662-1703), Samuel Pepys (1660-1703). Christina of Sweden was in Rome (1655-1689)."
+  },
+  {
+    "t": "London",
+    "y": 1691,
+    "q": "London, 1691. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Samuel Pepys",
+      "Christopher Wren",
+      "Robert Boyle",
+      "Louis XIV"
+    ],
+    "a": 3,
+    "w": "In London then: Samuel Pepys (1660-1703), Christopher Wren (1666-1723), Robert Boyle (1668-1691). Louis XIV was in Versailles (1682-1715)."
+  },
+  {
+    "t": "London",
+    "y": 1692,
+    "q": "London, 1692. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Christopher Wren",
+      "Robert Hooke",
+      "Louis XIV",
+      "Samuel Pepys"
+    ],
+    "a": 2,
+    "w": "In London then: Christopher Wren (1666-1723), Robert Hooke (1662-1703), Samuel Pepys (1660-1703). Louis XIV was in Versailles (1682-1715)."
+  },
+  {
+    "t": "London",
+    "y": 1693,
+    "q": "London, 1693. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Robert Hooke",
+      "Louis XIV",
+      "Samuel Pepys",
+      "Christopher Wren"
+    ],
+    "a": 1,
+    "w": "In London then: Robert Hooke (1662-1703), Samuel Pepys (1660-1703), Christopher Wren (1666-1723). Louis XIV was in Versailles (1682-1715)."
+  },
+  {
+    "t": "Versailles",
+    "y": 1774,
+    "q": "Versailles, 1774. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Edmund Burke",
+      "Marquis de Lafayette",
+      "Louis XVI",
+      "Marie Antoinette"
+    ],
+    "a": 0,
+    "w": "In Versailles then: Marquis de Lafayette (1774-1777), Louis XVI (1774-1789), Marie Antoinette (1770-1789). Edmund Burke was in London (1765-1797)."
+  },
+  {
+    "t": "Versailles",
+    "y": 1777,
+    "q": "Versailles, 1777. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Marquis de Lafayette",
+      "Denis Diderot",
+      "Louis XVI",
+      "Marie Antoinette"
+    ],
+    "a": 1,
+    "w": "In Versailles then: Marquis de Lafayette (1774-1777), Louis XVI (1774-1789), Marie Antoinette (1770-1789). Denis Diderot was in Paris (1742-1784)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1810,
+    "q": "Vienna, 1810. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Joseph Banks",
+      "Franz Schubert",
+      "Ludwig van Beethoven",
+      "Klemens von Metternich"
+    ],
+    "a": 0,
+    "w": "In Vienna then: Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827), Klemens von Metternich (1809-1848). Joseph Banks was in London (1772-1820)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1811,
+    "q": "Vienna, 1811. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ludwig van Beethoven",
+      "Klemens von Metternich",
+      "Franz Schubert",
+      "Felix Mendelssohn"
+    ],
+    "a": 3,
+    "w": "In Vienna then: Ludwig van Beethoven (1792-1827), Klemens von Metternich (1809-1848), Franz Schubert (1808-1828). Felix Mendelssohn was in Berlin (1811-1847)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1812,
+    "q": "Vienna, 1812. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Klemens von Metternich",
+      "Franz Schubert",
+      "Johann Goethe",
+      "Ludwig van Beethoven"
+    ],
+    "a": 2,
+    "w": "In Vienna then: Klemens von Metternich (1809-1848), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Johann Goethe was in Weimar (1775-1832)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1813,
+    "q": "Vienna, 1813. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Franz Schubert",
+      "Joseph Banks",
+      "Ludwig van Beethoven",
+      "Klemens von Metternich"
+    ],
+    "a": 1,
+    "w": "In Vienna then: Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827), Klemens von Metternich (1809-1848). Joseph Banks was in London (1772-1820)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1815,
+    "q": "Vienna, 1815. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Klemens von Metternich",
+      "Franz Schubert",
+      "Ludwig van Beethoven",
+      "Charles Babbage"
+    ],
+    "a": 3,
+    "w": "In Vienna then: Klemens von Metternich (1809-1848), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Charles Babbage was in London (1814-1871)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1816,
+    "q": "Vienna, 1816. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Franz Schubert",
+      "Ludwig van Beethoven",
+      "Charles Babbage",
+      "Klemens von Metternich"
+    ],
+    "a": 2,
+    "w": "In Vienna then: Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827), Klemens von Metternich (1809-1848). Charles Babbage was in London (1814-1871)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1817,
+    "q": "Vienna, 1817. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Ludwig van Beethoven",
+      "Felix Mendelssohn",
+      "Klemens von Metternich",
+      "Franz Schubert"
+    ],
+    "a": 1,
+    "w": "In Vienna then: Ludwig van Beethoven (1792-1827), Klemens von Metternich (1809-1848), Franz Schubert (1808-1828). Felix Mendelssohn was in Berlin (1811-1847)."
+  },
+  {
+    "t": "Vienna",
+    "y": 1818,
+    "q": "Vienna, 1818. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Lord Byron",
+      "Klemens von Metternich",
+      "Franz Schubert",
+      "Ludwig van Beethoven"
+    ],
+    "a": 0,
+    "w": "In Vienna then: Klemens von Metternich (1809-1848), Franz Schubert (1808-1828), Ludwig van Beethoven (1792-1827). Lord Byron was in Venice (1816-1818)."
+  },
+  {
+    "t": "Berlin",
+    "y": 1825,
+    "q": "Berlin, 1825. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Arthur Schopenhauer",
+      "Charles Dickens",
+      "Georg Hegel",
+      "Felix Mendelssohn"
+    ],
+    "a": 1,
+    "w": "In Berlin then: Arthur Schopenhauer (1825-1831), Georg Hegel (1818-1831), Felix Mendelssohn (1811-1847). Charles Dickens was in London (1822-1870)."
+  },
+  {
+    "t": "Berlin",
+    "y": 1826,
+    "q": "Berlin, 1826. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Franz Schubert",
+      "Georg Hegel",
+      "Felix Mendelssohn",
+      "Arthur Schopenhauer"
+    ],
+    "a": 0,
+    "w": "In Berlin then: Georg Hegel (1818-1831), Felix Mendelssohn (1811-1847), Arthur Schopenhauer (1825-1831). Franz Schubert was in Vienna (1808-1828)."
+  },
+  {
+    "t": "Berlin",
+    "y": 1828,
+    "q": "Berlin, 1828. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Georg Hegel",
+      "Alexander von Humboldt",
+      "Hector Berlioz",
+      "Felix Mendelssohn"
+    ],
+    "a": 2,
+    "w": "In Berlin then: Georg Hegel (1818-1831), Alexander von Humboldt (1827-1859), Felix Mendelssohn (1811-1847). Hector Berlioz was in Paris (1821-1869)."
+  },
+  {
+    "t": "St. Petersburg",
+    "y": 1834,
+    "q": "St. Petersburg, 1834. Three of these four were in the city that year. Who missed the table?",
+    "opts": [
+      "Nikolai Gogol",
+      "Ivan Turgenev",
+      "Alexander Pushkin",
+      "Franz Liszt"
+    ],
+    "a": 3,
+    "w": "In St. Petersburg then: Nikolai Gogol (1829-1836), Ivan Turgenev (1834-1836), Alexander Pushkin (1831-1837). Franz Liszt was in Paris (1823-1835)."
   }
 ]

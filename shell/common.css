@@ -19,6 +19,8 @@ h1 .dot{color:var(--accent);}
 .metaline{display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--ink); padding-bottom:10px; margin-top:12px;}
 .metaline .pno{font-family:Georgia,serif; font-size:15px;}
 .metaline .pno b{font-size:19px;}
+.archbtn{color:var(--accent); text-decoration:none; font-weight:700; padding:0 .35em;}
+.archbtn:hover{text-decoration:underline;}
 .reveal.show{display:block; animation:rise .3s ease;}
 .overlay{position:fixed; inset:0; background:rgba(30,20,8,.45); display:none; align-items:center; justify-content:center; padding:20px; z-index:50;}
 .overlay.show{display:flex;}

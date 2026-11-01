@@ -41,6 +41,8 @@ function run(h, ctx){
     h.ok(shell.indexOf('curve offline') >= 0, 'shell: offline grace present');
     h.ok(shell.indexOf('const SHELL') >= 0, 'shell: defines the SHELL module');
     h.ok(shell.indexOf('solo mode') >= 0, 'shell: air-gapped solo mode present');
+    h.ok(shell.indexOf('archbtn') >= 0, 'shell: archive chevrons present');
+    h.ok(shell.indexOf('parseViewDay') >= 0, 'shell: archive day parsing present');
     h.ok(shell.indexOf("const TZ = '" + manifest.tz + "'") >= 0,
       'shell: TZ matches the manifest timezone');
     h.ok(shell.indexOf("const EPOCH_KEY = '" + manifest.epoch + "'") >= 0,
@@ -77,7 +79,7 @@ function run(h, ctx){
     }
 
     /* sprint's inline anagram banks stay clean: no typos, no wrong-length
-       strays — junk entries could accept non-words as valid answers */
+       strays - junk entries could accept non-words as valid answers */
     {
       const html = readGame('sprint');
       const d4 = html.match(/const DICT_SRC = '([^']*)'/);

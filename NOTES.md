@@ -538,3 +538,30 @@ answering the longest life and the manifest edges widened to the
 new 1 to 7 range. Every draw comes from one seeded PRNG, so the
 store compiles byte-identical everywhere. The bank is a full 364
 sessions, so the first repeat waits for November 2027.
+
+## The archive opens (done 2026-11-01)
+
+Every past day is now replayable, webcomic style: the date line on
+every game page grew chevrons, and pressing back walks to yesterday,
+the day before, down to the opening table. The whole mechanic lives
+in the shell, so all sixteen games get it without touching a single
+game page. A viewed day is just the ?d parameter on the URL, the
+shell re-points dayIndex at it, and the games never know: they were
+already pure functions of dayIndex. Anything but a finished day
+(future, garbage, today itself) is refused and falls back to live,
+so a bare visit is byte for byte what it always was.
+
+A replay is quarantined. It reads the day's frozen curve copy from
+the server and never submits, never mints a player id, never writes
+a sync flag, and persists nothing: an archive boot plays entirely in
+memory, so the live day's state, streaks and tallies are untouchable.
+The curve banner says so in plain words, this day is closed and
+replays change nothing.
+
+The new tests/games/archive.js module pins the day math and the
+quarantine: the parse rules, the href builder (solo mode survives
+the walk), a brunch replay of day 1 played to its end with the store
+byte-identical before and after, a superlative replay of the opening
+table played through all rounds with zero submits and an empty store,
+and the frozen curve copy versus the live one. The harness grew one
+knob for it, location.search per boot; everything else is untouched.

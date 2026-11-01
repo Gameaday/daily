@@ -4,6 +4,8 @@
                                   loss, day rollover; regression notes
                                   inline, unchanged from the old
                                   monolithic tests/run.js)
+     tests/games/archive.js       the archive walk (?d=N replays an old
+                                  day in memory, quarantined from live)
      tests/games/server-gated.js  online delivery with the banks stripped
      tests/games/cross-checks.js  shell <-> manifest <-> landing agreement
      tests/games/_lib.js          the shared game list + pinned days
@@ -18,7 +20,7 @@ const { GAMES } = require('./games/_lib');
 const MODULES = [
   'bogus', 'well-actually', 'recycle-rings', 'recycle-grid', 'fermi',
   'sift', 'rounds', 'trace', 'lightbox', 'sprint', 'cipher', 'timeline',
-  'museum', 'thread', 'brunch', 'superlative', 'server-gated'
+  'museum', 'thread', 'brunch', 'superlative', 'archive', 'server-gated'
 ].map(file => require('./games/' + file + '.js'));
 
 async function main(h, ctx){

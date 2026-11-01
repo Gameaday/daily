@@ -20,6 +20,8 @@
      pinned to fixed days no matter when they run
    - setTimeout is queued and drained by flush() so toast timers etc. fire
      deterministically without waiting real milliseconds
+   - location.search comes from opts.search, so a boot can pose as the
+     archive view of any finished day (?d=N)
 */
 'use strict';
 
@@ -82,7 +84,7 @@ function createHarness(readGame, readShared){
     static now(){ return activeNow; }
   }
 
-  function makeEnv(store, servePuzzle){
+  function makeEnv(store, servePuzzle, search){
     const els = {};
     const fetchLog = [];
     const el = id => els[id] || (els[id] = new El(id));
@@ -113,7 +115,7 @@ function createHarness(readGame, readShared){
           return Promise.resolve({ ok: true, json: async () => servePuzzle });
         return Promise.resolve({ ok: true, json: async () => SNAPSHOT });
       },
-      location: { reload(){} },
+      location: { reload(){}, search: search || '' },
       setInterval: () => 0,
       setTimeout: fn => { timers.push(fn); return 0; }
     };
@@ -125,7 +127,7 @@ function createHarness(readGame, readShared){
      A missing name throws a ReferenceError - loud by design. */
   function boot(game, expose, opts){
     activeNow = opts.now;
-    const env = makeEnv(opts.store, opts.servePuzzle);
+    const env = makeEnv(opts.store, opts.servePuzzle, opts.search);
     const html = opts.html !== undefined ? opts.html : readGame(game);
     const m = html.match(/<script>([\s\S]*?)<\/script>/);
     if (!m) throw new Error(game + ': no script block found');
@@ -192,4 +194,3 @@ function createHarness(readGame, readShared){
 }
 
 module.exports = { createHarness };
-

@@ -5,8 +5,9 @@
      const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 
    Everything that is not the puzzle lives here: day math (midnight ET
-   rollover), localStorage persistence, toast, the countdown timer, the
-   help modal, share-to-clipboard and the global-curve client. That is more
+   rollover), archive walking (any past day replays forever, in memory
+   only), localStorage persistence, toast, the countdown timer, the help
+   modal, share-to-clipboard and the global-curve client. That is more
    than half of every game file, so a new game is now just its puzzle.
 
    A game keeps its own tiny adapters so call sites never change:
@@ -32,13 +33,48 @@ const SHELL = (() => {
   /* Days before the epoch (pre-launch) do not exist in the numbering:
      dayIndex clamps at 0, so the site reads No. 1 until the launch date
      arrives, then counts for real. */
-  const dayIndex = Math.max(0, Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000));
+  const todayIndex = Math.max(0, Math.round((Date.parse(todayKey) - Date.parse(EPOCH_KEY)) / 86400000));
+
+  /* ---- archive walking: ?d=N replays a finished day ---- */
+  /* Every past puzzle stays playable forever: the server serves old days
+     and their frozen curves, and the client banks carry the schedule, so
+     the date line doubles as the navigator (chevrons wired below). The
+     view day is invisible to the games - dayIndex IS the day the page
+     plays - and a replay is quarantined: it runs in memory only, never
+     submits, and cannot touch the live day's state, streaks or sync
+     flags. Anything but a finished day (a future number, garbage, or
+     today itself) is simply today, so live play stays byte-identical. */
+  let viewSearch = '';
+  try { viewSearch = (typeof location !== 'undefined' && location && location.search) || ''; } catch(e){}
+  function parseViewDay(search, today){
+    const m = /[?&]d=(\d+)/.exec(search || '');
+    if (!m) return today;
+    const d = parseInt(m[1], 10);
+    return (d >= 0 && d < today) ? d : today;
+  }
+  const viewDay = parseViewDay(viewSearch, todayIndex);
+  const isArchive = viewDay < todayIndex;
+  const dayIndex = viewDay;
   const num = dayIndex + 1;
+  /* the chevron hrefs: d === null means the live day (the query drops d) */
+  function archiveHref(search, d){
+    const solo = /[?&]solo=/.test(search || '');
+    if (d === null || d === undefined) return solo ? '?solo=1' : '?';
+    return solo ? ('?solo=1&d=' + d) : ('?d=' + d);
+  }
 
   const $ = id => document.getElementById(id);
 
-  /* ---- persistence: one localStorage key per game, play-in-memory on error ---- */
+  /* ---- persistence: one localStorage key per game, play-in-memory on error,
+     and in the archive a replay never persists at all ---- */
   function makeStore(key){
+    if (isArchive){
+      let mem = null;
+      return {
+        load(){ return mem; },
+        save(S){ mem = S; }
+      };
+    }
     return {
       load(){ try { return JSON.parse(localStorage.getItem(key)); } catch(e){ return null; } },
       save(S){ try { localStorage.setItem(key, JSON.stringify(S)); } catch(e){ /* private mode / sandbox: play in memory */ } }
@@ -99,8 +135,8 @@ const SHELL = (() => {
 
   /* ---- global curve client: the server owns the metric direction ---- */
   /* Solo mode: the whole site is static files, so an air-gapped copy (or
-     any file:// download, or ?solo=1) plays exactly the same game with the
-     curve switched off - nothing is submitted, no stats are fetched, and
+     any file:// download, or ?solo=1) plays exactly the same game with
+     the curve switched off - nothing is submitted, no stats are fetched, and
      the games keep working if the scores server is down. */
   function isSolo(){
     return location.protocol === 'file:' || String(location.search || '').indexOf('solo') >= 0;
@@ -117,6 +153,24 @@ const SHELL = (() => {
         return;
       }
       box.innerHTML = '<div class="curve-note">checking the global curve\u2026</div>';
+      const bases = ['/api', 'http://localhost:8787', 'http://127.0.0.1:8787'];
+      const tryBases = (makeReq) => {
+        const attempt = (i) => (i >= bases.length ? Promise.reject(new Error('unreachable'))
+          : makeReq(bases[i]).catch(() => attempt(i + 1)));
+        return attempt(0);
+      };
+      /* a replay never mints a player id either: nothing below the archive
+         branch may touch storage, so the walk stays perfectly read-only */
+      if (isArchive){
+        /* a finished day never takes new tallies: the curve reads the day's
+           frozen snapshot, nothing is submitted and no sync flag is set */
+        const get = (base) => fetch(base + '/dist?game=' + encodeURIComponent(game) + '&day=' + dayIndex)
+          .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+        tryBases(get)
+          .then(d => renderBoard(d))
+          .catch(() => { box.innerHTML = ''; });
+        return;
+      }
       /* One tally per game-day: the first sync submits the result, a later
          visit of the same day reads the curve back with a GET, so a reload
          never moves the day count twice. The flag is written only after a
@@ -130,12 +184,6 @@ const SHELL = (() => {
       } catch(e){ id = 'p' + Math.random().toString(36).slice(2, 10); }
       const synced = !!(stored && typeof stored === 'object' && stored.ok === 1
         && stored.d === dayIndex && typeof stored.v === 'number');
-      const bases = ['/api', 'http://localhost:8787', 'http://127.0.0.1:8787'];
-      const tryBases = (makeReq) => {
-        const attempt = (i) => (i >= bases.length ? Promise.reject(new Error('unreachable'))
-          : makeReq(bases[i]).catch(() => attempt(i + 1)));
-        return attempt(0);
-      };
       if (synced){
         const get = (base) => fetch(base + '/dist?game=' + encodeURIComponent(game)
           + '&day=' + dayIndex + '&v=' + encodeURIComponent(stored.v))
@@ -169,13 +217,15 @@ const SHELL = (() => {
       '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 44)) + 'px">' +
       (b.you ? '<div class="you-mark">you</div>' : '') + '</div>'
     ).join('');
+    const closed = d.archived === true;
     const tail = (typeof d.beat === 'number')
       ? '<div class="curve-note">you beat ' + d.beat + (d.beat === 1 ? ' player' : ' players') +
         (typeof d.mean === 'number' ? ' \u00b7 avg ' + d.mean : '') + '</div>'
       : '';
     box.innerHTML =
-      '<div class="curve-head">global curve \u00b7 ' + d.count + (d.count === 1 ? ' play' : ' plays') + ' today</div>' +
-      '<div class="curve-bars">' + bars + '</div>' + tail;
+      '<div class="curve-head">global curve \u00b7 ' + d.count + (d.count === 1 ? ' play' : ' plays') + (closed ? ' this day' : ' today') + '</div>' +
+      '<div class="curve-bars">' + bars + '</div>' +
+      (closed ? '<div class="curve-note">this day is closed \u00b7 replays change nothing</div>' : '') + tail;
   }
 
   /* ---- is the global curve service reachable? ---- */
@@ -191,9 +241,15 @@ const SHELL = (() => {
       .then(ok => ok || go('http://127.0.0.1:8787'));
   }
 
-  /* ---- the "No. N · date" line ---- */
+  /* ---- the "No. N · date" line: the day the page is playing ---- */
+  /* Live, the line is today's date exactly as before (pre-launch weekends
+     included); in the archive it is the viewed puzzle's own date, so a
+     replayed day reads the date it actually happened. */
   function pdateText(){
-    return new Date(Date.parse(todayKey) + 43200000)
+    const ms = isArchive
+      ? Date.parse(EPOCH_KEY) + dayIndex * 86400000 + 43200000
+      : Date.parse(todayKey) + 43200000;
+    return new Date(ms)
       .toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
   }
 
@@ -227,6 +283,34 @@ const SHELL = (() => {
     }
   } catch(e){}
 
+  /* ---- archive walking: the chevrons around the date line ---- */
+  /* The date span is inline inside its "No. N" line on every page, so the
+     links flank it naturally: ‹ walks back one puzzle at a time, › walks
+     forward, and each edge of history hides its own arrow (invisibly, so
+     the date keeps its place). No page had to change for this. */
+  try {
+    const pd = document.getElementById('pdate');
+    if (pd && pd.parentNode){
+      const mk = (label, href, hidden, aria) => {
+        const a = document.createElement('a');
+        a.className = 'archbtn';
+        a.href = href;
+        a.textContent = label;
+        a.setAttribute('aria-label', aria);
+        if (hidden) a.style.visibility = 'hidden';
+        return a;
+      };
+      const parent = pd.parentNode;
+      parent.insertBefore(mk('\u2039',
+        archiveHref(viewSearch, viewDay > 0 ? viewDay - 1 : null),
+        viewDay === 0, 'previous puzzle'), pd);
+      parent.insertBefore(mk('\u203a',
+        archiveHref(viewSearch, viewDay < todayIndex
+          ? (viewDay + 1 === todayIndex ? null : viewDay + 1) : null),
+        viewDay === todayIndex, 'next puzzle'), pd.nextSibling);
+    }
+  } catch(e){}
+
   /* ---- graceful "service unreachable" note for the online bundle ---- */
   /* The online bundle ships without local puzzle banks, so if the puzzle
      service cannot be reached there is nothing to render. Online games
@@ -245,7 +329,8 @@ const SHELL = (() => {
     }
   }
 
-  return { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $,
+  return { TZ, EPOCH_KEY, etKey, todayKey, todayIndex, dayIndex, num, $,
+           isArchive, parseViewDay, archiveHref,
            makeStore, toast, nextETMidnight, startCountdown,
            wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, showUnavailable };
 })();

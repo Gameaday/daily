@@ -166,21 +166,28 @@ Every entity may also carry (nothing requires them yet):
   ever moves a question. Only the question fields compile; the
   ids and the about keys stay in the layer. Output:
   puzzles/fermi/puzzles.json and its bank file.
-- superlative: puzzles/superlative/recipe.json holds the themed
-  cohorts, each four ids and an optional hint question. The people
-  layer is the pool, every life it dates at both ends in canonical
-  id order, cut into groups of four, and the recipe's cohorts
-  follow the pool, so a well documented life can serve twice when
-  a second cohort asks a different question of it. Eight questions
-  rotate by board, the longest or shortest life, the first or last
-  birth, and the measured ones, reign, voyages, works and height,
-  which only count the lives a source actually measured, at least
-  two, with the maximum unique, so a tie or a lone number never
-  decides, and a cohort hint the numbers cannot settle falls
-  through to the rotation. When the numbers let every life top
-  something, the board also carries a bonus match: four
-  superlatives, one per life, that the player assigns. Output:
-  puzzles/superlative/puzzles.json and its bank file.
+- superlative: puzzles/superlative/recipe.json is the session
+  recipe, { v: 2, days, seed, opening, themes }: days is a whole
+  number of weeks (364), seed is the integer that drives one seeded
+  PRNG behind every draw, opening seats the day 0 table of four to
+  six dated lives, and themes holds at least twenty named pools of
+  eight to twenty dated lives each. One session lands a day: a
+  cohort of four or five lives plus the four to six questions the
+  numbers settle for that cohort, asked one at a time, where the
+  same life may answer at most two questions. A new cohort may
+  never seat a majority that served together before, at most two
+  lives shared with any earlier cohort for five, one for four, so
+  lives return in new company instead of repeating. Weekdays draw
+  five lives from one era bucket (the seven buckets, weighted by
+  size) and carry the era as the session title; weekends seat a
+  theme pool, five lives when it holds ten or more, else four, and
+  carry the theme's name. The questions read the record, the
+  longest or shortest life, the first or last or middle birth, the
+  most average life, and the measured ones, reign, voyages, works
+  and height, which only count the lives a source actually
+  measured, at least two, with the maximum unique, so a tie never
+  decides; at most two questions come from one dim family.
+  Output: puzzles/superlative/puzzles.json and its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

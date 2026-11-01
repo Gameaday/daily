@@ -509,3 +509,32 @@ grew from 112 to 163 boards, so the first repeat moves from
 February to mid April 2027, the thread game regenerated as a side
 effect (all its picks change, fine before launch), and day 0
 still seats John Adams. Brunch was checked and stayed identical.
+
+
+## Superlative v2 (done 2026-11-01)
+
+The game reworks how the superlative plays, on Carl's read that v1
+was too restrictive: one question then a bonus match asked the
+same four lives the same few things every day. V2 seats a session
+a day, a cohort plus a run of questions. Cohort validity is the
+majority-fresh rule: a new cohort may overlap any earlier one by
+at most its size minus its majority, two shared lives for five,
+one for four, so entities reuse freely under that bar and 364
+sessions come out of the 505 dated lives. Weekdays draw five lives
+from an era bucket weighted by size; weekends seat one of thirty
+four curated themes, from Sovereigns of the East to The Bright
+Lights, and the session carries the era's or theme's name, so the
+title itself teaches. Every session asks four to six questions
+its own numbers settle: the measured dims lead when they can
+(voyages, reigns, works, height) and the dates fill, ties never
+serve, one life answers at most two questions and one dim family
+contributes at most two, so an outlier teaches and the rest still
+get their turn. A clean sweep wins, the value is rounds minus
+right plus one (1 to 7, low), streaks count consecutive sweeps,
+and each round reveal carries the winner's dates, the settled
+value and the k trivia. Day 0 stays the opening table, Ada
+Lovelace, John Adams, Akbar and Al-Idrisi, with John Adams still
+answering the longest life and the manifest edges widened to the
+new 1 to 7 range. Every draw comes from one seeded PRNG, so the
+store compiles byte-identical everywhere. The bank is a full 364
+sessions, so the first repeat waits for November 2027.

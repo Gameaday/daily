@@ -28,7 +28,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /museum/ | Museum | Name the artifact from five clues, obscure to obvious |
 | /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
 | /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |
-| /superlative/ | Superlative | Four lives from the record; pick the one the question asks for, one guess, then assign the bonus match |
+| /superlative/ | Superlative | A cohort from the record, a question at a time: every round asks which life it fits, and one life can answer twice |
 
 Each game is one self-contained index.html. The parts every game shares
 (day math, palette, countdown, curve client, help, share) live in
@@ -85,11 +85,12 @@ store or bank drifts from the layer. `knowledge/SCHEMA.md` documents
 every file, lint and recipe. lightbox stays hand-banked by
 design: picture clues are not shared entities, so its page remains its
 own source. fermi's questions live in the layer as facts, keyed to the
-graph when the layer knows the subject. superlative's boards are the
-people layer itself, cut by the compiler into groups of four and
-followed by the themed cohorts its recipe seats, and the person
-numbers (heights, catalogue counts, reign years, voyages) feed its
-questions and its bonus match.
+graph when the layer knows the subject. superlative's sessions are the
+people layer itself: the compiler draws a cohort a day from the
+lives it dates, era buckets on weekdays and the recipe's themed
+pools on weekends, and the person numbers (heights, catalogue
+counts, reign years, voyages) feed the questions each cohort's own
+numbers settle.
 
 ## The global curve
 

@@ -133,9 +133,9 @@ EVIDENCE_GAMES = (
 META_CAPS = {
     "rounds":   (("guesses", 1, 6),),
     "museum":   (("clues", 1, 5),),
-    "sift":     (("mistakes", 0, 3),),
-    "lightbox": (("mistakes", 0, 3),),
-    "cipher":   (("hints", 0, 3),),
+    "sift":     (("mistakes", 0, 4),),
+    "lightbox": (("mistakes", 0, 4),),
+    "cipher":   (("hints", 0, 5),),
     "timeline": (("checks", 1, 9),),
     "thread":   (("checks", 1, 9),),
 }
@@ -185,15 +185,17 @@ def validate_evidence(game, day, body):
     status = body.get("status")
     if status not in ("won", "lost", "gave"):
         return None, "bad status"
+    if status != "won" and game not in ("fermi", "superlative"):
+        # a loss or a give-up is 0 points no matter what the meta says,
+        # and it never needs meta at all - a real loss (sift's fourth
+        # mistake) must never trip a cap and go uncounted
+        return 0, None
     meta = body.get("meta")
     if not isinstance(meta, dict):
-        return None, "bad meta"
+        meta = {}
     for key, lo, hi in META_CAPS.get(game, ()):
         if _meta_int(meta, key, lo, hi) is None:
             return None, "bad meta"
-    if status != "won" and game not in ("fermi", "superlative"):
-        # a loss or a give-up is 0 points no matter what the meta says
-        return 0, None
     ans = body.get("answer")
 
     if game == "bogus":

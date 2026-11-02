@@ -379,6 +379,14 @@ def main():
         check(s == 200 and b.get("mean") == 2, "evidence: thread two-check win -> 2")
         s, _b = ev("rings", {"id": "ev25", "status": "won", "answer": "anything"})
         check(s == 400, "evidence: generator games have no evidence path yet")
+        s, b = ev("sift", {"id": "ev26", "status": "lost", "answer": [],
+                           "meta": {"mistakes": 4}})
+        check(s == 200 and b.get("count") == 2,
+              "evidence: a sift loss at the fourth mistake still tallies")
+        s, b = ev("cipher", {"id": "ev27", "status": "won", "answer": cip["q"],
+                             "meta": {"hints": 5}})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
+              "evidence: a cipher win on the fifth hint derives 0, not a rejection")
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "value": 3, "id": "legacy1"})
         check(s == 200, "transition: a self-reported value post still tallies")

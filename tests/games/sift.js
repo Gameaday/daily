@@ -27,7 +27,12 @@ async function run(h){
     }
     h.eq(r.x.S.status, 'won', 'sift: won with 1 mistake');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 2, 'sift: one miss posts 2 points');
+    h.eq(h.lastPost(r.env).body.status, 'won', 'sift: the win posts the won status');
+    h.eq(h.lastPost(r.env).body.meta.mistakes, 1, 'sift: the evidence carries the mistake count');
+    h.ok(h.lastPost(r.env).body.answer.length === 4
+      && h.lastPost(r.env).body.answer.every(g => g.length === 3),
+      'sift: the evidence carries the four solved groups');
+    h.ok(!('value' in h.lastPost(r.env).body), 'sift: the client never names its own score');
     h.ok(r.x.shareText().indexOf('\u2605') === -1, 'sift: a miss costs the star');
     h.ok(r.x.shareText().indexOf('1 miss') >= 0, 'sift: share "1 miss"');
     /* Regression: the rollover guard used to check S.solvedAll, which is

@@ -283,7 +283,9 @@ function showReveal(){
   $('grid').style.pointerEvents = 'none';
   $('grid').style.opacity = '.55';
   $('actbox').style.display = 'none';
-  syncBoard(S.pts);
+  syncBoard({ status: S.status,
+              answer: S.marks.map(row => row.map(v => v === 1 ? '#' : '.').join('')),
+              meta: { mistakes: S.mistakes }, points: S.pts });
 }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;

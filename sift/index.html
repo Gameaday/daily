@@ -282,7 +282,8 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the day is sifted - the play row goes quiet */
   $('playrow').style.display = 'none';
-  syncBoard(S.pts);
+  syncBoard({ status: S.status, answer: S.solvedCats.map(ci => BOARD.cats[ci].i),
+              meta: { mistakes: S.mistakes }, points: S.pts });
   renderTiles(); // to apply reveal dimming
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */

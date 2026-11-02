@@ -371,7 +371,9 @@ function showReveal(){
   $('playrow').style.display = 'none';
   $('selinfo').style.display = 'none';
   kbd.blur();
-  syncBoard(S.pts);
+  syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
+              answer: [...Q.q].map((ch, i) => /[A-Z]/.test(ch) ? (S.map[CIPHER[i]] || '') : ch).join(''),
+              meta: { hints: S.hints }, points: S.pts });
 }
 SHELL.wireShare(shareText);
 /* the codebook toggle in the end panel: a player who cracked it cold can

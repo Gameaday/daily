@@ -15,7 +15,9 @@ async function run(h){
     h.ok(r.env.els.timenote.textContent.indexOf('your time') === 0, 'lightbox: the result carries the time');
     h.eq(r.x.S.mistakes, 0, 'lightbox: 0 mistakes');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'lightbox: a clean develop posts full points');
+    h.eq(h.lastPost(r.env).body.status, 'won', 'lightbox: the win posts the won status');
+    h.eq(h.lastPost(r.env).body.meta.mistakes, 0, 'lightbox: the evidence carries a clean board');
+    h.ok(!('value' in h.lastPost(r.env).body), 'lightbox: the client never names its own score');
     h.ok(r.x.shareText().indexOf('\u2B50') >= 0, 'lightbox: the flawless star rides the share');
     const s2 = {};
     r = h.boot('lightbox', EXP, { now: T0, store: s2 });
@@ -25,7 +27,7 @@ async function run(h){
     }
     h.eq(r.x.S.status, 'lost', 'lightbox: lost after 4 wrong developments');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 0, 'lightbox: a loss posts 0 points');
+    h.eq(h.lastPost(r.env).body.status, 'lost', 'lightbox: the loss posts lost, the server owns the 0');
     r = h.boot('lightbox', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'lightbox: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'lightbox: streak preserved');

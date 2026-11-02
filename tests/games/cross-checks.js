@@ -37,7 +37,7 @@ function run(h, ctx){
     /* the shell itself: the curve strings moved here from every game */
     const shell = readShared('bogus');
     h.ok(shell.indexOf('SYNC_UNIT') === -1, 'shell: no leftover SYNC_UNIT');
-    h.ok(shell.indexOf('you-mark') >= 0, 'shell: curve you-mark present');
+    h.ok(shell.indexOf('cyou') >= 0, 'shell: curve you-marker present');
     h.ok(shell.indexOf('curve offline') >= 0, 'shell: offline grace present');
     h.ok(shell.indexOf('const SHELL') >= 0, 'shell: defines the SHELL module');
     h.ok(shell.indexOf('solo mode') >= 0, 'shell: air-gapped solo mode present');

@@ -25,7 +25,7 @@ async function run(h){
     await h.flush();
     h.ok(r.env.fetchLog.length === 0,
       'well-actually: a reload re-tallies nothing (regression)');
-    h.ok(String(r.env.els.curve.innerHTML).indexOf('you-mark') >= 0,
+    h.ok(String(r.env.els.curve.innerHTML).indexOf('cyou') >= 0,
       'well-actually: the reload still renders the curve');
     r = h.boot('well-actually', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'well-actually: day rolled');

@@ -102,7 +102,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p>Four wheels of letters. The marked ray at the top reads one letter from each wheel, and together they must spell today's <b>target word</b>. The word sits above the wheel, with your current letters at the ray beneath it.</p>
     <p><b>Spin</b> any wheel with its ◀ ▶ buttons to rotate that wheel alone. <b>Shift the ray</b> with the ◀ ▶ buttons at the end: every letter at the ray slides one seat together, the whole column at once.</p>
     <p><b>Par is exact:</b> before you play, the solver has already searched every possible wheel state for the shortest line to the word. Beat par and you found a line the solver missed (you didn't — it's exact).</p>
-    <p>There is no clock. Every spin and every swap costs one move, and reversing a move costs another — so plan before you spin.</p>
+    <p>There is no clock. Every spin and every ray shift costs one move, and reversing a move costs another — so plan before you spin.</p>
     <p>Same wheels for everyone, so compare move counts at standup.</p>
     <button class="close" data-close>Got it</button>
   </div>
@@ -273,7 +273,7 @@ function renderWheel(){
     const ring = PUZZLE.rings[p], rad = RADII[p];
     const step = 360 / ring.n;
     ring.letters.forEach((ch, j) => {
-      const a = (((j + S.off[r]) % ring.n) + ring.n) % ring.n * step;
+      const a = (((j + S.off[p]) % ring.n) + ring.n) % ring.n * step;
       const cls = (a === 0 && ch === PUZZLE.word[p]) ? 'lt ok' : 'lt';
       svg += `<text class="${cls}" x="200" y="${200 - rad}" transform="rotate(${a} 200 200)">${ch}</text>`;
     });

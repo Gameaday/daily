@@ -345,9 +345,14 @@ $('ringctl').addEventListener('click', e => {
 function shareText(){
   const over = S.moves - PUZZLE.par;
   const note = over <= 0 ? 'on par' : `+${over} over par`;
-  return `Recycle: Rings No. ${num} \u00b7 ${S.moves} moves (${note}) \uD83C\uDF00`;
+  return `Recycle: Rings No. ${num} \u00b7 ${S.moves} moves (${note})${S.stars ? ' \u00b7 1\u2605' : ''} \uD83C\uDF00`;
 }
 function showReveal(){
+  /* points read like points: par is full marks, every move over par costs one */
+  S.pts = Math.max(0, 3 - (S.moves - PUZZLE.par));
+  S.stars = (S.moves === PUZZLE.par) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   $('verdict').textContent = (S.moves === PUZZLE.par)
     ? 'On par — the perfect line.'
@@ -357,7 +362,7 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the word is aligned - the controls go quiet */
   $('ringctl').style.display = 'none';
-  syncBoard(S.moves);
+  syncBoard(S.pts);
   renderMeta();
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */

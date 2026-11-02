@@ -17,11 +17,12 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'trace: won walking the optimal path');
     h.eq(r.x.steps(), r.x.LADDER.par, 'trace: steps = par');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, r.x.LADDER.par, 'trace: curve value = par');
+    h.eq(h.lastPost(r.env).body.value, 3, 'trace: on par posts full points');
     h.ok(r.env.els.timenote.textContent.indexOf('your time') === 0, 'trace: the result carries the time');
     /* Regression: over <= 0 made "on par" unreachable; at exactly par the
        share text bragged "under par!". */
     h.ok(r.x.shareText().indexOf('on par') >= 0, 'trace: share "on par" (regression)');
+    h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'trace: the on-par star rides the share');
     r = h.boot('trace', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'trace: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'trace: streak preserved');
@@ -40,7 +41,7 @@ async function run(h){
     r.env.els.btnGive.click();
     h.eq(r.x.S.status, 'lost', 'trace: give-up loses');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, r.x.steps() + 10, 'trace: give-up value = steps + 10');
+    h.eq(h.lastPost(r.env).body.value, 0, 'trace: give-up posts 0 points');
 }
 
 module.exports = { name: 'trace', run };

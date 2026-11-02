@@ -21,7 +21,8 @@ async function run(h){
     h.ok(r.x.S.won, 'rings: won by replaying the par line');
     h.eq(r.x.S.moves, r.x.PUZZLE.par, 'rings: replay costs exactly par moves');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, r.x.PUZZLE.par, 'rings: curve value = move count');
+    h.eq(h.lastPost(r.env).body.value, 3, 'rings: on par posts full points');
+    h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'rings: the on-par star rides the share');
     h.ok(r.x.shareText().indexOf('moves') >= 0, 'rings: share text mentions moves');
     r = h.boot('recycle-rings', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'rings: day rolled');

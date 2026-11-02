@@ -223,12 +223,17 @@ function shareText(){
   if (S.status === 'won'){
     const over = steps() - LADDER.par;
     const note = over < 0 ? 'under par!' : (over === 0 ? 'on par' : '+' + over);
-    return `Trace No. ${num} \u00b7 ${steps()} rungs (par ${LADDER.par}) \u2014 ${note} \uD83E\uDE9C`;
+    return `Trace No. ${num} \u00b7 ${steps()} rungs (par ${LADDER.par}) \u2014 ${note}${steps() === LADDER.par ? ' \u00b7 1\u2605' : ''} \uD83E\uDE9C`;
   }
   return `Trace No. ${num} \u00b7 gave up after ${steps()} rungs \uD83E\uDE9C`;
 }
 
 function showReveal(){
+  /* points read like points: par is full marks, every rung over par costs one */
+  S.pts = S.status === 'won' ? Math.max(0, 3 - (steps() - LADDER.par)) : 0;
+  S.stars = (S.status === 'won' && steps() === LADDER.par) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   const cur = S.chain[S.chain.length - 1];
   if (S.status === 'won'){
@@ -243,7 +248,7 @@ function showReveal(){
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best != null ? st.best + ' rungs' : '\u2014'}`;
   $('reveal').classList.add('show');
   $('inrow').style.display = 'none';
-  syncBoard(S.status === 'won' ? steps() : steps() + 10);
+  syncBoard(S.pts);
 }
 
 /* ---------------- play ---------------- */

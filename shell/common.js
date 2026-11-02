@@ -215,13 +215,39 @@ const SHELL = (() => {
         : 'first result on the curve today') + '</div>';
       return;
     }
-    const maxBar = Math.max(...d.bins.map(b => b.count), 1);
-    /* the you-marker rides inside its own bar (absolute CSS anchor), and
-       bars cap at 44px so they fit the curve box instead of spilling out */
-    const bars = d.bins.map(b =>
-      '<div class="cbar' + (b.you ? ' you' : '') + '" style="height:' + Math.max(10, Math.round(b.count / maxBar * 44)) + 'px">' +
-      (b.you ? '<div class="you-mark">you</div>' : '') + '</div>'
-    ).join('');
+    /* the day's shape as one smoothed curve: every bin is a point at its
+       midpoint, its height is its share of the busiest bin, and a spline
+       through the points reads like the bell the day actually was. The
+       you-mark rides its own point, and the bin edges label the floor. */
+    const W = 320, L = 4, RGT = 316, BASE = 64, TOP = 8;
+    const bins = d.bins, n = bins.length;
+    const maxBar = Math.max(...bins.map(b => b.count), 1);
+    const xs = bins.map((b, i) => L + (i + 0.5) * (RGT - L) / n);
+    const ys = bins.map(b => BASE - Math.max(2, Math.round(b.count / maxBar * (BASE - TOP))));
+    const fx = v => String(Math.round(v * 10) / 10);
+    let curve = '';
+    for (let i = 0; i < n - 1; i++){
+      const p0 = i > 0 ? i - 1 : 0;
+      const p3 = i < n - 2 ? i + 2 : n - 1;
+      const c1x = xs[i] + (xs[i + 1] - xs[p0]) / 6, c1y = ys[i] + (ys[i + 1] - ys[p0]) / 6;
+      const c2x = xs[i + 1] - (xs[p3] - xs[i]) / 6, c2y = ys[i + 1] - (ys[p3] - ys[i]) / 6;
+      curve += ' C' + fx(c1x) + ',' + fx(c1y) + ' ' + fx(c2x) + ',' + fx(c2y) + ' ' + fx(xs[i + 1]) + ',' + fx(ys[i + 1]);
+    }
+    const line = 'M' + fx(xs[0]) + ',' + fx(ys[0]) + curve;
+    const area = 'M' + L + ',' + BASE + ' L' + fx(xs[0]) + ',' + fx(ys[0]) + curve + ' L' + RGT + ',' + BASE + ' Z';
+    const you = bins.findIndex(b => b.you);
+    let mark = '';
+    if (you >= 0){
+      const mx = Math.min(RGT - 10, Math.max(L + 10, xs[you]));
+      mark = '<line x1="' + fx(xs[you]) + '" y1="' + BASE + '" x2="' + fx(xs[you]) + '" y2="' + fx(ys[you]) + '" stroke="#b3541e" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>' +
+        '<text class="cyou" x="' + fx(mx) + '" y="' + Math.max(11, ys[you] - 6) + '" font-size="10" font-weight="700" fill="#b3541e" text-anchor="middle">you</text>';
+    }
+    const labels = bins.map((b, i) =>
+      '<text x="' + fx(xs[i]) + '" y="78" font-size="9" fill="#7a6f5d" text-anchor="middle">' + b.lo + '</text>').join('');
+    const svg = '<svg viewBox="0 0 ' + W + ' 100" style="width:100%; max-width:340px; display:block; margin:2px auto 0;">' +
+      '<path d="' + area + '" fill="#b3541e" opacity="0.12"/>' +
+      '<path d="' + line + '" fill="none" stroke="#b3541e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      mark + labels + '</svg>';
     const closed = d.archived === true;
     const tail = (typeof d.beat === 'number')
       ? '<div class="curve-note">you beat ' + d.beat + (d.beat === 1 ? ' player' : ' players') +
@@ -229,7 +255,7 @@ const SHELL = (() => {
       : '';
     box.innerHTML =
       '<div class="curve-head">global curve \u00b7 ' + d.count + (d.count === 1 ? ' play' : ' plays') + (closed ? ' this day' : ' today') + '</div>' +
-      '<div class="curve-bars">' + bars + '</div>' +
+      svg +
       (closed ? '<div class="curve-note">this day is closed \u00b7 replays change nothing</div>' : '') + tail;
   }
 

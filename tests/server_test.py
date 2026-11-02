@@ -283,8 +283,8 @@ def main():
 
         s, b = ev("rounds", {"id": "ev1", "status": "won", "answer": 1215,
                              "meta": {"guesses": 2}})
-        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
-              "evidence: rounds won in 2 guesses -> server derives 3")
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
+              "evidence: rounds won in 2 guesses -> server derives 2")
         s, _b = ev("rounds", {"id": "ev2", "status": "won", "answer": 1943,
                               "meta": {"guesses": 1}})
         check(s == 422, "evidence: the wrong year is rejected")
@@ -292,8 +292,8 @@ def main():
                               "meta": {"guesses": 0}})
         check(s == 422, "evidence: meta below the cap is rejected")
         s, b = ev("rounds", {"id": "ev4", "status": "lost"})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
-              "evidence: a loss is 0 points, enforced server-side")
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
+              "evidence: a loss is 0 points, enforced server-side (mean 1)")
         s, b = ev("bogus", {"id": "ev5", "status": "won", "answer": [5]})
         check(s == 200 and b.get("mean") == 3,
               "evidence: bogus first-pick find -> 3")

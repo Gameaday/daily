@@ -291,7 +291,7 @@ def validate_evidence(game, day, body):
         got = [frozenset(g) for g in ans]
         if frozenset(want) != frozenset(got):
             return None, "wrong answer"
-        return 3 - meta["mistakes"], None
+        return max(0, 3 - meta["mistakes"]), None
 
     if game == "lightbox":
         e = _list_entry(game, day)
@@ -304,7 +304,7 @@ def validate_evidence(game, day, body):
                              for row in rows]
         if norm(ans) != norm(e["g"]):
             return None, "wrong answer"
-        return 3 - meta["mistakes"], None
+        return max(0, 3 - meta["mistakes"]), None
 
     if game == "cipher":
         e = _list_entry(game, day)
@@ -314,7 +314,7 @@ def validate_evidence(game, day, body):
             return None, "bad answer"
         if _alnum_norm(ans) != _alnum_norm(e["q"]):
             return None, "wrong answer"
-        return 3 - meta["hints"], None
+        return max(0, 3 - meta["hints"]), None
 
     if game == "timeline":
         store = PUZZLES.get(game)

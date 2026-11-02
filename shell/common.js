@@ -209,7 +209,12 @@ const SHELL = (() => {
   function renderBoard(d){
     const box = $('curve');
     if (!box) return;
-    if (!d || !d.count){ box.innerHTML = '<div class="curve-note">first result on the curve today</div>'; return; }
+    if (!d || !d.count){
+      box.innerHTML = '<div class="curve-note">' + ((d && d.archived === true)
+        ? 'no recorded results \u00b7 this day is closed'
+        : 'first result on the curve today') + '</div>';
+      return;
+    }
     const maxBar = Math.max(...d.bins.map(b => b.count), 1);
     /* the you-marker rides inside its own bar (absolute CSS anchor), and
        bars cap at 44px so they fit the curve box instead of spilling out */

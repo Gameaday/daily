@@ -13,7 +13,9 @@ Design rules (deliberate):
   more on shutdown), each finished day's numbers collapse into a small
   static snapshot at <archive-dir>/<game>/<day>.json - how many played,
   the score distribution, and the aggregates needed to rebuild the
-  weights. Written once, read-only forever. This is the only disk write
+  weights. Written once, read-only forever. Each snapshot also records
+  the edges and direction it was tallied under, so history keeps serving
+  faithfully even if the manifest moves. This is the only disk write
   anywhere in the service
 - warm start: on boot, today's archived partial board (a mid-day restart
   flushed it) returns to the live curve together with its dedupe set, so
@@ -176,7 +178,7 @@ def write_archive(game, day):
             if old.get("n", 0) >= st["n"]:
                 return False
         except (OSError, ValueError):
-            return False
+            pass  # unreadable snapshot: the live board is the better truth
     payload = {
         "game": game, "day": day, "date": day_date(day),
         "n": st["n"], "sum": st["sum"], "sumsq": st["sumsq"],
@@ -207,6 +209,26 @@ def archived_stats(rec):
         return None
     return {"n": rec["n"], "sum": rec["sum"], "sumsq": rec["sumsq"],
             "min": rec["min"], "max": rec["max"], "bins": rec["bins"]}
+
+
+def archived_spec(rec, game):
+    """The spec a snapshot was recorded under. A finished day is frozen
+    truth: it keeps serving its own edges and direction even if the
+    manifest moved on afterwards, so an edges change can never crash or
+    silently re-label history."""
+    if isinstance(rec, dict) and isinstance(rec.get("edges"), list) \
+            and len(rec["edges"]) >= 2 and rec.get("better") in ("low", "high"):
+        return {"edges": rec["edges"], "better": rec["better"]}
+    return SPECS[game]
+
+
+def fit_bins(bins, edges):
+    """Counts fitted to a spec's bins: truncated or zero-padded, never an
+    index error, whatever shape the board was recorded in."""
+    n = len(edges) - 1
+    out = list(bins)[:n]
+    out.extend([0] * (n - len(out)))
+    return out
 
 
 def flush_stale(force=False):
@@ -256,6 +278,10 @@ def tally(game, day, value, digest):
         st["sumsq"] += value * value
         st["min"] = min(st["min"], value)
         st["max"] = max(st["max"], value)
+        if len(st["bins"]) != len(SPECS[game]["edges"]) - 1:
+            # a board inherited in another shape (a manifest change): the
+            # recorded bins are not comparable, so the histogram restarts
+            st["bins"] = [0] * (len(SPECS[game]["edges"]) - 1)
         st["bins"][bin_index(value, SPECS[game]["edges"])] += 1
     return counted
 
@@ -280,8 +306,8 @@ def beat_estimate(value, st, spec):
     return int(outside + max(0.0, min(1.0, frac)) * own)
 
 
-def snapshot(game, day, value=None, st=None):
-    spec = SPECS[game]
+def snapshot(game, day, value=None, st=None, spec=None):
+    spec = spec if spec is not None else SPECS[game]
     edges = spec["edges"]
     nbins = len(edges) - 1
     if st is None:
@@ -292,11 +318,14 @@ def snapshot(game, day, value=None, st=None):
     if not st or st["n"] == 0:
         return {"count": 0, "beat": None, "mean": None, "bins": bins,
                 "better": spec["better"]}
+    # whatever shape the board was recorded in, the response can never
+    # crash: counts are fitted to the bins being served
+    counts = fit_bins(st["bins"], edges)
     for i in range(nbins):
-        bins[i]["count"] = st["bins"][i]
+        bins[i]["count"] = counts[i]
         bins[i]["you"] = (i == you_bin)
     mean = st["sum"] / st["n"]
-    beat = beat_estimate(value, st, spec) if value is not None else None
+    beat = beat_estimate(value, dict(st, bins=counts), spec) if value is not None else None
     return {"count": st["n"], "beat": beat, "mean": round(mean, 2),
             "bins": bins, "better": spec["better"]}
 
@@ -379,6 +408,9 @@ class Handler(BaseHTTPRequestHandler):
             except ValueError:
                 self._json({"error": "bad day"}, 400)
                 return
+            if not (DAY_MIN <= day <= DAY_MAX):
+                self._json({"error": "bad day"}, 400)
+                return
             # optional value: a revisit that already synced for the day
             # fetches its personalized snapshot here without tallying
             value = None
@@ -401,7 +433,9 @@ class Handler(BaseHTTPRequestHandler):
                 if day == today:
                     payload = snapshot(game, day, value)
                 else:
-                    payload = snapshot(game, day, value, st=archived_stats(load_archive(game, day)))
+                    rec = load_archive(game, day)
+                    payload = snapshot(game, day, value, st=archived_stats(rec),
+                                       spec=archived_spec(rec, game))
                     payload["archived"] = True
             self._json(payload)
         elif path == "/puzzle":
@@ -517,10 +551,40 @@ class Handler(BaseHTTPRequestHandler):
                 tally(game, day, value, digest)
                 payload = snapshot(game, day, value)
             else:
-                # archive replay: answered from the frozen snapshot, changes nothing
-                payload = snapshot(game, day, value, st=archived_stats(load_archive(game, day)))
+                # archive replay: answered from the frozen snapshot under its
+                # own recorded edges, changes nothing
+                rec = load_archive(game, day)
+                payload = snapshot(game, day, value, st=archived_stats(rec),
+                                   spec=archived_spec(rec, game))
                 payload["archived"] = True
         self._json(payload)
+
+
+def warm_start(today):
+    """Bring today's archived partial boards back to the live curve.
+
+    A board recorded under different edges or direction (the manifest
+    changed and the deploy landed mid-day) restarts clean instead of
+    loading: those bins are not comparable to new submissions, and a
+    mixed-shape board would crash the next tally. The day's curve starts
+    over for that game; every other game keeps its numbers.
+    """
+    for game in SPECS:
+        rec = load_archive(game, today)
+        if rec and (rec.get("edges") != SPECS[game]["edges"]
+                    or rec.get("better") != SPECS[game]["better"]):
+            print("warm start: %s day %d was recorded under other edges - "
+                  "restarting the board" % (game, today), flush=True)
+            continue
+        st = archived_stats(rec)
+        if st:
+            STATS[(game, today)] = st
+            # the dedupe set rides along with the snapshot: without it
+            # a restart would re-open the day and re-count every revisit
+            seen = rec.get("seen") if isinstance(rec, dict) else None
+            if isinstance(seen, list):
+                SEEN.setdefault((game, today), set()).update(
+                    d for d in seen if isinstance(d, str) and len(d) <= 16)
 
 
 def main():
@@ -546,19 +610,8 @@ def main():
     # warm start: a mid-day restart (compose update, host reboot) flushed
     # today's partial boards to the archive on shutdown; bring them back
     # so the live curve never resets mid-day
-    today = current_day_index()
     with LOCK:
-        for game in SPECS:
-            rec = load_archive(game, today)
-            st = archived_stats(rec)
-            if st:
-                STATS[(game, today)] = st
-                # the dedupe set rides along with the snapshot: without it
-                # a restart would re-open the day and re-count every revisit
-                seen = rec.get("seen") if isinstance(rec, dict) else None
-                if isinstance(seen, list):
-                    SEEN.setdefault((game, today), set()).update(
-                        d for d in seen if isinstance(d, str) and len(d) <= 16)
+        warm_start(current_day_index())
 
     def _stop(signum, frame):
         raise KeyboardInterrupt()

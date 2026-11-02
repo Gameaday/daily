@@ -580,3 +580,17 @@ low-is-better framing: mistakes, moves, clues, hints and checks are
 things you spend, not things you earn. The scores archive was wiped the
 same evening, so no board carries a value recorded under the old
 direction.
+
+## The curve survives its own history (done 2026-11-01)
+
+The archive wipe fixed the launch-night crash by removing the data; the
+code now removes the failure mode. Every snapshot already recorded the
+edges and direction it was tallied under - a finished day now serves
+under them, so a manifest change can never re-label or crash history. A
+warm start that finds today's board recorded under different edges
+restarts that game's curve instead of loading numbers that cannot be
+compared; tally reshapes an inherited board instead of trusting its
+shape; an unreadable snapshot no longer silences a bigger live tally
+(the retry overwrites the broken file); and /dist bounds its day like
+/puzzle always did. The empty curve in an archive replay also learned to
+say the day is closed instead of calling it today.

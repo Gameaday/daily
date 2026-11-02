@@ -267,6 +267,8 @@ def main():
         check(s == 400, "GET /dist unknown game rejected")
         s, _b = req("GET", "/api/dist?game=fermi&day=x")
         check(s == 400, "GET /dist bad day rejected")
+        s, _b = req("GET", "/api/dist?game=fermi&day=100001")
+        check(s == 400, "GET /dist day beyond DAY_MAX rejected")
         # stale tallies live per game: another game's stale submit is archived too
         s, b = post("/api/submit", {"game": "rounds", "day": TODAY - 1,
                                     "value": 2, "better": "low", "id": "old"})
@@ -487,6 +489,66 @@ def main():
               "unit: the retried flush archives and clears the board")
         check(srv.load_archive("rounds", day)["n"] == 5,
               "unit: the retry wrote the day's numbers after all")
+
+        # --- a manifest change must never crash the service: history
+        #     serves under the edges it was recorded under ---
+        real_edges = srv.SPECS["rounds"]["edges"]
+        srv.SPECS["rounds"]["edges"] = [0, 1, 2]  # pretend the manifest moved
+        snap = srv.snapshot("rounds", day, 2, st=srv.archived_stats(rec),
+                            spec=srv.archived_spec(rec, "rounds"))
+        check(len(snap["bins"]) == len(real_edges) - 1
+              and sum(b["count"] for b in snap["bins"]) == rec["n"],
+              "unit: an archived day serves under its recorded edges")
+        snap2 = srv.snapshot("rounds", day, 2,
+                              st={"n": 3, "sum": 6, "sumsq": 14, "min": 1,
+                                  "max": 3, "bins": [3]})
+        check(len(snap2["bins"]) == 2 and sum(b["count"] for b in snap2["bins"]) == 3,
+              "unit: a short board is fitted to the served bins, never an index error")
+        srv.STATS[("rounds", day)] = {"n": 1, "sum": 2, "sumsq": 4, "min": 2,
+                                      "max": 2, "bins": [1, 0, 0, 0, 0, 0, 0]}
+        srv.SEEN[("rounds", day)] = set()
+        srv.tally("rounds", day, 1, "fresh-id")
+        check(srv.STATS[("rounds", day)]["bins"] == [0, 1],
+              "unit: tally reshapes an inherited board instead of trusting its shape")
+        srv.SPECS["rounds"]["edges"] = real_edges
+
+        # --- warm start vs a manifest change: restart, do not crash ---
+        with tempfile.TemporaryDirectory() as td2:
+            srv.ARCHIVE_DIR = Path(td2)
+            srv.STATS.clear()
+            srv.SEEN.clear()
+            day0 = srv.current_day_index()
+            bad = Path(td2) / "rounds" / ("%d.json" % day0)
+            bad.parent.mkdir(parents=True, exist_ok=True)
+            bad.write_text(json.dumps({
+                "game": "rounds", "day": day0, "n": 3, "sum": 9, "sumsq": 29,
+                "min": 1, "max": 5, "bins": [3], "seen": ["x1", "x2", "x3"],
+                "edges": [0, 1], "better": "low"}), encoding="utf-8")
+            good = Path(td2) / "brunch" / ("%d.json" % day0)
+            good.parent.mkdir(parents=True, exist_ok=True)
+            good.write_text(json.dumps({
+                "game": "brunch", "day": day0, "n": 2, "sum": 2, "sumsq": 2,
+                "min": 1, "max": 1,
+                "bins": [0] * (len(srv.SPECS["brunch"]["edges"]) - 1),
+                "seen": ["y1"],
+                "edges": srv.SPECS["brunch"]["edges"],
+                "better": srv.SPECS["brunch"]["better"]}), encoding="utf-8")
+            srv.warm_start(day0)
+            check(srv.STATS.get(("rounds", day0)) is None,
+                  "unit: warm start restarts a board recorded under other edges")
+            check(srv.STATS.get(("brunch", day0)) is not None
+                  and srv.STATS[("brunch", day0)]["n"] == 2,
+                  "unit: warm start still loads a board recorded under current edges")
+
+        # --- an unreadable snapshot never silences a bigger live tally ---
+        srv.ARCHIVE_DIR = Path(td)
+        srv.STATS[("rounds", day)] = {"n": 5, "sum": 15, "sumsq": 55, "min": 1,
+                                      "max": 6, "bins": [0, 0, 0, 0, 5, 0, 0]}
+        p.write_text("{not json", encoding="utf-8")
+        check(srv.write_archive("rounds", day) is True,
+              "unit: a corrupt snapshot is replaced by the live board")
+        check(srv.load_archive("rounds", day)["n"] == 5,
+              "unit: the overwrite carries the day's numbers")
 
     print("server tests: %s" % ("PASS" if not fails else "FAIL"))
     return 1 if fails else 0

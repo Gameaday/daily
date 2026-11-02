@@ -95,6 +95,12 @@ async function run(h, ctx){
       bins: [{ lo: 0, hi: 1, count: 2, you: true }, { lo: 1, hi: 2, count: 1, you: false }] });
     h.ok(b.env.els.curve.innerHTML.indexOf('today') >= 0,
       'archive: the live curve copy is unchanged');
+    b.x.SHELL.renderBoard({ count: 0, beat: null, mean: null,
+      bins: [{ lo: 0, hi: 1, count: 0, you: false }, { lo: 1, hi: 2, count: 0, you: false }],
+      archived: true });
+    const empty = b.env.els.curve.innerHTML;
+    h.ok(empty.indexOf('closed') >= 0, 'archive: an empty day still says closed');
+    h.ok(empty.indexOf('today') === -1, 'archive: an empty day is never called today');
   }
 }
 

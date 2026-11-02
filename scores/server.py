@@ -36,7 +36,7 @@ Endpoints (with or without the /api prefix):
                    {"game", "day", "id", "status", "answer", "meta"} -> evidence in,
                    points out (gated games: the answer is checked against the day's
                    key and the score derived server-side; self-reported value posts
-                   stay accepted during the transition)
+                   are accepted only for the generator games)
     GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
@@ -118,8 +118,8 @@ LOCK = threading.Lock()
 # the raw play facts instead of a self-reported score. The server checks
 # the answer, enforces the per-game meta caps, derives the points itself,
 # and holds the loss rule (a loss or a give-up is 0 no matter the meta).
-# Self-reported "value" posts keep tallying during the transition; the
-# cutover lands with the client-side switch. Generator games (rings,
+# Self-reported "value" posts are generator-only since the cutover - the
+# gated games refuse them outright. Generator games (rings,
 # trace, grid, sprint) have no server-side key yet - they ride the 1.2
 # dealt-play phase instead of porting the generators.
 # ---------------------------------------------------------------------------
@@ -777,6 +777,12 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"error": reason}, 422)
                 return
         else:
+            if game in EVIDENCE_GAMES:
+                # the cutover: a gated game no longer accepts a self-reported
+                # score - the answer and the play facts come in, and the
+                # points are derived here or not counted at all
+                self._json({"error": "value posts retired for this game - send evidence"}, 400)
+                return
             value = data.get("value")
             if isinstance(value, bool) or not isinstance(value, (int, float)) \
                     or not math.isfinite(value) or abs(value) > MAX_ABS_VALUE:

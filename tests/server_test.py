@@ -187,16 +187,16 @@ def main():
             check(s == 403, "GET /puzzle future day -> 403")
 
         # --- fresh-day submit + dedupe ---
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
+        s, b = post("/api/submit", {"game": "rings", "day": TODAY, "value": 3,
                                     "better": "high", "id": "a"})
         check(s == 200 and b.get("count") == 1, "first submit counts (today)")
         # same id, different value: deduped, first value stands
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 0,
+        s, b = post("/api/submit", {"game": "rings", "day": TODAY, "value": 0,
                                     "better": "high", "id": "a"})
         check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
               "re-submit same id is deduped (first stands, mean stays 3)")
         # a second player moves the mean to 2.5
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+        s, b = post("/api/submit", {"game": "rings", "day": TODAY,
                                     "value": 2, "better": "high", "id": "b"})
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
               "second player: count 2, mean 2.5")
@@ -205,52 +205,52 @@ def main():
         check(b.get("archived") is None, "today's snapshot is live, not archived")
 
         # --- fresh-day counting: stale and future submissions ---
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY - 1,
+        s, b = post("/api/submit", {"game": "rings", "day": TODAY - 1,
                                     "value": 0, "better": "high", "id": "stale"})
         check(s == 200 and b.get("archived") is True and b.get("count") == 0,
               "stale submit -> archived snapshot, no live tally")
-        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
+        s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "stale submit did not touch today's curve")
-        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY - 1))
+        s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY - 1))
         check(s == 200 and b.get("archived") is True and b.get("count") == 0,
               "GET /dist for a past day -> archived snapshot")
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY + 5,
+        s, b = post("/api/submit", {"game": "rings", "day": TODAY + 5,
                                     "value": 3, "better": "high", "id": "future"})
         check(s == 403, "future day submit rejected")
-        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY + 5))
+        s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY + 5))
         check(s == 403, "future day dist rejected")
 
         # --- dist endpoint ---
-        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
+        s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "GET /api/dist -> count 2")
         check(isinstance(b.get("bins"), list) and len(b["bins"]) >= 4,
               "dist returns histogram bins")
-        s, b = req("GET", "/dist?game=fermi&day=" + str(TODAY))
+        s, b = req("GET", "/dist?game=rings&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "GET /dist (no prefix) works")
-        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY) + "&v=3")
+        s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY) + "&v=3")
         check(s == 200 and b.get("count") == 2 and b.get("beat") in (0, 1, 2),
               "GET /dist with a value personalizes without tallying")
-        s, _b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY) + "&v=abc")
+        s, _b = req("GET", "/api/dist?game=rings&day=" + str(TODAY) + "&v=abc")
         check(s == 400, "GET /dist with a bad value is rejected")
 
         # --- validation: the server is the source of truth ---
         s, _b = post("/api/submit", {"game": "nope", "day": TODAY, "value": 1,
                                      "better": "high", "id": "c"})
         check(s == 400, "unknown game rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": "x", "value": 3,
+        s, _b = post("/api/submit", {"game": "rings", "day": "x", "value": 3,
                                      "better": "high", "id": "d"})
         check(s == 400, "non-integer day rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": "3",
+        s, _b = post("/api/submit", {"game": "rings", "day": TODAY, "value": "3",
                                      "better": "high", "id": "e"})
         check(s == 400, "string value rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
+        s, _b = post("/api/submit", {"game": "rings", "day": TODAY, "value": 3,
                                      "better": "high", "id": ""})
         check(s == 400, "empty id rejected")
-        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
+        s, _b = post("/api/submit", {"game": "rings", "day": TODAY, "value": 3,
                                      "better": "high"})
         check(s == 400, "missing id rejected")
         # oversized body -> 413 (2 KB cap)
-        s, _b = post("/api/submit", {"game": "fermi", "day": TODAY, "value": 3,
+        s, _b = post("/api/submit", {"game": "rings", "day": TODAY, "value": 3,
                                      "better": "high", "id": "z" * 3000})
         check(s == 413, "oversized body rejected")
         # out-of-range values clamp into the final bin instead of corrupting bins
@@ -259,22 +259,22 @@ def main():
         check(s == 200 and b["bins"][-1]["count"] == 1 and b.get("count") == 1,
               "value beyond last edge clamps into the final bin")
         # day bounds
-        s, _b = post("/api/submit", {"game": "fermi", "day": 100001, "value": 3,
+        s, _b = post("/api/submit", {"game": "rings", "day": 100001, "value": 3,
                                      "better": "high", "id": "f"})
         check(s == 400, "day beyond DAY_MAX rejected")
         # dist validation
         s, _b = req("GET", "/api/dist?game=nope&day=0")
         check(s == 400, "GET /dist unknown game rejected")
-        s, _b = req("GET", "/api/dist?game=fermi&day=x")
+        s, _b = req("GET", "/api/dist?game=rings&day=x")
         check(s == 400, "GET /dist bad day rejected")
-        s, _b = req("GET", "/api/dist?game=fermi&day=100001")
+        s, _b = req("GET", "/api/dist?game=rings&day=100001")
         check(s == 400, "GET /dist day beyond DAY_MAX rejected")
         # stale tallies live per game: another game's stale submit is archived too
-        s, b = post("/api/submit", {"game": "rounds", "day": TODAY - 1,
-                                    "value": 2, "better": "low", "id": "old"})
+        s, b = post("/api/submit", {"game": "trace", "day": TODAY - 1,
+                                    "value": 2, "better": "high", "id": "old"})
         check(s == 200 and b.get("archived") is True, "stale submit in another game also archived")
-        s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
-        check(s == 200 and b.get("count") == 2, "other games' stale days do not touch fermi")
+        s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY))
+        check(s == 200 and b.get("count") == 2, "other games' stale days do not touch rings")
 
         # --- evidence-based validation: the answer and the play facts come
         #     in, the points come out - the client never names a number ---
@@ -308,11 +308,11 @@ def main():
         check(s == 200 and b.get("mean") == 3.5,
               "evidence: a wrong correction earns no bonus (mean 3.5)")
         s, b = ev("fermi", {"id": "ev9", "status": "won", "answer": 2500000000})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 2.67,
-              "evidence: fermi spot-on derives 3 (mean 2.67 over the live board)")
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
+              "evidence: fermi spot-on derives 3")
         s, b = ev("fermi", {"id": "ev10", "status": "won", "answer": 1000000})
-        check(s == 200 and b.get("mean") == 2,
-              "evidence: fermi beyond 100x derives 0")
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
+              "evidence: fermi beyond 100x derives 0 (mean 1.5)")
         s, b = ev("brunch", {"id": "ev11", "status": "won", "answer": 3})
         check(s == 200 and b.get("mean") == 1, "evidence: brunch right pick -> 1")
         s, _b = ev("brunch", {"id": "ev12", "status": "won", "answer": 0})
@@ -393,7 +393,7 @@ def main():
               "evidence: a timeline win on the twelfth check derives 0, not a rejection")
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "value": 3, "id": "legacy1"})
-        check(s == 200, "transition: a self-reported value post still tallies")
+        check(s == 400, "cutover: a self-reported value post for a gated game is refused")
     finally:
         proc.terminate()
         try:
@@ -427,7 +427,7 @@ def main():
             check(g[:3] == [200, 200, 200] and g[3] == 429,
                   "GET cap: 3 per IP allowed, the 4th is 429")
             p = [post("/api/submit",
-                      {"game": "fermi", "day": TODAY, "value": 3,
+                      {"game": "rings", "day": TODAY, "value": 3,
                        "better": "high", "id": "r%d" % i}, port=PORT2)[0]
                  for i in range(3)]
             check(p[:2] == [200, 200] and p[2] == 429,
@@ -470,12 +470,12 @@ def main():
                   "pre-epoch: day 0 (No. 1) is served, not future")
             s, _b = req("GET", "/api/puzzle?game=bogus&day=1", port=PORT3)
             check(s == 403, "pre-epoch: day 1 stays future")
-            s, b = post("/api/submit", {"game": "fermi", "day": 0,
+            s, b = post("/api/submit", {"game": "rings", "day": 0,
                                         "value": 3, "better": "high", "id": "pre"},
                         port=PORT3)
             check(s == 200 and b.get("count") == 1,
                   "pre-epoch: day 0 submit tallies live")
-            s, b = req("GET", "/api/dist?game=fermi&day=0", port=PORT3)
+            s, b = req("GET", "/api/dist?game=rings&day=0", port=PORT3)
             check(s == 200 and b.get("count") == 1,
                   "pre-epoch: day 0 dist is live")
     finally:
@@ -506,7 +506,7 @@ def main():
         if not up:
             check(False, "warm-start instance never came up on port %d" % PORT4)
         else:
-            s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+            s, b = post("/api/submit", {"game": "rings", "day": TODAY,
                                         "value": 4, "better": "high", "id": "w1"},
                         port=PORT4)
             check(s == 200 and b.get("count") == 1,
@@ -530,15 +530,15 @@ def main():
                 if not up:
                     check(False, "restarted instance never came up on port %d" % PORT4)
                 else:
-                    s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY), port=PORT4)
+                    s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY), port=PORT4)
                     check(s == 200 and b.get("count") == 1,
                           "warm start: the restarted instance serves the flushed partial day")
-                    s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+                    s, b = post("/api/submit", {"game": "rings", "day": TODAY,
                                                 "value": 6, "better": "high", "id": "w2"},
                                 port=PORT4)
                     check(s == 200 and b.get("count") == 2,
                           "warm start: new plays tally on top of the restored board")
-                    s, b = post("/api/submit", {"game": "fermi", "day": TODAY,
+                    s, b = post("/api/submit", {"game": "rings", "day": TODAY,
                                                 "value": 9, "better": "high", "id": "w1"},
                                 port=PORT4)
                     check(s == 200 and b.get("count") == 2 and b.get("mean") == 5,

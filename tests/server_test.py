@@ -513,7 +513,7 @@ def main():
                   "warm start: the live instance tallies one play")
             proc4.terminate()
             proc4.wait(timeout=5)
-            check((Path(scratch4) / "fermi" / ("%d.json" % TODAY)).exists(),
+            check((Path(scratch4) / "rings" / ("%d.json" % TODAY)).exists(),
                   "warm start: SIGTERM flushed today's partial board")
             proc4b = subprocess.Popen(args4, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             try:

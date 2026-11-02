@@ -14,7 +14,8 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'timeline: won in one check');
     h.eq(r.x.S.checks, 1, 'timeline: checks = 1');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 1, 'timeline: curve value 1');
+    h.eq(h.lastPost(r.env).body.value, 3, 'timeline: one check posts full points');
+    h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'timeline: the first-check star rides the share');
     h.ok(r.x.shareText().indexOf('1 check') >= 0, 'timeline: share "1 check"');
     r = h.boot('timeline', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'timeline: day rolled');
@@ -26,7 +27,7 @@ async function run(h){
     h.eq(r.x.S.order.join(','), r.x.SORTED.map(i => r.x.PICK.indexOf(i)).join(','),
       'timeline: give-up sorts the lane');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 9, 'timeline: curve value 9 on give-up');
+    h.eq(h.lastPost(r.env).body.value, 0, 'timeline: a give-up posts 0 points');
 
     /* drag-to-reorder: the move the pointer handlers drive */
     const s3 = {};

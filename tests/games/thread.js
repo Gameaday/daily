@@ -21,7 +21,8 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'thread: won in one check');
     h.eq(r.x.S.checks, 1, 'thread: checks = 1');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 1, 'thread: curve value 1');
+    h.eq(h.lastPost(r.env).body.value, 3, 'thread: one check posts full points');
+    h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'thread: the first-check star rides the share');
     h.ok(r.x.shareText().indexOf('1 check') >= 0, 'thread: share "1 check"');
     r = h.boot('thread', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'thread: day rolled');
@@ -33,7 +34,7 @@ async function run(h){
     h.eq(r.x.S.slots.join(','), r.x.PZ.m.map(x => x.id).join(','),
       'thread: give-up lays out the true chain');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 9, 'thread: curve value 9 on give-up');
+    h.eq(h.lastPost(r.env).body.value, 0, 'thread: a give-up posts 0 points');
     h.ok(String(r.env.els.chainbox.innerHTML).length > 0, 'thread: reveal renders the chain');
     const TPRE = T0 - 3 * 86400000;
     r = h.boot('thread', EXP, { now: TPRE, store: {} });

@@ -205,11 +205,18 @@ function finish(status){
 function shareText(){
   const won = S.status === 'won';
   if (won){
-    return 'Museum No. ' + num + ' \u00b7 named it on clue ' + (S.resultClues != null ? S.resultClues : S.clueIdx + 1) + ' \uD83C\uDFDB';
+    return 'Museum No. ' + num + ' \u00b7 named it on clue ' + (S.resultClues != null ? S.resultClues : S.clueIdx + 1) + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDFDB';
   }
   return 'Museum No. ' + num + ' \u00b7 left the gallery puzzled \uD83C\uDFDB';
 }
 function showReveal(){
+  /* points read like points: naming it cold is full marks, each extra clue costs one */
+  const w = S.status === 'won';
+  const cn = S.resultClues != null ? S.resultClues : S.clueIdx + 1;
+  S.pts = w ? Math.max(0, 4 - cn) : 0;
+  S.stars = (w && cn === 1) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   const won = S.status === 'won';
   const used = S.resultClues != null ? S.resultClues : S.clueIdx + 1;
@@ -228,7 +235,7 @@ function showReveal(){
   $('btnGuess').disabled = true;
   $('guessrow').style.display = 'none';
   $('clueacts').style.display = 'none';
-  syncBoard(won ? used : 6);
+  syncBoard(S.pts);
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

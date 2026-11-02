@@ -367,11 +367,17 @@ function finish(status){
 /* ---------------- reveal / share ---------------- */
 function shareText(){
   if (S.status === 'won'){
-    return 'Timeline No. ' + num + ' \u00b7 ordered in ' + S.checks + (S.checks === 1 ? ' check' : ' checks') + ' \uD83D\uDCC5';
+    return 'Timeline No. ' + num + ' \u00b7 ordered in ' + S.checks + (S.checks === 1 ? ' check' : ' checks') + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83D\uDCC5';
   }
   return 'Timeline No. ' + num + ' \u00b7 gave up on the order \uD83D\uDCC5';
 }
 function showReveal(){
+  /* points read like points: the first check is full marks, each extra check costs one */
+  const w = S.status === 'won';
+  S.pts = w ? Math.max(0, 4 - S.checks) : 0;
+  S.stars = (w && S.checks === 1) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   const won = S.status === 'won';
   $('verdict').textContent = won
@@ -382,7 +388,7 @@ function showReveal(){
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
   $('actbox').style.display = 'none'; /* the day is done - the play UI goes quiet */
   $('reveal').classList.add('show');
-  syncBoard(won ? S.checks : 9);
+  syncBoard(S.pts);
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

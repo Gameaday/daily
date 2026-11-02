@@ -184,11 +184,17 @@ function renderGuesses(){
 
 function shareText(){
   const sq = S.guesses.map(g => g.off === 0 ? '\uD83C\uDFC6' : heatOf(g.off).sq).join('');
-  if (S.status === 'won') return `Rounds No. ${num} \u00b7 ${S.guesses.length}/6 guesses ${sq}`;
+  if (S.status === 'won') return `Rounds No. ${num} \u00b7 ${S.guesses.length}/6 guesses ${sq}${S.stars ? ' \u00b7 1\u2605' : ''}`;
   return `Rounds No. ${num} \u00b7 out of rounds ${sq}`;
 }
 
 function showReveal(){
+  /* points read like points: the first guess is full marks, each extra round costs one */
+  const w = S.status === 'won';
+  S.pts = w ? Math.max(0, 4 - S.guesses.length) : 0;
+  S.stars = (w && S.guesses.length === 1) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   if (S.status === 'won'){
     $('verdict').textContent = S.guesses.length <= 2 ? 'Nailed it — a historian\u2019s instinct.' : 'Pinned the year.';
@@ -201,7 +207,7 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the day is pinned - the slider row goes away entirely */
   $('sliderrow').style.display = 'none';
-  syncBoard(S.status === 'won' ? S.guesses.length : 7);
+  syncBoard(S.pts);
 }
 
 /* ---------------- play ---------------- */

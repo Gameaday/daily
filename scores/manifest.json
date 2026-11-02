@@ -9,14 +9,14 @@
     "grid-hard":     { "better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18] },
     "fermi":         { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "sift":          { "better": "high", "edges": [0, 1, 2, 3, 4] },
-    "rounds":        { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8] },
+    "rounds":        { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "trace":         { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "lightbox":      { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "sprint":        { "better": "high", "edges": [0, 1, 2, 3, 4, 5, 6] },
     "cipher":        { "better": "high", "edges": [0, 1, 2, 3, 4] },
-    "timeline":      { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8] },
-    "museum":        { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7] },
-    "thread":        { "better": "low",  "edges": [1, 2, 3, 4, 5, 6, 7, 8] },
+    "timeline":      { "better": "high", "edges": [0, 1, 2, 3, 4] },
+    "museum":        { "better": "high", "edges": [0, 1, 2, 3, 4] },
+    "thread":        { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "brunch":        { "better": "high", "edges": [0, 1, 2] },
     "superlative":   { "better": "high", "edges": [0, 1, 2, 3, 4, 5, 6, 7] }
   }

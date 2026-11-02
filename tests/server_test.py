@@ -275,6 +275,113 @@ def main():
         check(s == 200 and b.get("archived") is True, "stale submit in another game also archived")
         s, b = req("GET", "/api/dist?game=fermi&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "other games' stale days do not touch fermi")
+
+        # --- evidence-based validation: the answer and the play facts come
+        #     in, the points come out - the client never names a number ---
+        def ev(game, body):
+            return post("/api/submit", dict(body, game=game, day=TODAY))
+
+        s, b = ev("rounds", {"id": "ev1", "status": "won", "answer": 1215,
+                             "meta": {"guesses": 2}})
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
+              "evidence: rounds won in 2 guesses -> server derives 3")
+        s, _b = ev("rounds", {"id": "ev2", "status": "won", "answer": 1943,
+                              "meta": {"guesses": 1}})
+        check(s == 422, "evidence: the wrong year is rejected")
+        s, _b = ev("rounds", {"id": "ev3", "status": "won", "answer": 1215,
+                              "meta": {"guesses": 0}})
+        check(s == 422, "evidence: meta below the cap is rejected")
+        s, b = ev("rounds", {"id": "ev4", "status": "lost"})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
+              "evidence: a loss is 0 points, enforced server-side")
+        s, b = ev("bogus", {"id": "ev5", "status": "won", "answer": [5]})
+        check(s == 200 and b.get("mean") == 3,
+              "evidence: bogus first-pick find -> 3")
+        s, _b = ev("bogus", {"id": "ev6", "status": "won", "answer": [0]})
+        check(s == 422, "evidence: bogus wrong pick rejected")
+        s, b = ev("well-actually", {"id": "ev7", "status": "won",
+                                    "answer": {"picks": [1], "typed": "Leonardo da Vinci"}})
+        check(s == 200 and b.get("mean") == 4,
+              "evidence: found it and named the correction -> 4")
+        s, b = ev("well-actually", {"id": "ev8", "status": "won",
+                                    "answer": {"picks": [1], "typed": "nope"}})
+        check(s == 200 and b.get("mean") == 3.5,
+              "evidence: a wrong correction earns no bonus (mean 3.5)")
+        s, b = ev("fermi", {"id": "ev9", "status": "won", "answer": 2500000000})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 2.67,
+              "evidence: fermi spot-on derives 3 (mean 2.67 over the live board)")
+        s, b = ev("fermi", {"id": "ev10", "status": "won", "answer": 1000000})
+        check(s == 200 and b.get("mean") == 2,
+              "evidence: fermi beyond 100x derives 0")
+        s, b = ev("brunch", {"id": "ev11", "status": "won", "answer": 3})
+        check(s == 200 and b.get("mean") == 1, "evidence: brunch right pick -> 1")
+        s, _b = ev("brunch", {"id": "ev12", "status": "won", "answer": 0})
+        check(s == 422, "evidence: brunch wrong pick rejected")
+        s, b = ev("brunch", {"id": "ev13", "status": "lost", "answer": 0})
+        check(s == 200 and b.get("mean") == 0.5, "evidence: brunch loss -> 0")
+        sup = json.loads((ROOT / "puzzles" / "superlative" / "puzzles.json")
+                         .read_text(encoding="utf-8"))[0]
+        perfect = [q["a"] for q in sup["q"]]
+        s, b = ev("superlative", {"id": "ev14", "status": "won", "answer": perfect})
+        check(s == 200 and b.get("mean") == len(perfect),
+              "evidence: superlative clean sweep -> full marks")
+        imperfect = list(perfect)
+        imperfect[0] = (imperfect[0] + 1) % len(sup["m"])
+        s, b = ev("superlative", {"id": "ev15", "status": "lost", "answer": imperfect})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 4.5,
+              "evidence: superlative partial credit is derived, not claimed")
+        s, b = ev("museum", {"id": "ev16", "status": "won", "answer": "rosetta stone",
+                             "meta": {"clues": 2}})
+        check(s == 200 and b.get("mean") == 2,
+              "evidence: museum named on clue 2 -> 2")
+        s, _b = ev("museum", {"id": "ev17", "status": "won", "answer": "the mona lisa",
+                              "meta": {"clues": 1}})
+        check(s == 422, "evidence: museum wrong artifact rejected")
+        sif = json.loads((ROOT / "puzzles" / "sift" / "puzzles.json")
+                        .read_text(encoding="utf-8"))[0]
+        s, b = ev("sift", {"id": "ev18", "status": "won",
+                           "answer": [c["i"] for c in sif["cats"]],
+                           "meta": {"mistakes": 1}})
+        check(s == 200 and b.get("mean") == 2, "evidence: sift one-mistake win -> 2")
+        bad = [list(c["i"]) for c in sif["cats"]]
+        bad[0][0], bad[1][0] = bad[1][0], bad[0][0]
+        s, _b = ev("sift", {"id": "ev19", "status": "won", "answer": bad,
+                            "meta": {"mistakes": 0}})
+        check(s == 422, "evidence: sift wrong grouping rejected")
+        lb = json.loads((ROOT / "puzzles" / "lightbox" / "puzzles.json")
+                        .read_text(encoding="utf-8"))[0]
+        s, b = ev("lightbox", {"id": "ev20", "status": "won", "answer": lb["g"],
+                               "meta": {"mistakes": 0}})
+        check(s == 200 and b.get("mean") == 3, "evidence: lightbox clean grid -> 3")
+        cip = json.loads((ROOT / "puzzles" / "cipher" / "puzzles.json")
+                         .read_text(encoding="utf-8"))[0]
+        s, b = ev("cipher", {"id": "ev21", "status": "won", "answer": cip["q"].lower(),
+                             "meta": {"hints": 1}})
+        check(s == 200 and b.get("mean") == 2,
+              "evidence: cipher decoded with one hint -> 2")
+        tl = json.loads((ROOT / "puzzles" / "timeline" / "puzzles.json")
+                        .read_text(encoding="utf-8"))
+        tyears = sorted(tl["bank"][i]["y"] for i in tl["picks"][0])
+        s, b = ev("timeline", {"id": "ev22", "status": "won", "answer": tyears,
+                               "meta": {"checks": 1}})
+        check(s == 200 and b.get("mean") == 3,
+              "evidence: timeline first-check win -> 3")
+        s, _b = ev("timeline", {"id": "ev23", "status": "won",
+                                "answer": list(reversed(tyears)),
+                                "meta": {"checks": 1}})
+        check(s == 422, "evidence: timeline wrong order rejected")
+        th = json.loads((ROOT / "puzzles" / "thread" / "puzzles.json")
+                        .read_text(encoding="utf-8"))
+        tp = th["picks"][0]
+        s, b = ev("thread", {"id": "ev24", "status": "won",
+                             "answer": [tp["s"]] + list(tp["m"]) + [tp["e"]],
+                             "meta": {"checks": 2}})
+        check(s == 200 and b.get("mean") == 2, "evidence: thread two-check win -> 2")
+        s, _b = ev("rings", {"id": "ev25", "status": "won", "answer": "anything"})
+        check(s == 400, "evidence: generator games have no evidence path yet")
+        s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
+                                    "value": 3, "id": "legacy1"})
+        check(s == 200, "transition: a self-reported value post still tallies")
     finally:
         proc.terminate()
         try:

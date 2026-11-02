@@ -33,6 +33,10 @@ Design rules (deliberate):
 
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
+                   {"game", "day", "id", "status", "answer", "meta"} -> evidence in,
+                   points out (gated games: the answer is checked against the day's
+                   key and the score derived server-side; self-reported value posts
+                   stay accepted during the transition)
     GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
@@ -46,6 +50,7 @@ import argparse
 import hashlib
 import json
 import math
+import re
 import signal
 import threading
 from datetime import date, datetime, timedelta
@@ -104,6 +109,235 @@ for game in SPECS.keys():
 STATS = {}   # (game, day) -> {"n", "sum", "sumsq", "min", "max", "bins": [ints]}
 SEEN = {}    # (game, day) -> set of 8-byte id digests (transient dedupe only)
 LOCK = threading.Lock()
+
+
+# ---------------------------------------------------------------------------
+# Evidence-based validation (1.1): the server already holds the day's
+# answer key - the committed puzzle stores the /puzzle endpoint serves
+# from - so a gated game's submission can carry the proposed answer and
+# the raw play facts instead of a self-reported score. The server checks
+# the answer, enforces the per-game meta caps, derives the points itself,
+# and holds the loss rule (a loss or a give-up is 0 no matter the meta).
+# Self-reported "value" posts keep tallying during the transition; the
+# cutover lands with the client-side switch. Generator games (rings,
+# trace, grid, sprint) have no server-side key yet - they ride the 1.2
+# dealt-play phase instead of porting the generators.
+# ---------------------------------------------------------------------------
+
+EVIDENCE_GAMES = (
+    "bogus", "well-actually", "fermi", "brunch", "superlative",
+    "rounds", "museum", "sift", "lightbox", "cipher", "timeline", "thread",
+)
+
+# per-game meta caps on the won path: key, lo, hi
+META_CAPS = {
+    "rounds":   (("guesses", 1, 6),),
+    "museum":   (("clues", 1, 5),),
+    "sift":     (("mistakes", 0, 3),),
+    "lightbox": (("mistakes", 0, 3),),
+    "cipher":   (("hints", 0, 3),),
+    "timeline": (("checks", 1, 9),),
+    "thread":   (("checks", 1, 9),),
+}
+
+
+def _text_norm(s):
+    """The well-actually page's normalization of a typed correction:
+    lowercase, punctuation to spaces, collapsed, leading 'the ' dropped."""
+    s = re.sub(r"[.,!?;:'\u2019\u201c\u201d\"]", " ", str(s).lower())
+    s = re.sub(r"\s+", " ", s).strip()
+    return s[4:] if s.startswith("the ") else s
+
+
+def _name_norm(s):
+    """Museum-grade name matching: lowercase, punctuation dropped (an
+    apostrophe vanishes instead of spacing), collapsed, leading 'the ' off."""
+    s = re.sub(r"[^\w\s]", "", str(s).lower())
+    s = re.sub(r"\s+", " ", s).strip()
+    return s[4:] if s.startswith("the ") else s
+
+
+def _alnum_norm(s):
+    """Cipher-grade comparison: uppercase alphanumerics only."""
+    return "".join(ch for ch in str(s).upper() if ch.isalnum())
+
+
+def _meta_int(meta, key, lo, hi):
+    v = meta.get(key)
+    if isinstance(v, bool) or not isinstance(v, int) or not (lo <= v <= hi):
+        return None
+    return v
+
+
+def _list_entry(game, day):
+    """The day's answer-key entry for a list-store game (the same entry the
+    /puzzle endpoint serves)."""
+    store = PUZZLES.get(game)
+    if isinstance(store, list) and store:
+        return store[day % len(store)]
+    return None
+
+
+def validate_evidence(game, day, body):
+    """Check a gated game's evidence against the day's answer key and derive
+    the points. Returns (points, None) on success, (None, reason) otherwise.
+    The client never names a number: every point is computed here."""
+    status = body.get("status")
+    if status not in ("won", "lost", "gave"):
+        return None, "bad status"
+    meta = body.get("meta")
+    if not isinstance(meta, dict):
+        return None, "bad meta"
+    for key, lo, hi in META_CAPS.get(game, ()):
+        if _meta_int(meta, key, lo, hi) is None:
+            return None, "bad meta"
+    if status != "won" and game not in ("fermi", "superlative"):
+        # a loss or a give-up is 0 points no matter what the meta says
+        return 0, None
+    ans = body.get("answer")
+
+    if game == "bogus":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if not isinstance(ans, list) or not ans or len(ans) > 3 \
+                or not all(isinstance(p, int) and not isinstance(p, bool)
+                           and 0 <= p < len(e["s"]) for p in ans):
+            return None, "bad answer"
+        if e["l"] not in ans:
+            return None, "wrong answer"
+        return max(0, 3 - sum(1 for p in ans if p != e["l"])), None
+
+    if game == "well-actually":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        picks = ans.get("picks") if isinstance(ans, dict) else None
+        typed = ans.get("typed") if isinstance(ans, dict) else None
+        if not isinstance(picks, list) or not picks or len(picks) > 3 \
+                or not all(isinstance(p, int) and not isinstance(p, bool)
+                          and 0 <= p < len(e["s"]) for p in picks):
+            return None, "bad answer"
+        if e["l"] not in picks:
+            return None, "wrong answer"
+        pts = max(0, 3 - sum(1 for p in picks if p != e["l"]))
+        if isinstance(typed, str) and len(typed) <= 200 \
+                and _text_norm(typed) in (_text_norm(x) for x in e["a"]):
+            pts += 1
+        return pts, None
+
+    if game == "fermi":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if isinstance(ans, bool) or not isinstance(ans, (int, float)) \
+                or not math.isfinite(ans) or ans <= 0:
+            return None, "bad answer"
+        ratio = max(ans / e["a"], e["a"] / ans)
+        return (3 if ratio <= 3 else 2 if ratio <= 10
+                else 1 if ratio <= 100 else 0), None
+
+    if game == "brunch":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if isinstance(ans, bool) or not isinstance(ans, int) \
+                or not (0 <= ans < len(e["opts"])):
+            return None, "bad answer"
+        if ans != e["a"]:
+            return None, "wrong answer"
+        return 1, None
+
+    if game == "superlative":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if not isinstance(ans, list) or len(ans) != len(e["q"]) \
+                or not all(isinstance(p, int) and not isinstance(p, bool)
+                           and 0 <= p < len(e["m"]) for p in ans):
+            return None, "bad answer"
+        return sum(1 for p, q in zip(ans, e["q"]) if p == q["a"]), None
+
+    if game == "rounds":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if isinstance(ans, bool) or not isinstance(ans, int) or ans != e["y"]:
+            return None, "wrong answer"
+        return max(0, 4 - meta["guesses"]), None
+
+    if game == "museum":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if not isinstance(ans, str) or not ans or len(ans) > 200:
+            return None, "bad answer"
+        names = [_name_norm(x) for x in [e["a"]] + list(e.get("al") or ())]
+        if _name_norm(ans) not in names:
+            return None, "wrong answer"
+        return max(0, 4 - meta["clues"]), None
+
+    if game == "sift":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if not isinstance(ans, list) or len(ans) != len(e["cats"]) \
+                or not all(isinstance(g, list) and g
+                           and all(isinstance(x, str) for x in g) for g in ans):
+            return None, "bad answer"
+        want = [frozenset(c["i"]) for c in e["cats"]]
+        got = [frozenset(g) for g in ans]
+        if frozenset(want) != frozenset(got):
+            return None, "wrong answer"
+        return 3 - meta["mistakes"], None
+
+    if game == "lightbox":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if not isinstance(ans, list) or len(ans) != len(e["g"]) \
+                or not all(isinstance(r, str) and r for r in ans):
+            return None, "bad answer"
+        norm = lambda rows: ["".join(ch for ch in row.upper() if ch in "#.")
+                             for row in rows]
+        if norm(ans) != norm(e["g"]):
+            return None, "wrong answer"
+        return 3 - meta["mistakes"], None
+
+    if game == "cipher":
+        e = _list_entry(game, day)
+        if e is None:
+            return None, "no answer key"
+        if not isinstance(ans, str) or not ans or len(ans) > 500:
+            return None, "bad answer"
+        if _alnum_norm(ans) != _alnum_norm(e["q"]):
+            return None, "wrong answer"
+        return 3 - meta["hints"], None
+
+    if game == "timeline":
+        store = PUZZLES.get(game)
+        picks = store.get("picks") if isinstance(store, dict) else None
+        if not isinstance(picks, list) or not (0 <= day < len(picks)):
+            return None, "no answer key"
+        years = sorted(store["bank"][i]["y"] for i in picks[day])
+        if not isinstance(ans, list) or len(ans) != len(years) \
+                or not all(isinstance(y, int) and not isinstance(y, bool)
+                           for y in ans) or ans != years:
+            return None, "wrong answer"
+        return max(0, 4 - meta["checks"]), None
+
+    if game == "thread":
+        store = PUZZLES.get(game)
+        picks = store.get("picks") if isinstance(store, dict) else None
+        if not isinstance(picks, list) or not (0 <= day < len(picks)):
+            return None, "no answer key"
+        pk = picks[day]
+        chain = [pk["s"]] + list(pk["m"]) + [pk["e"]]
+        if ans != chain:
+            return None, "wrong answer"
+        return max(0, 4 - meta["checks"]), None
+
+    return None, "no evidence path"
 
 
 def bin_index(value, edges):
@@ -530,11 +764,22 @@ class Handler(BaseHTTPRequestHandler):
         if isinstance(day, bool) or not isinstance(day, int) or not (DAY_MIN <= day <= DAY_MAX):
             self._json({"error": "bad day"}, 400)
             return
-        value = data.get("value")
-        if isinstance(value, bool) or not isinstance(value, (int, float)) \
-                or not math.isfinite(value) or abs(value) > MAX_ABS_VALUE:
-            self._json({"error": "bad value"}, 400)
-            return
+        if "answer" in data or "status" in data:
+            # evidence path: the answer and the raw play facts come in,
+            # the points come out - the client never names a number
+            if game not in EVIDENCE_GAMES:
+                self._json({"error": "evidence not accepted for this game"}, 400)
+                return
+            value, reason = validate_evidence(game, day, data)
+            if value is None:
+                self._json({"error": reason}, 422)
+                return
+        else:
+            value = data.get("value")
+            if isinstance(value, bool) or not isinstance(value, (int, float)) \
+                    or not math.isfinite(value) or abs(value) > MAX_ABS_VALUE:
+                self._json({"error": "bad value"}, 400)
+                return
         pid = data.get("id")
         if not isinstance(pid, str) or not pid or len(pid) > 64:
             self._json({"error": "bad id"}, 400)

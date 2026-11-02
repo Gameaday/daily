@@ -187,8 +187,8 @@ function renderTiles(){
 
 function renderMistakes(){
   let pips = '';
-  for (let i = 0; i < 4; i++) pips += `<span class="pip${i < S.mistakes ? ' gone' : ''}"></span>`;
-  $('mistakes').innerHTML = `mistakes: ${pips}<span style="margin-left:6px;">${4 - S.mistakes} left</span>`;
+  for (let i = 0; i < 3; i++) pips += `<span class="pip${i < S.mistakes ? ' gone' : ''}"></span>`;
+  $('mistakes').innerHTML = `mistakes: ${pips}<span style="margin-left:6px;">${Math.max(0, 3 - S.mistakes)} left</span>`;
 }
 
 function renderFound(){
@@ -250,7 +250,7 @@ $('btnSubmit').addEventListener('click', () => {
         const el = document.querySelector(`.tile[data-i="${i}"]`);
         if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
       });
-      toastMsg(['Not a trio.','Close, maybe?','The tiles are judging you.','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
+      toastMsg(['Not a trio.','Close, maybe?','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
     }
   }
   saveState();

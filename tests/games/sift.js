@@ -15,6 +15,10 @@ async function run(h){
     [catIdx(1)[0], catIdx(2)[0], catIdx(3)[0]].forEach(i => r.x.sel.add(i));
     r.env.els.btnSubmit.click();
     h.eq(r.x.S.mistakes, 1, 'sift: 1 mistake');
+    h.ok((r.env.els.mistakes.innerHTML.match(/class="pip/g) || []).length === 3,
+      'sift: the meter counts the three affordable mistakes');
+    h.ok(r.env.els.mistakes.innerHTML.indexOf('2 left') >= 0,
+      'sift: the meter counts what you can afford');
     h.eq(r.x.S.solvedCats.length, 0, 'sift: nothing solved');
     r.x.sel.clear();
     for (const c of [0, 1, 2, 3]){

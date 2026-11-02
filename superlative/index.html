@@ -229,7 +229,7 @@ function renderSummary(){
     if (S.status === 'won'){ st.streak++; st.max = Math.max(st.max, st.streak); }
     else st.streak = 0;
     saveState();
-    syncBoard(correct);
+    syncBoard({ status: S.status, answer: S.picks, points: correct });
   }
   const correct = correctCount();
   const all = correct === total;

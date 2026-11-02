@@ -214,7 +214,8 @@ function showReveal(){
   $('why').textContent = puzzle.w;
   $('sharetext').textContent = shareText();
   $('reveal').classList.add('show');
-  syncBoard(S.status === 'won' ? baseScore() : 0);
+  syncBoard({ status: S.status, answer: S.picked,
+              points: S.status === 'won' ? baseScore() : 0 });
   renderPicks();
 }
 

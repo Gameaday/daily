@@ -37,7 +37,10 @@ async function run(h){
     r.env.els.btnNext.click();
     h.eq(r.x.S.status, 'won', 'superlative: a clean sweep wins the session');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 5, 'superlative: the sweep posts all five rounds right');
+    h.eq(h.lastPost(r.env).body.status, 'won', 'superlative: the sweep posts the won status');
+    h.ok(h.lastPost(r.env).body.answer.every((p, i) => p === r.x.EV.q[i].a),
+      'superlative: the evidence carries every round of the sweep');
+    h.ok(!('value' in h.lastPost(r.env).body), 'superlative: the client never names its own score');
     h.eq(r.env.els.sverdict.textContent, 'A clean sweep, 5 of 5.',
       'superlative: the tally reads the sweep');
     h.ok(r.x.shareText().indexOf('The Opening Table') >= 0,
@@ -60,7 +63,8 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'superlative: day 1 sweeps');
     h.eq(r.x.S.stats.streak, 2, 'superlative: the sweep streak counts');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, r.x.EV.q.length, 'superlative: the day 1 sweep posts every round right');
+    h.ok(h.lastPost(r.env).body.answer.every((p, i) => p === r.x.EV.q[i].a),
+      'superlative: the day 1 sweep posts a perfect run');
 
     /* one wrong round: the session plays through, the value carries the miss */
     const s2 = {};
@@ -80,7 +84,9 @@ async function run(h){
     h.eq(r.x.S.status, 'lost', 'superlative: one miss loses the sweep');
     h.eq(r.x.S.stats.streak, 0, 'superlative: a miss resets the streak');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 4, 'superlative: curve value 4 with four of five right');
+    h.eq(h.lastPost(r.env).body.status, 'lost', 'superlative: a miss posts lost');
+    h.eq(h.lastPost(r.env).body.answer.filter((p, i) => p === r.x.EV.q[i].a).length, 4,
+      'superlative: the evidence carries the four right rounds');
 
     /* weekends land a theme the recipe curates */
     const recipe = require('../../puzzles/superlative/recipe.json');

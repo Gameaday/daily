@@ -228,7 +228,7 @@ function showReveal(){
   $('reveal').classList.add('show');
   $('guessrow').style.display = 'none';
   $('hint').style.display = 'none';
-  syncBoard(S.score);
+  syncBoard({ status: 'won', answer: S.guess, points: S.score });
 }
 function shareText(){
   const r = ratioFor(S.guess, Q.a);

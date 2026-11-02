@@ -148,7 +148,7 @@ const SHELL = (() => {
     /* Callers may still pass their SYNC_BETTER hint as a second argument;
        it is deliberately ignored - the server owns the direction, and the
        submit payload carries no better field. */
-    return function syncBoard(value){
+    return function syncBoard(sub){
       const box = $('curve');
       if (!box) return;
       if (isSolo()){
@@ -196,11 +196,31 @@ const SHELL = (() => {
           .catch(() => { box.innerHTML = ''; });
         return;
       }
-      const payload = JSON.stringify({ game: game, day: dayIndex, value: value, id: id });
+      /* a gated game sends its evidence - the answer and the raw play facts -
+         and the server derives the points; a generator game still sends its
+         self-computed value. The local points ride along only to mark the
+         you-dot on later reads: on the evidence path the server never
+         reads a number from the client. */
+      const evidence = (sub && typeof sub === 'object');
+      const value = evidence ? sub.points : sub;
+      const payload = JSON.stringify(evidence
+        ? { game: game, day: dayIndex, id: id, status: sub.status, answer: sub.answer, meta: sub.meta || {} }
+        : { game: game, day: dayIndex, value: value, id: id });
       const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
-        .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+        .then(r => {
+          if (r.ok) return r.json();
+          /* a rejected play is an answer, not an outage: the answer did not
+             check out against the day's key, so nothing tallies and no
+             base walk follows */
+          if (r.status === 422) return { rejected: true };
+          throw new Error('http ' + r.status);
+        });
       tryBases(post)
         .then(d => {
+          if (d && d.rejected){
+            box.innerHTML = '<div class="curve-note">this result did not check out \u2014 it was not counted</div>';
+            return;
+          }
           if (!d || d.archived !== true){
             try { localStorage.setItem('warmup.sync.' + game, JSON.stringify({ d: dayIndex, ok: 1, v: value })); } catch(e){}
           }

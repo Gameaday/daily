@@ -16,7 +16,10 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'well-actually: won');
     h.eq(r.x.score(), 4, 'well-actually: 4 pts (3 + bonus)');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 4, 'well-actually: curve value 4');
+    h.eq(h.lastPost(r.env).body.status, 'won', 'well-actually: the win posts the won status');
+    h.eq(h.lastPost(r.env).body.answer.picks.join(), '1', 'well-actually: the evidence carries the picks');
+    h.eq(h.lastPost(r.env).body.answer.typed, 'Leonardo', 'well-actually: the evidence carries the typed correction');
+    h.ok(!('value' in h.lastPost(r.env).body), 'well-actually: the client never names its own score');
     /* Regression: a reload used to lose the curve because syncBoard only
        fired from finish(), which does not run again for a finished day.
        Now the reload reads the curve back with a GET instead of posting,

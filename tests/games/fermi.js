@@ -22,7 +22,9 @@ async function run(h){
     h.ok(r.x.S.scored, 'fermi: scored');
     h.eq(r.x.S.score, 3, 'fermi: exact guess scores 3');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'fermi: curve value 3');
+    h.eq(h.lastPost(r.env).body.status, 'won', 'fermi: the estimate posts the won status');
+    h.eq(h.lastPost(r.env).body.answer, r.x.Q.a, 'fermi: the evidence carries the estimate');
+    h.ok(!('value' in h.lastPost(r.env).body), 'fermi: the client never names its own score');
     r = h.boot('fermi', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'fermi: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'fermi: streak preserved');

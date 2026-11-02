@@ -263,7 +263,8 @@ function showReveal(){
   /* the day is argued - the pick meter goes quiet */
   $('picks').style.display = 'none';
   renderPicks();
-  syncBoard(score());
+  syncBoard({ status: S.status, answer: { picks: S.picked, typed: S.typed || '' },
+              points: score() });
 }
 
 function finish(){

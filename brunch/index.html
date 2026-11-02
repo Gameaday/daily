@@ -182,7 +182,8 @@ function showReveal(){
   $('why').textContent = EV.w;
   $('sharetext').textContent = shareText() + String.fromCharCode(10) + 'streak ' + st.streak + ' · played ' + st.played;
   $('reveal').classList.add('show');
-  syncBoard(S.status === 'won' ? 1 : 0);
+  syncBoard({ status: S.status, answer: S.pick,
+              points: S.status === 'won' ? 1 : 0 });
 }
 
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */

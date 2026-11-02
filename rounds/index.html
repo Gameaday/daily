@@ -255,7 +255,7 @@ $('btnLock').addEventListener('click', () => {
 
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'rounds';
-const SYNC_BETTER = 'low';
+const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 
 /* ---------------- share / toast ---------------- */

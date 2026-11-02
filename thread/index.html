@@ -554,7 +554,7 @@ const toastMsg = m => SHELL.toast(m, 1600);
 
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'thread';
-const SYNC_BETTER = 'low';
+const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 
 /* ---------------- help / countdown ---------------- */

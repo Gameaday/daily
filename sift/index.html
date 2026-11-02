@@ -260,10 +260,15 @@ $('btnSubmit').addEventListener('click', () => {
 /* ---------------- reveal / share ---------------- */
 function shareText(){
   const marks = BOARD.cats.map((c, ci) => S.solvedCats.includes(ci) ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
-  if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}`;
+  if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}${S.stars ? ' \u00b7 1\u2605' : ''}`;
   return `Sift No. ${num} \u00b7 sifted, ${S.mistakes} misses deep \u2014 ${marks}`;
 }
 function showReveal(){
+  /* points read like points: each mistake spent costs one, a loss clears the marks */
+  S.pts = S.status === 'won' ? 3 - S.mistakes : 0;
+  S.stars = (S.status === 'won' && S.mistakes === 0) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   if (S.status === 'won'){
     $('verdict').textContent = (S.mistakes === 0 ? 'Flawless sift — not one wasted test.' : 'Sifted clean. The day is in order.') + ' Today’s theme: ' + BOARD.t + '.';
@@ -277,7 +282,7 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the day is sifted - the play row goes quiet */
   $('playrow').style.display = 'none';
-  syncBoard(S.status === 'won' ? S.mistakes : 4);
+  syncBoard(S.pts);
   renderTiles(); // to apply reveal dimming
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */

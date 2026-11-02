@@ -344,11 +344,17 @@ function finish(status){
 function shareText(){
   if (S.status === 'won'){
     const h = S.hints === 0 ? 'no hints' : S.hints + (S.hints === 1 ? ' hint' : ' hints');
-    return 'Cipher No. ' + num + ' \u00b7 decoded with ' + h + ' \uD83D\uDD0D';
+    return 'Cipher No. ' + num + ' \u00b7 decoded with ' + h + (S.hints === 0 ? ' \u00b7 1\u2605' : '') + ' \uD83D\uDD0D';
   }
   return 'Cipher No. ' + num + ' \u00b7 revealed the codebook \uD83D\uDD0D';
 }
 function showReveal(){
+  /* points read like points: each hint costs one, a loss clears the marks */
+  const cw = S.status === 'won';
+  S.pts = cw ? Math.max(0, 3 - S.hints) : 0;
+  S.stars = (cw && S.hints === 0) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   const won = S.status === 'won';
   $('verdict').textContent = won
@@ -365,7 +371,7 @@ function showReveal(){
   $('playrow').style.display = 'none';
   $('selinfo').style.display = 'none';
   kbd.blur();
-  syncBoard(won ? S.hints : 7);
+  syncBoard(S.pts);
 }
 SHELL.wireShare(shareText);
 /* the codebook toggle in the end panel: a player who cracked it cold can

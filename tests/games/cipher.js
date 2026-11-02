@@ -31,7 +31,8 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'cipher: wins on Check with a complete decode');
     h.eq(r.x.S.hints, 0, 'cipher: no hints used');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 0, 'cipher: curve value 0');
+    h.eq(h.lastPost(r.env).body.value, 3, 'cipher: decoded cold posts full points');
+    h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'cipher: the cold-decode star rides the share');
     h.ok(r.x.shareText().indexOf('no hints') >= 0, 'cipher: share "no hints"');
     r.env.els.btnCodebook.click();
     h.ok(r.env.els.codebook.style.display !== 'none', 'cipher: codebook opens after the win');

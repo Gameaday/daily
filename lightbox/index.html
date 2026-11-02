@@ -262,6 +262,11 @@ function shareText(){
   return `Lightbox No. ${num} \u00b7 fogged the film \u2014 4 bad developments \uD83D\uDCF8`;
 }
 function showReveal(){
+  /* points read like points: each bad exposure costs one, a loss clears the marks */
+  S.pts = S.status === 'won' ? 3 - S.mistakes : 0;
+  S.stars = (S.status === 'won' && S.mistakes === 0) ? 1 : 0;
+  if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+
   const st = S.stats;
   const pix = SOL.map(row => row.map(v => `<div class="px${v ? ' f' : ''}"></div>`).join('')).join('');
   if (S.status === 'won'){
@@ -278,7 +283,7 @@ function showReveal(){
   $('grid').style.pointerEvents = 'none';
   $('grid').style.opacity = '.55';
   $('actbox').style.display = 'none';
-  syncBoard(S.status === 'won' ? S.mistakes : 4);
+  syncBoard(S.pts);
 }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;

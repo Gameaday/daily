@@ -27,7 +27,8 @@ async function run(h){
     }
     h.eq(r.x.S.status, 'won', 'sift: won with 1 mistake');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 1, 'sift: curve value 1');
+    h.eq(h.lastPost(r.env).body.value, 2, 'sift: one miss posts 2 points');
+    h.ok(r.x.shareText().indexOf('\u2605') === -1, 'sift: a miss costs the star');
     h.ok(r.x.shareText().indexOf('1 miss') >= 0, 'sift: share "1 miss"');
     /* Regression: the rollover guard used to check S.solvedAll, which is
        never set anywhere - so a winning streak reset every day. */

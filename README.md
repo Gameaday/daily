@@ -245,7 +245,7 @@ seconds; only the bundle builds stay CI-side.
 
 Sprint is the only game on the clock: it starts on your first move and
 never restarts. Rings and Grid traded the clock for a budget of moves:
-Rings counts every spin and swap against an exact par, Grid banks a board
+Rings counts every spin and ray shift against an exact par, Grid banks a board
 after one shared budget of shifts, any row or column, any order (Practice generates fresh boards and records
 nothing; Normal is the daily game; Hard replays the daily board with one
 more shift, online-only, on its own bonus curve). Pressure comes from

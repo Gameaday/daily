@@ -5,19 +5,18 @@
 const { T0, T1, T10 } = require('./_lib');
 
 async function run(h){
-    const EXP = ['S', 'PUZZLE', 'spin', 'swap', 'shiftCol', 'topLetter', 'shareText'];
+    const EXP = ['S', 'PUZZLE', 'spin', 'shiftRay', 'topLetter', 'shareText'];
     const store = {};
     let r = h.boot('recycle-rings', EXP, { now: T0, store });
     h.ok(!!r.x.PUZZLE && /^[A-Z]{4}$/.test(r.x.PUZZLE.word), 'rings: puzzle generated, 4-letter target');
     h.eq(new Set(r.x.PUZZLE.word).size, 4, 'rings: target has four distinct letters');
-    h.ok(r.x.PUZZLE.par >= 5 && r.x.PUZZLE.par <= 13,
-      'rings: par in [5,13] (got ' + r.x.PUZZLE.par + ')');
-    h.ok(r.x.PUZZLE.order.some((q, p) => q !== p), 'rings: ring order starts scrambled');
+    h.ok(r.x.PUZZLE.par >= 3 && r.x.PUZZLE.par <= 20,
+      'rings: par in [3,20], winnable in a reasonable line (got ' + r.x.PUZZLE.par + ')');
+    h.eq(r.x.S.off.join(','), '0,0,0,0', 'rings: wheels start unspun');
     /* replay the solver's own par line — it must win in exactly par moves */
     for (const mv of r.x.PUZZLE.sol){
       if (mv.t === 'r') r.x.spin(mv.p, mv.d);
-      else if (mv.t === 'c') r.x.shiftCol(mv.d);
-      else r.x.swap(mv.p);
+      else r.x.shiftRay(mv.d);
     }
     h.ok(r.x.S.won, 'rings: won by replaying the par line');
     h.eq(r.x.S.moves, r.x.PUZZLE.par, 'rings: replay costs exactly par moves');
@@ -32,12 +31,13 @@ async function run(h){
     r = h.boot('recycle-rings', EXP, { now: T0, store: s2 });
     r.x.spin(0, 1); r.x.spin(0, -1);
     h.eq(r.x.S.moves, 2, 'rings: reversing still costs moves');
-    const ord = r.x.S.order.slice();
-    r.x.shiftCol(1);
-    h.eq(r.x.S.moves, 3, 'rings: a column shift costs a move');
-    h.ok(r.x.S.order[0] === ord[3] && r.x.S.order[1] === ord[0], 'rings: the column rotated one seat');
-    r.x.shiftCol(-1);
-    h.ok(r.x.S.order.every((q, p) => q === ord[p]), 'rings: shifting back restores the order');
+    /* the ray shift moves every wheel one seat together */
+    const before = r.x.S.off.slice();
+    r.x.shiftRay(1);
+    h.eq(r.x.S.moves, 3, 'rings: a ray shift costs one move');
+    h.ok(r.x.S.off.every((o, i) => o !== before[i]), 'rings: the whole ray column shifted one seat');
+    r.x.shiftRay(-1);
+    h.ok(r.x.S.off.every((o, i) => o === before[i]), 'rings: shifting back restores every wheel');
     h.ok(!r.x.S.won, 'rings: aimless spinning does not win');
 }
 

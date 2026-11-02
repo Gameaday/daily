@@ -118,10 +118,13 @@ const SHELL = (() => {
     $('btnHelp').addEventListener('click', () => $('helpOverlay').classList.add('show'));
     document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => $('helpOverlay').classList.remove('show')));
   }
+  /* every share carries the site along - one line appended on copy, so
+     the share box on the page stays exactly as quiet as before */
+  const SHARE_URL = 'https://daily.historylabs.dev';
   function wireShare(getText){
     $('btnShare').addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(getText());
+        await navigator.clipboard.writeText(getText() + '\n' + SHARE_URL);
         toast('Copied \u2014 paste it anywhere');
       } catch (e){
         const r = document.createRange();

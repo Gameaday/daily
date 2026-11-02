@@ -360,8 +360,35 @@ const SHELL = (() => {
     }
   }
 
+  /* ---- bonus stars: local perfection milestones ---- */
+  /* A star is a flourish the curve never sees: it lives in the browser
+     next to the streaks, one record per day (the best stands), and an
+     archive replay never records. Games earn them however they like;
+     the shell only keeps the count. */
+  function recordStars(game, earned){
+    if (!earned || isArchive) return starTotal(game);
+    let o = null;
+    try { o = JSON.parse(localStorage.getItem('warmup.stars.' + game)) || null; } catch(e){}
+    if (!o || typeof o !== 'object'){ o = { total: 0, days: {} }; }
+    if (typeof o.days !== 'object' || !o.days) o.days = {};
+    const k = String(dayIndex);
+    const prev = typeof o.days[k] === 'number' ? o.days[k] : 0;
+    if (earned > prev) o.days[k] = earned;
+    let total = 0;
+    for (const d of Object.keys(o.days)) total += o.days[d];
+    o.total = total;
+    try { localStorage.setItem('warmup.stars.' + game, JSON.stringify(o)); } catch(e){}
+    return total;
+  }
+  function starTotal(game){
+    try {
+      const o = JSON.parse(localStorage.getItem('warmup.stars.' + game));
+      return (o && typeof o.total === 'number') ? o.total : 0;
+    } catch(e){ return 0; }
+  }
+
   return { TZ, EPOCH_KEY, etKey, todayKey, todayIndex, dayIndex, num, $,
            isArchive, parseViewDay, archiveHref,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, showUnavailable };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, showUnavailable, recordStars, starTotal };
 })();

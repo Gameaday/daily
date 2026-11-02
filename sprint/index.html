@@ -287,6 +287,11 @@ function advance(){
   saveState();
   renderWord();
 }
+/* bonus stars: spare-clock milestones on a full sweep, kept beside the
+   streaks - the curve never sees them */
+const STAR_SPARE = [30, 60, 75];
+function starsFor(spare){ return STAR_SPARE.reduce((n, t) => n + (spare >= t ? 1 : 0), 0); }
+
 function finish(status){
   S.status = status;
   S.timeMs = S.startAt ? (status === 'won' ? TOTAL_MS - timeLeft() : Date.now() - S.startAt) : 0;
@@ -298,6 +303,10 @@ function finish(status){
   } else {
     st.streak = 0;
   }
+  if (status === 'won'){
+    S.stars = starsFor(Math.round(timeLeft() / 1000));
+    if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
+  }
   saveState();
   showReveal();
 }
@@ -306,7 +315,8 @@ function finish(status){
 function shareText(){
   if (S.status === 'won'){
     const spare = S.startAt ? Math.max(0, Math.round(timeLeft() / 1000)) : 0;
-    return `Sprint No. ${num} \u00b7 ${S.solvedCount}/5 words \u00b7 ${spare}s to spare \uD83C\uDFC1`;
+    const stars = typeof S.stars === 'number' ? S.stars : 0;
+    return `Sprint No. ${num} \u00b7 ${S.solvedCount}/5 words \u00b7 ${spare}s to spare${stars ? ' \u00b7 ' + stars + '\u2605' : ''} \uD83C\uDFC1`;
   }
   return `Sprint No. ${num} \u00b7 ${S.solvedCount}/5 words \u00b7 out of time \u23F1`;
 }
@@ -318,7 +328,8 @@ function showReveal(){
     const list = [...(k.length === 4 ? ANA4 : ANA5).get(k)];
     return `<b>${list[0]}</b>`;
   }).slice(0, 5).join(' \u00b7 ');
-  $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}`;
+  const starT = SHELL.starTotal(SYNC_GAME);
+  $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 solved ${st.solved}/${st.played}` + (starT ? ` \u00b7 \u2605 ${starT}` : '');
   $('reveal').classList.add('show');
   /* the clock is done - the word box and its input go away entirely */
   $('wordbox').style.display = 'none';

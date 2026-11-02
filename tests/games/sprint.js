@@ -23,6 +23,8 @@ async function run(h){
     h.eq(h.lastPost(r.env).body.value, 5, 'sprint: curve value 5');
     h.eq((r.x.S.words || []).join(','), typed.join(','), 'sprint: solved-word list matches typed');
     h.ok(r.x.shareText().indexOf('5/5') >= 0, 'sprint: share 5/5');
+    h.eq(r.x.S.stars, 3, 'sprint: a full-speed sweep earns all three clock stars');
+    h.ok(r.x.shareText().indexOf('3\u2605') >= 0, 'sprint: the share text carries the stars');
     r = h.boot('sprint', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'sprint: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'sprint: streak preserved');

@@ -207,7 +207,9 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the day is pinned - the slider row goes away entirely */
   $('sliderrow').style.display = 'none';
-  syncBoard(S.pts);
+  syncBoard({ status: S.status,
+              answer: S.guesses.length ? S.guesses[S.guesses.length - 1].y : null,
+              meta: { guesses: S.guesses.length }, points: S.pts });
 }
 
 /* ---------------- play ---------------- */

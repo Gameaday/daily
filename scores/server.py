@@ -136,8 +136,8 @@ META_CAPS = {
     "sift":     (("mistakes", 0, 4),),
     "lightbox": (("mistakes", 0, 4),),
     "cipher":   (("hints", 0, 5),),
-    "timeline": (("checks", 1, 9),),
-    "thread":   (("checks", 1, 9),),
+    "timeline": (("checks", 1, 999),),
+    "thread":   (("checks", 1, 999),),
 }
 
 

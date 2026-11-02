@@ -14,7 +14,12 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'timeline: won in one check');
     h.eq(r.x.S.checks, 1, 'timeline: checks = 1');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'timeline: one check posts full points');
+    const p = h.lastPost(r.env).body;
+    h.eq(p.status, 'won', 'timeline: the won status rides the wire');
+    h.eq(p.answer.length, 5, 'timeline: five years ride the wire');
+    h.ok(p.answer.every((v, i) => i === 0 || p.answer[i - 1] < v),
+      'timeline: the years ride up the wire');
+    h.eq(p.meta.checks, 1, 'timeline: one check rides the wire');
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'timeline: the first-check star rides the share');
     h.ok(r.x.shareText().indexOf('1 check') >= 0, 'timeline: share "1 check"');
     r = h.boot('timeline', EXP, { now: T1, store });
@@ -27,7 +32,9 @@ async function run(h){
     h.eq(r.x.S.order.join(','), r.x.SORTED.map(i => r.x.PICK.indexOf(i)).join(','),
       'timeline: give-up sorts the lane');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 0, 'timeline: a give-up posts 0 points');
+    const q = h.lastPost(r.env).body;
+    h.eq(q.status, 'gave', 'timeline: a give-up posts the gave status');
+    h.eq(q.meta.checks, 0, 'timeline: zero checks ride the wire');
 
     /* drag-to-reorder: the move the pointer handlers drive */
     const s3 = {};

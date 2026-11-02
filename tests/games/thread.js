@@ -21,7 +21,11 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'thread: won in one check');
     h.eq(r.x.S.checks, 1, 'thread: checks = 1');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'thread: one check posts full points');
+    const p = h.lastPost(r.env).body;
+    h.eq(p.status, 'won', 'thread: the won status rides the wire');
+    h.eq(p.answer.join(','), [r.x.PZ.s.id].concat(r.x.PZ.m.map(x => x.id), [r.x.PZ.e.id]).join(','),
+      'thread: the chain ids ride the wire');
+    h.eq(p.meta.checks, 1, 'thread: one check rides the wire');
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'thread: the first-check star rides the share');
     h.ok(r.x.shareText().indexOf('1 check') >= 0, 'thread: share "1 check"');
     r = h.boot('thread', EXP, { now: T1, store });
@@ -34,7 +38,9 @@ async function run(h){
     h.eq(r.x.S.slots.join(','), r.x.PZ.m.map(x => x.id).join(','),
       'thread: give-up lays out the true chain');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 0, 'thread: a give-up posts 0 points');
+    const q = h.lastPost(r.env).body;
+    h.eq(q.status, 'gave', 'thread: a give-up posts the gave status');
+    h.eq(q.meta.checks, 0, 'thread: zero checks ride the wire');
     h.ok(String(r.env.els.chainbox.innerHTML).length > 0, 'thread: reveal renders the chain');
     const TPRE = T0 - 3 * 86400000;
     r = h.boot('thread', EXP, { now: TPRE, store: {} });

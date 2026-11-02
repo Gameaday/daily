@@ -388,7 +388,9 @@ function showReveal(){
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
   $('actbox').style.display = 'none'; /* the day is done - the play UI goes quiet */
   $('reveal').classList.add('show');
-  syncBoard(S.pts);
+  syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
+              answer: Array.from({length: 5}, (_, i) => evAt(i).y),
+              meta: { checks: S.checks }, points: S.pts });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

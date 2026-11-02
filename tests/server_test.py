@@ -387,6 +387,10 @@ def main():
                              "meta": {"hints": 5}})
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
               "evidence: a cipher win on the fifth hint derives 0, not a rejection")
+        s, b = ev("timeline", {"id": "ev28", "status": "won", "answer": tyears,
+                               "meta": {"checks": 12}})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
+              "evidence: a timeline win on the twelfth check derives 0, not a rejection")
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "value": 3, "id": "legacy1"})
         check(s == 200, "transition: a self-reported value post still tallies")

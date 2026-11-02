@@ -13,7 +13,10 @@ async function run(h){
     r.env.els.btnLock.click();
     h.eq(r.x.S.status, 'won', 'rounds: won first try');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'rounds: first guess posts full points');
+    const p = h.lastPost(r.env).body;
+    h.eq(p.status, 'won', 'rounds: the won status rides the wire');
+    h.eq(p.answer, 1215, 'rounds: the winning year rides the wire');
+    h.eq(p.meta.guesses, 1, 'rounds: one guess rides the wire');
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'rounds: the first-try star rides the share');
     r = h.boot('rounds', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'rounds: day rolled');
@@ -33,7 +36,9 @@ async function run(h){
     h.eq(r.env.els.guesses.innerHTML.indexOf('go earlier') !== -1, true, 'rounds: direction still shown');
     h.eq(r.env.els.guesses.innerHTML.indexOf('wrong century') !== -1, true, 'rounds: century nudge shown');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 0, 'rounds: a loss posts 0 points');
+    const q = h.lastPost(r.env).body;
+    h.eq(q.status, 'lost', 'rounds: a loss posts the lost status');
+    h.eq(q.meta.guesses, 6, 'rounds: six guesses ride the wire');
 }
 
 module.exports = { name: 'rounds', run };

@@ -164,6 +164,7 @@ function submitGuess(){
   if (!inp.value.trim()) return;
   S.started = true;
   if (matches(inp.value)){
+    S.typed = inp.value;
     finish('won');
     return;
   }
@@ -235,7 +236,8 @@ function showReveal(){
   $('btnGuess').disabled = true;
   $('guessrow').style.display = 'none';
   $('clueacts').style.display = 'none';
-  syncBoard(S.pts);
+  syncBoard({ status: S.status,
+              answer: S.typed || '', meta: { clues: used }, points: S.pts });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

@@ -18,7 +18,10 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'museum: won on clue 1');
     h.eq(r.x.S.resultClues, 1, 'museum: resultClues = 1');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'museum: named it cold posts full points');
+    const p = h.lastPost(r.env).body;
+    h.eq(p.status, 'won', 'museum: the won status rides the wire');
+    h.eq(p.answer, 'rosetta', 'museum: the typed name rides the wire');
+    h.eq(p.meta.clues, 1, 'museum: one clue rides the wire');
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'museum: the named-cold star rides the share');
     h.ok(r.x.shareText().indexOf('clue 1') >= 0, 'museum: share "clue 1"');
     r = h.boot('museum', EXP, { now: T1, store });
@@ -32,7 +35,9 @@ async function run(h){
     }
     h.eq(r.x.S.status, 'lost', 'museum: lost after 5 wrong guesses');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 0, 'museum: a loss posts 0 points');
+    const q = h.lastPost(r.env).body;
+    h.eq(q.status, 'lost', 'museum: a loss posts the lost status');
+    h.eq(q.answer, '', 'museum: a loss posts no name');
     /* day 10: accent transliteration */
     r = h.boot('museum', EXP, { now: T10, store: {} });
     h.ok(String(r.x.EXHIBIT.a).indexOf('tzi') >= 0, 'museum: day 10 = \u00d6tzi');

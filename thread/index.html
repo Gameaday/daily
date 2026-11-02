@@ -547,7 +547,9 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the day is woven - the play buttons go quiet */
   $('actbox').style.display = 'none';
-  syncBoard(S.pts);
+  syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
+              answer: [PZ.s.id].concat(S.slots || [], [PZ.e.id]),
+              meta: { checks: S.checks }, points: S.pts });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

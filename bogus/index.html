@@ -168,6 +168,7 @@ if (!S || typeof S.stats !== 'object') {
 } else if (S.day !== dayIndex) {
   if (S.status !== 'won') S.stats.streak = 0; // missed (or lost) the previous day
   S.day = dayIndex; S.picked = []; S.status = 'playing';
+  S.nonce = null; S.lie = null; S.reveal = null;
 }
 
 /* ---------------- dom ---------------- */
@@ -176,15 +177,18 @@ const passageEl = $('passage'), picksEl = $('picks');
 function renderPassage(){
   passageEl.innerHTML = puzzle.s.map((t,i)=>`<span class="seg" data-i="${i}">${t}</span>`).join(' ');
 }
+/* the lie index: the session's word once the day is dealt (the key never
+   ships), the bank's word on a local or replayed day */
+function lieKey(){ return (typeof S.lie === 'number') ? S.lie : puzzle.l; }
 function applyMarks(animateWin){
   S.picked.forEach(i => {
-    if (i === puzzle.l) return;
+    if (i === lieKey()) return;
     const el = passageEl.querySelector(`[data-i="${i}"]`);
     if (el) el.classList.add('wrong');
   });
   if (S.status !== 'playing'){
     passageEl.classList.add('done');
-    const el = passageEl.querySelector(`[data-i="${puzzle.l}"]`);
+    const el = passageEl.querySelector(`[data-i="${lieKey()}"]`);
     if (el){ el.classList.add('lie'); if (animateWin && S.status==='won') el.classList.add('win'); }
   }
 }
@@ -194,10 +198,10 @@ function renderPicks(){
   picksEl.innerHTML = html + `&nbsp;&nbsp;<span>${3 - S.picked.length} left</span>`;
 }
 
-function wrongPicks(){ return S.picked.filter(i => i !== puzzle.l).length; }
+function wrongPicks(){ return S.picked.filter(i => i !== lieKey()).length; }
 function baseScore(){ return Math.max(0, 3 - wrongPicks()); }
 function shareText(){
-  const emojis = S.picked.map(i => i === puzzle.l ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
+  const emojis = S.picked.map(i => i === lieKey() ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
   const score = S.status === 'won' ? `${baseScore()}/3` : '0/3';
   return `Bogus! No. ${num} \u00b7 ${score} ${emojis}\nOne phrase in this history is a lie \u2014 can you spot it?`;
 }
@@ -211,39 +215,102 @@ function showReveal(){
     v.textContent = 'Three strikes \u2014 the lie slipped past you.';
     v.className = 'verdict lost';
   }
-  $('why').textContent = puzzle.w;
+  const rv = S.reveal || { w: puzzle.w };
+  $('why').textContent = rv.w;
   $('sharetext').textContent = shareText();
   $('reveal').classList.add('show');
   syncBoard({ status: S.status, answer: S.picked,
-              points: S.status === 'won' ? baseScore() : 0 });
+              points: S.status === 'won' ? baseScore() : 0, nonce: S.nonce });
   renderPicks();
 }
 
-function pick(i){
+function finish(){
+  const st = S.stats;
+  st.played++;
+  if (S.status === 'won'){
+    st.wins++; st.streak++;
+    st.max = Math.max(st.max, st.streak);
+    st.dist[baseScore()]++;
+  } else {
+    st.streak = 0;
+    st.dist[0]++;
+  }
+  showReveal();
+  saveState();
+}
+
+/* the dealt session: one deal per day, held on the state and reused by
+   every pick */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle) puzzle = Object.assign({}, puzzle, d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+
+async function pick(i){
   if (S.status !== 'playing' || S.picked.includes(i)) return;
+  /* the dealt day: the lie never shipped, so every pick travels to the
+     session and the verdict (and any reveal) rides the spent pick */
+  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive){
+    const n = await ensureSession();
+    if (!n){ toast('the passage is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
+    if (!b){ toast('the passage is not answering right now, try again'); return; }
+    if (b.status === 409){ toast('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || !b.body.verdict){
+      S.nonce = null; saveState();
+      toast('this round expired, pick again for a fresh one');
+      return;
+    }
+    S.picked.push(i);
+    const el = passageEl.querySelector(`[data-i="${i}"]`);
+    if (b.body.verdict === 'won'){
+      S.status = 'won';
+      S.lie = i;
+      if (el) el.classList.add('lie','win');
+      passageEl.classList.add('done');
+      finish();
+      return;
+    }
+    if (el) el.classList.add('wrong');
+    if (b.body.verdict === 'lost'){
+      S.lie = b.body.reveal.l;
+      S.reveal = { w: b.body.reveal.w };
+      S.status = 'lost';
+      applyMarks(false);
+      finish();
+      return;
+    }
+    renderPicks();
+    saveState();
+    return;
+  }
   S.picked.push(i);
   const el = passageEl.querySelector(`[data-i="${i}"]`);
   if (i === puzzle.l){
     S.status = 'won';
-    const st = S.stats;
-    st.played++; st.wins++; st.streak++;
-    st.max = Math.max(st.max, st.streak);
-    st.dist[baseScore()]++;
     if (el) el.classList.add('lie','win');
     passageEl.classList.add('done');
-    showReveal();
+    finish();
   } else {
     if (el) el.classList.add('wrong');
     if (S.picked.length >= 3){
       S.status = 'lost';
-      S.stats.played++; S.stats.streak = 0; S.stats.dist[0]++;
       applyMarks(false);
-      showReveal();
+      finish();
     } else {
       renderPicks();
+      saveState();
     }
   }
-  saveState();
 }
 
 passageEl.addEventListener('click', e => {

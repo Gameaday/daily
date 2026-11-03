@@ -136,6 +136,34 @@ async function run(h, ctx){
     h.eq(r.x.S.status, 'won', 'gated: well-actually won on the dealt statement');
     h.eq(r.x.S.nonce, 'gwa1', 'gated: the well-actually session is held');
   }
+  /* bogus: the served passage is dealt - the lie never ships and the
+     session grades every pick */
+  {
+    const live = h.boot('bogus', ['puzzle'], { now: T0, store: {} });
+    const full = live.x.puzzle;
+    const served = serve('bogus', { t: full.t, s: full.s });
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gbg1', today: 0, puzzle: served.puzzle } };
+      if (body.pick === full.l)
+        return { status: 200, body: { verdict: 'won',
+          reveal: { l: full.l, w: full.w } } };
+      return { status: 200, body: { verdict: 'miss', left: 2 } };
+    };
+    const r = h.boot('bogus', ['S', 'puzzle', 'pick', 'PUZZLES'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
+    h.ok(r.x.PUZZLES === undefined, 'gated: bogus online boot has no bank');
+    await h.flush();
+    h.ok(String(r.env.els.passage.innerHTML).indexOf(full.s[1]) >= 0,
+      'gated: bogus served passage rendered');
+    h.ok(!('l' in served.puzzle) && !('w' in served.puzzle),
+      'gated: the bogus day never ships its lie');
+    r.x.pick(full.l);
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: bogus won on the dealt passage');
+    h.eq(r.x.S.nonce, 'gbg1', 'gated: the bogus session is held');
+  }
+
   /* lightbox: develop the served design clean */
   {
     const live = h.boot('lightbox', ['DESIGN', 'SOL'], { now: T0, store: {} });

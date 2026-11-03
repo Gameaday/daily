@@ -88,6 +88,37 @@ async function run(h, ctx){
     r.x.submitGuess();
     h.eq(r.x.S.status, 'won', 'gated: museum won on the served exhibit');
   }
+  /* well-actually: the served statement is dealt - the lie never ships
+     and the session grades every pick and the one correction */
+  {
+    const live = h.boot('well-actually', ['puzzle'], { now: T0, store: {} });
+    const full = live.x.puzzle;
+    const served = serve('well-actually', { t: full.t, s: full.s });
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gwa1', today: 0, puzzle: served.puzzle } };
+      if (body.pick !== undefined){
+        if (body.pick === full.l) return { status: 200, body: { verdict: 'found' } };
+        return { status: 200, body: { verdict: 'miss', left: 2 } };
+      }
+      return { status: 200, body: { verdict: 'won', bonus: 'correct',
+        reveal: { c: full.c, w: full.w } } };
+    };
+    const r = h.boot('well-actually', ['S', 'pick', 'submitBonus'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
+    await h.flush();
+    h.ok(String(r.env.els.statement.innerHTML).indexOf(full.s[1]) >= 0,
+      'gated: well-actually served statement rendered');
+    h.ok(!('l' in served.puzzle), 'gated: the well-actually day never ships its lie');
+    r.x.pick(full.l);
+    await h.flush();
+    h.eq(r.x.S.status, 'found', 'gated: well-actually found on the dealt session');
+    r.env.els.binput.value = full.a[0];
+    r.x.submitBonus();
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: well-actually won on the dealt statement');
+    h.eq(r.x.S.nonce, 'gwa1', 'gated: the well-actually session is held');
+  }
   /* lightbox: develop the served design clean */
   {
     const live = h.boot('lightbox', ['DESIGN', 'SOL'], { now: T0, store: {} });

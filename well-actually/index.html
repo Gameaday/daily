@@ -176,11 +176,11 @@ let puzzle = null;
 async function loadPuzzle(){
   const idx = ((dayIndex % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) + (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1)) % (typeof PUZZLES !== 'undefined' ? PUZZLES.length : 1);
   if (typeof PUZZLES !== 'undefined') puzzle = PUZZLES[idx];
-  if (puzzle) ACCEPTED = puzzle.a.map(norm);
+  if (puzzle && Array.isArray(puzzle.a)) ACCEPTED = puzzle.a.map(norm);
   if (isSolo()) return;
   try {
     const d = await fetchPuzzle('well-actually', dayIndex);
-    if (d && d.puzzle) { puzzle = d.puzzle; ACCEPTED = puzzle.a.map(norm); }
+    if (d && d.puzzle) { puzzle = d.puzzle; if (Array.isArray(puzzle.a)) ACCEPTED = puzzle.a.map(norm); }
   } catch (e) {}
 }
 
@@ -196,6 +196,7 @@ if (!S || typeof S.stats !== 'object') {
 } else if (S.day !== dayIndex) {
   if (S.status !== 'won') S.stats.streak = 0; // missed (or lost) the previous day
   S.day = dayIndex; S.picked = []; S.status = 'playing'; S.bonus = null;
+  S.nonce = null; S.lie = null; S.reveal = null; S.typed = '';
 }
 
 /* ---------------- helpers ---------------- */
@@ -213,15 +214,18 @@ let ACCEPTED = [];
 function renderStatement(){
   statementEl.innerHTML = puzzle.s.map((t,i)=>`<span class="seg" data-i="${i}">${t}</span>`).join(' ');
 }
+/* the lie index: the session's word once the day is dealt (the key never
+   ships), the bank's word on a local or replayed day */
+function lieKey(){ return (typeof S.lie === 'number') ? S.lie : puzzle.l; }
 function applyMarks(animateWin){
   S.picked.forEach(i => {
-    if (i === puzzle.l) return;
+    if (i === lieKey()) return;
     const el = statementEl.querySelector(`[data-i="${i}"]`);
     if (el) el.classList.add('wrong');
   });
   if (S.status !== 'playing'){
     statementEl.classList.add('done');
-    const el = statementEl.querySelector(`[data-i="${puzzle.l}"]`);
+    const el = statementEl.querySelector(`[data-i="${lieKey()}"]`);
     if (el){ el.classList.add('lie'); if (animateWin && S.status==='won') el.classList.add('win'); }
   }
 }
@@ -231,7 +235,7 @@ function renderPicks(){
   picksEl.innerHTML = html + `&nbsp;&nbsp;<span>${3 - S.picked.length} left</span>`;
 }
 
-function wrongPicks(){ return S.picked.filter(i => i !== puzzle.l).length; }
+function wrongPicks(){ return S.picked.filter(i => i !== lieKey()).length; }
 function baseScore(){ return Math.max(0, 3 - wrongPicks()); }
 function score(){
   if (S.status !== 'won') return 0;
@@ -256,7 +260,8 @@ function showReveal(){
   } else {
     v.textContent = 'Three strikes — the error got past you.'; v.className = 'verdict lost';
   }
-  $('why').innerHTML = `It should be <b>\u201c${puzzle.c}.\u201d</b> ${puzzle.w}` +
+  const rv = S.reveal || { c: puzzle.c, w: puzzle.w };
+  $('why').innerHTML = `It should be <b>\u201c${rv.c}.\u201d</b> ${rv.w}` +
     (S.bonus === 'wrong' && S.typed ? `<br/><span style="color:var(--muted);">You typed \u201c${S.typed.trim()}.\u201d — good instincts, wrong word.</span>` : '');
   $('sharetext').textContent = shareText();
   $('reveal').classList.add('show');
@@ -264,7 +269,7 @@ function showReveal(){
   $('picks').style.display = 'none';
   renderPicks();
   syncBoard({ status: S.status, answer: { picks: S.picked, typed: S.typed || '' },
-              points: score() });
+              points: score(), nonce: S.nonce });
 }
 
 function finish(){
@@ -283,8 +288,59 @@ function finish(){
   saveState();
 }
 
-function pick(i){
+/* the dealt session: one deal per day, held on the state and reused by
+   every pick and the correction attempt */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle) puzzle = Object.assign({}, puzzle, d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+
+async function pick(i){
   if (S.status !== 'playing' || S.picked.includes(i)) return;
+  /* the dealt day: the lie never shipped, so every pick travels to the
+     session and the verdict (and any reveal) rides the spent pick */
+  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive){
+    const n = await ensureSession();
+    if (!n){ toast('the statement is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
+    if (!b){ toast('the statement is not answering right now, try again'); return; }
+    if (b.status === 409){ toast('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || !b.body.verdict){
+      S.nonce = null; saveState();
+      toast('this round expired, pick again for a fresh one');
+      return;
+    }
+    S.picked.push(i);
+    const el = statementEl.querySelector(`[data-i="${i}"]`);
+    if (b.body.verdict === 'found'){
+      S.lie = i;
+      if (el) el.classList.add('lie','win');
+      statementEl.classList.add('done');
+      $('bonus').classList.add('show');
+      setTimeout(() => $('binput').focus(), 100);
+    } else if (b.body.verdict === 'lost'){
+      if (el) el.classList.add('wrong');
+      S.lie = b.body.reveal.l;
+      S.reveal = { c: b.body.reveal.c, w: b.body.reveal.w };
+      S.status = 'lost';
+      finish();
+      return;
+    } else {
+      if (el) el.classList.add('wrong');
+    }
+    renderPicks();
+    saveState();
+    return;
+  }
   S.picked.push(i);
   const el = statementEl.querySelector(`[data-i="${i}"]`);
   if (i === puzzle.l){
@@ -310,9 +366,29 @@ statementEl.addEventListener('click', e => {
 });
 
 /* ---------------- bonus round ---------------- */
-function submitBonus(){
+async function submitBonus(){
   if (S.status !== 'found') return;
   const val = $('binput').value || '';
+  /* the dealt day: the correction attempt travels to the session and the
+     canonical reveal rides the spent attempt */
+  if (typeof S.lie === 'number' && !isSolo() && !SHELL.isArchive){
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: S.nonce, correction: val }); } catch (e) {}
+    if (!b){ toast('the statement is not answering right now, try again'); return; }
+    if (b.status === 409){ toast('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || !b.body.reveal){
+      S.nonce = null; saveState();
+      toast('this round expired, pick again for a fresh one');
+      return;
+    }
+    S.typed = val;
+    S.bonus = b.body.bonus;
+    S.reveal = { c: b.body.reveal.c, w: b.body.reveal.w };
+    S.status = 'won';
+    $('bonus').classList.remove('show');
+    finish();
+    return;
+  }
   S.typed = val;
   S.bonus = ACCEPTED.includes(norm(val)) ? 'correct' : 'wrong';
   S.status = 'won';

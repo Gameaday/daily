@@ -100,6 +100,3 @@ def snapshot(game, day, value=None, st=None, spec=None):
     beat = beat_estimate(value, dict(st, bins=counts), spec) if value is not None else None
     return {"count": st["n"], "beat": beat, "mean": round(mean, 2),
             "bins": bins, "better": spec["better"]}
-
-
-# ---------------------------------------------------------------------------

@@ -234,50 +234,14 @@ $('yearbox').addEventListener('input', () => {
 $('yearbox').addEventListener('change', () => setYear($('yearbox').value));
 $('btnDown').addEventListener('click', () => setYear(+$('slider').value - 1));
 $('btnUp').addEventListener('click', () => setYear(+$('slider').value + 1));
-/* the dealt round (online live day): the page has no key, so the server
-   opens the session on the first lock, counts every guess, and answers
-   with heat and direction. The key crosses the wire exactly once, in the
-   reveal that ends the round; the submit names the session, so the
-   server's count is the one that counts */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  const d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex });
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle) EV = Object.assign({}, EV, d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
-}
-$('btnLock').addEventListener('click', async () => {
-  if (!EV) return;
-  if (S.status !== 'playing') return;
-  const y = +$('slider').value;
-  if (typeof EV.y !== 'number' && !isSolo() && !SHELL.isArchive){
-    if (!await ensureSession()){
-      toastMsg('the round service is not answering right now');
-      return;
-    }
-    const r = await SHELL.dealt('/guess', { nonce: S.nonce, y });
-    if (!r){
-      toastMsg('the round service is not answering right now');
-      return;
-    }
-    if (r.status === 409){
-      toastMsg('this round is already over');
-      return;
-    }
-    if (r.status !== 200){
-      /* the session aged out mid-round: the round is void and the next
-         lock deals a fresh one (a finished round still submits through
-         the 1.1 evidence path) */
-      S.nonce = null;
-      saveState();
-      toastMsg('this round expired, lock again for a fresh one');
-      return;
-    }
-    const b = r.body;
+/* the dealt round (online live day): the page has no key, so the shell's
+   session opens on the first lock, the server counts every guess and
+   answers with heat and direction. The key crosses the wire exactly
+   once, in the reveal that ends the round; the submit names the session,
+   so the server's count is the one that counts. The session itself is the
+   one dance every dealt page dances, from the shell */
+async function lockDealt(y){
+  await session.play({ y }, b => {
     if (b.verdict === 'miss'){
       S.guesses.push({ y, name: b.heat, sq: b.sq, hint: b.hint });
       saveState();
@@ -301,6 +265,14 @@ $('btnLock').addEventListener('click', async () => {
     saveState();
     renderGuesses();
     showReveal();
+  });
+}
+$('btnLock').addEventListener('click', async () => {
+  if (!EV) return;
+  if (S.status !== 'playing') return;
+  const y = +$('slider').value;
+  if (typeof EV.y !== 'number' && !isSolo() && !SHELL.isArchive){
+    lockDealt(y);
     return;
   }
   /* solo, a replay, or a served puzzle that still carries its key: the
@@ -339,6 +311,21 @@ function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
 
+/* the dealt session: the shell owns the deal, the nonce, the busy guard
+   and the triage; the page owns the round's moves and verdicts */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => { if (body.puzzle) EV = Object.assign({}, EV, body.puzzle); },
+  copy: {
+    unavailable: 'the round service is not answering right now',
+    over: 'this round is already over',
+    expired: 'this round expired, lock again for a fresh one'
+  }
+});
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });

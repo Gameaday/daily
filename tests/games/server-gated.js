@@ -118,15 +118,25 @@ async function run(h, ctx){
       String(r.env.els[k].textContent || '').indexOf(needle) >= 0);
     h.ok(found, 'gated: timeline served events rendered');
   }
-  /* brunch: the served table plays through */
+  /* brunch: the served table is dealt - the impostor never ships and the
+     session grades the pick */
   {
     const live = h.boot('brunch', ['S', 'EV'], { now: T0, store: {} });
-    const served = serve('brunch', live.x.EV);
-    const r = h.boot('brunch', ['S', 'EV', 'BRUNCH'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.EV;
+    const served = serve('brunch', { t: full.t, q: full.q, y: full.y, opts: full.opts });
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gb1', today: 0, puzzle: served.puzzle } };
+      return { status: 200, body: { verdict: body.pick === full.a ? 'won' : 'lost',
+        reveal: { a: full.a, w: full.w } } };
+    };
+    const r = h.boot('brunch', ['S', 'EV', 'BRUNCH'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.BRUNCH === undefined, 'gated: brunch online boot has no bank');
     await h.flush();
-    r.env.els['opt' + served.puzzle.a].click();
-    h.eq(r.x.S.status, 'won', 'gated: brunch won on the served table');
+    r.env.els['opt' + full.a].click();
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: brunch won on the dealt table');
+    h.eq(r.x.S.nonce, 'gb1', 'gated: the brunch session is held');
   }
   /* superlative: the served session plays through */
   {

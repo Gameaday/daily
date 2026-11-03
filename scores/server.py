@@ -1202,167 +1202,167 @@ def _guess_rounds(sess, data, now):
 
 def _evidence_bogus(day, ans, meta):
     """bogus: the picks must include the lie; each wrong pick costs a point."""
-e = _list_entry("bogus", day)
-if e is None:
-    return None, "no answer key"
-if not isinstance(ans, list) or not ans or len(ans) > 3 \
-        or not all(isinstance(p, int) and not isinstance(p, bool)
-                   and 0 <= p < len(e["s"]) for p in ans):
-    return None, "bad answer"
-if e["l"] not in ans:
-    return None, "wrong answer"
-return max(0, 3 - sum(1 for p in ans if p != e["l"])), None
+    e = _list_entry("bogus", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, list) or not ans or len(ans) > 3 \
+            or not all(isinstance(p, int) and not isinstance(p, bool)
+                       and 0 <= p < len(e["s"]) for p in ans):
+        return None, "bad answer"
+    if e["l"] not in ans:
+        return None, "wrong answer"
+    return max(0, 3 - sum(1 for p in ans if p != e["l"])), None
 
 
 def _evidence_well_actually(day, ans, meta):
     """well-actually: the picks must name the lie, and the typed correction can earn the bonus point."""
-e = _list_entry("well-actually", day)
-if e is None:
-    return None, "no answer key"
-picks = ans.get("picks") if isinstance(ans, dict) else None
-typed = ans.get("typed") if isinstance(ans, dict) else None
-if not isinstance(picks, list) or not picks or len(picks) > 3 \
-        or not all(isinstance(p, int) and not isinstance(p, bool)
-                  and 0 <= p < len(e["s"]) for p in picks):
-    return None, "bad answer"
-if e["l"] not in picks:
-    return None, "wrong answer"
-pts = max(0, 3 - sum(1 for p in picks if p != e["l"]))
-if isinstance(typed, str) and len(typed) <= 200 \
-        and _text_norm(typed) in (_text_norm(x) for x in e["a"]):
-    pts += 1
-return pts, None
+    e = _list_entry("well-actually", day)
+    if e is None:
+        return None, "no answer key"
+    picks = ans.get("picks") if isinstance(ans, dict) else None
+    typed = ans.get("typed") if isinstance(ans, dict) else None
+    if not isinstance(picks, list) or not picks or len(picks) > 3 \
+            or not all(isinstance(p, int) and not isinstance(p, bool)
+                      and 0 <= p < len(e["s"]) for p in picks):
+        return None, "bad answer"
+    if e["l"] not in picks:
+        return None, "wrong answer"
+    pts = max(0, 3 - sum(1 for p in picks if p != e["l"]))
+    if isinstance(typed, str) and len(typed) <= 200 \
+            and _text_norm(typed) in (_text_norm(x) for x in e["a"]):
+        pts += 1
+    return pts, None
 
 
 def _evidence_fermi(day, ans, meta):
     """fermi: the estimate grades by ratio bucket, won or lost."""
-e = _list_entry("fermi", day)
-if e is None:
-    return None, "no answer key"
-if isinstance(ans, bool) or not isinstance(ans, (int, float)) \
-        or not math.isfinite(ans) or ans <= 0:
-    return None, "bad answer"
-ratio = max(ans / e["a"], e["a"] / ans)
-return (3 if ratio <= 3 else 2 if ratio <= 10
-        else 1 if ratio <= 100 else 0), None
+    e = _list_entry("fermi", day)
+    if e is None:
+        return None, "no answer key"
+    if isinstance(ans, bool) or not isinstance(ans, (int, float)) \
+            or not math.isfinite(ans) or ans <= 0:
+        return None, "bad answer"
+    ratio = max(ans / e["a"], e["a"] / ans)
+    return (3 if ratio <= 3 else 2 if ratio <= 10
+            else 1 if ratio <= 100 else 0), None
 
 
 def _evidence_brunch(day, ans, meta):
     """brunch: the pick must be the impostor seat."""
-e = _list_entry("brunch", day)
-if e is None:
-    return None, "no answer key"
-if isinstance(ans, bool) or not isinstance(ans, int) \
-        or not (0 <= ans < len(e["opts"])):
-    return None, "bad answer"
-if ans != e["a"]:
-    return None, "wrong answer"
-return 1, None
+    e = _list_entry("brunch", day)
+    if e is None:
+        return None, "no answer key"
+    if isinstance(ans, bool) or not isinstance(ans, int) \
+            or not (0 <= ans < len(e["opts"])):
+        return None, "bad answer"
+    if ans != e["a"]:
+        return None, "wrong answer"
+    return 1, None
 
 
 def _evidence_superlative(day, ans, meta):
     """superlative: one point per round the pick matched."""
-e = _list_entry("superlative", day)
-if e is None:
-    return None, "no answer key"
-if not isinstance(ans, list) or len(ans) != len(e["q"]) \
-        or not all(isinstance(p, int) and not isinstance(p, bool)
-                   and 0 <= p < len(e["m"]) for p in ans):
-    return None, "bad answer"
-return sum(1 for p, q in zip(ans, e["q"]) if p == q["a"]), None
+    e = _list_entry("superlative", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, list) or len(ans) != len(e["q"]) \
+            or not all(isinstance(p, int) and not isinstance(p, bool)
+                       and 0 <= p < len(e["m"]) for p in ans):
+        return None, "bad answer"
+    return sum(1 for p, q in zip(ans, e["q"]) if p == q["a"]), None
 
 
 def _evidence_rounds(day, ans, meta):
     """rounds: the year must be exact; the guesses meter the points."""
-e = _list_entry("rounds", day)
-if e is None:
-    return None, "no answer key"
-if isinstance(ans, bool) or not isinstance(ans, int) or ans != e["y"]:
-    return None, "wrong answer"
-return max(0, 4 - meta["guesses"]), None
+    e = _list_entry("rounds", day)
+    if e is None:
+        return None, "no answer key"
+    if isinstance(ans, bool) or not isinstance(ans, int) or ans != e["y"]:
+        return None, "wrong answer"
+    return max(0, 4 - meta["guesses"]), None
 
 
 def _evidence_museum(day, ans, meta):
     """museum: the name must match the answer or an alias; the clues meter the points."""
-e = _list_entry("museum", day)
-if e is None:
-    return None, "no answer key"
-if not isinstance(ans, str) or not ans or len(ans) > 200:
-    return None, "bad answer"
-names = [_name_norm(x) for x in [e["a"]] + list(e.get("al") or ())]
-if _name_norm(ans) not in names:
-    return None, "wrong answer"
-return max(0, 4 - meta["clues"]), None
+    e = _list_entry("museum", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, str) or not ans or len(ans) > 200:
+        return None, "bad answer"
+    names = [_name_norm(x) for x in [e["a"]] + list(e.get("al") or ())]
+    if _name_norm(ans) not in names:
+        return None, "wrong answer"
+    return max(0, 4 - meta["clues"]), None
 
 
 def _evidence_sift(day, ans, meta):
     """sift: the groups must all be found; the mistakes meter the points."""
-e = _list_entry("sift", day)
-if e is None:
-    return None, "no answer key"
-if not isinstance(ans, list) or len(ans) != len(e["cats"]) \
-        or not all(isinstance(g, list) and g
-                   and all(isinstance(x, str) for x in g) for g in ans):
-    return None, "bad answer"
-want = [frozenset(c["i"]) for c in e["cats"]]
-got = [frozenset(g) for g in ans]
-if frozenset(want) != frozenset(got):
-    return None, "wrong answer"
-return max(0, 3 - meta["mistakes"]), None
+    e = _list_entry("sift", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, list) or len(ans) != len(e["cats"]) \
+            or not all(isinstance(g, list) and g
+                       and all(isinstance(x, str) for x in g) for g in ans):
+        return None, "bad answer"
+    want = [frozenset(c["i"]) for c in e["cats"]]
+    got = [frozenset(g) for g in ans]
+    if frozenset(want) != frozenset(got):
+        return None, "wrong answer"
+    return max(0, 3 - meta["mistakes"]), None
 
 
 def _evidence_lightbox(day, ans, meta):
     """lightbox: the grid must match; the mistakes meter the points."""
-e = _list_entry("lightbox", day)
-if e is None:
-    return None, "no answer key"
-if not isinstance(ans, list) or len(ans) != len(e["g"]) \
-        or not all(isinstance(r, str) and r for r in ans):
-    return None, "bad answer"
-norm = lambda rows: ["".join(ch for ch in row.upper() if ch in "#.")
-                     for row in rows]
-if norm(ans) != norm(e["g"]):
-    return None, "wrong answer"
-return max(0, 3 - meta["mistakes"]), None
+    e = _list_entry("lightbox", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, list) or len(ans) != len(e["g"]) \
+            or not all(isinstance(r, str) and r for r in ans):
+        return None, "bad answer"
+    norm = lambda rows: ["".join(ch for ch in row.upper() if ch in "#.")
+                         for row in rows]
+    if norm(ans) != norm(e["g"]):
+        return None, "wrong answer"
+    return max(0, 3 - meta["mistakes"]), None
 
 
 def _evidence_cipher(day, ans, meta):
     """cipher: the decode must match the quote; the hints meter the points."""
-e = _list_entry("cipher", day)
-if e is None:
-    return None, "no answer key"
-if not isinstance(ans, str) or not ans or len(ans) > 500:
-    return None, "bad answer"
-if _alnum_norm(ans) != _alnum_norm(e["q"]):
-    return None, "wrong answer"
-return max(0, 3 - meta["hints"]), None
+    e = _list_entry("cipher", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, str) or not ans or len(ans) > 500:
+        return None, "bad answer"
+    if _alnum_norm(ans) != _alnum_norm(e["q"]):
+        return None, "wrong answer"
+    return max(0, 3 - meta["hints"]), None
 
 
 def _evidence_timeline(day, ans, meta):
     """timeline: the years must be the bank's, in order; the checks meter the points."""
-store = PUZZLES.get("timeline")
-picks = store.get("picks") if isinstance(store, dict) else None
-if not isinstance(picks, list) or not (0 <= day < len(picks)):
-    return None, "no answer key"
-years = sorted(store["bank"][i]["y"] for i in picks[day])
-if not isinstance(ans, list) or len(ans) != len(years) \
-        or not all(isinstance(y, int) and not isinstance(y, bool)
-                   for y in ans) or ans != years:
-    return None, "wrong answer"
-return max(0, 4 - meta["checks"]), None
+    store = PUZZLES.get("timeline")
+    picks = store.get("picks") if isinstance(store, dict) else None
+    if not isinstance(picks, list) or not (0 <= day < len(picks)):
+        return None, "no answer key"
+    years = sorted(store["bank"][i]["y"] for i in picks[day])
+    if not isinstance(ans, list) or len(ans) != len(years) \
+            or not all(isinstance(y, int) and not isinstance(y, bool)
+                       for y in ans) or ans != years:
+        return None, "wrong answer"
+    return max(0, 4 - meta["checks"]), None
 
 
 def _evidence_thread(day, ans, meta):
     """thread: the chain must be the pick's own middles; the checks meter the points."""
-store = PUZZLES.get("thread")
-picks = store.get("picks") if isinstance(store, dict) else None
-if not isinstance(picks, list) or not (0 <= day < len(picks)):
-    return None, "no answer key"
-pk = picks[day]
-chain = [pk["s"]] + list(pk["m"]) + [pk["e"]]
-if ans != chain:
-    return None, "wrong answer"
-return max(0, 4 - meta["checks"]), None
+    store = PUZZLES.get("thread")
+    picks = store.get("picks") if isinstance(store, dict) else None
+    if not isinstance(picks, list) or not (0 <= day < len(picks)):
+        return None, "no answer key"
+    pk = picks[day]
+    chain = [pk["s"]] + list(pk["m"]) + [pk["e"]]
+    if ans != chain:
+        return None, "wrong answer"
+    return max(0, 4 - meta["checks"]), None
 
 
 def _meta_rounds(sess):

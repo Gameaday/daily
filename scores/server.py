@@ -54,7 +54,7 @@ Endpoints (with or without the /api prefix):
       /deal   req  {"game": str (required, a dealt game), "day": int (required,
                     the live day)}
               res  {"nonce": str, "today": int, "puzzle": object (stripped per
-                    the tables, never the key)}
+                    its registry row, never the key)}
       /guess  req  {"nonce": str (required), then exactly one game payload:
                     rounds {"y": int} | brunch {"pick": int} | fermi {"v": number} |
                     well-actually {"pick": int} or {"correction": str} |
@@ -199,26 +199,10 @@ LOCK = threading.Lock()
 DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
                "bogus", "superlative", "sift", "lightbox", "cipher",
                "timeline", "thread")
-# the per-game keys a live dealt day must never ship (brunch keeps its
-# table but not the impostor index or the reveal; fermi keeps the
-# question but not the cited value; well-actually keeps the statement
-# but not the lie, the corrections or the canonical; museum keeps the
-# clues but not the name or the story; bogus keeps the passage but
-# not the lie or the why; superlative keeps the questions and the
-# cohort but never a round's answer index; cipher keeps the author but
-# never the quote or the substitution; lightbox keeps the clues but
-# never the grid or its name; sift keeps the tiles but never their
-# categories; timeline keeps its events but never their years; thread
-# keeps its ends but never the chain, the decoy split or the links)
-DEALT_STRIP = {"rounds": ("y", "w"), "brunch": ("a", "w"), "fermi": ("a", "w"),
-               "well-actually": ("l", "a", "c", "w"),
-               "museum": ("a", "al", "w"),
-               "bogus": ("l", "w"), "superlative": (),
-               "cipher": ("q",), "lightbox": ("g", "n"), "sift": ("cats",),
-               "timeline": ("y",), "thread": ("m", "d", "links")}
-# the nested list-item keys a stripped live day must also lose
-# (superlative's questions keep their text but never their answer index)
-DEALT_DEEP = {"superlative": {"q": ("a",)}}
+# the per-game strip declarations live in the dealt adapter registry
+# below: each row carries the keys its live day must never ship (the
+# nested ones included), so a game and its strip can no longer drift
+# apart
 
 
 _ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -282,38 +266,17 @@ def dealt_puzzle(game, pz, day=0):
     timeline ships its events without their years, and thread ships its
     offered figures as one shuffled tray (the chain, the decoy split and
     the links stay server-side). Every other dealt game ships the stored
-    puzzle minus the keys in DEALT_STRIP and the nested keys in
-    DEALT_DEEP, so the live day's truth never crosses the wire."""
-    if game == "lightbox" and isinstance(pz.get("g"), list):
-        cells = [[1 if ch == "#" else 0 for ch in row] for row in pz["g"]]
-        return {"rc": [_runs(row) for row in cells],
-                "cc": [_runs([row[c] for row in cells])
-                       for c in range(len(cells[0]))]}
-    if game == "cipher" and isinstance(pz.get("q"), str):
-        enc, _dec = _cipher_sub(day)
-        return {"a": pz.get("a"),
-                "c": "".join(enc[ch] if ch in enc else ch for ch in pz["q"])}
-    if game == "sift" and isinstance(pz.get("cats"), list):
-        tiles = [txt for cat in pz["cats"] for txt in cat["i"]]
-        rnd = _mulberry32(day * 6151 + 42)
-        for i in range(len(tiles) - 1, 0, -1):
-            j = int(rnd() * (i + 1))
-            tiles[i], tiles[j] = tiles[j], tiles[i]
-        return {"t": pz.get("t"), "tiles": tiles}
-    if game == "timeline" and isinstance(pz.get("events"), list):
-        return {"events": [{k: v for k, v in ev.items() if k != "y"}
-                           for ev in pz["events"]]}
-    if game == "thread" and isinstance(pz.get("m"), list):
-        tray = list(pz["m"]) + list(pz["d"])
-        rnd = _mulberry32(day * 7919 + 17)
-        for i in range(len(tray) - 1, 0, -1):
-            j = int(rnd() * (i + 1))
-            tray[i], tray[j] = tray[j], tray[i]
-        return {"s": pz.get("s"), "e": pz.get("e"), "k": len(pz["m"]),
-                "tray": tray}
+    puzzle minus the keys its registry row strips, so the live day's
+    truth never crosses the wire."""
+    adapter = DEALT_ADAPTERS.get(game) or {}
+    transform = adapter.get("transform")
+    if transform is not None:
+        out = transform(pz, day)
+        if out is not None:
+            return out
     out = {k: v for k, v in pz.items()
-           if k not in DEALT_STRIP.get(game, ())}
-    for path, keys in DEALT_DEEP.get(game, {}).items():
+           if k not in adapter.get("strip", ())}
+    for path, keys in adapter.get("deep", {}).items():
         src = out.get(path)
         if isinstance(src, list):
             out[path] = [{k: v for k, v in it.items() if k not in keys}
@@ -694,9 +657,10 @@ def snapshot(game, day, value=None, st=None, spec=None):
 # answers with the same status and message the inline branches always
 # sent. Each row also declares the evidence validator that grades a
 # gated submission against the day's key, the meta meter a nonce-bearing
-# submit reports and the caps those facts must obey. The strip side
-# still consults the strip tables above and moves into the rows later;
-# the endpoints themselves never change.
+# submit reports and the caps those facts must obey. The strip side lives in the rows too: the keys a live dealt day must never
+# ship, the transform that ships a derived puzzle instead of the stored
+# one, and the window flag that says the day's puzzle is a pick into a
+# bank. The endpoints themselves never change.
 # ---------------------------------------------------------------------------
 
 class _Reject(Exception):
@@ -1394,41 +1358,113 @@ def _meta_checks(sess):
     return {"checks": sess.get("guesses", 0)}
 
 
+def _transform_lightbox(pz, day):
+    """lightbox: the clues the grid implies ship instead of the grid."""
+    if not isinstance(pz.get("g"), list):
+        return None
+    cells = [[1 if ch == "#" else 0 for ch in row] for row in pz["g"]]
+    return {"rc": [_runs(row) for row in cells],
+            "cc": [_runs([row[c] for row in cells])
+                   for c in range(len(cells[0]))]}
+
+
+def _transform_cipher(pz, day):
+    """cipher: the ciphertext ships and the author stays; the quote and
+    the substitution never do."""
+    if not isinstance(pz.get("q"), str):
+        return None
+    enc, _dec = _cipher_sub(day)
+    return {"a": pz.get("a"),
+            "c": "".join(enc[ch] if ch in enc else ch for ch in pz["q"])}
+
+
+def _transform_sift(pz, day):
+    """sift: the tiles ship shuffled; their categories never do."""
+    if not isinstance(pz.get("cats"), list):
+        return None
+    tiles = [txt for cat in pz["cats"] for txt in cat["i"]]
+    rnd = _mulberry32(day * 6151 + 42)
+    for i in range(len(tiles) - 1, 0, -1):
+        j = int(rnd() * (i + 1))
+        tiles[i], tiles[j] = tiles[j], tiles[i]
+    return {"t": pz.get("t"), "tiles": tiles}
+
+
+def _transform_timeline(pz, day):
+    """timeline: the events ship without their years."""
+    if not isinstance(pz.get("events"), list):
+        return None
+    return {"events": [{k: v for k, v in ev.items() if k != "y"}
+                       for ev in pz["events"]]}
+
+
+def _transform_thread(pz, day):
+    """thread: the offered figures ship as one shuffled tray; the chain,
+    the decoy split and the links never do."""
+    if not isinstance(pz.get("m"), list):
+        return None
+    tray = list(pz["m"]) + list(pz["d"])
+    rnd = _mulberry32(day * 7919 + 17)
+    for i in range(len(tray) - 1, 0, -1):
+        j = int(rnd() * (i + 1))
+        tray[i], tray[j] = tray[j], tray[i]
+    return {"s": pz.get("s"), "e": pz.get("e"), "k": len(pz["m"]),
+            "tray": tray}
+
+
 # One row per dealt game (sprint deals too, but its session is only the
 # starting gun, so it keeps no row here). Each row declares how the
 # session grades a move ("guess"), how a gated submission's answer is
 # graded against the day's key ("evidence"), which play facts a
 # nonce-bearing submit reports ("meta") and the caps those facts must
 # obey ("caps"); fermi and superlative grade even a loss, so they say so
-# ("grades_loss").
+# ("grades_loss"). The strip side rides along: the keys a live dealt day
+# must never ship ("strip", and the nested ones under "deep"), the
+# transform that ships a derived puzzle instead of the stored one
+# ("transform"), and a game whose day picks into a bank window says so
+# ("windowed"); superlative's strip is empty because its questions lose
+# their answer index in the nested pass instead.
 DEALT_ADAPTERS = {
     "rounds":        {"guess": _guess_rounds, "evidence": _evidence_rounds,
-                      "meta": _meta_rounds, "caps": (("guesses", 1, 6),)},
-    "brunch":        {"guess": _guess_brunch, "evidence": _evidence_brunch},
+                      "meta": _meta_rounds, "caps": (("guesses", 1, 6),),
+                      "strip": ("y", "w")},
+    "brunch":        {"guess": _guess_brunch, "evidence": _evidence_brunch,
+                      "strip": ("a", "w")},
     "fermi":         {"guess": _guess_fermi, "evidence": _evidence_fermi,
-                      "grades_loss": True},
+                      "grades_loss": True, "strip": ("a", "w")},
     "well-actually": {"guess": _guess_well_actually,
-                      "evidence": _evidence_well_actually},
+                      "evidence": _evidence_well_actually,
+                      "strip": ("l", "a", "c", "w")},
     "museum":        {"guess": _guess_museum, "evidence": _evidence_museum,
-                      "meta": _meta_clues, "caps": (("clues", 1, 5),)},
-    "bogus":         {"guess": _guess_bogus, "evidence": _evidence_bogus},
+                      "meta": _meta_clues, "caps": (("clues", 1, 5),),
+                      "strip": ("a", "al", "w")},
+    "bogus":         {"guess": _guess_bogus, "evidence": _evidence_bogus,
+                      "strip": ("l", "w")},
     "superlative":   {"guess": _guess_superlative,
                       "evidence": _evidence_superlative,
-                      "grades_loss": True},
+                      "grades_loss": True, "strip": (),
+                      "deep": {"q": ("a",)}},
     "sift":          {"guess": _guess_sift, "evidence": _evidence_sift,
                       "meta": _meta_mistakes,
-                      "caps": (("mistakes", 0, 4),)},
+                      "caps": (("mistakes", 0, 4),),
+                      "strip": ("cats",), "transform": _transform_sift},
     "lightbox":      {"guess": _guess_lightbox,
                       "evidence": _evidence_lightbox,
                       "meta": _meta_mistakes,
-                      "caps": (("mistakes", 0, 4),)},
+                      "caps": (("mistakes", 0, 4),),
+                      "strip": ("g", "n"), "transform": _transform_lightbox},
     "cipher":        {"guess": _guess_cipher, "evidence": _evidence_cipher,
-                      "meta": _meta_hints, "caps": (("hints", 0, 5),)},
+                      "meta": _meta_hints, "caps": (("hints", 0, 5),),
+                      "strip": ("q",), "transform": _transform_cipher},
     "timeline":      {"guess": _guess_timeline,
                       "evidence": _evidence_timeline,
-                      "meta": _meta_checks, "caps": (("checks", 1, 999),)},
+                      "meta": _meta_checks, "caps": (("checks", 1, 999),),
+                      "strip": ("y",), "transform": _transform_timeline,
+                      "windowed": True},
     "thread":        {"guess": _guess_thread, "evidence": _evidence_thread,
-                      "meta": _meta_checks, "caps": (("checks", 1, 999),)},
+                      "meta": _meta_checks, "caps": (("checks", 1, 999),),
+                      "strip": ("m", "d", "links"),
+                      "transform": _transform_thread, "windowed": True},
 }
 
 # the gated-games list derives from the rows: a game is evidence-gated
@@ -1591,7 +1627,7 @@ class Handler(BaseHTTPRequestHandler):
                 pz = {"events": events}
                 # the dealt cutover: the live day ships its events without
                 # their years, so the order grades at the session
-                if day == today and game == "timeline":
+                if day == today and "strip" in DEALT_ADAPTERS.get(game, {}):
                     pz = dealt_puzzle(game, pz, day)
                 self._json({"game": game, "day": day, "puzzle": pz, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
@@ -1601,13 +1637,12 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 idx = day % len(entry)
                 pz = entry[idx]
-                # the dealt cutover: rounds, brunch, fermi, well-actually
-                # and museum are played server-dealt on the live day, so
-                # today's puzzle ships without its key - the round lives in
-                # /deal and /guess.
+                # the dealt cutover: the dealt list-store games are played
+                # server-dealt on the live day, so today's puzzle ships
+                # without its key - the round lives in /deal and /guess.
                 # A replayed day is long over, so its key stays and the
                 # archive path keeps grading locally.
-                if day == today and game in DEALT_STRIP:
+                if day == today and "strip" in DEALT_ADAPTERS.get(game, {}):
                     pz = dealt_puzzle(game, pz, day)
                 self._json({"game": game, "day": day, "puzzle": pz, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
@@ -1772,9 +1807,10 @@ class Handler(BaseHTTPRequestHandler):
             with LOCK:
                 purge_sessions()
                 entry = PUZZLES.get(game) or []
+                adapter = DEALT_ADAPTERS.get(game) or {}
                 pz = None
-                if game in DEALT_STRIP:
-                    if game in ("timeline", "thread"):
+                if "strip" in adapter:
+                    if adapter.get("windowed"):
                         pz = _window_entry(game, day)
                     elif entry:
                         pz = entry[day % len(entry)]
@@ -1788,7 +1824,7 @@ class Handler(BaseHTTPRequestHandler):
                                    "mistakes": 0, "hints": 0, "solved": []}
                 if pz is not None:
                     # the deal carries the question but never the key: the
-                    # strip tables keep the answer server-side
+                    # row's strip keeps the answer server-side
                     payload = {"nonce": nonce, "today": today,
                                "puzzle": dealt_puzzle(game, pz, day)}
                 else:

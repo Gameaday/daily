@@ -54,6 +54,96 @@ async function run(h){
     h.ok(r.x.S.started, 'timeline: a drag marks the day started');
     r.env.els.btnGiveUp.click();
     h.ok(!r.x.moveCard(0, 2), 'timeline: no dragging after the day is done');
+
+    /* --- dealt play: the live day ships its events without their years,
+           so the order grades at the session and the reveal rides the
+           spent round --- */
+    const tlFull = h.boot('timeline', ['EVO'], { now: T0, store: {} });
+    const tlEvents = tlFull.x.EVO;
+    const tlServed = { day: 0, today: 0,
+      puzzle: { events: tlEvents.map(e => ({ t: e.t, q: e.q })) } };
+    const tlWant = tlEvents.map((e, i) => i)
+      .sort((a, b) => tlEvents[a].y - tlEvents[b].y);
+    let tlChecks = 0;
+    const tlDealer = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'tl1', today: 0, puzzle: tlServed.puzzle } };
+      if (body.give !== undefined)
+        return { status: 200, body: { verdict: 'gave', reveal: { events: tlEvents } } };
+      tlChecks++;
+      const lock = body.order.map((v, i) => v === tlWant[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks: tlChecks,
+          reveal: { events: tlEvents } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks: tlChecks } };
+    };
+    const tlStore = {};
+    const r2 = h.boot('timeline', ['S', 'EVENTS'],
+      { now: T0, store: tlStore, servePuzzle: tlServed, stubBanks: true, serveDealt: tlDealer });
+    h.ok(r2.x.EVENTS === undefined, 'timeline: dealt online boot has no bank');
+    await h.flush();
+    h.ok(String(r2.env.els.lane.innerHTML).indexOf('????') >= 0,
+      'timeline: the dealt lane never shows a year');
+    const tlWrong = tlWant.slice();
+    [tlWrong[0], tlWrong[1]] = [tlWrong[1], tlWrong[0]];
+    r2.x.S.order = tlWrong.slice();
+    r2.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r2.x.S.status, 'playing', 'timeline: a wrong order keeps the day open');
+    h.eq(r2.x.S.checks, 1, 'timeline: the session metered one check');
+    h.eq(r2.x.S.locked.join(','), [false, false, true, true, true].join(','),
+      'timeline: the session locked the cards that stand');
+    h.eq(r2.env.els.toast.textContent, '3 cards are in the right place',
+      'timeline: the session told how many cards stand');
+    h.ok(String(r2.env.els.lane.innerHTML).indexOf('????') >= 0,
+      'timeline: a locked card still never leaks its year');
+    r2.x.S.order = tlWant.slice();
+    r2.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r2.x.S.status, 'won', 'timeline: won on the dealt events');
+    h.eq(r2.x.S.nonce, 'tl1', 'timeline: the dealt session is held');
+    h.eq(r2.x.S.checks, 2, 'timeline: the session metered both checks');
+    h.ok(String(r2.env.els.lane.innerHTML).indexOf('????') < 0,
+      'timeline: the years arrived only with the reveal');
+    const tlp = h.lastPost(r2.env).body;
+    h.eq(tlp.nonce, 'tl1', 'timeline: the evidence names its session');
+    h.eq(tlp.meta.checks, 2, 'timeline: the session check meter rides the wire');
+    h.ok(tlp.answer.every((v, i) => i === 0 || tlp.answer[i - 1] <= v),
+      'timeline: the years ride up the wire');
+    const r3 = h.boot('timeline', ['S'], { now: T0, store: tlStore,
+      servePuzzle: tlServed, stubBanks: true, serveDealt: tlDealer });
+    await h.flush();
+    h.eq(r3.x.S.status, 'won', 'timeline: the won dealt day survives the reload');
+    h.ok(String(r3.env.els.lane.innerHTML).indexOf('????') < 0,
+      'timeline: the kept reveal retells the years on reload');
+    const tlStore2 = {};
+    const r4 = h.boot('timeline', ['S'], { now: T0, store: tlStore2,
+      servePuzzle: tlServed, stubBanks: true, serveDealt: tlDealer });
+    await h.flush();
+    r4.env.els.btnGiveUp.click();
+    await h.flush();
+    h.eq(r4.x.S.status, 'gaveup', 'timeline: gave up on the dealt day');
+    h.eq(r4.x.S.order.join(','), tlWant.join(','),
+      'timeline: the give-up lays the years out in order');
+    h.ok(String(r4.env.els.lane.innerHTML).indexOf('????') < 0,
+      'timeline: the give-up reveals the years');
+    const tlq = h.lastPost(r4.env).body;
+    h.eq(tlq.status, 'gave', 'timeline: the give-up posts the gave status');
+    h.eq(tlq.nonce, 'tl1', 'timeline: the give-up names its session');
+    /* an archive replay carries the years again and never touches the
+       dealt endpoints */
+    const tlArc = { day: 0, today: 1, puzzle: { events: tlEvents } };
+    const r5 = h.boot('timeline', ['S'],
+      { now: T1, store: {}, servePuzzle: tlArc, search: '?d=0', stubBanks: true });
+    await h.flush();
+    h.eq(r5.x.S.day, 0, 'timeline: the archive view plays day 0');
+    r5.x.S.order = tlWant.slice();
+    r5.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r5.x.S.status, 'won', 'timeline: the archive replay wins locally');
+    h.eq(r5.env.fetchLog.length, 0,
+      'timeline: a replay never touches the dealt endpoints');
 }
 
 module.exports = { name: 'timeline', run };

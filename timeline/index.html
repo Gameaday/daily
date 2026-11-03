@@ -138,7 +138,7 @@ function displayOrder(){
     const j = Math.floor(rng() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  if (arr.every((v, i) => EVO[v].y === EVO[SORTED[i]].y) && arr.length > 1){
+  if (SORTED && arr.every((v, i) => EVO[v].y === EVO[SORTED[i]].y) && arr.length > 1){
     [arr[0], arr[1]] = [arr[1], arr[0]];
   }
   return arr;
@@ -148,7 +148,10 @@ function applyPuzzle(events){
   EVO = events;
   /* identity pick: EVO holds the day's five events in pick order */
   PICK = events.map((e, i) => i);
-  SORTED = [...PICK].sort((a, b) => EVO[a].y - EVO[b].y);
+  /* dealt play: the live day ships its events without their years, so
+     there is nothing to sort by until the reveal folds them back in */
+  SORTED = EVO.every(e => typeof e.y === 'number')
+    ? [...PICK].sort((a, b) => EVO[a].y - EVO[b].y) : null;
   SHUFFLED = displayOrder();
 }
 
@@ -190,14 +193,23 @@ const store = SHELL.makeStore(KEY);
 function loadState(){ return store.load(); }
 function saveState(){ store.save(S); }
 let S = loadState();
-function initDay(){
-  if (!EVO) return; /* wait for the day's events */
+/* the day's state exists before the puzzle does (the dealt lane fills its
+   order only after the served events arrive), so a reload mid-round keeps
+   the same live state object */
 if (!S || S.day !== dayIndex){
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, solved:0, streak:0, max:0};
   if (S && S.day !== dayIndex && S.status === 'playing' && S.started) stats.streak = 0;
-  S = { day: dayIndex, order: SHUFFLED.map(i => PICK.indexOf(i)), locked: [false,false,false,false,false],
-        checks: 0, sel: null, started: false, status:'playing', stats };
+  S = { day: dayIndex, order: null, locked: null,
+        checks: 0, sel: null, started: false, status:'playing',
+        nonce: null, reveal: null, stats };
 }
+saveState();
+function initDay(){
+  if (!EVO) return; /* wait for the day's events */
+  if (!S.order){
+    S.order = SHUFFLED.map(i => PICK.indexOf(i));
+    S.locked = [false,false,false,false,false];
+  }
   saveState();
 }
 
@@ -211,7 +223,7 @@ function render(){
   for (let i = 0; i < 5; i++){
     const e = evAt(i);
     const cls = 'ecard' + (S.locked[i] ? ' locked' : S.sel === i ? ' sel' : '');
-    const yr = (S.locked[i] || S.status !== 'playing') ? e.y : '????';
+    const yr = ((S.locked[i] || S.status !== 'playing') && typeof e.y === 'number') ? e.y : '????';
     html += '<div class="trow"><span class="pos">' + (i + 1) + '</span>' +
       '<div class="' + cls + '" data-i="' + i + '">' +
       '<div class="top"><span class="tag">' + e.t + '</span><span class="yr">' + yr + '</span></div>' +
@@ -332,6 +344,9 @@ document.addEventListener('pointercancel', () => {
 $('btnCheck').addEventListener('click', () => {
   if (!EVO || !S) return;
   if (S.status !== 'playing') return;
+  /* the dealt day: the years never shipped, so the order grades at
+     the session and the session meters the checks */
+  if (isDealt()){ checkDealt(); return; }
   S.started = true;
   S.checks++;
   let right = 0;
@@ -345,8 +360,93 @@ $('btnCheck').addEventListener('click', () => {
 $('btnGiveUp').addEventListener('click', () => {
   if (!EVO || !S) return;
   if (S.status !== 'playing') return;
+  if (isDealt()){ giveDealt(); return; }
   finish('gaveup');
 });
+/* ---------------- dealt play: the live day grades at the session ---------------- */
+function isDealt(){
+  return !!EVO && EVO[0] && typeof EVO[0].y !== 'number'
+    && !isSolo() && !SHELL.isArchive;
+}
+/* the dealt session: one deal per day, held on the state and spent
+   one request at a time */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+/* the reveal rides the spent round: fold the years back into the lane,
+   then the ordinary reveal paths work unchanged */
+function mergeYears(reveal){
+  if (!reveal || !Array.isArray(reveal.events)) return false;
+  let got = false;
+  reveal.events.forEach((ev, i) => {
+    if (EVO[i] && ev && typeof ev.y === 'number' && EVO[i].y === undefined){
+      EVO[i].y = ev.y;
+      got = true;
+    }
+  });
+  if (got) SORTED = [...PICK].sort((a, b) => EVO[a].y - EVO[b].y);
+  return got;
+}
+let BUSY = false;
+async function checkDealt(){
+  if (BUSY) return;
+  BUSY = true;
+  try {
+    const n = await ensureSession();
+    if (!n){ toastMsg('the lane is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, order: S.order.slice() }); } catch (e) {}
+    if (!b){ toastMsg('the lane is not answering right now, try again'); return; }
+    if (b.status === 409){ toastMsg('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || !b.body.verdict){
+      S.nonce = null;
+      toastMsg('this round expired, check again for a fresh one');
+      return;
+    }
+    S.started = true;
+    if (b.body.verdict === 'won'){
+      mergeYears(b.body.reveal);
+      S.reveal = b.body.reveal;
+      S.checks = b.body.checks;
+      S.locked = [true, true, true, true, true];
+      saveState(); render();
+      finish('won');
+    } else {
+      S.locked = (b.body.lock || []).map(Boolean);
+      S.checks = b.body.checks;
+      saveState(); render();
+      toastMsg(b.body.right + (b.body.right === 1 ? ' card is' : ' cards are') + ' in the right place');
+    }
+  } finally { BUSY = false; }
+}
+async function giveDealt(){
+  if (BUSY) return;
+  BUSY = true;
+  try {
+    const n = await ensureSession();
+    if (!n){ toastMsg('the lane is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, give: 1 }); } catch (e) {}
+    if (!b){ toastMsg('the lane is not answering right now, try again'); return; }
+    if (b.status === 409){ toastMsg('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || b.body.verdict !== 'gave' || !b.body.reveal){
+      S.nonce = null;
+      toastMsg('this round expired, check again for a fresh one');
+      return;
+    }
+    mergeYears(b.body.reveal);
+    S.reveal = b.body.reveal;
+    finish('gaveup');
+  } finally { BUSY = false; }
+}
 function finish(status){
   S.status = status;
   S.sel = null;
@@ -390,7 +490,7 @@ function showReveal(){
   $('reveal').classList.add('show');
   syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
               answer: Array.from({length: 5}, (_, i) => evAt(i).y),
-              meta: { checks: S.checks }, points: S.pts });
+              meta: { checks: S.checks }, points: S.pts, nonce: S.nonce });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);
@@ -408,6 +508,9 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
 if (!EVO){ SHELL.showUnavailable(); return; }
+/* a finished dealt day reloads against stripped events: fold the kept
+   reveal back in before the lane tells its years */
+if (S.status !== 'playing' && S.reveal) mergeYears(S.reveal);
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();

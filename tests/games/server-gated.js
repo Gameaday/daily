@@ -295,18 +295,43 @@ async function run(h, ctx){
     h.eq(r.x.S.status, 'won', 'gated: sift won on the dealt board');
     h.eq(r.x.S.nonce, 'gsf1', 'gated: the sift session is held');
   }
-  /* timeline: the served events render in the lane */
+  /* timeline: the served events are dealt - the years never ship, so
+     the order grades at the session and the reveal rides the spent round */
   {
     const live = h.boot('timeline', ['EVO'], { now: T0, store: {} });
-    const served = serve('timeline', { events: live.x.EVO });
-    const r = h.boot('timeline', ['PICK', 'EVENTS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.EVO;
+    const served = serve('timeline',
+      { events: full.map(e => ({ t: e.t, q: e.q })) });
+    const want = full.map((e, i) => i).sort((a, b) => full[a].y - full[b].y);
+    let checks = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gtl1', today: 0, puzzle: served.puzzle } };
+      if (body.give !== undefined)
+        return { status: 200, body: { verdict: 'gave', reveal: { events: full } } };
+      checks++;
+      const lock = body.order.map((v, i) => v === want[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks,
+          reveal: { events: full } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks } };
+    };
+    const r = h.boot('timeline', ['S', 'EVENTS'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.EVENTS === undefined, 'gated: timeline online boot has no bank');
     await h.flush();
-    const needle = served.puzzle.events[0].q;
-    const found = Object.keys(r.env.els).some(k =>
-      String(r.env.els[k].innerHTML || '').indexOf(needle) >= 0 ||
-      String(r.env.els[k].textContent || '').indexOf(needle) >= 0);
-    h.ok(found, 'gated: timeline served events rendered');
+    h.ok(served.puzzle.events.every(e => !('y' in e)),
+      'gated: the timeline day never ships its years');
+    h.ok(String(r.env.els.lane.innerHTML).indexOf(served.puzzle.events[0].q) >= 0,
+      'gated: timeline served events rendered');
+    r.x.S.order = want.slice();
+    r.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: timeline won on the dealt events');
+    h.eq(r.x.S.nonce, 'gtl1', 'gated: the timeline session is held');
+    h.ok(String(r.env.els.lane.innerHTML).indexOf('????') < 0,
+      'gated: the years arrived only with the reveal');
   }
   /* brunch: the served table is dealt - the impostor never ships and the
      session grades the pick */

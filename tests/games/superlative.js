@@ -207,6 +207,71 @@ async function run(h){
     h.eq(r.x.S.day, 0, 'superlative: launch day keeps the pre-launch play');
     h.eq(r.x.S.status, 'won', 'superlative: weekend sweep carries into No. 1');
     h.eq(r.x.S.stats.streak, 1, 'superlative: pre-launch streak survives');
+
+    /* --- dealt: the live day ships the questions without their answers,
+       so every round travels to the session and the spent round hands
+       over its own answer --- */
+    const supLive = h.boot('superlative', EXP, { now: T0, store: {} });
+    await h.flush();
+    const supFull = supLive.x.EV;
+    const supServed = { game: 'superlative', day: 0, today: 0,
+      puzzle: { t: supFull.t, m: supFull.m,
+        q: supFull.q.map(q => ({ c: q.c, v: q.v })) } };
+    let supN = 0;
+    const supDealer = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 's1', today: 0, puzzle: supServed.puzzle } };
+      const i = supN++;
+      const last = i === supFull.q.length - 1;
+      return { status: 200, body: { verdict: body.pick === supFull.q[i].a ? 'hit' : 'miss',
+        a: supFull.q[i].a, final: last } };
+    };
+    const supDst = {};
+    const supD = h.boot('superlative', EXP,
+      { now: T0, store: supDst, servePuzzle: supServed, stubBanks: true, serveDealt: supDealer });
+    await h.flush();
+    h.ok(supServed.puzzle.q.every(q => !('a' in q)),
+      'superlative dealt: the served day never ships an answer');
+    h.ok(String(supD.env.els.qtag.textContent).indexOf('round 1') >= 0,
+      'superlative dealt: the served session rendered');
+    /* one wrong round first: the spent round hands over the answer */
+    supD.env.els['opt' + ((supFull.q[0].a + 1) % supFull.m.length)].click();
+    await h.flush();
+    h.eq(supD.x.S.ans[0], supFull.q[0].a,
+      'superlative dealt: the spent round handed over its own answer');
+    h.ok(String(supD.env.els.verdict.textContent).indexOf('No. The record says') === 0,
+      'superlative dealt: a wrong round is graded by the session');
+    supD.env.els.btnNext.click();
+    for (let i = 1; i < supFull.q.length; i++){
+      supD.env.els['opt' + supFull.q[i].a].click();
+      if (i < supFull.q.length - 1){ await h.flush(); supD.env.els.btnNext.click(); }
+    }
+    supD.env.els.btnNext.click();
+    await h.flush();
+    h.eq(supD.x.S.status, 'lost', 'superlative dealt: one miss loses the sweep');
+    h.eq(supD.x.S.nonce, 's1', 'superlative dealt: the session is held');
+    const supPost = h.lastPost(supD.env);
+    h.eq(supPost.body.nonce, 's1', 'superlative dealt: the evidence names the session');
+    h.eq(supPost.body.answer.filter((p, i) => p === supFull.q[i].a).length,
+      supFull.q.length - 1, 'superlative dealt: the evidence carries the session rounds');
+    /* a reload keeps the lost day and retells the review that never shipped */
+    const supR = h.boot('superlative', EXP,
+      { now: T0, store: supDst, servePuzzle: supServed, stubBanks: true });
+    await h.flush();
+    h.eq(supR.x.S.status, 'lost', 'superlative dealt: a reload keeps the lost day');
+    h.ok(supR.env.els.sreview.textContent.indexOf('longest life: John Adams') >= 0,
+      'superlative dealt: the reload retells the review it never shipped');
+    /* an archive replay keeps the local path: the bank still carries the answers */
+    const supRe = h.boot('superlative', EXP, { now: T1, store: {}, search: '?d=0' });
+    await h.flush();
+    for (let i = 0; i < supRe.x.EV.q.length; i++){
+      supRe.env.els['opt' + supRe.x.EV.q[i].a].click();
+      if (i < supRe.x.EV.q.length - 1) supRe.env.els.btnNext.click();
+    }
+    supRe.env.els.btnNext.click();
+    h.eq(supRe.x.S.status, 'won', 'superlative dealt: the replay wins locally');
+    await h.flush();
+    h.eq(supRe.env.fetchLog.length, 0, 'superlative dealt: a replay posts nothing');
 }
 
 module.exports = { name: 'superlative', run };

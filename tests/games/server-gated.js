@@ -226,22 +226,36 @@ async function run(h, ctx){
     h.eq(r.x.S.status, 'won', 'gated: brunch won on the dealt table');
     h.eq(r.x.S.nonce, 'gb1', 'gated: the brunch session is held');
   }
-  /* superlative: the served session plays through */
+  /* superlative: the served session is dealt - the answers never ship
+     and every round grades at the session */
   {
     const live = h.boot('superlative', ['S', 'EV'], { now: T0, store: {} });
-    const served = serve('superlative', live.x.EV);
-    const r = h.boot('superlative', ['S', 'EV', 'SUPERLATIVES'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.EV;
+    const served = serve('superlative',
+      { t: full.t, m: full.m, q: full.q.map(q => ({ c: q.c, v: q.v })) });
+    let supRound = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gs1', today: 0, puzzle: served.puzzle } };
+      const i = supRound;
+      supRound++;
+      const last = i === full.q.length - 1;
+      return { status: 200, body: { verdict: body.pick === full.q[i].a ? 'hit' : 'miss',
+        a: full.q[i].a, final: last } };
+    };
+    const r = h.boot('superlative', ['S', 'EV', 'SUPERLATIVES'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.SUPERLATIVES === undefined, 'gated: superlative online boot has no bank');
     await h.flush();
-    h.ok(Array.isArray(served.puzzle.m) && served.puzzle.m.length >= 4 &&
-      Array.isArray(served.puzzle.q) && served.puzzle.q.length >= 4,
-      'gated: the served session carries a cohort and its rounds');
-    for (let i = 0; i < served.puzzle.q.length; i++){
-      r.env.els['opt' + served.puzzle.q[i].a].click();
-      if (i < served.puzzle.q.length - 1) r.env.els.btnNext.click();
+    h.ok(served.puzzle.q.every(q => !('a' in q)),
+      'gated: the superlative day never ships an answer');
+    for (let i = 0; i < full.q.length; i++){
+      r.env.els['opt' + full.q[i].a].click();
+      if (i < full.q.length - 1){ await h.flush(); r.env.els.btnNext.click(); }
     }
     r.env.els.btnNext.click();
-    h.eq(r.x.S.status, 'won', 'gated: superlative won on the served session');
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: superlative swept the dealt session');
+    h.eq(r.x.S.nonce, 'gs1', 'gated: the superlative session is held');
   }
   /* thread: the served chain plays through */
   {

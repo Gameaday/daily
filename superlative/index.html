@@ -161,9 +161,19 @@ const LABEL = {
 };
 
 /* ---------------- play ---------------- */
+/* the answer to round i: the session's word once the day is dealt (the
+   per-question key never ships), the bank's word on a local day */
+function truthAt(i){
+  if (Array.isArray(S.ans) && typeof S.ans[i] === 'number') return S.ans[i];
+  return EV.q[i].a;
+}
+function isDealt(){
+  return EV && Array.isArray(EV.q) && EV.q.length &&
+    typeof EV.q[0].a !== 'number' && !isSolo() && !SHELL.isArchive;
+}
 function correctCount(){
   let c = 0;
-  for (let i = 0; i < EV.q.length; i++) if (S.picks[i] === EV.q[i].a) c++;
+  for (let i = 0; i < EV.q.length; i++) if (S.picks[i] === truthAt(i)) c++;
   return c;
 }
 function renderRound(){
@@ -190,30 +200,78 @@ function renderRound(){
   $('reveal').classList.remove('show');
   $('summary').style.display = 'none';
 }
-function pick(i){
-  if (!EV || S.status !== 'playing') return;
-  const r = S.picks.length;
-  if (r >= EV.q.length) return;
-  S.picks.push(i);
-  saveState();
-  const qz = EV.q[r];
-  const right = i === qz.a;
+/* the round's verdict card: the record settles the round and the fine
+   print explains it, whoever held the answer */
+function showRoundVerdict(i, r, a, right){
   for (let j = 0; j < EV.m.length; j++){
     const b = $('opt' + j);
     b.disabled = true;
-    if (j === qz.a) b.classList.add('best');
+    if (j === a) b.classList.add('best');
     else if (j === i) b.classList.add('miss');
     else b.classList.add('empty');
   }
-  const w = EV.m[qz.a];
+  const w = EV.m[a];
   $('verdict').textContent = right ? 'Right. ' + w.n + '.' : 'No. The record says ' + w.n + '.';
   $('verdict').style.color = right ? '' : 'var(--accent)';
-  let why = w.n + ' \u00b7 ' + w.b + '-' + w.d + ' \u00b7 ' + qz.v + (w.k ? ' - ' + w.k : '');
+  let why = w.n + ' \u00b7 ' + w.b + '-' + w.d + ' \u00b7 ' + EV.q[r].v + (w.k ? ' - ' + w.k : '');
   if (!right)
     why += String.fromCharCode(10) + 'You picked ' + EV.m[i].n + ' \u00b7 ' + EV.m[i].b + '-' + EV.m[i].d + '.';
   $('why').textContent = why;
   $('reveal').classList.add('show');
   if (S.picks.length === EV.q.length) $('btnNext').textContent = 'See the tally';
+}
+
+/* the dealt session: one deal per day, held on the state and reused by
+   every round */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle) EV = Object.assign({}, EV, d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+
+let PICKING = false;
+async function pick(i){
+  if (!EV || S.status !== 'playing' || PICKING) return;
+  const r = S.picks.length;
+  if (r >= EV.q.length) return;
+  /* the dealt day: the per-question answers never shipped, so every
+     round travels to the session and the spent round hands over its
+     own answer */
+  if (isDealt()){
+    PICKING = true;
+    try {
+      const n = await ensureSession();
+      if (!n){ toastMsg('the record is not answering right now, try again'); return; }
+      let b = null;
+      try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
+      if (!b){ toastMsg('the record is not answering right now, try again'); return; }
+      if (b.status === 409){ toastMsg('this session is already over'); return; }
+      if (b.status !== 200 || !b.body || !b.body.verdict ||
+          typeof b.body.a !== 'number'){
+        S.nonce = null; S.picks = []; S.ans = [];
+        saveState();
+        renderRound();
+        toastMsg('this session expired, the rounds reset for a fresh one');
+        return;
+      }
+      S.picks.push(i);
+      S.ans = S.ans || [];
+      S.ans[r] = b.body.a;
+      saveState();
+      showRoundVerdict(i, r, b.body.a, b.body.verdict === 'hit');
+    } finally { PICKING = false; }
+    return;
+  }
+  S.picks.push(i);
+  saveState();
+  showRoundVerdict(i, r, EV.q[r].a, i === EV.q[r].a);
 }
 function nextStep(){
   if (S.picks.length < EV.q.length) renderRound();
@@ -229,7 +287,7 @@ function renderSummary(){
     if (S.status === 'won'){ st.streak++; st.max = Math.max(st.max, st.streak); }
     else st.streak = 0;
     saveState();
-    syncBoard({ status: S.status, answer: S.picks, points: correct });
+    syncBoard({ status: S.status, answer: S.picks, points: correct, nonce: S.nonce });
   }
   const correct = correctCount();
   const all = correct === total;
@@ -237,8 +295,8 @@ function renderSummary(){
                                   : correct + ' of ' + total + ' right.';
   $('sverdict').style.color = all ? '' : 'var(--accent)';
   $('sreview').textContent = EV.q.map((q, i) => {
-    const w = EV.m[q.a];
-    return (S.picks[i] === q.a ? '\u2713 ' : '\u2717 ') + (LABEL[q.c] || q.c) + ': ' +
+    const w = EV.m[truthAt(i)];
+    return (S.picks[i] === truthAt(i) ? '\u2713 ' : '\u2717 ') + (LABEL[q.c] || q.c) + ': ' +
       w.n + ' \u00b7 ' + q.v + (w.k ? ' \u00b7 ' + w.k : '');
   }).join(String.fromCharCode(10));
   $('sharetext').textContent = shareText() + String.fromCharCode(10) +
@@ -252,7 +310,7 @@ function shareText(){
   const head = 'Superlative No. ' + num + ' \u00b7 ' + EV.t;
   if (S.status === 'playing')
     return head + ' \u00b7 round ' + Math.min(S.picks.length + 1, EV.q.length) + ' of ' + EV.q.length;
-  const marks = EV.q.map((q, i) => (S.picks[i] === q.a ? '\ud83d\udfe9' : '\ud83d\udfe5')).join('');
+  const marks = EV.q.map((q, i) => (S.picks[i] === truthAt(i) ? '\ud83d\udfe9' : '\ud83d\udfe5')).join('');
   return head + ' ' + marks;
 }
 

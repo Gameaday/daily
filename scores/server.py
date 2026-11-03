@@ -835,6 +835,538 @@ def snapshot(game, day, value=None, st=None, spec=None):
             "bins": bins, "better": spec["better"]}
 
 
+# ---------------------------------------------------------------------------
+# The dealt adapter registry: each dealt game declares how its session
+# grades a move and builds its verdict, so the /guess dispatcher is one
+# lookup. The bodies are the graders exactly as they lived inline in the
+# dispatcher - the session state, the answer key and every payload shape
+# are untouched - and a refused move raises _Reject so the endpoint
+# answers with the same status and message the inline branches always
+# sent. One row per game that takes guesses; sprint deals too, but its
+# session is only the starting gun, so it keeps no row. The registry
+# grows one declaration per game as the strip and evidence sides move
+# in; the endpoints themselves never change.
+# ---------------------------------------------------------------------------
+
+class _Reject(Exception):
+    """A dealt move the session refuses: (status, message) ride out."""
+    def __init__(self, status, msg):
+        Exception.__init__(self, msg)
+        self.status, self.msg = status, msg
+
+
+def _guess_brunch(sess, data, now):
+    """brunch: one pick spends the round - the verdict and the reveal ride the spent pick."""
+    i = data.get("pick")
+    if isinstance(i, bool) or not isinstance(i, int):
+        raise _Reject(400, "bad pick")
+    e = _list_entry("brunch", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    if not 0 <= i < len(e["opts"]):
+        raise _Reject(400, "bad pick")
+    sess["done"] = True
+    sess["verdict"] = "won" if i == e["a"] else "lost"
+    sess["ans"] = i
+    sess["done_at"] = now
+    # one seat, one guess: the verdict and the reveal arrive
+    # together, so the key crosses only once the pick is spent
+    return {"verdict": sess["verdict"],
+               "reveal": {"a": e["a"], "w": e.get("w")}}
+
+def _guess_fermi(sess, data, now):
+    """fermi: one estimate spends the round - the cited value and the ratio buckets ride the spent guess."""
+    v = data.get("v")
+    if isinstance(v, bool) or not isinstance(v, (int, float)) \
+            or not math.isfinite(v) or v <= 0:
+        raise _Reject(400, "bad estimate")
+    e = _list_entry("fermi", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    ratio = max(v / e["a"], e["a"] / v)
+    score = (3 if ratio <= 3 else 2 if ratio <= 10
+             else 1 if ratio <= 100 else 0)
+    sess["done"] = True
+    sess["verdict"] = "won"
+    sess["ans"] = v
+    sess["done_at"] = now
+    # the cited value and the ratio buckets stay server-side
+    # until the one guess is spent
+    return {"verdict": "won", "score": score,
+               "reveal": {"a": e["a"], "w": e.get("w")}}
+
+def _guess_well_actually(sess, data, now):
+    """well-actually: the picks hunt the lie and the one correction ends the round."""
+    e = _list_entry("well-actually", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    if sess["found"]:
+        # phase two: the one shot at naming the correction
+        corr = data.get("correction")
+        if not isinstance(corr, str) or len(corr) > 200:
+            raise _Reject(400, "bad correction")
+        bonus = "correct" if _text_norm(corr) in (
+            _text_norm(x) for x in e["a"]) else "wrong"
+        sess["done"] = True
+        sess["verdict"] = "won"
+        sess["ans"] = {"picks": list(sess["picks"]),
+                       "typed": corr}
+        sess["done_at"] = now
+        # the canonical correction and the explanation stay
+        # server-side until the one attempt is spent
+        return {"verdict": "won", "bonus": bonus,
+                   "reveal": {"c": e["c"],
+                              "w": e.get("w")}}
+    elif isinstance(data.get("correction"), str):
+        raise _Reject(400, "the lie is not found yet")
+    else:
+        i = data.get("pick")
+        if isinstance(i, bool) or not isinstance(i, int) \
+                or not (0 <= i < len(e["s"])):
+            raise _Reject(400, "bad pick")
+        if i in sess["picks"]:
+            raise _Reject(400, "phrase already picked")
+        sess["picks"].append(i)
+        if i == e["l"]:
+            sess["found"] = True
+            # the pick was the lie: found, but no reveal
+            # yet - the correction question is still to come
+            return {"verdict": "found"}
+        elif len(sess["picks"]) >= 3:
+            sess["done"] = True
+            sess["verdict"] = "lost"
+            sess["ans"] = {"picks": list(sess["picks"]),
+                           "typed": ""}
+            sess["done_at"] = now
+            # three strikes: the lie, the canonical
+            # correction and the why ride the spent round
+            return {"verdict": "lost",
+                       "reveal": {"l": e["l"], "c": e["c"],
+                                  "w": e.get("w")}}
+        else:
+            return {"verdict": "miss",
+                       "left": 3 - len(sess["picks"])}
+
+def _guess_museum(sess, data, now):
+    """museum: the names guess and the clues meter at the session - the name rides the spent round."""
+    e = _list_entry("museum", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    if data.get("clue"):
+        if sess["clue"] >= 4:
+            raise _Reject(400, "no more clues")
+        sess["clue"] += 1
+        # the session meters the clues itself, so a
+        # nonce-bearing claim cannot under-report them
+        return {"verdict": "clue", "clueIdx": sess["clue"]}
+    else:
+        name = data.get("name")
+        if not isinstance(name, str) or not name \
+                or len(name) > 40:
+            raise _Reject(400, "bad name")
+        names = [_name_norm(x) for x in
+                 [e["a"]] + list(e.get("al") or ())]
+        if _name_norm(name) in names:
+            sess["done"] = True
+            sess["verdict"] = "won"
+            sess["ans"] = name
+            sess["result"] = sess["clue"] + 1
+            sess["done_at"] = now
+            # the name and the story stay server-side
+            # until the guess is spent
+            return {"verdict": "won",
+                       "reveal": {"a": e["a"],
+                                  "w": e.get("w")}}
+        elif sess["clue"] < 4:
+            sess["clue"] += 1
+            return {"verdict": "miss",
+                       "clueIdx": sess["clue"]}
+        else:
+            sess["done"] = True
+            sess["verdict"] = "lost"
+            sess["ans"] = ""
+            sess["result"] = 6
+            sess["done_at"] = now
+            return {"verdict": "lost",
+                       "reveal": {"a": e["a"],
+                                  "w": e.get("w")}}
+
+def _guess_bogus(sess, data, now):
+    """bogus: three picks hunt the lie - the find or the third strike ends the round."""
+    e = _list_entry("bogus", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    i = data.get("pick")
+    if isinstance(i, bool) or not isinstance(i, int) \
+            or not (0 <= i < len(e["s"])):
+        raise _Reject(400, "bad pick")
+    if i in sess["picks"]:
+        raise _Reject(400, "phrase already picked")
+    sess["picks"].append(i)
+    if i == e["l"]:
+        sess["done"] = True
+        sess["verdict"] = "won"
+        sess["ans"] = list(sess["picks"])
+        sess["done_at"] = now
+        # the lie and the why cross only once the find is
+        # spent
+        return {"verdict": "won",
+                   "reveal": {"l": e["l"], "w": e.get("w")}}
+    elif len(sess["picks"]) >= 3:
+        sess["done"] = True
+        sess["verdict"] = "lost"
+        sess["ans"] = list(sess["picks"])
+        sess["done_at"] = now
+        # three strikes: the lie and the why ride the spent
+        # round
+        return {"verdict": "lost",
+                   "reveal": {"l": e["l"], "w": e.get("w")}}
+    else:
+        return {"verdict": "miss",
+                   "left": 3 - len(sess["picks"])}
+
+def _guess_superlative(sess, data, now):
+    """superlative: the rounds grade one at a time and the sweep verdict is the server's."""
+    e = _list_entry("superlative", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    q = e["q"]
+    r = len(sess["picks"])
+    i = data.get("pick")
+    if isinstance(i, bool) or not isinstance(i, int) \
+            or not (0 <= i < len(e["m"])) or r >= len(q):
+        raise _Reject(400, "bad pick")
+    sess["picks"].append(i)
+    right = i == q[r]["a"]
+    if r + 1 >= len(q):
+        # the last round ends the session: the sweep verdict
+        # and the picks are the server's, never the word
+        sess["done"] = True
+        sess["verdict"] = "won" if all(
+            p == qq["a"] for p, qq in zip(sess["picks"], q)) \
+            else "lost"
+        sess["ans"] = list(sess["picks"])
+        sess["done_at"] = now
+        return {"verdict": "hit" if right else "miss",
+                   "a": q[r]["a"], "final": True}
+    else:
+        # the spent round hands over its own answer: the
+        # questions ship without their key, so the record
+        # settles each round at the session
+        return {"verdict": "hit" if right else "miss",
+                   "a": q[r]["a"]}
+
+def _guess_sift(sess, data, now):
+    """sift: each trio tests one group - the fourth miss spends the day and the board rides it."""
+    e = _list_entry("sift", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    pick = data.get("pick")
+    if not isinstance(pick, list) or len(pick) != 3 \
+            or not all(isinstance(x, str) and x
+                       and len(x) <= 60 for x in pick) \
+            or len(set(pick)) != 3:
+        raise _Reject(400, "bad pick")
+    got = frozenset(pick)
+    solved = [frozenset(e["cats"][ci]["i"])
+              for ci in sess["solved"]]
+    if got in solved:
+        raise _Reject(400, "group already found")
+    hit = next((ci for ci, c in enumerate(e["cats"])
+                if frozenset(c["i"]) == got), None)
+    if hit is not None:
+        sess["solved"].append(hit)
+        if len(sess["solved"]) >= len(e["cats"]):
+            sess["done"] = True
+            sess["verdict"] = "won"
+            sess["ans"] = [list(c["i"]) for c in e["cats"]]
+            sess["done_at"] = now
+            return {"verdict": "hit", "cat": hit,
+                       "n": e["cats"][hit]["n"],
+                       "i": list(e["cats"][hit]["i"]),
+                       "final": True}
+        else:
+            # the spent test hands over its group: the
+            # name and the trio ride the find, never
+            # the served board
+            return {"verdict": "hit", "cat": hit,
+                       "n": e["cats"][hit]["n"],
+                       "i": list(e["cats"][hit]["i"])}
+    else:
+        sess["mistakes"] += 1
+        if sess["mistakes"] >= 4:
+            sess["done"] = True
+            sess["verdict"] = "lost"
+            sess["ans"] = [list(c["i"]) for c in e["cats"]]
+            sess["done_at"] = now
+            # the fourth miss spends the day: the whole
+            # board rides the spent round
+            return {"verdict": "lost",
+                       "reveal": {"t": e.get("t"),
+                                  "cats": e["cats"]}}
+        else:
+            return {"verdict": "miss",
+                       "mistakes": sess["mistakes"]}
+
+def _guess_lightbox(sess, data, now):
+    """lightbox: each development spends a mistake - the fourth fog spends the film."""
+    e = _list_entry("lightbox", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    grid = data.get("grid")
+    if not isinstance(grid, list) or len(grid) != len(e["g"]) \
+            or not all(isinstance(r, str)
+                       and len(r) == len(e["g"][0])
+                       and all(ch in "012" for ch in r)
+                       for r in grid):
+        raise _Reject(400, "bad grid")
+    rows = [[1 if ch == "1" else 0 for ch in r] for r in grid]
+    want = [[1 if ch == "#" else 0 for ch in r]
+            for r in e["g"]]
+    if rows == want:
+        sess["done"] = True
+        sess["verdict"] = "won"
+        sess["ans"] = list(e["g"])
+        sess["done_at"] = now
+        # the picture and its name ride the spent
+        # development
+        return {"verdict": "won",
+                   "reveal": {"n": e.get("n"),
+                              "g": list(e["g"])}}
+    else:
+        bad = [[r, c] for r in range(len(rows))
+               for c in range(len(rows[0]))
+               if rows[r][c] == 1 and want[r][c] == 0]
+        need = [[r, c] for r in range(len(rows))
+                for c in range(len(rows[0]))
+                if rows[r][c] == 0 and want[r][c] == 1]
+        sess["mistakes"] += 1
+        if sess["mistakes"] >= 4:
+            sess["done"] = True
+            sess["verdict"] = "lost"
+            sess["done_at"] = now
+            # the fourth fog spends the film: the picture
+            # rides the spent round
+            return {"verdict": "lost",
+                       "reveal": {"n": e.get("n"),
+                                  "g": list(e["g"])}}
+        else:
+            # the contradictions cross (the page has
+            # always flashed them), the grid never does
+            return {"verdict": "miss", "bad": bad,
+                       "need": need,
+                       "mistakes": sess["mistakes"]}
+
+def _guess_cipher(sess, data, now):
+    """cipher: the checks and hints grade against the day's substitution - the codebook opens only on the give-up."""
+    e = _list_entry("cipher", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    enc, dec = _cipher_sub(sess["day"])
+    freq = {}
+    for ch in e["q"]:
+        if "A" <= ch <= "Z":
+            freq[enc[ch]] = freq.get(enc[ch], 0) + 1
+    order = sorted(freq, key=lambda c: (-freq[c], c))
+    sub = {enc[ch]: ch for ch in e["q"] if "A" <= ch <= "Z"}
+    if data.get("give") is not None:
+        sess["done"] = True
+        sess["verdict"] = "gave"
+        sess["done_at"] = now
+        # the codebook opens only on the give-up: the
+        # quote and the substitution ride the spent round
+        return {"verdict": "gave",
+                   "reveal": {"q": e["q"], "a": e.get("a"),
+                              "sub": sub}}
+    elif data.get("hint"):
+        have = data.get("have")
+        if not isinstance(have, dict):
+            have = {}
+        if sess["hints"] >= 5:
+            raise _Reject(400, "no more hints")
+        cand = next((c for c in order
+                     if have.get(c) != dec[c]), None)
+        if cand is None:
+            raise _Reject(400, "nothing left to hint")
+        sess["hints"] += 1
+        # the session meters the hints itself, so a
+        # nonce-bearing claim cannot under-report them
+        return {"verdict": "hint", "cipher": cand,
+                   "plain": dec[cand],
+                   "hints": sess["hints"]}
+    else:
+        m = data.get("check")
+        if not isinstance(m, dict) or not all(
+                isinstance(k, str) and len(k) == 1
+                and "A" <= k <= "Z"
+                and isinstance(v, str) and len(v) == 1
+                and "A" <= v <= "Z"
+                for k, v in m.items()):
+            raise _Reject(400, "bad decode")
+        right = sum(1 for c in order if m.get(c) == dec[c])
+        if right == len(order):
+            sess["done"] = True
+            sess["verdict"] = "won"
+            sess["ans"] = e["q"]
+            sess["done_at"] = now
+            # the full decode spends the round: the quote
+            # rides it, letter-true
+            return {"verdict": "won",
+                       "reveal": {"q": e["q"],
+                                  "a": e.get("a"),
+                                  "sub": sub}}
+        else:
+            # honest but unfarmable: how many letters are
+            # right, never which ones
+            return {"verdict": "miss", "right": right,
+                       "total": len(order)}
+
+def _guess_timeline(sess, data, now):
+    """timeline: each order checks at the session - the years ride the spent round."""
+    pz = _window_entry("timeline", sess["day"])
+    if pz is None:
+        raise _Reject(404, "no answer key")
+    evs = pz["events"]
+    if data.get("give") is not None:
+        sess["done"] = True
+        sess["verdict"] = "gave"
+        sess["ans"] = sorted(ev["y"] for ev in evs)
+        sess["done_at"] = now
+        # the give-up lays the years out: the events ride
+        # the spent visit
+        return {"verdict": "gave",
+                   "reveal": {"events": evs}}
+    else:
+        order = data.get("order")
+        if not isinstance(order, list) \
+                or len(order) != len(evs) \
+                or not all(isinstance(i, int)
+                           and not isinstance(i, bool)
+                           and 0 <= i < len(evs)
+                           for i in order) \
+                or len(set(order)) != len(order):
+            raise _Reject(400, "bad order")
+        sess["guesses"] += 1
+        want = sorted(range(len(evs)),
+                      key=lambda i: evs[i]["y"])
+        lock = [order[i] == want[i]
+                for i in range(len(evs))]
+        right = sum(lock)
+        if right == len(evs):
+            sess["done"] = True
+            sess["verdict"] = "won"
+            sess["ans"] = [evs[i]["y"] for i in want]
+            sess["done_at"] = now
+            # the spent round hands over the years
+            return {"verdict": "won",
+                       "checks": sess["guesses"],
+                       "reveal": {"events": evs}}
+        else:
+            # honest feedback: which positions stand,
+            # never a year
+            return {"verdict": "miss", "right": right,
+                       "lock": lock,
+                       "checks": sess["guesses"]}
+
+def _guess_thread(sess, data, now):
+    """thread: each chain checks at the session - the middles, the decoys and the links ride the spent round."""
+    pz = _window_entry("thread", sess["day"])
+    if pz is None:
+        raise _Reject(404, "no answer key")
+    mids = [nd["id"] for nd in pz["m"]]
+    dids = [nd["id"] for nd in pz["d"]]
+    if data.get("give") is not None:
+        sess["done"] = True
+        sess["verdict"] = "gave"
+        sess["ans"] = [pz["s"]["id"]] + mids + \
+                [pz["e"]["id"]]
+        sess["done_at"] = now
+        # the give-up lays the chain out: the middles, the
+        # decoys and the links ride the spent visit
+        return {"verdict": "gave",
+                   "reveal": {"m": mids, "d": dids,
+                              "links": pz["links"]}}
+    else:
+        chain = data.get("chain")
+        if not isinstance(chain, list) \
+                or len(chain) != len(mids) \
+                or not all(isinstance(x, str) and x
+                           for x in chain) \
+                or len(set(chain)) != len(chain) \
+                or not set(chain) <= (set(mids) | set(dids)):
+            raise _Reject(400, "bad chain")
+        sess["guesses"] += 1
+        lock = [chain[i] == mids[i]
+                for i in range(len(mids))]
+        right = sum(lock)
+        if right == len(mids):
+            sess["done"] = True
+            sess["verdict"] = "won"
+            sess["ans"] = [pz["s"]["id"]] + mids + \
+                [pz["e"]["id"]]
+            sess["done_at"] = now
+            # the spent round hands over the chain
+            return {"verdict": "won",
+                       "checks": sess["guesses"],
+                       "reveal": {"m": mids, "d": dids,
+                                  "links": pz["links"]}}
+        else:
+            return {"verdict": "miss", "right": right,
+                       "lock": lock,
+                       "checks": sess["guesses"]}
+
+def _guess_rounds(sess, data, now):
+    """rounds: the heat and the direction grade server-side - the year never crosses until the round is spent."""
+    y = data.get("y")
+    if isinstance(y, bool) or not isinstance(y, int) \
+            or not (1000 <= y <= 2200):
+        raise _Reject(400, "bad year")
+    entry = PUZZLES.get("rounds") or []
+    pz = entry[sess["day"] % len(entry)]
+    key = pz["y"]
+    sess["guesses"] += 1
+    if y == key:
+        sess["done"] = True
+        sess["verdict"] = "won"
+        sess["done_at"] = now
+        return {"verdict": "won", "guesses": sess["guesses"],
+                   "reveal": {"y": key, "w": pz.get("w")}}
+    elif sess["guesses"] >= 6:
+        sess["done"] = True
+        sess["verdict"] = "lost"
+        sess["done_at"] = now
+        # the reveal hands over the key anyway, so the sixth
+        # row still reads like the five before it: heat and
+        # direction
+        return dict({"verdict": "lost",
+                        "guesses": sess["guesses"],
+                        "reveal": {"y": key, "w": pz.get("w")}},
+                       **round_feedback(y, key))
+    else:
+        return dict({"verdict": "miss",
+                        "guesses": sess["guesses"]},
+                       **round_feedback(y, key))
+
+
+
+# One row per dealt game that takes guesses (sprint deals too, but its
+# session is only the starting gun, so it keeps no row here).
+DEALT_ADAPTERS = {
+    "rounds":        {"guess": _guess_rounds},
+    "brunch":        {"guess": _guess_brunch},
+    "fermi":         {"guess": _guess_fermi},
+    "well-actually": {"guess": _guess_well_actually},
+    "museum":        {"guess": _guess_museum},
+    "bogus":         {"guess": _guess_bogus},
+    "superlative":   {"guess": _guess_superlative},
+    "sift":          {"guess": _guess_sift},
+    "lightbox":      {"guess": _guess_lightbox},
+    "cipher":        {"guess": _guess_cipher},
+    "timeline":      {"guess": _guess_timeline},
+    "thread":        {"guess": _guess_thread},
+}
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "warmup-curve/4.8"
 
@@ -1213,516 +1745,18 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"error": "no session"}, 404)
                 return
             if path == "/guess":
-                if sess["game"] not in ("rounds", "brunch", "fermi",
-                                        "well-actually", "museum",
-                                        "bogus", "superlative",
-                                        "sift", "lightbox", "cipher",
-                                        "timeline", "thread"):
+                guess = DEALT_ADAPTERS.get(sess["game"], {}).get("guess")
+                if guess is None:
                     self._json({"error": "this session takes no guesses"}, 400)
                     return
                 if sess["done"]:
                     self._json({"error": "the round is over"}, 409)
                     return
-                if sess["game"] == "brunch":
-                    i = data.get("pick")
-                    if isinstance(i, bool) or not isinstance(i, int):
-                        self._json({"error": "bad pick"}, 400)
-                        return
-                    e = _list_entry("brunch", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    if not 0 <= i < len(e["opts"]):
-                        self._json({"error": "bad pick"}, 400)
-                        return
-                    sess["done"] = True
-                    sess["verdict"] = "won" if i == e["a"] else "lost"
-                    sess["ans"] = i
-                    sess["done_at"] = now
-                    # one seat, one guess: the verdict and the reveal arrive
-                    # together, so the key crosses only once the pick is spent
-                    payload = {"verdict": sess["verdict"],
-                               "reveal": {"a": e["a"], "w": e.get("w")}}
-                elif sess["game"] == "fermi":
-                    v = data.get("v")
-                    if isinstance(v, bool) or not isinstance(v, (int, float)) \
-                            or not math.isfinite(v) or v <= 0:
-                        self._json({"error": "bad estimate"}, 400)
-                        return
-                    e = _list_entry("fermi", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    ratio = max(v / e["a"], e["a"] / v)
-                    score = (3 if ratio <= 3 else 2 if ratio <= 10
-                             else 1 if ratio <= 100 else 0)
-                    sess["done"] = True
-                    sess["verdict"] = "won"
-                    sess["ans"] = v
-                    sess["done_at"] = now
-                    # the cited value and the ratio buckets stay server-side
-                    # until the one guess is spent
-                    payload = {"verdict": "won", "score": score,
-                               "reveal": {"a": e["a"], "w": e.get("w")}}
-                elif sess["game"] == "well-actually":
-                    e = _list_entry("well-actually", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    if sess["found"]:
-                        # phase two: the one shot at naming the correction
-                        corr = data.get("correction")
-                        if not isinstance(corr, str) or len(corr) > 200:
-                            self._json({"error": "bad correction"}, 400)
-                            return
-                        bonus = "correct" if _text_norm(corr) in (
-                            _text_norm(x) for x in e["a"]) else "wrong"
-                        sess["done"] = True
-                        sess["verdict"] = "won"
-                        sess["ans"] = {"picks": list(sess["picks"]),
-                                       "typed": corr}
-                        sess["done_at"] = now
-                        # the canonical correction and the explanation stay
-                        # server-side until the one attempt is spent
-                        payload = {"verdict": "won", "bonus": bonus,
-                                   "reveal": {"c": e["c"],
-                                              "w": e.get("w")}}
-                    elif isinstance(data.get("correction"), str):
-                        self._json({"error": "the lie is not found yet"}, 400)
-                        return
-                    else:
-                        i = data.get("pick")
-                        if isinstance(i, bool) or not isinstance(i, int) \
-                                or not (0 <= i < len(e["s"])):
-                            self._json({"error": "bad pick"}, 400)
-                            return
-                        if i in sess["picks"]:
-                            self._json({"error": "phrase already picked"}, 400)
-                            return
-                        sess["picks"].append(i)
-                        if i == e["l"]:
-                            sess["found"] = True
-                            # the pick was the lie: found, but no reveal
-                            # yet - the correction question is still to come
-                            payload = {"verdict": "found"}
-                        elif len(sess["picks"]) >= 3:
-                            sess["done"] = True
-                            sess["verdict"] = "lost"
-                            sess["ans"] = {"picks": list(sess["picks"]),
-                                           "typed": ""}
-                            sess["done_at"] = now
-                            # three strikes: the lie, the canonical
-                            # correction and the why ride the spent round
-                            payload = {"verdict": "lost",
-                                       "reveal": {"l": e["l"], "c": e["c"],
-                                                  "w": e.get("w")}}
-                        else:
-                            payload = {"verdict": "miss",
-                                       "left": 3 - len(sess["picks"])}
-                elif sess["game"] == "museum":
-                    e = _list_entry("museum", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    if data.get("clue"):
-                        if sess["clue"] >= 4:
-                            self._json({"error": "no more clues"}, 400)
-                            return
-                        sess["clue"] += 1
-                        # the session meters the clues itself, so a
-                        # nonce-bearing claim cannot under-report them
-                        payload = {"verdict": "clue", "clueIdx": sess["clue"]}
-                    else:
-                        name = data.get("name")
-                        if not isinstance(name, str) or not name \
-                                or len(name) > 40:
-                            self._json({"error": "bad name"}, 400)
-                            return
-                        names = [_name_norm(x) for x in
-                                 [e["a"]] + list(e.get("al") or ())]
-                        if _name_norm(name) in names:
-                            sess["done"] = True
-                            sess["verdict"] = "won"
-                            sess["ans"] = name
-                            sess["result"] = sess["clue"] + 1
-                            sess["done_at"] = now
-                            # the name and the story stay server-side
-                            # until the guess is spent
-                            payload = {"verdict": "won",
-                                       "reveal": {"a": e["a"],
-                                                  "w": e.get("w")}}
-                        elif sess["clue"] < 4:
-                            sess["clue"] += 1
-                            payload = {"verdict": "miss",
-                                       "clueIdx": sess["clue"]}
-                        else:
-                            sess["done"] = True
-                            sess["verdict"] = "lost"
-                            sess["ans"] = ""
-                            sess["result"] = 6
-                            sess["done_at"] = now
-                            payload = {"verdict": "lost",
-                                       "reveal": {"a": e["a"],
-                                                  "w": e.get("w")}}
-                elif sess["game"] == "bogus":
-                    e = _list_entry("bogus", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    i = data.get("pick")
-                    if isinstance(i, bool) or not isinstance(i, int) \
-                            or not (0 <= i < len(e["s"])):
-                        self._json({"error": "bad pick"}, 400)
-                        return
-                    if i in sess["picks"]:
-                        self._json({"error": "phrase already picked"}, 400)
-                        return
-                    sess["picks"].append(i)
-                    if i == e["l"]:
-                        sess["done"] = True
-                        sess["verdict"] = "won"
-                        sess["ans"] = list(sess["picks"])
-                        sess["done_at"] = now
-                        # the lie and the why cross only once the find is
-                        # spent
-                        payload = {"verdict": "won",
-                                   "reveal": {"l": e["l"], "w": e.get("w")}}
-                    elif len(sess["picks"]) >= 3:
-                        sess["done"] = True
-                        sess["verdict"] = "lost"
-                        sess["ans"] = list(sess["picks"])
-                        sess["done_at"] = now
-                        # three strikes: the lie and the why ride the spent
-                        # round
-                        payload = {"verdict": "lost",
-                                   "reveal": {"l": e["l"], "w": e.get("w")}}
-                    else:
-                        payload = {"verdict": "miss",
-                                   "left": 3 - len(sess["picks"])}
-                elif sess["game"] == "superlative":
-                    e = _list_entry("superlative", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    q = e["q"]
-                    r = len(sess["picks"])
-                    i = data.get("pick")
-                    if isinstance(i, bool) or not isinstance(i, int) \
-                            or not (0 <= i < len(e["m"])) or r >= len(q):
-                        self._json({"error": "bad pick"}, 400)
-                        return
-                    sess["picks"].append(i)
-                    right = i == q[r]["a"]
-                    if r + 1 >= len(q):
-                        # the last round ends the session: the sweep verdict
-                        # and the picks are the server's, never the word
-                        sess["done"] = True
-                        sess["verdict"] = "won" if all(
-                            p == qq["a"] for p, qq in zip(sess["picks"], q)) \
-                            else "lost"
-                        sess["ans"] = list(sess["picks"])
-                        sess["done_at"] = now
-                        payload = {"verdict": "hit" if right else "miss",
-                                   "a": q[r]["a"], "final": True}
-                    else:
-                        # the spent round hands over its own answer: the
-                        # questions ship without their key, so the record
-                        # settles each round at the session
-                        payload = {"verdict": "hit" if right else "miss",
-                                   "a": q[r]["a"]}
-                elif sess["game"] == "sift":
-                    e = _list_entry("sift", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    pick = data.get("pick")
-                    if not isinstance(pick, list) or len(pick) != 3 \
-                            or not all(isinstance(x, str) and x
-                                       and len(x) <= 60 for x in pick) \
-                            or len(set(pick)) != 3:
-                        self._json({"error": "bad pick"}, 400)
-                        return
-                    got = frozenset(pick)
-                    solved = [frozenset(e["cats"][ci]["i"])
-                              for ci in sess["solved"]]
-                    if got in solved:
-                        self._json({"error": "group already found"}, 400)
-                        return
-                    hit = next((ci for ci, c in enumerate(e["cats"])
-                                if frozenset(c["i"]) == got), None)
-                    if hit is not None:
-                        sess["solved"].append(hit)
-                        if len(sess["solved"]) >= len(e["cats"]):
-                            sess["done"] = True
-                            sess["verdict"] = "won"
-                            sess["ans"] = [list(c["i"]) for c in e["cats"]]
-                            sess["done_at"] = now
-                            payload = {"verdict": "hit", "cat": hit,
-                                       "n": e["cats"][hit]["n"],
-                                       "i": list(e["cats"][hit]["i"]),
-                                       "final": True}
-                        else:
-                            # the spent test hands over its group: the
-                            # name and the trio ride the find, never
-                            # the served board
-                            payload = {"verdict": "hit", "cat": hit,
-                                       "n": e["cats"][hit]["n"],
-                                       "i": list(e["cats"][hit]["i"])}
-                    else:
-                        sess["mistakes"] += 1
-                        if sess["mistakes"] >= 4:
-                            sess["done"] = True
-                            sess["verdict"] = "lost"
-                            sess["ans"] = [list(c["i"]) for c in e["cats"]]
-                            sess["done_at"] = now
-                            # the fourth miss spends the day: the whole
-                            # board rides the spent round
-                            payload = {"verdict": "lost",
-                                       "reveal": {"t": e.get("t"),
-                                                  "cats": e["cats"]}}
-                        else:
-                            payload = {"verdict": "miss",
-                                       "mistakes": sess["mistakes"]}
-                elif sess["game"] == "lightbox":
-                    e = _list_entry("lightbox", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    grid = data.get("grid")
-                    if not isinstance(grid, list) or len(grid) != len(e["g"]) \
-                            or not all(isinstance(r, str)
-                                       and len(r) == len(e["g"][0])
-                                       and all(ch in "012" for ch in r)
-                                       for r in grid):
-                        self._json({"error": "bad grid"}, 400)
-                        return
-                    rows = [[1 if ch == "1" else 0 for ch in r] for r in grid]
-                    want = [[1 if ch == "#" else 0 for ch in r]
-                            for r in e["g"]]
-                    if rows == want:
-                        sess["done"] = True
-                        sess["verdict"] = "won"
-                        sess["ans"] = list(e["g"])
-                        sess["done_at"] = now
-                        # the picture and its name ride the spent
-                        # development
-                        payload = {"verdict": "won",
-                                   "reveal": {"n": e.get("n"),
-                                              "g": list(e["g"])}}
-                    else:
-                        bad = [[r, c] for r in range(len(rows))
-                               for c in range(len(rows[0]))
-                               if rows[r][c] == 1 and want[r][c] == 0]
-                        need = [[r, c] for r in range(len(rows))
-                                for c in range(len(rows[0]))
-                                if rows[r][c] == 0 and want[r][c] == 1]
-                        sess["mistakes"] += 1
-                        if sess["mistakes"] >= 4:
-                            sess["done"] = True
-                            sess["verdict"] = "lost"
-                            sess["done_at"] = now
-                            # the fourth fog spends the film: the picture
-                            # rides the spent round
-                            payload = {"verdict": "lost",
-                                       "reveal": {"n": e.get("n"),
-                                                  "g": list(e["g"])}}
-                        else:
-                            # the contradictions cross (the page has
-                            # always flashed them), the grid never does
-                            payload = {"verdict": "miss", "bad": bad,
-                                       "need": need,
-                                       "mistakes": sess["mistakes"]}
-                elif sess["game"] == "cipher":
-                    e = _list_entry("cipher", sess["day"])
-                    if e is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    enc, dec = _cipher_sub(sess["day"])
-                    freq = {}
-                    for ch in e["q"]:
-                        if "A" <= ch <= "Z":
-                            freq[enc[ch]] = freq.get(enc[ch], 0) + 1
-                    order = sorted(freq, key=lambda c: (-freq[c], c))
-                    sub = {enc[ch]: ch for ch in e["q"] if "A" <= ch <= "Z"}
-                    if data.get("give") is not None:
-                        sess["done"] = True
-                        sess["verdict"] = "gave"
-                        sess["done_at"] = now
-                        # the codebook opens only on the give-up: the
-                        # quote and the substitution ride the spent round
-                        payload = {"verdict": "gave",
-                                   "reveal": {"q": e["q"], "a": e.get("a"),
-                                              "sub": sub}}
-                    elif data.get("hint"):
-                        have = data.get("have")
-                        if not isinstance(have, dict):
-                            have = {}
-                        if sess["hints"] >= 5:
-                            self._json({"error": "no more hints"}, 400)
-                            return
-                        cand = next((c for c in order
-                                     if have.get(c) != dec[c]), None)
-                        if cand is None:
-                            self._json({"error": "nothing left to hint"}, 400)
-                            return
-                        sess["hints"] += 1
-                        # the session meters the hints itself, so a
-                        # nonce-bearing claim cannot under-report them
-                        payload = {"verdict": "hint", "cipher": cand,
-                                   "plain": dec[cand],
-                                   "hints": sess["hints"]}
-                    else:
-                        m = data.get("check")
-                        if not isinstance(m, dict) or not all(
-                                isinstance(k, str) and len(k) == 1
-                                and "A" <= k <= "Z"
-                                and isinstance(v, str) and len(v) == 1
-                                and "A" <= v <= "Z"
-                                for k, v in m.items()):
-                            self._json({"error": "bad decode"}, 400)
-                            return
-                        right = sum(1 for c in order if m.get(c) == dec[c])
-                        if right == len(order):
-                            sess["done"] = True
-                            sess["verdict"] = "won"
-                            sess["ans"] = e["q"]
-                            sess["done_at"] = now
-                            # the full decode spends the round: the quote
-                            # rides it, letter-true
-                            payload = {"verdict": "won",
-                                       "reveal": {"q": e["q"],
-                                                  "a": e.get("a"),
-                                                  "sub": sub}}
-                        else:
-                            # honest but unfarmable: how many letters are
-                            # right, never which ones
-                            payload = {"verdict": "miss", "right": right,
-                                       "total": len(order)}
-                elif sess["game"] == "timeline":
-                    pz = _window_entry("timeline", sess["day"])
-                    if pz is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    evs = pz["events"]
-                    if data.get("give") is not None:
-                        sess["done"] = True
-                        sess["verdict"] = "gave"
-                        sess["ans"] = sorted(ev["y"] for ev in evs)
-                        sess["done_at"] = now
-                        # the give-up lays the years out: the events ride
-                        # the spent visit
-                        payload = {"verdict": "gave",
-                                   "reveal": {"events": evs}}
-                    else:
-                        order = data.get("order")
-                        if not isinstance(order, list) \
-                                or len(order) != len(evs) \
-                                or not all(isinstance(i, int)
-                                           and not isinstance(i, bool)
-                                           and 0 <= i < len(evs)
-                                           for i in order) \
-                                or len(set(order)) != len(order):
-                            self._json({"error": "bad order"}, 400)
-                            return
-                        sess["guesses"] += 1
-                        want = sorted(range(len(evs)),
-                                      key=lambda i: evs[i]["y"])
-                        lock = [order[i] == want[i]
-                                for i in range(len(evs))]
-                        right = sum(lock)
-                        if right == len(evs):
-                            sess["done"] = True
-                            sess["verdict"] = "won"
-                            sess["ans"] = [evs[i]["y"] for i in want]
-                            sess["done_at"] = now
-                            # the spent round hands over the years
-                            payload = {"verdict": "won",
-                                       "checks": sess["guesses"],
-                                       "reveal": {"events": evs}}
-                        else:
-                            # honest feedback: which positions stand,
-                            # never a year
-                            payload = {"verdict": "miss", "right": right,
-                                       "lock": lock,
-                                       "checks": sess["guesses"]}
-                elif sess["game"] == "thread":
-                    pz = _window_entry("thread", sess["day"])
-                    if pz is None:
-                        self._json({"error": "no answer key"}, 404)
-                        return
-                    mids = [nd["id"] for nd in pz["m"]]
-                    dids = [nd["id"] for nd in pz["d"]]
-                    if data.get("give") is not None:
-                        sess["done"] = True
-                        sess["verdict"] = "gave"
-                        sess["ans"] = [pz["s"]["id"]] + mids + \
-                                [pz["e"]["id"]]
-                        sess["done_at"] = now
-                        # the give-up lays the chain out: the middles, the
-                        # decoys and the links ride the spent visit
-                        payload = {"verdict": "gave",
-                                   "reveal": {"m": mids, "d": dids,
-                                              "links": pz["links"]}}
-                    else:
-                        chain = data.get("chain")
-                        if not isinstance(chain, list) \
-                                or len(chain) != len(mids) \
-                                or not all(isinstance(x, str) and x
-                                           for x in chain) \
-                                or len(set(chain)) != len(chain) \
-                                or not set(chain) <= (set(mids) | set(dids)):
-                            self._json({"error": "bad chain"}, 400)
-                            return
-                        sess["guesses"] += 1
-                        lock = [chain[i] == mids[i]
-                                for i in range(len(mids))]
-                        right = sum(lock)
-                        if right == len(mids):
-                            sess["done"] = True
-                            sess["verdict"] = "won"
-                            sess["ans"] = [pz["s"]["id"]] + mids + \
-                                [pz["e"]["id"]]
-                            sess["done_at"] = now
-                            # the spent round hands over the chain
-                            payload = {"verdict": "won",
-                                       "checks": sess["guesses"],
-                                       "reveal": {"m": mids, "d": dids,
-                                                  "links": pz["links"]}}
-                        else:
-                            payload = {"verdict": "miss", "right": right,
-                                       "lock": lock,
-                                       "checks": sess["guesses"]}
-                else:
-                    y = data.get("y")
-                    if isinstance(y, bool) or not isinstance(y, int) \
-                            or not (1000 <= y <= 2200):
-                        self._json({"error": "bad year"}, 400)
-                        return
-                    entry = PUZZLES.get("rounds") or []
-                    pz = entry[sess["day"] % len(entry)]
-                    key = pz["y"]
-                    sess["guesses"] += 1
-                    if y == key:
-                        sess["done"] = True
-                        sess["verdict"] = "won"
-                        sess["done_at"] = now
-                        payload = {"verdict": "won", "guesses": sess["guesses"],
-                                   "reveal": {"y": key, "w": pz.get("w")}}
-                    elif sess["guesses"] >= 6:
-                        sess["done"] = True
-                        sess["verdict"] = "lost"
-                        sess["done_at"] = now
-                        # the reveal hands over the key anyway, so the sixth
-                        # row still reads like the five before it: heat and
-                        # direction
-                        payload = dict({"verdict": "lost",
-                                        "guesses": sess["guesses"],
-                                        "reveal": {"y": key, "w": pz.get("w")}},
-                                       **round_feedback(y, key))
-                    else:
-                        payload = dict({"verdict": "miss",
-                                        "guesses": sess["guesses"]},
-                                       **round_feedback(y, key))
+                try:
+                    payload = guess(sess, data, now)
+                except _Reject as r:
+                    self._json({"error": r.msg}, r.status)
+                    return
             else:  # /reveal
                 if sess["game"] != "sprint":
                     self._json({"error": "this session takes no starting gun"}, 400)

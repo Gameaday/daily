@@ -322,6 +322,7 @@ async function pick(i){
     S.picked.push(i);
     const el = statementEl.querySelector(`[data-i="${i}"]`);
     if (b.body.verdict === 'found'){
+      S.status = 'found';
       S.lie = i;
       if (el) el.classList.add('lie','win');
       statementEl.classList.add('done');

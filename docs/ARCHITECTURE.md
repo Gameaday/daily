@@ -58,7 +58,9 @@ layout. Everything that is not the puzzle lives in shell/common.js:
 day math (midnight ET rollover, dayIndex clamped at 0 before launch),
 archive walking (?d=N replays a finished day, quarantined in memory),
 localStorage persistence, toast, countdown, help, share, the global
-curve client, the puzzle fetcher and the dealt session client. A game
+curve client, the puzzle fetcher, the dealt session client and its
+local repeat guard (a move that already got its verdict is answered
+in the page, so a retread costs no round trip). A game
 page builds moves and renders reveals; the shell carries them. The
 seam is enforced: checks/games.js fails any page that lets shell code
 creep back in.
@@ -137,7 +139,8 @@ a player id, and cannot touch the live day's state or sync flags.
    receives a nonce plus the strip. The page keeps the nonce with its
    state, and a reload resumes a finished round from the kept reveal.
 3. Guess: every move posts /guess with the nonce and the move nested
-   under one "move" field.
+   under one "move" field; a move that already got its verdict is
+   answered in the page, no round trip.
    The session grades it, meters its own counters (checks, mistakes,
    hints, clues, picks) and answers with a verdict, honest feedback
    and, on a terminal verdict, the reveal.
@@ -218,6 +221,7 @@ Contracts in the middle, adapters at the edges, in CI-green steps:
     generator game   a game that derives its board at play time from a seeded RNG (sprint, trace, recycle-grid, recycle-rings)
     ledger           the manifest names the curve counts; recycle-grid tallies as grid and grid-hard
     dealt play       server-dealt rounds: the answer never ships while the round is open
+    repeat guard     the dealt client answers a move whose key already got a verdict, no round trip; the default key is the move's content, pages shape or waive it
     deal / guess / reveal   open a session / play a move / the sprint starting gun
     strip            the deal's version of the puzzle, keys removed (DEALT_STRIP, DEALT_DEEP) or derived (sift tiles, lightbox clues, cipher text, thread tray)
     tray             thread's deal shape: the offered figures shuffled, with the chain length k but no chain

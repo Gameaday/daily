@@ -370,14 +370,19 @@ const SHELL = (() => {
      play() is the whole /guess dance: it opens the session when none is
      open, posts the move with the nonce, and hands the verdict body to
      the page hook on a 200 that carries a verdict. The busy guard is
-     per session, so a double click costs nothing. An optional onDeal hook sees
-     the deal's answer before the nonce is saved, for the games whose
-     deal itself carries the day's strip. An optional onExpired
-     hook runs when a round expires, for the pages that meter more
-     than the nonce. Dealt rounds never
-     run in solo mode or in an archive replay; callers guard those. */
+     per session, so a double click costs nothing, and the repeat guard
+     answers a move that already got its verdict without a round trip:
+     the key is the move's own content by default, and an optional
+     dedup hook shapes or waives it (a page can key a move by its
+     round, or let a repeatable request through). An optional onDeal
+     hook sees the deal's answer before the nonce is saved, for the
+     games whose deal itself carries the day's strip. An optional
+     onExpired hook runs when a round expires, for the pages that
+     meter more than the nonce. Dealt rounds never run in solo mode or
+     in an archive replay; callers guard those. */
   function makeDealt(cfg){
     let busy = false;
+    const tried = new Set();
     async function session(){
       const S = cfg.state();
       if (S.nonce) return S.nonce;
@@ -393,6 +398,13 @@ const SHELL = (() => {
     }
     async function play(move, onBody){
       if (busy) return;
+      /* the repeat guard: a move whose key already got a verdict is
+         answered in the page, so a retread costs no round trip */
+      const key = cfg.dedup ? cfg.dedup(move) : JSON.stringify(move);
+      if (key !== null && key !== undefined && tried.has(key)){
+        cfg.toast((cfg.copy && cfg.copy.again) || 'you already tried that');
+        return;
+      }
       busy = true;
       try {
         const n = await session();
@@ -403,16 +415,19 @@ const SHELL = (() => {
         if (b.status === 409){ cfg.toast(cfg.copy.over); return; }
         if (b.status !== 200 || !b.body || !b.body.verdict){
           cfg.state().nonce = null;
+          tried.clear();
           if (cfg.onExpired) cfg.onExpired();
           cfg.save();
           cfg.toast(cfg.copy.expired);
           return;
         }
+        if (key !== null && key !== undefined) tried.add(key);
         await onBody(b.body);
       } finally { busy = false; }
     }
     function reset(){
       cfg.state().nonce = null;
+      tried.clear();
       cfg.save();
     }
     return { session, play, reset };

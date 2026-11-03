@@ -30,6 +30,15 @@ async function run(h, ctx){
     h.ok(r.x.EVENTS === undefined, 'gated: rounds online boot has no bank');
     await h.flush();
     h.ok(r.env.els.qtext.textContent.indexOf(served.puzzle.q) >= 0, 'gated: rounds served question rendered');
+    const wrong = full.y === 1900 ? 1800 : 1900;
+    r.env.els.slider.value = String(wrong);
+    r.env.els.btnLock.click();
+    await h.flush();
+    h.eq(r.x.S.status, 'playing', 'gated: rounds a wrong guess leaves the round open');
+    const posts = seen.length;
+    r.env.els.btnLock.click();
+    await h.flush();
+    h.eq(seen.length, posts, 'gated: the repeat guard answers the same guess without a round trip');
     r.env.els.slider.value = String(full.y);
     r.env.els.btnLock.click();
     await h.flush();
@@ -115,10 +124,15 @@ async function run(h, ctx){
     const live = h.boot('museum', ['EXHIBIT'], { now: T0, store: {} });
     const full = live.x.EXHIBIT;
     const served = serve('museum', { c: full.c });
+    let clues = 0;
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gm1', today: 0, puzzle: served.puzzle } };
       const mm = s => String(s || '').toLowerCase().replace(/^the /, '').trim();
+      if (body.move.clue !== undefined){
+        clues++;
+        return { status: 200, body: { verdict: 'clue', clueIdx: clues } };
+      }
       if ([full.a].concat(full.al).some(x => mm(body.move.name) === mm(x)))
         return { status: 200, body: { verdict: 'won',
           reveal: { a: full.a, w: full.w } } };
@@ -131,6 +145,11 @@ async function run(h, ctx){
       'gated: museum served clues rendered');
     h.ok(!('a' in served.puzzle) && !('al' in served.puzzle),
       'gated: the museum day never ships its name');
+    r.env.els.btnClue.click();
+    await h.flush();
+    r.env.els.btnClue.click();
+    await h.flush();
+    h.eq(clues, 2, 'gated: museum clue requests are repeatable, never deduped');
     r.env.els.guess.value = full.al[0];
     r.x.submitGuess();
     await h.flush();
@@ -384,6 +403,34 @@ async function run(h, ctx){
     await h.flush();
     h.eq(r.x.S.status, 'won', 'gated: superlative swept the dealt session');
     h.eq(r.x.S.nonce, 'gs1', 'gated: the superlative session is held');
+  }
+  /* superlative repeat guard: the key carries the round, so the same
+     option index answering a later question is a new move */
+  {
+    const live = h.boot('superlative', ['S', 'EV'], { now: T0, store: {} });
+    const full = live.x.EV;
+    const served = serve('superlative',
+      { t: full.t, m: full.m, q: full.q.map(q => ({ c: q.c, v: q.v })) });
+    let guesses = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gs3', today: 0, puzzle: served.puzzle } };
+      const i = guesses++;
+      const last = i === full.q.length - 1;
+      return { status: 200, body: { verdict: body.move.pick === full.q[i].a ? 'hit' : 'miss',
+        a: full.q[i].a, final: last } };
+    };
+    const r = h.boot('superlative', ['S', 'EV', 'SUPERLATIVES'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
+    await h.flush();
+    const w = (full.q[0].a + 1) % full.m.length;
+    r.env.els['opt' + w].click();
+    await h.flush();
+    r.env.els.btnNext.click();
+    await h.flush();
+    r.env.els['opt' + w].click();
+    await h.flush();
+    h.eq(guesses, 2, 'gated: the same pick in a later round is a new move');
   }
   /* thread: the served tray is dealt - the chain, the decoy split and the
      links never ship, so the chain grades at the session */

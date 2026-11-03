@@ -309,6 +309,9 @@ const session = SHELL.makeDealt({
   onDeal: body => {
     if (body.puzzle) EXHIBIT = Object.assign({}, EXHIBIT, body.puzzle);
   },
+  /* clues are repeatable by design, so only a name move carries a
+     key: the name as the session's own grader would read it */
+  dedup: m => m.clue !== undefined ? null : ('n:' + norm(m.name)),
   copy: {
     unavailable: 'the exhibit is not answering right now, try again',
     over: 'this visit is already over',

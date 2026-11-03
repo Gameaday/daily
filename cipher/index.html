@@ -491,6 +491,9 @@ const session = SHELL.makeDealt({
   onDeal: body => {
     if (body.puzzle && typeof body.puzzle.c === 'string') applyQuote(body.puzzle);
   },
+  /* hints are repeatable requests, so only the check and the codebook
+     ask carry the content key */
+  dedup: m => m.hint !== undefined ? null : JSON.stringify(m),
   copy: {
     unavailable: 'the code is not answering right now, try again',
     over: 'this round is already over',

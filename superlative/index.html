@@ -316,6 +316,9 @@ const session = SHELL.makeDealt({
   onDeal: body => {
     if (body.puzzle) EV = Object.assign({}, EV, body.puzzle);
   },
+  /* the same option index answers a different question each round, so
+     the key carries the round the pick is answering */
+  dedup: m => 'q' + S.picks.length + ':' + m.pick,
   onExpired: () => {
     S.picks = []; S.ans = [];
     renderRound();

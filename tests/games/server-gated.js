@@ -385,18 +385,50 @@ async function run(h, ctx){
     h.eq(r.x.S.status, 'won', 'gated: superlative swept the dealt session');
     h.eq(r.x.S.nonce, 'gs1', 'gated: the superlative session is held');
   }
-  /* thread: the served chain plays through */
+  /* thread: the served tray is dealt - the chain, the decoy split and the
+     links never ship, so the chain grades at the session */
   {
     const live = h.boot('thread', ['PZ'], { now: T0, store: {} });
-    const served = serve('thread', live.x.PZ);
-    const r = h.boot('thread', ['S', 'PZ', 'THREAD'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.PZ;
+    const mids = full.m.map(x => x.id);
+    const dids = full.d.map(x => x.id);
+    const byId = {};
+    [full.s, full.e].concat(full.m, full.d).forEach(nd => { byId[nd.id] = nd; });
+    const served = serve('thread',
+      { s: full.s, e: full.e, k: mids.length,
+        tray: mids.concat(dids).map(id => byId[id]) });
+    let checks = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gth1', today: 0, puzzle: served.puzzle } };
+      if (body.give !== undefined)
+        return { status: 200, body: { verdict: 'gave',
+          reveal: { m: mids, d: dids, links: full.links } } };
+      checks++;
+      const lock = body.chain.map((v, i) => v === mids[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks,
+          reveal: { m: mids, d: dids, links: full.links } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks } };
+    };
+    const r = h.boot('thread', ['S', 'PZ', 'THREAD'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.THREAD === undefined, 'gated: thread online boot has no bank');
     await h.flush();
-    h.ok(JSON.stringify(r.x.PZ) === JSON.stringify(live.x.PZ),
-      'gated: thread served puzzle matches the offline one');
-    r.x.S.slots = r.x.PZ.m.map(x => x.id);
+    h.ok(!('m' in served.puzzle) && !('d' in served.puzzle) &&
+      !('links' in served.puzzle),
+      'gated: the thread day never ships its chain');
+    h.ok(r.x.PZ.m === undefined, 'gated: the served thread strip has no chain');
+    h.ok(String(r.env.els.lane.innerHTML).indexOf(full.s.n) >= 0,
+      'gated: thread served ends rendered');
+    r.x.S.slots = mids.slice();
     r.env.els.btnCheck.click();
-    h.eq(r.x.S.status, 'won', 'gated: thread won on the served chain');
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: thread won on the dealt tray');
+    h.eq(r.x.S.nonce, 'gth1', 'gated: the thread session is held');
+    h.ok(String(r.env.els.chainbox.innerHTML).indexOf(full.links[0].w) >= 0,
+      'gated: the links arrived only with the reveal');
   }
   /* the exported store must agree with each game's own offline pick */
   if (readStore){

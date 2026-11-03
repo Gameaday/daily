@@ -47,6 +47,107 @@ async function run(h){
     h.ok(!!r.x.PZ.s, 'thread: pre-launch day boots a chain');
     h.eq(r.x.S.day, 0, 'thread: pre-launch day clamps to day 0');
     h.eq(JSON.stringify(r.x.PZ), day0, 'thread: pre-launch plays the No. 1 chain');
+
+    /* --- dealt play: the live day ships its figures as one shuffled tray
+           without the chain, the decoy split or the links, so the chain
+           grades at the session and the reveal rides the spent round --- */
+    const thFull = h.boot('thread', ['PZ'], { now: T0, store: {} });
+    const thPz = thFull.x.PZ;
+    const thMids = thPz.m.map(x => x.id);
+    const thDids = thPz.d.map(x => x.id);
+    const thById = {};
+    [thPz.s, thPz.e].concat(thPz.m, thPz.d).forEach(nd => { thById[nd.id] = nd; });
+    /* every dealt boot serves its own fresh strip: the reveal folds the
+       chain back into the page, so no fixture is shared across boots */
+    const thServed = () => ({ day: 0, today: 0,
+      puzzle: { s: thPz.s, e: thPz.e, k: thMids.length,
+        tray: thMids.concat(thDids).map(id => thById[id]) } });
+    let thChecks = 0;
+    const thDealer = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gth1', today: 0, puzzle: thServed().puzzle } };
+      if (body.give !== undefined)
+        return { status: 200, body: { verdict: 'gave',
+          reveal: { m: thMids, d: thDids, links: thPz.links } } };
+      thChecks++;
+      const lock = body.chain.map((v, i) => v === thMids[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks: thChecks,
+          reveal: { m: thMids, d: thDids, links: thPz.links } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks: thChecks } };
+    };
+    const thStore = {};
+    const r2 = h.boot('thread', ['S', 'PZ', 'THREAD'],
+      { now: T0, store: thStore, servePuzzle: thServed(), stubBanks: true, serveDealt: thDealer });
+    h.ok(r2.x.THREAD === undefined, 'thread: dealt online boot has no bank');
+    await h.flush();
+    h.ok(r2.x.PZ.m === undefined && r2.x.PZ.links === undefined,
+      'thread: the dealt day never ships its chain');
+    h.eq(r2.x.PZ.k, thMids.length, 'thread: the dealt strip counts its slots');
+    h.eq(r2.x.S.tray.length, thMids.length + thDids.length,
+      'thread: the tray holds the offered set');
+    h.ok(String(r2.env.els.lane.innerHTML).indexOf(thPz.s.n) >= 0,
+      'thread: the dealt ends render');
+    r2.x.S.slots = [thDids[0]].concat(thMids.slice(1));
+    r2.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r2.x.S.status, 'playing', 'thread: a wrong chain keeps the day open');
+    h.eq(r2.x.S.checks, 1, 'thread: the session metered one check');
+    h.eq(r2.x.S.locked.join(','),
+      [false].concat(thMids.slice(1).map(() => true)).join(','),
+      'thread: the session locked the figures that stand');
+    h.eq(r2.env.els.toast.textContent,
+      (thMids.length - 1) + ' of ' + thMids.length + ' in place',
+      'thread: the session told how many figures stand');
+    r2.x.S.slots = thMids.slice();
+    r2.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r2.x.S.status, 'won', 'thread: won on the dealt tray');
+    h.eq(r2.x.S.nonce, 'gth1', 'thread: the dealt session is held');
+    h.eq(r2.x.S.checks, 2, 'thread: the session metered both checks');
+    h.eq(r2.x.PZ.m.map(x => x.id).join(','), thMids.join(','),
+      'thread: the chain arrived only with the reveal');
+    h.ok(String(r2.env.els.chainbox.innerHTML).indexOf(thPz.links[0].w) >= 0,
+      'thread: the links arrived only with the reveal');
+    const thp = h.lastPost(r2.env).body;
+    h.eq(thp.nonce, 'gth1', 'thread: the evidence names its session');
+    h.eq(thp.status, 'won', 'thread: the won status rides the wire');
+    h.eq(thp.answer.join(','), [thPz.s.id].concat(thMids, [thPz.e.id]).join(','),
+      'thread: the chain ids ride the wire');
+    h.eq(thp.meta.checks, 2, 'thread: the session check meter rides the wire');
+    const r3 = h.boot('thread', ['S', 'PZ'], { now: T0, store: thStore,
+      servePuzzle: thServed(), stubBanks: true, serveDealt: thDealer });
+    await h.flush();
+    h.eq(r3.x.S.status, 'won', 'thread: the won dealt day survives the reload');
+    h.eq(r3.x.PZ.m.map(x => x.id).join(','), thMids.join(','),
+      'thread: the kept reveal retells the chain on reload');
+    h.ok(String(r3.env.els.chainbox.innerHTML).indexOf(thPz.links[0].w) >= 0,
+      'thread: the kept reveal renders the chain on reload');
+    const thStore2 = {};
+    const r4 = h.boot('thread', ['S'], { now: T0, store: thStore2,
+      servePuzzle: thServed(), stubBanks: true, serveDealt: thDealer });
+    await h.flush();
+    r4.env.els.btnGiveUp.click();
+    await h.flush();
+    h.eq(r4.x.S.status, 'gaveup', 'thread: gave up on the dealt day');
+    h.eq(r4.x.S.slots.join(','), thMids.join(','),
+      'thread: the give-up lays the chain out in order');
+    const thq = h.lastPost(r4.env).body;
+    h.eq(thq.status, 'gave', 'thread: the give-up posts the gave status');
+    h.eq(thq.nonce, 'gth1', 'thread: the give-up names its session');
+    /* an archive replay carries the full chain again and never touches the
+       dealt endpoints */
+    const r5 = h.boot('thread', ['S'], { now: T1, store: {},
+      servePuzzle: { day: 0, today: 1, puzzle: thPz }, search: '?d=0', stubBanks: true });
+    await h.flush();
+    h.eq(r5.x.S.day, 0, 'thread: the archive view plays day 0');
+    r5.x.S.slots = thMids.slice();
+    r5.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(r5.x.S.status, 'won', 'thread: the archive replay wins locally');
+    h.eq(r5.env.fetchLog.length, 0,
+      'thread: a replay never touches the dealt endpoints');
 }
 
 module.exports = { name: 'thread', run };

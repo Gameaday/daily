@@ -270,8 +270,10 @@ let PZ = { s: null, e: null, m: [], d: [], links: [] };
 let NODES_BY = {};
 function applyPuzzle(pz){
   PZ.s = pz.s; PZ.e = pz.e; PZ.m = pz.m; PZ.d = pz.d; PZ.links = pz.links;
+  PZ.k = pz.k; PZ.tray = pz.tray;
   NODES_BY = {};
-  for (const nd of [pz.s, pz.e].concat(pz.m, pz.d)) NODES_BY[nd.id] = nd;
+  for (const nd of [pz.s, pz.e].concat(pz.m || [], pz.d || [], pz.tray || []))
+    NODES_BY[nd.id] = nd;
 }
 
 async function loadPuzzle(){
@@ -283,7 +285,7 @@ async function loadPuzzle(){
   if (isSolo()) return;
   try {
     const d = await fetchPuzzle('thread', pzDay);
-    if (d && d.puzzle && d.puzzle.s && d.puzzle.m){
+    if (d && d.puzzle && d.puzzle.s && (d.puzzle.m || d.puzzle.tray)){
       applyPuzzle(d.puzzle);
       initDay();
     }
@@ -304,16 +306,23 @@ function initDay(){
   if (S.day !== pzDay){
     const stats = (S && typeof S.stats === 'object') ? S.stats : { played: 0, solved: 0, streak: 0, max: 0 };
     if (S.day !== pzDay && S.status === 'playing' && S.started) stats.streak = 0;
-    const k = PZ.m.length;
-    /* cosmetic-only display shuffle of the offered set */
-    const trng = mulberry32(pzDay * 9109 + 13);
-    const offered = PZ.m.map(x => x.id).concat(PZ.d.map(x => x.id));
-    for (let i = offered.length - 1; i > 0; i--){
-      const j = Math.floor(trng() * (i + 1));
-      [offered[i], offered[j]] = [offered[j], offered[i]];
+    const k = trayK();
+    /* the offline day shuffles its offered set for display; the dealt day
+       takes the tray as the server shuffled it, so a reload always
+       lists the same order */
+    const offered = Array.isArray(PZ.m)
+      ? PZ.m.map(x => x.id).concat(PZ.d.map(x => x.id))
+      : PZ.tray.map(x => x.id);
+    if (Array.isArray(PZ.m)){
+      const trng = mulberry32(pzDay * 9109 + 13);
+      for (let i = offered.length - 1; i > 0; i--){
+        const j = Math.floor(trng() * (i + 1));
+        [offered[i], offered[j]] = [offered[j], offered[i]];
+      }
     }
     S.day = pzDay; S.slots = new Array(k).fill(null); S.locked = new Array(k).fill(false);
-    S.tray = offered; S.checks = 0; S.sel = null; S.started = false; S.status = 'playing'; S.stats = stats;
+    S.tray = offered; S.checks = 0; S.sel = null; S.started = false; S.status = 'playing';
+    S.nonce = null; S.reveal = null; S.stats = stats;
   }
   saveState();
 }
@@ -325,7 +334,7 @@ function fixedCard(nd, cap){
 }
 function render(){
   if (!PZ.s || !S) return;
-  const k = PZ.m.length;
+  const k = trayK();
   let html = fixedCard(PZ.s, 'start');
   for (let i = 0; i < k; i++){
     const id = S.slots[i];
@@ -478,8 +487,11 @@ document.addEventListener('pointercancel', () => {
 });
 $('btnCheck').addEventListener('click', () => {
   if (!PZ.s || !S || S.status !== 'playing') return;
-  const k = PZ.m.length;
+  const k = trayK();
   if (S.slots.some(x => !x)){ toastMsg('every slot needs a figure'); return; }
+  /* the dealt day: the chain never shipped, so the order grades at
+     the session and the session meters the checks */
+  if (isDealt()){ checkDealt(); return; }
   S.started = true;
   S.checks++;
   let right = 0;
@@ -492,8 +504,92 @@ $('btnCheck').addEventListener('click', () => {
 });
 $('btnGiveUp').addEventListener('click', () => {
   if (!PZ.s || !S || S.status !== 'playing') return;
+  if (isDealt()){ giveDealt(); return; }
   finish('gaveup');
 });
+
+/* ---------------- dealt play: the live day grades at the session ---------------- */
+function trayK(){
+  return Array.isArray(PZ.m) ? PZ.m.length : PZ.k;
+}
+function isDealt(){
+  return !!PZ.s && !Array.isArray(PZ.m) && !isSolo() && !SHELL.isArchive;
+}
+/* the dealt session: one deal per day, held on the state and spent one
+   request at a time */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+/* the reveal rides the spent round: fold the chain, the decoy split and
+   the links back in, then the ordinary reveal paths work unchanged */
+function mergeDealt(reveal){
+  if (!reveal || !Array.isArray(reveal.m) || !Array.isArray(reveal.d)) return false;
+  PZ.m = reveal.m.map(id => NODES_BY[id]);
+  PZ.d = reveal.d.map(id => NODES_BY[id]);
+  if (Array.isArray(reveal.links)) PZ.links = reveal.links;
+  return true;
+}
+let BUSY = false;
+async function checkDealt(){
+  if (BUSY) return;
+  BUSY = true;
+  try {
+    const k = trayK();
+    const n = await ensureSession();
+    if (!n){ toastMsg('the thread is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, chain: S.slots.slice() }); } catch (e) {}
+    if (!b){ toastMsg('the thread is not answering right now, try again'); return; }
+    if (b.status === 409){ toastMsg('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || !b.body.verdict){
+      S.nonce = null;
+      toastMsg('this round expired, check again for a fresh one');
+      return;
+    }
+    S.started = true;
+    if (b.body.verdict === 'won'){
+      mergeDealt(b.body.reveal);
+      S.reveal = b.body.reveal;
+      S.checks = b.body.checks;
+      S.locked = S.slots.map(() => true);
+      saveState(); render();
+      finish('won');
+    } else {
+      S.locked = (b.body.lock || []).map(Boolean);
+      S.checks = b.body.checks;
+      saveState(); render();
+      toastMsg(b.body.right + ' of ' + k + ' in place');
+    }
+  } finally { BUSY = false; }
+}
+async function giveDealt(){
+  if (BUSY) return;
+  BUSY = true;
+  try {
+    const n = await ensureSession();
+    if (!n){ toastMsg('the thread is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, give: 1 }); } catch (e) {}
+    if (!b){ toastMsg('the thread is not answering right now, try again'); return; }
+    if (b.status === 409){ toastMsg('this round is already over'); return; }
+    if (b.status !== 200 || !b.body || b.body.verdict !== 'gave' || !b.body.reveal){
+      S.nonce = null;
+      toastMsg('this round expired, check again for a fresh one');
+      return;
+    }
+    mergeDealt(b.body.reveal);
+    S.reveal = b.body.reveal;
+    finish('gaveup');
+  } finally { BUSY = false; }
+}
 function finish(status){
   S.status = status;
   S.sel = null;
@@ -549,7 +645,7 @@ function showReveal(){
   $('actbox').style.display = 'none';
   syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
               answer: [PZ.s.id].concat(S.slots || [], [PZ.e.id]),
-              meta: { checks: S.checks }, points: S.pts });
+              meta: { checks: S.checks }, points: S.pts, nonce: S.nonce });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);
@@ -566,6 +662,9 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
   if (!PZ.s){ SHELL.showUnavailable(); return; }
+  /* a finished dealt day reloads against the stripped tray: fold the
+     kept reveal back in before the chain tells its story */
+  if (S.status !== 'playing' && S.reveal) mergeDealt(S.reveal);
   $('pno').textContent = num;
   $('pdate').textContent = SHELL.pdateText();
   render();

@@ -28,6 +28,56 @@ async function run(h){
     r = h.boot('fermi', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'fermi: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'fermi: streak preserved');
+
+    /* --- the live day cuts over to dealt play: the question arrives
+           without its cited value and the session scores the one guess --- */
+    const live = h.boot('fermi', ['Q'], { now: T0, store: {} });
+    const full = live.x.Q;
+    const served = { t: full.t, q: full.q };
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'f1', today: 0, puzzle: served } };
+      const ratio = Math.max(body.v / full.a, full.a / body.v);
+      const score = ratio <= 3 ? 3 : ratio <= 10 ? 2 : ratio <= 100 ? 1 : 0;
+      return { status: 200, body: { verdict: 'won', score,
+        reveal: { a: full.a, w: full.w } } };
+    };
+    const fstore = {};
+    const rd = h.boot('fermi', ['S', 'friendly'], { now: T0, store: fstore,
+      servePuzzle: { game: 'fermi', day: 0, puzzle: served, today: 0 },
+      stubBanks: true, serveDealt });
+    await h.flush();
+    h.ok(rd.env.els.qtext.textContent.indexOf(served.q) >= 0,
+      'fermi: the dealt question renders');
+    rd.env.els.guess.value = String(full.a * 2);
+    rd.env.els.btnGuess.click();
+    await h.flush();
+    h.ok(rd.x.S.scored, 'fermi: the session scores the spent estimate');
+    h.eq(rd.x.S.score, 3, 'fermi: a within-3x estimate scores 3 from the session');
+    h.eq(rd.x.S.nonce, 'f1', 'fermi: the dealt session is held');
+    h.ok(rd.env.els.vact.textContent.indexOf(rd.x.friendly(full.a)) >= 0,
+      'fermi: the cited value retells from the session reveal');
+    h.eq(h.lastPost(rd.env).body.nonce, 'f1', 'fermi: the evidence names the session');
+    h.eq(h.lastPost(rd.env).body.answer, full.a * 2, 'fermi: the evidence carries the estimate');
+    const again = h.boot('fermi', ['S', 'friendly'], { now: T0, store: fstore,
+      servePuzzle: { game: 'fermi', day: 0, puzzle: served, today: 0 },
+      stubBanks: true });
+    await h.flush();
+    h.ok(again.x.S.scored, 'fermi: a reload keeps the spent estimate');
+    h.ok(again.env.els.vact.textContent.indexOf(again.x.friendly(full.a)) >= 0,
+      'fermi: the reload retells the cited value though it never shipped');
+
+    /* --- a replayed day is long over: the archive path grades locally and
+           posts nothing --- */
+    const rr = h.boot('fermi', ['S', 'Q'], { now: T1, store: {}, search: '?d=0' });
+    await h.flush();
+    h.ok(rr.x.Q.a > 0, 'fermi: the replayed question carries its key from the bank');
+    rr.env.els.guess.value = String(rr.x.Q.a);
+    rr.env.els.btnGuess.click();
+    h.ok(rr.x.S.scored, 'fermi: a replayed day scores locally');
+    h.eq(rr.x.S.score, 3, 'fermi: the replayed guess reads 3/3');
+    await h.flush();
+    h.eq(rr.env.fetchLog.length, 0, 'fermi: a replayed day posts nothing');
 }
 
 module.exports = { name: 'fermi', run };

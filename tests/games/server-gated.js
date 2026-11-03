@@ -36,16 +36,28 @@ async function run(h, ctx){
     h.eq(r.x.S.status, 'won', 'gated: rounds won on the dealt session');
     h.eq(r.x.S.nonce, 'g1', 'gated: the dealt session is held');
   }
-  /* fermi: guess the served answer */
+  /* fermi: the served question is dealt - the cited value never ships and
+     the session scores the one estimate */
   {
     const live = h.boot('fermi', ['Q'], { now: T0, store: {} });
-    const served = serve('fermi', live.x.Q);
-    const r = h.boot('fermi', ['S', 'QS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.Q;
+    const served = serve('fermi', { t: full.t, q: full.q });
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gf1', today: 0, puzzle: served.puzzle } };
+      const ratio = Math.max(body.v / full.a, full.a / body.v);
+      const score = ratio <= 3 ? 3 : ratio <= 10 ? 2 : ratio <= 100 ? 1 : 0;
+      return { status: 200, body: { verdict: 'won', score,
+        reveal: { a: full.a, w: full.w } } };
+    };
+    const r = h.boot('fermi', ['S', 'QS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.QS === undefined, 'gated: fermi online boot has no bank');
     await h.flush();
-    r.env.els.guess.value = String(served.puzzle.a);
+    r.env.els.guess.value = String(full.a);
     r.env.els.btnGuess.click();
-    h.ok(r.x.S.scored, 'gated: fermi scored on the served answer');
+    await h.flush();
+    h.ok(r.x.S.scored, 'gated: fermi scored on the dealt question');
+    h.eq(r.x.S.nonce, 'gf1', 'gated: the fermi session is held');
   }
   /* cipher: the served quote decodes clean */
   {

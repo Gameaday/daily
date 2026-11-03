@@ -188,6 +188,15 @@ Every entity may also carry (nothing requires them yet):
   measured, at least two, with the maximum unique, so a tie never
   decides; at most two questions come from one dim family.
   Output: puzzles/superlative/puzzles.json and its bank file.
+- relativity: puzzles/relativity/recipe.json is { v: 1, days, seed,
+  margin, spread }: three dated lives a day, one question each. Every
+  round seats one life (a span of at least ten years), draws one anchor
+  end (birth or death) and two events strictly inside the life, in event
+  file order, names apart, distances never within the margin and years
+  never beyond the spread, so the answer is a judgement the record
+  settles. A life serves at most four days, never twice in one day and
+  never on consecutive days. Output: puzzles/relativity/puzzles.json and
+  its bank file.
 
 Canonical order is id sort everywhere, so any edit to the layer can
 reshuffle the whole pick schedule. Before launch that is free; after

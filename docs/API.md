@@ -14,9 +14,9 @@ that answers wins.
 
 - Request bodies are JSON, capped at 2048 bytes (413 above). Responses
   are JSON.
-- game is a manifest ledger name: one of the twelve gated page names
+- game is a manifest ledger name: one of the thirteen gated page names
   (bogus, well-actually, rounds, fermi, cipher, museum, lightbox,
-  sift, timeline, thread, brunch, superlative) or a generator name
+  sift, timeline, thread, brunch, superlative, relativity) or a generator name
   (sprint, rings, trace, grid, grid-hard).
 - day is the day index: days since the epoch 2026-11-02 in
   America/New_York, clamped at 0 before launch, bounded -1000..100000.
@@ -90,7 +90,7 @@ and answered 400):
 
     {"game": "grid", "day": 1, "value": 12, "id": "p3x9k2ab"}
 
-Evidence post (the twelve gated games):
+Evidence post (the thirteen gated games):
 
     {"game": "rounds", "day": 1, "id": "p3x9k2ab",
      "status": "won", "answer": 1865, "meta": {"guesses": 3},
@@ -98,8 +98,8 @@ Evidence post (the twelve gated games):
 
 status is won, lost or gave. The answer and meta are graded against
 the day's key (the meta caps below); the points are derived
-server-side. A loss or a give-up is 0 no matter the meta (fermi and
-superlative keep their partial scores). A nonce is the stronger claim:
+server-side. A loss or a give-up is 0 no matter the meta (fermi,
+superlative and relativity keep their partial scores). A nonce is the stronger claim:
 the session's own verdict, answer and counters override the client's,
 and the session is spent. An aged or unknown nonce simply falls back to
 grading what was posted, so a mid-game session loss costs the session's
@@ -151,6 +151,7 @@ fields, per game:
     museum         {"name": "the rosetta stone"} or {"clue": 1}
     bogus          {"pick": 0}
     superlative    {"pick": 2}
+    relativity     {"pick": 0}
     sift           {"pick": ["one", "two", "three"]}
     lightbox       {"grid": ["0110", ...]}
     cipher         {"check": {"Q": "e", ...}} or {"hint": 1, "have": {...}} or {"give": 1}
@@ -227,6 +228,15 @@ reaped 150 seconds after the gun.
 - Move: {"pick": index}, one per round in order; each spent round
   returns hit or miss with a (that round's answer index); the last
   carries final: true.
+- Evidence: answer the picks list; points are the correct rounds; won
+  only on a clean sweep.
+
+### relativity (three lives, one question each)
+
+- Strip: the rounds minus each round's answer index and fine print.
+- Move: {"pick": index}, one per round in order; each spent round
+  returns hit or miss with a (that round's answer index) and w (the
+  fine print that settles it); the last carries final: true.
 - Evidence: answer the picks list; points are the correct rounds; won
   only on a clean sweep.
 

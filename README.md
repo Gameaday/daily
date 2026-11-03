@@ -29,6 +29,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
 | /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |
 | /superlative/ | Superlative | A cohort from the record, a question at a time: every round asks which life it fits, and one life can answer twice |
+| /relativity/ | Relativity | Three lives a day, one question each: which event sat nearer the birth or the death |
 
 Each game is one self-contained index.html. The parts every game shares
 (day math, palette, countdown, curve client, help, share) live in
@@ -45,7 +46,7 @@ The puzzle is derived from the date, not stored per player:
 ## Puzzle delivery (server-side banks)
 
 The bank games (bogus, well-actually, rounds, fermi, cipher, museum,
-lightbox, sift, timeline, thread, brunch, superlative) keep their bank inline in the
+lightbox, sift, timeline, thread, brunch, superlative, relativity) keep their bank inline in the
 page, so solo and offline play work with zero infrastructure. When online, each page
 also asks the scores service for the day's puzzle:
 

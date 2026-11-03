@@ -112,6 +112,7 @@ async function run(h){
     await h.flush();
     for (let k = 0; k < 4; k++){
       lbL.x.S.marks[0][0] = lbSol[0][0] ? 0 : 1;
+      lbL.x.S.marks[0][k + 1] = 1; /* a fresh cell each exposure: the repeat guard wants four different boards */
       lbL.env.els.btnDevelop.click();
       await h.flush();
     }

@@ -131,9 +131,10 @@ async function run(h){
     const sfL = h.boot('sift', EXP,
       { now: T0, store: sfLst, servePuzzle: sfServed, stubBanks: true, serveDealt: sfDealer2 });
     await h.flush();
+    const sfWrong = [[0,0,0],[1,0,0],[0,1,0],[0,0,1]];
     for (let k = 0; k < 4; k++){
       sfL.x.sel.clear();
-      [sfIdx(0)[0], sfIdx(1)[0], sfIdx(2)[0]].forEach(i => sfL.x.sel.add(i));
+      sfWrong[k].forEach((t, ci) => sfL.x.sel.add(sfIdx(ci)[t])); /* a fresh trio each miss: the repeat guard wants four different picks */
       sfL.env.els.btnSubmit.click();
       await h.flush();
     }

@@ -372,7 +372,9 @@ const SHELL = (() => {
      the page hook on a 200 that carries a verdict. The busy guard is
      per session, so a double click costs nothing. An optional onDeal hook sees
      the deal's answer before the nonce is saved, for the games whose
-     deal itself carries the day's strip. Dealt rounds never
+     deal itself carries the day's strip. An optional onExpired
+     hook runs when a round expires, for the pages that meter more
+     than the nonce. Dealt rounds never
      run in solo mode or in an archive replay; callers guard those. */
   function makeDealt(cfg){
     let busy = false;
@@ -401,6 +403,7 @@ const SHELL = (() => {
         if (b.status === 409){ cfg.toast(cfg.copy.over); return; }
         if (b.status !== 200 || !b.body || !b.body.verdict){
           cfg.state().nonce = null;
+          if (cfg.onExpired) cfg.onExpired();
           cfg.save();
           cfg.toast(cfg.copy.expired);
           return;

@@ -146,19 +146,42 @@ function isDealt(){
   return DESIGN && Array.isArray(DESIGN.rc) && !DESIGN.g &&
     !isSolo() && !SHELL.isArchive;
 }
-/* the dealt session: one deal per day, held on the state and spent
-   one development at a time */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle && Array.isArray(d.body.puzzle.rc)) applyDesign(d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
+/* the page owns the game: which move each button builds and what each
+   verdict means; the session dance itself (the deal, the busy guard,
+   the triage, the nonce) lives in the shell now */
+async function developDealt(){
+  await session.play({ grid: S.marks.map(row => row.map(v => v === 1 ? '1' : (v === 2 ? '2' : '0')).join('')) }, body => {
+    const v = body.verdict;
+    if (v === 'won' || v === 'lost'){
+      S.status = v;
+      S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
+      if (body.reveal && Array.isArray(body.reveal.g)){
+        S.reveal = body.reveal;
+        applyDesign(Object.assign({}, DESIGN, S.reveal));
+      }
+      const st = S.stats;
+      if (v === 'won'){
+        st.played++; st.solved++; st.streak++;
+        st.max = Math.max(st.max, st.streak);
+      } else {
+        st.played++; st.streak = 0;
+      }
+      saveState(); showReveal();
+      return;
+    }
+    (body.bad || []).forEach(([r, c]) => {
+      const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+      if (el) el.classList.add('bad');
+    });
+    (body.need || []).forEach(([r, c]) => {
+      const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+      if (el) el.classList.add('miss');
+    });
+    S.mistakes = body.mistakes;
+    saveState(); renderMistakes();
+    setTimeout(() => document.querySelectorAll('.cell.bad,.cell.miss').forEach(el => el.classList.remove('bad','miss')), 1400);
+    toastMsg(['Not quite \u2014 study the flashes.','The film fogged a little \u2014 look again.','One more bad development and it\u2019s ruined.'][Math.min(S.mistakes - 1, 2)]);
+  });
 }
 async function loadPuzzle(){
   const L = typeof DESIGNS !== 'undefined' ? DESIGNS.length : 1;
@@ -246,61 +269,12 @@ function currentMatches(){
   return true;
 }
 
-let DEVING = false;
 $('btnDevelop').addEventListener('click', async () => {
   if (!DESIGN) return;
-  if (S.status !== 'playing' || DEVING) return;
+  if (S.status !== 'playing') return;
   /* the dealt day: the picture never shipped, so the development
      travels to the session and the spent film hands over the design */
-  if (isDealt()){
-    DEVING = true;
-    try {
-      const n = await ensureSession();
-      if (!n){ toastMsg('the darkroom is not answering right now, try again'); return; }
-      const grid = S.marks.map(row => row.map(v => v === 1 ? '1' : (v === 2 ? '2' : '0')).join(''));
-      let b = null;
-      try { b = await SHELL.dealt('/guess', { nonce: n, grid }); } catch (e) {}
-      if (!b){ toastMsg('the darkroom is not answering right now, try again'); return; }
-      if (b.status === 409){ toastMsg('this round is already over'); return; }
-      if (b.status !== 200 || !b.body || !b.body.verdict){
-        S.nonce = null; S.mistakes = 0;
-        saveState(); renderMistakes();
-        toastMsg('this round expired, develop again for a fresh one');
-        return;
-      }
-      const v = b.body.verdict;
-      if (v === 'won' || v === 'lost'){
-        S.status = v;
-        S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
-        if (b.body.reveal && Array.isArray(b.body.reveal.g)){
-          S.reveal = b.body.reveal;
-          applyDesign(Object.assign({}, DESIGN, S.reveal));
-        }
-        const st = S.stats;
-        if (v === 'won'){
-          st.played++; st.solved++; st.streak++;
-          st.max = Math.max(st.max, st.streak);
-        } else {
-          st.played++; st.streak = 0;
-        }
-        saveState(); showReveal();
-      } else {
-        (b.body.bad || []).forEach(([r, c]) => {
-          const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
-          if (el) el.classList.add('bad');
-        });
-        (b.body.need || []).forEach(([r, c]) => {
-          const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
-          if (el) el.classList.add('miss');
-        });
-        S.mistakes = b.body.mistakes;
-        saveState(); renderMistakes();
-        setTimeout(() => document.querySelectorAll('.cell.bad,.cell.miss').forEach(el => el.classList.remove('bad','miss')), 1400);
-        toastMsg(['Not quite \u2014 study the flashes.','The film fogged a little \u2014 look again.','One more bad development and it\u2019s ruined.'][Math.min(S.mistakes - 1, 2)]);
-      }
-    } finally { DEVING = false; }
-    return;
-  }
+  if (isDealt()){ developDealt(); return; }
   if (currentMatches()){
     S.status = 'won';
     S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
@@ -375,6 +349,28 @@ const toastMsg = SHELL.toast;
 const SYNC_GAME = 'lightbox';
 const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* the dealt session: one deal per day, held on the state and spent one
+   development at a time; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => {
+    if (body.puzzle && Array.isArray(body.puzzle.rc)) applyDesign(body.puzzle);
+  },
+  onExpired: () => {
+    S.mistakes = 0;
+    renderMistakes();
+  },
+  copy: {
+    unavailable: 'the darkroom is not answering right now, try again',
+    over: 'this round is already over',
+    expired: 'this round expired, develop again for a fresh one'
+  }
+});
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();

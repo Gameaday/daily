@@ -1145,7 +1145,7 @@ class Handler(BaseHTTPRequestHandler):
                     # the deal carries the question but never the key: the
                     # strip tables keep the answer server-side
                     payload = {"nonce": nonce, "today": today,
-                               "puzzle": dealt_puzzle(game, pz)}
+                               "puzzle": dealt_puzzle(game, pz, day)}
                 else:
                     payload = {"nonce": nonce, "today": today}
             self._json(payload)

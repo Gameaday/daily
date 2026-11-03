@@ -344,6 +344,74 @@ const SHELL = (() => {
     };
     return attempt(0);
   }
+  /* ---- dealt sessions: the one dance every dealt page dances ---- */
+  /* The live round is the same everywhere: open a session, post moves
+     until a terminal verdict, keep the reveal with the day's state. The
+     shell owns the dance (the deal, the busy guard, the triage, the
+     nonce, the copy) and the page owns the game: which move a button
+     builds, what a verdict means, and how the reveal folds back into
+     its puzzle model.
+
+       const session = SHELL.makeDealt({
+         game: 'thread',          // the ledger name /deal speaks
+         day: () => dayIndex,     // the live day the deal asks for
+         state: () => S,          // the page state; the nonce lives there
+         save: saveState,         // called after the shell moves the nonce
+         toast: toastMsg,         // the page toast
+         copy: {                  // the page's own words, kept as its own
+           unavailable: 'the thread is not answering right now, try again',
+           over: 'this round is already over',
+           expired: 'this round expired, check again for a fresh one'
+         }
+       });
+       await session.play({ chain: ids }, body => { ... });
+       session.reset();           // drop a stale nonce
+
+     play() is the whole /guess dance: it opens the session when none is
+     open, posts the move with the nonce, and hands the verdict body to
+     the page hook on a 200 that carries a verdict. The busy guard is
+     per session, so a double click costs nothing. Dealt rounds never
+     run in solo mode or in an archive replay; callers guard those. */
+  function makeDealt(cfg){
+    let busy = false;
+    async function session(){
+      const S = cfg.state();
+      if (S.nonce) return S.nonce;
+      let d = null;
+      try { d = await dealt('/deal', { game: cfg.game, day: cfg.day() }); } catch (e) {}
+      if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+        S.nonce = d.body.nonce;
+        cfg.save();
+        return S.nonce;
+      }
+      return null;
+    }
+    async function play(move, onBody){
+      if (busy) return;
+      busy = true;
+      try {
+        const n = await session();
+        if (!n){ cfg.toast(cfg.copy.unavailable); return; }
+        let b = null;
+        try { b = await dealt('/guess', Object.assign({ nonce: n }, move)); } catch (e) {}
+        if (!b){ cfg.toast(cfg.copy.unavailable); return; }
+        if (b.status === 409){ cfg.toast(cfg.copy.over); return; }
+        if (b.status !== 200 || !b.body || !b.body.verdict){
+          cfg.state().nonce = null;
+          cfg.save();
+          cfg.toast(cfg.copy.expired);
+          return;
+        }
+        await onBody(b.body);
+      } finally { busy = false; }
+    }
+    function reset(){
+      cfg.state().nonce = null;
+      cfg.save();
+    }
+    return { session, play, reset };
+  }
+
   try {
     const icons = document.querySelector('.icons');
     if (icons && !icons.querySelector('.home-link')){
@@ -435,5 +503,5 @@ const SHELL = (() => {
   return { TZ, EPOCH_KEY, etKey, todayKey, todayIndex, dayIndex, num, $,
            isArchive, parseViewDay, archiveHref,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, dealt, showUnavailable, recordStars, starTotal };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, dealt, showUnavailable, recordStars, starTotal, makeDealt };
 })();

@@ -515,21 +515,8 @@ function trayK(){
 function isDealt(){
   return !!PZ.s && !Array.isArray(PZ.m) && !isSolo() && !SHELL.isArchive;
 }
-/* the dealt session: one deal per day, held on the state and spent one
-   request at a time */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    saveState();
-    return S.nonce;
-  }
-  return null;
-}
-/* the reveal rides the spent round: fold the chain, the decoy split and
-   the links back in, then the ordinary reveal paths work unchanged */
+/* the reveal hook: fold the chain, the decoy split and the links back in,
+   then the ordinary reveal paths work unchanged */
 function mergeDealt(reveal){
   if (!reveal || !Array.isArray(reveal.m) || !Array.isArray(reveal.d)) return false;
   PZ.m = reveal.m.map(id => NODES_BY[id]);
@@ -537,58 +524,38 @@ function mergeDealt(reveal){
   if (Array.isArray(reveal.links)) PZ.links = reveal.links;
   return true;
 }
-let BUSY = false;
+/* the page owns the game: which move a check builds and what each verdict
+   means; the session dance itself (the deal, the busy guard, the triage,
+   the nonce) lives in the shell now */
 async function checkDealt(){
-  if (BUSY) return;
-  BUSY = true;
-  try {
-    const k = trayK();
-    const n = await ensureSession();
-    if (!n){ toastMsg('the thread is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, chain: S.slots.slice() }); } catch (e) {}
-    if (!b){ toastMsg('the thread is not answering right now, try again'); return; }
-    if (b.status === 409){ toastMsg('this round is already over'); return; }
-    if (b.status !== 200 || !b.body || !b.body.verdict){
-      S.nonce = null;
-      toastMsg('this round expired, check again for a fresh one');
-      return;
-    }
+  await session.play({ chain: S.slots.slice() }, body => {
     S.started = true;
-    if (b.body.verdict === 'won'){
-      mergeDealt(b.body.reveal);
-      S.reveal = b.body.reveal;
-      S.checks = b.body.checks;
+    if (body.verdict === 'won'){
+      mergeDealt(body.reveal);
+      S.reveal = body.reveal;
+      S.checks = body.checks;
       S.locked = S.slots.map(() => true);
       saveState(); render();
       finish('won');
     } else {
-      S.locked = (b.body.lock || []).map(Boolean);
-      S.checks = b.body.checks;
+      S.locked = (body.lock || []).map(Boolean);
+      S.checks = body.checks;
       saveState(); render();
-      toastMsg(b.body.right + ' of ' + k + ' in place');
+      toastMsg(body.right + ' of ' + trayK() + ' in place');
     }
-  } finally { BUSY = false; }
+  });
 }
 async function giveDealt(){
-  if (BUSY) return;
-  BUSY = true;
-  try {
-    const n = await ensureSession();
-    if (!n){ toastMsg('the thread is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, give: 1 }); } catch (e) {}
-    if (!b){ toastMsg('the thread is not answering right now, try again'); return; }
-    if (b.status === 409){ toastMsg('this round is already over'); return; }
-    if (b.status !== 200 || !b.body || b.body.verdict !== 'gave' || !b.body.reveal){
-      S.nonce = null;
+  await session.play({ give: 1 }, body => {
+    if (body.verdict !== 'gave' || !body.reveal){
+      session.reset();
       toastMsg('this round expired, check again for a fresh one');
       return;
     }
-    mergeDealt(b.body.reveal);
-    S.reveal = b.body.reveal;
+    mergeDealt(body.reveal);
+    S.reveal = body.reveal;
     finish('gaveup');
-  } finally { BUSY = false; }
+  });
 }
 function finish(status){
   S.status = status;
@@ -654,6 +621,20 @@ const toastMsg = m => SHELL.toast(m, 1600);
 const SYNC_GAME = 'thread';
 const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+/* the dealt session: one deal per day, held on the state and spent one
+   move at a time; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  copy: {
+    unavailable: 'the thread is not answering right now, try again',
+    over: 'this round is already over',
+    expired: 'this round expired, check again for a fresh one'
+  }
+});
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();

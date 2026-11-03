@@ -268,9 +268,11 @@ reaped 150 seconds after the gun.
 - Move: {"order": [event indexes]}, the player's arrangement; a miss
   returns right (how many stand), lock (which positions stand) and
   checks, never a year; the exact order wins with reveal (the events
-  with their years); {"give": 1} gives with the same reveal.
+  with their years); the miss that spends the budget loses with the
+  same reveal; {"give": 1} gives with it.
 - Evidence: answer the years in chronological order; meta checks
-  1..999; points 4 minus checks, floored at 0.
+  1..n+1, one more than the day's event count (the budget a real
+  player could ever need); points 4 minus checks, floored at 0.
 
 ### thread (connect start to end)
 

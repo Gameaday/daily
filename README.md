@@ -24,7 +24,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /lightbox/ | Lightbox | A 7x7 nonogram; four bad developments fog the film |
 | /sprint/ | Sprint | Five anagrams against one 90-second clock that never restarts |
 | /cipher/ | Cipher | A substitution cipher hiding a line of history; hints cost |
-| /timeline/ | Timeline | Five events, no dates; each check locks correct placements |
+| /timeline/ | Timeline | Five events, no dates; checks lock correct placements and six spend the day |
 | /museum/ | Museum | Name the artifact from five clues, obscure to obvious |
 | /thread/ | Thread | Two figures at the ends; build the one chain of connection, set the decoys aside |
 | /brunch/ | Brunch | One city, one year, four names; spot the one who was somewhere else |

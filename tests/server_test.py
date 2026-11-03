@@ -455,9 +455,13 @@ def main():
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
               "evidence: a cipher win on the fifth hint derives 0, not a rejection")
         s, b = ev("timeline", {"id": "ev28", "status": "won", "answer": tyears,
-                               "meta": {"checks": 12}})
+                               "meta": {"checks": 6}})
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
-              "evidence: a timeline win on the twelfth check derives 0, not a rejection")
+              "evidence: a timeline win on the last budget check derives 0, not a rejection")
+        s, _b = ev("timeline", {"id": "ev29", "status": "won", "answer": tyears,
+                               "meta": {"checks": 7}})
+        check(s == 422,
+              "evidence: a check past the day's own budget is rejected")
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "value": 3, "id": "legacy1"})
         check(s == 400, "cutover: a self-reported value post for a gated game is refused")
@@ -989,6 +993,27 @@ def main():
                                     "answer": tyears, "nonce": tln2})
         check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.25,
               "dealt submit: a given-up timeline day overrides the claimed win")
+        # --- the timeline budget: the day's own size, one more check
+        #     than its events. Five more misses, then the sixth ends
+        #     the day with the reveal riding it ---
+        s, b = post("/api/deal", {"game": "timeline", "day": TODAY})
+        tln3 = b["nonce"]
+        for _m in range(5):
+            s, b = post("/api/guess", {"nonce": tln3, "move": {"order": tlwrong}})
+            check(s == 200 and b.get("verdict") == "miss",
+                  "guess: the checks before the budget ride as misses")
+        s, b = post("/api/guess", {"nonce": tln3, "move": {"order": tlwrong}})
+        check(s == 200 and b.get("verdict") == "lost" and b.get("checks") == 6
+              and all(e.get("y") is not None
+                      for e in b.get("reveal", {}).get("events", [])),
+              "guess: the budget-spending miss loses the day, the years ride it")
+        s, _b = post("/api/guess", {"nonce": tln3, "move": {"order": tlwrong}})
+        check(s == 409, "guess: a spent timeline day takes no more checks")
+        s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
+                                    "id": "dv26", "status": "won",
+                                    "answer": tyears, "nonce": tln3})
+        check(s == 200 and b.get("count") == 5 and b.get("mean") == 1.0,
+              "dealt submit: a lost timeline day derives 0, never the claim")
         # --- dealt thread: the chain never ships, so every check travels
         #     to the session and it meters the checks itself ---
         thm = list(tp["m"])

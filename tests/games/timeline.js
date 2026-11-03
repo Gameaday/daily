@@ -36,6 +36,27 @@ async function run(h){
     h.eq(q.status, 'gave', 'timeline: a give-up posts the gave status');
     h.eq(q.meta.checks, 0, 'timeline: zero checks ride the wire');
 
+    /* the checks budget: one more check than cards. Six deranged
+       orders, no card ever right, and the sixth miss spends the day */
+    const s2c = {};
+    r = h.boot('timeline', EXP, { now: T0, store: s2c });
+    const win0 = r.x.SORTED.map(i => r.x.PICK.indexOf(i));
+    const ders = [[1,2,3,4,0],[2,3,4,0,1],[3,4,0,1,2],[4,0,1,2,3],[1,0,3,4,2],[2,3,0,4,1]];
+    for (const d of ders){
+      r.x.S.order = d.map(i => win0[i]);
+      r.env.els.btnCheck.click();
+    }
+    h.eq(r.x.S.status, 'lost', 'timeline: the local sixth miss spends the day');
+    h.eq(r.x.S.checks, 6, 'timeline: the local budget was six checks');
+    h.eq(r.x.S.order.join(','), win0.join(','),
+      'timeline: the lost day lays the order out');
+    await h.flush();
+    const lp = h.lastPost(r.env).body;
+    h.eq(lp.status, 'lost', 'timeline: the local lost status rides the wire');
+    h.eq(lp.meta.checks, 6, 'timeline: the spent budget rides the wire');
+    h.ok(String(r.env.els.lane.innerHTML).indexOf('????') < 0,
+      'timeline: the lost day reveals its years');
+
     /* drag-to-reorder: the move the pointer handlers drive */
     const s3 = {};
     r = h.boot('timeline', ['S', 'PICK', 'SORTED', 'moveCard'], { now: T0, store: s3 });
@@ -134,6 +155,46 @@ async function run(h){
     const tlq = h.lastPost(r4.env).body;
     h.eq(tlq.status, 'gave', 'timeline: the give-up posts the gave status');
     h.eq(tlq.nonce, 'tl1', 'timeline: the give-up names its session');
+    /* the dealt budget: the sixth miss spends the day at the session
+       and the years ride the lost round */
+    let tlChecks2 = 0;
+    const tlDealer2 = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'tl2', today: 0, puzzle: tlServed().puzzle } };
+      if (body.move.give !== undefined)
+        return { status: 200, body: { verdict: 'gave', reveal: { events: tlEvents } } };
+      tlChecks2++;
+      const lock = body.move.order.map((v, i) => v === tlWant[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks: tlChecks2,
+          reveal: { events: tlEvents } } };
+      if (tlChecks2 >= 6)
+        return { status: 200, body: { verdict: 'lost', checks: tlChecks2,
+          reveal: { events: tlEvents } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks: tlChecks2 } };
+    };
+    const tlStore3 = {};
+    const r6 = h.boot('timeline', ['S'],
+      { now: T0, store: tlStore3, servePuzzle: tlServed(), stubBanks: true, serveDealt: tlDealer2 });
+    await h.flush();
+    const tlWin = tlWant.slice();
+    const tlDers = [[1,2,3,4,0],[2,3,4,0,1],[3,4,0,1,2],[4,0,1,2,3],[1,0,3,4,2],[2,3,0,4,1]];
+    for (const d of tlDers){
+      r6.x.S.order = d.map(i => tlWin[i]);
+      r6.env.els.btnCheck.click();
+      await h.flush();
+    }
+    h.eq(r6.x.S.status, 'lost', 'timeline: the dealt sixth miss spends the day');
+    h.eq(r6.x.S.checks, 6, 'timeline: the dealt budget was six checks');
+    h.eq(r6.x.S.order.join(','), tlWant.join(','),
+      'timeline: the lost dealt day lays the order out');
+    h.ok(String(r6.env.els.lane.innerHTML).indexOf('????') < 0,
+      'timeline: the years arrived only with the lost reveal');
+    const tlp6 = h.lastPost(r6.env).body;
+    h.eq(tlp6.status, 'lost', 'timeline: the lost status rides the wire');
+    h.eq(tlp6.meta.checks, 6, 'timeline: the session check meter rides the wire');
+    h.eq(tlp6.nonce, 'tl2', 'timeline: the lost evidence names its session');
     /* an archive replay carries the years again and never touches the
        dealt endpoints */
     const tlArc = { day: 0, today: 1, puzzle: { events: tlEvents } };

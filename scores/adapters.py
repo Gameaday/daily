@@ -7,7 +7,7 @@ never change; the rows carry the game."""
 
 import math
 
-from helpers import (_cipher_sub, _mulberry32, _name_norm, _runs,
+from helpers import (_cipher_sub, _meta_int, _mulberry32, _name_norm, _runs,
                      _text_norm, _alnum_norm, round_feedback)
 from puzzles import PUZZLES, _list_entry, _window_entry
 
@@ -52,7 +52,9 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # games deal too: timeline ships its events without their years and
 # thread ships its offered figures as one shuffled tray without the
 # chain, the decoy split or the links, so both sessions grade every
-# check and meter the checks themselves. The
+# check and meter the checks themselves; timeline's budget is its
+# day's own size (the miss that spends it ends the day) while thread's
+# checks stay generous. The
 # residual honesty note that stays open: a rounds loss reveal hands over
 # the key a second session could mine, and sprint's solved count is
 # still the client's word inside the server-stamped window.
@@ -482,7 +484,7 @@ def _guess_cipher(sess, move, now):
                        "total": len(order)}
 
 def _guess_timeline(sess, move, now):
-    """timeline: each order checks at the session - the years ride the spent round."""
+    """timeline: each order checks at the session - the budget is the day's own size and the years ride the spent round."""
     pz = _window_entry("timeline", sess["day"])
     if pz is None:
         raise _Reject(404, "no answer key")
@@ -522,6 +524,18 @@ def _guess_timeline(sess, move, now):
                        "checks": sess["guesses"],
                        "reveal": {"events": evs}}
         else:
+            if sess["guesses"] >= len(evs) + 1:
+                # the budget is the day's own size: one opening miss,
+                # one lock per further miss, the last pair's wrong
+                # guess, then the win - the (n+1)-th miss spends the
+                # day and the years ride it
+                sess["done"] = True
+                sess["verdict"] = "lost"
+                sess["ans"] = sorted(ev["y"] for ev in evs)
+                sess["done_at"] = now
+                return {"verdict": "lost",
+                           "checks": sess["guesses"],
+                           "reveal": {"events": evs}}
             # honest feedback: which positions stand,
             # never a year
             return {"verdict": "miss", "right": right,
@@ -758,7 +772,14 @@ def _evidence_timeline(day, ans, meta):
             or not all(isinstance(y, int) and not isinstance(y, bool)
                        for y in ans) or ans != years:
         return None, "wrong answer"
-    return max(0, 4 - meta["checks"]), None
+    # the checks bound is the day's own size, not a hand number: n
+    # events need at most n+1 checks (one opening miss, one lock per
+    # further miss, the last pair's wrong guess, then the win), so a
+    # wider day widens the budget on its own
+    checks = _meta_int(meta, "checks", 1, len(years) + 1)
+    if checks is None:
+        return None, "bad meta"
+    return max(0, 4 - checks), None
 
 
 def _evidence_thread(day, ans, meta):
@@ -862,7 +883,10 @@ def _transform_thread(pz, day):
 # session grades a move ("guess"), how a gated submission's answer is
 # graded against the day's key ("evidence"), which play facts a
 # nonce-bearing submit reports ("meta") and the caps those facts must
-# obey ("caps"); fermi and superlative grade even a loss, so they say so
+# obey ("caps"); timeline declares no caps because its checks bound is
+# its day's own size (n+1 for n events), so the bound lives in its
+# evidence validator and widens with the day; fermi and superlative
+# grade even a loss, so they say so
 # ("grades_loss"). The strip side rides along: the keys a live dealt day
 # must never ship ("strip", and the nested ones under "deep"), the
 # transform that ships a derived puzzle instead of the stored one
@@ -903,7 +927,7 @@ DEALT_ADAPTERS = {
                       "strip": ("q",), "transform": _transform_cipher},
     "timeline":      {"guess": _guess_timeline,
                       "evidence": _evidence_timeline,
-                      "meta": _meta_checks, "caps": (("checks", 1, 999),),
+                      "meta": _meta_checks,
                       "strip": ("y",), "transform": _transform_timeline,
                       "windowed": True},
     "thread":        {"guess": _guess_thread, "evidence": _evidence_thread,

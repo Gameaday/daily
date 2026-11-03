@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Five events from history, no dates given. Put them back in order — correct placements lock, every check counts." />
+<meta name="description" content="Five events from history, no dates given. Put them back in order. Correct placements lock, every check counts, and six spend the day." />
 <title>Timeline · put the day back in order</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3EW.%3C/text%3E%3C/svg%3E"/>
 <link rel="stylesheet" href="../shell/common.css"/>
@@ -67,7 +67,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
   </div>
 
-  <p class="lead"><b>Five moments from history, shuffled.</b> No dates shown. Put them in order, then check.</p>
+  <p class="lead"><b>Five moments from history, shuffled.</b> No dates shown. Put them in order, then check. Six checks are the day's whole budget.</p>
 
   <div class="lane" id="lane"></div>
   <p class="checknote" id="checknote">tap a card to start arranging</p>
@@ -97,6 +97,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <h2>How to play</h2>
     <p>Five events appear in a random order with <b>no dates</b>. Drag a card to a new slot, or tap two cards to swap them.</p>
     <p><b>Check order</b> counts as one check and tells you how many cards are in the right place — correct ones <b>lock</b> and show their year, so each check shrinks the problem.</p>
+    <p>The budget is one more check than there are cards: five cards, six checks. The miss that spends the last one ends the day and reveals the years, so spend them with care.</p>
     <p>The score is how few checks you needed. A perfect read of history is <b>one</b>.</p>
     <p><b>Give up</b> ends the day and reveals the years, laid out properly.</p>
     <button class="close" data-close>Onward</button>
@@ -216,6 +217,10 @@ function initDay(){
 /* ---------------- dom ---------------- */
 function evAt(i){ return EVO[PICK[S.order[i]]]; }
 function allLocked(){ return S.locked.every(Boolean); }
+/* the checks budget is the day's own size: one opening miss, then one
+   lock per further miss, then the last pair's wrong guess, then the
+   win - so n cards mean n+1 checks, and a wider day widens it */
+function checkBudget(){ return EVO.length + 1; }
 
 function render(){
   if (!EVO || !S) return;
@@ -232,7 +237,8 @@ function render(){
   $('lane').innerHTML = html;
   $('checknote').textContent = S.status !== 'playing'
     ? 'the day, in order'
-    : (S.sel != null ? 'now tap another card to swap' : 'checks used: ' + S.checks);
+    : (S.sel != null ? 'now tap another card to swap'
+      : 'checks used: ' + S.checks + ' of ' + checkBudget());
   $('btnCheck').disabled = S.status !== 'playing';
   $('btnGiveUp').disabled = S.status !== 'playing';
 }
@@ -355,6 +361,7 @@ $('btnCheck').addEventListener('click', () => {
   }
   saveState(); render();
   if (allLocked()) finish('won');
+  else if (S.checks >= checkBudget()) finish('lost');
   else toastMsg(right + (right === 1 ? ' card is' : ' cards are') + ' in the right place');
 });
 $('btnGiveUp').addEventListener('click', () => {
@@ -395,6 +402,12 @@ async function checkDealt(){
       S.locked = [true, true, true, true, true];
       saveState(); render();
       finish('won');
+    } else if (body.verdict === 'lost'){
+      /* the spent budget: the years ride the lost day */
+      S.checks = body.checks;
+      mergeYears(body.reveal);
+      S.reveal = body.reveal;
+      finish('lost');
     } else {
       S.locked = (body.lock || []).map(Boolean);
       S.checks = body.checks;
@@ -437,6 +450,7 @@ function shareText(){
   if (S.status === 'won'){
     return 'Timeline No. ' + num + ' \u00b7 ordered in ' + S.checks + (S.checks === 1 ? ' check' : ' checks') + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83D\uDCC5';
   }
+  if (S.status === 'lost') return 'Timeline No. ' + num + ' \u00b7 spent the checks \uD83D\uDCC5';
   return 'Timeline No. ' + num + ' \u00b7 gave up on the order \uD83D\uDCC5';
 }
 function showReveal(){
@@ -450,13 +464,14 @@ function showReveal(){
   const won = S.status === 'won';
   $('verdict').textContent = won
     ? (S.checks === 1 ? 'Read it like a chronicle.' : 'Order restored.')
-    : 'The centuries, rearranged by hand.';
+    : (S.status === 'lost' ? 'Out of checks; the order stands revealed.'
+      : 'The centuries, rearranged by hand.');
   if (!won) $('verdict').classList.add('lost');
   render();
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 solved ' + st.solved + '/' + st.played;
   $('actbox').style.display = 'none'; /* the day is done - the play UI goes quiet */
   $('reveal').classList.add('show');
-  syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
+  syncBoard({ status: S.status === 'won' ? 'won' : S.status === 'lost' ? 'lost' : 'gave',
               answer: Array.from({length: 5}, (_, i) => evAt(i).y),
               meta: { checks: S.checks }, points: S.pts, nonce: S.nonce });
 }

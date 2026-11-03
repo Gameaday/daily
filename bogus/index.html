@@ -239,52 +239,27 @@ function finish(){
   saveState();
 }
 
-/* the dealt session: one deal per day, held on the state and reused by
-   every pick */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle) puzzle = Object.assign({}, puzzle, d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
-}
-
-async function pick(i){
-  if (S.status !== 'playing' || S.picked.includes(i)) return;
-  /* the dealt day: the lie never shipped, so every pick travels to the
-     session and the verdict (and any reveal) rides the spent pick */
-  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive){
-    const n = await ensureSession();
-    if (!n){ toast('the passage is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
-    if (!b){ toast('the passage is not answering right now, try again'); return; }
-    if (b.status === 409){ toast('this round is already over'); return; }
-    if (b.status !== 200 || !b.body || !b.body.verdict){
-      S.nonce = null; saveState();
-      toast('this round expired, pick again for a fresh one');
-      return;
-    }
+/* the dealt day: the lie never shipped, so every pick travels to the
+   shell's session and the verdict (and any reveal) rides the spent
+   pick; the session itself is the one dance every dealt page dances,
+   from the shell */
+async function pickDealt(i){
+  await session.play({ pick: i }, b => {
     S.picked.push(i);
     const el = passageEl.querySelector(`[data-i="${i}"]`);
-    if (b.body.verdict === 'won'){
+    if (b.verdict === 'won'){
       S.status = 'won';
       S.lie = i;
-      S.reveal = { w: b.body.reveal.w };
+      S.reveal = { w: b.reveal.w };
       if (el) el.classList.add('lie','win');
       passageEl.classList.add('done');
       finish();
       return;
     }
     if (el) el.classList.add('wrong');
-    if (b.body.verdict === 'lost'){
-      S.lie = b.body.reveal.l;
-      S.reveal = { w: b.body.reveal.w };
+    if (b.verdict === 'lost'){
+      S.lie = b.reveal.l;
+      S.reveal = { w: b.reveal.w };
       S.status = 'lost';
       applyMarks(false);
       finish();
@@ -292,6 +267,14 @@ async function pick(i){
     }
     renderPicks();
     saveState();
+  });
+}
+async function pick(i){
+  if (S.status !== 'playing' || S.picked.includes(i)) return;
+  /* the dealt day: the lie never shipped, so every pick travels to the
+     session and the verdict (and any reveal) rides the spent pick */
+  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive){
+    pickDealt(i);
     return;
   }
   S.picked.push(i);
@@ -351,7 +334,22 @@ function renderStats(){
 
 /* ---------------- share ---------------- */
 const toast = SHELL.toast;
-SHELL.wireShare(shareText);
+
+/* the dealt session: the shell owns the deal, the nonce, the busy guard
+   and the triage; the page owns the pick and its verdicts */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toast,
+  onDeal: body => { if (body.puzzle) puzzle = Object.assign({}, puzzle, body.puzzle); },
+  copy: {
+    unavailable: 'the passage is not answering right now, try again',
+    over: 'this round is already over',
+    expired: 'this round expired, pick again for a fresh one'
+  }
+});SHELL.wireShare(shareText);
 
 /* ---------------- countdown to next puzzle (next ET midnight) ---------------- */
 

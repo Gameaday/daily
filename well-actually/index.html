@@ -288,50 +288,25 @@ function finish(){
   saveState();
 }
 
-/* the dealt session: one deal per day, held on the state and reused by
-   every pick and the correction attempt */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle) puzzle = Object.assign({}, puzzle, d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
-}
-
-async function pick(i){
-  if (S.status !== 'playing' || S.picked.includes(i)) return;
-  /* the dealt day: the lie never shipped, so every pick travels to the
-     session and the verdict (and any reveal) rides the spent pick */
-  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive){
-    const n = await ensureSession();
-    if (!n){ toast('the statement is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
-    if (!b){ toast('the statement is not answering right now, try again'); return; }
-    if (b.status === 409){ toast('this round is already over'); return; }
-    if (b.status !== 200 || !b.body || !b.body.verdict){
-      S.nonce = null; saveState();
-      toast('this round expired, pick again for a fresh one');
-      return;
-    }
+/* the dealt day: the lie never shipped, so every pick and the
+   correction travel to the shell's session and the verdict (and any
+   reveal) rides the spent move; the session itself is the one dance
+   every dealt page dances, from the shell */
+async function pickDealt(i){
+  await session.play({ pick: i }, b => {
     S.picked.push(i);
     const el = statementEl.querySelector(`[data-i="${i}"]`);
-    if (b.body.verdict === 'found'){
+    if (b.verdict === 'found'){
       S.status = 'found';
       S.lie = i;
       if (el) el.classList.add('lie','win');
       statementEl.classList.add('done');
       $('bonus').classList.add('show');
       setTimeout(() => $('binput').focus(), 100);
-    } else if (b.body.verdict === 'lost'){
+    } else if (b.verdict === 'lost'){
       if (el) el.classList.add('wrong');
-      S.lie = b.body.reveal.l;
-      S.reveal = { c: b.body.reveal.c, w: b.body.reveal.w };
+      S.lie = b.reveal.l;
+      S.reveal = { c: b.reveal.c, w: b.reveal.w };
       S.status = 'lost';
       finish();
       return;
@@ -340,6 +315,29 @@ async function pick(i){
     }
     renderPicks();
     saveState();
+  });
+}
+async function submitBonusDealt(val){
+  await session.play({ correction: val }, b => {
+    if (!b.reveal){
+      session.reset();
+      toast('this round expired, pick again for a fresh one');
+      return;
+    }
+    S.typed = val;
+    S.bonus = b.bonus;
+    S.reveal = { c: b.reveal.c, w: b.reveal.w };
+    S.status = 'won';
+    $('bonus').classList.remove('show');
+    finish();
+  });
+}
+async function pick(i){
+  if (S.status !== 'playing' || S.picked.includes(i)) return;
+  /* the dealt day: the lie never shipped, so every pick travels to the
+     session and the verdict (and any reveal) rides the spent pick */
+  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive){
+    pickDealt(i);
     return;
   }
   S.picked.push(i);
@@ -373,21 +371,7 @@ async function submitBonus(){
   /* the dealt day: the correction attempt travels to the session and the
      canonical reveal rides the spent attempt */
   if (typeof S.lie === 'number' && !isSolo() && !SHELL.isArchive){
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: S.nonce, correction: val }); } catch (e) {}
-    if (!b){ toast('the statement is not answering right now, try again'); return; }
-    if (b.status === 409){ toast('this round is already over'); return; }
-    if (b.status !== 200 || !b.body || !b.body.reveal){
-      S.nonce = null; saveState();
-      toast('this round expired, pick again for a fresh one');
-      return;
-    }
-    S.typed = val;
-    S.bonus = b.body.bonus;
-    S.reveal = { c: b.body.reveal.c, w: b.body.reveal.w };
-    S.status = 'won';
-    $('bonus').classList.remove('show');
-    finish();
+    submitBonusDealt(val);
     return;
   }
   S.typed = val;
@@ -433,7 +417,23 @@ function renderStats(){
 
 /* ---------------- share ---------------- */
 const toast = SHELL.toast;
-SHELL.wireShare(shareText);
+
+/* the dealt session: the shell owns the deal, the nonce, the busy guard
+   and the triage; the page owns the pick, the correction and their
+   verdicts */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toast,
+  onDeal: body => { if (body.puzzle) puzzle = Object.assign({}, puzzle, body.puzzle); },
+  copy: {
+    unavailable: 'the statement is not answering right now, try again',
+    over: 'this round is already over',
+    expired: 'this round expired, pick again for a fresh one'
+  }
+});SHELL.wireShare(shareText);
 
 /* ---------------- countdown to next puzzle (next ET midnight) ---------------- */
 

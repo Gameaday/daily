@@ -142,19 +142,33 @@ function renderOpts(){
    the reveal rides the session and the seats mark from what came back */
 function seatKey(){ return (S.reveal && typeof S.reveal.a === 'number') ? S.reveal.a : EV.a; }
 
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle) EV = Object.assign({}, EV, d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
+/* the dealt day: the table arrives without its impostor, so the pick
+   travels to the session and the verdict rides back with the reveal */
+function isDealt(){
+  return EV && typeof EV.a !== 'number' && !isSolo() && !SHELL.isArchive;
 }
-
+/* the page owns the game: which move each button builds and what each
+   verdict means; the session dance itself (the deal, the busy guard,
+   the triage, the nonce) lives in the shell now */
+async function pickDealt(i){
+  await session.play({ pick: i }, body => {
+    if (!body.reveal){
+      session.reset();
+      toastMsg('this table expired, pick again for a fresh one');
+      return;
+    }
+    S.pick = i;
+    S.reveal = { a: body.reveal.a, w: body.reveal.w };
+    EV.a = body.reveal.a; EV.w = body.reveal.w;
+    const st = S.stats;
+    S.status = body.verdict === 'won' ? 'won' : 'lost';
+    if (S.status === 'won'){ st.played++; st.streak++; st.max = Math.max(st.max, st.streak); }
+    else { st.played++; st.streak = 0; }
+    saveState();
+    markSeats();
+    showReveal();
+  });
+}
 function markSeats(){
   for (let i = 0; i < EV.opts.length; i++){
     const b = $('opt' + i);
@@ -167,33 +181,9 @@ function markSeats(){
 
 async function pick(i){
   if (!EV || S.status !== 'playing') return;
-  if (typeof EV.a !== 'number' && !isSolo() && !SHELL.isArchive){
-    /* the live day plays dealt: the impostor never ships, so the pick
-       travels to the session and the verdict travels back with the reveal */
-    const n = await ensureSession();
-    if (!n){ toastMsg('the table is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
-    if (!b){ toastMsg('the table is not answering right now, try again'); return; }
-    if (b.status === 409){ toastMsg('this round is already over'); return; }
-    if (b.status !== 200 || !b.body || !b.body.reveal){
-      S.nonce = null; saveState();
-      toastMsg('this table expired, pick again for a fresh one');
-      return;
-    }
-    S.pick = i;
-    S.nonce = n;
-    S.reveal = { a: b.body.reveal.a, w: b.body.reveal.w };
-    EV.a = b.body.reveal.a; EV.w = b.body.reveal.w;
-    const st = S.stats;
-    S.status = b.body.verdict === 'won' ? 'won' : 'lost';
-    if (S.status === 'won'){ st.played++; st.streak++; st.max = Math.max(st.max, st.streak); }
-    else { st.played++; st.streak = 0; }
-    saveState();
-    markSeats();
-    showReveal();
-    return;
-  }
+  /* the live day plays dealt: the impostor never ships, so the pick
+     travels to the session and the verdict travels back with the reveal */
+  if (isDealt()){ pickDealt(i); return; }
   S.pick = i;
   const st = S.stats;
   if (i === EV.a){
@@ -240,6 +230,24 @@ function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 /* ---------------- share / toast ---------------- */
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
+
+/* the dealt session: one deal per day, held on the state and spent one
+   pick at a time; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => {
+    if (body.puzzle) EV = Object.assign({}, EV, body.puzzle);
+  },
+  copy: {
+    unavailable: 'the table is not answering right now, try again',
+    over: 'this round is already over',
+    expired: 'this table expired, pick again for a fresh one'
+  }
+});
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();

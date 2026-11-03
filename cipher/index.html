@@ -167,11 +167,39 @@ function buildSub(rnd){
 const SUB = buildSub(mulberry32(dayIndex * 668265263 % 4294967296 + 29));
 function applyQuote(q){
   Q = q;
-  CIPHER = [...q.q].map(ch => /[A-Z]/.test(ch) ? SUB.enc[ch] : ch);
-  /* frequency order of cipher letters in today's quote */
-  const freq = {};
-  [...q.q].forEach(ch => { if (/[A-Z]/.test(ch)) freq[SUB.enc[ch]] = (freq[SUB.enc[ch]] || 0) + 1; });
-  FREQ_ORDER = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+  if (typeof q.q === 'string'){
+    CIPHER = [...q.q].map(ch => /[A-Z]/.test(ch) ? SUB.enc[ch] : ch);
+    /* frequency order of cipher letters in today's quote */
+    const freq = {};
+    [...q.q].forEach(ch => { if (/[A-Z]/.test(ch)) freq[SUB.enc[ch]] = (freq[SUB.enc[ch]] || 0) + 1; });
+    FREQ_ORDER = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+  } else {
+    /* the dealt day ships the ciphertext alone: the quote and the
+       substitution stay server-side */
+    CIPHER = [...q.c];
+    const freq = {};
+    CIPHER.forEach(ch => { if (/[A-Z]/.test(ch)) freq[ch] = (freq[ch] || 0) + 1; });
+    FREQ_ORDER = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+  }
+}
+/* the dealt day: the ciphertext arrived without the quote, so the
+   check, the hint and the codebook travel to the session */
+function isDealt(){
+  return Q && typeof Q.c === 'string' && !Q.q && !isSolo() && !SHELL.isArchive;
+}
+/* the dealt session: one deal per day, held on the state and spent
+   one request at a time */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle && typeof d.body.puzzle.c === 'string') applyQuote(d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
 }
 async function loadPuzzle(){
   const L = typeof QUOTES !== 'undefined' ? QUOTES.length : 1;
@@ -197,12 +225,13 @@ saveState();
 /* ---------------- dom ---------------- */
 
 function decodedChar(i){
-  const ch = Q.q[i];
+  const ch = CIPHER[i];
   if (!/[A-Z]/.test(ch)) return ch;
-  const c = CIPHER[i];
-  return S.map[c] || '';
+  return S.map[ch] || '';
 }
 function solvedP(){
+  /* the dealt day's quote never shipped: the session settles the day */
+  if (isDealt()) return false;
   for (let i = 0; i < Q.q.length; i++){
     if (/[A-Z]/.test(Q.q[i]) && decodedChar(i) !== Q.q[i]) return false;
   }
@@ -211,10 +240,10 @@ function solvedP(){
 function render(){
   let html = '', word = '';
   const flush = () => { if (word){ html += '<span class="word">' + word + '</span>'; word = ''; } };
-  for (let i = 0; i < Q.q.length; i++){
-    const ch = Q.q[i];
+  for (let i = 0; i < CIPHER.length; i++){
+    const ch = CIPHER[i];
     if (/[A-Z]/.test(ch)){
-      const c = CIPHER[i];
+      const c = ch;
       const d = S.map[c] || '';
       const cls = 'slot' + (S.sel === c ? ' sel' : '') + (S.status !== 'playing' && d ? ' done' : '');
       word += '<span class="' + cls + '" data-c="' + c + '"><i class="cl">' + c + '</i><b class="pl">' + d + '</b></span>';
@@ -251,7 +280,7 @@ function nextOpen(c){
   const start = CIPHER.indexOf(c);
   for (let k = 1; k <= CIPHER.length; k++){
     const i = (start + k) % CIPHER.length;
-    if (/[A-Z]/.test(Q.q[i]) && !S.map[CIPHER[i]]) return CIPHER[i];
+    if (/[A-Z]/.test(CIPHER[i]) && !S.map[CIPHER[i]]) return CIPHER[i];
   }
   return null;
 }
@@ -263,7 +292,8 @@ function assign(p){
      filled (the quote sets the order, not the frequency table); once every
      space holds a guess, advance to the next wrong one instead of dropping
      the selection, so typing keeps flowing until the board is solved */
-  const next = nextOpen(S.sel) || FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]);
+  const next = nextOpen(S.sel) ||
+    (isDealt() ? null : FREQ_ORDER.find(c => S.map[c] !== SUB.dec[c]));
   S.sel = next || null;
   if (!S.sel) kbd.blur();
   saveState(); render();
@@ -297,9 +327,38 @@ kbd.addEventListener('input', () => {
   const p = v.slice(-1).toUpperCase();
   if (/^[A-Z]$/.test(p)) assign(p);
 });
-$('btnHint').addEventListener('click', () => {
+let BUSY = false;
+$('btnHint').addEventListener('click', async () => {
   if (!Q) return;
   if (S.status !== 'playing' || S.hints >= 5) return;
+  /* the dealt day: the substitution lives server-side, so the hint
+     travels to the session and the session meters it */
+  if (isDealt()){
+    if (BUSY) return;
+    BUSY = true;
+    try {
+      const n = await ensureSession();
+      if (!n){ toastMsg('the code is not answering right now, try again'); return; }
+      let b = null;
+      try { b = await SHELL.dealt('/guess', { nonce: n, hint: 1, have: S.map }); } catch (e) {}
+      if (!b){ toastMsg('the code is not answering right now, try again'); return; }
+      if (b.status === 409){ toastMsg('this round is already over'); return; }
+      if (b.status !== 200 || !b.body || b.body.verdict !== 'hint' ||
+          typeof b.body.cipher !== 'string' || typeof b.body.plain !== 'string'){
+        S.nonce = null;
+        toastMsg('this round expired, try a hint again');
+        return;
+      }
+      S.started = true;
+      for (const k in S.map){ if (S.map[k] === b.body.plain) delete S.map[k]; }
+      S.map[b.body.cipher] = b.body.plain;
+      S.hints = b.body.hints;
+      S.sel = nextOpen(b.body.cipher) || null;
+      saveState(); render();
+      if (S.sel) kbd.focus();
+    } finally { BUSY = false; }
+    return;
+  }
   S.started = true;
   const cand = FREQ_ORDER.find(c => !S.map[c] || S.map[c] !== SUB.dec[c]);
   if (!cand) return;
@@ -310,14 +369,65 @@ $('btnHint').addEventListener('click', () => {
   saveState(); render();
   if (S.sel) kbd.focus();
 });
-$('btnGiveUp').addEventListener('click', () => {
+$('btnGiveUp').addEventListener('click', async () => {
   if (!Q) return;
   if (S.status !== 'playing') return;
+  /* the dealt day: the codebook opens only on the give-up, so the
+     quote and the substitution ride the spent round */
+  if (isDealt()){
+    if (BUSY) return;
+    BUSY = true;
+    try {
+      const n = await ensureSession();
+      if (!n){ toastMsg('the code is not answering right now, try again'); return; }
+      let b = null;
+      try { b = await SHELL.dealt('/guess', { nonce: n, give: 1 }); } catch (e) {}
+      if (!b){ toastMsg('the code is not answering right now, try again'); return; }
+      if (b.status === 409){ toastMsg('this round is already over'); return; }
+      if (b.status !== 200 || !b.body || b.body.verdict !== 'gave' || !b.body.reveal){
+        S.nonce = null;
+        toastMsg('this round expired, try the codebook again');
+        return;
+      }
+      S.reveal = b.body.reveal;
+      S.sub = b.body.reveal.sub || null;
+      finish('gaveup');
+    } finally { BUSY = false; }
+    return;
+  }
   finish('gaveup');
 });
-$('btnCheck').addEventListener('click', () => {
+$('btnCheck').addEventListener('click', async () => {
   if (!Q) return;
   if (S.status !== 'playing') return;
+  /* the dealt day: the quote never shipped, so the check travels to
+     the session and the session counts the right letters */
+  if (isDealt()){
+    if (BUSY) return;
+    BUSY = true;
+    try {
+      S.started = true;
+      const n = await ensureSession();
+      if (!n){ toastMsg('the code is not answering right now, try again'); return; }
+      let b = null;
+      try { b = await SHELL.dealt('/guess', { nonce: n, check: S.map }); } catch (e) {}
+      if (!b){ toastMsg('the code is not answering right now, try again'); return; }
+      if (b.status === 409){ toastMsg('this round is already over'); return; }
+      if (b.status !== 200 || !b.body || !b.body.verdict){
+        S.nonce = null;
+        toastMsg('this round expired, check again for a fresh one');
+        return;
+      }
+      if (b.body.verdict === 'won'){
+        S.reveal = b.body.reveal || null;
+        S.sub = (b.body.reveal && b.body.reveal.sub) || null;
+        finish('won');
+      } else {
+        toastMsg(b.body.right + ' of ' + b.body.total + ' letters right');
+      }
+    } finally { BUSY = false; }
+    return;
+  }
   S.started = true;
   if (solvedP()){ finish('won'); return; }
   /* honest but unfarmable feedback: how many letters are right, never
@@ -327,7 +437,11 @@ $('btnCheck').addEventListener('click', () => {
 });
 function finish(status){
   S.status = status;
-  for (const k in S.map){ if (S.map[k] !== SUB.dec[k]) delete S.map[k]; }
+  /* the dealt day's codebook comes with the reveal: the local
+     substitution never spoke for the served ciphertext */
+  if (!isDealt()){
+    for (const k in S.map){ if (S.map[k] !== SUB.dec[k]) delete S.map[k]; }
+  }
   const st = S.stats;
   st.played++;
   if (status === 'won'){
@@ -361,9 +475,11 @@ function showReveal(){
     ? (S.hints === 0 ? 'Cracked it cold.' : 'Cracked it, with a little help.')
     : 'The codebook, opened.';
   if (!won) $('verdict').classList.add('lost');
-  for (const c in SUB.dec){ S.map[c] = SUB.dec[c]; }
+  const book = isDealt() ? (S.sub || {}) : SUB.dec;
+  for (const c in book){ S.map[c] = book[c]; }
   render();
-  $('plainq').innerHTML = '<b>' + Q.a + '</b> \u2014 ' + Q.q;
+  $('plainq').innerHTML = '<b>' + Q.a + '</b> \u2014 ' +
+    (isDealt() ? ((S.reveal && S.reveal.q) || '') : Q.q);
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 decoded ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
   /* the day is decoded - the play UI goes quiet */
@@ -372,8 +488,10 @@ function showReveal(){
   $('selinfo').style.display = 'none';
   kbd.blur();
   syncBoard({ status: S.status === 'won' ? 'won' : 'gave',
-              answer: [...Q.q].map((ch, i) => /[A-Z]/.test(ch) ? (S.map[CIPHER[i]] || '') : ch).join(''),
-              meta: { hints: S.hints }, points: S.pts });
+              answer: isDealt()
+                ? CIPHER.map(c => (/[A-Z]/.test(c) ? (S.map[c] || '') : c)).join('')
+                : [...Q.q].map((ch, i) => /[A-Z]/.test(ch) ? (S.map[CIPHER[i]] || '') : ch).join(''),
+              meta: { hints: S.hints }, points: S.pts, nonce: S.nonce });
 }
 SHELL.wireShare(shareText);
 /* the codebook toggle in the end panel: a player who cracked it cold can
@@ -389,9 +507,13 @@ $('btnCodebook').addEventListener('click', () => {
   box.style.display = open ? 'block' : 'none';
   $('btnCodebook').textContent = open ? 'Hide the codebook' : 'Show the codebook';
   if (!open) return;
-  const pairs = [...new Set([...Q.q].filter(ch => /[A-Z]/.test(ch)).map(ch => SUB.enc[ch]))]
-    .sort((a, b) => SUB.dec[a] < SUB.dec[b] ? -1 : 1)
-    .map(c => '<span class="cp"><span class="ccl">' + c + '</span> \u2192 ' + SUB.dec[c] + '</span>');
+  const book = isDealt() ? (S.sub || {}) : SUB.dec;
+  const src = isDealt()
+    ? Object.keys(book)
+    : [...new Set([...Q.q].filter(ch => /[A-Z]/.test(ch)).map(ch => SUB.enc[ch]))];
+  const pairs = src
+    .sort((a, b) => book[a] < book[b] ? -1 : 1)
+    .map(c => '<span class="cp"><span class="ccl">' + c + '</span> \u2192 ' + book[c] + '</span>');
   box.innerHTML = pairs.join(' ');
 });
 const toastMsg = m => SHELL.toast(m, 1600);

@@ -59,21 +59,55 @@ async function run(h, ctx){
     h.ok(r.x.S.scored, 'gated: fermi scored on the dealt question');
     h.eq(r.x.S.nonce, 'gf1', 'gated: the fermi session is held');
   }
-  /* cipher: the served quote decodes clean */
+  /* cipher: the served cipher is dealt - the quote never ships, the
+     substitution lives server-side, and the session grades the decode */
   {
-    const live = h.boot('cipher', ['Q'], { now: T0, store: {} });
-    const served = serve('cipher', live.x.Q);
-    const r = h.boot('cipher', ['S', 'SUB', 'assign', 'QUOTES'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const live = h.boot('cipher', ['Q', 'SUB'], { now: T0, store: {} });
+    const full = live.x.Q;
+    const sub = live.x.SUB;
+    const served = serve('cipher',
+      { a: full.a, c: [...full.q].map(ch => /[A-Z]/.test(ch) ? sub.enc[ch] : ch).join('') });
+    const freq = {};
+    [...full.q].forEach(ch => { if (/[A-Z]/.test(ch)) freq[sub.enc[ch]] = (freq[sub.enc[ch]] || 0) + 1; });
+    const order = Object.keys(freq).sort((a, b) => freq[b] - freq[a] || (a < b ? -1 : 1));
+    let hints = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gc1', today: 0, puzzle: served.puzzle } };
+      if (body.give !== undefined)
+        return { status: 200, body: { verdict: 'gave',
+          reveal: { q: full.q, a: full.a, sub: sub.dec } } };
+      if (body.hint){
+        const cand = order.find(c => body.have[c] !== sub.dec[c]);
+        if (!cand) return { status: 400, body: { error: 'nothing left to hint' } };
+        hints++;
+        return { status: 200, body: { verdict: 'hint', cipher: cand,
+          plain: sub.dec[cand], hints } };
+      }
+      const right = order.filter(c => body.check[c] === sub.dec[c]).length;
+      if (right === order.length)
+        return { status: 200, body: { verdict: 'won',
+          reveal: { q: full.q, a: full.a, sub: sub.dec } } };
+      return { status: 200, body: { verdict: 'miss', right, total: order.length } };
+    };
+    const r = h.boot('cipher', ['S', 'assign', 'QUOTES'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.QUOTES === undefined, 'gated: cipher online boot has no bank');
     await h.flush();
-    h.ok(r.env.els.author.textContent.indexOf(served.puzzle.a) >= 0, 'gated: cipher served author rendered');
-    for (const c of Object.keys(r.x.SUB.dec)){
-      r.x.S.sel = c;
-      r.x.assign(r.x.SUB.dec[c]);
-    }
+    h.ok(!('q' in served.puzzle), 'gated: the cipher day never ships its quote');
+    h.ok(String(r.env.els.author.textContent).indexOf(full.a) >= 0,
+      'gated: cipher served author rendered');
     h.eq(r.x.S.status, 'playing', 'gated: cipher does not auto-win while typing');
+    for (const c of Object.keys(sub.dec)){
+      r.x.S.sel = c;
+      r.x.assign(sub.dec[c]);
+    }
     r.env.els.btnCheck.click();
-    h.eq(r.x.S.status, 'won', 'gated: cipher won on Check over the served quote');
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: cipher won on the dealt ciphertext');
+    h.eq(r.x.S.nonce, 'gc1', 'gated: the cipher session is held');
+    h.ok(String(r.env.els.plainq.innerHTML).indexOf(full.q) >= 0,
+      'gated: the quote arrived only with the reveal');
   }
   /* museum: the served exhibit is dealt - the name never ships and the
      session meters the clues and grades the one guess */

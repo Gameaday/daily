@@ -164,18 +164,55 @@ async function run(h, ctx){
     h.eq(r.x.S.nonce, 'gbg1', 'gated: the bogus session is held');
   }
 
-  /* lightbox: develop the served design clean */
+  /* lightbox: the served design is dealt - the grid and its name never
+     ship, so every development grades at the session */
   {
     const live = h.boot('lightbox', ['DESIGN', 'SOL'], { now: T0, store: {} });
+    const full = live.x.DESIGN;
     const sol = live.x.SOL;
-    const served = serve('lightbox', live.x.DESIGN);
-    const r = h.boot('lightbox', ['S', 'DESIGNS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const lbRuns = line => { const out = []; let c = 0;
+      for (const v of line){ if (v) c++; else if (c){ out.push(c); c = 0; } }
+      if (c) out.push(c); return out.length ? out : [0]; };
+    const served = serve('lightbox',
+      { rc: sol.map(lbRuns), cc: [0,1,2,3,4,5,6].map(c => lbRuns(sol.map(r => r[c]))) });
+    let misses = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'glb1', today: 0, puzzle: served.puzzle } };
+      const rows = body.grid.map(rw => [...rw].map(ch => ch === '1' ? 1 : 0));
+      if (JSON.stringify(rows) === JSON.stringify(sol))
+        return { status: 200, body: { verdict: 'won',
+          reveal: { n: full.n, g: full.g } } };
+      misses++;
+      if (misses >= 4)
+        return { status: 200, body: { verdict: 'lost',
+          reveal: { n: full.n, g: full.g } } };
+      const bad = [], need = [];
+      for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++){
+        if (rows[r][c] === 1 && !sol[r][c]) bad.push([r, c]);
+        if (rows[r][c] !== 1 && sol[r][c]) need.push([r, c]);
+      }
+      return { status: 200, body: { verdict: 'miss', bad, need, mistakes: misses } };
+    };
+    const r = h.boot('lightbox', ['S', 'DESIGN', 'DESIGNS'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.DESIGNS === undefined, 'gated: lightbox online boot has no bank');
     await h.flush();
+    h.ok(!('g' in served.puzzle) && !('n' in served.puzzle),
+      'gated: the lightbox day never ships its picture');
+    h.ok((String(r.env.els.grid.innerHTML).match(/class="cell"/g) || []).length === 49,
+      'gated: lightbox served clues rendered an empty board');
+    r.x.S.marks[0][0] = sol[0][0] ? 0 : 1;
+    r.env.els.btnDevelop.click();
+    await h.flush();
+    h.eq(r.x.S.mistakes, 1, 'gated: the session counted the bad exposure');
     for (let i = 0; i < 7; i++) for (let j = 0; j < 7; j++) r.x.S.marks[i][j] = sol[i][j] ? 1 : 0;
     r.env.els.btnDevelop.click();
-    h.eq(r.x.S.status, 'won', 'gated: lightbox won on the served design');
-    h.eq(r.x.S.mistakes, 0, 'gated: lightbox clean film');
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: lightbox won on the dealt design');
+    h.eq(r.x.S.nonce, 'glb1', 'gated: the lightbox session is held');
+    h.ok(String(r.env.els.verdict.textContent).indexOf(full.n) >= 0,
+      'gated: the name arrived only with the reveal');
   }
   /* sift: the served board is dealt - the tiles ship without their
      categories, so every trio grades at the session */

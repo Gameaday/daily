@@ -127,9 +127,38 @@ let ROWCLUES = null;
 let COLCLUES = null;
 function applyDesign(d){
   DESIGN = d;
-  SOL = d.g.map(row => [...row].map(c => c === '#' ? 1 : 0));
-  ROWCLUES = SOL.map(runs);
-  COLCLUES = [0,1,2,3,4,5,6].map(c => runs(SOL.map(r => r[c])));
+  if (Array.isArray(d.g)){
+    SOL = d.g.map(row => [...row].map(c => c === '#' ? 1 : 0));
+    ROWCLUES = SOL.map(runs);
+    COLCLUES = [0,1,2,3,4,5,6].map(c => runs(SOL.map(r => r[c])));
+  } else {
+    /* the dealt day ships the clues alone: the grid and its name stay
+       server-side until the film is spent */
+    SOL = null;
+    ROWCLUES = d.rc;
+    COLCLUES = d.cc;
+  }
+}
+/* the dealt day: the clues arrived without the picture, so the
+   development travels to the session and the spent film hands over
+   the design */
+function isDealt(){
+  return DESIGN && Array.isArray(DESIGN.rc) && !DESIGN.g &&
+    !isSolo() && !SHELL.isArchive;
+}
+/* the dealt session: one deal per day, held on the state and spent
+   one development at a time */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle && Array.isArray(d.body.puzzle.rc)) applyDesign(d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
 }
 async function loadPuzzle(){
   const L = typeof DESIGNS !== 'undefined' ? DESIGNS.length : 1;
@@ -188,11 +217,11 @@ function renderMistakes(){
   $('mistakes').innerHTML = `developments left: ${pips}<span style="margin-left:6px;">${4 - S.mistakes}</span>`;
 }
 
-function renderAll(){ if (!SOL) return; renderGrid(); renderMistakes(); }
+function renderAll(){ if (!DESIGN) return; renderGrid(); renderMistakes(); }
 
 /* ---------------- play ---------------- */
 $('grid').addEventListener('click', e => {
-  if (!SOL) return;
+  if (!DESIGN) return;
   const el = e.target.closest('.cell');
   if (!el || S.status !== 'playing') return;
   const r = +el.dataset.r, c = +el.dataset.c;
@@ -217,9 +246,61 @@ function currentMatches(){
   return true;
 }
 
-$('btnDevelop').addEventListener('click', () => {
-  if (!SOL) return;
-  if (S.status !== 'playing') return;
+let DEVING = false;
+$('btnDevelop').addEventListener('click', async () => {
+  if (!DESIGN) return;
+  if (S.status !== 'playing' || DEVING) return;
+  /* the dealt day: the picture never shipped, so the development
+     travels to the session and the spent film hands over the design */
+  if (isDealt()){
+    DEVING = true;
+    try {
+      const n = await ensureSession();
+      if (!n){ toastMsg('the darkroom is not answering right now, try again'); return; }
+      const grid = S.marks.map(row => row.map(v => v === 1 ? '1' : (v === 2 ? '2' : '0')).join(''));
+      let b = null;
+      try { b = await SHELL.dealt('/guess', { nonce: n, grid }); } catch (e) {}
+      if (!b){ toastMsg('the darkroom is not answering right now, try again'); return; }
+      if (b.status === 409){ toastMsg('this round is already over'); return; }
+      if (b.status !== 200 || !b.body || !b.body.verdict){
+        S.nonce = null; S.mistakes = 0;
+        saveState(); renderMistakes();
+        toastMsg('this round expired, develop again for a fresh one');
+        return;
+      }
+      const v = b.body.verdict;
+      if (v === 'won' || v === 'lost'){
+        S.status = v;
+        S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
+        if (b.body.reveal && Array.isArray(b.body.reveal.g)){
+          S.reveal = b.body.reveal;
+          applyDesign(Object.assign({}, DESIGN, S.reveal));
+        }
+        const st = S.stats;
+        if (v === 'won'){
+          st.played++; st.solved++; st.streak++;
+          st.max = Math.max(st.max, st.streak);
+        } else {
+          st.played++; st.streak = 0;
+        }
+        saveState(); showReveal();
+      } else {
+        (b.body.bad || []).forEach(([r, c]) => {
+          const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+          if (el) el.classList.add('bad');
+        });
+        (b.body.need || []).forEach(([r, c]) => {
+          const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+          if (el) el.classList.add('miss');
+        });
+        S.mistakes = b.body.mistakes;
+        saveState(); renderMistakes();
+        setTimeout(() => document.querySelectorAll('.cell.bad,.cell.miss').forEach(el => el.classList.remove('bad','miss')), 1400);
+        toastMsg(['Not quite \u2014 study the flashes.','The film fogged a little \u2014 look again.','One more bad development and it\u2019s ruined.'][Math.min(S.mistakes - 1, 2)]);
+      }
+    } finally { DEVING = false; }
+    return;
+  }
   if (currentMatches()){
     S.status = 'won';
     S.timeMs = S.startAt ? Date.now() - S.startAt : 0;
@@ -285,7 +366,7 @@ function showReveal(){
   $('actbox').style.display = 'none';
   syncBoard({ status: S.status,
               answer: S.marks.map(row => row.map(v => v === 1 ? '#' : '.').join('')),
-              meta: { mistakes: S.mistakes }, points: S.pts });
+              meta: { mistakes: S.mistakes }, points: S.pts, nonce: S.nonce });
 }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
@@ -301,11 +382,16 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 
 /* ---------------- boot ---------------- */
 loadPuzzle().then(() => {
-if (!SOL){ SHELL.showUnavailable(); return; }
+if (!DESIGN){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();
-if (S.status !== 'playing') showReveal();
+if (S.status !== 'playing'){
+  /* a finished dealt day retells its picture from the session's
+     reveal: the clues alone never carried it */
+  if (S.reveal && Array.isArray(S.reveal.g)) applyDesign(Object.assign({}, DESIGN, S.reveal));
+  showReveal();
+}
 SHELL.startCountdown('countdown', 500);
 });
 </script>

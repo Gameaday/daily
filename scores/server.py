@@ -131,10 +131,10 @@ LOCK = threading.Lock()
 # the raw play facts instead of a self-reported score. The server checks
 # the answer, enforces the per-game meta caps, derives the points itself,
 # and holds the loss rule (a loss or a give-up is 0 no matter the meta).
-# Self-reported "value" posts are generator-only since the cutover - the
-# gated games refuse them outright. Generator games (rings,
-# trace, grid, sprint) have no server-side key yet - they ride the 1.2
-# dealt-play phase instead of porting the generators.
+# Self-reported "value" posts are generator-only: the gated games refuse
+# them outright. The generator games (rings, trace, grid) have no answer
+# key by design - their puzzles are derived at play time, not curated -
+# and sprint, the fourth generator, now rides a dealt clock instead.
 # ---------------------------------------------------------------------------
 
 EVIDENCE_GAMES = (
@@ -705,7 +705,7 @@ class Handler(BaseHTTPRequestHandler):
             today = current_day_index()
             with LOCK:
                 # day/num echo the clamped day math, so a curl shows exactly
-                # what the server thinks "today" is (the pre-launch bug class)
+                # what the server thinks "today" is
                 payload = {"ok": True, "boards": len(STATS),
                            "day": today, "num": today + 1}
             self._json(payload)

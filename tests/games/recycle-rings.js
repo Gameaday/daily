@@ -5,7 +5,7 @@
 const { T0, T1, T10 } = require('./_lib');
 
 async function run(h){
-    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftRay', 'topLetter', 'shareText'];
+    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftRay', 'commitDrag', 'topLetter', 'shareText'];
     const store = {};
     let r = h.boot('recycle-rings', EXP, { now: T0, store });
     const P = r.x.PUZZLE;
@@ -67,6 +67,38 @@ async function run(h){
     h.eq(r.x.S.grid, g1, 'rings: four inward shifts wrap the ray home');
     h.eq(r.x.S.moves, 8, 'rings: every shift costs, wraps included');
     h.ok(!r.x.S.won, 'rings: aimless moves do not win');
+    /* drag commits: one gesture can cover several seats, one move a seat */
+    const g2 = r.x.S.grid;
+    r.x.commitDrag('ring', 1, 2);
+    h.eq(r.x.S.moves, 10, 'rings: a two-seat ring drag costs two moves');
+    let ringOnly = true, ringTurned = true;
+    for (let rr = 0; rr < 4; rr++){
+      for (let c = 0; c < 8; c++){
+        if (rr !== 1 && r.x.S.grid[rr * 8 + c] !== g2[rr * 8 + c]) ringOnly = false;
+        if (r.x.S.grid[8 + ((c + 2) % 8)] !== g2[8 + c]) ringTurned = false;
+      }
+    }
+    h.ok(ringOnly, 'rings: a drag turns only its own ring');
+    h.ok(ringTurned, 'rings: the drag turns the ring two seats');
+    const g3 = r.x.S.grid;
+    r.x.commitDrag('ray', 5, 3);
+    h.eq(r.x.S.moves, 13, 'rings: a three-seat ray drag costs three moves');
+    let rayOnly2 = true, rayMoved2 = true;
+    for (let rr = 0; rr < 4; rr++){
+      for (let c = 0; c < 8; c++){
+        if (c !== 5 && r.x.S.grid[rr * 8 + c] !== g3[rr * 8 + c]) rayOnly2 = false;
+      }
+      if (r.x.S.grid[((rr + 3) % 4) * 8 + 5] !== g3[rr * 8 + 5]) rayMoved2 = false;
+    }
+    h.ok(rayOnly2, 'rings: a drag shifts only its own ray');
+    h.ok(rayMoved2, 'rings: the drag slides the ray three seats, wrapping');
+    const g4 = r.x.S.grid;
+    r.x.commitDrag('ray', 5, -4);
+    h.eq(r.x.S.grid, g4, 'rings: a full wrap of the ray lands on the same seats');
+    h.eq(r.x.S.moves, 17, 'rings: wrapping seats still cost one move a seat');
+    r.x.commitDrag('ring', 0, 0);
+    h.eq(r.x.S.moves, 17, 'rings: a drag that covers no seat costs nothing');
+    h.ok(!r.x.S.won, 'rings: drag commits do not win on their own');
 }
 
 module.exports = { name: 'recycle-rings', run };

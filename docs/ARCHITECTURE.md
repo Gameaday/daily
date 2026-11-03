@@ -178,8 +178,7 @@ package split along its seams (server.py the entry point plus config,
 puzzles, sessions, curve, archive, adapters, evidence, app and
 helpers), and the wire speaks api_version 2, every dealt game's move
 nested under one "move" field. What remains is step 6, naming: names
-still carry their history (config.py keeps a vestigial puzzle-store
-load from before the split), and the sweep is opportunistic, file by
+still carry their history, and the sweep is opportunistic, file by
 file, never a mechanical pass.
 
 ## Growth: the target architecture

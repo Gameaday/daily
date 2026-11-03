@@ -1417,7 +1417,7 @@ def main():
     srv = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(srv)
     with tempfile.TemporaryDirectory() as td:
-        srv.ARCHIVE_DIR = Path(td)
+        srv.config.ARCHIVE_DIR = Path(td)
         srv.STATS.clear()
         srv.SEEN.clear()
         day = srv.current_day_index()
@@ -1432,10 +1432,10 @@ def main():
         check(isinstance(rec.get("seen"), list) and len(rec["seen"]) == 2,
               "unit: the snapshot carries the day's dedupe set")
         # the day rolls over: the stale board flushes to the archive and dies
-        real_today = srv.current_day_index
-        srv.current_day_index = lambda: day + 1
+        real_today = srv.config.current_day_index
+        srv.config.current_day_index = lambda: day + 1
         srv.flush_stale()
-        srv.current_day_index = real_today
+        srv.config.current_day_index = real_today
         check(srv.STATS.get(("rounds", day)) is None, "unit: flushed board removed from memory")
         check(srv.load_archive("rounds", day)["n"] == 2, "unit: archive readable after the flush")
         # write-once: a smaller tally never replaces a bigger snapshot
@@ -1448,16 +1448,16 @@ def main():
         srv.STATS[("rounds", day)] = {"n": 5, "sum": 15, "sumsq": 55, "min": 1,
                                       "max": 6, "bins": [0, 0, 0, 0, 5, 0, 0]}
         srv.SEEN[("rounds", day)] = {"retry1"}
-        real_write = srv.write_archive
-        real_today = srv.current_day_index
-        srv.current_day_index = lambda: day + 1
-        srv.write_archive = lambda g, d: None if d == day else real_write(g, d)
+        real_write = srv.archive.write_archive
+        real_today = srv.config.current_day_index
+        srv.config.current_day_index = lambda: day + 1
+        srv.archive.write_archive = lambda g, d: None if d == day else real_write(g, d)
         srv.flush_stale()
         check(srv.STATS.get(("rounds", day)) is not None,
               "unit: a failed snapshot write keeps the live board")
-        srv.write_archive = real_write
+        srv.archive.write_archive = real_write
         srv.flush_stale()
-        srv.current_day_index = real_today
+        srv.config.current_day_index = real_today
         check(srv.STATS.get(("rounds", day)) is None,
               "unit: the retried flush archives and clears the board")
         check(srv.load_archive("rounds", day)["n"] == 5,
@@ -1487,7 +1487,7 @@ def main():
 
         # --- warm start vs a manifest change: restart, do not crash ---
         with tempfile.TemporaryDirectory() as td2:
-            srv.ARCHIVE_DIR = Path(td2)
+            srv.config.ARCHIVE_DIR = Path(td2)
             srv.STATS.clear()
             srv.SEEN.clear()
             day0 = srv.current_day_index()
@@ -1514,7 +1514,7 @@ def main():
                   "unit: warm start still loads a board recorded under current edges")
 
         # --- an unreadable snapshot never silences a bigger live tally ---
-        srv.ARCHIVE_DIR = Path(td)
+        srv.config.ARCHIVE_DIR = Path(td)
         srv.STATS[("rounds", day)] = {"n": 5, "sum": 15, "sumsq": 55, "min": 1,
                                       "max": 6, "bins": [0, 0, 0, 0, 5, 0, 0]}
         p.write_text("{not json", encoding="utf-8")

@@ -5,10 +5,10 @@
 'use strict';
 
 function run(h, ctx){
-    const { GAMES, serverPy, landing, readGame, readShared, manifest } = ctx;
+    const { GAMES, configPy, landing, readGame, readShared, manifest } = ctx;
     h.group('shell <-> server cross-check');
     const specs = manifest.games;
-    h.ok(serverPy.indexOf('manifest.json') >= 0, 'server: SPECS loaded from manifest.json');
+    h.ok(configPy.indexOf('manifest.json') >= 0, 'server: SPECS loaded from manifest.json');
     const serverKey = g => (g === 'recycle-rings' ? 'rings' : (g === 'recycle-grid' ? 'grid' : g));
     for (const g of GAMES){
       const html = readGame(g);

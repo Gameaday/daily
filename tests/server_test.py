@@ -6,8 +6,8 @@ health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
 sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
-(the live rounds, brunch, fermi, well-actually and museum days ship
-without their keys),
+(the live rounds, brunch, fermi, well-actually, museum, bogus and
+superlative days ship without their keys),
 fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
@@ -158,8 +158,14 @@ def main():
             check(False, "puzzles/bogus/puzzles.json missing")
         else:
             s, b = req("GET", "/api/puzzle?game=bogus&day=0")
-            check(s == 200 and b.get("puzzle", {}).get("l") == 5,
-                  "GET /puzzle bogus day 0 -> lie is statement 5")
+            check(s == 200 and "l" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("s", [])) >= 5,
+                  "GET /puzzle bogus day 0 (live) -> the passage, never the lie")
+            s, b = req("GET", "/api/puzzle?game=superlative&day=0")
+            check(s == 200 and len(b.get("puzzle", {}).get("m", [])) >= 4
+                  and all("a" not in q for q in b.get("puzzle", {}).get("q", [])),
+                  "GET /puzzle superlative day 0 (live) -> the rounds, never their answers")
             s, b = req("GET", "/api/puzzle?game=rounds&day=0")
             check(s == 200 and b.get("puzzle", {}).get("q", "").startswith("King John")
                   and "y" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {}),
@@ -693,6 +699,89 @@ def main():
                                     "nonce": mn2})
         check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.0,
               "dealt submit: a lost visit overrides the claimed win")
+        # --- dealt bogus: the lie never ships, so every pick travels to
+        #     the session and the reveal rides the spent round ---
+        s, b = post("/api/deal", {"game": "bogus", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "l" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {})
+              and len(b.get("puzzle", {}).get("s", [])) >= 5,
+              "deal: the passage arrives without its lie")
+        bgn = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": bgn, "pick": "x"})
+        check(s == 400, "guess: bogus refuses a non-integer pick")
+        s, b = post("/api/guess", {"nonce": bgn, "pick": 0})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("left") == 2,
+              "guess: a wrong phrase misses, the lie stays hidden")
+        s, _b = post("/api/guess", {"nonce": bgn, "pick": 0})
+        check(s == 400, "guess: a phrase cannot be picked twice")
+        s, b = post("/api/guess", {"nonce": bgn, "pick": 5})
+        check(s == 200 and b.get("verdict") == "won"
+              and b.get("reveal", {}).get("l") == 5,
+              "guess: the lie rides the spent pick")
+        s, _b = post("/api/guess", {"nonce": bgn, "pick": 2})
+        check(s == 409, "guess: a finished bogus session takes no more picks")
+        s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
+                                    "id": "dv14", "status": "won",
+                                    "answer": [5], "nonce": bgn})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
+              "dealt submit: the session's picks and verdict override the claim")
+        s, b = post("/api/deal", {"game": "bogus", "day": TODAY})
+        bgn2 = b["nonce"]
+        for p in (0, 1, 2):
+            s, b = post("/api/guess", {"nonce": bgn2, "pick": p})
+        check(s == 200 and b.get("verdict") == "lost"
+              and b.get("reveal", {}).get("l") == 5,
+              "guess: three strikes lose, the lie rides the spent round")
+        s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
+                                    "id": "dv15", "status": "won",
+                                    "answer": [5], "nonce": bgn2})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.67,
+              "dealt submit: the session's lost verdict overrides the claimed win")
+        # --- dealt superlative: the round answers never ship, so every
+        #     pick travels to the session and the verdict rides the last round ---
+        s, b = post("/api/deal", {"game": "superlative", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and all("a" not in q for q in b.get("puzzle", {}).get("q", []))
+              and len(b.get("puzzle", {}).get("m", [])) == 4,
+              "deal: the cohort arrives, its rounds without their answers")
+        spn = b["nonce"]
+        s, b = post("/api/guess", {"nonce": spn,
+                                  "pick": (perfect[0] + 1) % len(sup["m"])})
+        check(s == 200 and b.get("verdict") == "wrong" and b.get("a") == perfect[0],
+              "guess: a wrong round is graded, the answer rides the spent pick")
+        for p in perfect[1:]:
+            s, b = post("/api/guess", {"nonce": spn, "pick": p})
+        check(s == 200 and b.get("verdict") == "right"
+              and b.get("status") == "lost",
+              "guess: one miss loses the sweep, the verdict rides the last round")
+        s, b = post("/api/submit", {"game": "superlative", "day": TODAY,
+                                    "id": "dv16", "status": "won",
+                                    "answer": perfect, "nonce": spn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 4.33,
+              "dealt submit: the session's picks and verdict override the claimed sweep")
+        s, b = post("/api/deal", {"game": "superlative", "day": TODAY})
+        spn2 = b["nonce"]
+        for p in perfect:
+            s, b = post("/api/guess", {"nonce": spn2, "pick": p})
+        check(s == 200 and b.get("verdict") == "right"
+              and b.get("status") == "won",
+              "guess: a clean sweep wins on the last round")
+        s, _b = post("/api/guess", {"nonce": spn2, "pick": 0})
+        check(s == 409, "guess: a finished superlative session takes no more picks")
+        s, b = post("/api/submit", {"game": "superlative", "day": TODAY,
+                                    "id": "dv17", "status": "lost",
+                                    "answer": perfect, "nonce": spn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 4.5,
+              "dealt submit: the session's won verdict overrides the claimed loss")
+        # --- the schema contract: one payload key per guess ---
+        s, b = post("/api/deal", {"game": "museum", "day": TODAY})
+        scn = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": scn, "name": "not it", "clue": 1})
+        check(s == 400, "guess: a body carrying two payload keys is refused")
+        s, b = post("/api/deal", {"game": "rounds", "day": TODAY})
+        scn2 = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": scn2})
+        check(s == 400, "guess: a body carrying no payload key is refused")
     finally:
         proc.terminate()
         try:
@@ -765,7 +854,8 @@ def main():
             check(False, "pre-launch instance never came up on port %d" % PORT3)
         else:
             s, b = req("GET", "/api/puzzle?game=bogus&day=0", port=PORT3)
-            check(s == 200 and b.get("puzzle", {}).get("l") == 5,
+            check(s == 200 and b.get("puzzle", {}).get("s")
+                  and "l" not in b.get("puzzle", {}),
                   "pre-epoch: day 0 (No. 1) is served, not future")
             s, _b = req("GET", "/api/puzzle?game=bogus&day=1", port=PORT3)
             check(s == 403, "pre-epoch: day 1 stays future")
@@ -1011,6 +1101,18 @@ def main():
                   and "al" not in b.get("puzzle", {})
                   and len(b.get("puzzle", {}).get("c", [])) == 5,
                   "cutover: the live museum day ships the clues, never the name")
+            s, b = req("GET", "/api/puzzle?game=bogus&day=1", port=PORT7)
+            check(s == 200 and "l" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("s", [])) >= 5,
+                  "cutover: the live bogus day ships the passage, never the lie")
+            s, b = req("GET", "/api/puzzle?game=superlative&day=0", port=PORT7)
+            check(s == 200 and all("a" in q for q in b.get("puzzle", {}).get("q", [])),
+                  "cutover: a replayed superlative day still carries its round answers")
+            s, b = req("GET", "/api/puzzle?game=superlative&day=1", port=PORT7)
+            check(s == 200 and len(b.get("puzzle", {}).get("q", [])) >= 4
+                  and all("a" not in q for q in b.get("puzzle", {}).get("q", [])),
+                  "cutover: the live superlative day ships its rounds, never their answers")
     finally:
         proc7.terminate()
         try:
@@ -1023,6 +1125,9 @@ def main():
     spec = importlib.util.spec_from_file_location("warmup_server", ROOT / "scores" / "server.py")
     srv = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(srv)
+    check(set(srv.DEALT_SCHEMA) == set(g for g in srv.DEALT_GAMES if g != "sprint")
+          and all(v["guess"] and v["verdicts"] for v in srv.DEALT_SCHEMA.values()),
+          "unit: every guessing game declares its schema, required and optional")
     with tempfile.TemporaryDirectory() as td:
         srv.ARCHIVE_DIR = Path(td)
         srv.STATS.clear()

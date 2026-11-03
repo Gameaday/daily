@@ -45,7 +45,7 @@ Endpoints (with or without the /api prefix):
                    key and the score derived server-side; self-reported value posts
                    are accepted only for the generator games)
     POST /deal    {"game", "day"}                  -> open a dealt session (live day only; the rounds, brunch and fermi deals carry the puzzle without its key)
-    POST /guess   {"nonce", "y"|"pick"|"v"}        -> the dealt verdict: rounds heat, the brunch seat, the fermi score (the key never crosses until the round is over)
+    POST /guess   {"nonce", "y"|"pick"|"v"}        -> the dealt verdict, one schema payload key per guess: rounds heat, the brunch seat, the fermi score, the well-actually and bogus picks, the museum names, the superlative rounds (the key never crosses until the round is over)
     POST /reveal  {"nonce"}                          -> the sprint starting gun (t0 stamped once, never reset; the window is enforced at submit)
     GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
     GET  /puzzle?game=&day=                         -> the day's puzzle (rounds on the live
@@ -164,13 +164,17 @@ META_CAPS = {
 # reveal can only ever arrive attached to a spent guess. well-actually
 # deals the same way per pick: the lie never ships, so every pick and the
 # one correction attempt travel to the session. museum deals per guess
-# and meters the clues itself, so the name never ships either. The
+# and meters the clues itself, so the name never ships either. bogus deals
+# per pick the same way (the passage never ships its lie), and superlative
+# deals per round (the rounds never ship their answers, and the sweep
+# verdict rides the last spent pick). The
 # residual honesty note that stays open: a rounds loss reveal hands over
 # the key a second session could mine, and sprint's solved count is
 # still the client's word inside the server-stamped window.
 # ---------------------------------------------------------------------------
 
-DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum")
+DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
+               "bogus", "superlative")
 # the per-game keys a live dealt day must never ship (brunch keeps its
 # table but not the impostor index or the reveal; fermi keeps the
 # question but not the cited value; well-actually keeps the statement
@@ -178,7 +182,59 @@ DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum")
 # clues but not the name or the story)
 DEALT_STRIP = {"rounds": ("y", "w"), "brunch": ("a", "w"), "fermi": ("a", "w"),
                "well-actually": ("l", "a", "c", "w"),
-               "museum": ("a", "al", "w")}
+               "museum": ("a", "al", "w"),
+               "bogus": ("l", "w"),
+               "superlative": ("q.a",)}
+
+
+def _strip_puzzle(game, pz):
+    """Drop the day's answer fields from a puzzle about to cross the wire.
+    A plain path strips a top-level key; a dotted path strips the leaf
+    key from every entry of the named list, so superlative ships its
+    rounds without their answers."""
+    out = dict(pz)
+    for path in DEALT_STRIP.get(game, ()):
+        if "." not in path:
+            out.pop(path, None)
+            continue
+        head, leaf = path.split(".")
+        seq = out.get(head)
+        if isinstance(seq, list):
+            out[head] = [{k: v for k, v in item.items() if k != leaf}
+                         if isinstance(item, dict) else item for item in seq]
+    return out
+
+
+# The dealt API's per-game schema: one declaration of the required and
+# optional fields each endpoint takes and returns, so the per-game
+# branches and the client cutovers follow a single contract instead of
+# per-game folklore. /deal always takes {"game", "day"} and answers
+# {"nonce", "today", "puzzle"} (the puzzle minus the strip fields). A
+# /guess body carries the nonce plus exactly one of the game's guess
+# keys; its response always carries a verdict and adds the optional
+# fields, with the reveal arriving only once the round is spent. The
+# eventual one-API refinement can grow this table instead of the
+# if-chain.
+DEALT_SCHEMA = {
+    "rounds":        {"guess": ("y",), "verdicts": ("miss", "won", "lost"),
+                      "optional": ("guesses", "heat", "sq", "hint"),
+                      "reveal": ("y", "w")},
+    "brunch":        {"guess": ("pick",), "verdicts": ("won", "lost"),
+                      "optional": (), "reveal": ("a", "w")},
+    "fermi":         {"guess": ("v",), "verdicts": ("won",),
+                      "optional": ("score",), "reveal": ("a", "w")},
+    "well-actually": {"guess": ("pick", "correction"),
+                      "verdicts": ("miss", "found", "won", "lost"),
+                      "optional": ("left", "bonus"),
+                      "reveal": ("l", "c", "w")},
+    "museum":        {"guess": ("name", "clue"),
+                      "verdicts": ("clue", "miss", "won", "lost"),
+                      "optional": ("clueIdx",), "reveal": ("a", "w")},
+    "bogus":         {"guess": ("pick",), "verdicts": ("miss", "won", "lost"),
+                      "optional": ("left",), "reveal": ("l", "w")},
+    "superlative":   {"guess": ("pick",), "verdicts": ("right", "wrong"),
+                      "optional": ("a", "status"), "reveal": ()},
+}
 SESSIONS = {}        # nonce -> {"game", "day", "created", "ip", "guesses",
                     #            "done", "verdict", "t0", and the per-game
                     #            counters ("picks", "found", "clue")
@@ -658,7 +714,7 @@ def snapshot(game, day, value=None, st=None, spec=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.5"
+    server_version = "warmup-curve/4.6"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -823,15 +879,14 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 idx = day % len(entry)
                 pz = entry[idx]
-                # the dealt cutover: rounds, brunch, fermi, well-actually
-                # and museum are played server-dealt on the live day, so
-                # today's puzzle ships without its key - the round lives in
-                # /deal and /guess.
+                # the dealt cutover: rounds, brunch, fermi, well-actually,
+                # museum, bogus and superlative are played server-dealt on
+                # the live day, so today's puzzle ships without its key -
+                # the round lives in /deal and /guess.
                 # A replayed day is long over, so its key stays and the
                 # archive path keeps grading locally.
                 if day == today and game in DEALT_STRIP:
-                    pz = {k: v for k, v in pz.items()
-                          if k not in DEALT_STRIP[game]}
+                    pz = _strip_puzzle(game, pz)
                 self._json({"game": game, "day": day, "puzzle": pz, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
         else:
@@ -1008,8 +1063,7 @@ class Handler(BaseHTTPRequestHandler):
                     # the deal carries the question but never the key: the
                     # per-game strip keeps the answer server-side
                     payload = {"nonce": nonce, "today": today,
-                               "puzzle": {k: v for k, v in pz.items()
-                                          if k not in DEALT_STRIP[game]}}
+                               "puzzle": _strip_puzzle(game, pz)}
                 else:
                     payload = {"nonce": nonce, "today": today}
             self._json(payload)
@@ -1026,11 +1080,18 @@ class Handler(BaseHTTPRequestHandler):
                 return
             if path == "/guess":
                 if sess["game"] not in ("rounds", "brunch", "fermi",
-                                        "well-actually", "museum"):
+                                        "well-actually", "museum", "bogus",
+                                        "superlative"):
                     self._json({"error": "this session takes no guesses"}, 400)
                     return
                 if sess["done"]:
                     self._json({"error": "the round is over"}, 409)
+                    return
+                # the schema's contract: a guess carries the nonce plus
+                # exactly one of the game's payload keys, never both
+                if sum(1 for k in DEALT_SCHEMA[sess["game"]]["guess"]
+                       if k in data) != 1:
+                    self._json({"error": "bad guess"}, 400)
                     return
                 if sess["game"] == "brunch":
                     i = data.get("pick")
@@ -1073,6 +1134,41 @@ class Handler(BaseHTTPRequestHandler):
                     # until the one guess is spent
                     payload = {"verdict": "won", "score": score,
                                "reveal": {"a": e["a"], "w": e.get("w")}}
+                elif sess["game"] == "bogus":
+                    i = data.get("pick")
+                    if isinstance(i, bool) or not isinstance(i, int):
+                        self._json({"error": "bad pick"}, 400)
+                        return
+                    e = _list_entry("bogus", sess["day"])
+                    if e is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    if not 0 <= i < len(e["s"]):
+                        self._json({"error": "bad pick"}, 400)
+                        return
+                    if i in sess["picks"]:
+                        self._json({"error": "phrase already picked"}, 400)
+                        return
+                    sess["picks"].append(i)
+                    if i == e["l"]:
+                        sess["done"] = True
+                        sess["verdict"] = "won"
+                        sess["ans"] = list(sess["picks"])
+                        sess["done_at"] = now
+                        # the lie and the why ride the spent pick: the
+                        # key crosses only once a pick found it
+                        payload = {"verdict": "won",
+                                   "reveal": {"l": e["l"], "w": e.get("w")}}
+                    elif len(sess["picks"]) >= 3:
+                        sess["done"] = True
+                        sess["verdict"] = "lost"
+                        sess["ans"] = list(sess["picks"])
+                        sess["done_at"] = now
+                        payload = {"verdict": "lost",
+                                   "reveal": {"l": e["l"], "w": e.get("w")}}
+                    else:
+                        payload = {"verdict": "miss",
+                                   "left": 3 - len(sess["picks"])}
                 elif sess["game"] == "well-actually":
                     e = _list_entry("well-actually", sess["day"])
                     if e is None:
@@ -1128,6 +1224,33 @@ class Handler(BaseHTTPRequestHandler):
                         else:
                             payload = {"verdict": "miss",
                                        "left": 3 - len(sess["picks"])}
+                elif sess["game"] == "superlative":
+                    i = data.get("pick")
+                    if isinstance(i, bool) or not isinstance(i, int):
+                        self._json({"error": "bad pick"}, 400)
+                        return
+                    e = _list_entry("superlative", sess["day"])
+                    if e is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    if not 0 <= i < len(e["m"]):
+                        self._json({"error": "bad pick"}, 400)
+                        return
+                    r = len(sess["picks"])
+                    a = e["q"][r]["a"]
+                    sess["picks"].append(i)
+                    # the graded answer rides the spent pick, and the
+                    # session's own verdict rides the last round
+                    payload = {"verdict": "right" if i == a else "wrong",
+                               "a": a}
+                    if len(sess["picks"]) == len(e["q"]):
+                        sess["done"] = True
+                        sess["ans"] = list(sess["picks"])
+                        sess["verdict"] = ("won" if all(
+                            p == q["a"] for p, q in
+                            zip(sess["picks"], e["q"])) else "lost")
+                        sess["done_at"] = now
+                        payload["status"] = sess["verdict"]
                 elif sess["game"] == "museum":
                     e = _list_entry("museum", sess["day"])
                     if e is None:

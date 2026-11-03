@@ -40,6 +40,127 @@ async function run(h){
     r = h.boot('sift', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'sift: day rolled');
     h.eq(r.x.S.stats.streak, 1, 'sift: streak preserved after win (regression)');
+
+    /* --- dealt: the live day ships its tiles without the categories,
+       so every trio travels to the session and the spent test hands
+       over its own group --- */
+    const sfLive = h.boot('sift', ['BOARD'], { now: T0, store: {} });
+    const sfFull = sfLive.x.BOARD;
+    h.ok(Array.isArray(sfFull.cats) && sfFull.cats.length === 4,
+      'sift dealt: the banked day still carries its groups');
+    const sfTiles = sfFull.cats.reduce((a, c) => a.concat(c.i), []);
+    const sfServed = { game: 'sift', day: 0, today: 0, puzzle: { t: sfFull.t, tiles: sfTiles } };
+    const sfOwner = {};
+    sfFull.cats.forEach((c, ci) => c.i.forEach(tx => { sfOwner[tx] = ci; }));
+    let sfMisses = 0;
+    const sfSolved = [];
+    const sfDealer = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'sf1', today: 0, puzzle: sfServed.puzzle } };
+      const ci = sfOwner[body.pick[0]];
+      if (body.pick.every(tx => sfOwner[tx] === ci) && !sfSolved.includes(ci)){
+        sfSolved.push(ci);
+        return { status: 200, body: { verdict: 'hit', cat: ci, n: sfFull.cats[ci].n,
+          i: sfFull.cats[ci].i, final: sfSolved.length === 4 } };
+      }
+      sfMisses++;
+      if (sfMisses >= 4)
+        return { status: 200, body: { verdict: 'lost',
+          reveal: { t: sfFull.t, cats: sfFull.cats } } };
+      return { status: 200, body: { verdict: 'miss', mistakes: sfMisses } };
+    };
+    const sfDst = {};
+    const sfD = h.boot('sift', EXP,
+      { now: T0, store: sfDst, servePuzzle: sfServed, stubBanks: true, serveDealt: sfDealer });
+    await h.flush();
+    h.ok(!('cats' in sfServed.puzzle), 'sift dealt: the served day never ships its groups');
+    h.ok(String(sfD.env.els.tiles.innerHTML).indexOf(sfTiles[0]) >= 0,
+      'sift dealt: the served tiles rendered');
+    const sfIdx = ci => sfFull.cats[ci].i.map(tx => sfTiles.indexOf(tx));
+    [sfIdx(1)[0], sfIdx(2)[0], sfIdx(3)[0]].forEach(i => sfD.x.sel.add(i));
+    sfD.env.els.btnSubmit.click();
+    await h.flush();
+    h.eq(sfD.x.S.mistakes, 1, 'sift dealt: the session counted the miss');
+    sfD.x.sel.clear();
+    sfIdx(0).forEach(i => sfD.x.sel.add(i));
+    sfD.env.els.btnSubmit.click();
+    await h.flush();
+    h.eq(sfD.x.S.solvedCats.length, 1, 'sift dealt: the first group locked');
+    h.ok(String(sfD.env.els.found.innerHTML).indexOf(sfFull.cats[0].n) >= 0,
+      'sift dealt: the spent test named its group');
+    h.ok((sfD.env.els.tiles.innerHTML.match(/tile solved/g) || []).length === 3,
+      'sift dealt: the locked tiles left the trio pool');
+    for (const c of [1, 2, 3]){
+      sfD.x.sel.clear();
+      sfIdx(c).forEach(i => sfD.x.sel.add(i));
+      sfD.env.els.btnSubmit.click();
+      await h.flush();
+    }
+    h.eq(sfD.x.S.status, 'won', 'sift dealt: swept the dealt board');
+    h.eq(sfD.x.S.nonce, 'sf1', 'sift dealt: the session is held');
+    const sfPost = h.lastPost(sfD.env);
+    h.eq(sfPost.body.status, 'won', 'sift dealt: the win posts the won status');
+    h.eq(sfPost.body.nonce, 'sf1', 'sift dealt: the evidence names the session');
+    h.eq(sfPost.body.meta.mistakes, 1, 'sift dealt: the evidence carries the session mistakes');
+    h.ok(sfPost.body.answer.length === 4
+      && sfPost.body.answer.every(g => g.length === 3),
+      'sift dealt: the evidence carries the four groups');
+    h.ok(String(sfD.env.els.verdict.textContent).indexOf(sfFull.t) >= 0,
+      'sift dealt: the verdict tells the theme it never shipped');
+    h.ok(sfD.x.shareText().indexOf('1 miss') >= 0, 'sift dealt: share counts the miss');
+    /* a reload keeps the won day and retells the groups that never shipped */
+    const sfR = h.boot('sift', EXP,
+      { now: T0, store: sfDst, servePuzzle: sfServed, stubBanks: true });
+    await h.flush();
+    h.eq(sfR.x.S.status, 'won', 'sift dealt: a reload keeps the won day');
+    h.ok(String(sfR.env.els.found.innerHTML).indexOf(sfFull.cats[3].n) >= 0,
+      'sift dealt: the reload retells the groups that never shipped');
+    /* the fourth miss spends the day: the reveal seats the cats the
+       served day never carried */
+    let sfMisses2 = 0;
+    const sfDealer2 = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'sf2', today: 0, puzzle: sfServed.puzzle } };
+      sfMisses2++;
+      if (sfMisses2 >= 4)
+        return { status: 200, body: { verdict: 'lost',
+          reveal: { t: sfFull.t, cats: sfFull.cats } } };
+      return { status: 200, body: { verdict: 'miss', mistakes: sfMisses2 } };
+    };
+    const sfLst = {};
+    const sfL = h.boot('sift', EXP,
+      { now: T0, store: sfLst, servePuzzle: sfServed, stubBanks: true, serveDealt: sfDealer2 });
+    await h.flush();
+    for (let k = 0; k < 4; k++){
+      sfL.x.sel.clear();
+      [sfIdx(0)[0], sfIdx(1)[0], sfIdx(2)[0]].forEach(i => sfL.x.sel.add(i));
+      sfL.env.els.btnSubmit.click();
+      await h.flush();
+    }
+    h.eq(sfL.x.S.status, 'lost', 'sift dealt: the fourth miss spent the day');
+    h.ok((sfL.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 12,
+      'sift dealt: the reveal dims the whole board');
+    h.ok(String(sfL.env.els.verdict.textContent).indexOf('Sifted out') >= 0,
+      'sift dealt: the loss tells its verdict');
+    /* a reload of the lost day replays the reveal it never shipped */
+    const sfLR = h.boot('sift', EXP,
+      { now: T0, store: sfLst, servePuzzle: sfServed, stubBanks: true });
+    await h.flush();
+    h.eq(sfLR.x.S.status, 'lost', 'sift dealt: a reload keeps the lost day');
+    h.ok((sfLR.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 12,
+      'sift dealt: the reload replays the reveal dimming');
+    /* an archive replay keeps the local path: the banked day still
+       carries its groups and nothing posts */
+    const sfRe = h.boot('sift', EXP, { now: T1, store: {}, search: '?d=0' });
+    const sfReIdx = c => sfRe.x.TILES.map((t, i) => ({ t, i }))
+      .filter(o => o.t.cat === c).map(o => o.i);
+    for (const c of [0, 1, 2, 3]){
+      sfReIdx(c).forEach(i => sfRe.x.sel.add(i));
+      sfRe.env.els.btnSubmit.click();
+    }
+    h.eq(sfRe.x.S.status, 'won', 'sift dealt: the replay wins locally on the banked day');
+    await h.flush();
+    h.eq(sfRe.env.fetchLog.length, 0, 'sift dealt: a replay posts nothing');
 }
 
 module.exports = { name: 'sift', run };

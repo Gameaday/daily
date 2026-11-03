@@ -127,15 +127,41 @@ let BOARD = null;
 let TILES = [];
 function applyBoard(b){
   BOARD = b;
-  /* tile list: {text, cat} */
+  /* tile list: {text, cat} on a banked day, {text} on a dealt one */
   TILES.length = 0;
-  BOARD.cats.forEach((cat, ci) => cat.i.forEach(text => TILES.push({ text, cat: ci })));
-  /* deterministic shuffle of the display order */
-  const rng = mulberry32(dayIndex * 6151 + 42);
-  for (let i = TILES.length - 1; i > 0; i--){
-    const j = Math.floor(rng() * (i + 1));
-    [TILES[i], TILES[j]] = [TILES[j], TILES[i]];
+  if (Array.isArray(BOARD.cats) && BOARD.cats.length){
+    BOARD.cats.forEach((cat, ci) => cat.i.forEach(text => TILES.push({ text, cat: ci })));
+    /* deterministic shuffle of the display order */
+    const rng = mulberry32(dayIndex * 6151 + 42);
+    for (let i = TILES.length - 1; i > 0; i--){
+      const j = Math.floor(rng() * (i + 1));
+      [TILES[i], TILES[j]] = [TILES[j], TILES[i]];
+    }
+  } else if (Array.isArray(BOARD.tiles)){
+    /* the dealt day arrives shuffled server-side, its groups never ship */
+    BOARD.tiles.forEach(text => TILES.push({ text }));
   }
+}
+/* the dealt day: the served board carries its tiles without the
+   categories, so every trio travels to the session and the spent
+   test hands over its own group */
+function isDealt(){
+  return BOARD && Array.isArray(BOARD.tiles) && !BOARD.cats &&
+    !isSolo() && !SHELL.isArchive;
+}
+/* the dealt session: one deal per day, held on the state and spent
+   one trio at a time */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle && Array.isArray(d.body.puzzle.tiles)) applyBoard(d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
 }
 async function loadPuzzle(){
   const L = typeof BOARDS !== 'undefined' ? BOARDS.length : 1;
@@ -173,14 +199,19 @@ saveState();
 let sel = new Set(); // indices into TILES
 
 function renderTiles(){
+  /* a dealt day tracks its finds by text: the group index rides the hit */
+  const dealt = !BOARD.cats;
+  const locked = dealt ? new Set((S.found || []).reduce((a, g) => a.concat(g.i), [])) : null;
+  const textCat = {};
+  if (dealt) (S.found || []).forEach(g => g.i.forEach(tx => { textCat[tx] = g.cat; }));
   $('tiles').innerHTML = TILES.map((t, i) => {
-    const inSolved = S.solvedCats.includes(t.cat);
+    const inSolved = dealt ? locked.has(t.text) : S.solvedCats.includes(t.cat);
     const revealAll = S.status === 'lost';
     let cls = 'tile';
     if (inSolved) cls += ' solved';
     if (revealAll && !inSolved) cls += ' dim';
     if (sel.has(i)) cls += ' sel';
-    const color = (inSolved || revealAll) ? COLORS[t.cat] : '';
+    const color = (inSolved || revealAll) ? COLORS[dealt ? (textCat[t.text] || 0) : t.cat] : '';
     return `<div class="${cls}" data-i="${i}" ${color ? `style="background:${color};border-color:${color}"` : ''}>${t.text}</div>`;
   }).join('');
 }
@@ -192,8 +223,8 @@ function renderMistakes(){
 }
 
 function renderFound(){
-  $('found').innerHTML = S.solvedCats.map(ci => {
-    const c = BOARD.cats[ci];
+  $('found').innerHTML = S.solvedCats.map((ci, k) => {
+    const c = BOARD.cats ? BOARD.cats[ci] : ((S.found || [])[k] || { n: '', i: [] });
     return `<div class="grp" style="background:${COLORS[ci]}">
       <div class="gname">${c.n}</div>
       <div class="gitems">${c.i.join(' \u00b7 ')}</div></div>`;
@@ -211,7 +242,12 @@ $('tiles').addEventListener('click', e => {
   if (!el) return;
   const i = +el.dataset.i;
   if (S.status !== 'playing') return;
-  if (S.solvedCats.includes(TILES[i].cat)) return; // locked tile
+  /* a locked tile never re-enters a trio: banked days lock by group,
+     dealt days by text */
+  const lockedTile = BOARD.cats
+    ? S.solvedCats.includes(TILES[i].cat)
+    : (S.found || []).some(g => g.i.includes(TILES[i].text));
+  if (lockedTile) return;
   if (sel.has(i)) sel.delete(i);
   else if (sel.size < 3) sel.add(i);
   else toastMsg('Three at a time — deselect one first');
@@ -220,9 +256,66 @@ $('tiles').addEventListener('click', e => {
 
 $('btnClear').addEventListener('click', () => { sel.clear(); renderTiles(); updateSubmit(); });
 
-$('btnSubmit').addEventListener('click', () => {
+let TESTING = false;
+$('btnSubmit').addEventListener('click', async () => {
   if (!BOARD) return;
-  if (sel.size !== 3 || S.status !== 'playing') return;
+  if (sel.size !== 3 || S.status !== 'playing' || TESTING) return;
+  /* the dealt day: the categories never shipped, so the trio travels
+     to the session and the spent test hands over its own group */
+  if (isDealt()){
+    TESTING = true;
+    try {
+      const n = await ensureSession();
+      if (!n){ toastMsg('the board is not answering right now, try again'); return; }
+      let b = null;
+      try { b = await SHELL.dealt('/guess', { nonce: n, pick: [...sel].map(i => TILES[i].text) }); } catch (e) {}
+      if (!b){ toastMsg('the board is not answering right now, try again'); return; }
+      if (b.status === 409){ toastMsg('this round is already over'); return; }
+      if (b.status !== 200 || !b.body || !b.body.verdict){
+        S.nonce = null; S.solvedCats = []; S.found = []; S.mistakes = 0; sel.clear();
+        saveState(); renderAll();
+        toastMsg('this round expired, test again for a fresh one');
+        return;
+      }
+      const v = b.body.verdict;
+      if (v === 'hit'){
+        S.solvedCats.push(b.body.cat);
+        S.found = S.found || [];
+        S.found.push({ cat: b.body.cat, n: b.body.n, i: b.body.i });
+        sel.clear();
+        if (b.body.final){
+          seatDealtCats();
+          S.status = 'won';
+          const st = S.stats;
+          st.played++; st.solved++; st.streak++;
+          st.max = Math.max(st.max, st.streak);
+          st.dist[S.mistakes]++;
+          saveState(); renderAll(); showReveal();
+        } else {
+          saveState(); renderAll();
+        }
+      } else if (v === 'lost'){
+        S.status = 'lost';
+        const st = S.stats;
+        st.played++;
+        st.dist[4]++;
+        if (b.body.reveal && Array.isArray(b.body.reveal.cats)){
+          S.reveal = b.body.reveal;
+          applyReveal(S.reveal);
+        }
+        saveState(); renderAll(); showReveal();
+      } else {
+        S.mistakes = b.body.mistakes;
+        [...sel].forEach(i => {
+          const el = document.querySelector(`.tile[data-i="${i}"]`);
+          if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
+        });
+        toastMsg(['Not a trio.','Close, maybe?','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
+        saveState(); renderAll();
+      }
+    } finally { TESTING = false; }
+    return;
+  }
   const selTexts = new Set([...sel].map(i => TILES[i].text));
   const hit = BOARD.cats.findIndex((c, ci) => !S.solvedCats.includes(ci) && c.i.length === 3 && c.i.every(x => selTexts.has(x)));
   if (hit >= 0){
@@ -258,8 +351,32 @@ $('btnSubmit').addEventListener('click', () => {
 });
 
 /* ---------------- reveal / share ---------------- */
+/* ---------------- dealt reveal ---------------- */
+/* the dealt win knows its groups from the finds: seat them in cat
+   order so the marks and the evidence read like the banked days */
+function seatDealtCats(){
+  if (BOARD.cats || !Array.isArray(S.found) || !S.found.length) return;
+  const cats = [];
+  S.found.forEach(g => { cats[g.cat] = { n: g.n, i: g.i }; });
+  BOARD = { t: BOARD.t, cats };
+  const owner = {};
+  cats.forEach((c, ci) => { if (c) c.i.forEach(tx => { owner[tx] = ci; }); });
+  TILES.forEach(t => { t.cat = owner[t.text]; });
+}
+/* the spent round hands over the whole board: seat the cats the served
+   day never carried, keeping the tiles where they lay */
+function applyReveal(rv){
+  BOARD = rv;
+  if (Array.isArray(rv.cats)){
+    const owner = {};
+    rv.cats.forEach((c, ci) => c.i.forEach(tx => { owner[tx] = ci; }));
+    TILES.forEach(t => { t.cat = owner[t.text]; });
+  }
+}
 function shareText(){
-  const marks = BOARD.cats.map((c, ci) => S.solvedCats.includes(ci) ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('');
+  const marks = BOARD.cats
+    ? BOARD.cats.map((c, ci) => S.solvedCats.includes(ci) ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('')
+    : '\uD83D\uDFE9'.repeat((S.found || []).length || 4);
   if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}${S.stars ? ' \u00b7 1\u2605' : ''}`;
   return `Sift No. ${num} \u00b7 sifted, ${S.mistakes} misses deep \u2014 ${marks}`;
 }
@@ -282,8 +399,10 @@ function showReveal(){
   $('reveal').classList.add('show');
   /* the day is sifted - the play row goes quiet */
   $('playrow').style.display = 'none';
-  syncBoard({ status: S.status, answer: S.solvedCats.map(ci => BOARD.cats[ci].i),
-              meta: { mistakes: S.mistakes }, points: S.pts });
+  syncBoard({ status: S.status,
+              answer: BOARD.cats ? S.solvedCats.map(ci => BOARD.cats[ci].i)
+                                 : (S.found || []).map(g => g.i),
+              meta: { mistakes: S.mistakes }, points: S.pts, nonce: S.nonce });
   renderTiles(); // to apply reveal dimming
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
@@ -304,7 +423,13 @@ if (!BOARD){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderAll();
-if (S.status !== 'playing') showReveal();
+if (S.status !== 'playing'){
+  /* a finished dealt day retells what the session handed over: the
+     lost day replays its reveal, the won day seats its finds */
+  if (S.reveal && Array.isArray(S.reveal.cats)) applyReveal(S.reveal);
+  else if (!BOARD.cats) seatDealtCats();
+  showReveal();
+}
 SHELL.startCountdown('countdown', 500);
 });
 </script>

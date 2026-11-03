@@ -177,21 +177,52 @@ async function run(h, ctx){
     h.eq(r.x.S.status, 'won', 'gated: lightbox won on the served design');
     h.eq(r.x.S.mistakes, 0, 'gated: lightbox clean film');
   }
-  /* sift: solve the served board */
+  /* sift: the served board is dealt - the tiles ship without their
+     categories, so every trio grades at the session */
   {
-    const live = h.boot('sift', ['BOARD', 'TILES'], { now: T0, store: {} });
-    const served = serve('sift', live.x.BOARD);
-    const r = h.boot('sift', ['S', 'TILES', 'sel', 'BOARDS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const live = h.boot('sift', ['BOARD'], { now: T0, store: {} });
+    const full = live.x.BOARD;
+    const tiles = full.cats.reduce((a, c) => a.concat(c.i), []);
+    const served = serve('sift', { t: full.t, tiles });
+    const owner = {};
+    full.cats.forEach((c, ci) => c.i.forEach(tx => { owner[tx] = ci; }));
+    let misses = 0;
+    const solved = [];
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gsf1', today: 0, puzzle: served.puzzle } };
+      const ci = owner[body.pick[0]];
+      if (body.pick.every(tx => owner[tx] === ci) && !solved.includes(ci)){
+        solved.push(ci);
+        return { status: 200, body: { verdict: 'hit', cat: ci, n: full.cats[ci].n,
+          i: full.cats[ci].i, final: solved.length === 4 } };
+      }
+      misses++;
+      if (misses >= 4)
+        return { status: 200, body: { verdict: 'lost',
+          reveal: { t: full.t, cats: full.cats } } };
+      return { status: 200, body: { verdict: 'miss', mistakes: misses } };
+    };
+    const r = h.boot('sift', ['S', 'TILES', 'sel', 'BOARDS'],
+      { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.BOARDS === undefined, 'gated: sift online boot has no bank');
     await h.flush();
-    const catIdx = c => r.x.TILES.map((t, i) => ({ t, i }))
-      .filter(o => o.t.cat === c).map(o => o.i);
-    h.eq(catIdx(0).length, 3, 'gated: sift served board has groups of 3');
+    h.ok(!('cats' in served.puzzle), 'gated: the sift day never ships its groups');
+    h.ok(String(r.env.els.tiles.innerHTML).indexOf(tiles[0]) >= 0,
+      'gated: sift served tiles rendered');
+    const tIdx = ci => full.cats[ci].i.map(tx => tiles.indexOf(tx));
+    [tIdx(1)[0], tIdx(2)[0], tIdx(3)[0]].forEach(i => r.x.sel.add(i));
+    r.env.els.btnSubmit.click();
+    await h.flush();
+    h.eq(r.x.S.mistakes, 1, 'gated: the session counted the miss');
+    r.x.sel.clear();
     for (const c of [0, 1, 2, 3]){
-      catIdx(c).forEach(i => r.x.sel.add(i));
+      tIdx(c).forEach(i => r.x.sel.add(i));
       r.env.els.btnSubmit.click();
+      await h.flush();
     }
-    h.eq(r.x.S.status, 'won', 'gated: sift won on the served board');
+    h.eq(r.x.S.status, 'won', 'gated: sift won on the dealt board');
+    h.eq(r.x.S.nonce, 'gsf1', 'gated: the sift session is held');
   }
   /* timeline: the served events render in the lane */
   {

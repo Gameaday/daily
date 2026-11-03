@@ -201,7 +201,7 @@ def main():
             check(s == 200 and "q" not in pzc and pzc.get("a") == cip0["a"]
                   and isinstance(pzc.get("c"), str)
                   and len(pzc["c"]) == len(cip0["q"])
-                  and all(cc == qq or not qq.isalpha()
+                  and all(cc != qq or not qq.isalpha()
                           for cc, qq in zip(pzc["c"], cip0["q"])),
                   "GET /puzzle cipher day 0 (live) -> the ciphertext, never the quote")
             lb0 = json.loads((ROOT / "puzzles" / "lightbox" / "puzzles.json")

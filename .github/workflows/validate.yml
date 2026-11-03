@@ -27,7 +27,7 @@ jobs:
       - name: Layer 3 - scores service API test (spawn + urllib)
         run: |
           set -o pipefail
-          python3 tests/server_test.py 2>&1 | tee /tmp/l3.log || { tail -10 /tmp/l3.log | sed 's/^/::error::/'; exit 1; }
+          python3 tests/server_test.py 2>&1 | tee /tmp/l3.log || { grep -E 'FAIL|Traceback' /tmp/l3.log | head -25 | sed 's/^/::error::/'; exit 1; }
       - name: Build online + offline bundles
         run: node tools/build-bundles.mjs
       - name: Upload offline bundle

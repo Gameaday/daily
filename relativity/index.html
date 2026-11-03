@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Three lives a day, one question each: which event happened nearer the birth, which nearer the death. The record's own years settle it." />
+<title>Relativity · the daily record game</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3ER.%3C/text%3E%3C/svg%3E"/>
+<link rel="stylesheet" href="../shell/common.css"/>
+<style>
+:root{ --gold:#c99a2e; --gold-soft:#f6eccf; --red:#b3402e; --red-soft:#f7e0da; }
+header{display:flex; align-items:flex-end; justify-content:space-between;}
+h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
+.lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
+.qcard{background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:6px;}
+.qtag{display:inline-block; background:var(--accent-soft); color:var(--accent);
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    border-radius:999px; padding:3px 12px; margin-bottom:10px;}
+.qtext{font-family:Georgia,serif; font-size:22px; margin:0 0 18px; line-height:1.35;}
+.opts{display:flex; flex-direction:column; gap:8px;}
+.opt{display:block; width:100%; text-align:left; background:var(--paper); border:1.5px solid var(--line);
+    border-radius:10px; padding:12px 14px; font-family:Georgia,serif; font-size:17px; color:var(--ink);
+    cursor:pointer; animation:rise .25s ease;}
+.opt:hover:not(:disabled){filter:brightness(.96); border-color:var(--accent);}
+.opt:disabled{cursor:default;}
+.opt.best{border-color:var(--green); background:var(--green-soft); font-weight:700;}
+.opt.miss{border-color:var(--red); background:var(--red-soft);}
+.opt.empty{opacity:.55;}
+@keyframes rise{from{opacity:0; transform:translateY(6px);}to{opacity:1; transform:none;}}
+.reveal{margin-top:16px; display:none;}
+.verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
+.why{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px; white-space:pre-line;}
+.nextrow{margin-bottom:14px;}
+.summary{margin-top:16px; display:none;}
+.sreview{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--green);
+    border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px; white-space:pre-line;}
+.sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+.actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+@media (max-width:480px){
+    h1{font-size:28px;}
+    .qtext{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Relativity<span class="dot">.</span></h1>
+      <p class="sub">the daily record game · a history labs warmup</p>
+    </div>
+    <div class="icons">
+      <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="metaline">
+    <span class="pno">No. <b id="pno">–</b> · <span id="pdate"></span></span>
+    <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
+  </div>
+
+  <p class="lead">Three lives a day, <b>a question each</b>. Every round seats one dated life and asks which of two events happened <b>nearer its birth or nearer its death</b>. The years sit close enough to make you think, and the record's own arithmetic settles it. <b>Play all three rounds.</b></p>
+
+  <div class="qcard">
+    <span class="qtag" id="qtag"></span>
+    <p class="qtext" id="qtext"></p>
+    <div class="opts" id="opts"></div>
+
+    <div class="reveal" id="reveal">
+      <p class="verdict" id="verdict"></p>
+      <div class="why" id="why"></div>
+      <div class="nextrow"><button class="btn" id="btnNext">Next round</button></div>
+    </div>
+
+    <div class="summary" id="summary">
+      <p class="verdict" id="sverdict"></p>
+      <div class="sreview" id="sreview"></div>
+      <div class="sharebox" id="sharetext"></div>
+      <div id="curve"></div>
+      <div class="actions">
+        <button class="btn" id="btnShare">Share result</button>
+        <span class="countdown">next board in <span id="countdown">–</span></span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    a <b><a href="https://historylabs.dev/">history labs</a></b> warm-up
+  </footer>
+</div>
+
+<div class="overlay" id="helpOverlay">
+  <div class="modal">
+    <h2>How to play</h2>
+    <p>Each day seats three lives from the people record. Every round asks the same kind of question: <b>which of two events happened nearer the life's birth, or nearer its death.</b> Both events fall inside the life, and their years sit close enough that the answer is a judgement, never a giveaway.</p>
+    <p>The record settles each round itself: one event sits so many years after the birth, or before the death, and the nearer one answers the question. The fine print lays out both distances, so even a wrong pick teaches you the arithmetic.</p>
+    <p>A life can return across the season, but never on consecutive days and never too often. A clean sweep, all three rounds right, keeps your streak alive.</p>
+    <p>One board a day. Everyone gets the same session, so compare notes over coffee.</p>
+    <button class="close" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../shell/common.js"></script>
+<script src="../assets/banks/relativity.js"></script>
+<script>
+'use strict';
+
+/* ---------------- the daily record ---------------- */
+/* day math, storage, toast, countdown, help/share wiring and the global-curve
+   client all live in ../shell/common.js - destructured once here */
+const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $, isSolo, fetchPuzzle } = SHELL;
+let EV = null;
+async function loadPuzzle(){
+  const L = typeof RELATIVITY !== 'undefined' ? RELATIVITY.length : 1;
+  const idx = ((dayIndex % L) + L) % L;
+  if (typeof RELATIVITY !== 'undefined') EV = RELATIVITY[idx];
+  if (isSolo()) return;
+  try { const d = await fetchPuzzle('relativity', dayIndex); if (d && d.puzzle) EV = d.puzzle; } catch (e) {}
+}
+
+/* ---------------- state ---------------- */
+const KEY = 'warmup.relativity.v1';
+const store = SHELL.makeStore(KEY);
+function loadState(){ return store.load(); }
+function saveState(){ store.save(S); }
+let S = loadState();
+if (!S || S.day !== dayIndex){
+  if (S && typeof S.stats === 'object' && S.day !== dayIndex){
+    if (!(S.status === 'won' && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since last sweep */
+  }
+  const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, best:null};
+  S = { day: dayIndex, picks: [], ans: [], rv: [], status: 'playing', stats };
+}
+saveState();
+
+/* ---------------- play ---------------- */
+/* the answer to round i: the session's answer once the day is dealt
+   (the per-round key never ships), the bank's answer on a local day */
+function truthAt(i){
+  if (Array.isArray(S.ans) && typeof S.ans[i] === 'number') return S.ans[i];
+  return EV.r[i].a;
+}
+/* the fine print rides the same trip: the dealt round hands it over
+   with the answer, and a reload retells it from the state */
+function revealAt(i){
+  if (Array.isArray(S.rv) && typeof S.rv[i] === 'string') return S.rv[i];
+  return EV.r[i].w;
+}
+function isDealt(){
+  return EV && Array.isArray(EV.r) && EV.r.length &&
+    typeof EV.r[0].a !== 'number' && !isSolo() && !SHELL.isArchive;
+}
+function correctCount(){
+  let c = 0;
+  for (let i = 0; i < EV.r.length; i++) if (S.picks[i] === truthAt(i)) c++;
+  return c;
+}
+function renderRound(){
+  const r = S.picks.length;
+  const rz = EV.r[r];
+  $('qtag').textContent = rz.p + ' (' + rz.s + ') \u00b7 round ' + (r + 1) + ' of ' + EV.r.length;
+  $('qtext').textContent = rz.q;
+  let html = '';
+  for (let i = 0; i < rz.o.length; i++)
+    html += '<button class="opt" id="opt' + i + '">' + rz.o[i] + '</button>';
+  $('opts').innerHTML = html;
+  /* the option buttons wire once: in the browser the innerHTML swap
+     gives every round fresh buttons, and pick(i) reads the current
+     round off the record, so the listener never carries stale state */
+  for (let i = 0; i < rz.o.length; i++){
+    const b = $('opt' + i);
+    b.disabled = false;
+    b.classList.remove('best', 'miss', 'empty');
+    if (!b.dataset.wired){
+      b.dataset.wired = '1';
+      b.addEventListener('click', () => pick(i));
+    }
+  }
+  $('reveal').classList.remove('show');
+  $('summary').style.display = 'none';
+}
+/* the round's verdict card: the record settles the round and the fine
+   print explains it, whichever event you picked */
+function showRoundVerdict(i, r, a, right){
+  const rz = EV.r[r];
+  for (let j = 0; j < rz.o.length; j++){
+    const b = $('opt' + j);
+    b.disabled = true;
+    if (j === a) b.classList.add('best');
+    else if (j === i) b.classList.add('miss');
+    else b.classList.add('empty');
+  }
+  $('verdict').textContent = right ? 'Right.' : 'No.';
+  $('verdict').style.color = right ? '' : 'var(--accent)';
+  let why = revealAt(r);
+  if (!right)
+    why += String.fromCharCode(10) + 'You picked ' + rz.o[i] + '.';
+  $('why').textContent = why;
+  $('reveal').classList.add('show');
+  if (S.picks.length === EV.r.length) $('btnNext').textContent = 'See the tally';
+}
+
+/* the page owns the game: which move each round builds and what each
+   verdict means; the session dance itself (the deal, the busy guard,
+   the triage, the nonce) lives in the shell now */
+async function pickDealt(i){
+  await session.play({ pick: i }, body => {
+    if (typeof body.a !== 'number' || typeof body.w !== 'string'){
+      session.reset();
+      S.picks = []; S.ans = []; S.rv = [];
+      saveState();
+      renderRound();
+      toastMsg('this session expired, the rounds reset for a fresh one');
+      return;
+    }
+    const r = S.picks.length;
+    S.picks.push(i);
+    S.ans = S.ans || [];
+    S.rv = S.rv || [];
+    S.ans[r] = body.a;
+    S.rv[r] = body.w;
+    saveState();
+    showRoundVerdict(i, r, body.a, body.verdict === 'hit');
+  });
+}
+
+async function pick(i){
+  if (!EV || S.status !== 'playing') return;
+  const r = S.picks.length;
+  if (r >= EV.r.length) return;
+  /* the dealt day: the per-round answers never shipped, so every
+     round travels to the session and the spent round hands over its
+     own answer and its fine print */
+  if (isDealt()){ pickDealt(i); return; }
+  S.picks.push(i);
+  saveState();
+  showRoundVerdict(i, r, EV.r[r].a, i === EV.r[r].a);
+}
+function nextStep(){
+  if (S.picks.length < EV.r.length) renderRound();
+  else renderSummary();
+}
+function renderSummary(){
+  const total = EV.r.length;
+  if (S.status === 'playing'){
+    const correct = correctCount();
+    S.status = correct === total ? 'won' : 'lost';
+    const st = S.stats;
+    st.played++;
+    if (S.status === 'won'){ st.streak++; st.max = Math.max(st.max, st.streak); }
+    else st.streak = 0;
+    saveState();
+    syncBoard({ status: S.status, answer: S.picks, points: correct, nonce: S.nonce });
+  }
+  const correct = correctCount();
+  const all = correct === total;
+  $('sverdict').textContent = all ? 'A clean sweep, ' + total + ' of ' + total + '.'
+                                  : correct + ' of ' + total + ' right.';
+  $('sverdict').style.color = all ? '' : 'var(--accent)';
+  $('sreview').textContent = EV.r.map((rz, i) => {
+    return (S.picks[i] === truthAt(i) ? '\u2713 ' : '\u2717 ') + rz.p + ': ' + revealAt(i);
+  }).join(String.fromCharCode(10));
+  $('sharetext').textContent = shareText() + String.fromCharCode(10) +
+    'streak ' + S.stats.streak + ' \u00b7 played ' + S.stats.played;
+  $('reveal').classList.remove('show');
+  $('summary').style.display = 'block';
+}
+
+/* ---------------- share ---------------- */
+function shareText(){
+  const head = 'Relativity No. ' + num;
+  if (S.status === 'playing')
+    return head + ' \u00b7 round ' + Math.min(S.picks.length + 1, EV.r.length) + ' of ' + EV.r.length;
+  const marks = EV.r.map((rz, i) => (S.picks[i] === truthAt(i) ? '\ud83d\udfe9' : '\ud83d\udfe5')).join('');
+  return head + ' ' + marks;
+}
+
+/* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
+const SYNC_GAME = 'relativity';
+const SYNC_BETTER = 'high';
+function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* ---------------- share / toast ---------------- */
+SHELL.wireShare(shareText);
+const toastMsg = SHELL.toast;
+
+/* the dealt session: one deal per day, held on the state and reused by
+   every round; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => {
+    if (body.puzzle) EV = Object.assign({}, EV, body.puzzle);
+  },
+  /* the same option index answers a different round each time, so
+     the key carries the round the pick is answering */
+  dedup: m => 'q' + S.picks.length + ':' + m.pick,
+  onExpired: () => {
+    S.picks = []; S.ans = []; S.rv = [];
+    renderRound();
+  },
+  copy: {
+    unavailable: 'the record is not answering right now, try again',
+    over: 'this session is already over',
+    expired: 'this session expired, the rounds reset for a fresh one'
+  }
+});
+
+/* ---------------- help / countdown ---------------- */
+SHELL.wireHelp();
+$('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) $('helpOverlay').classList.remove('show'); });
+
+/* ---------------- boot ---------------- */
+loadPuzzle().then(() => {
+if (!EV){ SHELL.showUnavailable(); return; }
+$('pno').textContent = num;
+$('pdate').textContent = SHELL.pdateText();
+$('btnNext').addEventListener('click', nextStep);
+if (S.status !== 'playing' || S.picks.length >= EV.r.length) renderSummary();
+else renderRound();
+SHELL.startCountdown('countdown', 500);
+});
+</script>
+</body>
+</html>

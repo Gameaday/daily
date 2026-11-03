@@ -43,7 +43,10 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # one correction attempt travel to the session. museum deals per guess
 # and meters the clues itself, so the name never ships either. bogus
 # deals per pick the same way, and superlative deals per round: the
-# per-question answers never ship and the session owns the sweep. The
+# per-question answers never ship and the session owns the sweep.
+# relativity deals per round the same way: its answers and its fine
+# print never ship, so every round hands both over once it is spent.
+# The
 # check games deal their own way: sift ships its tiles but never their
 # categories, lightbox ships the clues its grid implies but never the
 # grid or its name, and cipher ships a ciphertext under a server-side
@@ -61,7 +64,7 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # ---------------------------------------------------------------------------
 
 DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
-               "bogus", "superlative", "sift", "lightbox", "cipher",
+               "bogus", "superlative", "relativity", "sift", "lightbox", "cipher",
                "timeline", "thread")
 # the per-game strip declarations live in the dealt adapter registry
 # below: each row carries the keys its live day must never ship (the
@@ -317,6 +320,37 @@ def _guess_superlative(sess, move, now):
         # settles each round at the session
         return {"verdict": "hit" if right else "miss",
                    "a": q[r]["a"]}
+
+def _guess_relativity(sess, move, now):
+    """relativity: the rounds grade one at a time and the sweep verdict is the server's."""
+    e = _list_entry("relativity", sess["day"])
+    if e is None:
+        raise _Reject(404, "no answer key")
+    q = e["r"]
+    r = len(sess["picks"])
+    i = move.get("pick")
+    if isinstance(i, bool) or not isinstance(i, int) \
+            or r >= len(q) or not (0 <= i < len(q[r]["o"])):
+        raise _Reject(400, "bad pick")
+    sess["picks"].append(i)
+    right = i == q[r]["a"]
+    if r + 1 >= len(q):
+        # the last round ends the session: the sweep verdict
+        # and the picks are the server's, never the client's
+        sess["done"] = True
+        sess["verdict"] = "won" if all(
+            p == qq["a"] for p, qq in zip(sess["picks"], q)) \
+            else "lost"
+        sess["ans"] = list(sess["picks"])
+        sess["done_at"] = now
+        return {"verdict": "hit" if right else "miss",
+                   "a": q[r]["a"], "w": q[r].get("w"), "final": True}
+    else:
+        # the spent round hands over its own answer and its
+        # fine print: the rounds ship without their key, so
+        # the record settles each round at the session
+        return {"verdict": "hit" if right else "miss",
+                   "a": q[r]["a"], "w": q[r].get("w")}
 
 def _guess_sift(sess, move, now):
     """sift: each trio tests one group - the fourth miss spends the day and the board rides it."""
@@ -695,6 +729,18 @@ def _evidence_superlative(day, ans, meta):
     return sum(1 for p, q in zip(ans, e["q"]) if p == q["a"]), None
 
 
+def _evidence_relativity(day, ans, meta):
+    """relativity: one point per round the pick matched."""
+    e = _list_entry("relativity", day)
+    if e is None:
+        return None, "no answer key"
+    if not isinstance(ans, list) or len(ans) != len(e["r"]) \
+            or not all(isinstance(p, int) and not isinstance(p, bool)
+                       and 0 <= p < 2 for p in ans):
+        return None, "bad answer"
+    return sum(1 for p, q in zip(ans, e["r"]) if p == q["a"]), None
+
+
 def _evidence_rounds(day, ans, meta):
     """rounds: the year must be exact; the guesses meter the points."""
     e = _list_entry("rounds", day)
@@ -892,7 +938,8 @@ def _transform_thread(pz, day):
 # transform that ships a derived puzzle instead of the stored one
 # ("transform"), and a game whose day picks into a bank window says so
 # ("windowed"); superlative's strip is empty because its questions lose
-# their answer index in the nested pass instead.
+# their answer index in the nested pass instead, and relativity's works
+# the same way on its rounds, which lose their answer and their fine print.
 DEALT_ADAPTERS = {
     "rounds":        {"guess": _guess_rounds, "evidence": _evidence_rounds,
                       "meta": _meta_rounds, "caps": (("guesses", 1, 6),),
@@ -913,6 +960,10 @@ DEALT_ADAPTERS = {
                       "evidence": _evidence_superlative,
                       "grades_loss": True, "strip": (),
                       "deep": {"q": ("a",)}},
+    "relativity":    {"guess": _guess_relativity,
+                      "evidence": _evidence_relativity,
+                      "grades_loss": True, "strip": (),
+                      "deep": {"r": ("a", "w")}},
     "sift":          {"guess": _guess_sift, "evidence": _evidence_sift,
                       "meta": _meta_mistakes,
                       "caps": (("mistakes", 0, 4),),

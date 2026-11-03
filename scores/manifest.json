@@ -18,6 +18,7 @@
     "museum":        { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "thread":        { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "brunch":        { "better": "high", "edges": [0, 1, 2] },
-    "superlative":   { "better": "high", "edges": [0, 1, 2, 3, 4, 5, 6, 7] }
+    "superlative":   { "better": "high", "edges": [0, 1, 2, 3, 4, 5, 6, 7] },
+    "relativity":    { "better": "high", "edges": [0, 1, 2, 3] }
   }
 }

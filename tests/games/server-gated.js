@@ -432,6 +432,40 @@ async function run(h, ctx){
     await h.flush();
     h.eq(guesses, 2, 'gated: the same pick in a later round is a new move');
   }
+  /* relativity: the served board is dealt - the answers and the fine
+     print never ship, so every round grades at the session */
+  {
+    const live = h.boot('relativity', ['S', 'EV'], { now: T0, store: {} });
+    const full = live.x.EV;
+    const served = serve('relativity',
+      { r: full.r.map(rz => ({ p: rz.p, s: rz.s, q: rz.q, o: rz.o })) });
+    let relRound = 0;
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gr1', today: 0, puzzle: served.puzzle } };
+      const i = relRound;
+      relRound++;
+      const last = i === full.r.length - 1;
+      return { status: 200, body: { verdict: body.move.pick === full.r[i].a ? 'hit' : 'miss',
+        a: full.r[i].a, w: full.r[i].w, final: last } };
+    };
+    const r = h.boot('relativity', ['S', 'EV', 'RELATIVITY'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
+    h.ok(r.x.RELATIVITY === undefined, 'gated: relativity online boot has no bank');
+    await h.flush();
+    h.ok(served.puzzle.r.every(rz => !('a' in rz) && !('w' in rz)),
+      'gated: the relativity day never ships an answer or its fine print');
+    h.ok(String(r.env.els.qtag.textContent).indexOf('round 1') >= 0,
+      'gated: relativity served rounds rendered');
+    for (let i = 0; i < full.r.length; i++){
+      r.env.els['opt' + full.r[i].a].click();
+      await h.flush();
+      if (i < full.r.length - 1) r.env.els.btnNext.click();
+    }
+    r.env.els.btnNext.click();
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: relativity swept the dealt session');
+    h.eq(r.x.S.nonce, 'gr1', 'gated: the relativity session is held');
+  }
   /* thread: the served tray is dealt - the chain, the decoy split and the
      links never ship, so the chain grades at the session */
   {
@@ -500,6 +534,9 @@ async function run(h, ctx){
     const sup = h.boot('superlative', ['EV'], { now: T0, store: {} });
     h.ok(JSON.stringify(sup.x.EV) === JSON.stringify(store.superlative[0]),
       'gated: exported superlative bank matches the generated bank');
+    const rel = h.boot('relativity', ['EV'], { now: T0, store: {} });
+    h.ok(JSON.stringify(rel.x.EV) === JSON.stringify(store.relativity[0]),
+      'gated: exported relativity bank matches the generated bank');
   }
 }
 

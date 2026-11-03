@@ -59,7 +59,8 @@ Endpoints (with or without the /api prefix):
                     rounds {"y": int} | brunch {"pick": int} | fermi {"v": number} |
                     well-actually {"pick": int} or {"correction": str} |
                     museum {"name": str} or {"clue": 1} | bogus {"pick": int} |
-                    superlative {"pick": int} | sift {"pick": [str, str, str]} |
+                    superlative {"pick": int} | relativity {"pick": int} |
+                    sift {"pick": [str, str, str]} |
                     lightbox {"grid": [7 rows of "0"|"1"|"2"]} |
                     cipher {"check": {cipher: plain}} or {"hint": 1, "have": {...}} or {"give": 1} |
                     timeline {"order": [event indexes]} or {"give": 1} |

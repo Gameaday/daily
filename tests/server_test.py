@@ -7,7 +7,7 @@ stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
 sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
 (the live rounds, brunch, fermi, well-actually, museum, bogus, superlative,
-sift, lightbox, cipher, timeline and thread days ship without their keys),
+relativity, sift, lightbox, cipher, timeline and thread days ship without their keys),
 fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
@@ -195,6 +195,13 @@ def main():
                   and all("a" not in q for q in b.get("puzzle", {}).get("q", []))
                   and len(b.get("puzzle", {}).get("m", [])) >= 4,
                   "GET /puzzle superlative day 0 (live) -> the questions, never the answers")
+            s, b = req("GET", "/api/puzzle?game=relativity&day=0")
+            check(s == 200 and len(b.get("puzzle", {}).get("r", [])) == 3
+                  and all("a" not in rz and "w" not in rz
+                          for rz in b.get("puzzle", {}).get("r", []))
+                  and all(len(rz.get("o", [])) == 2
+                          for rz in b.get("puzzle", {}).get("r", [])),
+                  "GET /puzzle relativity day 0 (live) -> the rounds, never the answers")
             cip0 = json.loads((ROOT / "puzzles" / "cipher" / "puzzles.json")
                               .read_text(encoding="utf-8"))[0]
             s, b = req("GET", "/api/puzzle?game=cipher&day=0")
@@ -397,6 +404,17 @@ def main():
         s, b = ev("superlative", {"id": "ev15", "status": "lost", "answer": imperfect})
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 4.5,
               "evidence: superlative partial credit is derived, not claimed")
+        rel = json.loads((ROOT / "puzzles" / "relativity" / "puzzles.json")
+                         .read_text(encoding="utf-8"))[0]
+        rperfect = [rz["a"] for rz in rel["r"]]
+        s, b = ev("relativity", {"id": "evr1", "status": "won", "answer": rperfect})
+        check(s == 200 and b.get("mean") == 3,
+              "evidence: relativity clean sweep -> full marks")
+        rwrong = list(rperfect)
+        rwrong[0] = (rwrong[0] + 1) % 2
+        s, b = ev("relativity", {"id": "evr2", "status": "lost", "answer": rwrong})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
+              "evidence: relativity partial credit is derived, not claimed")
         s, b = ev("museum", {"id": "ev16", "status": "won", "answer": "rosetta stone",
                              "meta": {"clues": 2}})
         check(s == 200 and b.get("mean") == 2,
@@ -820,6 +838,47 @@ def main():
                                     "id": "dv17", "status": "lost",
                                     "answer": imperfect, "nonce": sgn2})
         check(s == 200 and b.get("count") == 4 and b.get("mean") == 4.5,
+              "dealt submit: the session's sweep overrides the claimed loss")
+        # --- dealt relativity: the answers and the fine print never ship,
+        #     so every round travels to the session and the sweep verdict
+        #     is the server's ---
+        s, b = post("/api/deal", {"game": "relativity", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and len(b.get("puzzle", {}).get("r", [])) == 3
+              and all("a" not in rz and "w" not in rz
+                      for rz in b.get("puzzle", {}).get("r", [])),
+              "deal: the three rounds arrive without their answers")
+        rgn = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": rgn, "move": {"pick": "x"}})
+        check(s == 400, "guess: relativity refuses a non-integer pick")
+        s, _b = post("/api/guess", {"nonce": rgn, "move": {"pick": 9}})
+        check(s == 400, "guess: relativity refuses an off-round pick")
+        s, b = post("/api/guess", {"nonce": rgn, "move": {"pick": rwrong[0]}})
+        check(s == 200 and b.get("verdict") == "miss"
+              and b.get("a") == rperfect[0] and b.get("w"),
+              "guess: the spent round hands over its answer and its fine print")
+        for pk in rperfect[1:]:
+            s, b = post("/api/guess", {"nonce": rgn, "move": {"pick": pk}})
+        check(s == 200 and b.get("final") is True
+              and b.get("verdict") == "hit" and b.get("a") == rperfect[-1],
+              "guess: the last round ends the session")
+        s, _b = post("/api/guess", {"nonce": rgn, "move": {"pick": rperfect[0]}})
+        check(s == 409, "guess: a finished relativity session takes no more picks")
+        s, b = post("/api/submit", {"game": "relativity", "day": TODAY,
+                                    "id": "dvr1", "status": "won",
+                                    "answer": rperfect, "nonce": rgn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 2.33,
+              "dealt submit: the session's lost verdict overrides the claim")
+        s, b = post("/api/deal", {"game": "relativity", "day": TODAY})
+        rgn2 = b["nonce"]
+        for pk in rperfect:
+            s, b = post("/api/guess", {"nonce": rgn2, "move": {"pick": pk}})
+        check(s == 200 and b.get("final") is True,
+              "guess: a clean relativity sweep plays out")
+        s, b = post("/api/submit", {"game": "relativity", "day": TODAY,
+                                    "id": "dvr2", "status": "lost",
+                                    "answer": rwrong, "nonce": rgn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 2.5,
               "dealt submit: the session's sweep overrides the claimed loss")
         # --- dealt sift: the categories never ship, so every trio travels
         #     to the session and the spent test hands over its group ---

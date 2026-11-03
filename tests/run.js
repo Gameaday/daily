@@ -20,7 +20,7 @@ const { GAMES } = require('./games/_lib');
 const MODULES = [
   'bogus', 'well-actually', 'recycle-rings', 'recycle-grid', 'fermi',
   'sift', 'rounds', 'trace', 'lightbox', 'sprint', 'cipher', 'timeline',
-  'museum', 'thread', 'brunch', 'superlative', 'archive', 'server-gated'
+  'museum', 'thread', 'brunch', 'superlative', 'relativity', 'archive', 'server-gated'
 ].map(file => require('./games/' + file + '.js'));
 
 async function main(h, ctx){
@@ -75,7 +75,8 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
         const thread = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles', 'thread', 'puzzles.json'), 'utf8'));
         const brunch = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles', 'brunch', 'puzzles.json'), 'utf8'));
         const superlative = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles', 'superlative', 'puzzles.json'), 'utf8'));
-        return JSON.stringify({ timeline, rounds, thread, brunch, superlative });
+        const relativity = JSON.parse(fs.readFileSync(path.join(ROOT, 'puzzles', 'relativity', 'puzzles.json'), 'utf8'));
+        return JSON.stringify({ timeline, rounds, thread, brunch, superlative, relativity });
       } catch (e){ return null; }
     }
   };

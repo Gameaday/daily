@@ -341,7 +341,8 @@ class Handler(BaseHTTPRequestHandler):
         """The dealt-play endpoints: /deal opens a session, /guess plays a
         dealt round (rounds heat, the one-shot verdicts, well-actually's
         picks and correction, museum's names and clues, bogus's picks,
-        superlative's rounds, sift's trios, lightbox's developments,
+        superlative's rounds, relativity's rounds, sift's trios,
+        lightbox's developments,
         cipher's checks and hints, timeline's and thread's checks), /reveal
         is the sprint starting gun. Every game's move nests under
         "move"; the session map mutates under the lock; a key leaves

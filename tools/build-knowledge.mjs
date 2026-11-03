@@ -66,6 +66,17 @@
      never a tie. Every draw comes from one seeded PRNG, so the
      layer compiles byte-identical on every machine
 
+   - relativity is a recipe over people and events: three lives a
+     day, one question each - which of two events happened nearer
+     the life's birth or its death. Every round seats one dated life
+     (a span of at least ten years) and draws one anchor end plus two
+     events strictly inside the life, years never more than the
+     recipe's spread apart and distances never within its margin, so
+     the question stays a judgement and the record settles it. A life
+     serves at most four days and never on consecutive days, and no
+     day seats the same life twice. Every draw comes from one seeded
+     PRNG, so the layer compiles byte-identical on every machine
+
    Lint (always, before anything compiles):
    - ids unique across every present entity file (one namespace: the
      Benjamin / John Franklin near miss stays impossible forever)
@@ -919,6 +930,118 @@ function compileSuperlative(){
   return text;
 }
 
+/* ---------------- recipe: relativity ---------------- */
+/* relativity: three lives a day, one question each - which of two
+   events happened nearer the life's birth or its death. Every round
+   seats one dated life and draws one anchor end plus two events
+   strictly inside the life, years never more than the recipe's
+   spread apart and distances never within its margin, so the answer
+   is a judgement the record settles. A life serves at most four days
+   and never on consecutive days, and no day seats the same life
+   twice. Everything is drawn from one seeded PRNG, so the layer
+   compiles byte-identical on every machine. */
+function compileRelativity(){
+  if (!Array.isArray(people) || !Array.isArray(events)) return null;
+  const recipe = readRecipe('relativity');
+  if (!recipe || typeof recipe !== 'object' || Array.isArray(recipe)){
+    fail('relativity recipe must be an object');
+    return null;
+  }
+  if (recipe.v !== 1) fail('relativity recipe must carry v: 1');
+  if (!Number.isInteger(recipe.days) || recipe.days < 1)
+    fail('relativity recipe days must be a positive integer');
+  if (!Number.isInteger(recipe.seed)) fail('relativity recipe seed must be an integer');
+  if (!Number.isInteger(recipe.margin) || recipe.margin < 1)
+    fail('relativity recipe margin must be a positive integer');
+  if (!Number.isInteger(recipe.spread) || recipe.spread < 1)
+    fail('relativity recipe spread must be a positive integer');
+
+  const dated = people
+    .filter(p => p && Number.isInteger(p.born) && Number.isInteger(p.died)
+      && p.died - p.born >= 10)
+    .sort((p, q) => p.id < q.id ? -1 : p.id > q.id ? 1 : 0);
+  const evs = events.filter(x => x && Number.isInteger(x.y));
+  const margin = recipe.margin, spread = recipe.spread;
+  /* the pairs a round may seat: two events strictly inside the life,
+     in event file order, names apart, distances past the margin and
+     years inside the spread */
+  function pairsOf(p, anchor){
+    const out = [];
+    for (let i = 0; i < evs.length; i++){
+      const A = evs[i];
+      if (A.y <= p.born || A.y >= p.died) continue;
+      for (let j = i + 1; j < evs.length; j++){
+        const B = evs[j];
+        if (B.y <= p.born || B.y >= p.died) continue;
+        if (A.n === B.n) continue;
+        const dA = anchor === 'birth' ? A.y - p.born : p.died - A.y;
+        const dB = anchor === 'birth' ? B.y - p.born : p.died - B.y;
+        if (Math.abs(dA - dB) < margin) continue;
+        if (Math.abs(A.y - B.y) > spread) continue;
+        out.push({ A, B });
+      }
+    }
+    return out;
+  }
+  const lives = dated.filter(p => pairsOf(p, 'birth').length + pairsOf(p, 'death').length > 0);
+  if (lives.length < LIST.minBank)
+    fail('knowledge: relativity lives below the minimum (' + lives.length + ' < ' + LIST.minBank + ')');
+
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const rng = mulberry32(recipe.seed);
+  const uses = {};
+  let prev = [];
+  const boards = [];
+  for (let day = 0; day < recipe.days; day++){
+    /* three lives: each seat draws from the whole pool, and a capped,
+       repeated or yesterday life redraws the same seat */
+    const ids = [];
+    let guard = 0;
+    while (ids.length < 3 && guard++ < 100000){
+      const p = lives[Math.floor(rng() * lives.length)];
+      if ((uses[p.id] || 0) >= 4 || ids.includes(p.id) || prev.includes(p.id)) continue;
+      ids.push(p.id);
+    }
+    if (ids.length !== 3){
+      fail('relativity: day ' + day + ' seats no board');
+      return null;
+    }
+    const rounds = ids.map(id => {
+      const p = dated.find(x => x.id === id);
+      let anchor = rng() < 0.5 ? 'birth' : 'death';
+      let list = pairsOf(p, anchor);
+      if (!list.length){ anchor = anchor === 'birth' ? 'death' : 'birth'; list = pairsOf(p, anchor); }
+      const item = list[Math.floor(rng() * list.length)];
+      const flip = rng() < 0.5;
+      const A = flip ? item.B : item.A;
+      const B = flip ? item.A : item.B;
+      const dA = anchor === 'birth' ? A.y - p.born : p.died - A.y;
+      const dB = anchor === 'birth' ? B.y - p.born : p.died - B.y;
+      const a = dA <= dB ? 0 : 1;
+      const yr = d => d === 1 ? '1 year' : d + ' years';
+      const tail = anchor === 'birth' ? 'after the birth' : 'before the death';
+      return { p: p.n, s: p.born + '-' + p.died,
+        q: 'Which happened nearer ' + p.n + "'s " + anchor + '?',
+        o: [A.n, B.n], a,
+        w: A.n + ' was ' + A.y + ', ' + yr(dA) + ' ' + tail + '. '
+          + B.n + ' was ' + B.y + ', ' + yr(dB) + ' ' + tail + '.' };
+    });
+    for (const id of ids) uses[id] = (uses[id] || 0) + 1;
+    prev = ids;
+    boards.push({ r: rounds });
+  }
+  if (boards.length < LIST.minBank)
+    fail('knowledge: relativity bank below the minimum (' + boards.length + ' < ' + LIST.minBank + ')');
+  return JSON.stringify(boards, null, 2) + '\n';
+}
+
 function checkStore(game, text){
   const path = 'puzzles/' + game + '/puzzles.json';
   let actual = null;
@@ -947,6 +1070,7 @@ if (LIST.gated['well-actually']) checkStore('well-actually', compileWellActually
 if (LIST.gated.sift) checkStore('sift', compileSift());
 if (LIST.gated.fermi) checkStore('fermi', compileFermi());
 if (LIST.gated.superlative) checkStore('superlative', compileSuperlative());
+if (LIST.gated.relativity) checkStore('relativity', compileRelativity());
 
 if (fails){
   console.error('');

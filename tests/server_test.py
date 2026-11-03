@@ -6,7 +6,8 @@ health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
 sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
-(the live rounds, brunch and fermi days ship without their keys),
+(the live rounds, brunch, fermi, well-actually and museum days ship
+without their keys),
 fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
@@ -173,6 +174,19 @@ def main():
                   and "w" not in b.get("puzzle", {})
                   and b.get("puzzle", {}).get("q"),
                   "GET /puzzle fermi day 0 (live) -> the question, never the cited value")
+            s, b = req("GET", "/api/puzzle?game=well-actually&day=0")
+            check(s == 200 and "l" not in b.get("puzzle", {})
+                  and "a" not in b.get("puzzle", {})
+                  and "c" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("s", [])) >= 4,
+                  "GET /puzzle well-actually day 0 (live) -> the statement, never the lie")
+            s, b = req("GET", "/api/puzzle?game=museum&day=0")
+            check(s == 200 and "a" not in b.get("puzzle", {})
+                  and "al" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("c", [])) == 5,
+                  "GET /puzzle museum day 0 (live) -> the clues, never the name")
             s, b = req("GET", "/api/puzzle?game=timeline&day=0")
             ev = b.get("puzzle", {}).get("events", [])
             check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
@@ -578,6 +592,107 @@ def main():
                                     "nonce": fn2})
         check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.5,
               "dealt submit: the session's wild estimate overrides the claimed spot-on")
+        # --- dealt well-actually: the lie never ships, so every pick and
+        #     the one correction attempt travel to the session ---
+        s, b = post("/api/deal", {"game": "well-actually", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "l" not in b.get("puzzle", {})
+              and "a" not in b.get("puzzle", {})
+              and "c" not in b.get("puzzle", {})
+              and "w" not in b.get("puzzle", {})
+              and len(b.get("puzzle", {}).get("s", [])) >= 4,
+              "deal: the statement arrives without its lie")
+        wn = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": wn, "pick": "x"})
+        check(s == 400, "guess: well-actually refuses a non-integer pick")
+        s, _b = post("/api/guess", {"nonce": wn, "correction": "Leonardo"})
+        check(s == 400, "guess: the correction cannot precede the find")
+        s, b = post("/api/guess", {"nonce": wn, "pick": 0})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("left") == 2,
+              "guess: a wrong pick misses, the lie stays hidden")
+        s, _b = post("/api/guess", {"nonce": wn, "pick": 0})
+        check(s == 400, "guess: a phrase cannot be picked twice")
+        s, b = post("/api/guess", {"nonce": wn, "pick": 1})
+        check(s == 200 and b.get("verdict") == "found",
+              "guess: the lie is found, no reveal yet")
+        s, b = post("/api/guess", {"nonce": wn, "correction": "leonardo"})
+        check(s == 200 and b.get("verdict") == "won"
+              and b.get("bonus") == "correct"
+              and b.get("reveal", {}).get("c") == "Leonardo",
+              "guess: the correction rides the spent attempt")
+        s, _b = post("/api/guess", {"nonce": wn, "pick": 2})
+        check(s == 409, "guess: a finished well-actually session takes no more picks")
+        s, b = post("/api/submit", {"game": "well-actually", "day": TODAY,
+                                    "id": "dv10", "status": "won",
+                                    "answer": {"picks": [1],
+                                               "typed": "Leonardo da Vinci"},
+                                    "nonce": wn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 3.33,
+              "dealt submit: the session's picks and correction override the claim")
+        s, b = post("/api/deal", {"game": "well-actually", "day": TODAY})
+        wn2 = b["nonce"]
+        s, b = post("/api/guess", {"nonce": wn2, "pick": 0})
+        s, b = post("/api/guess", {"nonce": wn2, "pick": 2})
+        s, b = post("/api/guess", {"nonce": wn2, "pick": 3})
+        check(s == 200 and b.get("verdict") == "lost"
+              and b.get("reveal", {}).get("l") == 1,
+              "guess: three strikes lose, the lie rides the spent round")
+        s, b = post("/api/submit", {"game": "well-actually", "day": TODAY,
+                                    "id": "dv11", "status": "won",
+                                    "answer": {"picks": [1],
+                                               "typed": "Leonardo"},
+                                    "nonce": wn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 2.5,
+              "dealt submit: the session's lost verdict overrides the claimed win")
+        # --- dealt museum: the name never ships and the session meters
+        #     the clues, so the reveal rides the spent guess ---
+        s, b = post("/api/deal", {"game": "museum", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "a" not in b.get("puzzle", {})
+              and "al" not in b.get("puzzle", {})
+              and "w" not in b.get("puzzle", {})
+              and len(b.get("puzzle", {}).get("c", [])) == 5,
+              "deal: the exhibit arrives without its name")
+        mn = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": mn, "name": ""})
+        check(s == 400, "guess: museum refuses an empty name")
+        s, b = post("/api/guess", {"nonce": mn, "name": "not it"})
+        check(s == 200 and b.get("verdict") == "miss"
+              and b.get("clueIdx") == 1,
+              "guess: a wrong name buys the next clue, metered by the session")
+        s, b = post("/api/guess", {"nonce": mn, "clue": 1})
+        check(s == 200 and b.get("verdict") == "clue"
+              and b.get("clueIdx") == 2,
+              "guess: a clue request meters itself")
+        s, b = post("/api/guess", {"nonce": mn, "name": "the rosetta stone"})
+        check(s == 200 and b.get("verdict") == "won"
+              and b.get("reveal", {}).get("a") == "The Rosetta Stone",
+              "guess: the name rides the spent guess")
+        s, _b = post("/api/guess", {"nonce": mn, "name": "rosetta"})
+        check(s == 409, "guess: a finished museum session takes no more guesses")
+        s, b = post("/api/submit", {"game": "museum", "day": TODAY,
+                                    "id": "dv12", "status": "won",
+                                    "answer": "rosetta",
+                                    "meta": {"clues": 1},
+                                    "nonce": mn})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
+              "dealt submit: the session's clue meter overrides the claim")
+        s, b = post("/api/deal", {"game": "museum", "day": TODAY})
+        mn2 = b["nonce"]
+        for _i in range(4):
+            s, b = post("/api/guess", {"nonce": mn2, "clue": 1})
+        s, _b = post("/api/guess", {"nonce": mn2, "clue": 1})
+        check(s == 400, "guess: the fifth clue request is refused")
+        s, b = post("/api/guess", {"nonce": mn2, "name": "not it"})
+        check(s == 200 and b.get("verdict") == "lost",
+              "guess: a wrong name at the last clue ends the visit")
+        s, b = post("/api/submit", {"game": "museum", "day": TODAY,
+                                    "id": "dv13", "status": "won",
+                                    "answer": "rosetta stone",
+                                    "meta": {"clues": 1},
+                                    "nonce": mn2})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.0,
+              "dealt submit: a lost visit overrides the claimed win")
     finally:
         proc.terminate()
         try:
@@ -880,6 +995,22 @@ def main():
             check(s == 200 and "a" not in b.get("puzzle", {})
                   and "w" not in b.get("puzzle", {}),
                   "cutover: the live fermi day ships without its cited value")
+            s, b = req("GET", "/api/puzzle?game=well-actually&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("l") == 1,
+                  "cutover: a replayed well-actually day still carries its lie")
+            s, b = req("GET", "/api/puzzle?game=well-actually&day=1", port=PORT7)
+            check(s == 200 and "l" not in b.get("puzzle", {})
+                  and "a" not in b.get("puzzle", {})
+                  and "c" not in b.get("puzzle", {}),
+                  "cutover: the live well-actually day ships without its lie")
+            s, b = req("GET", "/api/puzzle?game=museum&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("a") == "The Rosetta Stone",
+                  "cutover: a replayed museum day still carries its name")
+            s, b = req("GET", "/api/puzzle?game=museum&day=1", port=PORT7)
+            check(s == 200 and "a" not in b.get("puzzle", {})
+                  and "al" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("c", [])) == 5,
+                  "cutover: the live museum day ships the clues, never the name")
     finally:
         proc7.terminate()
         try:

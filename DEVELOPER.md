@@ -5,7 +5,9 @@ game per day, self-hosted as dumb static files plus a tiny stdlib-only
 Python scores service. Everything uses relative paths.
 
 User-facing documentation lives in README.md; design notes and future ideas
-in NOTES.md. This file is the short orientation for contributors.
+in NOTES.md. This file is the short orientation for contributors. The full architecture
+map lives in docs/ARCHITECTURE.md, and the scores service wire contract in
+docs/API.md.
 
 ## Architecture
 

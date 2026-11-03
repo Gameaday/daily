@@ -30,6 +30,13 @@ Design rules (deliberate):
 - input is strictly validated: game must be in the fixed allowlist below,
   day/value are bounded numbers, bodies are capped at 2 KB, and no user
   text is accepted or stored anywhere
+- dealt play (1.2) is per-SESSION, never per-PLAYER: an in-memory nonce map
+  (game, day, counters - no identity attached) that is purged at the day
+  rollover, on TTL, and when a round ends. It exists so answers can stop
+  shipping to the client (rounds computes hotter/colder server-side) and so
+  a clock can be stamped where it cannot be edited (sprint's starting gun).
+  The consolidated-numbers privacy stance survives: a session is a random
+  token, not a person
 
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
@@ -37,6 +44,9 @@ Endpoints (with or without the /api prefix):
                    points out (gated games: the answer is checked against the day's
                    key and the score derived server-side; self-reported value posts
                    are accepted only for the generator games)
+    POST /deal    {"game", "day"}                  -> open a dealt session (live day only; the rounds deal carries the puzzle without its key)
+    POST /guess   {"nonce", "y"}                     -> the rounds verdict with server-side heat (the distance never crosses the wire)
+    POST /reveal  {"nonce"}                          -> the sprint starting gun (t0 stamped once, never reset; the window is enforced at submit)
     GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
     GET  /puzzle?game=&day=                         -> the day's puzzle
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
@@ -51,8 +61,10 @@ import hashlib
 import json
 import math
 import re
+import secrets
 import signal
 import threading
+import time
 from datetime import date, datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -73,7 +85,7 @@ ARCHIVE_DIR = Path(__file__).parent / 'archive'
 # pruned if it ever grows past a fixed bound.
 MAX_GETS_PER_IP = 10000
 MAX_POSTS_PER_IP = 300
-IP_HITS = {}   # ip -> [day, gets, posts]
+IP_HITS = {}   # ip -> [day, gets, posts, dealt]
 
 # Per-game truth: which direction is better, and the fixed histogram edges.
 # Bin i covers [edges[i], edges[i+1]); values beyond the last edge clamp into
@@ -139,6 +151,71 @@ META_CAPS = {
     "timeline": (("checks", 1, 999),),
     "thread":   (("checks", 1, 999),),
 }
+
+
+# ---------------------------------------------------------------------------
+# Dealt play (1.2): the server deals the round and keeps the truth. A dealt
+# session is a random nonce over an in-memory map - no identity, no disk, no
+# player records - purged at the day rollover, on TTL, and when the round
+# ends. Dealt traffic is per-action (a session can need a dozen calls), so it
+# rides its own tighter per-IP daily cap, separate from /submit's.
+# The residual honesty note: a loss reveal hands the player the key they
+# failed to find, and a generator's solved count is still the client's word
+# inside the server-stamped window - closing those needs the answers dealt
+# per solve, which is the next phase, not this one.
+# ---------------------------------------------------------------------------
+
+DEALT_GAMES = ("rounds", "sprint")
+SESSIONS = {}        # nonce -> {"game", "day", "created", "ip", "guesses",
+                    #            "done", "verdict", "t0"}
+MAX_DEALT_PER_IP = 400    # per-IP daily cap across /deal, /guess, /reveal
+SPRINT_WINDOW = 90.0      # the sprint round is this many seconds, server clock
+SPRINT_GRACE = 10.0       # network lag allowance on the window check
+SPRINT_PURGE = 150.0      # t0 + this is when an unsubmitted round is reaped
+SESSION_TTL = 1800.0      # housekeeping horizon for any dealt session
+
+
+def purge_sessions(now=None):
+    """Reclaim dealt sessions. Caller holds LOCK. A session dies when the
+    day rolls over (dealt play is for the live day), when it ages past the
+    TTL, when a sprint round is long over, or when a finished round has
+    been submitted against. A purged sprint session is over for good: a
+    later submit naming it derives 0, so the clock cannot be re-entered."""
+    now = time.time() if now is None else now
+    today = current_day_index()
+    for nonce in list(SESSIONS):
+        s = SESSIONS[nonce]
+        if s["day"] != today:
+            del SESSIONS[nonce]
+        elif now - s["created"] > SESSION_TTL:
+            del SESSIONS[nonce]
+        elif (s["game"] == "sprint" and s["t0"] is not None
+                and now - s["t0"] > SPRINT_PURGE):
+            del SESSIONS[nonce]
+        elif s["done"] and now - s.get("done_at", s["created"]) > 300:
+            del SESSIONS[nonce]
+
+
+def round_feedback(y, key):
+    """Rounds hotter/colder, server-side: the distance in years never
+    crosses the wire - only the heat bucket and the direction hint the
+    page has always shown. A port of the client's heatOf/hintOf; the solo
+    offline path keeps its own copy."""
+    off = abs(y - key)
+    if off <= 2:
+        heat, sq = "scalding", "\U0001F7E9"
+    elif off <= 5:
+        heat, sq = "hot", "\U0001F7E8"
+    elif off <= 15:
+        heat, sq = "warm", "\U0001F7E7"
+    else:
+        heat, sq = "cold", "\U0001F7E5"
+    parts = ["go earlier" if y > key else "go later"]
+    if y // 100 != key // 100:
+        parts.append("wrong century")
+    elif y // 10 == key // 10:
+        parts.append("right decade")
+    return {"heat": heat, "sq": sq, "hint": " \u00b7 ".join(parts)}
 
 
 def _text_norm(s):
@@ -567,7 +644,7 @@ def snapshot(game, day, value=None, st=None, spec=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.1"
+    server_version = "warmup-curve/4.2"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -605,11 +682,12 @@ class Handler(BaseHTTPRequestHandler):
                 if len(IP_HITS) > 100000:
                     for k in [k for k, v in IP_HITS.items() if v[0] != today]:
                         IP_HITS.pop(k, None)
-                rec = [today, 0, 0]
+                rec = [today, 0, 0, 0]
                 IP_HITS[ip] = rec
-            idx = 1 if kind == "get" else 2
+            idx = {"get": 1, "post": 2, "dealt": 3}[kind]
             rec[idx] += 1
-            cap = MAX_GETS_PER_IP if kind == "get" else MAX_POSTS_PER_IP
+            cap = {"get": MAX_GETS_PER_IP, "post": MAX_POSTS_PER_IP,
+                   "dealt": MAX_DEALT_PER_IP}[kind]
             return rec[idx] <= cap
 
     def do_OPTIONS(self):
@@ -735,29 +813,46 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self._json({"error": "not found"}, 404)
 
-    def do_POST(self):
-        if self._path() != "/submit":
-            self._json({"error": "not found"}, 404)
-            return
-        if not self._rate_ok("post"):
-            self._json({"error": "too many requests"}, 429)
-            return
+    def _read_json(self):
+        """One bounded body read for every POST path: the length cap is the
+        flood dam, the json and type checks keep every handler honest."""
         try:
             length = int(self.headers.get("Content-Length") or 0)
         except ValueError:
             self._json({"error": "bad length"}, 400)
-            return
+            return None
         if length <= 0 or length > MAX_BODY:
             self._json({"error": "bad length"}, 413)
-            return
+            return None
         try:
             data = json.loads(self.rfile.read(length).decode("utf-8"))
         except Exception:
             self._json({"error": "bad body"}, 400)
-            return
+            return None
         if not isinstance(data, dict):
             self._json({"error": "bad body"}, 400)
+            return None
+        return data
+
+    def do_POST(self):
+        path = self._path()
+        if path not in ("/submit", "/deal", "/guess", "/reveal"):
+            self._json({"error": "not found"}, 404)
             return
+        # dealt play is per-action traffic (a session can need a dozen
+        # calls), so it rides its own tighter per-IP daily cap
+        if not self._rate_ok("post" if path == "/submit" else "dealt"):
+            self._json({"error": "too many requests"}, 429)
+            return
+        data = self._read_json()
+        if data is None:
+            return
+        if path == "/submit":
+            self._submit(data)
+        else:
+            self._dealt(path, data)
+
+    def _submit(self, data):
         game = data.get("game")
         if not isinstance(game, str) or game not in SPECS:
             self._json({"error": "unknown game"}, 400)
@@ -772,6 +867,20 @@ class Handler(BaseHTTPRequestHandler):
             if game not in EVIDENCE_GAMES:
                 self._json({"error": "evidence not accepted for this game"}, 400)
                 return
+            # a dealt session is the stronger claim: the server counted the
+            # guesses and knows the verdict, so a nonce-bearing post reports
+            # the session's facts, never the client's word. An unknown or
+            # aged nonce is simply absent - the checks below stay as the
+            # fallback for a session that dropped mid-game
+            if isinstance(data.get("nonce"), str):
+                with LOCK:
+                    purge_sessions()
+                    sess = SESSIONS.pop(data["nonce"], None)
+                if (sess and sess["game"] == game and sess["day"] == day
+                        and sess["done"]):
+                    data = dict(data)
+                    data["status"] = sess["verdict"]
+                    data["meta"] = {"guesses": sess["guesses"]}
             value, reason = validate_evidence(game, day, data)
             if value is None:
                 self._json({"error": reason}, 422)
@@ -788,6 +897,18 @@ class Handler(BaseHTTPRequestHandler):
                     or not math.isfinite(value) or abs(value) > MAX_ABS_VALUE:
                 self._json({"error": "bad value"}, 400)
                 return
+            # a dealt sprint session owns the clock: a claimed score only
+            # stands if the server-stamped window says it could have
+            # happened. A session that was never started, or aged past the
+            # window, is over - the claim derives 0 and the nonce can
+            # never re-enter the window
+            if game == "sprint" and isinstance(data.get("nonce"), str):
+                with LOCK:
+                    purge_sessions()
+                    sess = SESSIONS.get(data["nonce"])
+                    t0 = sess.get("t0") if sess and sess["game"] == "sprint" else None
+                if t0 is None or time.time() - t0 > SPRINT_WINDOW + SPRINT_GRACE:
+                    value = 0
         pid = data.get("id")
         if not isinstance(pid, str) or not pid or len(pid) > 64:
             self._json({"error": "bad id"}, 400)
@@ -811,6 +932,98 @@ class Handler(BaseHTTPRequestHandler):
                                    spec=archived_spec(rec, game))
                 payload["archived"] = True
         self._json(payload)
+
+    def _dealt(self, path, data):
+        """The dealt-play endpoints: /deal opens a session, /guess plays a
+        dealt rounds round, /reveal is the sprint starting gun. SESSIONS
+        mutates under LOCK; a key leaves only when a round ends."""
+        now = time.time()
+        if path == "/deal":
+            game = data.get("game")
+            if not isinstance(game, str) or game not in DEALT_GAMES:
+                self._json({"error": "dealt play is not open for this game"}, 400)
+                return
+            day = data.get("day")
+            if isinstance(day, bool) or not isinstance(day, int) \
+                    or not (DAY_MIN <= day <= DAY_MAX):
+                self._json({"error": "bad day"}, 400)
+                return
+            today = current_day_index()
+            if day != today:
+                self._json({"error": "dealt play is for the live day"}, 403)
+                return
+            nonce = secrets.token_hex(16)
+            with LOCK:
+                purge_sessions()
+                entry = PUZZLES.get(game) or []
+                if game == "rounds":
+                    if not entry:
+                        self._json({"error": "no puzzles"}, 404)
+                        return
+                    pz = entry[day % len(entry)]
+                SESSIONS[nonce] = {"game": game, "day": day, "created": now,
+                                   "ip": self.client_address[0], "guesses": 0,
+                                   "done": False, "verdict": None, "t0": None}
+                if game == "rounds":
+                    # the deal carries the question but never the key: the
+                    # target year and the reveal line stay server-side
+                    payload = {"nonce": nonce, "today": today,
+                               "puzzle": {"t": pz.get("t"), "q": pz.get("q")}}
+                else:
+                    payload = {"nonce": nonce, "today": today}
+            self._json(payload)
+            return
+        nonce = data.get("nonce")
+        if not isinstance(nonce, str) or not nonce or len(nonce) > 64:
+            self._json({"error": "bad nonce"}, 400)
+            return
+        with LOCK:
+            purge_sessions()
+            sess = SESSIONS.get(nonce)
+            if sess is None or sess["day"] != current_day_index():
+                self._json({"error": "no session"}, 404)
+                return
+            if path == "/guess":
+                if sess["game"] != "rounds":
+                    self._json({"error": "this session takes no guesses"}, 400)
+                    return
+                if sess["done"]:
+                    self._json({"error": "the round is over"}, 409)
+                    return
+                y = data.get("y")
+                if isinstance(y, bool) or not isinstance(y, int) \
+                        or not (1000 <= y <= 2200):
+                    self._json({"error": "bad year"}, 400)
+                    return
+                entry = PUZZLES.get("rounds") or []
+                pz = entry[sess["day"] % len(entry)]
+                key = pz["y"]
+                sess["guesses"] += 1
+                if y == key:
+                    sess["done"] = True
+                    sess["verdict"] = "won"
+                    sess["done_at"] = now
+                    payload = {"verdict": "won", "guesses": sess["guesses"],
+                               "reveal": {"y": key, "w": pz.get("w")}}
+                elif sess["guesses"] >= 6:
+                    sess["done"] = True
+                    sess["verdict"] = "lost"
+                    sess["done_at"] = now
+                    payload = {"verdict": "lost", "guesses": sess["guesses"],
+                               "reveal": {"y": key, "w": pz.get("w")}}
+                else:
+                    payload = dict({"verdict": "miss",
+                                    "guesses": sess["guesses"]},
+                                   **round_feedback(y, key))
+            else:  # /reveal
+                if sess["game"] != "sprint":
+                    self._json({"error": "this session takes no starting gun"}, 400)
+                    return
+                if sess["t0"] is None:
+                    sess["t0"] = now  # stamped once, never reset
+                payload = {"ok": True, "elapsed": round(now - sess["t0"], 3),
+                           "window": SPRINT_WINDOW}
+            self._json(payload)
 
 
 def warm_start(today):
@@ -841,7 +1054,8 @@ def warm_start(today):
 
 
 def main():
-    global ARCHIVE_DIR, MAX_GETS_PER_IP, MAX_POSTS_PER_IP, EPOCH_KEY
+    global ARCHIVE_DIR, MAX_GETS_PER_IP, MAX_POSTS_PER_IP, MAX_DEALT_PER_IP, \
+           SESSION_TTL, SPRINT_PURGE, EPOCH_KEY
     ap = argparse.ArgumentParser(description="Warmup global curve")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8787)
@@ -851,12 +1065,21 @@ def main():
                     help="per-IP daily cap for GET endpoints")
     ap.add_argument("--max-posts-per-ip", type=int, default=MAX_POSTS_PER_IP,
                     help="per-IP daily cap for POST /submit")
+    ap.add_argument("--max-dealt-per-ip", type=int, default=MAX_DEALT_PER_IP,
+                    help="per-IP daily cap for the dealt-play endpoints")
+    ap.add_argument("--session-ttl", type=float, default=SESSION_TTL,
+                    help="seconds before an idle dealt session is purged")
+    ap.add_argument("--sprint-purge", type=float, default=SPRINT_PURGE,
+                    help="seconds after the starting gun before an unsubmitted sprint round is reaped")
     ap.add_argument("--epoch", default=None,
                     help="override the manifest epoch (the effective day 0 date); the test suite pins this so it never depends on the wall clock")
     args = ap.parse_args()
     ARCHIVE_DIR = Path(args.archive_dir)
     MAX_GETS_PER_IP = args.max_gets_per_ip
     MAX_POSTS_PER_IP = args.max_posts_per_ip
+    MAX_DEALT_PER_IP = args.max_dealt_per_ip
+    SESSION_TTL = args.session_ttl
+    SPRINT_PURGE = args.sprint_purge
     if args.epoch:
         EPOCH_KEY = args.epoch
 

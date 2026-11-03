@@ -4,7 +4,8 @@
 Spawns the real server on a scratch port and exercises the API with urllib:
 health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
-input validation, fresh-day counting (stale submits answered from the
+input validation, dealt play (session nonces, server-side heat, the
+sprint starting gun, session TTL), fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
 day over midnight). Stdlib only - no pytest, no requests, no docker needed.
@@ -76,6 +77,8 @@ def main():
     scratch2 = tempfile.mkdtemp()
     scratch3 = tempfile.mkdtemp()
     scratch4 = tempfile.mkdtemp()
+    scratch5 = tempfile.mkdtemp()
+    scratch6 = tempfile.mkdtemp()
     # Every instance boots with --epoch <today's ET date>: inside them the
     # current day index is 0 no matter the real calendar and no matter whether
     # the committed epoch lies in the past or the future, so this suite never
@@ -394,6 +397,107 @@ def main():
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "value": 3, "id": "legacy1"})
         check(s == 400, "cutover: a self-reported value post for a gated game is refused")
+
+        # --- dealt play (1.2): the answers stop shipping to the client ---
+        s, _b = post("/api/deal", {"game": "rings", "day": TODAY})
+        check(s == 400, "deal: a game that has not moved to dealt play is refused")
+        s, _b = post("/api/deal", {"game": "rounds", "day": "x"})
+        check(s == 400, "deal: a non-integer day is refused")
+        s, _b = post("/api/deal", {"game": "rounds", "day": TODAY + 5})
+        check(s == 403, "deal: a future day is refused")
+        s, _b = post("/api/deal", {"game": "rounds", "day": TODAY - 1})
+        check(s == 403, "deal: a stale day is refused (replays stay on /puzzle)")
+        s, b = post("/api/deal", {"game": "rounds", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and len(b["nonce"]) == 32,
+              "deal: rounds opens a session under a 32-char nonce")
+        check("y" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {}),
+              "deal: the target year and the reveal line never cross the wire")
+        check(b.get("puzzle", {}).get("q", "").startswith("King John"),
+              "deal: the day's question still arrives")
+        rn = b["nonce"]
+        s, b = post("/api/guess", {"nonce": rn, "y": 1900})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("guesses") == 1
+              and b.get("heat") == "cold"
+              and b.get("hint") == "go earlier \u00b7 wrong century",
+              "guess: a miss is answered with heat and direction, never distance")
+        s, b = post("/api/guess", {"nonce": rn, "y": 1217})
+        check(s == 200 and b.get("guesses") == 2 and b.get("heat") == "scalding"
+              and b.get("hint") == "go earlier \u00b7 right decade",
+              "guess: within two years reads scalding")
+        s, b = post("/api/guess", {"nonce": rn, "y": 1213})
+        check(s == 200 and b.get("guesses") == 3
+              and b.get("hint") == "go later \u00b7 right decade",
+              "guess: the direction flips without the distance ever leaking")
+        s, _b = post("/api/guess", {"nonce": rn, "y": "1215"})
+        check(s == 400, "guess: a string year is refused")
+        s, b = post("/api/guess", {"nonce": rn, "y": 1216})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("guesses") == 4,
+              "guess: the fourth guess still misses")
+        s, b = post("/api/guess", {"nonce": rn, "y": 1218})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("guesses") == 5
+              and b.get("heat") == "hot",
+              "guess: three years off reads hot")
+        s, b = post("/api/guess", {"nonce": rn, "y": 2000})
+        check(s == 200 and b.get("verdict") == "lost" and b.get("guesses") == 6,
+              "guess: the sixth miss ends the round")
+        check(b.get("reveal", {}).get("y") == 1215
+              and "Runnymede" in b.get("reveal", {}).get("w", ""),
+              "guess: the loss reveal carries the key only once the round is over")
+        s, _b = post("/api/guess", {"nonce": rn, "y": 1215})
+        check(s == 409, "guess: a finished session refuses further guesses")
+        # the server counted all six: a nonce-bearing claim cannot under-report
+        s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "dv1",
+                                    "status": "won", "answer": 1215,
+                                    "meta": {"guesses": 1}, "nonce": rn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 0.67,
+              "dealt submit: the session's verdict and count override the claim")
+        s, b = post("/api/deal", {"game": "rounds", "day": TODAY})
+        rn2 = b["nonce"]
+        s, b = post("/api/guess", {"nonce": rn2, "y": 1500})
+        check(s == 200 and b.get("verdict") == "miss",
+              "guess: a fresh session plays on")
+        s, b = post("/api/guess", {"nonce": rn2, "y": 1215})
+        check(s == 200 and b.get("verdict") == "won" and b.get("guesses") == 2
+              and b.get("reveal", {}).get("y") == 1215,
+              "guess: the right year wins the round")
+        s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "dv2",
+                                    "status": "won", "answer": 1215,
+                                    "meta": {"guesses": 1}, "nonce": rn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
+              "dealt submit: the server's guess count overrides the client's word")
+        # --- dealt sprint: the starting gun is a server timestamp ---
+        s, b = post("/api/deal", {"game": "sprint", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str),
+              "deal: sprint opens a timed session")
+        sn = b["nonce"]
+        s, _b = post("/api/guess", {"nonce": sn, "y": 1215})
+        check(s == 400, "guess: a sprint session takes no year guesses")
+        s, b = post("/api/reveal", {"nonce": sn})
+        check(s == 200 and b.get("ok") is True and b.get("elapsed") == 0,
+              "reveal: the starting gun stamps t0 once")
+        s, b = post("/api/reveal", {"nonce": sn})
+        check(s == 200 and b.get("elapsed") < 5,
+              "reveal: a second reveal never restarts the clock")
+        s, _b = post("/api/reveal", {"nonce": rn2})
+        check(s == 400, "reveal: a rounds session is not a starting gun")
+        s, _b = post("/api/guess", {"nonce": "no-such-session", "y": 1215})
+        check(s == 404, "guess: an unknown nonce is no session")
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
+                                    "better": "high", "id": "dv3", "nonce": sn})
+        check(s == 200 and b.get("count") == 2 and b["bins"][-1]["you"] is True,
+              "dealt submit: a claim inside the server-stamped window tallies")
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
+                                    "better": "high", "id": "dv4",
+                                    "nonce": "deadbeef" * 4})
+        check(s == 200 and b.get("count") == 3 and b["bins"][0]["you"] is True,
+              "dealt submit: an unknown session derives 0 - the clock cannot be re-entered")
+        s, b = post("/api/deal", {"game": "sprint", "day": TODAY})
+        sn3 = b["nonce"]
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
+                                    "better": "high", "id": "dv5", "nonce": sn3})
+        check(s == 200 and b.get("count") == 4 and b["bins"][0]["you"] is True,
+              "dealt submit: claiming a score without ever starting derives 0")
     finally:
         proc.terminate()
         try:
@@ -556,6 +660,94 @@ def main():
                 proc4.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 proc4.kill()
+
+    # --- dealt-play rate limiting: its own per-IP daily cap ---
+    PORT5 = PORT + 4
+    proc5 = subprocess.Popen(
+        [sys.executable, str(ROOT / "scores" / "server.py"),
+         "--port", str(PORT5), "--host", "127.0.0.1", "--archive-dir", scratch5,
+         "--epoch", str(ET_TODAY), "--max-dealt-per-ip", "2"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        up = False
+        for _ in range(50):
+            try:
+                s, _b = req("GET", "/health", port=PORT5)
+                if s == 200:
+                    up = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.1)
+        if not up:
+            check(False, "dealt-cap instance never came up on port %d" % PORT5)
+        else:
+            d = [post("/api/deal", {"game": "sprint", "day": TODAY}, port=PORT5)[0]
+                 for _ in range(3)]
+            check(d[:2] == [200, 200] and d[2] == 429,
+                  "dealt cap: 2 per IP allowed, the 3rd is 429")
+            s, b = post("/api/submit", {"game": "rings", "day": TODAY, "value": 3,
+                                        "better": "high", "id": "dc"}, port=PORT5)
+            check(s == 200 and b.get("count") == 1,
+                  "dealt cap: submit traffic still flows under its own cap")
+    finally:
+        proc5.terminate()
+        try:
+            proc5.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc5.kill()
+
+    # --- session TTL: an aged dealt session is gone for good, and the 1.1
+    #     evidence checks stay as the fallback for a dropped session ---
+    PORT6 = PORT + 5
+    proc6 = subprocess.Popen(
+        [sys.executable, str(ROOT / "scores" / "server.py"),
+         "--port", str(PORT6), "--host", "127.0.0.1", "--archive-dir", scratch6,
+         "--epoch", str(ET_TODAY), "--session-ttl", "1", "--sprint-purge", "1"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        up = False
+        for _ in range(50):
+            try:
+                s, _b = req("GET", "/health", port=PORT6)
+                if s == 200:
+                    up = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.1)
+        if not up:
+            check(False, "ttl instance never came up on port %d" % PORT6)
+        else:
+            s, b = post("/api/deal", {"game": "rounds", "day": TODAY}, port=PORT6)
+            n6 = b["nonce"]
+            s, b = post("/api/guess", {"nonce": n6, "y": 1900}, port=PORT6)
+            check(s == 200 and b.get("verdict") == "miss",
+                  "ttl: the session answers while fresh")
+            time.sleep(1.3)
+            s, _b = post("/api/guess", {"nonce": n6, "y": 1215}, port=PORT6)
+            check(s == 404, "ttl: an aged session is no session")
+            s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "tt1",
+                                        "status": "won", "answer": 1215,
+                                        "meta": {"guesses": 2}, "nonce": n6},
+                        port=PORT6)
+            check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
+                  "ttl: an aged rounds nonce falls back to 1.1 validation")
+            s, b = post("/api/deal", {"game": "sprint", "day": TODAY}, port=PORT6)
+            s6 = b["nonce"]
+            s, _b = post("/api/reveal", {"nonce": s6}, port=PORT6)
+            time.sleep(1.3)
+            s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
+                                        "better": "high", "id": "tt2", "nonce": s6},
+                        port=PORT6)
+            check(s == 200 and b.get("count") == 1 and b["bins"][0]["you"] is True,
+                  "ttl: an aged sprint session derives 0, never the claim")
+    finally:
+        proc6.terminate()
+        try:
+            proc6.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc6.kill()
 
     # --- archive handoff (unit): a finished day collapses into a static,
     #     read-only snapshot and leaves the live state ---

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Four letter wheels, one target word in plain sight, one exact par. Spin a wheel, or shift the whole ray a seat, to spell it in as few moves as you can." />
-<title>Recycle: Rings · the daily wheel game</title>
+<meta name="description" content="Four letter rings in aligned rays, one target word, one exact par. Loop a ring, or slide a ray's four letters between rings, to spell it in as few moves as you can." />
+<title>Recycle: Rings · the daily ring game</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3EW.%3C/text%3E%3C/svg%3E"/>
 <link rel="stylesheet" href="../shell/common.css"/>
 <style>header{display:flex; align-items:flex-end; justify-content:space-between;}
@@ -22,7 +22,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .slot.tgt{border-color:var(--accent); color:var(--accent);}
 @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.12);}100%{transform:scale(1);}}
 .wheelbox{display:flex; justify-content:center;}
-.wheel{width:100%; max-width:420px; height:auto;}
+.wheel{width:100%; max-width:440px; height:auto;}
 .ringctl{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:12px; flex-wrap:wrap;}
 .ringbtn{display:flex; align-items:center; gap:6px; background:var(--card); border:1.5px solid var(--line);
     border-radius:999px; padding:6px 10px;}
@@ -40,8 +40,13 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
-.lt{ font-family:Georgia,serif; font-size:24px; font-weight:700; fill:#272117; text-anchor:middle; dominant-baseline:middle; }
-.lt.ok{ fill:#2e7d4f; font-size:28px; }
+.lt{ font-family:Georgia,serif; font-size:22px; font-weight:700; fill:#272117; text-anchor:middle; dominant-baseline:middle; }
+.lt.ok{ fill:#2e7d4f; font-size:26px; }
+.rayline{ stroke:#d9cdb2; stroke-width:1; stroke-dasharray:4 7; opacity:0.55; }
+.rayline.top{ stroke:#b3541e; opacity:0.8; }
+.chev{ fill:none; stroke:#8a7c66; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+.hit{ fill:rgba(0,0,0,0); cursor:pointer; }
+.rayg:hover .chev{ stroke:#b3541e; }
 @media (max-width:480px){ h1{font-size:28px;} .slot{width:38px; height:44px; font-size:22px;} .ringbtn button{width:30px;height:30px;} }</style>
 </head>
 <body>
@@ -49,7 +54,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <header>
     <div>
       <h1>Recycle: <span class="dot">Rings</span></h1>
-      <p class="sub">the daily wheel game · a history labs warmup</p>
+      <p class="sub">the daily ring game · a history labs warmup</p>
     </div>
     <div class="icons">
       <button class="iconbtn" id="btnHelp" aria-label="How to play">?</button>
@@ -61,7 +66,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
   </div>
 
-  <p class="lead">Four wheels, one target word, shown above the ray. <b>Spin</b> any wheel, or <b>shift the ray</b> to slide all four letters at the ray one seat together. There is no clock: every move counts against an <b>exact par</b>, so be conservative.</p>
+  <p class="lead">Four rings of letters sit in eight aligned rays. <b>Loop</b> any ring with its ◀ ▶ buttons, or tap a ray's chevrons to <b>shift</b> that ray's four letters between rings, until the ray at the top spells the word. There is no clock: every move counts against an <b>exact par</b>.</p>
 
   <div class="targetrow">
     <span class="lbl">Spell</span>
@@ -99,11 +104,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 <div class="overlay" id="helpOverlay">
   <div class="modal">
     <h2>How to play</h2>
-    <p>Four wheels of letters. The marked ray at the top reads one letter from each wheel, and together they must spell today's <b>target word</b>. The word sits above the wheel, with your current letters at the ray beneath it.</p>
-    <p><b>Spin</b> any wheel with its ◀ ▶ buttons to rotate that wheel alone. <b>Shift the ray</b> with the ◀ ▶ buttons at the end: every letter at the ray slides one seat together, the whole column at once.</p>
-    <p><b>Par is exact:</b> before you play, the solver has already searched every possible wheel state for the shortest line to the word. Beat par and you found a line the solver missed (you didn't — it's exact).</p>
-    <p>There is no clock. Every spin and every ray shift costs one move, and reversing a move costs another — so plan before you spin.</p>
-    <p>Same wheels for everyone, so compare move counts at standup.</p>
+    <p>Four rings of eight letters, sitting in eight aligned rays. The marked ray at the top reads one letter from each ring, and together they must spell today's <b>target word</b>. The word sits above the rings, with your current letters at the ray beneath it.</p>
+    <p><b>Loop</b> any ring with its ◀ ▶ buttons: that ring alone rotates one seat. <b>Shift a ray</b> with the chevrons at its outer end: all four letters in that ray slide one ring inward or outward together, wrapping around, so the inner ring hands its letter to the outer ring.</p>
+    <p><b>Par is exact:</b> before you play, the solver has already searched every reachable position of the four word letters for the shortest line to the word. Beat par and you found a line the solver missed (you didn't; it's exact).</p>
+    <p>There is no clock. Every loop and every ray shift costs one move, and reversing a move costs another, so plan before you slide.</p>
+    <p>Same rings for everyone, so compare move counts at standup.</p>
     <button class="close" data-close>Got it</button>
   </div>
 </div>
@@ -117,7 +122,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
 /* ---------------- deterministic daily generation ---------------- */
 /* day math, storage, toast, countdown, help/share wiring and the global-curve
-   client all live in ../shell/common.js — destructured once here */
+   client all live in ../shell/common.js - destructured once here */
 const { TZ, EPOCH_KEY, etKey, todayKey, dayIndex, num, $ } = SHELL;
 
 function mulberry32(a){
@@ -129,111 +134,137 @@ function mulberry32(a){
   };
 }
 
-const SIZES = [10, 9, 9, 8];
+/* four rings of eight aligned slots: cell (r, c) is S.grid[r*8 + c].
+   Ring 0 is the outer ring. The four word letters are the only pieces
+   that matter, so the whole game is where they sit on this 4 x 8 torus. */
 const FILLER = 'AAEEIIOOUUBCDGLMNPRST';
-/* four distinct letters, so every wheel owns exactly one of them */
+/* four distinct letters, so each ring owns exactly one of them */
 const CAND = WORDS_EN.split(',').filter(w => w.length === 4 && new Set(w).size === 4);
 
-/* Exact solver: BFS over the four wheel offsets, the whole state a
-   player can reach. 10 x 9 x 9 x 8 = 6480 states, a blink, so par stays a
-   fact: the shortest line of spins and ray shifts. The goal is the state
-   whose four letters at the ray spell the word, so par is a true minimum. */
-function solve(rings, word){
-  const key = f => f.join(',');
-  const win = f => {
-    for (let p = 0; p < 4; p++){
-      const n = SIZES[p];
-      const idx = ((-f[p]) % n + n) % n;
-      if (rings[p].letters[idx] !== word[p]) return false;
-    }
-    return true;
-  };
-  const start = [0,0,0,0];
-  if (win(start)) return { par: 0, sol: [] };
-  const prev = new Map();
-  prev.set(key(start), null);
-  let frontier = [start];
-  let depth = 0;
-  while (frontier.length && depth < 24){
-    depth++;
-    const next = [];
-    for (const st of frontier){
-      const pk = key(st);
-      /* spin one wheel a seat */
-      for (let p = 0; p < 4; p++){
-        for (const d of [-1, 1]){
-          const f = st.slice();
-          f[p] = ((f[p] + d) % SIZES[p] + SIZES[p]) % SIZES[p];
-          const k = key(f);
-          if (prev.has(k)) continue;
-          prev.set(k, { pk, mv: { t: 'r', p, d } });
-          if (win(f)) return { par: depth, sol: path(prev, k) };
-          next.push(f);
-        }
+/* Exact solver, by projection: the win reads the top ray, so it depends
+   only on where the four labeled word letters sit, never on the fillers
+   around them. The solver searches exactly that space: the four cell
+   numbers packed five bits each, 32*31*30*29 = 863040 reachable states
+   inside 2^20. Breadth-first search from the scrambled board gives the
+   true minimum number of loops and ray shifts, so par is a fact.
+   Stored depth is one-based (the root stores 1): a state d moves from
+   the start stores d+1, and a win found one move beyond it costs d. */
+const PAR_MIN = 3, PAR_CAP = 10;
+function solve(s0, s1, s2, s3){
+  if (s0 === 0 && s1 === 8 && s2 === 16 && s3 === 24) return { par: 0, sol: [] };
+  const visited = new Uint8Array(1 << 20);
+  const parent = new Int32Array(1 << 20);
+  const mvStore = new Uint8Array(1 << 20);
+  const queue = new Int32Array(1 << 20);
+  const sk = s0 | (s1 << 5) | (s2 << 10) | (s3 << 15);
+  visited[sk] = 1; parent[sk] = -1;
+  let head = 0, tail = 0;
+  queue[tail++] = sk;
+  while (head < tail){
+    const k = queue[head++];
+    const depth = visited[k];
+    const p0 = k & 31, p1 = (k >> 5) & 31, p2 = (k >> 10) & 31, p3 = (k >> 15) & 31;
+    for (let id = 0; id < 24; id++){
+      let q0 = p0, q1 = p1, q2 = p2, q3 = p3;
+      if (id < 8){
+        /* loop: ring r rotates one seat; +1 / +7 mod 8 */
+        const r = id >> 1, d = (id & 1) ? 1 : 7;
+        if ((q0 >> 3) === r) q0 = (r << 3) | (((q0 & 7) + d) & 7);
+        if ((q1 >> 3) === r) q1 = (r << 3) | (((q1 & 7) + d) & 7);
+        if ((q2 >> 3) === r) q2 = (r << 3) | (((q2 & 7) + d) & 7);
+        if ((q3 >> 3) === r) q3 = (r << 3) | (((q3 & 7) + d) & 7);
+      } else {
+        /* ray shift: ray c's letters slide between rings; +1 / +3 mod 4 */
+        const c = (id - 8) >> 1, d = (id & 1) ? 1 : 3;
+        if ((q0 & 7) === c) q0 = ((((q0 >> 3) + d) & 3) << 3) | c;
+        if ((q1 & 7) === c) q1 = ((((q1 >> 3) + d) & 3) << 3) | c;
+        if ((q2 & 7) === c) q2 = ((((q2 >> 3) + d) & 3) << 3) | c;
+        if ((q3 & 7) === c) q3 = ((((q3 >> 3) + d) & 3) << 3) | c;
       }
-      /* shift the ray: every wheel rotates one seat together */
-      for (const d of [-1, 1]){
-        const f = st.slice();
-        for (let r = 0; r < 4; r++) f[r] = ((f[r] + d) % SIZES[r] + SIZES[r]) % SIZES[r];
-        const k = key(f);
-        if (prev.has(k)) continue;
-        prev.set(k, { pk, mv: { t: 'c', d } });
-        if (win(f)) return { par: depth, sol: path(prev, k) };
-        next.push(f);
+      if (q0 === 0 && q1 === 8 && q2 === 16 && q3 === 24){
+        const ids = [id];
+        let cur = k;
+        while (parent[cur] !== -1){ ids.unshift(mvStore[cur]); cur = parent[cur]; }
+        return { par: depth, sol: ids };
       }
+      const nk = q0 | (q1 << 5) | (q2 << 10) | (q3 << 15);
+      if (visited[nk]) continue;
+      visited[nk] = depth + 1; parent[nk] = k; mvStore[nk] = id;
+      queue[tail++] = nk;
     }
-    frontier = next;
   }
   return { par: Infinity, sol: [] };
 }
-function path(prev, k){
-  const sol = [];
-  while (prev.get(k)){ const e = prev.get(k); sol.unshift(e.mv); k = e.pk; }
-  return sol;
+
+/* the same two moves, applied to the whole 32-cell grid the page renders */
+function applyMove(grid, id){
+  const g = grid.slice();
+  if (id < 8){
+    const r = id >> 1, d = (id & 1) ? 1 : 7;
+    const row = g.slice(r * 8, r * 8 + 8);
+    for (let c = 0; c < 8; c++) g[r * 8 + ((c + d) & 7)] = row[c];
+  } else {
+    const c = (id - 8) >> 1, d = (id & 1) ? 1 : 3;
+    const col = [0, 1, 2, 3].map(rr => g[rr * 8 + c]);
+    for (let rr = 0; rr < 4; rr++) g[((rr + d) & 3) * 8 + c] = col[rr];
+  }
+  return g;
 }
 
-/* the day's board must be winnable in a reasonable number of moves, and
-   the solver proves it before the puzzle is served: nothing over PAR_CAP
-   ever ships, and nothing unsolvable ever can */
-const PAR_CAP = 20;
+/* the day's board: the solved board (word at the top ray) scrambled by a
+   seeded walk of 4 to 10 moves that never immediately undoes itself. The
+   walk guarantees solvability within 10, the solver reports the exact
+   par, and only boards that need at least PAR_MIN moves ship, so nothing
+   pre-solved or endless ever does. Fillers never spell the word. */
 function gen(day){
   for (let salt = 0; salt < 200; salt++){
     const rng = mulberry32(day * 1013904223 + salt * 7919 + 7);
     const word = CAND[Math.floor(rng() * CAND.length)];
-    const rings = [];
-    for (let i = 0; i < 4; i++){
-      const n = SIZES[i];
-      const pos = 1 + Math.floor(rng() * (n - 2)); /* never pre-solved at top */
-      const letters = [];
-      for (let j = 0; j < n; j++){
-        if (j === pos){ letters.push(word[i]); continue; }
-        let ch = word[0];
-        while (word.includes(ch)) ch = FILLER[Math.floor(rng() * FILLER.length)];
-        letters.push(ch);
-      }
-      rings.push({ n, letters });
+    let grid = new Array(32).fill('');
+    for (let p = 0; p < 4; p++) grid[p * 8] = word[p];
+    for (let i = 0; i < 32; i++){
+      if (grid[i]) continue;
+      let ch;
+      do { ch = FILLER[Math.floor(rng() * FILLER.length)]; } while (word.indexOf(ch) >= 0);
+      grid[i] = ch;
     }
-    const res = solve(rings, word);
-    if (res.par >= 3 && res.par <= PAR_CAP) return { word, rings, par: res.par, sol: res.sol };
+    const K = 4 + Math.floor(rng() * 7);
+    let last = -1;
+    for (let m = 0; m < K; m++){
+      let id;
+      do { id = Math.floor(rng() * 24); } while (last >= 0 && id === (last ^ 1));
+      last = id;
+      grid = applyMove(grid, id);
+    }
+    const pos = [0, 1, 2, 3].map(p => grid.indexOf(word[p]));
+    const res = solve(pos[0], pos[1], pos[2], pos[3]);
+    if (res.par >= PAR_MIN && res.par <= PAR_CAP){
+      return {
+        word: word, start: grid.join(''), par: res.par,
+        sol: res.sol.map(id => id < 8
+          ? { t: 'l', r: id >> 1, d: (id & 1) ? 1 : -1 }
+          : { t: 'x', c: (id - 8) >> 1, d: (id & 1) ? 1 : -1 })
+      };
+    }
   }
   return null; /* unreachable in practice */
 }
 const PUZZLE = gen(dayIndex);
 
 /* ---------------- state ---------------- */
-const KEY = 'warmup.rings.v3';
+const KEY = 'warmup.rings.v4';
 const store = SHELL.makeStore(KEY);
 function loadState(){ return store.load(); }
 function saveState(){ store.save(S); }
 let S = loadState();
-if (!S || S.day !== dayIndex || !PUZZLE){
+if (!S || S.day !== dayIndex || !PUZZLE || typeof S.grid !== 'string' || S.grid.length !== 32){
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
     if (!(S.won && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since the last win */
   }
-  /* stats carry over from the swap-era rings (v2) and the clock era (v1);
+  /* stats carry over from the wheel era (v3, v2) and the clock era (v1);
      the new key gets a fresh board either way */
   if (!S && typeof localStorage !== 'undefined'){
-    for (const oldKey of ['warmup.rings.v2', 'warmup.rings.v1']){
+    for (const oldKey of ['warmup.rings.v3', 'warmup.rings.v2', 'warmup.rings.v1']){
       try {
         const old = JSON.parse(localStorage.getItem(oldKey));
         if (old && typeof old.stats === 'object'){ S = { stats: old.stats }; break; }
@@ -241,42 +272,53 @@ if (!S || S.day !== dayIndex || !PUZZLE){
     }
   }
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, best:null};
-  S = { day: dayIndex, off:[0,0,0,0], moves:0, won:false, stats };
+  S = { day: dayIndex, grid: PUZZLE ? PUZZLE.start : '', moves: 0, won: false, stats };
 }
 saveState();
 
 /* ---------------- dom ---------------- */
-const RADII = [172, 136, 100, 64];
+const RADII = [156, 122, 88, 54];
 const NAMES = ['outer', 'mid-outer', 'mid-inner', 'inner'];
 
-function topIndex(r){ const n = SIZES[r], o = S.off[r]; return ((-o) % n + n) % n; }
-function topLetter(p){ return PUZZLE.rings[p].letters[topIndex(p)]; }
+function topLetter(p){ return S.grid[p * 8]; }
 function aligned(p){ return topLetter(p) === PUZZLE.word[p]; }
 
 function renderTarget(){
-  $('target').innerHTML = PUZZLE.word.split('').map(ch => `<div class="slot tgt">${ch}</div>`).join('');
+  $('target').innerHTML = PUZZLE.word.split('').map(ch => '<div class="slot tgt">' + ch + '</div>').join('');
 }
 function renderSlots(){
   $('slots').innerHTML = PUZZLE.word.split('').map((ch, p) => {
     const ok = aligned(p);
-    return `<div class="slot${ok ? ' ok' : ''}">${topLetter(p)}</div>`;
+    return '<div class="slot' + (ok ? ' ok' : '') + '">' + topLetter(p) + '</div>';
   }).join('');
 }
 
 function renderWheel(){
-  let svg = `<circle cx="200" cy="200" r="192" fill="#fffdf7" stroke="#e5dbc8" stroke-width="1.5"/>`;
-  RADII.forEach(r => { svg += `<circle cx="200" cy="200" r="${r}" fill="none" stroke="#d9cdb2" stroke-width="1.5"/>`; });
-  /* marked ray */
-  svg += `<path d="M200 30 l-10 17 h20 z" fill="#b3541e"/>`;
-  svg += `<line x1="200" y1="47" x2="200" y2="353" stroke="#b3541e" stroke-width="1" stroke-dasharray="4 7" opacity="0.4"/>`;
+  let svg = '<circle cx="200" cy="200" r="170" fill="#fffdf7" stroke="#e5dbc8" stroke-width="1.5"/>';
+  RADII.forEach(r => { svg += '<circle cx="200" cy="200" r="' + r + '" fill="none" stroke="#d9cdb2" stroke-width="1.5"/>'; });
+  /* the eight rays are four faint dashed diameters; the top one is marked */
+  for (let c = 0; c < 4; c++){
+    svg += '<line class="rayline' + (c === 0 ? ' top' : '') + '" x1="200" y1="32" x2="200" y2="368" transform="rotate(' + (c * 45) + ' 200 200)"/>';
+  }
   for (let p = 0; p < 4; p++){
-    const ring = PUZZLE.rings[p], rad = RADII[p];
-    const step = 360 / ring.n;
-    ring.letters.forEach((ch, j) => {
-      const a = (((j + S.off[p]) % ring.n) + ring.n) % ring.n * step;
-      const cls = (a === 0 && ch === PUZZLE.word[p]) ? 'lt ok' : 'lt';
-      svg += `<text class="${cls}" x="200" y="${200 - rad}" transform="rotate(${a} 200 200)">${ch}</text>`;
-    });
+    for (let c = 0; c < 8; c++){
+      const ch = S.grid[p * 8 + c];
+      const cls = (c === 0 && ch === PUZZLE.word[p]) ? 'lt ok' : 'lt';
+      svg += '<text class="' + cls + '" x="200" y="' + (200 - RADII[p]) + '" transform="rotate(' + (c * 45) + ' 200 200)">' + ch + '</text>';
+    }
+  }
+  /* chevrons at the outer end of every ray: the inward chevron slides the
+     ray's four letters toward the center, the outward one slides them back;
+     on a won board the controls go quiet */
+  if (!S.won){
+    for (let c = 0; c < 8; c++){
+      svg += '<g class="rayg" transform="rotate(' + (c * 45) + ' 200 200)">' +
+        '<path class="chev" d="M195,23 L200,29 L205,23"/>' +
+        '<path class="chev" d="M195,17 L200,11 L205,17"/>' +
+        '<circle class="hit" data-ray="' + c + '" data-dir="1" cx="200" cy="26" r="12"/>' +
+        '<circle class="hit" data-ray="' + c + '" data-dir="-1" cx="200" cy="14" r="12"/>' +
+        '</g>';
+    }
   }
   $('wheel').innerHTML = svg;
 }
@@ -290,12 +332,9 @@ function renderCtl(){
   let html = '';
   for (let p = 0; p < 4; p++){
     html += '<div class="ringbtn"><span class="rname">' + NAMES[p] + '</span>' +
-      '<button data-p="' + p + '" data-d="-1" aria-label="spin ' + NAMES[p] + ' left">\u25C0</button>' +
-      '<button data-p="' + p + '" data-d="1" aria-label="spin ' + NAMES[p] + ' right">\u25B6</button></div>';
+      '<button data-p="' + p + '" data-d="-1" aria-label="loop ' + NAMES[p] + ' left">\u25C0</button>' +
+      '<button data-p="' + p + '" data-d="1" aria-label="loop ' + NAMES[p] + ' right">\u25B6</button></div>';
   }
-  html += '<div class="ringbtn"><span class="rname">ray</span>' +
-    '<button data-shift="-1" aria-label="shift the ray left">\u25C0</button>' +
-    '<button data-shift="1" aria-label="shift the ray right">\u25B6</button></div>';
   $('ringctl').innerHTML = html;
 }
 
@@ -313,21 +352,30 @@ function checkWin(){
   }
 }
 
-function spin(p, d){
+/* loop: one ring rotates one seat, the letter at column c moving to c + d */
+function loopRing(r, d){
   if (S.won || !PUZZLE) return;
-  const n = SIZES[p];
-  S.off[p] = ((S.off[p] + d) % n + n) % n;
+  const g = S.grid.split('');
+  const row = g.slice(r * 8, r * 8 + 8);
+  const dd = ((d % 8) + 8) % 8;
+  for (let c = 0; c < 8; c++) g[r * 8 + ((c + dd) & 7)] = row[c];
+  S.grid = g.join('');
   S.moves++;
   checkWin();
   saveState();
   renderAll();
 }
-function shiftRay(d){
+
+/* ray shift: the whole column at ray c slides one ring inward (d = 1,
+   the outer ring's letter stepping toward the center and the inner
+   ring's wrapping to the outside) or outward (d = -1) */
+function shiftRay(c, d){
   if (S.won || !PUZZLE) return;
-  for (let r = 0; r < 4; r++){
-    const n = SIZES[r];
-    S.off[r] = ((S.off[r] + d) % n + n) % n;
-  }
+  const g = S.grid.split('');
+  const col = [0, 1, 2, 3].map(rr => g[rr * 8 + c]);
+  const dd = ((d % 4) + 4) % 4;
+  for (let rr = 0; rr < 4; rr++) g[((rr + dd) & 3) * 8 + c] = col[rr];
+  S.grid = g.join('');
   S.moves++;
   checkWin();
   saveState();
@@ -337,15 +385,19 @@ function shiftRay(d){
 $('ringctl').addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
-  if (b.dataset.shift !== undefined) shiftRay(+b.dataset.shift);
-  else spin(+b.dataset.p, +b.dataset.d);
+  loopRing(+b.dataset.p, +b.dataset.d);
+});
+$('wheel').addEventListener('click', e => {
+  const t = e.target;
+  if (!t.classList || !t.classList.contains('hit')) return;
+  shiftRay(+t.dataset.ray, +t.dataset.dir);
 });
 
 /* ---------------- reveal / share ---------------- */
 function shareText(){
   const over = S.moves - PUZZLE.par;
-  const note = over <= 0 ? 'on par' : `+${over} over par`;
-  return `Recycle: Rings No. ${num} \u00b7 ${S.moves} moves (${note})${S.stars ? ' \u00b7 1\u2605' : ''} \uD83C\uDF00`;
+  const note = over <= 0 ? 'on par' : '+' + over + ' over par';
+  return 'Recycle: Rings No. ' + num + ' \u00b7 ' + S.moves + ' moves (' + note + ')' + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDF00';
 }
 function showReveal(){
   /* points read like points: par is full marks, every move over par costs one */
@@ -355,10 +407,10 @@ function showReveal(){
 
   const st = S.stats;
   $('verdict').textContent = (S.moves === PUZZLE.par)
-    ? 'On par — the perfect line.'
-    : (S.moves <= PUZZLE.par + 3 ? 'Aligned — smooth spinning.' : 'Aligned — the scenic route.');
+    ? 'On par. The perfect line.'
+    : (S.moves <= PUZZLE.par + 3 ? 'Aligned. Smooth looping.' : 'Aligned. The scenic route.');
   $('sharetext').textContent =
-    shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best == null ? '\u2013' : st.best + ' moves'}`;
+    shareText() + '\nstreak ' + st.streak + ' \u00b7 best ' + (st.best == null ? '–' : st.best + ' moves');
   $('reveal').classList.add('show');
   /* the word is aligned - the controls go quiet */
   $('ringctl').style.display = 'none';
@@ -378,9 +430,11 @@ $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverla
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
-renderCtl();
-renderAll();
-if (S.won) showReveal();
+if (PUZZLE){
+  renderCtl();
+  renderAll();
+  if (S.won) showReveal();
+}
 SHELL.startCountdown('count', 500);
 </script>
 </body>

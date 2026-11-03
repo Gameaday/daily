@@ -1,596 +1,97 @@
 # Notes for later
 
-Design notes we are deliberately not building yet. Each is small once the
-shell is extracted (see common.js below).
+Design notes and future ideas we are deliberately not building yet. Work
+that has landed is documented where it lives: README.md for the site and
+its games, DEVELOPER.md for contributor orientation, scores/server.py for
+the scores service and its design rules, knowledge/SCHEMA.md for the
+layer format. This file keeps only what is still ahead.
 
-## Deploy state (2026-10-31)
+## Deploy state
 
-Simplified to the floor: the release workflow builds the web + scores
-images and pushes them to GHCR (ghcr.io/gameaday/daily-web and
-daily-scores, amd64 and arm64) on every v* tag, but only once the tag
-commit's validate run is green. The running stack is one compose file
-plus .env that pulls those images: copy both to any Docker machine and
-docker compose up -d. No repo checkout on the host, no systemd timer, no
+The release workflow builds the web + scores images and pushes them to GHCR
+(ghcr.io/gameaday/daily-web and daily-scores, amd64 and arm64) on every v*
+tag, but only once the tag commit's validate run is green. The running stack
+is one compose file plus .env that pulls those images: copy both to any
+Docker machine and docker compose up -d. No repo checkout on the host, no
 tokens (the packages are public, and package visibility is separate from
-repo visibility, so they stay pullable after the privacy flip).
-Persistent state is the end-of-day archive under DATA_DIR (default
-/opt/data/daily). The old tag-gated host-side updater and its systemd
-units are gone, and the image-per-release world keeps the safety the
-updater provided: a red validate publishes nothing, and a rollback is
-setting the previous tag in .env. Nothing in the notes below changes
-because of that - the scores service stays in-memory and consolidated
-only, whether it runs under systemd or in a container. When the archive
-idea below lands, note that the scores container is read_only: frozen
-snapshots would need a small writable volume mounted at
-scores/archive/ - the one deliberate disk write in the whole system,
-gated behind count >= 3.
-
+repo visibility, so they stay pullable after the privacy flip). Persistent
+state is the end-of-day archive under DATA_DIR (default /opt/data/daily).
+A red validate publishes nothing, and a rollback is setting the previous tag
+in .env. The scores service stays in-memory and consolidated only.
 
 ## Curve representation cleanup
 
-Today every game renders the histogram plus a sentence: "you: better than N
-of M" (the "by X" unit tail was dropped in the fix pass) and the global average.
-Opportunity: drop the prose entirely and let the chart do the talking, the way
-racing-style puzzle games do - the distribution itself with an unmistakable
-you-marker (accent bar, tick, and a tiny "you" label under your bin). One
-glance, zero words.
+Today every game renders the histogram plus a "you: better than N of M"
+sentence and the global average. Opportunity: drop the prose entirely and
+let the chart do the talking, the way racing-style puzzle games do - the
+distribution itself with an unmistakable you-marker (accent bar, tick, and
+a tiny "you" label under your bin). One glance, zero words.
 
 The server already returns everything needed (bins with a you-flag, mean,
-count). It is a pure client-side change - and now that the shell extraction
-is done, it is a single edit to renderBoard in shell/common.js.
-
-## Archive mode (frozen distributions)
-
-Once a day rolls over, its consolidated snapshot - count, sum, sum of
-squares, min, max, bins, roughly 200 bytes - could be frozen by the service
-itself to scores/archive/GAME-DAY.json at prune time. This is the server
-archiving its own aggregate numbers; players still never write anything to
-disk.
-
-Then an archive page could let someone replay a past puzzle and see their
-result against the frozen curve: submissions to archived days are read-only -
-"you would have beaten 7 of 12" - and never change the archived totals.
-Suggested guard: only archive days with count >= 3, so solo mornings do not
-get memorialized.
-
-Retention is now 1 day (PRUNE_DAYS in server.py). If operators want
-"yesterday's curve" visible live, bump it to 2 - memory is not the
-constraint, tidiness is.
-
-## common.js shell extraction (done 2026-10)
-
-Done - see README. The shared shell - palette CSS, EPOCH_KEY/etKey,
-nextETMidnight/tick, toast, help modal, curve client, share-to-clipboard -
-now lives in shell/common.js + shell/common.css, and the word banks of
-Trace/Recycle Grid/Sprint were deduplicated into assets/words-en.js. Games
-destructure what they need from SHELL, so the curve representation change
-above is now a one-file edit in shell/common.js (renderBoard moved there).
-Solo/offline mode came along for free: file:// or ?solo switches the curve
-off and never posts, which is also the air-gapped bundle story - the repo itself is the bundle. Next: game 14 can be puzzle-only.
-
-## Word bank expansion (done 2026-10-27)
-
-assets/words-en.js grew 1353 -> 2230 words (378 three-, 1052 four-, 800
-five-letter), still one 12KB file loaded once and cached. Curation rule:
-common English words only - no proper nouns, no obscure Scrabble dumps.
-Trace and Recycle Grid puzzles are derived from the bank, so the day's
-puzzle changes when the bank does (streaks and stats are untouched - anyone
-mid-streak just gets the new puzzle). Sprint's inline anagram banks got a
-hygiene pass at the same time: non-words (BASON, YOUK, WRAY, GLANE, TICKY,
-WRITH...), wrong-length strays and duplicates removed or relocated; the
-real-but-obscure words stay (ROUE, WOLD, QUOD - they are the fun ones).
-The per-game tests (tests/games/) and checks/games.js assert both banks'
-shape (A-Z 3-5, sorted, no duplicates, known typos stay gone).
-
-## Recycle redesign (done 2026-10-27)
-
-Grid is now two-phase with three modes instead of a free difficulty dial:
-**Practice · 4** — a fresh random board generated on every entry (seeded by
-Math.random, persisted in S.practice for reload continuity), nothing
-recorded, no stats, no curve post; it's the "validate instantly, play
-forever" sandbox. **Normal · 5** — the daily game: rows first, then
-columns (one-way lock), undo/restart free, no clock, first bank counts for
-streak + the 'grid' curve (S.counted). **Hard · 6** — the same daily board
-with one more shift, unlocked only when the global curve service answers:
-probeCurve() POSTs {} to /health with the same base fallback chain as the
-submit path and treats ANY http answer as online (network error = offline,
-solo = offline by design). Hard banks to its own 'grid-hard' bonus curve
-once/day (S.hardCounted) and never touches normal stats — a hard-only day
-does not preserve the streak (rollover checks !S.counted, not !S.banked).
-The online gate exists because the six-shift exhaustive search is the heavy
-one: interleaved row/column shifts at depth 6 explode past 5M states, but
-every (row-offset, col-offset) pair with total cost <= 6 is only ~62k board
-sims (<1s client-side, computed lazily at first hard entry and cached in
-S.bestHard). Practice/normal are ~10k/25k sims. The two-phase structure is
-what makes the "best possible board" exact rather than estimated. One daily
-board is shared by normal+hard (scramble cost 4-5 sized by the normal
-budget, seed does not include the budget) so both modes can always walk it
-back. No server precalc - the scores service stays pure.
-
-Generation lesson: the first cut filled the fat board with random letters
-plus a hill climb, which topped out at ~7 words and failed the >= 8-9
-acceptance floor on real days (day 0 and day 1 both generated NOTHING).
-Fix: plant 7-10 real dictionary words into the random board before the
-climb (monotone - the climb only accepts strict improvements), then scramble
-by offsets costing budget-1 or budget so the rows-then-columns language can
-always walk the fat board back. Accept when the exact optimum clears
-max(fatMin, 8) and beats the start by >= 2-3 words.
-
-Rings: four wheels (10/9/9/8 letters), a 4-letter target with distinct
-letters from WORDS_EN, ops are per-position rotate +-1 plus adjacent-ring
-swap. Metric is moves, low; par is an exact BFS over the full state space
-(order x offsets, <= 155k states) to ANY state spelling the target, so par
-is a true minimum. The clock is gone - being conservative is the game.
-Note: the BFS is the one client-side cost that spikes memory (~155k-state
-Map on first load); fine on desktop/CI, worth watching on old phones.
-
-Ledger change: rings now counts moves, not seconds (SPECS edges
-0/5/7/9/11/13/15/17/20, low; old seconds snapshots age out after a day).
-Grid's ledger is unchanged (words, high) but adds a local "perfect" counter
-when a bank matches the exact best possible, plus a new 'grid-hard' bonus
-ledger (words, high, edges to 18 — one more shift can reach one more bin).
-State keys bumped to
-warmup.grid.v2 / warmup.rings.v2 with v1 stat migration. Only Sprint keeps a
-clock now.
-
-Natural next steps, in rough order: (1) land assets/valid-en.js via
-tools/make-valid-en.mjs so guess-validating games get the wide bank;
-(2) watch CI + real phone timing for the hard-mode lazy search — if any
-device struggles, the precalc moves server-side (calculated once at
-midnight, served with the puzzle) without touching the game logic;
-(3) rings could get the same mode treatment (practice rerolls, hard =
-larger wheels or two targets) once the grid modes have soaked;
-(4) the curve-representation cleanup and archive mode already on the
-roadmap.
+count). It is a pure client-side change, a single edit to renderBoard in
+shell/common.js.
 
 ## Valid-guesses bank (Wordnik, decided 2026-10-27)
 
-Decision: future guess-validating games get a wider "we'll accept it" bank
-built from the MIT-licensed Wordnik wordlist (wordnik/wordlist). Answers
-always come from curated WORDS_EN; VALID_EN only widens what a player may
-guess. The 2.3MB source file can't be fetched through the bot's tooling, so
-tools/make-valid-en.mjs (zero-dep) ships instead: run `curl -O
+Future guess-validating games get a wider "we'll accept it" bank built from
+the MIT-licensed Wordnik wordlist (wordnik/wordlist). Answers always come
+from curated WORDS_EN; VALID_EN only widens what a player may guess.
+tools/make-valid-en.mjs (zero-dep) builds it: run curl -O
 https://raw.githubusercontent.com/wordnik/wordlist/main/wordlist-20210729.txt
-&& node tools/make-valid-en.mjs` locally (or drop the txt into the chat) and
-assets/valid-en.js lands with its MIT header; bank-shape guards follow in
-the same commit as the asset.
+&& node tools/make-valid-en.mjs locally, and assets/valid-en.js lands with
+its MIT header; bank-shape guards follow in the same commit as the asset.
 
 ## Mobile UX pass
 
-Cipher now types through a hidden off-screen input (tap a slot, the soft
+Cipher types through a hidden off-screen input (tap a slot, the soft
 keyboard opens; a sentinel space turns backspace into an input event) - copy
 that trick into any future keyboard-driven game. The rest of the fleet is
-still desktop-first in small ways: Sprint only accepts a word on Enter, which
-costs an extra tap on a phone, and nothing has been trialed on a real small
-screen. Worth one deliberate pass on a phone before players find what we
-missed.
+still desktop-first in small ways: Sprint only accepts a word on Enter,
+which costs an extra tap on a phone, and nothing has been trialed on a real
+small screen. Worth one deliberate pass on a phone before players find what
+we missed.
 
-## Metrics ledger (single source of truth: scores/manifest.json)
+## Watch items
 
-- bogus: points 0-3, high (0 on a miss)
-- well-actually: points 0-4, high
-- rings: moves, low (exact BFS par; edges 0/5/7/9/11/13/15/17/20)
-- grid: words banked, high (0-16 in twos)
-- grid-hard: words banked, high (bonus curve, online-only mode)
-- fermi: points 0-3, high
-- sift: mistakes 0-4, low (4 on a loss)
-- rounds: guesses 1-7, low (7 on a loss)
-- trace: rungs, low (steps+10 on a give-up)
-- lightbox: mistakes 0-4, low (4 on a fogged film)
-- sprint: words 0-5, high
-- cipher: hints 0-5, low (7 on a revealed codebook)
-- timeline: checks 1+, low (9 on a reveal)
-- museum: clues 1-5, low (6 on a stumped visit)
+- Grid hard mode runs the exact six-shift search client-side on first entry
+  (roughly 62k board sims, under a second on desktop and CI). If any real
+  phone struggles, the precalc moves server-side, calculated once at
+  midnight and served with the puzzle, without touching the game logic.
+- Rings could get the same mode treatment as grid (practice rerolls, hard =
+  larger wheels or two targets) once the grid modes have soaked.
 
-Since 2026-10-29 the single source is `scores/manifest.json` (epoch, tz,
-per-game better + histogram edges). scores/server.py loads it at boot, the
-client pages carry the same constants inline for offline play, and
-tests/games/cross-checks.js fails CI if the shell, the landing page or the
-server disagree with the manifest. SPECS in server.py is gone; the list above
-is documentation only.
+## Future game ideas
 
-## Batch 4 candidates
+Recipes the knowledge layer can grow toward; none of these build yet.
 
-- Dig: a daily excavation grid - probe cells, read stratigraphy, date the layer
-- Almanac: today-in-history trivia with a twist (multiple choice, escalating)
+- Dig: a daily excavation grid - probe cells, read stratigraphy, date the
+  layer
+- Almanac: today-in-history trivia with a twist (multiple choice,
+  escalating)
 - Follow: a daily six-degrees chain between two historical figures
-
-
-## Server-gated puzzle delivery (2026-10-28)
-
-Every bank-driven game now ships its bank inline AND defers to the scores
-service: over file:// or ?solo the inline bank plays (offline stays
-self-contained); online the page asks GET /api/puzzle?game=...&day=... and
-the served puzzle replaces the inline pick, so the shipped site no longer
-contains tomorrow's answers. bogus + well-actually piloted the pattern;
-this batch converts rounds, fermi, cipher, museum, lightbox, sift,
-timeline.
-
-Boundary: sprint, trace, recycle-grid and recycle-rings stay client-only -
-their banks are generators the game needs at play time (word validation,
-board checking), not answer keys, so serving them buys nothing.
-
-Timeline is the one windowed game: the whole bank is too big to ship
-wholesale in a daily answer, so the store carries {bank, picks} with 1000
-precomputed days (same seed, same shuffle, same distinct-years walk as
-the page). Direct games ship their bank whole; the server serves
-bank[day % len]. One cosmetic difference online: the served path
-reshuffles the display lane with a fresh rng, so the lane order can
-differ from the offline pick for the same day - the events and the
-answer are identical.
-
-The stores are committed per game (scores/<game>/puzzles.json) and
-verified against the client banks by tools/export-puzzles.mjs: CI, make
-test and npm test all run the verifier first, so a bank edited without
-re-exporting its store fails the build. scores/server.py loads each
-store from next to itself, so the scores container just COPYs scores/
-in. tests/games/timeline.js deep-checks the committed timeline picks
-against the page's own offline day-0 pick, and server_test.py does the
-same against the served JSON.
-
-## Docker refine (2026-10-28)
-
-The web image no longer bind-mounts the repo: it bakes in the ONLINE
-bundle (banks stripped) built by a throwaway node stage, so a rebuild is
-what ships site content - the pull-based timer already runs compose up
---build. Plain HTTP on host port 8080, auto_https off, no domain config:
-TLS/domains belong to the edge proxy in front of it (the standalone
-Traefik on the other Pi). This keeps the repo self-contained - no edge
-config lives here on purpose.
-
-The wording guard moved local: checks/wording.js runs as part of
-checks/games.js (same rule, same exemptions); the old CI grep matched its
-own workflow file and kept main red, so the CI copy is gone - too specific
-for CI, right at home in make test.
-
-## Test split + manifest single source (done 2026-10-29)
-
-tests/run.js is now a thin orchestrator over per-game modules in tests/games/
-(each game's playthrough, server-gated.js for online delivery,
-cross-checks.js for the shell/manifest/landing agreement, _lib.js for the
-shared game list). Dropping a game later means deleting its module and its
-entry in the MODULES list, nothing else. A suite-guard group fails the run
-if the orchestrator ever loads no modules or runs zero assertions (an empty
-file exits 0 in Node, so a silent pass must be impossible).
-
-## Batch 5 candidates: recipes over the layer (2026-10-30)
-
-The idea list below is recorded as the recipe each game would arrive
-as, so the layer grows toward them and the games land thin.
-Superlative below has since landed; the rest do not build yet; the
-ko-fi card on the landing page covers the support
-idea and is already live.
-
-- Who Said It: the quote game. quotes.json already keys each line to
-  its speaker; the enrichment it wants is more y and via on the quotes,
-  and a country hint after a miss wants country fields or resident
-  relations to read.
+- Who Said It: the quote game. quotes.json already keys each line to its
+  speaker; it wants more y and via on the quotes, and a country hint after
+  a miss wants country fields or resident relations to read.
 - Relativity: which of two events a figure stood closer to. The layer
   already carries born and died, event years, and dated participant
-  relations; the recipe draws a person, two events inside the life,
-  and asks which year sits nearer. Richer with every dated relation.
-- Fibbs: one truth among authored fibs. The facts file feeds the
-  truth, the fibs stay authored beside it twist-style, and both key
-  by about.
+  relations; the recipe draws a person, two events inside the life, and
+  asks which year sits nearer.
+- Fibbs: one truth among authored fibs. The facts file feeds the truth,
+  the fibs stay authored beside it twist-style, and both key by about.
 - Archived: where an artifact is kept. The housed-at relations already
   answer it; the recipe offers place options and grows with every new
-  housed-at edge. It wants more places than the eighteen cities to
-  shine.
+  housed-at edge.
 - Refactored: when people believed the false thing. Needs dated
-  misconception entries, a claim, a believed window, the correction;
-  a natural new file keyed like the twists.
-- Odd Fame: who did the odd accomplishment. Facts and twist entries
-  with about keys feed it; deep person profiles make it rich.
-- Superlative: group-relative superlatives. The pool wants a few
-  numeric person fields (height, works, reign length); the recipe
-  draws a group and asks the superlative the group itself decides.
-  Depth first.
-- Topical: this day in history. A pure recipe: events with month and
-  day against the day of the year, plus same-day impostors from the
-  same era.
+  misconception entries, a claim, a believed window, the correction; a
+  natural new file keyed like the twists.
+- Odd Fame: who did the odd accomplishment. Facts and twist entries with
+  about keys feed it; deep person profiles make it rich.
+- Topical: this day in history. A pure recipe: events with month and day
+  against the day of the year, plus same-day impostors from the same era.
 
-The cut line for the next testing round: finish the enrichment the
-recipes above point at (world entities for the fermi subjects, quote
-years and sources, person numbers, more housed-at and participant
-edges), then freeze layer growth, then one full round: every CI
-layer, store byte-identity, a spot-review of the newest entries, and
-per-game plays for any recipe game that has landed. After that round,
-1.0 and the privacy flip come into view.
+## Deferred on purpose
 
-The first enrichment pass landed the same day: the fermi subjects joined
-the wider world (the Moon, the Sun, the Earth, the Eiffel Tower, the
-Louvre, the International Space Station, the Great Pyramid, the Roman
-Empire, Lake Superior, Tokyo, the Library of Congress, the Milky Way,
-the Challenger Deep), twenty more facts keyed to them, the reviewed
-quotes carried their sources and three more their years, and the kept
-things found their cities: ten new housed-at edges beside the two
-Paris residents and the three Everest and Moon participants. Person
-numbers wait for the Superlative recipe that defines them.
-
-Superlative landed the same day as its v1 recipe, and it doubles as
-the web test the layer wanted: a game whose whole content is the
-people file. Every life the layer dates at both ends joins the pool
-in canonical id order (450 of the 512), the pool cuts into groups of
-four, and each group serves the question its own numbers settle
-alone, the longest life or the first or last birth, rotating by
-group (day 0: Ada Lovelace, John Adams, Akbar and Al-Idrisi, the
-longest life, John Adams). The store carries 112 boards on the same
-store-and-bank pipeline, checked by the same cross-checks, with its
-own headless playthrough and server-gated block. Person numbers
-still wait; when they land the recipe grows richer questions
-without a new store shape.
-
-The bonus round landed with the first person numbers. A board now
-carries a bonus match whenever the numbers seat every life one
-superlative it tops: the three the dates always settle (the longest
-life, the first birth, the last birth) plus the measured and counted
-dims, height only when all four lives are measured, works and reign
-reading a missing number as zero. Batch one records fifty reign
-years (sovereigns only, from bedrock accession dates), five heights
-(Lincoln, Washington, Napoleon, Victoria, Ali) and two catalogue
-counts (Bach at 1080 by BWV, Mozart at 626 by K), and the epoch
-moved to Monday 2026-11-02 with pre-launch days clamped to No. 1 so
-weekend visitors play the board Monday re-serves. 3 boards
-carry the bonus so far, and every batch of numbers seats more.
-
-Batch two seats six more: Handel at 612 by HWV, Haydn at 750 by
-Hoboken, Wagner at 113 by WWV, and three more crowns, Genghis Khan
-at 21, Napoleon III at 18, Nader Shah at 11. 3 boards carry
-the bonus now; the composers without a crisp catalogue count stay
-honest at zero until a reputable source settles them.
-
-Batch three goes targeted: the blocker map says 51 boards sit one
-number away, and the batch seats what a reputable source settles,
-Corelli at 72 (six published sets of twelve, the authenticated
-works), plus three crowns the first pass missed, Mehmed II at 30,
-Julius II at 10, Cromwell at 5. 4 boards carry the bonus
-now (0, 6, 21, 44). Vivaldi stays honest at zero: the RV
-catalogue is open-ended past 740, so no standard total exists.
-
-The inversions land on Carl's read that with enough metrics
-everyone tops something: every dim counts from both ends now,
-so a middle life can top the shortest life or the shortest
-reign the way an extreme one tops the longest, and the bottom
-ends of the counting dims compare only the lives a source
-actually measured (a life that never reigned stays out of the
-shortest-reign contest). The one life a group cannot seat takes
-the most-average chip, so a board carries its bonus whenever a
-single life is all that stays untopped: 95 of the 112 boards
-carry the bonus now, 26 seated outright and 69 through the most
-average, and 17 groups still wait on numbers for their middles.
-The average lives are the honest zeros by another name, mostly
-novelists and composers without catalogues; the hunt continues
-against the middle lives of those 17. Day 1 (al-Khwarizmi,
-al-Kindi, al-Razi, Aldus Manutius) seats through the fallback
-with al-Razi the most average, so the no-bonus test pin moves
-to day 13 (Butch Cassidy, Richard Byrd, Byron, James Cagney).
-
-Batch four answers the completeness directive: later games will
-read standardized fields, so the layer fills the h field from the
-one standard set the pool holds, seventeen presidential heights
-from the record table (Adams 170, Jefferson 189, Madison 163,
-Quincy Adams 171, Benjamin Harrison 168, Grant 173, Hayes 174,
-Garfield 183, McKinley 170, Theodore Roosevelt 178, Wilson 180,
-Franklin Roosevelt 188, Eisenhower 179, Kennedy 185, Carter 177,
-Reagan 185, Obama 187). Washington stays at its verified 188
-while the same table reads 187, and that spread is the warning
-for the softer numbers (actors, aviators) no standard source
-states. The batch is bonus-neutral by construction: height only
-counts when a whole group of four is measured, so the compiled
-store came out byte-identical and the push carries no store or
-bank.
-
-The calculated middles close the same loop for every life the
-sources never counted: the dates hold two more dims no source can
-dispute, the life nearest the group's mean span and the birth
-nearest the group's middle year, computable for every pool
-member. All 112 boards seat a bonus now; the most-average chip
-drops from 69 boards to 29, which is the rare thing it was always
-meant to be, and the 17 waiting groups (Cassidy and Byrd, Barton
-and Clara Schumann, Franklin and Herschel and the rest) all seat
-on calculated middles. Day 0 trades Akbar's reign chip for the
-middle birth he actually holds (born 1542 against a group mean of
-1548), and day 1 seats Al-Razi on her middle birth instead of
-the fallback. The test pins move with them: the bank-wide check
-asserts every board seats four chips, the calculated-middle pin
-lives on day 13 (Byrd), and the most-average pin on day 48
-(Hillary).
-
-The places batch gives the eighteen cities the numbers a later
-game can compare, the same completeness directive batch four
-answered for heights. Every city now carries pop, the latest city
-proper figure a census or the national statistics office settles,
-with popYear dating it, from Constantinople, which carries
-Istanbul's 15,701,602 at the end of 2024, down to Weimar's 65,566.
-Thirteen carry tall, the commonly cited height in whole meters of
-the city's tallest building: One World Trade Center stands 541
-for New York, the Lakhta Center 462 for Saint Petersburg, the
-Shard 310 for London, the CBRT Tower 354 for Constantinople, and
-at the other end the campanile of St Mark's counts 99 for Venice
-and St Mary's Cathedral spire 90 for Edinburgh. Five stay honest
-without one: Berlin's Estrel Tower tops out at 176 but no source
-confirms it open, Milan's Allianz Tower is fought over between its
-architectural height and its antenna pinnacle, and Florence,
-Versailles and Weimar keep no standard figure at all. Lisbon's
-census count stands at 545,796 because the newer estimate track
-(658,236) outruns what the census series supports. Nothing compiles
-from these fields yet, so the batch is a deposit for the games the
-place layer will serve, and the compiled stores keep their bytes.
-
-## Knowledge layer (done 2026-10-30)
-
-Every bank game now compiles from one knowledge layer in knowledge/:
-people, events, places, artifacts, the wider world, animals and quotes
-as entities in one id namespace, relations typed twenty-two ways, the
-twist tellings for bogus and well-actually, the commonly cited figures
-fermi asks about, the stories the year games
-share, and each game's recipe over the whole. build-knowledge compiles
-the layer to the committed stores byte-exact (CI verifies), and
-export-puzzles re-emits the client banks from the stores: truth stored
-once, every manipulation a marked derivation. Timeline and rounds read
-events, thread walks the people graph (one connected component, no
-orphans, edges filtered to the nodes it knows), brunch seats the
-presence layer, museum shows artifacts, cipher encrypts quotes, sift
-sorts boards authored over the layer, fermi asks the commonly cited
-figures keyed by about ids, and the twist tellings key
-themselves to the graph. lightbox stays hand-banked on purpose:
-picture clues are not shared entities. The wording guard retired with the rework it watched
-over (the module is gone); the em dash rule covers new copy only.
-SCHEMA.md in knowledge/ is the format reference.
-
-Deferred on purpose: wiki/sameAs alias matching, a sift board
-auto-generator (the boards are authored for now), and the Batch 4 games
-(Dig, Almanac, Follow) - all natural future recipes over the layer.
-
-## Content batch (done 2026-11-01)
-
-The first content growth since the audit lands at the tail of four
-banks: museum takes the Gundestrup cauldron and the Nag Hammadi
-codices, cipher takes Nelson's Trafalgar signal, Lovelace's Note A
-(kept in the algebraical spelling the 1843 original printed) and
-Turing closing his Mind paper, fermi takes the active satellite
-fleet and the wild tiger count, and sift takes The Romantic Age,
-seating twelve figures the eighty boards had left untouched. All
-four games are whole-file recipes that compile in file order, so
-the files grow at the end and no day rotation moves; the stores and
-banks were mirrored by hand to the byte and the compiler verified
-the result.
-
-## Runway batch (done 2026-11-01)
-
-A second growth pass for the winter: brunch seats one hundred fifty
-moments, lightbox banks one hundred fifty designs, rounds walks one
-hundred fifty events, and those three stay fresh past the end of
-March. Fermi asks one hundred twenty figures, cipher hides one
-hundred twenty-one quotes, museum displays one hundred artifacts,
-sift sorts one hundred and one boards, and the twist banks grow by
-fifteen tellings each (bogus ninety-seven, well-actually ninety-
-five), so every bank is new to every player through the new year and
-well into February. Superlative stays capped at its one hundred
-twelve people-derived boards and repeats from late February; lifting it
-means growing the people layer, which deliberately waits. The recipe
-banks append in file order as before, day pins hold, and the stores and
-banks were mirrored by hand and compiler-verified.
-
-## Depth pass, November 2026
-
-This pass grew the daily banks to one hundred fifty entries each so the
-rotation stays fresh well past the end of March 2027. The schedule counts
-from November 2, 2026 as day zero, so a bank of one hundred fifty first
-repeats on or about April 1, 2027. Every bank now meets that bar except
-superlative, which stays hard capped at one hundred twelve as a pure
-function of people.json; its questions will begin repeating around
-February 22, 2027 until the people layer grows.
-
-The additions lean on the knowledge layers: forty nine new sift boards,
-thirty fermi facts, twenty nine cipher quotes, and fifty museum artifacts
-across two pushes. Questions that threatened to echo earlier material were
-reworked toward new categories and lie positions, and every new entry was
-reviewed against its source on 2026-11-01.
-
-## Superlative expansion (done 2026-11-01)
-
-Fifty five worldwide lives joined the people layer: Chinese
-sovereigns from Wu Zetian to Qianlong, Japan's unifiers and Edo
-masters, Sejong and Yi Sun-sin, the Indian mathematicians from
-Aryabhata to Ramanujan and the reformers, Mughal court women,
-African scholars and chroniclers, and Pakal, Sor Juana and Frida
-Kahlo from the Americas; lives the record cannot date at both
-ends, the BCE ones, stayed out. The superlative recipe learned
-thirty seven themed cohorts, and a well documented life can serve
-a second time when a different cohort asks a different question
-of it. Eight questions now rotate by board, the longest or
-shortest life, the first or last birth, and the measured ones,
-reign, voyages, works and height, which only count the lives a
-source actually measured and never serve a tie, the voyages dim
-joined the bonus match, and the fine print carries a piece of
-trivia per life. Fifteen new relations joined the graph. The bank
-grew from 112 to 163 boards, so the first repeat moves from
-February to mid April 2027, the thread game regenerated as a side
-effect (all its picks change, fine before launch), and day 0
-still seats John Adams. Brunch was checked and stayed identical.
-
-
-## Superlative v2 (done 2026-11-01)
-
-The game reworks how the superlative plays, on Carl's read that v1
-was too restrictive: one question then a bonus match asked the
-same four lives the same few things every day. V2 seats a session
-a day, a cohort plus a run of questions. Cohort validity is the
-majority-fresh rule: a new cohort may overlap any earlier one by
-at most its size minus its majority, two shared lives for five,
-one for four, so entities reuse freely under that bar and 364
-sessions come out of the 505 dated lives. Weekdays draw five lives
-from an era bucket weighted by size; weekends seat one of thirty
-four curated themes, from Sovereigns of the East to The Bright
-Lights, and the session carries the era's or theme's name, so the
-title itself teaches. Every session asks four to six questions
-its own numbers settle: the measured dims lead when they can
-(voyages, reigns, works, height) and the dates fill, ties never
-serve, one life answers at most two questions and one dim family
-contributes at most two, so an outlier teaches and the rest still
-get their turn. A clean sweep wins, the value is rounds minus
-right plus one (1 to 7, low), streaks count consecutive sweeps,
-and each round reveal carries the winner's dates, the settled
-value and the k trivia. Day 0 stays the opening table, Ada
-Lovelace, John Adams, Akbar and Al-Idrisi, with John Adams still
-answering the longest life and the manifest edges widened to the
-new 1 to 7 range. Every draw comes from one seeded PRNG, so the
-store compiles byte-identical everywhere. The bank is a full 364
-sessions, so the first repeat waits for November 2027.
-
-## The archive opens (done 2026-11-01)
-
-Every past day is now replayable, webcomic style: the date line on
-every game page grew chevrons, and pressing back walks to yesterday,
-the day before, down to the opening table. The whole mechanic lives
-in the shell, so all sixteen games get it without touching a single
-game page. A viewed day is just the ?d parameter on the URL, the
-shell re-points dayIndex at it, and the games never know: they were
-already pure functions of dayIndex. Anything but a finished day
-(future, garbage, today itself) is refused and falls back to live,
-so a bare visit is byte for byte what it always was.
-
-A replay is quarantined. It reads the day's frozen curve copy from
-the server and never submits, never mints a player id, never writes
-a sync flag, and persists nothing: an archive boot plays entirely in
-memory, so the live day's state, streaks and tallies are untouchable.
-The curve banner says so in plain words, this day is closed and
-replays change nothing.
-
-The new tests/games/archive.js module pins the day math and the
-quarantine: the parse rules, the href builder (solo mode survives
-the walk), a brunch replay of day 1 played to its end with the store
-byte-identical before and after, a superlative replay of the opening
-table played through all rounds with zero submits and an empty store,
-and the frozen curve copy versus the live one. The harness grew one
-knob for it, location.search per boot; everything else is untouched.
-
-## Points read like points (done 2026-11-01)
-
-Players talked about the curve bins as if they were scores, and two
-games read backwards: a clean superlative sweep posted 1 (rounds missed
-plus one) and a brunch win posted 1 with a loss at 2. Both now post what
-a player would say out loud. Superlative posts the round count, so five
-of five reads 5, and the histogram grows an edge at 7 for the longest
-sessions. Brunch posts 1 for the seat and 0 for missing it. The manifest
-flips both to better: high and widens the edges to start at 0, the page
-pins (SYNC_BETTER) flip with them, and the cost-like games keep their
-low-is-better framing: mistakes, moves, clues, hints and checks are
-things you spend, not things you earn. The scores archive was wiped the
-same evening, so no board carries a value recorded under the old
-direction.
-
-## The curve survives its own history (done 2026-11-01)
-
-The archive wipe fixed the launch-night crash by removing the data; the
-code now removes the failure mode. Every snapshot already recorded the
-edges and direction it was tallied under - a finished day now serves
-under them, so a manifest change can never re-label or crash history. A
-warm start that finds today's board recorded under different edges
-restarts that game's curve instead of loading numbers that cannot be
-compared; tally reshapes an inherited board instead of trusting its
-shape; an unreadable snapshot no longer silences a bigger live tally
-(the retry overwrites the broken file); and /dist bounds its day like
-/puzzle always did. The empty curve in an archive replay also learned to
-say the day is closed instead of calling it today.
+- wiki/sameAs alias matching for entities
+- a sift board auto-generator (the boards are authored for now)
+- lifting Superlative past its people-derived bank: the people layer
+  grows deliberately, and the bank follows it

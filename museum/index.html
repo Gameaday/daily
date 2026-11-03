@@ -157,12 +157,62 @@ function render(){
 }
 $('btnGuess').addEventListener('click', submitGuess);
 $('guess').addEventListener('keydown', e => { if (e.key === 'Enter') submitGuess(); });
-function submitGuess(){
+/* the dealt session: one deal per day, held on the state and reused by
+   every guess and clue request */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  let d = null;
+  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle) EXHIBIT = Object.assign({}, EXHIBIT, d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+
+async function submitGuess(){
   if (!EXHIBIT) return;
   if (S.status !== 'playing') return;
   const inp = $('guess');
   if (!inp.value.trim()) return;
   S.started = true;
+  /* the dealt day: the name never shipped, so the guess travels to the
+     session and the session meters the clues */
+  if (typeof EXHIBIT.a !== 'string' && !isSolo() && !SHELL.isArchive){
+    const n = await ensureSession();
+    if (!n){ toastMsg('the exhibit is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, name: inp.value }); } catch (e) {}
+    if (!b){ toastMsg('the exhibit is not answering right now, try again'); return; }
+    if (b.status === 409){ toastMsg('this visit is already over'); return; }
+    if (b.status !== 200 || !b.body || !b.body.verdict){
+      S.nonce = null; saveState();
+      toastMsg('this exhibit expired, name it again for a fresh one');
+      return;
+    }
+    if (b.body.verdict === 'won'){
+      S.typed = inp.value;
+      S.reveal = { a: b.body.reveal.a, w: b.body.reveal.w };
+      finish('won');
+      return;
+    }
+    if (b.body.verdict === 'lost'){
+      S.reveal = { a: b.body.reveal.a, w: b.body.reveal.w };
+      finish('lost');
+      return;
+    }
+    /* miss: the session hands back the metered clue index */
+    S.clueIdx = b.body.clueIdx;
+    saveState(); render();
+    inp.classList.remove('shake');
+    void inp.offsetWidth;
+    inp.classList.add('shake');
+    inp.value = '';
+    toastMsg('not it \u2014 another clue for the case file');
+    return;
+  }
   if (matches(inp.value)){
     S.typed = inp.value;
     finish('won');
@@ -180,13 +230,31 @@ function submitGuess(){
     finish('lost');
   }
 }
-$('btnClue').addEventListener('click', () => {
+$('btnClue').addEventListener('click', takeClue);
+async function takeClue(){
   if (!EXHIBIT) return;
   if (S.status !== 'playing' || S.clueIdx >= 4) return;
   S.started = true;
+  /* the dealt day: the session meters the clues itself */
+  if (typeof EXHIBIT.a !== 'string' && !isSolo() && !SHELL.isArchive){
+    const n = await ensureSession();
+    if (!n){ toastMsg('the exhibit is not answering right now, try again'); return; }
+    let b = null;
+    try { b = await SHELL.dealt('/guess', { nonce: n, clue: 1 }); } catch (e) {}
+    if (!b){ toastMsg('the exhibit is not answering right now, try again'); return; }
+    if (b.status === 409){ toastMsg('this visit is already over'); return; }
+    if (b.status !== 200 || !b.body || typeof b.body.clueIdx !== 'number'){
+      S.nonce = null; saveState();
+      toastMsg('this exhibit expired, name it again for a fresh one');
+      return;
+    }
+    S.clueIdx = b.body.clueIdx;
+    saveState(); render();
+    return;
+  }
   S.clueIdx++;
   saveState(); render();
-});
+}
 function finish(status){
   S.status = status;
   S.resultClues = status === 'won' ? S.clueIdx + 1 : 6;
@@ -227,8 +295,9 @@ function showReveal(){
     ? (used === 1 ? 'Named it cold.' : used <= 3 ? 'A curator\u2019s eye.' : 'Got there in the end.')
     : 'The lights come up anyway.';
   if (!won) $('verdict').classList.add('lost');
-  $('answer').textContent = EXHIBIT.a;
-  $('story').textContent = EXHIBIT.w;
+  const rv = S.reveal || { a: EXHIBIT.a, w: EXHIBIT.w };
+  $('answer').textContent = rv.a;
+  $('story').textContent = rv.w;
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 named ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
   $('btnClue').disabled = true;
@@ -237,7 +306,8 @@ function showReveal(){
   $('guessrow').style.display = 'none';
   $('clueacts').style.display = 'none';
   syncBoard({ status: S.status,
-              answer: S.typed || '', meta: { clues: used }, points: S.pts });
+              answer: S.typed || '', meta: { clues: used }, points: S.pts,
+              nonce: S.nonce });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

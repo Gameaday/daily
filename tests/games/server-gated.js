@@ -75,18 +75,35 @@ async function run(h, ctx){
     r.env.els.btnCheck.click();
     h.eq(r.x.S.status, 'won', 'gated: cipher won on Check over the served quote');
   }
-  /* museum: the served exhibit matches its alias */
+  /* museum: the served exhibit is dealt - the name never ships and the
+     session meters the clues and grades the one guess */
   {
     const live = h.boot('museum', ['EXHIBIT'], { now: T0, store: {} });
-    const served = serve('museum', live.x.EXHIBIT);
-    const r = h.boot('museum', ['S', 'matches', 'submitGuess', 'MUSEUM'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.EXHIBIT;
+    const served = serve('museum', { c: full.c });
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'gm1', today: 0, puzzle: served.puzzle } };
+      const mm = s => String(s || '').toLowerCase().replace(/^the /, '').trim();
+      if ([full.a].concat(full.al).some(x => mm(body.name) === mm(x)))
+        return { status: 200, body: { verdict: 'won',
+          reveal: { a: full.a, w: full.w } } };
+      return { status: 200, body: { verdict: 'miss', clueIdx: 1 } };
+    };
+    const r = h.boot('museum', ['S', 'submitGuess', 'MUSEUM'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.MUSEUM === undefined, 'gated: museum online boot has no bank');
     await h.flush();
-    const alias = served.puzzle.al[0];
-    h.ok(r.x.matches(alias), 'gated: museum served alias matches');
-    r.env.els.guess.value = alias;
+    h.ok(String(r.env.els.plaque.innerHTML).indexOf(full.c[0]) >= 0,
+      'gated: museum served clues rendered');
+    h.ok(!('a' in served.puzzle) && !('al' in served.puzzle),
+      'gated: the museum day never ships its name');
+    r.env.els.guess.value = full.al[0];
     r.x.submitGuess();
-    h.eq(r.x.S.status, 'won', 'gated: museum won on the served exhibit');
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: museum won on the dealt exhibit');
+    h.eq(r.x.S.nonce, 'gm1', 'gated: the museum session is held');
+    h.ok(String(r.env.els.answer.textContent).indexOf(full.a) >= 0,
+      'gated: the answer arrived only with the reveal');
   }
   /* well-actually: the served statement is dealt - the lie never ships
      and the session grades every pick and the one correction */

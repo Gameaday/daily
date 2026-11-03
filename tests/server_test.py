@@ -5,9 +5,9 @@ Spawns the real server on a scratch port and exercises the API with urllib:
 health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
-one-shot brunch and fermi verdicts, the sprint starting gun, session
-TTL), the dealt cutover (the live rounds, brunch and fermi days ship
-without their keys), fresh-day counting (stale submits answered from the
+sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
+(the live rounds, brunch and fermi days ship without their keys),
+fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
 day over midnight). Stdlib only - no pytest, no requests, no docker needed.
@@ -163,6 +163,16 @@ def main():
             check(s == 200 and b.get("puzzle", {}).get("q", "").startswith("King John")
                   and "y" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {}),
                   "GET /puzzle rounds day 0 (live) -> the question, never the key")
+            s, b = req("GET", "/api/puzzle?game=brunch&day=0")
+            check(s == 200 and "a" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("opts", [])) == 4,
+                  "GET /puzzle brunch day 0 (live) -> the table, never the impostor")
+            s, b = req("GET", "/api/puzzle?game=fermi&day=0")
+            check(s == 200 and "a" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {})
+                  and b.get("puzzle", {}).get("q"),
+                  "GET /puzzle fermi day 0 (live) -> the question, never the cited value")
             s, b = req("GET", "/api/puzzle?game=timeline&day=0")
             ev = b.get("puzzle", {}).get("events", [])
             check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
@@ -506,68 +516,68 @@ def main():
                                     "better": "high", "id": "dv5", "nonce": sn3})
         check(s == 200 and b.get("count") == 4 and b["bins"][0]["you"] is True,
               "dealt submit: claiming a score without ever starting derives 0")
-        # --- brunch and fermi deal their one shot: the key never ships and
-        #     the server calls the round ---
+        # --- dealt brunch and fermi: one guess ends the round, so the
+        #     reveal can only arrive attached to a spent pick ---
         s, b = post("/api/deal", {"game": "brunch", "day": TODAY})
         check(s == 200 and isinstance(b.get("nonce"), str)
-              and isinstance(b.get("puzzle", {}).get("opts"), list)
-              and "a" not in b.get("puzzle", {})
-              and "w" not in b.get("puzzle", {}),
-              "deal: brunch seats its names but never ships the impostor")
+              and "a" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {})
+              and len(b.get("puzzle", {}).get("opts", [])) == 4,
+              "deal: brunch opens a session, the table arrives without its impostor")
         bn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": bn, "pick": "three"})
-        check(s == 400, "guess: a non-integer pick is refused")
-        s, _b = post("/api/guess", {"nonce": bn, "pick": 9})
-        check(s == 400, "guess: a pick outside the table is refused")
-        s, b = post("/api/guess", {"nonce": bn, "pick": 1})
+        s, _b = post("/api/guess", {"nonce": bn, "pick": "x"})
+        check(s == 400, "guess: brunch refuses a non-integer pick")
+        s, _b = post("/api/guess", {"nonce": bn, "pick": 4})
+        check(s == 400, "guess: brunch refuses an off-table pick")
+        s, b = post("/api/guess", {"nonce": bn, "pick": 0})
         check(s == 200 and b.get("verdict") == "lost"
-              and b.get("reveal", {}).get("a") == 3
-              and isinstance(b.get("reveal", {}).get("w"), str),
-              "guess: the wrong name loses and the reveal seats the table")
+              and b.get("reveal", {}).get("a") == 3,
+              "guess: a wrong pick is lost, the reveal rides the spent pick")
         s, _b = post("/api/guess", {"nonce": bn, "pick": 3})
-        check(s == 409, "guess: a finished brunch session takes no second shot")
-        s, b = post("/api/submit", {"game": "brunch", "day": TODAY, "id": "bn1",
+        check(s == 409, "guess: a finished brunch session refuses a second pick")
+        s, _b = post("/api/reveal", {"nonce": bn})
+        check(s == 400, "reveal: a brunch session is not a starting gun")
+        s, b = post("/api/submit", {"game": "brunch", "day": TODAY, "id": "dv6",
                                     "status": "won", "answer": 3, "nonce": bn})
         check(s == 200 and b.get("count") == 3 and b.get("mean") == 0.33,
-              "dealt submit: the session's lost verdict overrides the claim")
+              "dealt submit: the session's lost verdict overrides the claimed win")
         s, b = post("/api/deal", {"game": "brunch", "day": TODAY})
         bn2 = b["nonce"]
         s, b = post("/api/guess", {"nonce": bn2, "pick": 3})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("reveal", {}).get("a") == 3,
-              "guess: the impostor wins the table")
-        s, b = post("/api/submit", {"game": "brunch", "day": TODAY, "id": "bn2",
+              "guess: the right seat wins the table")
+        s, b = post("/api/submit", {"game": "brunch", "day": TODAY, "id": "dv7",
                                     "status": "lost", "answer": 0, "nonce": bn2})
         check(s == 200 and b.get("count") == 4 and b.get("mean") == 0.5,
-              "dealt submit: the session's won verdict overrides the claim")
+              "dealt submit: the session's won verdict overrides the claimed loss")
         s, b = post("/api/deal", {"game": "fermi", "day": TODAY})
         check(s == 200 and isinstance(b.get("nonce"), str)
-              and b.get("puzzle", {}).get("q")
-              and "a" not in b.get("puzzle", {})
-              and "w" not in b.get("puzzle", {}),
-              "deal: fermi asks its question without the cited figure")
+              and "a" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {}),
+              "deal: the fermi question arrives without its cited value")
         fn = b["nonce"]
         s, _b = post("/api/guess", {"nonce": fn, "v": -1})
-        check(s == 400, "guess: a non-positive estimate is refused")
-        s, b = post("/api/guess", {"nonce": fn, "v": 2.5e12})
-        check(s == 200 and b.get("verdict") == "won" and b.get("score") == 1
-              and b.get("reveal", {}).get("a") == 2.5e9,
-              "guess: three orders off scores 1 and reveals the figure")
-        s, _b = post("/api/guess", {"nonce": fn, "v": 2.5e9})
-        check(s == 409, "guess: a finished fermi session takes no second shot")
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "fn1",
-                                    "status": "won", "answer": 2.5e9, "nonce": fn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
-              "dealt submit: the session's estimate overrides the client's word")
+        check(s == 400, "guess: fermi refuses a non-positive estimate")
+        s, b = post("/api/guess", {"nonce": fn, "v": 2500000000})
+        check(s == 200 and b.get("verdict") == "won" and b.get("score") == 3
+              and b.get("reveal", {}).get("a") == 2500000000,
+              "guess: a spot-on estimate scores 3, the cited value rides the spent guess")
+        s, _b = post("/api/guess", {"nonce": fn, "v": 2500000000})
+        check(s == 409, "guess: a finished fermi session refuses a second estimate")
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "dv8",
+                                    "status": "won", "answer": 1000000,
+                                    "nonce": fn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 2.0,
+              "dealt submit: fermi points derive from the session's estimate, not the claim")
         s, b = post("/api/deal", {"game": "fermi", "day": TODAY})
         fn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": fn2, "v": 2.5e9})
-        check(s == 200 and b.get("score") == 3,
-              "guess: a spot-on estimate scores 3")
-        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "fn2",
-                                    "status": "won", "answer": 1e15, "nonce": fn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.75,
-              "dealt submit: the graded estimate is the session's, never the claim's")
+        s, b = post("/api/guess", {"nonce": fn2, "v": 1000000})
+        check(s == 200 and b.get("score") == 0,
+              "guess: a wild estimate scores 0, the ratio buckets live server-side")
+        s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "dv9",
+                                    "status": "won", "answer": 2500000000,
+                                    "nonce": fn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.5,
+              "dealt submit: the session's wild estimate overrides the claimed spot-on")
     finally:
         proc.terminate()
         try:
@@ -819,10 +829,10 @@ def main():
         except subprocess.TimeoutExpired:
             proc6.kill()
 
-    # --- the dealt cutover: the live rounds, brunch and fermi days ship
-    #     without their keys, and a replayed day keeps them (the archive
-    #     path grades locally). This instance boots with a past epoch, so
-    #     inside it day 0 is history and day 1 is the live day ---
+    # --- the dealt cutover: the live rounds day ships without its key, and
+    #     a replayed day keeps it (the archive path grades locally). This
+    #     instance boots with a past epoch, so inside it day 0 is history
+    #     and day 1 is the live day ---
     PORT7 = PORT + 6
     proc7 = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
@@ -853,18 +863,23 @@ def main():
             s, b = req("GET", "/api/puzzle?game=bogus&day=0", port=PORT7)
             check(s == 200 and b.get("puzzle", {}).get("l") == 5,
                   "cutover: the other games' puzzles are untouched")
+            bz = json.loads((ROOT / "puzzles" / "brunch" / "puzzles.json")
+                            .read_text(encoding="utf-8"))[0]
             s, b = req("GET", "/api/puzzle?game=brunch&day=0", port=PORT7)
-            check(s == 200 and b.get("puzzle", {}).get("a") == 3,
+            check(s == 200 and b.get("puzzle", {}).get("a") == bz["a"]
+                  and "w" in b.get("puzzle", {}),
                   "cutover: a replayed brunch day still carries its key")
             s, b = req("GET", "/api/puzzle?game=brunch&day=1", port=PORT7)
-            check(s == 200 and isinstance(b.get("puzzle", {}).get("opts"), list)
-                  and "a" not in b.get("puzzle", {})
-                  and "w" not in b.get("puzzle", {}),
-                  "cutover: the live brunch day ships without its impostor")
+            check(s == 200 and "a" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("opts", [])) == 4,
+                  "cutover: the live brunch day ships the table, never the impostor")
+            s, b = req("GET", "/api/puzzle?game=fermi&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("a") == 2500000000,
+                  "cutover: a replayed fermi day still carries its key")
             s, b = req("GET", "/api/puzzle?game=fermi&day=1", port=PORT7)
             check(s == 200 and "a" not in b.get("puzzle", {})
                   and "w" not in b.get("puzzle", {}),
-                  "cutover: the live fermi day ships without its figure")
+                  "cutover: the live fermi day ships without its cited value")
     finally:
         proc7.terminate()
         try:

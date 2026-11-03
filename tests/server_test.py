@@ -618,7 +618,7 @@ def main():
         s, b = post("/api/guess", {"nonce": wn, "correction": "leonardo"})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("bonus") == "correct"
-              and b.get("reveal", {}).get("c") == "Leonardo",
+              and b.get("reveal", {}).get("c") == "Leonardo da Vinci",
               "guess: the correction rides the spent attempt")
         s, _b = post("/api/guess", {"nonce": wn, "pick": 2})
         check(s == 409, "guess: a finished well-actually session takes no more picks")

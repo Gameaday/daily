@@ -244,7 +244,8 @@ async function run(h){
     supD.env.els.btnNext.click();
     for (let i = 1; i < supFull.q.length; i++){
       supD.env.els['opt' + supFull.q[i].a].click();
-      if (i < supFull.q.length - 1){ await h.flush(); supD.env.els.btnNext.click(); }
+      await h.flush();
+      if (i < supFull.q.length - 1) supD.env.els.btnNext.click();
     }
     supD.env.els.btnNext.click();
     await h.flush();

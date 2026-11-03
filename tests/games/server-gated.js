@@ -250,7 +250,8 @@ async function run(h, ctx){
       'gated: the superlative day never ships an answer');
     for (let i = 0; i < full.q.length; i++){
       r.env.els['opt' + full.q[i].a].click();
-      if (i < full.q.length - 1){ await h.flush(); r.env.els.btnNext.click(); }
+      await h.flush();
+      if (i < full.q.length - 1) r.env.els.btnNext.click();
     }
     r.env.els.btnNext.click();
     await h.flush();

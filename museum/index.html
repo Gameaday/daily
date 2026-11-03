@@ -157,19 +157,47 @@ function render(){
 }
 $('btnGuess').addEventListener('click', submitGuess);
 $('guess').addEventListener('keydown', e => { if (e.key === 'Enter') submitGuess(); });
-/* the dealt session: one deal per day, held on the state and reused by
-   every guess and clue request */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle) EXHIBIT = Object.assign({}, EXHIBIT, d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
+/* the dealt day: the name never shipped, so the guess and the clue
+   requests travel to the session and the session meters the clues */
+function isDealt(){
+  return EXHIBIT && typeof EXHIBIT.a !== 'string' && !isSolo() && !SHELL.isArchive;
+}
+/* the page owns the game: which move each button builds and what each
+   verdict means; the session dance itself (the deal, the busy guard,
+   the triage, the nonce) lives in the shell now */
+async function guessDealt(inp){
+  await session.play({ name: inp.value }, body => {
+    if (body.verdict === 'won'){
+      S.typed = inp.value;
+      S.reveal = { a: body.reveal.a, w: body.reveal.w };
+      finish('won');
+      return;
+    }
+    if (body.verdict === 'lost'){
+      S.reveal = { a: body.reveal.a, w: body.reveal.w };
+      finish('lost');
+      return;
+    }
+    /* miss: the session hands back the metered clue index */
+    S.clueIdx = body.clueIdx;
+    saveState(); render();
+    inp.classList.remove('shake');
+    void inp.offsetWidth;
+    inp.classList.add('shake');
+    inp.value = '';
+    toastMsg('not it \u2014 another clue for the case file');
+  });
+}
+async function clueDealt(){
+  await session.play({ clue: 1 }, body => {
+    if (body.verdict !== 'clue' || typeof body.clueIdx !== 'number'){
+      session.reset();
+      toastMsg('this exhibit expired, name it again for a fresh one');
+      return;
+    }
+    S.clueIdx = body.clueIdx;
+    saveState(); render();
+  });
 }
 
 async function submitGuess(){
@@ -180,39 +208,7 @@ async function submitGuess(){
   S.started = true;
   /* the dealt day: the name never shipped, so the guess travels to the
      session and the session meters the clues */
-  if (typeof EXHIBIT.a !== 'string' && !isSolo() && !SHELL.isArchive){
-    const n = await ensureSession();
-    if (!n){ toastMsg('the exhibit is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, name: inp.value }); } catch (e) {}
-    if (!b){ toastMsg('the exhibit is not answering right now, try again'); return; }
-    if (b.status === 409){ toastMsg('this visit is already over'); return; }
-    if (b.status !== 200 || !b.body || !b.body.verdict){
-      S.nonce = null; saveState();
-      toastMsg('this exhibit expired, name it again for a fresh one');
-      return;
-    }
-    if (b.body.verdict === 'won'){
-      S.typed = inp.value;
-      S.reveal = { a: b.body.reveal.a, w: b.body.reveal.w };
-      finish('won');
-      return;
-    }
-    if (b.body.verdict === 'lost'){
-      S.reveal = { a: b.body.reveal.a, w: b.body.reveal.w };
-      finish('lost');
-      return;
-    }
-    /* miss: the session hands back the metered clue index */
-    S.clueIdx = b.body.clueIdx;
-    saveState(); render();
-    inp.classList.remove('shake');
-    void inp.offsetWidth;
-    inp.classList.add('shake');
-    inp.value = '';
-    toastMsg('not it \u2014 another clue for the case file');
-    return;
-  }
+  if (isDealt()){ guessDealt(inp); return; }
   if (matches(inp.value)){
     S.typed = inp.value;
     finish('won');
@@ -236,22 +232,7 @@ async function takeClue(){
   if (S.status !== 'playing' || S.clueIdx >= 4) return;
   S.started = true;
   /* the dealt day: the session meters the clues itself */
-  if (typeof EXHIBIT.a !== 'string' && !isSolo() && !SHELL.isArchive){
-    const n = await ensureSession();
-    if (!n){ toastMsg('the exhibit is not answering right now, try again'); return; }
-    let b = null;
-    try { b = await SHELL.dealt('/guess', { nonce: n, clue: 1 }); } catch (e) {}
-    if (!b){ toastMsg('the exhibit is not answering right now, try again'); return; }
-    if (b.status === 409){ toastMsg('this visit is already over'); return; }
-    if (b.status !== 200 || !b.body || typeof b.body.clueIdx !== 'number'){
-      S.nonce = null; saveState();
-      toastMsg('this exhibit expired, name it again for a fresh one');
-      return;
-    }
-    S.clueIdx = b.body.clueIdx;
-    saveState(); render();
-    return;
-  }
+  if (isDealt()){ clueDealt(); return; }
   S.clueIdx++;
   saveState(); render();
 }
@@ -316,6 +297,24 @@ const toastMsg = m => SHELL.toast(m, 1600);
 const SYNC_GAME = 'museum';
 const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+
+/* the dealt session: one deal per day, held on the state and spent one
+   move at a time; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => {
+    if (body.puzzle) EXHIBIT = Object.assign({}, EXHIBIT, body.puzzle);
+  },
+  copy: {
+    unavailable: 'the exhibit is not answering right now, try again',
+    over: 'this visit is already over',
+    expired: 'this exhibit expired, name it again for a fresh one'
+  }
+});
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();

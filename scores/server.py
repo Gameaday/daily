@@ -46,7 +46,7 @@ Endpoints (with or without the /api prefix):
                    are accepted only for the generator games)
     POST /deal    {"game", "day"}                  -> open a dealt session (live day only; the deal carries the day's
                    puzzle without its key, per the dealt API schema below)
-    POST /guess   {"nonce", <one game payload>}    -> the dealt verdict (dealt API schema below; the key never
+    POST /guess   {"nonce", "move": {...}}       -> the dealt verdict (dealt API schema below; the key never
                    crosses until the round is over)
     POST /reveal  {"nonce"}                          -> the sprint starting gun (t0 stamped once, never reset; the window is enforced at submit)
 
@@ -55,7 +55,7 @@ Endpoints (with or without the /api prefix):
                     the live day)}
               res  {"nonce": str, "today": int, "puzzle": object (stripped per
                     its registry row, never the key)}
-      /guess  req  {"nonce": str (required), then exactly one game payload:
+      /guess  req  {"nonce": str (required), "move": exactly one game payload:
                     rounds {"y": int} | brunch {"pick": int} | fermi {"v": number} |
                     well-actually {"pick": int} or {"correction": str} |
                     museum {"name": str} or {"clue": 1} | bogus {"pick": int} |

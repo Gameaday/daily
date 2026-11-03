@@ -62,7 +62,6 @@ if (typeof require === 'function' && typeof module !== 'undefined' && require.ma
   const ctx = {
     GAMES,
     readGame: g => fs.readFileSync(path.join(ROOT, g, 'index.html'), 'utf8'),
-    serverPy: fs.readFileSync(path.join(ROOT, 'scores', 'server.py'), 'utf8'),
     configPy: fs.readFileSync(path.join(ROOT, 'scores', 'config.py'), 'utf8'),
     landing: fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'),
     readShared: (g, stubBanks) => SHELL_JS +

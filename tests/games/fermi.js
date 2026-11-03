@@ -37,7 +37,7 @@ async function run(h){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'f1', today: 0, puzzle: served } };
-      const ratio = Math.max(body.v / full.a, full.a / body.v);
+      const ratio = Math.max(body.move.v / full.a, full.a / body.move.v);
       const score = ratio <= 3 ? 3 : ratio <= 10 ? 2 : ratio <= 100 ? 1 : 0;
       return { status: 200, body: { verdict: 'won', score,
         reveal: { a: full.a, w: full.w } } };

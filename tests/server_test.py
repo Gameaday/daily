@@ -122,6 +122,7 @@ def main():
         check(s == 200 and b.get("ok") is True, "GET /health -> ok:true")
         check(b.get("day") == TODAY and b.get("num") == TODAY + 1,
               "GET /health -> the clamped day index echoes (day/num)")
+        check(b.get("api_version") == 2, "GET /health -> the wire speaks api_version 2")
         s, b = req("GET", "/api/health")
         check(s == 200 and b.get("ok") is True, "GET /api/health (prefix stripped)")
         s, _b = req("OPTIONS", "/api/submit")
@@ -479,35 +480,39 @@ def main():
         check(b.get("puzzle", {}).get("q", "").startswith("King John"),
               "deal: the day's question still arrives")
         rn = b["nonce"]
-        s, b = post("/api/guess", {"nonce": rn, "y": 1900})
+        s, b = post("/api/guess", {"nonce": rn, "move": {"y": 1900}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("guesses") == 1
               and b.get("heat") == "cold"
               and b.get("hint") == "go earlier \u00b7 wrong century",
               "guess: a miss is answered with heat and direction, never distance")
-        s, b = post("/api/guess", {"nonce": rn, "y": 1217})
+        s, b = post("/api/guess", {"nonce": rn, "move": {"y": 1217}})
         check(s == 200 and b.get("guesses") == 2 and b.get("heat") == "scalding"
               and b.get("hint") == "go earlier \u00b7 right decade",
               "guess: within two years reads scalding")
-        s, b = post("/api/guess", {"nonce": rn, "y": 1213})
+        s, b = post("/api/guess", {"nonce": rn, "move": {"y": 1213}})
         check(s == 200 and b.get("guesses") == 3
               and b.get("hint") == "go later \u00b7 right decade",
               "guess: the direction flips without the distance ever leaking")
-        s, _b = post("/api/guess", {"nonce": rn, "y": "1215"})
+        s, _b = post("/api/guess", {"nonce": rn, "move": {"y": "1215"}})
         check(s == 400, "guess: a string year is refused")
-        s, b = post("/api/guess", {"nonce": rn, "y": 1216})
+        s, _b = post("/api/guess", {"nonce": rn, "move": "x"})
+        check(s == 400, "guess: a move that is not a move object is refused")
+        s, _b = post("/api/guess", {"nonce": rn})
+        check(s == 400, "guess: a guess with no move is refused")
+        s, b = post("/api/guess", {"nonce": rn, "move": {"y": 1216}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("guesses") == 4,
               "guess: the fourth guess still misses")
-        s, b = post("/api/guess", {"nonce": rn, "y": 1218})
+        s, b = post("/api/guess", {"nonce": rn, "move": {"y": 1218}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("guesses") == 5
               and b.get("heat") == "hot",
               "guess: three years off reads hot")
-        s, b = post("/api/guess", {"nonce": rn, "y": 2000})
+        s, b = post("/api/guess", {"nonce": rn, "move": {"y": 2000}})
         check(s == 200 and b.get("verdict") == "lost" and b.get("guesses") == 6,
               "guess: the sixth miss ends the round")
         check(b.get("reveal", {}).get("y") == 1215
               and "Runnymede" in b.get("reveal", {}).get("w", ""),
               "guess: the loss reveal carries the key only once the round is over")
-        s, _b = post("/api/guess", {"nonce": rn, "y": 1215})
+        s, _b = post("/api/guess", {"nonce": rn, "move": {"y": 1215}})
         check(s == 409, "guess: a finished session refuses further guesses")
         # the server counted all six: a nonce-bearing claim cannot under-report
         s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "dv1",
@@ -517,10 +522,10 @@ def main():
               "dealt submit: the session's verdict and count override the claim")
         s, b = post("/api/deal", {"game": "rounds", "day": TODAY})
         rn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": rn2, "y": 1500})
+        s, b = post("/api/guess", {"nonce": rn2, "move": {"y": 1500}})
         check(s == 200 and b.get("verdict") == "miss",
               "guess: a fresh session plays on")
-        s, b = post("/api/guess", {"nonce": rn2, "y": 1215})
+        s, b = post("/api/guess", {"nonce": rn2, "move": {"y": 1215}})
         check(s == 200 and b.get("verdict") == "won" and b.get("guesses") == 2
               and b.get("reveal", {}).get("y") == 1215,
               "guess: the right year wins the round")
@@ -534,7 +539,7 @@ def main():
         check(s == 200 and isinstance(b.get("nonce"), str),
               "deal: sprint opens a timed session")
         sn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": sn, "y": 1215})
+        s, _b = post("/api/guess", {"nonce": sn, "move": {"y": 1215}})
         check(s == 400, "guess: a sprint session takes no year guesses")
         s, b = post("/api/reveal", {"nonce": sn})
         check(s == 200 and b.get("ok") is True and b.get("elapsed") == 0,
@@ -548,7 +553,7 @@ def main():
         rn3 = b["nonce"]
         s, _b = post("/api/reveal", {"nonce": rn3})
         check(s == 400, "reveal: a rounds session is not a starting gun")
-        s, _b = post("/api/guess", {"nonce": "no-such-session", "y": 1215})
+        s, _b = post("/api/guess", {"nonce": "no-such-session", "move": {"y": 1215}})
         check(s == 404, "guess: an unknown nonce is no session")
         s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
                                     "better": "high", "id": "dv3", "nonce": sn})
@@ -573,15 +578,15 @@ def main():
               and len(b.get("puzzle", {}).get("opts", [])) == 4,
               "deal: brunch opens a session, the table arrives without its impostor")
         bn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": bn, "pick": "x"})
+        s, _b = post("/api/guess", {"nonce": bn, "move": {"pick": "x"}})
         check(s == 400, "guess: brunch refuses a non-integer pick")
-        s, _b = post("/api/guess", {"nonce": bn, "pick": 4})
+        s, _b = post("/api/guess", {"nonce": bn, "move": {"pick": 4}})
         check(s == 400, "guess: brunch refuses an off-table pick")
-        s, b = post("/api/guess", {"nonce": bn, "pick": 0})
+        s, b = post("/api/guess", {"nonce": bn, "move": {"pick": 0}})
         check(s == 200 and b.get("verdict") == "lost"
               and b.get("reveal", {}).get("a") == 3,
               "guess: a wrong pick is lost, the reveal rides the spent pick")
-        s, _b = post("/api/guess", {"nonce": bn, "pick": 3})
+        s, _b = post("/api/guess", {"nonce": bn, "move": {"pick": 3}})
         check(s == 409, "guess: a finished brunch session refuses a second pick")
         s, _b = post("/api/reveal", {"nonce": bn})
         check(s == 400, "reveal: a brunch session is not a starting gun")
@@ -591,7 +596,7 @@ def main():
               "dealt submit: the session's lost verdict overrides the claimed win")
         s, b = post("/api/deal", {"game": "brunch", "day": TODAY})
         bn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": bn2, "pick": 3})
+        s, b = post("/api/guess", {"nonce": bn2, "move": {"pick": 3}})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("reveal", {}).get("a") == 3,
               "guess: the right seat wins the table")
@@ -604,13 +609,13 @@ def main():
               and "a" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {}),
               "deal: the fermi question arrives without its cited value")
         fn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": fn, "v": -1})
+        s, _b = post("/api/guess", {"nonce": fn, "move": {"v": -1}})
         check(s == 400, "guess: fermi refuses a non-positive estimate")
-        s, b = post("/api/guess", {"nonce": fn, "v": 2500000000})
+        s, b = post("/api/guess", {"nonce": fn, "move": {"v": 2500000000}})
         check(s == 200 and b.get("verdict") == "won" and b.get("score") == 3
               and b.get("reveal", {}).get("a") == 2500000000,
               "guess: a spot-on estimate scores 3, the cited value rides the spent guess")
-        s, _b = post("/api/guess", {"nonce": fn, "v": 2500000000})
+        s, _b = post("/api/guess", {"nonce": fn, "move": {"v": 2500000000}})
         check(s == 409, "guess: a finished fermi session refuses a second estimate")
         s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "dv8",
                                     "status": "won", "answer": 1000000,
@@ -619,7 +624,7 @@ def main():
               "dealt submit: fermi points derive from the session's estimate, not the claim")
         s, b = post("/api/deal", {"game": "fermi", "day": TODAY})
         fn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": fn2, "v": 1000000})
+        s, b = post("/api/guess", {"nonce": fn2, "move": {"v": 1000000}})
         check(s == 200 and b.get("score") == 0,
               "guess: a wild estimate scores 0, the ratio buckets live server-side")
         s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "dv9",
@@ -638,24 +643,24 @@ def main():
               and len(b.get("puzzle", {}).get("s", [])) >= 4,
               "deal: the statement arrives without its lie")
         wn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": wn, "pick": "x"})
+        s, _b = post("/api/guess", {"nonce": wn, "move": {"pick": "x"}})
         check(s == 400, "guess: well-actually refuses a non-integer pick")
-        s, _b = post("/api/guess", {"nonce": wn, "correction": "Leonardo"})
+        s, _b = post("/api/guess", {"nonce": wn, "move": {"correction": "Leonardo"}})
         check(s == 400, "guess: the correction cannot precede the find")
-        s, b = post("/api/guess", {"nonce": wn, "pick": 0})
+        s, b = post("/api/guess", {"nonce": wn, "move": {"pick": 0}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("left") == 2,
               "guess: a wrong pick misses, the lie stays hidden")
-        s, _b = post("/api/guess", {"nonce": wn, "pick": 0})
+        s, _b = post("/api/guess", {"nonce": wn, "move": {"pick": 0}})
         check(s == 400, "guess: a phrase cannot be picked twice")
-        s, b = post("/api/guess", {"nonce": wn, "pick": 1})
+        s, b = post("/api/guess", {"nonce": wn, "move": {"pick": 1}})
         check(s == 200 and b.get("verdict") == "found",
               "guess: the lie is found, no reveal yet")
-        s, b = post("/api/guess", {"nonce": wn, "correction": "leonardo"})
+        s, b = post("/api/guess", {"nonce": wn, "move": {"correction": "leonardo"}})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("bonus") == "correct"
               and b.get("reveal", {}).get("c") == "Leonardo da Vinci",
               "guess: the correction rides the spent attempt")
-        s, _b = post("/api/guess", {"nonce": wn, "pick": 2})
+        s, _b = post("/api/guess", {"nonce": wn, "move": {"pick": 2}})
         check(s == 409, "guess: a finished well-actually session takes no more picks")
         s, b = post("/api/submit", {"game": "well-actually", "day": TODAY,
                                     "id": "dv10", "status": "won",
@@ -666,9 +671,9 @@ def main():
               "dealt submit: the session's picks and correction override the claim")
         s, b = post("/api/deal", {"game": "well-actually", "day": TODAY})
         wn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": wn2, "pick": 0})
-        s, b = post("/api/guess", {"nonce": wn2, "pick": 2})
-        s, b = post("/api/guess", {"nonce": wn2, "pick": 3})
+        s, b = post("/api/guess", {"nonce": wn2, "move": {"pick": 0}})
+        s, b = post("/api/guess", {"nonce": wn2, "move": {"pick": 2}})
+        s, b = post("/api/guess", {"nonce": wn2, "move": {"pick": 3}})
         check(s == 200 and b.get("verdict") == "lost"
               and b.get("reveal", {}).get("l") == 1,
               "guess: three strikes lose, the lie rides the spent round")
@@ -689,21 +694,21 @@ def main():
               and len(b.get("puzzle", {}).get("c", [])) == 5,
               "deal: the exhibit arrives without its name")
         mn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": mn, "name": ""})
+        s, _b = post("/api/guess", {"nonce": mn, "move": {"name": ""}})
         check(s == 400, "guess: museum refuses an empty name")
-        s, b = post("/api/guess", {"nonce": mn, "name": "not it"})
+        s, b = post("/api/guess", {"nonce": mn, "move": {"name": "not it"}})
         check(s == 200 and b.get("verdict") == "miss"
               and b.get("clueIdx") == 1,
               "guess: a wrong name buys the next clue, metered by the session")
-        s, b = post("/api/guess", {"nonce": mn, "clue": 1})
+        s, b = post("/api/guess", {"nonce": mn, "move": {"clue": 1}})
         check(s == 200 and b.get("verdict") == "clue"
               and b.get("clueIdx") == 2,
               "guess: a clue request meters itself")
-        s, b = post("/api/guess", {"nonce": mn, "name": "the rosetta stone"})
+        s, b = post("/api/guess", {"nonce": mn, "move": {"name": "the rosetta stone"}})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("reveal", {}).get("a") == "The Rosetta Stone",
               "guess: the name rides the spent guess")
-        s, _b = post("/api/guess", {"nonce": mn, "name": "rosetta"})
+        s, _b = post("/api/guess", {"nonce": mn, "move": {"name": "rosetta"}})
         check(s == 409, "guess: a finished museum session takes no more guesses")
         s, b = post("/api/submit", {"game": "museum", "day": TODAY,
                                     "id": "dv12", "status": "won",
@@ -715,10 +720,10 @@ def main():
         s, b = post("/api/deal", {"game": "museum", "day": TODAY})
         mn2 = b["nonce"]
         for _i in range(4):
-            s, b = post("/api/guess", {"nonce": mn2, "clue": 1})
-        s, _b = post("/api/guess", {"nonce": mn2, "clue": 1})
+            s, b = post("/api/guess", {"nonce": mn2, "move": {"clue": 1}})
+        s, _b = post("/api/guess", {"nonce": mn2, "move": {"clue": 1}})
         check(s == 400, "guess: the fifth clue request is refused")
-        s, b = post("/api/guess", {"nonce": mn2, "name": "not it"})
+        s, b = post("/api/guess", {"nonce": mn2, "move": {"name": "not it"}})
         check(s == 200 and b.get("verdict") == "lost",
               "guess: a wrong name at the last clue ends the visit")
         s, b = post("/api/submit", {"game": "museum", "day": TODAY,
@@ -737,21 +742,21 @@ def main():
               and len(b.get("puzzle", {}).get("s", [])) >= 6,
               "deal: the passage arrives without its lie")
         bgn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": bgn, "pick": "x"})
+        s, _b = post("/api/guess", {"nonce": bgn, "move": {"pick": "x"}})
         check(s == 400, "guess: bogus refuses a non-integer pick")
-        s, _b = post("/api/guess", {"nonce": bgn, "pick": 99})
+        s, _b = post("/api/guess", {"nonce": bgn, "move": {"pick": 99}})
         check(s == 400, "guess: bogus refuses an off-passage pick")
-        s, b = post("/api/guess", {"nonce": bgn, "pick": 0})
+        s, b = post("/api/guess", {"nonce": bgn, "move": {"pick": 0}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("left") == 2,
               "guess: a wrong pick misses, the lie stays hidden")
-        s, _b = post("/api/guess", {"nonce": bgn, "pick": 0})
+        s, _b = post("/api/guess", {"nonce": bgn, "move": {"pick": 0}})
         check(s == 400, "guess: a phrase cannot be picked twice")
-        s, b = post("/api/guess", {"nonce": bgn, "pick": 5})
+        s, b = post("/api/guess", {"nonce": bgn, "move": {"pick": 5}})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("reveal", {}).get("l") == 5
               and b.get("reveal", {}).get("w"),
               "guess: the find wins, the why rides the spent round")
-        s, _b = post("/api/guess", {"nonce": bgn, "pick": 2})
+        s, _b = post("/api/guess", {"nonce": bgn, "move": {"pick": 2}})
         check(s == 409, "guess: a finished bogus session takes no more picks")
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "id": "dv14", "status": "won",
@@ -761,7 +766,7 @@ def main():
         s, b = post("/api/deal", {"game": "bogus", "day": TODAY})
         bgn2 = b["nonce"]
         for _p in (0, 1, 2):
-            s, b = post("/api/guess", {"nonce": bgn2, "pick": _p})
+            s, b = post("/api/guess", {"nonce": bgn2, "move": {"pick": _p}})
         check(s == 200 and b.get("verdict") == "lost"
               and b.get("reveal", {}).get("l") == 5,
               "guess: three strikes lose, the lie rides the spent round")
@@ -780,21 +785,21 @@ def main():
               and len(b.get("puzzle", {}).get("m", [])) >= 4,
               "deal: the cohort arrives without its answers")
         sgn = b["nonce"]
-        s, _b = post("/api/guess", {"nonce": sgn, "pick": "x"})
+        s, _b = post("/api/guess", {"nonce": sgn, "move": {"pick": "x"}})
         check(s == 400, "guess: superlative refuses a non-integer pick")
-        s, _b = post("/api/guess", {"nonce": sgn, "pick": 99})
+        s, _b = post("/api/guess", {"nonce": sgn, "move": {"pick": 99}})
         check(s == 400, "guess: superlative refuses an off-cohort pick")
         wrong0 = (perfect[0] + 1) % len(sup["m"])
-        s, b = post("/api/guess", {"nonce": sgn, "pick": wrong0})
+        s, b = post("/api/guess", {"nonce": sgn, "move": {"pick": wrong0}})
         check(s == 200 and b.get("verdict") == "miss"
               and b.get("a") == perfect[0],
               "guess: the spent round hands over its own answer")
         for pk in perfect[1:]:
-            s, b = post("/api/guess", {"nonce": sgn, "pick": pk})
+            s, b = post("/api/guess", {"nonce": sgn, "move": {"pick": pk}})
         check(s == 200 and b.get("final") is True
               and b.get("verdict") == "hit" and b.get("a") == perfect[-1],
               "guess: the last round ends the session")
-        s, _b = post("/api/guess", {"nonce": sgn, "pick": perfect[0]})
+        s, _b = post("/api/guess", {"nonce": sgn, "move": {"pick": perfect[0]}})
         check(s == 409, "guess: a finished superlative session takes no more picks")
         s, b = post("/api/submit", {"game": "superlative", "day": TODAY,
                                     "id": "dv16", "status": "won",
@@ -804,7 +809,7 @@ def main():
         s, b = post("/api/deal", {"game": "superlative", "day": TODAY})
         sgn2 = b["nonce"]
         for pk in perfect:
-            s, b = post("/api/guess", {"nonce": sgn2, "pick": pk})
+            s, b = post("/api/guess", {"nonce": sgn2, "move": {"pick": pk}})
         check(s == 200 and b.get("final") is True,
               "guess: a clean sweep plays out")
         s, b = post("/api/submit", {"game": "superlative", "day": TODAY,
@@ -823,22 +828,21 @@ def main():
               "deal: the board arrives without its categories")
         sfn = b["nonce"]
         sfw = [sf0["cats"][ci]["i"][0] for ci in (0, 1, 2)]
-        s, b = post("/api/guess", {"nonce": sfn, "pick": sfw})
+        s, b = post("/api/guess", {"nonce": sfn, "move": {"pick": sfw}})
         check(s == 200 and b.get("verdict") == "miss"
               and b.get("mistakes") == 1,
               "guess: a wrong trio costs the first mistake")
-        s, _b = post("/api/guess", {"nonce": sfn, "pick": "not a tile"})
+        s, _b = post("/api/guess", {"nonce": sfn, "move": {"pick": "not a tile"}})
         check(s == 400, "guess: sift refuses a bad pick")
-        s, b = post("/api/guess", {"nonce": sfn, "pick": list(sf0["cats"][0]["i"])})
+        s, b = post("/api/guess", {"nonce": sfn, "move": {"pick": list(sf0["cats"][0]["i"])}})
         check(s == 200 and b.get("verdict") == "hit"
               and b.get("n") == sf0["cats"][0]["n"]
               and b.get("final") is not True,
               "guess: the spent test hands over its group")
-        s, _b = post("/api/guess", {"nonce": sfn, "pick": list(sf0["cats"][0]["i"])})
+        s, _b = post("/api/guess", {"nonce": sfn, "move": {"pick": list(sf0["cats"][0]["i"])}})
         check(s == 400, "guess: a found group cannot be re-tested")
         for ci in (1, 2, 3):
-            s, b = post("/api/guess", {"nonce": sfn,
-                                       "pick": list(sf0["cats"][ci]["i"])})
+            s, b = post("/api/guess", {"nonce": sfn, "move": {"pick": list(sf0["cats"][ci]["i"])}})
         check(s == 200 and b.get("verdict") == "hit"
               and b.get("final") is True,
               "guess: the fourth group ends the day")
@@ -850,7 +854,7 @@ def main():
         s, b = post("/api/deal", {"game": "sift", "day": TODAY})
         sfn2 = b["nonce"]
         for _i in range(4):
-            s, b = post("/api/guess", {"nonce": sfn2, "pick": sfw})
+            s, b = post("/api/guess", {"nonce": sfn2, "move": {"pick": sfw}})
         check(s == 200 and b.get("verdict") == "lost"
               and b.get("reveal", {}).get("cats"),
               "guess: the fourth miss spends the day, the board rides the spent round")
@@ -869,14 +873,14 @@ def main():
               and len(b.get("puzzle", {}).get("rc", [])) == 7,
               "deal: the design arrives as clues, never the picture")
         lbn = b["nonce"]
-        s, b = post("/api/guess", {"nonce": lbn, "grid": ["0000000"] * 7})
+        s, b = post("/api/guess", {"nonce": lbn, "move": {"grid": ["0000000"] * 7}})
         check(s == 200 and b.get("verdict") == "miss"
               and b.get("mistakes") == 1 and b.get("need"),
               "guess: a fogged development hands back its contradictions")
-        s, _b = post("/api/guess", {"nonce": lbn, "grid": "x"})
+        s, _b = post("/api/guess", {"nonce": lbn, "move": {"grid": "x"}})
         check(s == 400, "guess: lightbox refuses a bad grid")
         lbgood = [r.replace("#", "1").replace(".", "0") for r in lb0["g"]]
-        s, b = post("/api/guess", {"nonce": lbn, "grid": lbgood})
+        s, b = post("/api/guess", {"nonce": lbn, "move": {"grid": lbgood}})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("reveal", {}).get("g") == lb0["g"]
               and b.get("reveal", {}).get("n") == lb0["n"],
@@ -889,7 +893,7 @@ def main():
         s, b = post("/api/deal", {"game": "lightbox", "day": TODAY})
         lbn2 = b["nonce"]
         for _i in range(4):
-            s, b = post("/api/guess", {"nonce": lbn2, "grid": ["0000000"] * 7})
+            s, b = post("/api/guess", {"nonce": lbn2, "move": {"grid": ["0000000"] * 7}})
         check(s == 200 and b.get("verdict") == "lost"
               and b.get("reveal", {}).get("g"),
               "guess: the fourth fog spends the film")
@@ -914,17 +918,17 @@ def main():
         for cc, qq in zip(b["puzzle"]["c"], cip0["q"]):
             if qq.isalpha():
                 csub[cc] = qq
-        s, b = post("/api/guess", {"nonce": cpn, "check": {}})
+        s, b = post("/api/guess", {"nonce": cpn, "move": {"check": {}}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("right") == 0
               and b.get("total") == len(csub),
               "guess: an empty decode is answered with the count, never the letters")
-        s, b = post("/api/guess", {"nonce": cpn, "hint": 1, "have": {}})
+        s, b = post("/api/guess", {"nonce": cpn, "move": {"hint": 1, "have": {}}})
         check(s == 200 and b.get("verdict") == "hint" and b.get("hints") == 1
               and csub.get(b.get("cipher")) == b.get("plain"),
               "guess: a hint reveals one letter, metered by the session")
-        s, _b = post("/api/guess", {"nonce": cpn, "check": "x"})
+        s, _b = post("/api/guess", {"nonce": cpn, "move": {"check": "x"}})
         check(s == 400, "guess: cipher refuses a bad decode")
-        s, b = post("/api/guess", {"nonce": cpn, "check": csub})
+        s, b = post("/api/guess", {"nonce": cpn, "move": {"check": csub}})
         check(s == 200 and b.get("verdict") == "won"
               and b.get("reveal", {}).get("q") == cip0["q"],
               "guess: the full decode wins, the quote rides the spent round")
@@ -935,7 +939,7 @@ def main():
               "dealt submit: the session's decode and hint meter override the claim")
         s, b = post("/api/deal", {"game": "cipher", "day": TODAY})
         cpn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": cpn2, "give": 1})
+        s, b = post("/api/guess", {"nonce": cpn2, "move": {"give": 1}})
         check(s == 200 and b.get("verdict") == "gave"
               and b.get("reveal", {}).get("q") == cip0["q"],
               "guess: the codebook opens only on the give-up")
@@ -956,18 +960,18 @@ def main():
                       for e in b.get("puzzle", {}).get("events", [])),
               "deal: the events arrive without their years")
         tln = b["nonce"]
-        s, b = post("/api/guess", {"nonce": tln, "order": tlwrong})
+        s, b = post("/api/guess", {"nonce": tln, "move": {"order": tlwrong}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("checks") == 1
               and b.get("right") == len(tlwant) - 2
               and b.get("lock") == [False, False] + [True] * (len(tlwant) - 2),
               "guess: a wrong order locks the cards that stand, never a year")
-        s, _b = post("/api/guess", {"nonce": tln, "order": [0, 1, 2, 3]})
+        s, _b = post("/api/guess", {"nonce": tln, "move": {"order": [0, 1, 2, 3]}})
         check(s == 400, "guess: timeline refuses a bad order")
-        s, b = post("/api/guess", {"nonce": tln, "order": tlwant})
+        s, b = post("/api/guess", {"nonce": tln, "move": {"order": tlwant}})
         check(s == 200 and b.get("verdict") == "won" and b.get("checks") == 2
               and b.get("reveal", {}).get("events", [])[0].get("y") is not None,
               "guess: the right order wins, the years ride the spent round")
-        s, _b = post("/api/guess", {"nonce": tln, "order": tlwant})
+        s, _b = post("/api/guess", {"nonce": tln, "move": {"order": tlwant}})
         check(s == 409, "guess: a finished timeline session takes no more checks")
         s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
                                     "id": "dv24", "status": "won",
@@ -976,7 +980,7 @@ def main():
               "dealt submit: the session's order and check meter override the claim")
         s, b = post("/api/deal", {"game": "timeline", "day": TODAY})
         tln2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": tln2, "give": 1})
+        s, b = post("/api/guess", {"nonce": tln2, "move": {"give": 1}})
         check(s == 200 and b.get("verdict") == "gave"
               and len(b.get("reveal", {}).get("events", [])) == len(tlwant),
               "guess: the give-up lays the years out")
@@ -1001,20 +1005,20 @@ def main():
         thn = b["nonce"]
         thwrong = list(reversed(thm))
         thright = sum(1 for i in range(len(thm)) if thwrong[i] == thm[i])
-        s, b = post("/api/guess", {"nonce": thn, "chain": thwrong})
+        s, b = post("/api/guess", {"nonce": thn, "move": {"chain": thwrong}})
         check(s == 200 and b.get("verdict") == "miss" and b.get("checks") == 1
               and b.get("right") == thright
               and isinstance(b.get("lock"), list),
               "guess: a wrong chain locks the figures that stand")
-        s, _b = post("/api/guess", {"nonce": thn, "chain": ["nope"] * len(thm)})
+        s, _b = post("/api/guess", {"nonce": thn, "move": {"chain": ["nope"] * len(thm)}})
         check(s == 400, "guess: thread refuses a bad chain")
-        s, b = post("/api/guess", {"nonce": thn, "chain": thm})
+        s, b = post("/api/guess", {"nonce": thn, "move": {"chain": thm}})
         check(s == 200 and b.get("verdict") == "won" and b.get("checks") == 2
               and b.get("reveal", {}).get("m") == thm
               and b.get("reveal", {}).get("d") == thd
               and len(b.get("reveal", {}).get("links", [])) == len(thm) + 1,
               "guess: the true chain wins, the links ride the spent round")
-        s, _b = post("/api/guess", {"nonce": thn, "chain": thm})
+        s, _b = post("/api/guess", {"nonce": thn, "move": {"chain": thm}})
         check(s == 409, "guess: a finished thread session takes no more checks")
         s, b = post("/api/submit", {"game": "thread", "day": TODAY,
                                     "id": "dv26", "status": "won",
@@ -1023,7 +1027,7 @@ def main():
               "dealt submit: the session's chain and check meter override the claim")
         s, b = post("/api/deal", {"game": "thread", "day": TODAY})
         thn2 = b["nonce"]
-        s, b = post("/api/guess", {"nonce": thn2, "give": 1})
+        s, b = post("/api/guess", {"nonce": thn2, "move": {"give": 1}})
         check(s == 200 and b.get("verdict") == "gave"
               and b.get("reveal", {}).get("m") == thm,
               "guess: the give-up lays the chain out")
@@ -1258,11 +1262,11 @@ def main():
         else:
             s, b = post("/api/deal", {"game": "rounds", "day": TODAY}, port=PORT6)
             n6 = b["nonce"]
-            s, b = post("/api/guess", {"nonce": n6, "y": 1900}, port=PORT6)
+            s, b = post("/api/guess", {"nonce": n6, "move": {"y": 1900}}, port=PORT6)
             check(s == 200 and b.get("verdict") == "miss",
                   "ttl: the session answers while fresh")
             time.sleep(1.3)
-            s, _b = post("/api/guess", {"nonce": n6, "y": 1215}, port=PORT6)
+            s, _b = post("/api/guess", {"nonce": n6, "move": {"y": 1215}}, port=PORT6)
             check(s == 404, "ttl: an aged session is no session")
             s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "tt1",
                                         "status": "won", "answer": 1215,

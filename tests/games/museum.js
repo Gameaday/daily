@@ -54,13 +54,13 @@ async function run(h){
     const muDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'm1', today: 0, puzzle: muServed.puzzle } };
-      if (body.clue){
+      if (body.move.clue){
         if (muClueN >= 4) return { status: 400, body: { error: 'no more clues' } };
         muClueN++;
         return { status: 200, body: { verdict: 'clue', clueIdx: muClueN } };
       }
       const muNorm = s => String(s || '').toLowerCase().replace(/^the /, '').trim();
-      if ([muFull.a].concat(muFull.al).some(x => muNorm(body.name) === muNorm(x)))
+      if ([muFull.a].concat(muFull.al).some(x => muNorm(body.move.name) === muNorm(x)))
         return { status: 200, body: { verdict: 'won',
           reveal: { a: muFull.a, w: muFull.w } } };
       if (muClueN < 4){

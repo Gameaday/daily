@@ -223,7 +223,7 @@ async function run(h){
         return { status: 200, body: { nonce: 's1', today: 0, puzzle: supServed.puzzle } };
       const i = supN++;
       const last = i === supFull.q.length - 1;
-      return { status: 200, body: { verdict: body.pick === supFull.q[i].a ? 'hit' : 'miss',
+      return { status: 200, body: { verdict: body.move.pick === supFull.q[i].a ? 'hit' : 'miss',
         a: supFull.q[i].a, final: last } };
     };
     const supDst = {};

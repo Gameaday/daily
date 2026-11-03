@@ -24,7 +24,7 @@ the scores service speaks.
                    |
                    | /puzzle /deal /guess /submit /dist
                    v
-    scores/server.py + manifest.json  the scores service, grading and the curve
+    scores/server.py (package) + manifest.json  the scores service, grading and the curve
 
 Content only flows downward, requests only flow upward, and no layer
 reaches back up to rewrite the one above it.
@@ -65,8 +65,8 @@ creep back in.
 
 ### The scores plane: scores/
 
-server.py (stdlib only) plus manifest.json. This is where every truth
-lives: the day's answer keys (read from the same committed stores the
+server.py and its sibling modules (stdlib only) plus manifest.json.
+This is where every truth lives: the day's answer keys (read from the same committed stores the
 client banks compile from), the dealt sessions and their counters,
 grading and point derivation, the metric direction and histogram
 edges, the live curve, the frozen archive, and the day clock. It keeps
@@ -136,7 +136,8 @@ a player id, and cannot touch the live day's state or sync flags.
 2. Deal: when the page is ready to accept moves it posts /deal and
    receives a nonce plus the strip. The page keeps the nonce with its
    state, and a reload resumes a finished round from the kept reveal.
-3. Guess: every move posts /guess with the nonce plus one game move.
+3. Guess: every move posts /guess with the nonce and the move nested
+   under one "move" field.
    The session grades it, meters its own counters (checks, mistakes,
    hints, clues, picks) and answers with a verdict, honest feedback
    and, on a terminal verdict, the reveal.
@@ -171,44 +172,35 @@ on afterwards.
 
 ## The honest map: how the code sits today
 
-The seams are real, but two structures have grown past their comfort:
-server.py is one large file, and each dealt game page carries its own
-copy of the dealt dance (open a session, guard the action button, merge
-the reveal, carry the nonce). Both are correct and fully tested; both
-are the maintenance cost the growth plan below pays down. The seams
-already exist inside server.py as visible sections:
-
-- config, caps and the manifest load
-- store loading (list stores and windowed picks/bank stores)
-- the evidence tables: EVIDENCE_GAMES, META_CAPS, validate_evidence
-- the dealt tables: DEALT_GAMES, DEALT_STRIP, DEALT_DEEP,
-  dealt_puzzle, _window_entry
-- derivation helpers: the text and name normalizers, the PRNG, the
-  cipher substitution builder, the lightbox runs
-- the curve: tally, beat_estimate, snapshot, bin fitting
-- the archive: write/load, flush_stale, warm_start
-- the HTTP shell: routing, rate caps, cache policy
-- the /guess dispatcher: one branch per game
+The growth plan below has landed its first five steps: every dealt
+page's dance lives once in the shell (makeDealt), the server is a
+package split along its seams (server.py the entry point plus config,
+puzzles, sessions, curve, archive, adapters, evidence, app and
+helpers), and the wire speaks api_version 2, every dealt game's move
+nested under one "move" field. What remains is step 6, naming: names
+still carry their history (config.py keeps a vestigial puzzle-store
+load from before the split), and the sweep is opportunistic, file by
+file, never a mechanical pass.
 
 ## Growth: the target architecture
 
 Contracts in the middle, adapters at the edges, in CI-green steps:
 
-1. docs (this commit): the map and the wire contract, fixed in writing
+1. docs (landed): the map and the wire contract, fixed in writing
    before any code moves.
-2. client: one dealt-session module in the shell (or shell/dealt.js)
+2. client (landed): one dealt-session module in the shell (makeDealt)
    with three per-game hooks: isDealt (recognize the served strip),
    buildMove (turn the page's play into the /guess payload) and
    applyReveal (merge the reveal into the page's model). The pages shed
    their duplicated dealt blocks.
-3. server: an adapter registry. Each game declares its strip schema,
+3. server (landed): an adapter registry. Each game declares its strip schema,
    move shape, grader, reveal builder and evidence validator in one
    object; the endpoints stay byte-compatible and the existing suites
    prove parity.
-4. server: the package split along the seams above (app, adapters,
+4. server (landed): the package split along the seams above (app, adapters,
    sessions, evidence, curve, puzzles). stdlib-only and the deploy
    shape stay exactly as they are.
-5. API: the unified dealt cutover, with an api_version beside
+5. API (landed): the unified dealt cutover, with api_version 2 beside
    server_version. Server and pages deploy as one tag, so the bump is a
    coordinated act, not a migration.
 6. naming: an opportunistic sweep, file by file as it is touched,
@@ -240,7 +232,8 @@ Contracts in the middle, adapters at the edges, in CI-green steps:
     archive          the frozen per-day snapshots, written once, read-only forever
     warm start       boot restores today's archived partial board after a restart
     solo mode        file:// or ?solo=1: local banks, no submissions, curve off
-    server_version   the service's self-declared version, currently warmup-curve/4.8
+    server_version   the service's self-declared version, currently warmup-curve/4.9
+    api_version     the wire contract version, currently 2, spoken by /health and /manifest
 
 ## Deploy shape
 

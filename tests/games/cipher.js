@@ -78,17 +78,17 @@ async function run(h){
     const cpDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'c1', today: 0, puzzle: cpServed.puzzle } };
-      if (body.give !== undefined)
+      if (body.move.give !== undefined)
         return { status: 200, body: { verdict: 'gave',
           reveal: { q: cpFull.q, a: cpFull.a, sub: cpSub.dec } } };
-      if (body.hint){
-        const cand = cpOrder.find(c => body.have[c] !== cpSub.dec[c]);
+      if (body.move.hint){
+        const cand = cpOrder.find(c => body.move.have[c] !== cpSub.dec[c]);
         if (!cand) return { status: 400, body: { error: 'nothing left to hint' } };
         cpHints++;
         return { status: 200, body: { verdict: 'hint', cipher: cand,
           plain: cpSub.dec[cand], hints: cpHints } };
       }
-      const right = cpOrder.filter(c => body.check[c] === cpSub.dec[c]).length;
+      const right = cpOrder.filter(c => body.move.check[c] === cpSub.dec[c]).length;
       if (right === cpOrder.length)
         return { status: 200, body: { verdict: 'won',
           reveal: { q: cpFull.q, a: cpFull.a, sub: cpSub.dec } } };

@@ -2,9 +2,9 @@
 
 The contract for scores/server.py, spoken by the pages through
 shell/common.js. The service identifies itself as server_version
-"warmup-curve/4.8". An api_version field will join it when the unified
-dealt API lands; until then this document describes the wire exactly
-as it is.
+"warmup-curve/4.9" and api_version 2: server_version moves with the
+code, api_version with the wire contract, and /health and /manifest
+speak both. This document describes api_version 2 exactly as it is.
 
 ## Conventions
 
@@ -26,7 +26,7 @@ that answers wins.
   corrections cross the wire, are graded, and are discarded.
 
     status  meaning
-    400     malformed request, or a move the round state forbids (bad pick, repeat pick, hint with nothing left)
+    400     malformed request, a move that is not a move object, or a move the round state forbids (bad pick, repeat pick, hint with nothing left)
     403     a day the caller may not touch (future day, dealt play off the live day)
     404     nothing there (no session, no puzzles, no answer key)
     409     the round is over; a dealt session refuses further guesses
@@ -47,15 +47,17 @@ can never trip the caps.
 
 ### /health
 
-    {"ok": true, "boards": 3, "day": 1, "num": 2}
+    {"ok": true, "api_version": 2, "boards": 3, "day": 1, "num": 2}
 
 boards is the number of live (game, day) curves in memory; day and num
-echo the server's own day math.
+echo the server's own day math; api_version is the wire contract
+version the service speaks.
 
 ### /manifest
 
-The scoring truth, verbatim: the epoch, the timezone, and per ledger
-game the better direction and the histogram edges.
+The scoring truth (the epoch, the timezone, and per ledger game the
+better direction and the histogram edges) with the wire's api_version
+added beside it.
 
     {"epoch": "2026-11-02", "tz": "America/New_York",
      "games": {"rounds": {"better": "high", "edges": [0, 1, 2, 3, 4]}, ...}}
@@ -118,7 +120,7 @@ submitted; a finished round answers 409 to further guesses. The
 lifecycle is one shape for every dealt game:
 
     POST /deal    {"game", "day"}        -> {nonce, today, puzzle}   (sprint: no puzzle)
-    POST /guess   {"nonce", <one move>}  -> verdict, feedback, [reveal]
+    POST /guess   {"nonce", "move": {...}}  -> verdict, feedback, [reveal]
     POST /submit  {...evidence, "nonce"} -> the curve
 
 Verdict vocabulary: won, lost and gave are terminal; miss, found,
@@ -137,7 +139,10 @@ without the key. Sprint deals a clock and no puzzle.
 
 ### /guess
 
-One move per call: the nonce plus exactly one game payload.
+One move per call: the nonce plus one move object under "move", so
+the envelope is one schema for every dealt game. A guess whose move
+is missing or not an object is answered 400 "bad move". The move's
+fields, per game:
 
     rounds         {"y": 1865}
     brunch         {"pick": 1}
@@ -290,11 +295,11 @@ reaped 150 seconds after the gun.
       -> {"nonce": "ab12", "today": 1,
           "puzzle": {"s": {...}, "e": {...}, "k": 3, "tray": [9 figures]}}
 
-    POST /guess  {"nonce": "ab12", "chain": ["id-d1", "id-m1", "id-d2"]}
+    POST /guess  {"nonce": "ab12", "move": {"chain": ["id-d1", "id-m1", "id-d2"]}}
       -> {"verdict": "miss", "right": 1, "lock": [false, true, false],
           "checks": 1}
 
-    POST /guess  {"nonce": "ab12", "chain": ["id-m2", "id-m1", "id-m3"]}
+    POST /guess  {"nonce": "ab12", "move": {"chain": ["id-m2", "id-m1", "id-m3"]}}
       -> {"verdict": "won", "checks": 2,
           "reveal": {"m": ["id-m2", "id-m1", "id-m3"], "d": [...],
                      "links": [...]}}

@@ -40,7 +40,7 @@ async function run(h){
     const bgDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'b1', today: 0, puzzle: bgServed.puzzle } };
-      if (body.pick === bgFull.l)
+      if (body.move.pick === bgFull.l)
         return { status: 200, body: { verdict: 'won',
           reveal: { l: bgFull.l, w: bgFull.w } } };
       return { status: 200, body: { verdict: 'miss', left: 2 } };

@@ -66,11 +66,11 @@ async function run(h){
     const thDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gth1', today: 0, puzzle: thServed().puzzle } };
-      if (body.give !== undefined)
+      if (body.move.give !== undefined)
         return { status: 200, body: { verdict: 'gave',
           reveal: { m: thMids, d: thDids, links: thPz.links } } };
       thChecks++;
-      const lock = body.chain.map((v, i) => v === thMids[i]);
+      const lock = body.move.chain.map((v, i) => v === thMids[i]);
       if (lock.every(Boolean))
         return { status: 200, body: { verdict: 'won', checks: thChecks,
           reveal: { m: thMids, d: thDids, links: thPz.links } } };

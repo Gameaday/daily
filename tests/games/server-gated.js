@@ -20,7 +20,7 @@ async function run(h, ctx){
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'g1', today: 0, puzzle: served.puzzle } };
       seen.push(body);
-      if (body.y === full.y)
+      if (body.move.y === full.y)
         return { status: 200, body: { verdict: 'won', guesses: seen.length,
           reveal: { y: full.y, w: full.w } } };
       return { status: 200, body: { verdict: 'miss', guesses: seen.length,
@@ -45,7 +45,7 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gf1', today: 0, puzzle: served.puzzle } };
-      const ratio = Math.max(body.v / full.a, full.a / body.v);
+      const ratio = Math.max(body.move.v / full.a, full.a / body.move.v);
       const score = ratio <= 3 ? 3 : ratio <= 10 ? 2 : ratio <= 100 ? 1 : 0;
       return { status: 200, body: { verdict: 'won', score,
         reveal: { a: full.a, w: full.w } } };
@@ -74,17 +74,17 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gc1', today: 0, puzzle: served.puzzle } };
-      if (body.give !== undefined)
+      if (body.move.give !== undefined)
         return { status: 200, body: { verdict: 'gave',
           reveal: { q: full.q, a: full.a, sub: sub.dec } } };
-      if (body.hint){
-        const cand = order.find(c => body.have[c] !== sub.dec[c]);
+      if (body.move.hint){
+        const cand = order.find(c => body.move.have[c] !== sub.dec[c]);
         if (!cand) return { status: 400, body: { error: 'nothing left to hint' } };
         hints++;
         return { status: 200, body: { verdict: 'hint', cipher: cand,
           plain: sub.dec[cand], hints } };
       }
-      const right = order.filter(c => body.check[c] === sub.dec[c]).length;
+      const right = order.filter(c => body.move.check[c] === sub.dec[c]).length;
       if (right === order.length)
         return { status: 200, body: { verdict: 'won',
           reveal: { q: full.q, a: full.a, sub: sub.dec } } };
@@ -119,7 +119,7 @@ async function run(h, ctx){
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gm1', today: 0, puzzle: served.puzzle } };
       const mm = s => String(s || '').toLowerCase().replace(/^the /, '').trim();
-      if ([full.a].concat(full.al).some(x => mm(body.name) === mm(x)))
+      if ([full.a].concat(full.al).some(x => mm(body.move.name) === mm(x)))
         return { status: 200, body: { verdict: 'won',
           reveal: { a: full.a, w: full.w } } };
       return { status: 200, body: { verdict: 'miss', clueIdx: 1 } };
@@ -148,8 +148,8 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gwa1', today: 0, puzzle: served.puzzle } };
-      if (body.pick !== undefined){
-        if (body.pick === full.l) return { status: 200, body: { verdict: 'found' } };
+      if (body.move.pick !== undefined){
+        if (body.move.pick === full.l) return { status: 200, body: { verdict: 'found' } };
         return { status: 200, body: { verdict: 'miss', left: 2 } };
       }
       return { status: 200, body: { verdict: 'won', bonus: 'correct',
@@ -179,7 +179,7 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gbg1', today: 0, puzzle: served.puzzle } };
-      if (body.pick === full.l)
+      if (body.move.pick === full.l)
         return { status: 200, body: { verdict: 'won',
           reveal: { l: full.l, w: full.w } } };
       return { status: 200, body: { verdict: 'miss', left: 2 } };
@@ -213,7 +213,7 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'glb1', today: 0, puzzle: served.puzzle } };
-      const rows = body.grid.map(rw => [...rw].map(ch => ch === '1' ? 1 : 0));
+      const rows = body.move.grid.map(rw => [...rw].map(ch => ch === '1' ? 1 : 0));
       if (JSON.stringify(rows) === JSON.stringify(sol))
         return { status: 200, body: { verdict: 'won',
           reveal: { n: full.n, g: full.g } } };
@@ -262,8 +262,8 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gsf1', today: 0, puzzle: served.puzzle } };
-      const ci = owner[body.pick[0]];
-      if (body.pick.every(tx => owner[tx] === ci) && !solved.includes(ci)){
+      const ci = owner[body.move.pick[0]];
+      if (body.move.pick.every(tx => owner[tx] === ci) && !solved.includes(ci)){
         solved.push(ci);
         return { status: 200, body: { verdict: 'hit', cat: ci, n: full.cats[ci].n,
           i: full.cats[ci].i, final: solved.length === 4 } };
@@ -307,10 +307,10 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gtl1', today: 0, puzzle: served.puzzle } };
-      if (body.give !== undefined)
+      if (body.move.give !== undefined)
         return { status: 200, body: { verdict: 'gave', reveal: { events: full } } };
       checks++;
-      const lock = body.order.map((v, i) => v === want[i]);
+      const lock = body.move.order.map((v, i) => v === want[i]);
       if (lock.every(Boolean))
         return { status: 200, body: { verdict: 'won', checks,
           reveal: { events: full } } };
@@ -342,7 +342,7 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gb1', today: 0, puzzle: served.puzzle } };
-      return { status: 200, body: { verdict: body.pick === full.a ? 'won' : 'lost',
+      return { status: 200, body: { verdict: body.move.pick === full.a ? 'won' : 'lost',
         reveal: { a: full.a, w: full.w } } };
     };
     const r = h.boot('brunch', ['S', 'EV', 'BRUNCH'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
@@ -367,7 +367,7 @@ async function run(h, ctx){
       const i = supRound;
       supRound++;
       const last = i === full.q.length - 1;
-      return { status: 200, body: { verdict: body.pick === full.q[i].a ? 'hit' : 'miss',
+      return { status: 200, body: { verdict: body.move.pick === full.q[i].a ? 'hit' : 'miss',
         a: full.q[i].a, final: last } };
     };
     const r = h.boot('superlative', ['S', 'EV', 'SUPERLATIVES'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
@@ -401,11 +401,11 @@ async function run(h, ctx){
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gth1', today: 0, puzzle: served.puzzle } };
-      if (body.give !== undefined)
+      if (body.move.give !== undefined)
         return { status: 200, body: { verdict: 'gave',
           reveal: { m: mids, d: dids, links: full.links } } };
       checks++;
-      const lock = body.chain.map((v, i) => v === mids[i]);
+      const lock = body.move.chain.map((v, i) => v === mids[i]);
       if (lock.every(Boolean))
         return { status: 200, body: { verdict: 'won', checks,
           reveal: { m: mids, d: dids, links: full.links } } };

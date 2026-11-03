@@ -115,9 +115,9 @@ class _Reject(Exception):
         self.status, self.msg = status, msg
 
 
-def _guess_brunch(sess, data, now):
+def _guess_brunch(sess, move, now):
     """brunch: one pick spends the round - the verdict and the reveal ride the spent pick."""
-    i = data.get("pick")
+    i = move.get("pick")
     if isinstance(i, bool) or not isinstance(i, int):
         raise _Reject(400, "bad pick")
     e = _list_entry("brunch", sess["day"])
@@ -134,9 +134,9 @@ def _guess_brunch(sess, data, now):
     return {"verdict": sess["verdict"],
                "reveal": {"a": e["a"], "w": e.get("w")}}
 
-def _guess_fermi(sess, data, now):
+def _guess_fermi(sess, move, now):
     """fermi: one estimate spends the round - the cited value and the ratio buckets ride the spent guess."""
-    v = data.get("v")
+    v = move.get("v")
     if isinstance(v, bool) or not isinstance(v, (int, float)) \
             or not math.isfinite(v) or v <= 0:
         raise _Reject(400, "bad estimate")
@@ -155,14 +155,14 @@ def _guess_fermi(sess, data, now):
     return {"verdict": "won", "score": score,
                "reveal": {"a": e["a"], "w": e.get("w")}}
 
-def _guess_well_actually(sess, data, now):
+def _guess_well_actually(sess, move, now):
     """well-actually: the picks hunt the lie and the one correction ends the round."""
     e = _list_entry("well-actually", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
     if sess["found"]:
         # phase two: the one shot at naming the correction
-        corr = data.get("correction")
+        corr = move.get("correction")
         if not isinstance(corr, str) or len(corr) > 200:
             raise _Reject(400, "bad correction")
         bonus = "correct" if _text_norm(corr) in (
@@ -177,10 +177,10 @@ def _guess_well_actually(sess, data, now):
         return {"verdict": "won", "bonus": bonus,
                    "reveal": {"c": e["c"],
                               "w": e.get("w")}}
-    elif isinstance(data.get("correction"), str):
+    elif isinstance(move.get("correction"), str):
         raise _Reject(400, "the lie is not found yet")
     else:
-        i = data.get("pick")
+        i = move.get("pick")
         if isinstance(i, bool) or not isinstance(i, int) \
                 or not (0 <= i < len(e["s"])):
             raise _Reject(400, "bad pick")
@@ -207,12 +207,12 @@ def _guess_well_actually(sess, data, now):
             return {"verdict": "miss",
                        "left": 3 - len(sess["picks"])}
 
-def _guess_museum(sess, data, now):
+def _guess_museum(sess, move, now):
     """museum: the names guess and the clues meter at the session - the name rides the spent round."""
     e = _list_entry("museum", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
-    if data.get("clue"):
+    if move.get("clue"):
         if sess["clue"] >= 4:
             raise _Reject(400, "no more clues")
         sess["clue"] += 1
@@ -220,7 +220,7 @@ def _guess_museum(sess, data, now):
         # nonce-bearing claim cannot under-report them
         return {"verdict": "clue", "clueIdx": sess["clue"]}
     else:
-        name = data.get("name")
+        name = move.get("name")
         if not isinstance(name, str) or not name \
                 or len(name) > 40:
             raise _Reject(400, "bad name")
@@ -251,12 +251,12 @@ def _guess_museum(sess, data, now):
                        "reveal": {"a": e["a"],
                                   "w": e.get("w")}}
 
-def _guess_bogus(sess, data, now):
+def _guess_bogus(sess, move, now):
     """bogus: three picks hunt the lie - the find or the third strike ends the round."""
     e = _list_entry("bogus", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
-    i = data.get("pick")
+    i = move.get("pick")
     if isinstance(i, bool) or not isinstance(i, int) \
             or not (0 <= i < len(e["s"])):
         raise _Reject(400, "bad pick")
@@ -285,14 +285,14 @@ def _guess_bogus(sess, data, now):
         return {"verdict": "miss",
                    "left": 3 - len(sess["picks"])}
 
-def _guess_superlative(sess, data, now):
+def _guess_superlative(sess, move, now):
     """superlative: the rounds grade one at a time and the sweep verdict is the server's."""
     e = _list_entry("superlative", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
     q = e["q"]
     r = len(sess["picks"])
-    i = data.get("pick")
+    i = move.get("pick")
     if isinstance(i, bool) or not isinstance(i, int) \
             or not (0 <= i < len(e["m"])) or r >= len(q):
         raise _Reject(400, "bad pick")
@@ -316,12 +316,12 @@ def _guess_superlative(sess, data, now):
         return {"verdict": "hit" if right else "miss",
                    "a": q[r]["a"]}
 
-def _guess_sift(sess, data, now):
+def _guess_sift(sess, move, now):
     """sift: each trio tests one group - the fourth miss spends the day and the board rides it."""
     e = _list_entry("sift", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
-    pick = data.get("pick")
+    pick = move.get("pick")
     if not isinstance(pick, list) or len(pick) != 3 \
             or not all(isinstance(x, str) and x
                        and len(x) <= 60 for x in pick) \
@@ -368,12 +368,12 @@ def _guess_sift(sess, data, now):
             return {"verdict": "miss",
                        "mistakes": sess["mistakes"]}
 
-def _guess_lightbox(sess, data, now):
+def _guess_lightbox(sess, move, now):
     """lightbox: each development spends a mistake - the fourth fog spends the film."""
     e = _list_entry("lightbox", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
-    grid = data.get("grid")
+    grid = move.get("grid")
     if not isinstance(grid, list) or len(grid) != len(e["g"]) \
             or not all(isinstance(r, str)
                        and len(r) == len(e["g"][0])
@@ -417,7 +417,7 @@ def _guess_lightbox(sess, data, now):
                        "need": need,
                        "mistakes": sess["mistakes"]}
 
-def _guess_cipher(sess, data, now):
+def _guess_cipher(sess, move, now):
     """cipher: the checks and hints grade against the day's substitution - the codebook opens only on the give-up."""
     e = _list_entry("cipher", sess["day"])
     if e is None:
@@ -429,7 +429,7 @@ def _guess_cipher(sess, data, now):
             freq[enc[ch]] = freq.get(enc[ch], 0) + 1
     order = sorted(freq, key=lambda c: (-freq[c], c))
     sub = {enc[ch]: ch for ch in e["q"] if "A" <= ch <= "Z"}
-    if data.get("give") is not None:
+    if move.get("give") is not None:
         sess["done"] = True
         sess["verdict"] = "gave"
         sess["done_at"] = now
@@ -438,8 +438,8 @@ def _guess_cipher(sess, data, now):
         return {"verdict": "gave",
                    "reveal": {"q": e["q"], "a": e.get("a"),
                               "sub": sub}}
-    elif data.get("hint"):
-        have = data.get("have")
+    elif move.get("hint"):
+        have = move.get("have")
         if not isinstance(have, dict):
             have = {}
         if sess["hints"] >= 5:
@@ -455,7 +455,7 @@ def _guess_cipher(sess, data, now):
                    "plain": dec[cand],
                    "hints": sess["hints"]}
     else:
-        m = data.get("check")
+        m = move.get("check")
         if not isinstance(m, dict) or not all(
                 isinstance(k, str) and len(k) == 1
                 and "A" <= k <= "Z"
@@ -481,13 +481,13 @@ def _guess_cipher(sess, data, now):
             return {"verdict": "miss", "right": right,
                        "total": len(order)}
 
-def _guess_timeline(sess, data, now):
+def _guess_timeline(sess, move, now):
     """timeline: each order checks at the session - the years ride the spent round."""
     pz = _window_entry("timeline", sess["day"])
     if pz is None:
         raise _Reject(404, "no answer key")
     evs = pz["events"]
-    if data.get("give") is not None:
+    if move.get("give") is not None:
         sess["done"] = True
         sess["verdict"] = "gave"
         sess["ans"] = sorted(ev["y"] for ev in evs)
@@ -497,7 +497,7 @@ def _guess_timeline(sess, data, now):
         return {"verdict": "gave",
                    "reveal": {"events": evs}}
     else:
-        order = data.get("order")
+        order = move.get("order")
         if not isinstance(order, list) \
                 or len(order) != len(evs) \
                 or not all(isinstance(i, int)
@@ -528,14 +528,14 @@ def _guess_timeline(sess, data, now):
                        "lock": lock,
                        "checks": sess["guesses"]}
 
-def _guess_thread(sess, data, now):
+def _guess_thread(sess, move, now):
     """thread: each chain checks at the session - the middles, the decoys and the links ride the spent round."""
     pz = _window_entry("thread", sess["day"])
     if pz is None:
         raise _Reject(404, "no answer key")
     mids = [nd["id"] for nd in pz["m"]]
     dids = [nd["id"] for nd in pz["d"]]
-    if data.get("give") is not None:
+    if move.get("give") is not None:
         sess["done"] = True
         sess["verdict"] = "gave"
         sess["ans"] = [pz["s"]["id"]] + mids + \
@@ -547,7 +547,7 @@ def _guess_thread(sess, data, now):
                    "reveal": {"m": mids, "d": dids,
                               "links": pz["links"]}}
     else:
-        chain = data.get("chain")
+        chain = move.get("chain")
         if not isinstance(chain, list) \
                 or len(chain) != len(mids) \
                 or not all(isinstance(x, str) and x
@@ -575,9 +575,9 @@ def _guess_thread(sess, data, now):
                        "lock": lock,
                        "checks": sess["guesses"]}
 
-def _guess_rounds(sess, data, now):
+def _guess_rounds(sess, move, now):
     """rounds: the heat and the direction grade server-side - the year never crosses until the round is spent."""
-    y = data.get("y")
+    y = move.get("y")
     if isinstance(y, bool) or not isinstance(y, int) \
             or not (1000 <= y <= 2200):
         raise _Reject(400, "bad year")

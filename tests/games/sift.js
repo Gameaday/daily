@@ -57,8 +57,8 @@ async function run(h){
     const sfDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'sf1', today: 0, puzzle: sfServed.puzzle } };
-      const ci = sfOwner[body.pick[0]];
-      if (body.pick.every(tx => sfOwner[tx] === ci) && !sfSolved.includes(ci)){
+      const ci = sfOwner[body.move.pick[0]];
+      if (body.move.pick.every(tx => sfOwner[tx] === ci) && !sfSolved.includes(ci)){
         sfSolved.push(ci);
         return { status: 200, body: { verdict: 'hit', cat: ci, n: sfFull.cats[ci].n,
           i: sfFull.cats[ci].i, final: sfSolved.length === 4 } };

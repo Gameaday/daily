@@ -49,7 +49,7 @@ async function run(h){
           return { status: 200, body: { nonce: 'rn0', today: 0,
             puzzle: { t: 'England', q: 'King John seals the Magna Carta at Runnymede.' } } };
         seen.push(body);
-        if (body.y === 1215)
+        if (body.move.y === 1215)
           return { status: 200, body: { verdict: 'won', guesses: seen.length,
             reveal: { y: 1215, w: 'Runnymede, June 1215 - the king first put his seal under the law.' } } };
         return { status: 200, body: { verdict: 'miss', guesses: seen.length,

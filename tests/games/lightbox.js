@@ -48,7 +48,7 @@ async function run(h){
     const lbDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'lb1', today: 0, puzzle: lbServed.puzzle } };
-      const rows = body.grid.map(rw => [...rw].map(ch => ch === '1' ? 1 : 0));
+      const rows = body.move.grid.map(rw => [...rw].map(ch => ch === '1' ? 1 : 0));
       if (JSON.stringify(rows) === JSON.stringify(lbSol))
         return { status: 200, body: { verdict: 'won',
           reveal: { n: lbFull.n, g: lbFull.g } } };

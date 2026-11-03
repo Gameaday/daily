@@ -45,7 +45,7 @@ async function run(h){
         deals++;
         return { status: 200, body: { nonce: 'b1', today: 0, puzzle: served } };
       }
-      return { status: 200, body: { verdict: body.pick === full.a ? 'won' : 'lost',
+      return { status: 200, body: { verdict: body.move.pick === full.a ? 'won' : 'lost',
         reveal: { a: full.a, w: full.w } } };
     };
     const dstore = {};

@@ -71,10 +71,10 @@ async function run(h){
     const tlDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'tl1', today: 0, puzzle: tlServed().puzzle } };
-      if (body.give !== undefined)
+      if (body.move.give !== undefined)
         return { status: 200, body: { verdict: 'gave', reveal: { events: tlEvents } } };
       tlChecks++;
-      const lock = body.order.map((v, i) => v === tlWant[i]);
+      const lock = body.move.order.map((v, i) => v === tlWant[i]);
       if (lock.every(Boolean))
         return { status: 200, body: { verdict: 'won', checks: tlChecks,
           reveal: { events: tlEvents } } };

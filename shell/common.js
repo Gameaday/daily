@@ -398,7 +398,7 @@ const SHELL = (() => {
         const n = await session();
         if (!n){ cfg.toast(cfg.copy.unavailable); return; }
         let b = null;
-        try { b = await dealt('/guess', Object.assign({ nonce: n }, move)); } catch (e) {}
+        try { b = await dealt('/guess', { nonce: n, move: move }); } catch (e) {}
         if (!b){ cfg.toast(cfg.copy.unavailable); return; }
         if (b.status === 409){ cfg.toast(cfg.copy.over); return; }
         if (b.status !== 200 || !b.body || !b.body.verdict){

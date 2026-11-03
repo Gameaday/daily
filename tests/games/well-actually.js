@@ -45,15 +45,15 @@ async function run(h){
     const waDealer = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'wa1', today: 0, puzzle: waServed.puzzle } };
-      if (body.pick !== undefined){
-        waPicks.push(body.pick);
-        if (body.pick === waFull.l) return { status: 200, body: { verdict: 'found' } };
+      if (body.move.pick !== undefined){
+        waPicks.push(body.move.pick);
+        if (body.move.pick === waFull.l) return { status: 200, body: { verdict: 'found' } };
         if (waPicks.length >= 3)
           return { status: 200, body: { verdict: 'lost',
             reveal: { l: waFull.l, c: waFull.c, w: waFull.w } } };
         return { status: 200, body: { verdict: 'miss', left: 3 - waPicks.length } };
       }
-      const waTyped = String(body.correction || '').toLowerCase().trim();
+      const waTyped = String(body.move.correction || '').toLowerCase().trim();
       const waHit = waFull.a.some(x => x.toLowerCase() === waTyped);
       return { status: 200, body: { verdict: 'won', bonus: waHit ? 'correct' : 'wrong',
         reveal: { c: waFull.c, w: waFull.w } } };

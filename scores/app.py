@@ -22,8 +22,13 @@ import puzzles
 import sessions
 
 
+# the wire contract version: it moves with the /guess envelope, and
+# /health and /manifest speak it beside server_version
+API_VERSION = 2
+
+
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.8"
+    server_version = "warmup-curve/4.9"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -84,12 +89,16 @@ class Handler(BaseHTTPRequestHandler):
             with config.LOCK:
                 # day/num echo the clamped day math, so a curl shows exactly
                 # what the server thinks "today" is
-                payload = {"ok": True, "boards": len(curve.STATS),
+                payload = {"ok": True, "api_version": API_VERSION,
+                           "boards": len(curve.STATS),
                            "day": today, "num": today + 1}
             self._json(payload)
         elif path == "/manifest":
-            # the scoring truth (epoch, tz, per-game ledger) as plain JSON
-            self._json(config._MANIFEST, cache="public, max-age=3600")
+            # the scoring truth (epoch, tz, per-game ledger) as plain
+            # JSON, with the wire's api_version riding beside it
+            payload = dict(config._MANIFEST)
+            payload["api_version"] = API_VERSION
+            self._json(payload, cache="public, max-age=3600")
         elif path in ("/dist", "/distribution"):
             qs = parse_qs(urlparse(self.path).query)
             game = (qs.get("game") or [""])[0]
@@ -334,8 +343,9 @@ class Handler(BaseHTTPRequestHandler):
         picks and correction, museum's names and clues, bogus's picks,
         superlative's rounds, sift's trios, lightbox's developments,
         cipher's checks and hints, timeline's and thread's checks), /reveal
-        is the sprint starting gun. The session map mutates under the
-        lock; a key leaves only when a round ends."""
+        is the sprint starting gun. Every game's move nests under
+        "move"; the session map mutates under the lock; a key leaves
+        only when a round ends."""
         now = time.time()
         if path == "/deal":
             game = data.get("game")
@@ -397,8 +407,12 @@ class Handler(BaseHTTPRequestHandler):
                 if sess["done"]:
                     self._json({"error": "the round is over"}, 409)
                     return
+                move = data.get("move")
+                if not isinstance(move, dict):
+                    self._json({"error": "bad move"}, 400)
+                    return
                 try:
-                    payload = guess(sess, data, now)
+                    payload = guess(sess, move, now)
                 except adapters._Reject as r:
                     self._json({"error": r.msg}, r.status)
                     return

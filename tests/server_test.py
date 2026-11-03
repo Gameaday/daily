@@ -479,7 +479,11 @@ def main():
         s, b = post("/api/reveal", {"nonce": sn})
         check(s == 200 and b.get("elapsed") < 5,
               "reveal: a second reveal never restarts the clock")
-        s, _b = post("/api/reveal", {"nonce": rn2})
+        # the 400 needs a live rounds session: rn2 was consumed by its
+        # own evidence submit (a spent nonce is no session), so deal one
+        s, b = post("/api/deal", {"game": "rounds", "day": TODAY})
+        rn3 = b["nonce"]
+        s, _b = post("/api/reveal", {"nonce": rn3})
         check(s == 400, "reveal: a rounds session is not a starting gun")
         s, _b = post("/api/guess", {"nonce": "no-such-session", "y": 1215})
         check(s == 404, "guess: an unknown nonce is no session")

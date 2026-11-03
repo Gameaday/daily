@@ -221,54 +221,36 @@ function showRoundVerdict(i, r, a, right){
   if (S.picks.length === EV.q.length) $('btnNext').textContent = 'See the tally';
 }
 
-/* the dealt session: one deal per day, held on the state and reused by
-   every round */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle) EV = Object.assign({}, EV, d.body.puzzle);
+/* the page owns the game: which move each round builds and what each
+   verdict means; the session dance itself (the deal, the busy guard,
+   the triage, the nonce) lives in the shell now */
+async function pickDealt(i){
+  await session.play({ pick: i }, body => {
+    if (typeof body.a !== 'number'){
+      session.reset();
+      S.picks = []; S.ans = [];
+      saveState();
+      renderRound();
+      toastMsg('this session expired, the rounds reset for a fresh one');
+      return;
+    }
+    const r = S.picks.length;
+    S.picks.push(i);
+    S.ans = S.ans || [];
+    S.ans[r] = body.a;
     saveState();
-    return S.nonce;
-  }
-  return null;
+    showRoundVerdict(i, r, body.a, body.verdict === 'hit');
+  });
 }
 
-let PICKING = false;
 async function pick(i){
-  if (!EV || S.status !== 'playing' || PICKING) return;
+  if (!EV || S.status !== 'playing') return;
   const r = S.picks.length;
   if (r >= EV.q.length) return;
   /* the dealt day: the per-question answers never shipped, so every
      round travels to the session and the spent round hands over its
      own answer */
-  if (isDealt()){
-    PICKING = true;
-    try {
-      const n = await ensureSession();
-      if (!n){ toastMsg('the record is not answering right now, try again'); return; }
-      let b = null;
-      try { b = await SHELL.dealt('/guess', { nonce: n, pick: i }); } catch (e) {}
-      if (!b){ toastMsg('the record is not answering right now, try again'); return; }
-      if (b.status === 409){ toastMsg('this session is already over'); return; }
-      if (b.status !== 200 || !b.body || !b.body.verdict ||
-          typeof b.body.a !== 'number'){
-        S.nonce = null; S.picks = []; S.ans = [];
-        saveState();
-        renderRound();
-        toastMsg('this session expired, the rounds reset for a fresh one');
-        return;
-      }
-      S.picks.push(i);
-      S.ans = S.ans || [];
-      S.ans[r] = b.body.a;
-      saveState();
-      showRoundVerdict(i, r, b.body.a, b.body.verdict === 'hit');
-    } finally { PICKING = false; }
-    return;
-  }
+  if (isDealt()){ pickDealt(i); return; }
   S.picks.push(i);
   saveState();
   showRoundVerdict(i, r, EV.q[r].a, i === EV.q[r].a);
@@ -322,6 +304,28 @@ function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 /* ---------------- share / toast ---------------- */
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
+
+/* the dealt session: one deal per day, held on the state and reused by
+   every round; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => {
+    if (body.puzzle) EV = Object.assign({}, EV, body.puzzle);
+  },
+  onExpired: () => {
+    S.picks = []; S.ans = [];
+    renderRound();
+  },
+  copy: {
+    unavailable: 'the record is not answering right now, try again',
+    over: 'this session is already over',
+    expired: 'this session expired, the rounds reset for a fresh one'
+  }
+});
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();

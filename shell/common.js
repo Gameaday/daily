@@ -370,7 +370,9 @@ const SHELL = (() => {
      play() is the whole /guess dance: it opens the session when none is
      open, posts the move with the nonce, and hands the verdict body to
      the page hook on a 200 that carries a verdict. The busy guard is
-     per session, so a double click costs nothing. Dealt rounds never
+     per session, so a double click costs nothing. An optional onDeal hook sees
+     the deal's answer before the nonce is saved, for the games whose
+     deal itself carries the day's strip. Dealt rounds never
      run in solo mode or in an archive replay; callers guard those. */
   function makeDealt(cfg){
     let busy = false;
@@ -381,6 +383,7 @@ const SHELL = (() => {
       try { d = await dealt('/deal', { game: cfg.game, day: cfg.day() }); } catch (e) {}
       if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
         S.nonce = d.body.nonce;
+        if (cfg.onDeal) cfg.onDeal(d.body);
         cfg.save();
         return S.nonce;
       }

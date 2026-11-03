@@ -60,7 +60,11 @@ async function run(h){
       const r = h.boot('rounds', ['S', 'EV'], { now: T0, store: {}, stubBanks: true,
         servePuzzle: served, serveDealt });
       await h.flush();
-      h.ok(r.x.EV.y === undefined, 'dealt: the live day arrives without its key');
+      /* the harness snapshots exposed values at script end, while the
+     served puzzle is still in flight - so the key-less arrival is pinned
+     by what renders, and by the dealt flow the page takes below because
+     it holds no key */
+  h.ok(r.env.els.qtag.textContent === 'England', 'dealt: the served question renders');
       r.env.els.slider.value = '1900';
       r.env.els.btnLock.click();
       await h.flush();

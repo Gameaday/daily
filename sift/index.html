@@ -149,19 +149,48 @@ function isDealt(){
   return BOARD && Array.isArray(BOARD.tiles) && !BOARD.cats &&
     !isSolo() && !SHELL.isArchive;
 }
-/* the dealt session: one deal per day, held on the state and spent
-   one trio at a time */
-async function ensureSession(){
-  if (S.nonce) return S.nonce;
-  let d = null;
-  try { d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex }); } catch (e) {}
-  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
-    S.nonce = d.body.nonce;
-    if (d.body.puzzle && Array.isArray(d.body.puzzle.tiles)) applyBoard(d.body.puzzle);
-    saveState();
-    return S.nonce;
-  }
-  return null;
+/* the page owns the game: which move each button builds and what each
+   verdict means; the session dance itself (the deal, the busy guard,
+   the triage, the nonce) lives in the shell now */
+async function testDealt(){
+  await session.play({ pick: [...sel].map(i => TILES[i].text) }, body => {
+    const v = body.verdict;
+    if (v === 'hit'){
+      S.solvedCats.push(body.cat);
+      S.found = S.found || [];
+      S.found.push({ cat: body.cat, n: body.n, i: body.i });
+      sel.clear();
+      if (body.final){
+        seatDealtCats();
+        S.status = 'won';
+        const st = S.stats;
+        st.played++; st.solved++; st.streak++;
+        st.max = Math.max(st.max, st.streak);
+        st.dist[S.mistakes]++;
+        saveState(); renderAll(); showReveal();
+      } else {
+        saveState(); renderAll();
+      }
+    } else if (v === 'lost'){
+      S.status = 'lost';
+      const st = S.stats;
+      st.played++;
+      st.dist[4]++;
+      if (body.reveal && Array.isArray(body.reveal.cats)){
+        S.reveal = body.reveal;
+        applyReveal(S.reveal);
+      }
+      saveState(); renderAll(); showReveal();
+    } else {
+      S.mistakes = body.mistakes;
+      [...sel].forEach(i => {
+        const el = document.querySelector(`.tile[data-i="${i}"]`);
+        if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
+      });
+      toastMsg(['Not a trio.','Close, maybe?','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
+      saveState(); renderAll();
+    }
+  });
 }
 async function loadPuzzle(){
   const L = typeof BOARDS !== 'undefined' ? BOARDS.length : 1;
@@ -256,66 +285,12 @@ $('tiles').addEventListener('click', e => {
 
 $('btnClear').addEventListener('click', () => { sel.clear(); renderTiles(); updateSubmit(); });
 
-let TESTING = false;
 $('btnSubmit').addEventListener('click', async () => {
   if (!BOARD) return;
-  if (sel.size !== 3 || S.status !== 'playing' || TESTING) return;
+  if (sel.size !== 3 || S.status !== 'playing') return;
   /* the dealt day: the categories never shipped, so the trio travels
      to the session and the spent test hands over its own group */
-  if (isDealt()){
-    TESTING = true;
-    try {
-      const n = await ensureSession();
-      if (!n){ toastMsg('the board is not answering right now, try again'); return; }
-      let b = null;
-      try { b = await SHELL.dealt('/guess', { nonce: n, pick: [...sel].map(i => TILES[i].text) }); } catch (e) {}
-      if (!b){ toastMsg('the board is not answering right now, try again'); return; }
-      if (b.status === 409){ toastMsg('this round is already over'); return; }
-      if (b.status !== 200 || !b.body || !b.body.verdict){
-        S.nonce = null; S.solvedCats = []; S.found = []; S.mistakes = 0; sel.clear();
-        saveState(); renderAll();
-        toastMsg('this round expired, test again for a fresh one');
-        return;
-      }
-      const v = b.body.verdict;
-      if (v === 'hit'){
-        S.solvedCats.push(b.body.cat);
-        S.found = S.found || [];
-        S.found.push({ cat: b.body.cat, n: b.body.n, i: b.body.i });
-        sel.clear();
-        if (b.body.final){
-          seatDealtCats();
-          S.status = 'won';
-          const st = S.stats;
-          st.played++; st.solved++; st.streak++;
-          st.max = Math.max(st.max, st.streak);
-          st.dist[S.mistakes]++;
-          saveState(); renderAll(); showReveal();
-        } else {
-          saveState(); renderAll();
-        }
-      } else if (v === 'lost'){
-        S.status = 'lost';
-        const st = S.stats;
-        st.played++;
-        st.dist[4]++;
-        if (b.body.reveal && Array.isArray(b.body.reveal.cats)){
-          S.reveal = b.body.reveal;
-          applyReveal(S.reveal);
-        }
-        saveState(); renderAll(); showReveal();
-      } else {
-        S.mistakes = b.body.mistakes;
-        [...sel].forEach(i => {
-          const el = document.querySelector(`.tile[data-i="${i}"]`);
-          if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
-        });
-        toastMsg(['Not a trio.','Close, maybe?','One more chance…'][Math.min(S.mistakes, 3) - 1] || 'Not a trio.');
-        saveState(); renderAll();
-      }
-    } finally { TESTING = false; }
-    return;
-  }
+  if (isDealt()){ testDealt(); return; }
   const selTexts = new Set([...sel].map(i => TILES[i].text));
   const hit = BOARD.cats.findIndex((c, ci) => !S.solvedCats.includes(ci) && c.i.length === 3 && c.i.every(x => selTexts.has(x)));
   if (hit >= 0){
@@ -411,6 +386,28 @@ const SYNC_BETTER = 'high';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
 SHELL.wireShare(shareText);
 const toastMsg = SHELL.toast;
+
+/* the dealt session: one deal per day, held on the state and spent one
+   trio at a time; the shell owns the dance, the page owns the game */
+const session = SHELL.makeDealt({
+  game: SYNC_GAME,
+  day: () => dayIndex,
+  state: () => S,
+  save: saveState,
+  toast: toastMsg,
+  onDeal: body => {
+    if (body.puzzle && Array.isArray(body.puzzle.tiles)) applyBoard(body.puzzle);
+  },
+  onExpired: () => {
+    S.solvedCats = []; S.found = []; S.mistakes = 0; sel.clear();
+    renderAll();
+  },
+  copy: {
+    unavailable: 'the board is not answering right now, try again',
+    over: 'this round is already over',
+    expired: 'this round expired, test again for a fresh one'
+  }
+});
 
 /* ---------------- help / countdown ---------------- */
 SHELL.wireHelp();

@@ -59,10 +59,15 @@ Endpoints (with or without the /api prefix):
                     rounds {"y": int} | brunch {"pick": int} | fermi {"v": number} |
                     well-actually {"pick": int} or {"correction": str} |
                     museum {"name": str} or {"clue": 1} | bogus {"pick": int} |
-                    superlative {"pick": int}}
-              res  {"verdict": "won"|"lost"|"found"|"miss"|"clue"|"hit" (required),
+                    superlative {"pick": int} | sift {"pick": [str, str, str]} |
+                    lightbox {"grid": [7 rows of "0"|"1"|"2"]} |
+                    cipher {"check": {cipher: plain}} or {"hint": 1, "have": {...}} or {"give": 1}}
+              res  {"verdict": "won"|"lost"|"gave"|"found"|"miss"|"clue"|"hit"|"hint"
+                    (required),
                     "reveal": object (optional, terminal rounds only),
-                    "left"|"guesses"|"score"|"bonus"|"clueIdx"|"a"|"final" (optional)}
+                    "left"|"guesses"|"score"|"bonus"|"clueIdx"|"a"|"final"|
+                    "cat"|"n"|"i"|"bad"|"need"|"mistakes"|"right"|"total"|
+                    "cipher"|"plain"|"hints" (optional)}
       /reveal req  {"nonce": str (required)} (sprint only)
       /submit with a "nonce" (optional): the session's graded verdict, answer
               and meta override whatever the client claims
@@ -186,33 +191,115 @@ META_CAPS = {
 # and meters the clues itself, so the name never ships either. bogus
 # deals per pick the same way, and superlative deals per round: the
 # per-question answers never ship and the session owns the sweep. The
+# check games deal their own way: sift ships its tiles but never their
+# categories, lightbox ships the clues its grid implies but never the
+# grid or its name, and cipher ships a ciphertext under a server-side
+# substitution, so the session grades every trio, development and
+# decode, and meters the mistakes and hints itself. The
 # residual honesty note that stays open: a rounds loss reveal hands over
 # the key a second session could mine, and sprint's solved count is
 # still the client's word inside the server-stamped window.
 # ---------------------------------------------------------------------------
 
 DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
-               "bogus", "superlative")
+               "bogus", "superlative", "sift", "lightbox", "cipher")
 # the per-game keys a live dealt day must never ship (brunch keeps its
 # table but not the impostor index or the reveal; fermi keeps the
 # question but not the cited value; well-actually keeps the statement
 # but not the lie, the corrections or the canonical; museum keeps the
 # clues but not the name or the story; bogus keeps the passage but
 # not the lie or the why; superlative keeps the questions and the
-# cohort but never a round's answer index)
+# cohort but never a round's answer index; cipher keeps the author but
+# never the quote or the substitution; lightbox keeps the clues but
+# never the grid or its name; sift keeps the tiles but never their
+# categories)
 DEALT_STRIP = {"rounds": ("y", "w"), "brunch": ("a", "w"), "fermi": ("a", "w"),
                "well-actually": ("l", "a", "c", "w"),
                "museum": ("a", "al", "w"),
-               "bogus": ("l", "w"), "superlative": ()}
+               "bogus": ("l", "w"), "superlative": (),
+               "cipher": ("q",), "lightbox": ("g", "n"), "sift": ("cats",)}
 # the nested list-item keys a stripped live day must also lose
 # (superlative's questions keep their text but never their answer index)
 DEALT_DEEP = {"superlative": {"q": ("a",)}}
 
 
-def dealt_puzzle(game, pz):
-    """The day's puzzle as a dealt game may ship it: the top-level keys in
-    DEALT_STRIP stay server-side, and so do the nested list-item keys in
-    DEALT_DEEP, so the live day's truth never crosses the wire."""
+_ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+
+def _mulberry32(seed):
+    """The pages' tiny PRNG, ported so a served layout or a served cipher
+    stays deterministic per day without shipping anything else."""
+    state = [seed & 0xFFFFFFFF]
+
+    def rnd():
+        state[0] = (state[0] + 0x6D2B79F5) & 0xFFFFFFFF
+        a = state[0]
+        t = ((a ^ (a >> 15)) * (a | 1)) & 0xFFFFFFFF
+        w = ((t ^ (t >> 7)) * (t | 61)) & 0xFFFFFFFF
+        t = ((t + w) & 0xFFFFFFFF) ^ t
+        return ((t ^ (t >> 14)) & 0xFFFFFFFF) / 4294967296
+    return rnd
+
+
+def _build_sub(rnd):
+    """The cipher page's substitution builder, ported: a seeded shuffle
+    of the alphabet with no letter standing for itself."""
+    while True:
+        perm = list(_ALPHA)
+        for i in range(len(perm) - 1, 0, -1):
+            j = int(rnd() * (i + 1))
+            perm[i], perm[j] = perm[j], perm[i]
+        if all(perm[i] != _ALPHA[i] for i in range(len(perm))):
+            enc = {_ALPHA[i]: perm[i] for i in range(len(perm))}
+            dec = {perm[i]: _ALPHA[i] for i in range(len(perm))}
+            return enc, dec
+
+
+def _cipher_sub(day):
+    """The day's substitution, seeded server-side: the live ciphertext is
+    stable across requests and restarts, but its key never ships."""
+    return _build_sub(_mulberry32((day * 668265261 + 8191) & 0xFFFFFFFF))
+
+
+def _runs(line):
+    """The lightbox page's clue builder: the runs of consecutive filled
+    cells in one line, in order ([0] for an empty line)."""
+    out, c = [], 0
+    for v in line:
+        if v:
+            c += 1
+        elif c:
+            out.append(c)
+            c = 0
+    if c:
+        out.append(c)
+    return out or [0]
+
+
+def dealt_puzzle(game, pz, day=0):
+    """The day's puzzle as a dealt game may ship it. The transform games
+    ship a derived puzzle instead of the stored one: lightbox ships the
+    clues its grid implies, cipher ships the ciphertext (the substitution
+    lives server-side), and sift ships the tiles without their
+    categories. Every other dealt game ships the stored puzzle minus the
+    keys in DEALT_STRIP and the nested keys in DEALT_DEEP, so the live
+    day's truth never crosses the wire."""
+    if game == "lightbox" and isinstance(pz.get("g"), list):
+        cells = [[1 if ch == "#" else 0 for ch in row] for row in pz["g"]]
+        return {"rc": [_runs(row) for row in cells],
+                "cc": [_runs([row[c] for row in cells])
+                       for c in range(len(cells[0]))]}
+    if game == "cipher" and isinstance(pz.get("q"), str):
+        enc, _dec = _cipher_sub(day)
+        return {"a": pz.get("a"),
+                "c": "".join(enc[ch] if ch in enc else ch for ch in pz["q"])}
+    if game == "sift" and isinstance(pz.get("cats"), list):
+        tiles = [txt for cat in pz["cats"] for txt in cat["i"]]
+        rnd = _mulberry32(day * 6151 + 42)
+        for i in range(len(tiles) - 1, 0, -1):
+            j = int(rnd() * (i + 1))
+            tiles[i], tiles[j] = tiles[j], tiles[i]
+        return {"t": pz.get("t"), "tiles": tiles}
     out = {k: v for k, v in pz.items()
            if k not in DEALT_STRIP.get(game, ())}
     for path, keys in DEALT_DEEP.get(game, {}).items():
@@ -700,7 +787,7 @@ def snapshot(game, day, value=None, st=None, spec=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.6"
+    server_version = "warmup-curve/4.7"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -872,7 +959,7 @@ class Handler(BaseHTTPRequestHandler):
                 # A replayed day is long over, so its key stays and the
                 # archive path keeps grading locally.
                 if day == today and game in DEALT_STRIP:
-                    pz = dealt_puzzle(game, pz)
+                    pz = dealt_puzzle(game, pz, day)
                 self._json({"game": game, "day": day, "puzzle": pz, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
         else:
@@ -956,6 +1043,12 @@ class Handler(BaseHTTPRequestHandler):
                     elif game == "museum":
                         # the session metered the clues itself
                         data["meta"] = {"clues": sess.get("result", 1)}
+                    elif game == "cipher":
+                        # the session metered the hints itself
+                        data["meta"] = {"hints": sess.get("hints", 0)}
+                    elif game in ("sift", "lightbox"):
+                        # the session metered the mistakes itself
+                        data["meta"] = {"mistakes": sess.get("mistakes", 0)}
                     else:
                         data["meta"] = {}
             value, reason = validate_evidence(game, day, data)
@@ -1013,8 +1106,9 @@ class Handler(BaseHTTPRequestHandler):
     def _dealt(self, path, data):
         """The dealt-play endpoints: /deal opens a session, /guess plays a
         dealt round (rounds heat, the one-shot verdicts, well-actually's
-        picks and correction, museum's names and clues, bogus's picks, superlative's rounds),
-        /reveal is the
+        picks and correction, museum's names and clues, bogus's picks,
+        superlative's rounds, sift's trios, lightbox's developments,
+        cipher's checks and hints), /reveal is the
         sprint starting gun. SESSIONS mutates under LOCK; a key leaves
         only when a round ends."""
         now = time.time()
@@ -1045,7 +1139,8 @@ class Handler(BaseHTTPRequestHandler):
                 SESSIONS[nonce] = {"game": game, "day": day, "created": now,
                                    "ip": self.client_address[0], "guesses": 0,
                                    "done": False, "verdict": None, "t0": None,
-                                   "picks": [], "found": False, "clue": 0}
+                                   "picks": [], "found": False, "clue": 0,
+                                   "mistakes": 0, "hints": 0, "solved": []}
                 if pz is not None:
                     # the deal carries the question but never the key: the
                     # strip tables keep the answer server-side
@@ -1068,7 +1163,8 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/guess":
                 if sess["game"] not in ("rounds", "brunch", "fermi",
                                         "well-actually", "museum",
-                                        "bogus", "superlative"):
+                                        "bogus", "superlative",
+                                        "sift", "lightbox", "cipher"):
                     self._json({"error": "this session takes no guesses"}, 400)
                     return
                 if sess["done"]:
@@ -1281,6 +1377,174 @@ class Handler(BaseHTTPRequestHandler):
                         # settles each round at the session
                         payload = {"verdict": "hit" if right else "miss",
                                    "a": q[r]["a"]}
+                elif sess["game"] == "sift":
+                    e = _list_entry("sift", sess["day"])
+                    if e is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    pick = data.get("pick")
+                    if not isinstance(pick, list) or len(pick) != 3 \
+                            or not all(isinstance(x, str) and x
+                                       and len(x) <= 60 for x in pick) \
+                            or len(set(pick)) != 3:
+                        self._json({"error": "bad pick"}, 400)
+                        return
+                    got = frozenset(pick)
+                    solved = [frozenset(e["cats"][ci]["i"])
+                              for ci in sess["solved"]]
+                    if got in solved:
+                        self._json({"error": "group already found"}, 400)
+                        return
+                    hit = next((ci for ci, c in enumerate(e["cats"])
+                                if frozenset(c["i"]) == got), None)
+                    if hit is not None:
+                        sess["solved"].append(hit)
+                        if len(sess["solved"]) >= len(e["cats"]):
+                            sess["done"] = True
+                            sess["verdict"] = "won"
+                            sess["ans"] = [list(c["i"]) for c in e["cats"]]
+                            sess["done_at"] = now
+                            payload = {"verdict": "hit", "cat": hit,
+                                       "n": e["cats"][hit]["n"],
+                                       "i": list(e["cats"][hit]["i"]),
+                                       "final": True}
+                        else:
+                            # the spent test hands over its group: the
+                            # name and the trio ride the find, never
+                            # the served board
+                            payload = {"verdict": "hit", "cat": hit,
+                                       "n": e["cats"][hit]["n"],
+                                       "i": list(e["cats"][hit]["i"])}
+                    else:
+                        sess["mistakes"] += 1
+                        if sess["mistakes"] >= 4:
+                            sess["done"] = True
+                            sess["verdict"] = "lost"
+                            sess["ans"] = [list(c["i"]) for c in e["cats"]]
+                            sess["done_at"] = now
+                            # the fourth miss spends the day: the whole
+                            # board rides the spent round
+                            payload = {"verdict": "lost",
+                                       "reveal": {"t": e.get("t"),
+                                                  "cats": e["cats"]}}
+                        else:
+                            payload = {"verdict": "miss",
+                                       "mistakes": sess["mistakes"]}
+                elif sess["game"] == "lightbox":
+                    e = _list_entry("lightbox", sess["day"])
+                    if e is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    grid = data.get("grid")
+                    if not isinstance(grid, list) or len(grid) != len(e["g"]) \
+                            or not all(isinstance(r, str)
+                                       and len(r) == len(e["g"][0])
+                                       and all(ch in "012" for ch in r)
+                                       for r in grid):
+                        self._json({"error": "bad grid"}, 400)
+                        return
+                    rows = [[1 if ch == "1" else 0 for ch in r] for r in grid]
+                    want = [[1 if ch == "#" else 0 for ch in r]
+                            for r in e["g"]]
+                    if rows == want:
+                        sess["done"] = True
+                        sess["verdict"] = "won"
+                        sess["ans"] = list(e["g"])
+                        sess["done_at"] = now
+                        # the picture and its name ride the spent
+                        # development
+                        payload = {"verdict": "won",
+                                   "reveal": {"n": e.get("n"),
+                                              "g": list(e["g"])}}
+                    else:
+                        bad = [[r, c] for r in range(len(rows))
+                               for c in range(len(rows[0]))
+                               if rows[r][c] == 1 and want[r][c] == 0]
+                        need = [[r, c] for r in range(len(rows))
+                                for c in range(len(rows[0]))
+                                if rows[r][c] == 0 and want[r][c] == 1]
+                        sess["mistakes"] += 1
+                        if sess["mistakes"] >= 4:
+                            sess["done"] = True
+                            sess["verdict"] = "lost"
+                            sess["done_at"] = now
+                            # the fourth fog spends the film: the picture
+                            # rides the spent round
+                            payload = {"verdict": "lost",
+                                       "reveal": {"n": e.get("n"),
+                                                  "g": list(e["g"])}}
+                        else:
+                            # the contradictions cross (the page has
+                            # always flashed them), the grid never does
+                            payload = {"verdict": "miss", "bad": bad,
+                                       "need": need,
+                                       "mistakes": sess["mistakes"]}
+                elif sess["game"] == "cipher":
+                    e = _list_entry("cipher", sess["day"])
+                    if e is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    enc, dec = _cipher_sub(sess["day"])
+                    freq = {}
+                    for ch in e["q"]:
+                        if "A" <= ch <= "Z":
+                            freq[enc[ch]] = freq.get(enc[ch], 0) + 1
+                    order = sorted(freq, key=lambda c: (-freq[c], c))
+                    sub = {enc[ch]: ch for ch in e["q"] if "A" <= ch <= "Z"}
+                    if data.get("give") is not None:
+                        sess["done"] = True
+                        sess["verdict"] = "gave"
+                        sess["done_at"] = now
+                        # the codebook opens only on the give-up: the
+                        # quote and the substitution ride the spent round
+                        payload = {"verdict": "gave",
+                                   "reveal": {"q": e["q"], "a": e.get("a"),
+                                              "sub": sub}}
+                    elif data.get("hint"):
+                        have = data.get("have")
+                        if not isinstance(have, dict):
+                            have = {}
+                        if sess["hints"] >= 5:
+                            self._json({"error": "no more hints"}, 400)
+                            return
+                        cand = next((c for c in order
+                                     if have.get(c) != dec[c]), None)
+                        if cand is None:
+                            self._json({"error": "nothing left to hint"}, 400)
+                            return
+                        sess["hints"] += 1
+                        # the session meters the hints itself, so a
+                        # nonce-bearing claim cannot under-report them
+                        payload = {"verdict": "hint", "cipher": cand,
+                                   "plain": dec[cand],
+                                   "hints": sess["hints"]}
+                    else:
+                        m = data.get("check")
+                        if not isinstance(m, dict) or not all(
+                                isinstance(k, str) and len(k) == 1
+                                and "A" <= k <= "Z"
+                                and isinstance(v, str) and len(v) == 1
+                                and "A" <= v <= "Z"
+                                for k, v in m.items()):
+                            self._json({"error": "bad decode"}, 400)
+                            return
+                        right = sum(1 for c in order if m.get(c) == dec[c])
+                        if right == len(order):
+                            sess["done"] = True
+                            sess["verdict"] = "won"
+                            sess["ans"] = e["q"]
+                            sess["done_at"] = now
+                            # the full decode spends the round: the quote
+                            # rides it, letter-true
+                            payload = {"verdict": "won",
+                                       "reveal": {"q": e["q"],
+                                                  "a": e.get("a"),
+                                                  "sub": sub}}
+                        else:
+                            # honest but unfarmable: how many letters are
+                            # right, never which ones
+                            payload = {"verdict": "miss", "right": right,
+                                       "total": len(order)}
                 else:
                     y = data.get("y")
                     if isinstance(y, bool) or not isinstance(y, int) \

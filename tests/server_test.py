@@ -6,8 +6,8 @@ health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
 sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
-(the live rounds, brunch, fermi, well-actually, museum, bogus and
-superlative days ship without their keys),
+(the live rounds, brunch, fermi, well-actually, museum, bogus, superlative,
+sift, lightbox and cipher days ship without their keys),
 fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
@@ -194,6 +194,31 @@ def main():
                   and all("a" not in q for q in b.get("puzzle", {}).get("q", []))
                   and len(b.get("puzzle", {}).get("m", [])) >= 4,
                   "GET /puzzle superlative day 0 (live) -> the questions, never the answers")
+            cip0 = json.loads((ROOT / "puzzles" / "cipher" / "puzzles.json")
+                              .read_text(encoding="utf-8"))[0]
+            s, b = req("GET", "/api/puzzle?game=cipher&day=0")
+            pzc = b.get("puzzle", {})
+            check(s == 200 and "q" not in pzc and pzc.get("a") == cip0["a"]
+                  and isinstance(pzc.get("c"), str)
+                  and len(pzc["c"]) == len(cip0["q"])
+                  and all(cc == qq or not qq.isalpha()
+                          for cc, qq in zip(pzc["c"], cip0["q"])),
+                  "GET /puzzle cipher day 0 (live) -> the ciphertext, never the quote")
+            lb0 = json.loads((ROOT / "puzzles" / "lightbox" / "puzzles.json")
+                             .read_text(encoding="utf-8"))[0]
+            s, b = req("GET", "/api/puzzle?game=lightbox&day=0")
+            pzl = b.get("puzzle", {})
+            check(s == 200 and "g" not in pzl and "n" not in pzl
+                  and len(pzl.get("rc", [])) == 7 and len(pzl.get("cc", [])) == 7,
+                  "GET /puzzle lightbox day 0 (live) -> the clues, never the picture")
+            sf0 = json.loads((ROOT / "puzzles" / "sift" / "puzzles.json")
+                             .read_text(encoding="utf-8"))[0]
+            s, b = req("GET", "/api/puzzle?game=sift&day=0")
+            pzs = b.get("puzzle", {})
+            check(s == 200 and "cats" not in pzs
+                  and sorted(pzs.get("tiles", [])) ==
+                      sorted(t for c in sf0["cats"] for t in c["i"]),
+                  "GET /puzzle sift day 0 (live) -> the tiles, never the categories")
             s, b = req("GET", "/api/puzzle?game=timeline&day=0")
             ev = b.get("puzzle", {}).get("events", [])
             check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
@@ -784,6 +809,138 @@ def main():
                                     "answer": imperfect, "nonce": sgn2})
         check(s == 200 and b.get("count") == 4 and b.get("mean") == 4.5,
               "dealt submit: the session's sweep overrides the claimed loss")
+        # --- dealt sift: the categories never ship, so every trio travels
+        #     to the session and the spent test hands over its group ---
+        sf0 = json.loads((ROOT / "puzzles" / "sift" / "puzzles.json")
+                         .read_text(encoding="utf-8"))[0]
+        s, b = post("/api/deal", {"game": "sift", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "cats" not in b.get("puzzle", {})
+              and len(b.get("puzzle", {}).get("tiles", [])) == 12,
+              "deal: the board arrives without its categories")
+        sfn = b["nonce"]
+        sfw = [sf0["cats"][ci]["i"][0] for ci in (0, 1, 2)]
+        s, b = post("/api/guess", {"nonce": sfn, "pick": sfw})
+        check(s == 200 and b.get("verdict") == "miss"
+              and b.get("mistakes") == 1,
+              "guess: a wrong trio costs the first mistake")
+        s, _b = post("/api/guess", {"nonce": sfn, "pick": "not a tile"})
+        check(s == 400, "guess: sift refuses a bad pick")
+        s, b = post("/api/guess", {"nonce": sfn, "pick": list(sf0["cats"][0]["i"])})
+        check(s == 200 and b.get("verdict") == "hit"
+              and b.get("n") == sf0["cats"][0]["n"]
+              and b.get("final") is not True,
+              "guess: the spent test hands over its group")
+        s, _b = post("/api/guess", {"nonce": sfn, "pick": list(sf0["cats"][0]["i"])})
+        check(s == 400, "guess: a found group cannot be re-tested")
+        for ci in (1, 2, 3):
+            s, b = post("/api/guess", {"nonce": sfn,
+                                       "pick": list(sf0["cats"][ci]["i"])})
+        check(s == 200 and b.get("verdict") == "hit"
+              and b.get("final") is True,
+              "guess: the fourth group ends the day")
+        s, b = post("/api/submit", {"game": "sift", "day": TODAY, "id": "dv18",
+                                    "status": "won", "answer": [],
+                                    "meta": {"mistakes": 0}, "nonce": sfn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
+              "dealt submit: the session's grouping and mistake meter override the claim")
+        s, b = post("/api/deal", {"game": "sift", "day": TODAY})
+        sfn2 = b["nonce"]
+        for _i in range(4):
+            s, b = post("/api/guess", {"nonce": sfn2, "pick": sfw})
+        check(s == 200 and b.get("verdict") == "lost"
+              and b.get("reveal", {}).get("cats"),
+              "guess: the fourth miss spends the day, the board rides the spent round")
+        s, b = post("/api/submit", {"game": "sift", "day": TODAY, "id": "dv19",
+                                    "status": "won", "answer": [],
+                                    "meta": {"mistakes": 0}, "nonce": sfn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
+              "dealt submit: a lost sift day overrides the claimed win")
+        # --- dealt lightbox: the grid never ships, so every development
+        #     travels to the session and it meters the fog itself ---
+        lb0 = json.loads((ROOT / "puzzles" / "lightbox" / "puzzles.json")
+                         .read_text(encoding="utf-8"))[0]
+        s, b = post("/api/deal", {"game": "lightbox", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "g" not in b.get("puzzle", {}) and "n" not in b.get("puzzle", {})
+              and len(b.get("puzzle", {}).get("rc", [])) == 7,
+              "deal: the design arrives as clues, never the picture")
+        lbn = b["nonce"]
+        s, b = post("/api/guess", {"nonce": lbn, "grid": ["0000000"] * 7})
+        check(s == 200 and b.get("verdict") == "miss"
+              and b.get("mistakes") == 1 and b.get("need"),
+              "guess: a fogged development hands back its contradictions")
+        s, _b = post("/api/guess", {"nonce": lbn, "grid": "x"})
+        check(s == 400, "guess: lightbox refuses a bad grid")
+        lbgood = [r.replace("#", "1").replace(".", "0") for r in lb0["g"]]
+        s, b = post("/api/guess", {"nonce": lbn, "grid": lbgood})
+        check(s == 200 and b.get("verdict") == "won"
+              and b.get("reveal", {}).get("g") == lb0["g"]
+              and b.get("reveal", {}).get("n") == lb0["n"],
+              "guess: the clean development wins, the picture rides the reveal")
+        s, b = post("/api/submit", {"game": "lightbox", "day": TODAY,
+                                    "id": "dv20", "status": "won",
+                                    "answer": lbgood, "nonce": lbn})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
+              "dealt submit: the session's fog meter overrides the claim")
+        s, b = post("/api/deal", {"game": "lightbox", "day": TODAY})
+        lbn2 = b["nonce"]
+        for _i in range(4):
+            s, b = post("/api/guess", {"nonce": lbn2, "grid": ["0000000"] * 7})
+        check(s == 200 and b.get("verdict") == "lost"
+              and b.get("reveal", {}).get("g"),
+              "guess: the fourth fog spends the film")
+        s, b = post("/api/submit", {"game": "lightbox", "day": TODAY,
+                                    "id": "dv21", "status": "won",
+                                    "answer": lbgood, "nonce": lbn2})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.67,
+              "dealt submit: a fogged day overrides the claimed win")
+        # --- dealt cipher: the quote never ships, the substitution lives
+        #     server-side, and the session grades every check and meters
+        #     the hints ---
+        cip0 = json.loads((ROOT / "puzzles" / "cipher" / "puzzles.json")
+                          .read_text(encoding="utf-8"))[0]
+        s, b = post("/api/deal", {"game": "cipher", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "q" not in b.get("puzzle", {})
+              and b.get("puzzle", {}).get("a") == cip0["a"]
+              and isinstance(b.get("puzzle", {}).get("c"), str),
+              "deal: the ciphertext arrives, never the quote")
+        cpn = b["nonce"]
+        csub = {}
+        for cc, qq in zip(b["puzzle"]["c"], cip0["q"]):
+            if qq.isalpha():
+                csub[cc] = qq
+        s, b = post("/api/guess", {"nonce": cpn, "check": {}})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("right") == 0
+              and b.get("total") == len(csub),
+              "guess: an empty decode is answered with the count, never the letters")
+        s, b = post("/api/guess", {"nonce": cpn, "hint": 1, "have": {}})
+        check(s == 200 and b.get("verdict") == "hint" and b.get("hints") == 1
+              and csub.get(b.get("cipher")) == b.get("plain"),
+              "guess: a hint reveals one letter, metered by the session")
+        s, _b = post("/api/guess", {"nonce": cpn, "check": "x"})
+        check(s == 400, "guess: cipher refuses a bad decode")
+        s, b = post("/api/guess", {"nonce": cpn, "check": csub})
+        check(s == 200 and b.get("verdict") == "won"
+              and b.get("reveal", {}).get("q") == cip0["q"],
+              "guess: the full decode wins, the quote rides the spent round")
+        s, b = post("/api/submit", {"game": "cipher", "day": TODAY,
+                                    "id": "dv22", "status": "won",
+                                    "answer": "x", "nonce": cpn})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
+              "dealt submit: the session's decode and hint meter override the claim")
+        s, b = post("/api/deal", {"game": "cipher", "day": TODAY})
+        cpn2 = b["nonce"]
+        s, b = post("/api/guess", {"nonce": cpn2, "give": 1})
+        check(s == 200 and b.get("verdict") == "gave"
+              and b.get("reveal", {}).get("q") == cip0["q"],
+              "guess: the codebook opens only on the give-up")
+        s, b = post("/api/submit", {"game": "cipher", "day": TODAY,
+                                    "id": "dv23", "status": "won",
+                                    "answer": cip0["q"], "nonce": cpn2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
+              "dealt submit: a revealed codebook derives 0, never the claim")
 
     finally:
         proc.terminate()
@@ -1116,6 +1273,29 @@ def main():
                   and "al" not in b.get("puzzle", {})
                   and len(b.get("puzzle", {}).get("c", [])) == 5,
                   "cutover: the live museum day ships the clues, never the name")
+            s, b = req("GET", "/api/puzzle?game=cipher&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("q") == cip0["q"],
+                  "cutover: a replayed cipher day still carries its quote")
+            s, b = req("GET", "/api/puzzle?game=cipher&day=1", port=PORT7)
+            cip1 = json.loads((ROOT / "puzzles" / "cipher" / "puzzles.json")
+                              .read_text(encoding="utf-8"))[1]
+            check(s == 200 and "q" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("c", "")) == len(cip1["q"]),
+                  "cutover: the live cipher day ships the ciphertext, never the quote")
+            s, b = req("GET", "/api/puzzle?game=lightbox&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("g") == lb0["g"],
+                  "cutover: a replayed lightbox day still carries its picture")
+            s, b = req("GET", "/api/puzzle?game=lightbox&day=1", port=PORT7)
+            check(s == 200 and "g" not in b.get("puzzle", {})
+                  and b.get("puzzle", {}).get("rc"),
+                  "cutover: the live lightbox day ships the clues, never the picture")
+            s, b = req("GET", "/api/puzzle?game=sift&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("cats"),
+                  "cutover: a replayed sift day still carries its categories")
+            s, b = req("GET", "/api/puzzle?game=sift&day=1", port=PORT7)
+            check(s == 200 and "cats" not in b.get("puzzle", {})
+                  and len(b.get("puzzle", {}).get("tiles", [])) == 12,
+                  "cutover: the live sift day ships the tiles, never the categories")
     finally:
         proc7.terminate()
         try:

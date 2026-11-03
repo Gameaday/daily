@@ -275,6 +275,7 @@ async function pick(i){
     if (b.body.verdict === 'won'){
       S.status = 'won';
       S.lie = i;
+      S.reveal = { w: b.body.reveal.w };
       if (el) el.classList.add('lie','win');
       passageEl.classList.add('done');
       finish();

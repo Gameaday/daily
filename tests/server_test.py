@@ -5,7 +5,8 @@ Spawns the real server on a scratch port and exercises the API with urllib:
 health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
-sprint starting gun, session TTL), fresh-day counting (stale submits answered from the
+sprint starting gun, session TTL), the dealt cutover (the live rounds
+day ships without its key), fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
 day over midnight). Stdlib only - no pytest, no requests, no docker needed.
@@ -79,6 +80,7 @@ def main():
     scratch4 = tempfile.mkdtemp()
     scratch5 = tempfile.mkdtemp()
     scratch6 = tempfile.mkdtemp()
+    scratch7 = tempfile.mkdtemp()
     # Every instance boots with --epoch <today's ET date>: inside them the
     # current day index is 0 no matter the real calendar and no matter whether
     # the committed epoch lies in the past or the future, so this suite never
@@ -157,8 +159,9 @@ def main():
             check(s == 200 and b.get("puzzle", {}).get("l") == 5,
                   "GET /puzzle bogus day 0 -> lie is statement 5")
             s, b = req("GET", "/api/puzzle?game=rounds&day=0")
-            check(s == 200 and b.get("puzzle", {}).get("y") == 1215,
-                  "GET /puzzle rounds day 0 -> Magna Carta 1215")
+            check(s == 200 and b.get("puzzle", {}).get("q", "").startswith("King John")
+                  and "y" not in b.get("puzzle", {}) and "w" not in b.get("puzzle", {}),
+                  "GET /puzzle rounds day 0 (live) -> the question, never the key")
             s, b = req("GET", "/api/puzzle?game=timeline&day=0")
             ev = b.get("puzzle", {}).get("events", [])
             check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
@@ -752,6 +755,47 @@ def main():
             proc6.wait(timeout=5)
         except subprocess.TimeoutExpired:
             proc6.kill()
+
+    # --- the dealt cutover: the live rounds day ships without its key, and
+    #     a replayed day keeps it (the archive path grades locally). This
+    #     instance boots with a past epoch, so inside it day 0 is history
+    #     and day 1 is the live day ---
+    PORT7 = PORT + 6
+    proc7 = subprocess.Popen(
+        [sys.executable, str(ROOT / "scores" / "server.py"),
+         "--port", str(PORT7), "--host", "127.0.0.1", "--archive-dir", scratch7,
+         "--epoch", str(ET_TODAY - timedelta(days=1))],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        up = False
+        for _ in range(50):
+            try:
+                s, _b = req("GET", "/health", port=PORT7)
+                if s == 200:
+                    up = True
+                    break
+            except Exception:
+                pass
+            time.sleep(0.1)
+        if not up:
+            check(False, "cutover instance never came up on port %d" % PORT7)
+        else:
+            s, b = req("GET", "/api/puzzle?game=rounds&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("y") == 1215,
+                  "cutover: a replayed rounds day still carries its key")
+            s, b = req("GET", "/api/puzzle?game=rounds&day=1", port=PORT7)
+            check(s == 200 and "y" not in b.get("puzzle", {})
+                  and "w" not in b.get("puzzle", {}),
+                  "cutover: the live rounds day ships without its key")
+            s, b = req("GET", "/api/puzzle?game=bogus&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("l") == 5,
+                  "cutover: the other games' puzzles are untouched")
+    finally:
+        proc7.terminate()
+        try:
+            proc7.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc7.kill()
 
     # --- archive handoff (unit): a finished day collapses into a static,
     #     read-only snapshot and leaves the live state ---

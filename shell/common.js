@@ -201,11 +201,16 @@ const SHELL = (() => {
          self-computed value. The local points ride along only to mark the
          you-dot on later reads: on the evidence path the server never
          reads a number from the client. */
-      const evidence = (sub && typeof sub === 'object');
-      const value = evidence ? sub.points : sub;
+      /* a dealt round names its session: a nonce-bearing evidence post
+         reports the session's facts (the server counted them itself), and
+         a dealt generator post is checked against the server-stamped
+         window. Undealt games keep passing a bare number, as before. */
+      const isObj = !!(sub && typeof sub === 'object');
+      const evidence = isObj && !('value' in sub);
+      const value = evidence ? sub.points : (isObj ? sub.value : sub);
       const payload = JSON.stringify(evidence
-        ? { game: game, day: dayIndex, id: id, status: sub.status, answer: sub.answer, meta: sub.meta || {} }
-        : { game: game, day: dayIndex, value: value, id: id });
+        ? { game: game, day: dayIndex, id: id, status: sub.status, answer: sub.answer, meta: sub.meta || {}, nonce: sub.nonce || undefined }
+        : { game: game, day: dayIndex, value: value, id: id, nonce: (isObj && sub.nonce) || undefined });
       const post = (base) => fetch(base + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
         .then(r => {
           if (r.ok) return r.json();
@@ -322,6 +327,23 @@ const SHELL = (() => {
     };
     return tryBase(0);
   }
+  /* ---- dealt play client: POST /deal, /guess, /reveal ---- */
+  /* Same base walk as fetchPuzzle. Resolves {status, body} from the
+     service's JSON answer, or null when the service is unreachable; the
+     page owns what an error answer means for its round. Dealt rounds never
+     run in solo mode or in an archive replay, so callers guard those. */
+  function dealt(path, body){
+    const bases = ['/api', 'http://localhost:8787', 'http://127.0.0.1:8787'];
+    const payload = JSON.stringify(body);
+    const attempt = (i) => {
+      if (i >= bases.length) return Promise.resolve(null);
+      return fetch(bases[i] + path, { method:'POST', headers:{'Content-Type':'application/json'}, body: payload })
+        .then(r => r.json().then(j => ({ status: r.status, body: j }),
+                                 () => ({ status: r.status, body: null })))
+        .catch(() => attempt(i + 1));
+    };
+    return attempt(0);
+  }
   try {
     const icons = document.querySelector('.icons');
     if (icons && !icons.querySelector('.home-link')){
@@ -413,5 +435,5 @@ const SHELL = (() => {
   return { TZ, EPOCH_KEY, etKey, todayKey, todayIndex, dayIndex, num, $,
            isArchive, parseViewDay, archiveHref,
            makeStore, toast, nextETMidnight, startCountdown,
-           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, showUnavailable, recordStars, starTotal };
+           wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, dealt, showUnavailable, recordStars, starTotal };
 })();

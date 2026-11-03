@@ -48,7 +48,8 @@ Endpoints (with or without the /api prefix):
     POST /guess   {"nonce", "y"}                     -> the rounds verdict with server-side heat (the distance never crosses the wire)
     POST /reveal  {"nonce"}                          -> the sprint starting gun (t0 stamped once, never reset; the window is enforced at submit)
     GET  /dist?game=&day=[&v=]                     -> snapshot (today live, past days from the archive; v personalizes without tallying)
-    GET  /puzzle?game=&day=                         -> the day's puzzle
+    GET  /puzzle?game=&day=                         -> the day's puzzle (rounds on the live
+                   day ships no key: dealt play owns the live round)
     GET  /manifest                                  -> the scoring manifest (epoch, tz, ledger)
     GET  /health                                    -> {"ok": true, "day", "num"}
 
@@ -644,7 +645,7 @@ def snapshot(game, day, value=None, st=None, spec=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.2"
+    server_version = "warmup-curve/4.3"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -808,7 +809,14 @@ class Handler(BaseHTTPRequestHandler):
                     self._json({"error": "no puzzles"}, 404)
                     return
                 idx = day % len(entry)
-                self._json({"game": game, "day": day, "puzzle": entry[idx], "today": today},
+                pz = entry[idx]
+                # the dealt cutover: rounds is played server-dealt on the live
+                # day, so today's puzzle ships without its key - the round
+                # lives in /deal and /guess. A replayed day is long over, so
+                # its key stays and the archive path keeps grading locally.
+                if game == "rounds" and day == today:
+                    pz = {k: v for k, v in pz.items() if k not in ("y", "w")}
+                self._json({"game": game, "day": day, "puzzle": pz, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
         else:
             self._json({"error": "not found"}, 404)
@@ -1009,8 +1017,11 @@ class Handler(BaseHTTPRequestHandler):
                     sess["done"] = True
                     sess["verdict"] = "lost"
                     sess["done_at"] = now
-                    payload = {"verdict": "lost", "guesses": sess["guesses"],
-                               "reveal": {"y": key, "w": pz.get("w")}}
+                    # the reveal hands over the key anyway, so the sixth row
+                    # still reads like the five before it: heat and direction
+                    payload = dict({"verdict": "lost", "guesses": sess["guesses"],
+                                    "reveal": {"y": key, "w": pz.get("w")}},
+                                   **round_feedback(y, key))
                 else:
                     payload = dict({"verdict": "miss",
                                     "guesses": sess["guesses"]},

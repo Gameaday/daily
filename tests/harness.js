@@ -14,6 +14,8 @@
    - document.querySelectorAll returns [] (the games null-guard the few
      querySelector results they use)
    - fetch logs every POST and resolves a canned global-curve snapshot
+     (the dealt endpoints answer through the test's own mini dealer when
+     one is supplied)
    - localStorage is a plain object, so a "reload" is just booting again
      with the same store - which is exactly how day-rollover gets tested
    - Date is a subclass whose now() returns the harness clock, so tests are
@@ -84,7 +86,7 @@ function createHarness(readGame, readShared){
     static now(){ return activeNow; }
   }
 
-  function makeEnv(store, servePuzzle, search){
+  function makeEnv(store, servePuzzle, search, serveDealt){
     const els = {};
     const fetchLog = [];
     const el = id => els[id] || (els[id] = new El(id));
@@ -113,6 +115,16 @@ function createHarness(readGame, readShared){
            one, mirroring the scores service's server-gated delivery */
         if (body === null && servePuzzle && String(url).indexOf('/puzzle') >= 0)
           return Promise.resolve({ ok: true, json: async () => servePuzzle });
+        /* the dealt endpoints answer through the test's own mini dealer
+           ({status, body}), mirroring /deal /guess /reveal */
+        if (body !== null && serveDealt && /\/(deal|guess|reveal)$/.test(String(url))){
+          const ans = serveDealt(String(url), body);
+          return Promise.resolve({
+            ok: !ans || !(ans.status >= 400),
+            status: (ans && ans.status) || 200,
+            json: async () => (ans && ans.body !== undefined) ? ans.body : ans
+          });
+        }
         return Promise.resolve({ ok: true, json: async () => SNAPSHOT });
       },
       location: { reload(){}, search: search || '' },
@@ -127,7 +139,7 @@ function createHarness(readGame, readShared){
      A missing name throws a ReferenceError - loud by design. */
   function boot(game, expose, opts){
     activeNow = opts.now;
-    const env = makeEnv(opts.store, opts.servePuzzle, opts.search);
+    const env = makeEnv(opts.store, opts.servePuzzle, opts.search, opts.serveDealt);
     const html = opts.html !== undefined ? opts.html : readGame(game);
     const m = html.match(/<script>([\s\S]*?)<\/script>/);
     if (!m) throw new Error(game + ': no script block found');

@@ -9,17 +9,32 @@ async function run(h, ctx){
   const { readStore } = ctx;
   const serve = (game, puzzle) => ({ game, day: 0, puzzle, today: 0 });
 
-  /* rounds: slide to the served year */
+  /* rounds: the live day is dealt - the served puzzle carries no key, so
+     the round runs on a session and the server counts and grades */
   {
     const live = h.boot('rounds', ['S', 'EV'], { now: T0, store: {} });
-    const served = serve('rounds', live.x.EV);
-    const r = h.boot('rounds', ['S', 'EV', 'EVENTS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true });
+    const full = live.x.EV;
+    const served = serve('rounds', { t: full.t, q: full.q });
+    const seen = [];
+    const serveDealt = (url, body) => {
+      if (/\/deal$/.test(url))
+        return { status: 200, body: { nonce: 'g1', today: 0, puzzle: served.puzzle } };
+      seen.push(body);
+      if (body.y === full.y)
+        return { status: 200, body: { verdict: 'won', guesses: seen.length,
+          reveal: { y: full.y, w: full.w } } };
+      return { status: 200, body: { verdict: 'miss', guesses: seen.length,
+        heat: 'scalding', sq: '\uD83D\uDFE9', hint: 'go later \u00b7 right decade' } };
+    };
+    const r = h.boot('rounds', ['S', 'EV', 'EVENTS'], { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     h.ok(r.x.EVENTS === undefined, 'gated: rounds online boot has no bank');
     await h.flush();
     h.ok(r.env.els.qtext.textContent.indexOf(served.puzzle.q) >= 0, 'gated: rounds served question rendered');
-    r.env.els.slider.value = String(served.puzzle.y);
+    r.env.els.slider.value = String(full.y);
     r.env.els.btnLock.click();
-    h.eq(r.x.S.status, 'won', 'gated: rounds won on the served year');
+    await h.flush();
+    h.eq(r.x.S.status, 'won', 'gated: rounds won on the dealt session');
+    h.eq(r.x.S.nonce, 'g1', 'gated: the dealt session is held');
   }
   /* fermi: guess the served answer */
   {

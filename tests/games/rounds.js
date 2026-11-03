@@ -39,6 +39,61 @@ async function run(h){
     const q = h.lastPost(r.env).body;
     h.eq(q.status, 'lost', 'rounds: a loss posts the lost status');
     h.eq(q.meta.guesses, 6, 'rounds: six guesses ride the wire');
+
+    /* --- the online live day is dealt: the served puzzle carries no key,
+       so the round runs on a session and the server counts and grades --- */
+    {
+      const seen = [];
+      const serveDealt = (url, body) => {
+        if (/\/deal$/.test(url))
+          return { status: 200, body: { nonce: 'rn0', today: 0,
+            puzzle: { t: 'England', q: 'King John seals the Magna Carta at Runnymede.' } } };
+        seen.push(body);
+        if (body.y === 1215)
+          return { status: 200, body: { verdict: 'won', guesses: seen.length,
+            reveal: { y: 1215, w: 'Runnymede, June 1215 - the king first put his seal under the law.' } } };
+        return { status: 200, body: { verdict: 'miss', guesses: seen.length,
+          heat: 'cold', sq: '\uD83D\uDFE5', hint: 'go earlier \u00b7 wrong century' } };
+      };
+      const served = { game: 'rounds', day: 0, today: 0,
+        puzzle: { t: 'England', q: 'King John seals the Magna Carta at Runnymede.' } };
+      const r = h.boot('rounds', ['S', 'EV'], { now: T0, store: {}, stubBanks: true,
+        servePuzzle: served, serveDealt });
+      await h.flush();
+      h.ok(r.x.EV.y === undefined, 'dealt: the live day arrives without its key');
+      r.env.els.slider.value = '1900';
+      r.env.els.btnLock.click();
+      await h.flush();
+      h.eq(r.x.S.guesses.length, 1, 'dealt: the server counts the first guess');
+      h.ok(r.env.els.guesses.innerHTML.indexOf('go earlier') >= 0, 'dealt: the server hint renders');
+      r.env.els.slider.value = '1215';
+      r.env.els.btnLock.click();
+      await h.flush();
+      h.eq(r.x.S.status, 'won', 'dealt: the server verdict wins the round');
+      h.eq(seen.length, 2, 'dealt: two guesses crossed the wire');
+      h.eq(seen[0].nonce, 'rn0', 'dealt: a guess names its session');
+      const p = h.lastPost(r.env).body;
+      h.eq(p.nonce, 'rn0', 'dealt: the submit names the session');
+      h.eq(p.answer, 1215, 'dealt: the revealed year is the answer');
+      const again = h.boot('rounds', ['S', 'EV'], { now: T0, store: r.env.store,
+        stubBanks: true, servePuzzle: served });
+      await h.flush();
+      h.eq(again.x.S.status, 'won', 'dealt: the finished round survives the reload');
+      h.ok(again.env.els.why.textContent.indexOf('Runnymede') >= 0,
+        'dealt: the reveal retells without the key shipping again');
+    }
+
+    /* --- a replayed day still grades locally and never touches the wire --- */
+    {
+      const r = h.boot('rounds', ['S', 'EV'], { now: T1, store: {}, search: '?d=0' });
+      await h.flush();
+      h.ok(r.x.EV.y === 1215, 'replay: a past day keeps its key');
+      r.env.els.slider.value = '1215';
+      r.env.els.btnLock.click();
+      h.eq(r.x.S.status, 'won', 'replay: the replayed round grades locally');
+      await h.flush();
+      h.eq(r.env.fetchLog.length, 0, 'replay: a replay never posts');
+    }
 }
 
 module.exports = { name: 'rounds', run };

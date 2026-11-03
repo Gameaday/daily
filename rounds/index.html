@@ -172,10 +172,12 @@ function hintOf(g){
   else if (Math.floor(g.y / 10) === Math.floor(EV.y / 10)) parts.push('right decade');
   return parts.join(' \u00b7 ');
 }
+/* the dealt round names the heat; the row styles map back to the page's own classes */
+const HEAT_CLS = { scalding:'hot', hot:'hot', warm:'warm', cold:'cold' };
 function renderGuesses(){
   $('guesses').innerHTML = S.guesses.map(g => {
-    const h = heatOf(g.off);
-    const hint = hintOf(g);
+    const h = g.sq ? { cls: HEAT_CLS[g.name] || 'cold', name: g.name, sq: g.sq } : heatOf(g.off);
+    const hint = g.hint || hintOf(g);
     return `<div class="grow ${g.off === 0 ? 'win' : h.cls}">
       <span><span class="gy">${g.y}</span> <span class="hd">· ${h.name} · ${hint}</span></span>
       <span>${g.off === 0 ? '\uD83C\uDFC6' : h.sq}</span></div>`;
@@ -183,7 +185,7 @@ function renderGuesses(){
 }
 
 function shareText(){
-  const sq = S.guesses.map(g => g.off === 0 ? '\uD83C\uDFC6' : heatOf(g.off).sq).join('');
+  const sq = S.guesses.map(g => g.off === 0 ? '\uD83C\uDFC6' : (g.sq || heatOf(g.off).sq)).join('');
   if (S.status === 'won') return `Rounds No. ${num} \u00b7 ${S.guesses.length}/6 guesses ${sq}${S.stars ? ' \u00b7 1\u2605' : ''}`;
   return `Rounds No. ${num} \u00b7 out of rounds ${sq}`;
 }
@@ -202,14 +204,18 @@ function showReveal(){
     $('verdict').textContent = 'Six rounds gone — the year got away.';
     $('verdict').style.color = 'var(--accent)';
   }
-  $('why').textContent = `The year was ${EV.y}. ${EV.w}`;
+  /* the live day's puzzle ships without its key, so the ending writes the
+     reveal into state: a reload retells it even though the key never
+     ships again */
+  const rv = S.reveal || { y: EV.y, w: EV.w };
+  $('why').textContent = `The year was ${rv.y}. ${rv.w}`;
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best ? st.best + ' guesses' : '\u2014'}`;
   $('reveal').classList.add('show');
   /* the day is pinned - the slider row goes away entirely */
   $('sliderrow').style.display = 'none';
   syncBoard({ status: S.status,
               answer: S.guesses.length ? S.guesses[S.guesses.length - 1].y : null,
-              meta: { guesses: S.guesses.length }, points: S.pts });
+              meta: { guesses: S.guesses.length }, points: S.pts, nonce: S.nonce });
 }
 
 /* ---------------- play ---------------- */
@@ -228,14 +234,82 @@ $('yearbox').addEventListener('input', () => {
 $('yearbox').addEventListener('change', () => setYear($('yearbox').value));
 $('btnDown').addEventListener('click', () => setYear(+$('slider').value - 1));
 $('btnUp').addEventListener('click', () => setYear(+$('slider').value + 1));
-$('btnLock').addEventListener('click', () => {
+/* the dealt round (online live day): the page has no key, so the server
+   opens the session on the first lock, counts every guess, and answers
+   with heat and direction. The key crosses the wire exactly once, in the
+   reveal that ends the round; the submit names the session, so the
+   server's count is the one that counts */
+async function ensureSession(){
+  if (S.nonce) return S.nonce;
+  const d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex });
+  if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+    S.nonce = d.body.nonce;
+    if (d.body.puzzle) EV = Object.assign({}, EV, d.body.puzzle);
+    saveState();
+    return S.nonce;
+  }
+  return null;
+}
+$('btnLock').addEventListener('click', async () => {
   if (!EV) return;
   if (S.status !== 'playing') return;
   const y = +$('slider').value;
+  if (typeof EV.y !== 'number' && !isSolo() && !SHELL.isArchive){
+    if (!await ensureSession()){
+      toastMsg('the round service is not answering right now');
+      return;
+    }
+    const r = await SHELL.dealt('/guess', { nonce: S.nonce, y });
+    if (!r){
+      toastMsg('the round service is not answering right now');
+      return;
+    }
+    if (r.status === 409){
+      toastMsg('this round is already over');
+      return;
+    }
+    if (r.status !== 200){
+      /* the session aged out mid-round: the round is void and the next
+         lock deals a fresh one (a finished round still submits through
+         the 1.1 evidence path) */
+      S.nonce = null;
+      saveState();
+      toastMsg('this round expired, lock again for a fresh one');
+      return;
+    }
+    const b = r.body;
+    if (b.verdict === 'miss'){
+      S.guesses.push({ y, name: b.heat, sq: b.sq, hint: b.hint });
+      saveState();
+      renderGuesses();
+      return;
+    }
+    EV.y = b.reveal.y; EV.w = b.reveal.w;
+    S.reveal = { y: b.reveal.y, w: b.reveal.w };
+    S.guesses.push({ y, off: b.verdict === 'won' ? 0 : Math.abs(y - b.reveal.y),
+                     name: b.heat, sq: b.sq, hint: b.hint });
+    if (b.verdict === 'won'){
+      S.status = 'won';
+      const st = S.stats;
+      st.played++; st.streak++;
+      st.max = Math.max(st.max, st.streak);
+      st.best = st.best == null ? S.guesses.length : Math.min(st.best, S.guesses.length);
+    } else {
+      S.status = 'lost';
+      S.stats.played++; S.stats.streak = 0;
+    }
+    saveState();
+    renderGuesses();
+    showReveal();
+    return;
+  }
+  /* solo, a replay, or a served puzzle that still carries its key: the
+     page grades the guess itself, exactly as before */
   const off = Math.abs(y - EV.y);
   S.guesses.push({ y, off });
   if (off === 0){
     S.status = 'won';
+    S.reveal = { y: EV.y, w: EV.w };
     const st = S.stats;
     st.played++; st.streak++;
     st.max = Math.max(st.max, st.streak);
@@ -245,6 +319,7 @@ $('btnLock').addEventListener('click', () => {
     showReveal();
   } else if (S.guesses.length >= 6){
     S.status = 'lost';
+    S.reveal = { y: EV.y, w: EV.w };
     S.stats.played++; S.stats.streak = 0;
     saveState();
     renderGuesses();

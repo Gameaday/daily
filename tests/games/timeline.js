@@ -60,14 +60,17 @@ async function run(h){
            spent round --- */
     const tlFull = h.boot('timeline', ['EVO'], { now: T0, store: {} });
     const tlEvents = tlFull.x.EVO;
-    const tlServed = { day: 0, today: 0,
-      puzzle: { events: tlEvents.map(e => ({ t: e.t, q: e.q })) } };
+    /* every dealt boot serves its own fresh strip: the reveal folds the
+       won years into the served events, so a shared fixture would carry
+       the years into the next boot and read as undealt */
+    const tlServed = () => ({ day: 0, today: 0,
+      puzzle: { events: tlEvents.map(e => ({ t: e.t, q: e.q })) } });
     const tlWant = tlEvents.map((e, i) => i)
       .sort((a, b) => tlEvents[a].y - tlEvents[b].y);
     let tlChecks = 0;
     const tlDealer = (url, body) => {
       if (/\/deal$/.test(url))
-        return { status: 200, body: { nonce: 'tl1', today: 0, puzzle: tlServed.puzzle } };
+        return { status: 200, body: { nonce: 'tl1', today: 0, puzzle: tlServed().puzzle } };
       if (body.give !== undefined)
         return { status: 200, body: { verdict: 'gave', reveal: { events: tlEvents } } };
       tlChecks++;
@@ -80,7 +83,7 @@ async function run(h){
     };
     const tlStore = {};
     const r2 = h.boot('timeline', ['S', 'EVENTS'],
-      { now: T0, store: tlStore, servePuzzle: tlServed, stubBanks: true, serveDealt: tlDealer });
+      { now: T0, store: tlStore, servePuzzle: tlServed(), stubBanks: true, serveDealt: tlDealer });
     h.ok(r2.x.EVENTS === undefined, 'timeline: dealt online boot has no bank');
     await h.flush();
     h.ok(String(r2.env.els.lane.innerHTML).indexOf('????') >= 0,
@@ -112,14 +115,14 @@ async function run(h){
     h.ok(tlp.answer.every((v, i) => i === 0 || tlp.answer[i - 1] <= v),
       'timeline: the years ride up the wire');
     const r3 = h.boot('timeline', ['S'], { now: T0, store: tlStore,
-      servePuzzle: tlServed, stubBanks: true, serveDealt: tlDealer });
+      servePuzzle: tlServed(), stubBanks: true, serveDealt: tlDealer });
     await h.flush();
     h.eq(r3.x.S.status, 'won', 'timeline: the won dealt day survives the reload');
     h.ok(String(r3.env.els.lane.innerHTML).indexOf('????') < 0,
       'timeline: the kept reveal retells the years on reload');
     const tlStore2 = {};
     const r4 = h.boot('timeline', ['S'], { now: T0, store: tlStore2,
-      servePuzzle: tlServed, stubBanks: true, serveDealt: tlDealer });
+      servePuzzle: tlServed(), stubBanks: true, serveDealt: tlDealer });
     await h.flush();
     r4.env.els.btnGiveUp.click();
     await h.flush();

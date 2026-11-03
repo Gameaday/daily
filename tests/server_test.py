@@ -7,7 +7,7 @@ stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
 sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
 (the live rounds, brunch, fermi, well-actually, museum, bogus, superlative,
-sift, lightbox and cipher days ship without their keys),
+sift, lightbox, cipher, timeline and thread days ship without their keys),
 fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
 the dedupe set that survives a restart (a unit section that imports the module and walks a
@@ -221,25 +221,28 @@ def main():
                   "GET /puzzle sift day 0 (live) -> the tiles, never the categories")
             s, b = req("GET", "/api/puzzle?game=timeline&day=0")
             ev = b.get("puzzle", {}).get("events", [])
-            check(s == 200 and len(ev) == 5, "GET /puzzle timeline day 0 -> 5 events")
-            check(len({e.get("y") for e in ev}) == 5, "GET /puzzle timeline -> distinct years")
+            check(s == 200 and len(ev) == 5,
+                  "GET /puzzle timeline day 0 (live) -> 5 events")
+            check(all("y" not in e for e in ev),
+                  "GET /puzzle timeline day 0 (live) -> the events, never their years")
             store = json.loads((ROOT / "puzzles" / "timeline" / "puzzles.json").read_text(encoding="utf-8"))
-            exp = [store["bank"][i] for i in store["picks"][0]]
-            check(ev == exp, "GET /puzzle timeline matches the committed picks")
+            exp = [{k: v for k, v in store["bank"][i].items() if k != "y"}
+                   for i in store["picks"][0]]
+            check(ev == exp, "GET /puzzle timeline matches the committed picks, stripped")
             s, b = req("GET", "/api/puzzle?game=thread&day=0")
             pz = b.get("puzzle", {})
             check(s == 200 and pz.get("s", {}).get("id") and pz.get("e", {}).get("id"),
-                  "GET /puzzle thread day 0 -> start and end nodes")
-            check(2 <= len(pz.get("m", [])) <= 4, "GET /puzzle thread -> 2-4 middles")
-            check(len(pz.get("d", [])) == 2, "GET /puzzle thread -> two decoys")
-            check(len(pz.get("links", [])) == len(pz.get("m", [])) + 1,
-                  "GET /puzzle thread -> one link per hop")
+                  "GET /puzzle thread day 0 (live) -> start and end nodes")
+            check("m" not in pz and "d" not in pz and "links" not in pz
+                  and pz.get("k"),
+                  "GET /puzzle thread day 0 (live) -> the tray, never the chain")
             tstore = json.loads((ROOT / "puzzles" / "thread" / "puzzles.json").read_text(encoding="utf-8"))
             tp = tstore["picks"][0]
             check(pz["s"]["id"] == tp["s"] and pz["e"]["id"] == tp["e"]
-                  and [n["id"] for n in pz["m"]] == tp["m"]
-                  and [n["id"] for n in pz["d"]] == tp["d"],
-                  "GET /puzzle thread matches the committed picks")
+                  and pz["k"] == len(tp["m"])
+                  and sorted(n["id"] for n in pz["tray"]) ==
+                      sorted(list(tp["m"]) + list(tp["d"])),
+                  "GET /puzzle thread matches the committed picks, offered as one tray")
             s, b = req("GET", "/api/puzzle?game=timeline&day=-1")
             check(s == 404, "GET /puzzle windowed negative day -> 404")
             s, b = req("GET", "/api/puzzle?game=nosuchgame&day=0")
@@ -941,6 +944,95 @@ def main():
                                     "answer": cip0["q"], "nonce": cpn2})
         check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
               "dealt submit: a revealed codebook derives 0, never the claim")
+        # --- dealt timeline: the years never ship, so every check travels
+        #     to the session and it meters the checks itself ---
+        tlev = [tl["bank"][i] for i in tl["picks"][0]]
+        tlwant = sorted(range(len(tlev)), key=lambda i: tlev[i]["y"])
+        tlwrong = list(tlwant)
+        tlwrong[0], tlwrong[1] = tlwrong[1], tlwrong[0]
+        s, b = post("/api/deal", {"game": "timeline", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and all("y" not in e
+                      for e in b.get("puzzle", {}).get("events", [])),
+              "deal: the events arrive without their years")
+        tln = b["nonce"]
+        s, b = post("/api/guess", {"nonce": tln, "order": tlwrong})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("checks") == 1
+              and b.get("right") == len(tlwant) - 2
+              and b.get("lock") == [False, False] + [True] * (len(tlwant) - 2),
+              "guess: a wrong order locks the cards that stand, never a year")
+        s, _b = post("/api/guess", {"nonce": tln, "order": [0, 1, 2, 3]})
+        check(s == 400, "guess: timeline refuses a bad order")
+        s, b = post("/api/guess", {"nonce": tln, "order": tlwant})
+        check(s == 200 and b.get("verdict") == "won" and b.get("checks") == 2
+              and b.get("reveal", {}).get("events", [])[0].get("y") is not None,
+              "guess: the right order wins, the years ride the spent round")
+        s, _b = post("/api/guess", {"nonce": tln, "order": tlwant})
+        check(s == 409, "guess: a finished timeline session takes no more checks")
+        s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
+                                    "id": "dv24", "status": "won",
+                                    "answer": [], "nonce": tln})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.67,
+              "dealt submit: the session's order and check meter override the claim")
+        s, b = post("/api/deal", {"game": "timeline", "day": TODAY})
+        tln2 = b["nonce"]
+        s, b = post("/api/guess", {"nonce": tln2, "give": 1})
+        check(s == 200 and b.get("verdict") == "gave"
+              and len(b.get("reveal", {}).get("events", [])) == len(tlwant),
+              "guess: the give-up lays the years out")
+        s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
+                                    "id": "dv25", "status": "won",
+                                    "answer": tyears, "nonce": tln2})
+        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.25,
+              "dealt submit: a given-up timeline day overrides the claimed win")
+        # --- dealt thread: the chain never ships, so every check travels
+        #     to the session and it meters the checks itself ---
+        thm = list(tp["m"])
+        thd = list(tp["d"])
+        s, b = post("/api/deal", {"game": "thread", "day": TODAY})
+        check(s == 200 and isinstance(b.get("nonce"), str)
+              and "m" not in b.get("puzzle", {})
+              and "d" not in b.get("puzzle", {})
+              and "links" not in b.get("puzzle", {})
+              and b.get("puzzle", {}).get("k") == len(thm)
+              and sorted(n["id"] for n in b.get("puzzle", {}).get("tray", []))
+                  == sorted(thm + thd),
+              "deal: the tray arrives, never the chain or its links")
+        thn = b["nonce"]
+        thwrong = list(reversed(thm))
+        thright = sum(1 for i in range(len(thm)) if thwrong[i] == thm[i])
+        s, b = post("/api/guess", {"nonce": thn, "chain": thwrong})
+        check(s == 200 and b.get("verdict") == "miss" and b.get("checks") == 1
+              and b.get("right") == thright
+              and isinstance(b.get("lock"), list),
+              "guess: a wrong chain locks the figures that stand")
+        s, _b = post("/api/guess", {"nonce": thn, "chain": ["nope"] * len(thm)})
+        check(s == 400, "guess: thread refuses a bad chain")
+        s, b = post("/api/guess", {"nonce": thn, "chain": thm})
+        check(s == 200 and b.get("verdict") == "won" and b.get("checks") == 2
+              and b.get("reveal", {}).get("m") == thm
+              and b.get("reveal", {}).get("d") == thd
+              and len(b.get("reveal", {}).get("links", [])) == len(thm) + 1,
+              "guess: the true chain wins, the links ride the spent round")
+        s, _b = post("/api/guess", {"nonce": thn, "chain": thm})
+        check(s == 409, "guess: a finished thread session takes no more checks")
+        s, b = post("/api/submit", {"game": "thread", "day": TODAY,
+                                    "id": "dv26", "status": "won",
+                                    "answer": ["x"], "nonce": thn})
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.0,
+              "dealt submit: the session's chain and check meter override the claim")
+        s, b = post("/api/deal", {"game": "thread", "day": TODAY})
+        thn2 = b["nonce"]
+        s, b = post("/api/guess", {"nonce": thn2, "give": 1})
+        check(s == 200 and b.get("verdict") == "gave"
+              and b.get("reveal", {}).get("m") == thm,
+              "guess: the give-up lays the chain out")
+        s, b = post("/api/submit", {"game": "thread", "day": TODAY,
+                                    "id": "dv27", "status": "won",
+                                    "answer": [tp["s"]] + thm + [tp["e"]],
+                                    "nonce": thn2})
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
+              "dealt submit: a given-up thread day derives 0, never the claim")
 
     finally:
         proc.terminate()
@@ -1296,6 +1388,22 @@ def main():
             check(s == 200 and "cats" not in b.get("puzzle", {})
                   and len(b.get("puzzle", {}).get("tiles", [])) == 12,
                   "cutover: the live sift day ships the tiles, never the categories")
+            s, b = req("GET", "/api/puzzle?game=timeline&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("events", [])[0].get("y")
+                  is not None,
+                  "cutover: a replayed timeline day still carries its years")
+            s, b = req("GET", "/api/puzzle?game=timeline&day=1", port=PORT7)
+            check(s == 200 and all("y" not in e
+                                  for e in b.get("puzzle", {}).get("events", [])),
+                  "cutover: the live timeline day ships the events, never the years")
+            s, b = req("GET", "/api/puzzle?game=thread&day=0", port=PORT7)
+            check(s == 200 and b.get("puzzle", {}).get("m") is not None,
+                  "cutover: a replayed thread day still carries its chain")
+            s, b = req("GET", "/api/puzzle?game=thread&day=1", port=PORT7)
+            check(s == 200 and "m" not in b.get("puzzle", {})
+                  and "links" not in b.get("puzzle", {})
+                  and b.get("puzzle", {}).get("tray"),
+                  "cutover: the live thread day ships the tray, never the chain")
     finally:
         proc7.terminate()
         try:

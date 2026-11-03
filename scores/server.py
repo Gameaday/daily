@@ -61,13 +61,15 @@ Endpoints (with or without the /api prefix):
                     museum {"name": str} or {"clue": 1} | bogus {"pick": int} |
                     superlative {"pick": int} | sift {"pick": [str, str, str]} |
                     lightbox {"grid": [7 rows of "0"|"1"|"2"]} |
-                    cipher {"check": {cipher: plain}} or {"hint": 1, "have": {...}} or {"give": 1}}
+                    cipher {"check": {cipher: plain}} or {"hint": 1, "have": {...}} or {"give": 1} |
+                    timeline {"order": [event indexes]} or {"give": 1} |
+                    thread {"chain": [figure ids]} or {"give": 1}}
               res  {"verdict": "won"|"lost"|"gave"|"found"|"miss"|"clue"|"hit"|"hint"
                     (required),
                     "reveal": object (optional, terminal rounds only),
                     "left"|"guesses"|"score"|"bonus"|"clueIdx"|"a"|"final"|
                     "cat"|"n"|"i"|"bad"|"need"|"mistakes"|"right"|"total"|
-                    "cipher"|"plain"|"hints" (optional)}
+                    "cipher"|"plain"|"hints"|"lock"|"checks" (optional)}
       /reveal req  {"nonce": str (required)} (sprint only)
       /submit with a "nonce" (optional): the session's graded verdict, answer
               and meta override whatever the client claims
@@ -195,14 +197,19 @@ META_CAPS = {
 # categories, lightbox ships the clues its grid implies but never the
 # grid or its name, and cipher ships a ciphertext under a server-side
 # substitution, so the session grades every trio, development and
-# decode, and meters the mistakes and hints itself. The
+# decode, and meters the mistakes and hints itself. The windowed check
+# games deal too: timeline ships its events without their years and
+# thread ships its offered figures as one shuffled tray without the
+# chain, the decoy split or the links, so both sessions grade every
+# check and meter the checks themselves. The
 # residual honesty note that stays open: a rounds loss reveal hands over
 # the key a second session could mine, and sprint's solved count is
 # still the client's word inside the server-stamped window.
 # ---------------------------------------------------------------------------
 
 DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
-               "bogus", "superlative", "sift", "lightbox", "cipher")
+               "bogus", "superlative", "sift", "lightbox", "cipher",
+               "timeline", "thread")
 # the per-game keys a live dealt day must never ship (brunch keeps its
 # table but not the impostor index or the reveal; fermi keeps the
 # question but not the cited value; well-actually keeps the statement
@@ -212,12 +219,14 @@ DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
 # cohort but never a round's answer index; cipher keeps the author but
 # never the quote or the substitution; lightbox keeps the clues but
 # never the grid or its name; sift keeps the tiles but never their
-# categories)
+# categories; timeline keeps its events but never their years; thread
+# keeps its ends but never the chain, the decoy split or the links)
 DEALT_STRIP = {"rounds": ("y", "w"), "brunch": ("a", "w"), "fermi": ("a", "w"),
                "well-actually": ("l", "a", "c", "w"),
                "museum": ("a", "al", "w"),
                "bogus": ("l", "w"), "superlative": (),
-               "cipher": ("q",), "lightbox": ("g", "n"), "sift": ("cats",)}
+               "cipher": ("q",), "lightbox": ("g", "n"), "sift": ("cats",),
+               "timeline": ("y",), "thread": ("m", "d", "links")}
 # the nested list-item keys a stripped live day must also lose
 # (superlative's questions keep their text but never their answer index)
 DEALT_DEEP = {"superlative": {"q": ("a",)}}
@@ -280,10 +289,12 @@ def dealt_puzzle(game, pz, day=0):
     """The day's puzzle as a dealt game may ship it. The transform games
     ship a derived puzzle instead of the stored one: lightbox ships the
     clues its grid implies, cipher ships the ciphertext (the substitution
-    lives server-side), and sift ships the tiles without their
-    categories. Every other dealt game ships the stored puzzle minus the
-    keys in DEALT_STRIP and the nested keys in DEALT_DEEP, so the live
-    day's truth never crosses the wire."""
+    lives server-side), sift ships the tiles without their categories,
+    timeline ships its events without their years, and thread ships its
+    offered figures as one shuffled tray (the chain, the decoy split and
+    the links stay server-side). Every other dealt game ships the stored
+    puzzle minus the keys in DEALT_STRIP and the nested keys in
+    DEALT_DEEP, so the live day's truth never crosses the wire."""
     if game == "lightbox" and isinstance(pz.get("g"), list):
         cells = [[1 if ch == "#" else 0 for ch in row] for row in pz["g"]]
         return {"rc": [_runs(row) for row in cells],
@@ -300,6 +311,17 @@ def dealt_puzzle(game, pz, day=0):
             j = int(rnd() * (i + 1))
             tiles[i], tiles[j] = tiles[j], tiles[i]
         return {"t": pz.get("t"), "tiles": tiles}
+    if game == "timeline" and isinstance(pz.get("events"), list):
+        return {"events": [{k: v for k, v in ev.items() if k != "y"}
+                           for ev in pz["events"]]}
+    if game == "thread" and isinstance(pz.get("m"), list):
+        tray = list(pz["m"]) + list(pz["d"])
+        rnd = _mulberry32(day * 7919 + 17)
+        for i in range(len(tray) - 1, 0, -1):
+            j = int(rnd() * (i + 1))
+            tray[i], tray[j] = tray[j], tray[i]
+        return {"s": pz.get("s"), "e": pz.get("e"), "k": len(pz["m"]),
+                "tray": tray}
     out = {k: v for k, v in pz.items()
            if k not in DEALT_STRIP.get(game, ())}
     for path, keys in DEALT_DEEP.get(game, {}).items():
@@ -395,6 +417,33 @@ def _list_entry(game, day):
     store = PUZZLES.get(game)
     if isinstance(store, list) and store:
         return store[day % len(store)]
+    return None
+
+
+def _window_entry(game, day):
+    """The day's full puzzle for a windowed dict-store game (timeline,
+    thread): the same entry the /puzzle endpoint serves, before any dealt
+    strip. None when the day falls outside the precomputed window."""
+    store = PUZZLES.get(game)
+    picks = store.get("picks") if isinstance(store, dict) else None
+    if not isinstance(picks, list) or not (0 <= day < len(picks)):
+        return None
+    if game == "thread":
+        bank = store["bank"]
+        nodes = {nd["id"]: nd for nd in bank["nodes"]}
+        emap = {}
+        for ed in bank["edges"]:
+            emap.setdefault(ed["a"], {})[ed["b"]] = ed
+            emap.setdefault(ed["b"], {})[ed["a"]] = ed
+        pk = picks[day]
+        seq = [pk["s"]] + list(pk["m"]) + [pk["e"]]
+        links = [emap[a][b] for a, b in zip(seq, seq[1:])]
+        return {"s": nodes[pk["s"]], "e": nodes[pk["e"]],
+                "m": [nodes[i] for i in pk["m"]],
+                "d": [nodes[i] for i in pk["d"]], "links": links}
+    if game == "timeline":
+        bank = store["bank"]
+        return {"events": [bank[i] for i in picks[day]]}
     return None
 
 
@@ -787,7 +836,7 @@ def snapshot(game, day, value=None, st=None, spec=None):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "warmup-curve/4.7"
+    server_version = "warmup-curve/4.8"
 
     def log_message(self, fmt, *args):
         pass  # nothing is logged anywhere, on purpose
@@ -915,26 +964,18 @@ class Handler(BaseHTTPRequestHandler):
                 return
             entry = PUZZLES[game]
             if game == "thread":
-                # thread: picks index the graph bank; the served puzzle carries
-                # the start, the end, the chain, the decoys, and the links
-                picks = entry["picks"]
-                if day < 0 or day >= len(picks):
+                # thread: picks index the graph bank; a replayed day carries
+                # the start, the end, the chain, the decoys and the links,
+                # while the live dealt day ships the offered figures as one
+                # shuffled tray, never the chain
+                pz = _window_entry(game, day)
+                if pz is None:
                     self._json({"error": "no puzzles"}, 404)
                     return
-                bank = entry["bank"]
-                nodes = {nd["id"]: nd for nd in bank["nodes"]}
-                emap = {}
-                for ed in bank["edges"]:
-                    emap.setdefault(ed["a"], {})[ed["b"]] = ed
-                    emap.setdefault(ed["b"], {})[ed["a"]] = ed
-                pk = picks[day]
-                seq = [pk["s"]] + list(pk["m"]) + [pk["e"]]
-                links = [emap[a][b] for a, b in zip(seq, seq[1:])]
+                if day == today:
+                    pz = dealt_puzzle(game, pz, day)
                 self._json({"game": game, "day": day, "today": today,
-                            "puzzle": {"s": nodes[pk["s"]], "e": nodes[pk["e"]],
-                                       "m": [nodes[i] for i in pk["m"]],
-                                       "d": [nodes[i] for i in pk["d"]],
-                                       "links": links}},
+                            "puzzle": pz},
                            cache="public, max-age=%d" % seconds_to_midnight())
             elif isinstance(entry, dict) and "picks" in entry:
                 # windowed game: precomputed picks into the bank (timeline)
@@ -944,7 +985,12 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 bank = entry["bank"]
                 events = [bank[i] for i in picks[day]]
-                self._json({"game": game, "day": day, "puzzle": {"events": events}, "today": today},
+                pz = {"events": events}
+                # the dealt cutover: the live day ships its events without
+                # their years, so the order grades at the session
+                if day == today and game == "timeline":
+                    pz = dealt_puzzle(game, pz, day)
+                self._json({"game": game, "day": day, "puzzle": pz, "today": today},
                            cache="public, max-age=%d" % seconds_to_midnight())
             else:
                 if not entry:
@@ -1049,6 +1095,9 @@ class Handler(BaseHTTPRequestHandler):
                     elif game in ("sift", "lightbox"):
                         # the session metered the mistakes itself
                         data["meta"] = {"mistakes": sess.get("mistakes", 0)}
+                    elif game in ("timeline", "thread"):
+                        # the session metered the checks itself
+                        data["meta"] = {"checks": sess.get("guesses", 0)}
                     else:
                         data["meta"] = {}
             value, reason = validate_evidence(game, day, data)
@@ -1108,9 +1157,9 @@ class Handler(BaseHTTPRequestHandler):
         dealt round (rounds heat, the one-shot verdicts, well-actually's
         picks and correction, museum's names and clues, bogus's picks,
         superlative's rounds, sift's trios, lightbox's developments,
-        cipher's checks and hints), /reveal is the
-        sprint starting gun. SESSIONS mutates under LOCK; a key leaves
-        only when a round ends."""
+        cipher's checks and hints, timeline's and thread's checks), /reveal
+        is the sprint starting gun. SESSIONS mutates under LOCK; a key
+        leaves only when a round ends."""
         now = time.time()
         if path == "/deal":
             game = data.get("game")
@@ -1132,10 +1181,13 @@ class Handler(BaseHTTPRequestHandler):
                 entry = PUZZLES.get(game) or []
                 pz = None
                 if game in DEALT_STRIP:
-                    if not entry:
+                    if game in ("timeline", "thread"):
+                        pz = _window_entry(game, day)
+                    elif entry:
+                        pz = entry[day % len(entry)]
+                    if pz is None:
                         self._json({"error": "no puzzles"}, 404)
                         return
-                    pz = entry[day % len(entry)]
                 SESSIONS[nonce] = {"game": game, "day": day, "created": now,
                                    "ip": self.client_address[0], "guesses": 0,
                                    "done": False, "verdict": None, "t0": None,
@@ -1164,7 +1216,8 @@ class Handler(BaseHTTPRequestHandler):
                 if sess["game"] not in ("rounds", "brunch", "fermi",
                                         "well-actually", "museum",
                                         "bogus", "superlative",
-                                        "sift", "lightbox", "cipher"):
+                                        "sift", "lightbox", "cipher",
+                                        "timeline", "thread"):
                     self._json({"error": "this session takes no guesses"}, 400)
                     return
                 if sess["done"]:
@@ -1545,6 +1598,100 @@ class Handler(BaseHTTPRequestHandler):
                             # right, never which ones
                             payload = {"verdict": "miss", "right": right,
                                        "total": len(order)}
+                elif sess["game"] == "timeline":
+                    pz = _window_entry("timeline", sess["day"])
+                    if pz is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    evs = pz["events"]
+                    if data.get("give") is not None:
+                        sess["done"] = True
+                        sess["verdict"] = "gave"
+                        sess["ans"] = sorted(ev["y"] for ev in evs)
+                        sess["done_at"] = now
+                        # the give-up lays the years out: the events ride
+                        # the spent visit
+                        payload = {"verdict": "gave",
+                                   "reveal": {"events": evs}}
+                    else:
+                        order = data.get("order")
+                        if not isinstance(order, list) \
+                                or len(order) != len(evs) \
+                                or not all(isinstance(i, int)
+                                           and not isinstance(i, bool)
+                                           and 0 <= i < len(evs)
+                                           for i in order) \
+                                or len(set(order)) != len(order):
+                            self._json({"error": "bad order"}, 400)
+                            return
+                        sess["guesses"] += 1
+                        want = sorted(range(len(evs)),
+                                      key=lambda i: evs[i]["y"])
+                        lock = [order[i] == want[i]
+                                for i in range(len(evs))]
+                        right = sum(lock)
+                        if right == len(evs):
+                            sess["done"] = True
+                            sess["verdict"] = "won"
+                            sess["ans"] = [evs[i]["y"] for i in want]
+                            sess["done_at"] = now
+                            # the spent round hands over the years
+                            payload = {"verdict": "won",
+                                       "checks": sess["guesses"],
+                                       "reveal": {"events": evs}}
+                        else:
+                            # honest feedback: which positions stand,
+                            # never a year
+                            payload = {"verdict": "miss", "right": right,
+                                       "lock": lock,
+                                       "checks": sess["guesses"]}
+                elif sess["game"] == "thread":
+                    pz = _window_entry("thread", sess["day"])
+                    if pz is None:
+                        self._json({"error": "no answer key"}, 404)
+                        return
+                    mids = [nd["id"] for nd in pz["m"]]
+                    dids = [nd["id"] for nd in pz["d"]]
+                    if data.get("give") is not None:
+                        sess["done"] = True
+                        sess["verdict"] = "gave"
+                        sess["ans"] = [pz["s"]["id"]] + mids + \
+                                [pz["e"]["id"]]
+                        sess["done_at"] = now
+                        # the give-up lays the chain out: the middles, the
+                        # decoys and the links ride the spent visit
+                        payload = {"verdict": "gave",
+                                   "reveal": {"m": mids, "d": dids,
+                                              "links": pz["links"]}}
+                    else:
+                        chain = data.get("chain")
+                        if not isinstance(chain, list) \
+                                or len(chain) != len(mids) \
+                                or not all(isinstance(x, str) and x
+                                           for x in chain) \
+                                or len(set(chain)) != len(chain) \
+                                or not set(chain) <= (set(mids) | set(dids)):
+                            self._json({"error": "bad chain"}, 400)
+                            return
+                        sess["guesses"] += 1
+                        lock = [chain[i] == mids[i]
+                                for i in range(len(mids))]
+                        right = sum(lock)
+                        if right == len(mids):
+                            sess["done"] = True
+                            sess["verdict"] = "won"
+                            sess["ans"] = [pz["s"]["id"]] + mids + \
+                                [pz["e"]["id"]]
+                            sess["done_at"] = now
+                            # the spent round hands over the chain
+                            payload = {"verdict": "won",
+                                       "checks": sess["guesses"],
+                                       "reveal": {"m": mids, "d": dids,
+                                                  "links": pz["links"]}}
+                        else:
+                            payload = {"verdict": "miss", "right": right,
+                                       "lock": lock,
+                                       "checks": sess["guesses"]}
                 else:
                     y = data.get("y")
                     if isinstance(y, bool) or not isinstance(y, int) \

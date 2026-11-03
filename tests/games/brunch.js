@@ -49,20 +49,20 @@ async function run(h){
         reveal: { a: full.a, w: full.w } } };
     };
     const dstore = {};
-    const r = h.boot('brunch', ['S', 'EV'], { now: T0, store: dstore,
+    const rd = h.boot('brunch', ['S', 'EV'], { now: T0, store: dstore,
       servePuzzle: { game: 'brunch', day: 0, puzzle: served, today: 0 },
       stubBanks: true, serveDealt });
     await h.flush();
-    h.ok(r.env.els.qtext.textContent.indexOf(served.q) >= 0,
+    h.ok(rd.env.els.qtext.textContent.indexOf(served.q) >= 0,
       'brunch: the dealt table renders its question');
     const off = (full.a + 1) % 4;
-    r.env.els['opt' + off].click();
+    rd.env.els['opt' + off].click();
     await h.flush();
-    h.eq(r.x.S.status, 'lost', 'brunch: the session grades the wrong pick lost');
-    h.eq(r.x.S.nonce, 'b1', 'brunch: the dealt session is held');
-    h.eq(r.env.els.why.textContent, full.w, 'brunch: the reveal rides the spent pick');
-    h.eq(h.lastPost(r.env).body.nonce, 'b1', 'brunch: the evidence names the session');
-    h.eq(h.lastPost(r.env).body.status, 'lost', 'brunch: the lost pick posts lost');
+    h.eq(rd.x.S.status, 'lost', 'brunch: the session grades the wrong pick lost');
+    h.eq(rd.x.S.nonce, 'b1', 'brunch: the dealt session is held');
+    h.eq(rd.env.els.why.textContent, full.w, 'brunch: the reveal rides the spent pick');
+    h.eq(h.lastPost(rd.env).body.nonce, 'b1', 'brunch: the evidence names the session');
+    h.eq(h.lastPost(rd.env).body.status, 'lost', 'brunch: the lost pick posts lost');
     h.eq(deals, 1, 'brunch: one deal carries the live round');
     const again = h.boot('brunch', ['S', 'EV'], { now: T0, store: dstore,
       servePuzzle: { game: 'brunch', day: 0, puzzle: served, today: 0 },

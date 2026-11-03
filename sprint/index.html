@@ -231,10 +231,41 @@ function renderDoneList(){
   $('donelist').innerHTML = S.solved.map((i, k) => `<li>${(S.words && S.words[k]) || [...(scrambles[i])].sort().join('')}</li>`).join('');
 }
 
+/* the starting gun moves server-side: the first keystroke deals a
+   sprint session and /reveal stamps the server's clock once, idempotently,
+   so no reload or second tab can restart it. The local startAt still
+   drives the visible countdown; the server stamp is what the finish is
+   checked against. A lost stamp heals on the next boot while the clock
+   still has time left */
+let gunBusy = false;
+async function gunFire(){
+  if (S.gun || gunBusy || S.status !== 'playing' || SHELL.isSolo() || SHELL.isArchive) return;
+  gunBusy = true;
+  try {
+    let nonce = S.nonce;
+    if (!nonce){
+      const d = await SHELL.dealt('/deal', { game: SYNC_GAME, day: dayIndex });
+      if (d && d.status === 200 && d.body && typeof d.body.nonce === 'string'){
+        S.nonce = d.body.nonce;
+        nonce = S.nonce;
+        saveState();
+      } else {
+        return;
+      }
+    }
+    const r = await SHELL.dealt('/reveal', { nonce });
+    if (r && r.status === 200 && r.body && r.body.ok){
+      S.gun = 1;
+      saveState();
+    }
+  } finally {
+    gunBusy = false;
+  }
+}
 /* ---------------- play ---------------- */
 $('guess').addEventListener('keydown', e => {
   if (e.key === 'Enter'){
-    if (!S.startAt) S.startAt = Date.now();
+    if (!S.startAt){ S.startAt = Date.now(); gunFire(); }
     const val = e.target.value.trim().toUpperCase();
     if (!val) return;
     if (S.status !== 'playing' || S.solved.includes(S.idx)) return;
@@ -255,6 +286,7 @@ $('guess').addEventListener('keydown', e => {
     }
   } else if (e.key.length === 1 && !S.startAt){
     S.startAt = Date.now();
+    gunFire();
   }
 });
 $('btnSkip').addEventListener('click', () => {
@@ -337,7 +369,9 @@ function showReveal(){
   $('btnSkip').disabled = true;
   $('btnShuffle').style.display = 'none';
   $('bigclock').textContent = S.status === 'won' ? fmtClock(TOTAL_MS - timeLeft()) : '0:00';
-  syncBoard(S.solvedCount);
+  /* the finish names the session: the server checks the claim against
+     its own stamp, so a solved count only counts inside the window */
+  syncBoard(S.nonce ? { value: S.solvedCount, nonce: S.nonce } : S.solvedCount);
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);
@@ -372,6 +406,9 @@ if (S.status === 'playing'){
   if (!S.shownAt){ S.shownAt = Date.now(); saveState(); }
   renderWord();
   updateShuffleBtn();
+  /* a reload mid-round heals a stamp the first keystroke never landed:
+     the server stamps once, so this cannot restart the clock */
+  if (S.startAt && !S.gun && timeLeft() > 0) gunFire();
   if (S.startAt && timeLeft() <= 0) finish('lost');
 } else {
   showReveal();

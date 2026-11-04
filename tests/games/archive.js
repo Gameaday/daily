@@ -102,6 +102,27 @@ async function run(h, ctx){
     h.ok(empty.indexOf('closed') >= 0, 'archive: an empty day still says closed');
     h.ok(empty.indexOf('today') === -1, 'archive: an empty day is never called today');
   }
+
+  /* ---- the you-mark and the honest tail ---- */
+  {
+    const b = h.boot('brunch', ['SHELL'], { now: T2, store: {} });
+    b.x.SHELL.renderBoard({ count: 3, beat: 1, mean: 2.5,
+      bins: [{ lo: 0, hi: 1, count: 2, you: true }, { lo: 1, hi: 2, count: 1, you: false }] });
+    const html = b.env.els.curve.innerHTML;
+    h.ok(html.indexOf('you beat 1 of 3 players') >= 0,
+      'curve: the tail names the size of the field');
+    h.ok(html.indexOf('1 other on your mark') >= 0,
+      'curve: the tail counts the company on your mark');
+    h.ok(html.indexOf('<circle') >= 0, 'curve: the you-mark is a dot on the curve');
+    h.ok(html.indexOf('role="img"') >= 0, 'curve: the chart speaks to screen readers');
+    const lane = html.match(/<text class="cyou"[^>]*y="(\d+)"/);
+    h.ok(!!lane && Number(lane[1]) >= 79,
+      'curve: the you-label rides its own lane under the chart, never inside the line');
+    b.x.SHELL.renderBoard({ count: 1, beat: 0, mean: null,
+      bins: [{ lo: 0, hi: 1, count: 1, you: true }] });
+    h.ok(b.env.els.curve.innerHTML.indexOf('your mark is the whole curve so far') >= 0,
+      'curve: the day\u2019s first play owns the whole curve');
+  }
 }
 
 module.exports = { name: 'archive', run };

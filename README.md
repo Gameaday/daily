@@ -96,8 +96,8 @@ numbers settle.
 ## The global curve
 
 Every game can show how you fared relative to everyone else: a distribution
-of results with your bar highlighted, roughly how many you beat, and the
-global average. No names, no high-score tables, just the shape of the day.
+of results with your mark riding the curve, how many of the field you beat,
+and the global average. No names, no high-score tables, just the shape of the day.
 
 The scoring model, on purpose:
 

@@ -247,7 +247,10 @@ const SHELL = (() => {
     /* the day's shape as one smoothed curve: every bin is a point at its
        midpoint, its height is its share of the busiest bin, and a spline
        through the points reads like the bell the day actually was. The
-       you-mark rides its own point, and the bin edges label the floor. */
+       you-mark is a dot riding the curve at your bin with a hairline down
+       to the floor, and the word itself sits in its own lane under the
+       bin labels - it never renders inside the line, whatever shape the
+       day's bell takes. */
     const W = 320, L = 4, RGT = 316, BASE = 64, TOP = 8;
     const bins = d.bins, n = bins.length;
     const maxBar = Math.max(...bins.map(b => b.count), 1);
@@ -267,20 +270,31 @@ const SHELL = (() => {
     const you = bins.findIndex(b => b.you);
     let mark = '';
     if (you >= 0){
-      const mx = Math.min(RGT - 10, Math.max(L + 10, xs[you]));
+      const mx = Math.min(RGT - 12, Math.max(L + 12, xs[you]));
       mark = '<line x1="' + fx(xs[you]) + '" y1="' + BASE + '" x2="' + fx(xs[you]) + '" y2="' + fx(ys[you]) + '" stroke="#b3541e" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>' +
-        '<text class="cyou" x="' + fx(mx) + '" y="' + Math.max(11, ys[you] - 6) + '" font-size="10" font-weight="700" fill="#b3541e" text-anchor="middle">you</text>';
+        '<circle cx="' + fx(xs[you]) + '" cy="' + fx(ys[you]) + '" r="3.2" fill="#b3541e" stroke="#fffdf7" stroke-width="1.5"/>' +
+        '<text class="cyou" x="' + fx(mx) + '" y="96" font-size="9" font-weight="700" fill="#b3541e" text-anchor="middle">you</text>';
     }
     const labels = bins.map((b, i) =>
       '<text x="' + fx(xs[i]) + '" y="78" font-size="9" fill="#7a6f5d" text-anchor="middle">' + b.lo + '</text>').join('');
-    const svg = '<svg viewBox="0 0 ' + W + ' 100" style="width:100%; max-width:340px; display:block; margin:2px auto 0;">' +
+    const aria = 'global curve of ' + d.count + (d.count === 1 ? ' play' : ' plays') +
+      (typeof d.beat === 'number' ? ', you beat ' + d.beat : '') +
+      (typeof d.mean === 'number' ? ', average ' + d.mean : '');
+    const svg = '<svg viewBox="0 0 ' + W + ' 106" role="img" aria-label="' + aria + '" style="width:100%; max-width:340px; display:block; margin:2px auto 0;">' +
       '<path d="' + area + '" fill="#b3541e" opacity="0.12"/>' +
       '<path d="' + line + '" fill="none" stroke="#b3541e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
       mark + labels + '</svg>';
     const closed = d.archived === true;
+    /* the honest tail: the size of the field you beat some of, the company
+       on your mark, the average - and on the day's very first play, a
+       curve that is all yours so far */
     const tail = (typeof d.beat === 'number')
-      ? '<div class="curve-note">you beat ' + d.beat + (d.beat === 1 ? ' player' : ' players') +
-        (typeof d.mean === 'number' ? ' \u00b7 avg ' + d.mean : '') + '</div>'
+      ? (d.count === 1
+        ? '<div class="curve-note">your mark is the whole curve so far</div>'
+        : '<div class="curve-note">you beat ' + d.beat + ' of ' + d.count + ' players' +
+          (you >= 0 && bins[you].count > 1 ? ' \u00b7 ' + (bins[you].count - 1) +
+            (bins[you].count === 2 ? ' other on your mark' : ' others on your mark') : '') +
+          (typeof d.mean === 'number' ? ' \u00b7 avg ' + d.mean : '') + '</div>')
       : '';
     box.innerHTML =
       '<div class="curve-head">global curve \u00b7 ' + d.count + (d.count === 1 ? ' play' : ' plays') + (closed ? ' this day' : ' today') + '</div>' +

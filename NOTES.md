@@ -19,18 +19,6 @@ state is the end-of-day archive under DATA_DIR (default /opt/data/daily).
 A red validate publishes nothing, and a rollback is setting the previous tag
 in .env. The scores service stays in-memory and consolidated only.
 
-## Curve representation cleanup
-
-Today every game renders the histogram plus a "you: better than N of M"
-sentence and the global average. Opportunity: drop the prose entirely and
-let the chart do the talking, the way racing-style puzzle games do - the
-distribution itself with an unmistakable you-marker (accent bar, tick, and
-a tiny "you" label under your bin). One glance, zero words.
-
-The server already returns everything needed (bins with a you-flag, mean,
-count). It is a pure client-side change, a single edit to renderBoard in
-shell/common.js.
-
 ## Valid-guesses bank (Wordnik, decided 2026-10-27)
 
 Future guess-validating games get a wider "we'll accept it" bank built from

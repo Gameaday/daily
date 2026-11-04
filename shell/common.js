@@ -546,3 +546,30 @@ const SHELL = (() => {
            makeStore, toast, nextETMidnight, startCountdown,
            wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, dealt, showUnavailable, recordStars, starTotal, makeDealt };
 })();
+
+/* ---- first light: the once-a-day sunrise (shell/dawn.js + dawn.css) ---- */
+/* Any page can be the first page of the day, so the shell loads the
+   dawn module everywhere and hands it the day facts. The module keeps
+   the once-per-ET-day marker itself, so the sun rises wherever you
+   enter from and never twice in one day. The loader is the only seam:
+   visuals in dawn.css, trigger and cleanup in dawn.js. */
+(function(){
+  try {
+    var me = document.currentScript;
+    if (!me || !/shell\/common\.js(\?.*)?$/.test(me.src || '')) return;
+    var base = me.src.replace(/shell\/common\.js.*$/, 'shell/');
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = base + 'dawn.css';
+    document.head.appendChild(css);
+    var js = document.createElement('script');
+    js.src = base + 'dawn.js';
+    js.onload = function(){
+      if (window.DAWN) window.DAWN.init({
+        key: SHELL.todayKey, num: SHELL.num,
+        dayIndex: SHELL.dayIndex, dateText: SHELL.pdateText()
+      });
+    };
+    document.head.appendChild(js);
+  } catch (e){ /* the dawn is a garnish: it never breaks a page */ }
+})();

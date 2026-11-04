@@ -13,6 +13,22 @@
     "y": 1876
   },
   {
+    "id": "adrianople",
+    "n": "The Battle of Adrianople",
+    "q": "Goths destroy a Roman army and the emperor falls at Adrianople.",
+    "y": 378,
+    "month": 8,
+    "day": 9
+  },
+  {
+    "id": "ain-jalut",
+    "n": "The Battle of Ain Jalut",
+    "q": "The Mamluks stop the Mongol advance at Ain Jalut.",
+    "y": 1260,
+    "month": 9,
+    "day": 3
+  },
+  {
     "id": "alaska-purchase",
     "n": "The Alaska Purchase",
     "q": "The United States purchases Alaska from Russia.",
@@ -303,6 +319,22 @@
     "y": 1964
   },
   {
+    "id": "clermont-council",
+    "n": "The Council of Clermont",
+    "q": "Urban II preaches the First Crusade at Clermont.",
+    "y": 1095,
+    "month": 11,
+    "day": 27
+  },
+  {
+    "id": "columbia-first-flight",
+    "n": "The First Shuttle Flight",
+    "q": "Columbia carries two astronauts to orbit on the first shuttle flight.",
+    "y": 1981,
+    "month": 4,
+    "day": 12
+  },
+  {
     "id": "columbus-landfall",
     "n": "The Landfall of Columbus",
     "q": "Columbus makes landfall in the Americas.",
@@ -336,6 +368,14 @@
     "q": "The delegates meet in Philadelphia to write a constitution.",
     "y": 1787,
     "month": 5
+  },
+  {
+    "id": "crecy",
+    "n": "The Battle of Crécy",
+    "q": "English longbowmen cut down French chivalry at Crécy.",
+    "y": 1346,
+    "month": 8,
+    "day": 26
   },
   {
     "id": "cuban-missile-crisis",
@@ -381,6 +421,14 @@
     "day": 4
   },
   {
+    "id": "defenestration-of-prague",
+    "n": "The Defenestration of Prague",
+    "q": "Prague Protestants throw imperial envoys from a window and a war begins.",
+    "y": 1618,
+    "month": 5,
+    "day": 23
+  },
+  {
     "id": "discovery-of-radium",
     "n": "The Discovery of Radium",
     "q": "Pierre and Marie Curie announce the discovery of radium.",
@@ -398,6 +446,14 @@
     "n": "Don Quixote",
     "q": "The first part of Don Quixote appears in Madrid bookshops.",
     "y": 1605
+  },
+  {
+    "id": "dos-de-mayo",
+    "n": "The Dos de Mayo",
+    "q": "Madrid rises against the French and is shot down in its streets.",
+    "y": 1808,
+    "month": 5,
+    "day": 2
   },
   {
     "id": "double-helix",
@@ -418,6 +474,14 @@
     "n": "The First Earth Day",
     "q": "Millions mark the first Earth Day across the United States.",
     "y": 1970
+  },
+  {
+    "id": "east-india-company",
+    "n": "The East India Company",
+    "q": "Elizabeth I charters the East India Company on the year’s last day.",
+    "y": 1600,
+    "month": 12,
+    "day": 31
   },
   {
     "id": "edison-lamp",
@@ -459,11 +523,27 @@
     "y": 1946
   },
   {
+    "id": "euro-launched",
+    "n": "The Launch of the Euro",
+    "q": "Eleven countries wake to a single shared currency.",
+    "y": 1999,
+    "month": 1,
+    "day": 1
+  },
+  {
     "id": "execution-of-charles-i",
     "n": "The Execution of Charles I",
     "q": "Charles I is executed after a public trial.",
     "y": 1649,
     "month": 1
+  },
+  {
+    "id": "facebook-launches",
+    "n": "The Launch of Facebook",
+    "q": "A Harvard dorm project opens as a campus social network.",
+    "y": 2004,
+    "month": 2,
+    "day": 4
   },
   {
     "id": "fall-of-constantinople",
@@ -586,6 +666,14 @@
     "q": "Parisians storm the Bastille.",
     "y": 1789,
     "month": 7,
+    "day": 14
+  },
+  {
+    "id": "friedland",
+    "n": "The Battle of Friedland",
+    "q": "Napoleon crushes the Russians between a river and their own lines at Friedland.",
+    "y": 1807,
+    "month": 6,
     "day": 14
   },
   {
@@ -774,6 +862,14 @@
     "y": 1069
   },
   {
+    "id": "henry-iv-assassinated",
+    "n": "The Assassination of Henry IV",
+    "q": "A fanatic stabs Henry IV of France dead in his carriage.",
+    "y": 1610,
+    "month": 5,
+    "day": 14
+  },
+  {
     "id": "higgs-boson-discovered",
     "n": "The Higgs Boson",
     "q": "CERN announces the discovery of the Higgs boson.",
@@ -874,6 +970,14 @@
     "day": 22
   },
   {
+    "id": "joan-of-arc-executed",
+    "n": "The Execution of Joan of Arc",
+    "q": "England burns Joan of Arc at the stake in Rouen.",
+    "y": 1431,
+    "month": 5,
+    "day": 30
+  },
+  {
     "id": "july-crisis",
     "n": "The July Crisis",
     "q": "The July ultimatums turn a Balkan murder into a general war.",
@@ -906,12 +1010,28 @@
     "y": 1498
   },
   {
+    "id": "lechfeld",
+    "n": "The Battle of Lechfeld",
+    "q": "Otto I breaks the Magyar raids for good at Lechfeld.",
+    "y": 955,
+    "month": 8,
+    "day": 10
+  },
+  {
     "id": "legnica",
     "n": "The Battle of Legnica",
     "q": "The Mongol columns defeat the Polish knights at Legnica.",
     "y": 1241,
     "month": 4,
     "day": 9
+  },
+  {
+    "id": "lehman-collapse",
+    "n": "The Collapse of Lehman Brothers",
+    "q": "Lehman Brothers files the largest bankruptcy in history and the crisis goes global.",
+    "y": 2008,
+    "month": 9,
+    "day": 15
   },
   {
     "id": "lepanto",
@@ -954,10 +1074,26 @@
     "day": 1
   },
   {
+    "id": "live-aid",
+    "n": "Live Aid",
+    "q": "A globe-spanning concert plays for famine relief from Wembley to Philadelphia.",
+    "y": 1985,
+    "month": 7,
+    "day": 13
+  },
+  {
     "id": "long-march-ends",
     "n": "The End of the Long March",
     "q": "Mao’s column of marchers reaches Shaanxi after a year on the move.",
     "y": 1935
+  },
+  {
+    "id": "louise-brown-born",
+    "n": "The Birth of Louise Brown",
+    "q": "Louise Brown is born, the first child conceived outside the body.",
+    "y": 1978,
+    "month": 7,
+    "day": 25
   },
   {
     "id": "louisiana-purchase",
@@ -979,6 +1115,14 @@
     "q": "The Soviet Luna 2 probe becomes the first craft to reach the Moon.",
     "y": 1959,
     "month": 9
+  },
+  {
+    "id": "macintosh-ships",
+    "n": "The Launch of the Macintosh",
+    "q": "The Macintosh puts a mouse and a desktop on the office desk.",
+    "y": 1984,
+    "month": 1,
+    "day": 24
   },
   {
     "id": "magellan-departs",
@@ -1007,6 +1151,14 @@
     "y": 1324
   },
   {
+    "id": "manzikert",
+    "n": "The Battle of Manzikert",
+    "q": "The Seljuks trap a Byzantine army and take the emperor at Manzikert.",
+    "y": 1071,
+    "month": 8,
+    "day": 26
+  },
+  {
     "id": "marathon",
     "n": "The Battle of Marathon",
     "d": "Battle, 490 BCE",
@@ -1024,6 +1176,14 @@
     "q": "The airborne attempt to bridge the Rhine falls short at Arnhem.",
     "y": 1944,
     "month": 9
+  },
+  {
+    "id": "mary-stuart-executed",
+    "n": "The Execution of Mary Stuart",
+    "q": "Mary Queen of Scots meets the block at Fotheringhay.",
+    "y": 1587,
+    "month": 2,
+    "day": 8
   },
   {
     "id": "mayflower-landing",
@@ -1108,6 +1268,14 @@
     "y": 325
   },
   {
+    "id": "nika-riots",
+    "n": "The Nika Riots",
+    "q": "Chariot-team fans burn half of Constantinople in the Nika riots.",
+    "y": 532,
+    "month": 1,
+    "day": 13
+  },
+  {
     "id": "nineteenth-amendment",
     "n": "The Nineteenth Amendment",
     "q": "The 19th Amendment is ratified, giving American women the vote.",
@@ -1122,6 +1290,14 @@
     "month": 10
   },
   {
+    "id": "nixon-resigns",
+    "n": "The Resignation of Nixon",
+    "q": "Facing impeachment, Nixon resigns and leaves the White House.",
+    "y": 1974,
+    "month": 8,
+    "day": 9
+  },
+  {
     "id": "origin-of-species",
     "n": "On the Origin of Species",
     "q": "Darwin publishes On the Origin of Species.",
@@ -1133,6 +1309,14 @@
     "n": "The Panama Canal",
     "q": "The Panama Canal opens to its first ship.",
     "y": 1914
+  },
+  {
+    "id": "pavia",
+    "n": "The Battle of Pavia",
+    "q": "Imperial arquebusiers shatter the French army and take its king at Pavia.",
+    "y": 1525,
+    "month": 2,
+    "day": 24
   },
   {
     "id": "peasants-revolt",
@@ -1169,6 +1353,14 @@
     "y": 1757,
     "month": 6,
     "day": 23
+  },
+  {
+    "id": "poitiers",
+    "n": "The Battle of Poitiers",
+    "q": "The Black Prince takes the king of France captive at Poitiers.",
+    "y": 1356,
+    "month": 9,
+    "day": 19
   },
   {
     "id": "pong-released",
@@ -1274,6 +1466,14 @@
     "month": 4
   },
   {
+    "id": "sack-of-rome",
+    "n": "The Sack of Rome",
+    "q": "Unpaid imperial soldiers storm Rome and drive the pope into a fortress.",
+    "y": 1527,
+    "month": 5,
+    "day": 6
+  },
+  {
     "id": "salamis",
     "n": "The Battle of Salamis",
     "d": "Battle, 480 BCE",
@@ -1329,6 +1529,14 @@
     "y": 2001,
     "month": 9,
     "day": 11
+  },
+  {
+    "id": "seven-years-war",
+    "n": "The Seven Years War",
+    "q": "Britain declares war on France and the fighting spreads from Ohio to Bengal.",
+    "y": 1756,
+    "month": 5,
+    "day": 17
   },
   {
     "id": "shakespeare-birth",
@@ -1435,6 +1643,14 @@
     "n": "The Statue of Liberty",
     "q": "The Statue of Liberty is dedicated in New York harbor.",
     "y": 1886
+  },
+  {
+    "id": "stirling-bridge",
+    "n": "The Battle of Stirling Bridge",
+    "q": "Wallace and Moray cut an English army in two at Stirling Bridge.",
+    "y": 1297,
+    "month": 9,
+    "day": 11
   },
   {
     "id": "stockton-darlington",
@@ -1607,6 +1823,14 @@
     "y": 1863,
     "month": 7,
     "day": 4
+  },
+  {
+    "id": "viking-1-lands",
+    "n": "The Viking 1 Landing",
+    "q": "Viking 1 lands on Mars and sends back the first pictures from the surface.",
+    "y": 1976,
+    "month": 7,
+    "day": 20
   },
   {
     "id": "wall-street-crash",

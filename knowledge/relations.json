@@ -4472,5 +4472,47 @@
     "b": "qianlong",
     "w": "The grandson who grew up in the peace the longest reign had won",
     "t": "family"
+  },
+  {
+    "a": "lewis-chessmen",
+    "b": "edinburgh",
+    "y": 1831,
+    "w": "Eleven of the ninety-three pieces came out of the dune in 1831 and stay in the National Museum of Scotland; the British Museum keeps the rest",
+    "t": "housed-at"
+  },
+  {
+    "a": "last-supper",
+    "b": "milan",
+    "y": 1498,
+    "w": "Still on the refectory wall of Santa Maria delle Grazie, where it has been since Leonardo finished it in 1498",
+    "t": "housed-at"
+  },
+  {
+    "a": "pieta",
+    "b": "rome",
+    "y": 1499,
+    "w": "It came to Rome in 1499 for a cardinal's funeral monument and now stands behind glass in Saint Peter's Basilica",
+    "t": "housed-at"
+  },
+  {
+    "a": "augustus-of-prima-porta",
+    "b": "rome",
+    "y": 1863,
+    "w": "Dug from Livia's villa at Prima Porta in 1863, and standing in the Vatican's Braccio Nuovo ever since",
+    "t": "housed-at"
+  },
+  {
+    "a": "the-boxer-at-rest",
+    "b": "rome",
+    "y": 1885,
+    "w": "Buried on the Quirinal and unearthed in 1885, now seated in the Palazzo Massimo alle Terme",
+    "t": "housed-at"
+  },
+  {
+    "a": "imperial-faberge-eggs",
+    "b": "st-petersburg",
+    "y": 2013,
+    "w": "Made in the city on the Neva and scattered by the revolution; the largest gathering of the house now fills the Faberge Museum on the Fontanka",
+    "t": "housed-at"
   }
 ]

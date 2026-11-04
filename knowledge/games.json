@@ -22,7 +22,7 @@
   "ledger": {
     "bogus": ["bogus"],
     "well-actually": ["well-actually"],
-    "recycle-rings": ["rings"],
+    "recycle-rings": ["rings", "rings-bonus"],
     "recycle-grid": ["grid", "grid-hard"],
     "fermi": ["fermi"],
     "sift": ["sift"],

@@ -5,6 +5,7 @@
     "bogus":         { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "well-actually": { "better": "high", "edges": [0, 1, 2, 3, 4, 5] },
     "rings":         { "better": "high", "edges": [0, 1, 2, 3, 4] },
+    "rings-bonus":   { "better": "high", "edges": [0, 1, 2, 3, 4] },
     "grid":          { "better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16] },
     "grid-hard":     { "better": "high", "edges": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18] },
     "fermi":         { "better": "high", "edges": [0, 1, 2, 3, 4] },

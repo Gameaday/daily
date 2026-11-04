@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Four letter rings in aligned rays, one target word, one exact par. Drag a ring around the wheel or slide a ray's four letters between rings to spell it in as few moves as you can." />
+<meta name="description" content="Four letter rings in aligned rays, one target word, one exact par. Take up a seat for one resource, however far you run it, and spell the word at the top ray." />
 <title>Recycle: Rings · the daily ring game</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3EW.%3C/text%3E%3C/svg%3E"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3EW.%3C/text%3E%3C/svg%3E"/>
 <link rel="stylesheet" href="../shell/common.css"/>
 <style>header{display:flex; align-items:flex-end; justify-content:space-between;}
 h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
@@ -70,7 +70,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
   </div>
 
-  <p class="lead">Four rings of letters sit in eight aligned rays. <b>Loop</b> any ring, with its ◀ ▶ buttons or by dragging it around the wheel, or <b>shift</b> a ray's four letters between rings, with its chevrons or by dragging along its spoke, until the ray at the top spells the word. There is no clock: every move counts against an <b>exact par</b>.</p>
+  <p class="lead">Four rings of letters sit in eight aligned rays. <b>Loop</b> any ring, with its ◀ ▶ buttons or by dragging it around the wheel, or <b>shift</b> a ray's four letters between rings, with its chevrons or by dragging along its spoke, until the ray at the top spells the word. There is no clock: play counts <b>resources</b>, one for each seat you take up, however far you run it.</p>
 
   <div class="targetrow">
     <span class="lbl">Spell</span>
@@ -86,8 +86,8 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="ringctl" id="ringctl"></div>
 
   <div class="metarow">
-    <span class="bignum"><span id="moves">0</span> <span class="u">moves</span></span>
-    <span class="bignum"><span id="par">–</span> <span class="u">par</span></span>
+    <span class="bignum"><span id="res">0</span> <span class="u" id="reslbl">resources</span></span>
+    <span class="bignum"><span id="par">–</span> <span class="u" id="parlbl">par</span></span>
   </div>
 
   <div class="reveal" id="reveal">
@@ -95,6 +95,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <div class="sharebox" id="sharetext"></div>
     <div id="curve"></div>
     <div class="actions">
+      <button class="btn" id="btnBonus">Play the bonus round</button>
       <button class="btn" id="btnShare">Share result</button>
       <span class="countdown">next puzzle in <span id="count">–</span></span>
     </div>
@@ -110,9 +111,10 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <h2>How to play</h2>
     <p>Four rings of eight letters, sitting in eight aligned rays. The marked ray at the top reads one letter from each ring, and together they must spell today's <b>target word</b>. The word sits above the rings, with your current letters at the ray beneath it.</p>
     <p><b>Loop</b> any ring: its ◀ ▶ buttons turn it one seat, or drag any of its letters around the wheel and it follows your finger, snapping to the nearest seat when you let go. <b>Shift a ray</b> with the chevrons at its outer end, or by dragging any of its letters along its spoke: all four letters slide one ring inward or outward together, wrapping around, so the inner ring hands its letter to the outer ring.</p>
-    <p><b>Par is exact:</b> before you play, the solver has already searched every reachable position of the four word letters for the shortest line to the word. Beat par and you found a line the solver missed (you didn't; it's exact).</p>
-    <p>There is no clock. Every loop and every ray shift costs one move, a drag simply charges one move per seat it covers, and reversing costs another, so plan before you slide.</p>
-    <p>Same rings for everyone, so compare move counts at standup.</p>
+    <p><b>Resources, not moves:</b> taking up a seat costs one resource, however far you run it. Keep turning the same ring, or keep sliding the same ray, and it costs nothing more; switch to another seat, or come back to one you left, and it costs again. So think laterally: a long sweep of one ring can be cheaper than a ladder of little corrections.</p>
+    <p><b>Par is exact:</b> the solver has already walked every reachable position of the four word letters, counting resources the same way, so par is the fewest the day can be solved in. Beat par and you found a line the solver missed (you didn't; it's exact).</p>
+    <p><b>The bonus round:</b> win the day and the same board opens again under the old step economy, where every seat a move covers costs and par is a count of steps. A different economy, often a different number. It posts to its own little curve, and no streak rides on it.</p>
+    <p>Same rings for everyone, so compare resources at standup.</p>
     <button class="close" data-close>Got it</button>
   </div>
 </div>
@@ -138,23 +140,138 @@ function mulberry32(a){
   };
 }
 
-/* four rings of eight aligned slots: cell (r, c) is S.grid[r*8 + c].
+/* four rings of eight aligned slots: cell (r, c) is grid[r*8 + c].
    Ring 0 is the outer ring. The four word letters are the only pieces
-   that matter, so the whole game is where they sit on this 4 x 8 torus. */
+   that matter, so the whole game is where they sit on this 4 x 8 torus:
+   a state is their four cell numbers packed five bits each, and the
+   solved state - the word spelled at the top ray - is letter p at cell
+   p*8. */
 const FILLER = 'AAEEIIOOUUBCDGLMNPRST';
 /* four distinct letters, so each ring owns exactly one of them */
 const CAND = WORDS_EN.split(',').filter(w => w.length === 4 && new Set(w).size === 4);
+const GOAL = 0 | (8 << 5) | (16 << 10) | (24 << 15);
 
-/* Exact solver, by projection: the win reads the top ray, so it depends
-   only on where the four labeled word letters sit, never on the fillers
-   around them. The solver searches exactly that space: the four cell
-   numbers packed five bits each, 32*31*30*29 = 863040 reachable states
-   inside 2^20. Breadth-first search from the scrambled board gives the
-   true minimum number of loops and ray shifts, so par is a fact.
-   Stored depth is one-based (the root stores 1): a state d moves from
-   the start stores d+1, and a win found one move beyond it costs d. */
-const PAR_MIN = 3, PAR_CAP = 10;
-function solve(s0, s1, s2, s3){
+/* one engagement move on the packed state: a ring seat turned by d seats
+   (d = 1..7) or a ray seat shifted by d rings (d = 1..3). Move ids pack the
+   pair: 0..27 are the four rings x seven turns, 28..39 the four rays x
+   three shifts. */
+function engage(k, kind, seat, d){
+  let p0 = k & 31, p1 = (k >> 5) & 31, p2 = (k >> 10) & 31, p3 = (k >> 15) & 31;
+  if (kind === 0){
+    if ((p0 >> 3) === seat) p0 = (seat << 3) | (((p0 & 7) + d) & 7);
+    if ((p1 >> 3) === seat) p1 = (seat << 3) | (((p1 & 7) + d) & 7);
+    if ((p2 >> 3) === seat) p2 = (seat << 3) | (((p2 & 7) + d) & 7);
+    if ((p3 >> 3) === seat) p3 = (seat << 3) | (((p3 & 7) + d) & 7);
+  } else {
+    if ((p0 & 7) === seat) p0 = ((((p0 >> 3) + d) & 3) << 3) | seat;
+    if ((p1 & 7) === seat) p1 = ((((p1 >> 3) + d) & 3) << 3) | seat;
+    if ((p2 & 7) === seat) p2 = ((((p2 >> 3) + d) & 3) << 3) | seat;
+    if ((p3 & 7) === seat) p3 = ((((p3 >> 3) + d) & 3) << 3) | seat;
+  }
+  return p0 | (p1 << 5) | (p2 << 10) | (p3 << 15);
+}
+function unpackMove(id){
+  if (id < 28) return { kind: 0, seat: (id / 7) | 0, d: (id % 7) + 1 };
+  return { kind: 1, seat: ((id - 28) / 3) | 0, d: ((id - 28) % 3) + 1 };
+}
+
+/* the resource solver: breadth-first from the solved state, backwards over
+   the forty engagement moves. A minimal line never rides the same seat
+   twice in a row - two turns of one ring compose into one turn, two shifts
+   of one ray into one shift - so a state's depth here is exactly the fewest
+   resources any line can solve it in, revisits and all. The walk closes the
+   whole ring at the day's target depth and stops. */
+function engagementRing(T){
+  const visited = new Uint8Array(1 << 20);
+  const parent = new Int32Array(1 << 20);
+  const mv = new Uint8Array(1 << 20);
+  const queue = new Int32Array(1 << 20);
+  const ring = [];
+  visited[GOAL] = 1; parent[GOAL] = -1;
+  let head = 0, tail = 0;
+  queue[tail++] = GOAL;
+  while (head < tail){
+    const k = queue[head++];
+    const depth = visited[k] - 1;
+    for (let id = 0; id < 40; id++){
+      const m = unpackMove(id);
+      const nk = engage(k, m.kind, m.seat, m.d);
+      if (visited[nk]) continue;
+      visited[nk] = depth + 2; parent[nk] = k; mv[nk] = id;
+      if (depth + 1 === T) ring.push(nk); else queue[tail++] = nk;
+    }
+  }
+  return { ring, parent, mv };
+}
+
+/* the day's target depth: a weekday ladder, Mondays easiest, Fridays
+   hardest, and the weekend draws its own rung from the day's seed */
+function targetDepth(day){
+  const wd = new Date(Date.parse(EPOCH_KEY) + day * 86400000).getUTCDay();
+  if (wd === 1) return 4;                 /* Monday */
+  if (wd === 2) return 5;                 /* Tuesday */
+  if (wd === 3 || wd === 4) return 6;      /* Wednesday, Thursday */
+  if (wd === 5) return 7;                 /* Friday */
+  return 4 + Math.floor(mulberry32(day * 2654435761 + 11)() * 4);
+}
+
+/* the day's board: the solved state scattered to the target depth. The
+   solver enumerates the full ring of states at that depth and the day's
+   seed picks one, so the par is a fact before anyone plays. Only states
+   with a word letter outside its home ring are eligible: with every
+   letter home, turns alone would spell the word, and the day must ask
+   for a shift. Fillers never spell the word. */
+function gen(day){
+  const rng = mulberry32(day * 1013904223 + 7);
+  const word = CAND[Math.floor(rng() * CAND.length)];
+  let T = targetDepth(day);
+  let pool = [], parent = null, mv = null;
+  while (T >= 1){
+    const found = engagementRing(T);
+    parent = found.parent; mv = found.mv;
+    pool = found.ring.filter(k => {
+      const p0 = k & 31, p1 = (k >> 5) & 31, p2 = (k >> 10) & 31, p3 = (k >> 15) & 31;
+      return (p0 >> 3) !== 0 || (p1 >> 3) !== 1 || (p2 >> 3) !== 2 || (p3 >> 3) !== 3;
+    });
+    if (pool.length) break;
+    T--; /* unreachable in practice: every depth past three holds shift states */
+  }
+  const pick = pool[Math.floor(rng() * pool.length)];
+  /* the par line: the pick's own chain home, each move inverted (a turn by
+     d inverts to 8-d, a shift by d to 4-d) and shortened to the near way
+     round, read in play order */
+  const sol = [];
+  for (let k = pick; k !== GOAL; k = parent[k]){
+    const m = unpackMove(mv[k]);
+    if (m.kind === 0){
+      let d = 8 - m.d;
+      if (d > 4) d -= 8;
+      sol.push({ t: 'l', r: m.seat, d: d });
+    } else {
+      let d = 4 - m.d;
+      if (d === 3) d = -1;
+      sol.push({ t: 'x', c: m.seat, d: d });
+    }
+  }
+  /* the full board: fillers around the word letters at the picked cells */
+  const cells = [pick & 31, (pick >> 5) & 31, (pick >> 10) & 31, (pick >> 15) & 31];
+  const grid = new Array(32).fill('');
+  for (let i = 0; i < 32; i++){
+    if (cells.indexOf(i) >= 0) continue;
+    let ch;
+    do { ch = FILLER[Math.floor(rng() * FILLER.length)]; } while (word.indexOf(ch) >= 0);
+    grid[i] = ch;
+  }
+  for (let p = 0; p < 4; p++) grid[cells[p]] = word[p];
+  return { word: word, start: grid.join(''), par: T, sol: sol };
+}
+const PUZZLE = gen(dayIndex);
+
+/* the step solver, for the bonus round: the same projection searched with
+   plain single-seat moves (a turn is one seat, a shift is one ring), so
+   its par is the fewest seat-steps the day's board can be solved in - a
+   different economy, and usually a different number. */
+function solveSteps(s0, s1, s2, s3){
   if (s0 === 0 && s1 === 8 && s2 === 16 && s3 === 24) return { par: 0, sol: [] };
   const visited = new Uint8Array(1 << 20);
   const parent = new Int32Array(1 << 20);
@@ -171,14 +288,12 @@ function solve(s0, s1, s2, s3){
     for (let id = 0; id < 24; id++){
       let q0 = p0, q1 = p1, q2 = p2, q3 = p3;
       if (id < 8){
-        /* loop: ring r rotates one seat; +1 / +7 mod 8 */
         const r = id >> 1, d = (id & 1) ? 1 : 7;
         if ((q0 >> 3) === r) q0 = (r << 3) | (((q0 & 7) + d) & 7);
         if ((q1 >> 3) === r) q1 = (r << 3) | (((q1 & 7) + d) & 7);
         if ((q2 >> 3) === r) q2 = (r << 3) | (((q2 & 7) + d) & 7);
         if ((q3 >> 3) === r) q3 = (r << 3) | (((q3 & 7) + d) & 7);
       } else {
-        /* ray shift: ray c's letters slide between rings; +1 / +3 mod 4 */
         const c = (id - 8) >> 1, d = (id & 1) ? 1 : 3;
         if ((q0 & 7) === c) q0 = ((((q0 >> 3) + d) & 3) << 3) | c;
         if ((q1 & 7) === c) q1 = ((((q1 >> 3) + d) & 3) << 3) | c;
@@ -200,63 +315,8 @@ function solve(s0, s1, s2, s3){
   return { par: Infinity, sol: [] };
 }
 
-/* the same two moves, applied to the whole 32-cell grid the page renders */
-function applyMove(grid, id){
-  const g = grid.slice();
-  if (id < 8){
-    const r = id >> 1, d = (id & 1) ? 1 : 7;
-    const row = g.slice(r * 8, r * 8 + 8);
-    for (let c = 0; c < 8; c++) g[r * 8 + ((c + d) & 7)] = row[c];
-  } else {
-    const c = (id - 8) >> 1, d = (id & 1) ? 1 : 3;
-    const col = [0, 1, 2, 3].map(rr => g[rr * 8 + c]);
-    for (let rr = 0; rr < 4; rr++) g[((rr + d) & 3) * 8 + c] = col[rr];
-  }
-  return g;
-}
-
-/* the day's board: the solved board (word at the top ray) scrambled by a
-   seeded walk of 4 to 10 moves that never immediately undoes itself. The
-   walk guarantees solvability within 10, the solver reports the exact
-   par, and only boards that need at least PAR_MIN moves ship, so nothing
-   pre-solved or endless ever does. Fillers never spell the word. */
-function gen(day){
-  for (let salt = 0; salt < 200; salt++){
-    const rng = mulberry32(day * 1013904223 + salt * 7919 + 7);
-    const word = CAND[Math.floor(rng() * CAND.length)];
-    let grid = new Array(32).fill('');
-    for (let p = 0; p < 4; p++) grid[p * 8] = word[p];
-    for (let i = 0; i < 32; i++){
-      if (grid[i]) continue;
-      let ch;
-      do { ch = FILLER[Math.floor(rng() * FILLER.length)]; } while (word.indexOf(ch) >= 0);
-      grid[i] = ch;
-    }
-    const K = 4 + Math.floor(rng() * 7);
-    let last = -1;
-    for (let m = 0; m < K; m++){
-      let id;
-      do { id = Math.floor(rng() * 24); } while (last >= 0 && id === (last ^ 1));
-      last = id;
-      grid = applyMove(grid, id);
-    }
-    const pos = [0, 1, 2, 3].map(p => grid.indexOf(word[p]));
-    const res = solve(pos[0], pos[1], pos[2], pos[3]);
-    if (res.par >= PAR_MIN && res.par <= PAR_CAP){
-      return {
-        word: word, start: grid.join(''), par: res.par,
-        sol: res.sol.map(id => id < 8
-          ? { t: 'l', r: id >> 1, d: (id & 1) ? 1 : -1 }
-          : { t: 'x', c: (id - 8) >> 1, d: (id & 1) ? 1 : -1 })
-      };
-    }
-  }
-  return null; /* unreachable in practice */
-}
-const PUZZLE = gen(dayIndex);
-
 /* ---------------- state ---------------- */
-const KEY = 'warmup.rings.v4';
+const KEY = 'warmup.rings.v5';
 const store = SHELL.makeStore(KEY);
 function loadState(){ return store.load(); }
 function saveState(){ store.save(S); }
@@ -265,10 +325,10 @@ if (!S || S.day !== dayIndex || !PUZZLE || typeof S.grid !== 'string' || S.grid.
   if (S && typeof S.stats === 'object' && S.day !== dayIndex){
     if (!(S.won && S.day === dayIndex - 1)) S.stats.streak = 0; /* missed a day since the last win */
   }
-  /* stats carry over from the wheel era (v3, v2) and the clock era (v1);
-     the new key gets a fresh board either way */
+  /* stats carry over from the drag era (v4), the wheel era (v3, v2) and
+     the clock era (v1); a new key gets a fresh board either way */
   if (!S && typeof localStorage !== 'undefined'){
-    for (const oldKey of ['warmup.rings.v3', 'warmup.rings.v2', 'warmup.rings.v1']){
+    for (const oldKey of ['warmup.rings.v4', 'warmup.rings.v3', 'warmup.rings.v2', 'warmup.rings.v1']){
       try {
         const old = JSON.parse(localStorage.getItem(oldKey));
         if (old && typeof old.stats === 'object'){ S = { stats: old.stats }; break; }
@@ -276,15 +336,23 @@ if (!S || S.day !== dayIndex || !PUZZLE || typeof S.grid !== 'string' || S.grid.
     }
   }
   const stats = (S && typeof S.stats === 'object') ? S.stats : {played:0, streak:0, max:0, best:null};
-  S = { day: dayIndex, grid: PUZZLE ? PUZZLE.start : '', moves: 0, won: false, stats };
+  S = { day: dayIndex, grid: PUZZLE ? PUZZLE.start : '', res: 0, seat: null, won: false, bonus: null, stats };
 }
 saveState();
+
+/* ---------------- the two boards ---------------- */
+/* the day's round plays the resource economy; the bonus round, unlocked by
+   a win, replays the same board under the step economy. Every helper reads
+   the active board, so one wheel serves both. */
+function inBonus(){ return !!(S.bonus && S.bonus.on); }
+function boardGrid(){ return inBonus() ? S.bonus.grid : S.grid; }
+function boardWon(){ return inBonus() ? S.bonus.won : S.won; }
 
 /* ---------------- dom ---------------- */
 const RADII = [156, 122, 88, 54];
 const NAMES = ['outer', 'mid-outer', 'mid-inner', 'inner'];
 
-function topLetter(p){ return S.grid[p * 8]; }
+function topLetter(p){ return boardGrid()[p * 8]; }
 function aligned(p){ return topLetter(p) === PUZZLE.word[p]; }
 
 function renderTarget(){
@@ -298,6 +366,8 @@ function renderSlots(){
 }
 
 function renderWheel(){
+  const g = boardGrid();
+  const quiet = boardWon();
   let svg = '<circle cx="200" cy="200" r="170" fill="#fffdf7" stroke="#e5dbc8" stroke-width="1.5"/>';
   RADII.forEach(r => { svg += '<circle cx="200" cy="200" r="' + r + '" fill="none" stroke="#d9cdb2" stroke-width="1.5"/>'; });
   /* the eight rays are four faint dashed diameters; the top one is marked */
@@ -306,14 +376,14 @@ function renderWheel(){
   }
   for (let p = 0; p < 4; p++){
     for (let c = 0; c < 8; c++){
-      const ch = S.grid[p * 8 + c];
+      const ch = g[p * 8 + c];
       const cls = (c === 0 && ch === PUZZLE.word[p]) ? 'lt ok' : 'lt';
       svg += '<text class="' + cls + '" data-r="' + p + '" data-c="' + c + '" x="200" y="' + (200 - RADII[p]) + '" transform="rotate(' + (c * 45) + ' 200 200)">' + ch + '</text>';
     }
   }
   /* one invisible pad under every letter, so a drag can start anywhere on
      any ring or ray; on a won board the pads go with the controls */
-  if (!S.won){
+  if (!quiet){
     for (let p = 0; p < 4; p++){
       for (let c = 0; c < 8; c++){
         svg += '<circle class="cellhit" data-r="' + p + '" data-c="' + c + '" cx="200" cy="' + (200 - RADII[p]) + '" r="17" transform="rotate(' + (c * 45) + ' 200 200)"/>';
@@ -323,7 +393,7 @@ function renderWheel(){
   /* chevrons at the outer end of every ray: the inward chevron slides the
      ray's four letters toward the center, the outward one slides them back;
      on a won board the controls go quiet */
-  if (!S.won){
+  if (!quiet){
     for (let c = 0; c < 8; c++){
       svg += '<g class="rayg" transform="rotate(' + (c * 45) + ' 200 200)">' +
         '<path class="chev" d="M195,23 L200,29 L205,23"/>' +
@@ -337,8 +407,17 @@ function renderWheel(){
 }
 
 function renderMeta(){
-  $('moves').textContent = S.moves;
-  $('par').textContent = PUZZLE ? PUZZLE.par : '–';
+  if (inBonus()){
+    $('res').textContent = S.bonus.steps;
+    $('reslbl').textContent = 'steps';
+    $('par').textContent = S.bonus.par;
+    $('parlbl').textContent = 'bonus par';
+  } else {
+    $('res').textContent = S.res;
+    $('reslbl').textContent = 'resources';
+    $('par').textContent = PUZZLE ? PUZZLE.par : '–';
+    $('parlbl').textContent = 'par';
+  }
 }
 
 function renderCtl(){
@@ -355,44 +434,77 @@ function renderAll(){ renderTarget(); renderSlots(); renderWheel(); renderMeta()
 
 /* ---------------- play ---------------- */
 function checkWin(){
-  if ([0,1,2,3].every(p => aligned(p))){
-    S.won = true;
-    const st = S.stats;
-    st.played++; st.streak++;
-    st.max = Math.max(st.max, st.streak);
-    st.best = (st.best == null) ? S.moves : Math.min(st.best, S.moves);
-    showReveal();
+  if (!PUZZLE) return;
+  if (inBonus()){
+    if (!S.bonus.won && [0,1,2,3].every(p => aligned(p))){
+      S.bonus.won = true;
+      showBonusReveal();
+    }
+    return;
   }
+  if (S.won || ![0,1,2,3].every(p => aligned(p))) return;
+  S.won = true;
+  const st = S.stats;
+  st.played++; st.streak++;
+  st.max = Math.max(st.max, st.streak);
+  st.best = (st.best == null) ? S.res : Math.min(st.best, S.res);
+  showReveal();
 }
 
-/* loop: one ring rotates one seat, the letter at column c moving to c + d */
-function loopRing(r, d){
-  if (S.won || !PUZZLE) return;
-  const g = S.grid.split('');
-  const row = g.slice(r * 8, r * 8 + 8);
-  const dd = ((d % 8) + 8) % 8;
-  for (let c = 0; c < 8; c++) g[r * 8 + ((c + dd) & 7)] = row[c];
-  S.grid = g.join('');
-  S.moves++;
+/* one committed play on the active board: the day charges a resource only
+   when the seat changes, the bonus charges every seat-step it is handed */
+function commit(kind, idx, grid, steps){
+  if (inBonus()){
+    S.bonus.grid = grid;
+    S.bonus.steps += steps;
+  } else {
+    S.grid = grid;
+    const key = kind + idx;
+    if (S.seat !== key){ S.res++; S.seat = key; }
+  }
   checkWin();
   saveState();
   renderAll();
+}
+
+/* loop: one ring rotates one seat at a time */
+function loopRing(r, d){
+  if (boardWon() || !PUZZLE) return;
+  const g = boardGrid().split('');
+  const dd = ((d % 8) + 8) % 8;
+  const row = g.slice(r * 8, r * 8 + 8);
+  for (let c = 0; c < 8; c++) g[r * 8 + ((c + dd) & 7)] = row[c];
+  commit('l', r, g.join(''), Math.abs(d));
 }
 
 /* ray shift: the whole column at ray c slides one ring inward (d = 1,
    the outer ring's letter stepping toward the center and the inner
    ring's wrapping to the outside) or outward (d = -1) */
 function shiftRay(c, d){
-  if (S.won || !PUZZLE) return;
-  const g = S.grid.split('');
-  const col = [0, 1, 2, 3].map(rr => g[rr * 8 + c]);
+  if (boardWon() || !PUZZLE) return;
+  const g = boardGrid().split('');
   const dd = ((d % 4) + 4) % 4;
+  const col = [0, 1, 2, 3].map(rr => g[rr * 8 + c]);
   for (let rr = 0; rr < 4; rr++) g[((rr + dd) & 3) * 8 + c] = col[rr];
-  S.grid = g.join('');
-  S.moves++;
-  checkWin();
-  saveState();
-  renderAll();
+  commit('x', c, g.join(''), Math.abs(d));
+}
+
+/* a drag's commit: the grid moves as far as the gesture ran; the day
+   charges its one resource for taking the seat up, the bonus charges a
+   step a seat */
+function commitDrag(kind, idx, seats){
+  if (boardWon() || !PUZZLE || !seats){ renderWheel(); return; }
+  const g = boardGrid().split('');
+  if (kind === 'ring'){
+    const dd = ((seats % 8) + 8) % 8;
+    const row = g.slice(idx * 8, idx * 8 + 8);
+    for (let c = 0; c < 8; c++) g[idx * 8 + ((c + dd) & 7)] = row[c];
+  } else {
+    const dd = ((seats % 4) + 4) % 4;
+    const col = [0, 1, 2, 3].map(rr => g[rr * 8 + idx]);
+    for (let rr = 0; rr < 4; rr++) g[((rr + dd) & 3) * 8 + idx] = col[rr];
+  }
+  commit(kind === 'ring' ? 'l' : 'x', idx, g.join(''), Math.abs(seats));
 }
 
 $('ringctl').addEventListener('click', e => {
@@ -415,29 +527,16 @@ $('wheel').addEventListener('click', e => {
    spoke; the buttons and chevrons keep working for one-seat precision.
    The gesture names itself: a tangential drag turns the ring under the
    finger, a radial drag slides the ray it starts from. The wheel follows
-   the pointer live, snaps to the nearest seat on release, and every seat
-   a drag covers costs one move, so the par stays honest. */
+   the pointer live, snaps to the nearest seat on release, and the whole
+   gesture is one engagement of one seat, however far it ran. */
 const STEP_PX = RADII[0] - RADII[1];
 let drag = null;
 
-/* one drag, several seats: the grid moves once, the moves charge per seat */
-function commitDrag(kind, idx, seats){
-  if (S.won || !PUZZLE || !seats){ renderWheel(); return; }
-  const g = S.grid.split('');
-  if (kind === 'ring'){
-    const dd = ((seats % 8) + 8) % 8;
-    const row = g.slice(idx * 8, idx * 8 + 8);
-    for (let c = 0; c < 8; c++) g[idx * 8 + ((c + dd) & 7)] = row[c];
-  } else {
-    const dd = ((seats % 4) + 4) % 4;
-    const col = [0, 1, 2, 3].map(rr => g[rr * 8 + idx]);
-    for (let rr = 0; rr < 4; rr++) g[((rr + dd) & 3) * 8 + idx] = col[rr];
-  }
-  S.grid = g.join('');
-  S.moves += Math.abs(seats);
-  checkWin();
-  saveState();
-  renderAll();
+/* what the counter would read if the gesture committed right now */
+function liveCost(seatKey, seats){
+  if (!seats) return inBonus() ? S.bonus.steps : S.res;
+  if (inBonus()) return S.bonus.steps + Math.abs(seats);
+  return S.res + (S.seat === seatKey ? 0 : 1);
 }
 
 function svgXY(e){
@@ -478,7 +577,7 @@ function glide(from, to, apply, done){
 $('wheel').addEventListener('pointerdown', e => {
   const t = e.target && e.target.closest ? e.target.closest('.cellhit') : null;
   clickArmed = !t; /* a tap on a chevron may click; a drag or a letter tap may not */
-  if (S.won || !PUZZLE || drag) return;
+  if (boardWon() || !PUZZLE || drag) return;
   if (!t) return;
   e.preventDefault();
   const p = svgXY(e);
@@ -515,14 +614,14 @@ $('wheel').addEventListener('pointermove', e => {
     drag.aPrev = a;
     drag.deg += da * 180 / Math.PI;
     applyRingDrag(drag, drag.deg);
-    $('moves').textContent = S.moves + Math.abs(Math.round(drag.deg / 45));
+    $('res').textContent = liveCost('l' + drag.r, Math.round(drag.deg / 45));
   } else {
     const th = drag.c * 45 * Math.PI / 180;
     const s = (-dx * Math.sin(th) + dy * Math.cos(th)) / STEP_PX; /* inward is positive, like the inward chevron */
     drag.s = s;
     const k = Math.round(s), f = s - k;
     applyRayDrag(drag, k, f);
-    $('moves').textContent = S.moves + Math.abs(k);
+    $('res').textContent = liveCost('x' + drag.c, k);
   }
 });
 
@@ -535,9 +634,9 @@ function finishDrag(){
   if (pill) for (let i = 0; i < pill.length; i++) pill[i].classList.remove('active');
   if (d.mode === null){ renderWheel(); return; } /* a wiggle that never chose a side costs nothing */
   const seats = d.mode === 'ring' ? Math.round(d.deg / 45) : Math.round(d.s);
-  const commit = () => commitDrag(d.mode, d.mode === 'ring' ? d.r : d.c, seats);
-  if (d.mode === 'ring') glide(d.deg, seats * 45, v => applyRingDrag(d, v), commit);
-  else glide(d.s - Math.round(d.s), 0, f => applyRayDrag(d, seats, f), commit);
+  const commitIt = () => commitDrag(d.mode, d.mode === 'ring' ? d.r : d.c, seats);
+  if (d.mode === 'ring') glide(d.deg, seats * 45, v => applyRingDrag(d, v), commitIt);
+  else glide(d.s - Math.round(d.s), 0, f => applyRayDrag(d, seats, f), commitIt);
 }
 $('wheel').addEventListener('pointerup', e => { if (drag && e.pointerId === drag.id) finishDrag(); });
 $('wheel').addEventListener('pointercancel', e => { if (drag && e.pointerId === drag.id) finishDrag(); });
@@ -559,32 +658,69 @@ $('ringctl').addEventListener('mouseout', e => {
 
 /* ---------------- reveal / share ---------------- */
 function shareText(){
-  const over = S.moves - PUZZLE.par;
+  if (inBonus()){
+    const over = S.bonus.steps - S.bonus.par;
+    const note = over <= 0 ? 'on par' : '+' + over + ' over par';
+    return 'Recycle: Rings No. ' + num + ' \u00b7 bonus \u00b7 ' + S.bonus.steps + ' steps (' + note + ') \uD83C\uDF00';
+  }
+  const over = S.res - PUZZLE.par;
   const note = over <= 0 ? 'on par' : '+' + over + ' over par';
-  return 'Recycle: Rings No. ' + num + ' \u00b7 ' + S.moves + ' moves (' + note + ')' + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDF00';
+  return 'Recycle: Rings No. ' + num + ' \u00b7 ' + S.res + ' resources (' + note + ')' + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDF00';
 }
 function showReveal(){
-  /* points read like points: par is full marks, every move over par costs one */
-  S.pts = Math.max(0, 3 - (S.moves - PUZZLE.par));
-  S.stars = (S.moves === PUZZLE.par) ? 1 : 0;
+  /* points read like points: par is full marks, every resource over par costs one */
+  S.pts = Math.max(0, 3 - (S.res - PUZZLE.par));
+  S.stars = (S.res === PUZZLE.par) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 
   const st = S.stats;
-  $('verdict').textContent = (S.moves === PUZZLE.par)
+  $('verdict').textContent = (S.res === PUZZLE.par)
     ? 'On par. The perfect line.'
-    : (S.moves <= PUZZLE.par + 3 ? 'Aligned. Smooth looping.' : 'Aligned. The scenic route.');
+    : (S.res <= PUZZLE.par + 3 ? 'Aligned. Smooth looping.' : 'Aligned. The scenic route.');
   $('sharetext').textContent =
-    shareText() + '\nstreak ' + st.streak + ' \u00b7 best ' + (st.best == null ? '–' : st.best + ' moves');
+    shareText() + '\nstreak ' + st.streak + ' \u00b7 best ' + (st.best == null ? '–' : st.best + ' resources');
   $('reveal').classList.add('show');
-  /* the word is aligned - the controls go quiet */
+  /* the word is aligned - the controls go quiet, the bonus opens */
   $('ringctl').style.display = 'none';
+  $('btnBonus').style.display = '';
   syncBoard(S.pts);
   renderMeta();
 }
+function showBonusReveal(){
+  const over = S.bonus.steps - S.bonus.par;
+  $('verdict').textContent = (over <= 0)
+    ? 'On par. The exact sequence.'
+    : (over <= 4 ? 'Aligned. The short ladder.' : 'Aligned. The long ladder.');
+  $('sharetext').textContent = shareText() + '\nthe bonus keeps no streak \u00b7 just the line';
+  $('reveal').classList.add('show');
+  $('ringctl').style.display = 'none';
+  $('btnBonus').style.display = 'none';
+  syncBonusBoard(Math.max(0, 3 - over));
+  renderMeta();
+}
+
+/* the bonus round: the day's own board again, under the step economy.
+   Its par is the step solver's, computed the moment it opens and kept
+   with the state, so a reload never pays for it twice. No streak, no
+   stats - the day already counted those. */
+function openBonus(){
+  if (!PUZZLE || S.won !== true || S.bonus) return;
+  const pos = [0, 1, 2, 3].map(p => PUZZLE.start.indexOf(PUZZLE.word[p]));
+  const r = solveSteps(pos[0], pos[1], pos[2], pos[3]);
+  S.bonus = { on: true, grid: PUZZLE.start, steps: 0, par: r.par, won: false };
+  $('reveal').classList.remove('show');
+  $('ringctl').style.display = '';
+  saveState();
+  renderAll();
+}
+$('btnBonus').addEventListener('click', openBonus);
+
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'rings';
 const SYNC_BETTER = 'high';
+const BONUS_GAME = 'rings-bonus';
 function syncBoard(v){ return SHELL.syncBoardFor(SYNC_GAME, SYNC_BETTER)(v); }
+function syncBonusBoard(v){ return SHELL.syncBoardFor(BONUS_GAME, SYNC_BETTER)(v); }
 SHELL.wireShare(shareText);
 
 /* ---------------- help / countdown ---------------- */
@@ -597,7 +733,9 @@ $('pdate').textContent = SHELL.pdateText();
 if (PUZZLE){
   renderCtl();
   renderAll();
-  if (S.won) showReveal();
+  if (inBonus()){
+    if (S.bonus.won) showBonusReveal();
+  } else if (S.won) showReveal();
 }
 SHELL.startCountdown('count', 500);
 </script>

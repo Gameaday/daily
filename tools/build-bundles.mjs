@@ -5,15 +5,20 @@
    - dist/online  : identical HTML, but every generated bank file
      (assets/banks/<game>.js) is stubbed to `undefined` - the puzzles come
      from the scores service's /puzzle route. This is what the web
-     container bakes in. No regex ever touches a page.
+     container bakes in. The online pages are never rewritten; the one
+     deliberate edit is the offline landing, whose clean game urls go
+     back to index.html because file:// has no directory index.
    Both bundles are site-only: no tooling, tests, or deploy files, and a
    verification pass fails the build if any relative src/href does not
    resolve inside the bundle or a game's shell wiring went missing. */
 import fs from 'node:fs';
 import path from 'node:path';
 
-/* the gated-game map has one source of truth: games.json at the repo root */
-const GATED = JSON.parse(fs.readFileSync('games.json', 'utf8')).gated;
+/* the gated-game map and the play order have one source of truth:
+   games.json at the repo root */
+const GAMES_JSON = JSON.parse(fs.readFileSync('games.json', 'utf8'));
+const GATED = GAMES_JSON.gated;
+const ORDER = GAMES_JSON.order;
 const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'dist', '__pycache__',
   'deploy', 'tests', 'tools', 'checks', 'scores']);
 const SKIP_FILES = new Set(['.gitignore', '.dockerignore', '.env', '.env.example',
@@ -82,6 +87,19 @@ for (const [g, name] of Object.entries(GATED))
     'const ' + name + ' = undefined;\n');
 
 const problems = [];
+/* file:// has no directory index, so the offline landing's clean game
+   urls are rewritten back to index.html - the one deliberate page edit,
+   landing only; the online bundle keeps the clean urls untouched */
+{
+  const landingFile = path.join('dist', 'offline', 'index.html');
+  let landing = fs.readFileSync(landingFile, 'utf8');
+  for (const g of ORDER){
+    const from = 'href="' + g + '/"';
+    if (landing.indexOf(from) === -1) problems.push('offline landing: no card for ' + g);
+    landing = landing.split(from).join('href="' + g + '/index.html"');
+  }
+  fs.writeFileSync(landingFile, landing);
+}
 for (const bundle of ['offline', 'online']){
   const rootDir = path.join('dist', bundle);
   for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js', 'assets/words-l4.js'])

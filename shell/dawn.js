@@ -18,16 +18,17 @@
    or a browser without the web animations api reveals the mark plainly
    instead, so no page is ever left without its dot.
 
-   The dot keeps a little sun in it afterwards: a click on the mark
-   brings the dawn glow back for a moment.
+   The dot keeps a little sun in it afterwards. A click on the mark
+   brings the dawn glow back for a moment, and pressing and holding it
+   builds the glow until the whole morning replays, any time, not once
+   a day but whenever the day calls for it.
 
-   The favicon carries the motif too. The site tile already ends in a
-   period, so at load the module restyles it: the period becomes a
-   small gold sun on the letter tile. During the show the tab performs
-   the sunrise in miniature (night, sliver, rise, morning) and hands
-   the tab back to the sun tile the moment the disc lands in the logo.
-   The page's own icon in the html stays untouched, so a no-script
-   visit keeps the tile it has always had.
+   The whole tab performs it. The favicon carries the motif at rest
+   (the tile's period restyled as a small gold sun), and during the
+   show the tab title greets while the favicon and the mobile browser
+   chrome ride the sky from night to morning, handing both back the
+   moment the disc lands. The page's own icon and title in the html
+   stay untouched, so a no-script visit keeps what it has always had.
 
    Contract with the shell (common.js passes these in):
      key      the ET date key for today, as YYYY-MM-DD
@@ -47,6 +48,8 @@
                         the keyframes in dawn.css */
   var FLIGHT = 1100; /* the settle: the sun's trip from the sky into the
                         logo's mark */
+  var PRESS = 600;   /* the dot: press and hold this long to replay the
+                        morning */
   var GREETINGS = [
     'Good morning.',
     'First light. Fresh warm-ups.',
@@ -56,6 +59,7 @@
     'Hello, early bird.',
     'The day begins.'
   ];
+  var lastCfg = null;
 
   function storageWritable(){
     try { localStorage.setItem(MARK + '.t', '1'); localStorage.removeItem(MARK + '.t'); return true; }
@@ -85,12 +89,11 @@
     return null;
   }
 
-  /* ---------------- the favicon: the period as a small sun ----------------
-     The site tile already ends in a period; the module restyles it at
-     load, and the show runs a miniature sunrise in the tab. All of it
-     is wrapped soft: a browser that minds none of this keeps its own
-     icon, no harm done. */
-  var FAV = { link: null, timers: [] };
+  /* ------- the tab: favicon and chrome tint ride the sky -------
+     All of it is wrapped soft: a browser that minds none of this
+     keeps its own icon, tint and title, no harm done. */
+  var FAV = { link: null, meta: null, timers: [] };
+  var TITLE = { saved: null };
 
   function sunTile(){
     return "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
@@ -126,13 +129,28 @@
       if (FAV.link) FAV.link.setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
     } catch (e){}
   }
-  function restFav(){ setFav(sunTile()); }
+  function setTheme(color){
+    try {
+      if (FAV.meta) FAV.meta.setAttribute('content', color);
+    } catch (e){}
+  }
+  function saveTitle(greet){
+    try {
+      TITLE.saved = document.title;
+      document.title = greet;
+    } catch (e){ TITLE.saved = null; }
+  }
+  function restoreTitle(){
+    if (TITLE.saved == null) return;
+    try { document.title = TITLE.saved; } catch (e){}
+    TITLE.saved = null;
+  }
   function clearFavTimers(){
     for (var i = 0; i < FAV.timers.length; i++) window.clearTimeout(FAV.timers[i]);
     FAV.timers = [];
   }
 
-  function findFavLink(){
+  function findTabBits(){
     try {
       var l = document.querySelector('link[rel="icon"]') || document.querySelector('link[rel~="icon"]');
       if (!l){
@@ -141,12 +159,22 @@
         (document.head || document.documentElement).appendChild(l);
       }
       FAV.link = l;
-    } catch (e){ FAV.link = null; }
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (!m){
+        m = document.createElement('meta');
+        m.setAttribute('name', 'theme-color');
+        (document.head || document.documentElement).appendChild(m);
+      }
+      FAV.meta = m;
+    } catch (e){ FAV.link = null; FAV.meta = null; }
   }
 
-  /* the tab's miniature sunrise, in step with the sky on the page */
-  function playFav(){
+  /* the tab's miniature sunrise, in step with the sky on the page:
+     the favicon and the mobile chrome tint move frame by frame, and
+     the title greets until the disc lands */
+  function playTab(greet){
     clearFavTimers();
+    saveTitle(greet);
     var frames = [
       { t: 0,    top: '#17162e', bot: '#2e2242', cy: 100, glow: '.2' },
       { t: 1500, top: '#2e2242', bot: '#4a2c48', cy: 95,  glow: '.3' },
@@ -157,21 +185,50 @@
       (function(f){
         FAV.timers.push(window.setTimeout(function(){
           setFav(dawnFrame(f.top, f.bot, f.cy, f.glow));
+          setTheme(f.top);
         }, f.t));
       })(frames[i]);
     }
   }
 
-  /* ---------------- the kiss: the dot keeps a little sun ----------------
-     Armed on every page load, show or no show: a click on the logo's
-     mark brings the dawn glow back for a moment. */
+  /* everything the tab hands back when the show is over */
+  function restTab(){
+    setFav(sunTile());
+    setTheme('#f7f1e5');
+    restoreTitle();
+  }
+
+  /* ------- the dot: the kiss and the hold -------
+     Armed on every page load, show or no show. A click brings the dawn
+     glow back for a moment; pressing and holding builds the glow until
+     the whole morning replays. */
   function armKiss(){
     try {
       var m = logoMark();
       if (!m) return;
       m.classList.add('dawn-kiss');
       m.setAttribute('title', 'first light');
+      var holdT = null, held = false;
+      var offHold = function(){
+        window.clearTimeout(holdT);
+        holdT = null;
+        try { m.classList.remove('dawn-hold'); } catch (e){}
+      };
+      m.addEventListener('pointerdown', function(e){
+        if (e.button !== 0) return;
+        held = false;
+        try { m.classList.add('dawn-hold'); } catch (e2){}
+        holdT = window.setTimeout(function(){
+          held = true;
+          offHold();
+          try { if (!document.getElementById('dawn-overlay')) play(lastCfg || {}); } catch (e2){}
+        }, PRESS);
+      });
+      m.addEventListener('pointerup', offHold);
+      m.addEventListener('pointercancel', offHold);
+      m.addEventListener('pointerleave', offHold);
       m.addEventListener('click', function(){
+        if (held){ held = false; return; }
         m.classList.remove('dawn-glow');
         void m.offsetWidth;
         m.classList.add('dawn-glow');
@@ -179,7 +236,7 @@
     } catch (e){}
   }
 
-  function build(cfg){
+  function build(cfg, greet){
     var ov = document.createElement('div');
     ov.id = 'dawn-overlay';
     ov.className = 'dawn-overlay' + (reducedMotion() ? ' dawn-still' : '');
@@ -191,7 +248,7 @@
     var text = document.createElement('div'); text.className = 'dawn-text';
     var hello = document.createElement('div'); hello.className = 'dawn-hello';
     var sub = document.createElement('div'); sub.className = 'dawn-sub';
-    hello.textContent = GREETINGS[Math.abs(cfg.dayIndex | 0) % GREETINGS.length];
+    hello.textContent = greet;
     sub.textContent = cfg.num ? ('warmup no. ' + cfg.num + (cfg.dateText ? ' \u00b7 ' + cfg.dateText : '')) : '';
     text.appendChild(hello); text.appendChild(sub);
     ov.appendChild(sky); ov.appendChild(day); ov.appendChild(sun);
@@ -240,7 +297,8 @@
   function play(cfg){
     cfg = cfg || {};
     if (document.getElementById('dawn-overlay')) return false;
-    var ov = build(cfg);
+    var greet = GREETINGS[Math.abs(cfg.dayIndex | 0) % GREETINGS.length];
+    var ov = build(cfg, greet);
     var sun = ov.querySelector('.dawn-sun');
     var gone = false, freeSun = null, flight = null;
 
@@ -287,7 +345,7 @@
       unlisten();
       if (flight){ try { flight.cancel(); } catch (e){} }
       clearFavTimers();
-      restFav();
+      restTab();
       revealMark();
       ov.classList.add('dawn-out');
       window.setTimeout(function(){ removeOverlay(); removeSun(); }, 800);
@@ -303,7 +361,7 @@
           flight.onfinish = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}
             depositMark();
-            restFav();
+            restTab();
           };
           flight.oncancel = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}
@@ -314,20 +372,21 @@
         }
       }
       revealMark();
-      restFav();
+      restTab();
       ov.classList.add('dawn-out');
       window.setTimeout(function(){ removeOverlay(); removeSun(); }, 800);
     };
     window.addEventListener('keydown', dismiss, true);
     window.addEventListener('pointerdown', dismiss, true);
     window.setTimeout(end, HOLD);
-    if (!reducedMotion()) playFav();
+    if (!reducedMotion()) playTab(greet);
     (document.body || document.documentElement).appendChild(ov);
     return true;
   }
 
   function init(cfg){
     if (!cfg || !cfg.key) return false;
+    lastCfg = cfg;   /* the hold-to-replay uses the day facts too */
     if (!storageWritable() || seenToday(cfg.key)) return false;
     markToday(cfg.key);   /* marked at the start: a greeting cut short by
                              navigation never replays on the next page */
@@ -348,10 +407,11 @@
     reset: function(){ try { localStorage.removeItem(MARK); } catch (e){} }
   };
 
-  /* module boot: restyle the favicon's period as a small sun, and arm
-     the kiss on the logo's mark. Both are garnishes: each is wrapped
-     soft and the page is unaffected if either comes to nothing. */
-  findFavLink();
-  restFav();
+  /* module boot: restyle the favicon's period as a small sun, tint the
+     chrome to the paper, and arm the kiss on the logo's mark. All of
+     it is garnish: each piece is wrapped soft and the page is
+     unaffected if any of it comes to nothing. */
+  findTabBits();
+  restTab();
   armKiss();
 })();

@@ -1,10 +1,11 @@
-/* dawn.css - first light: the once-a-day sunrise greeting.
-   The whole choreography lives here; dawn.js owns the trigger, the
-   once-per-day guard and the cleanup. Layers, in paint order: the
-   night sky, the brightening day, the rising sun, the horizon haze,
-   the greeting text. The overlay never takes pointer events, so
-   nothing beneath it is ever blocked, and the sky ends on the site's
-   own paper so the dissolve meets the page seamlessly. */
+/* dawn.css - first light: the once-a-day sunrise greeting,
+   plus a few quiet garnishes the whole site shares. The sunrise
+   choreography lives here; dawn.js owns the trigger, the once-per-day
+   guard and the cleanup. Layers, in paint order: the night sky, the
+   brightening day, the rising sun, the horizon haze, the greeting
+   text. The overlay never takes pointer events, so nothing beneath it
+   is ever blocked, and the sky ends on the site's own paper so the
+   dissolve meets the page seamlessly. */
 
 .dawn-overlay{ position:fixed; inset:0; z-index:9999; overflow:hidden;
   pointer-events:none; transition:opacity .75s ease; }
@@ -64,9 +65,14 @@
 @keyframes dawn-landed{ 0%{transform:scale(1);} 45%{transform:scale(1.28);}
                         100%{transform:scale(1);} }
 
-/* the kiss: the dot keeps a little sun in it, and a click brings the
-   dawn glow back for a moment */
-.dawn-kiss{ display:inline-block; cursor:pointer; }
+/* the kiss and the hold: the dot keeps a little sun in it. A click
+   brings the dawn glow back for a moment; press and hold and the glow
+   builds until the whole morning replays. */
+.dawn-kiss{ display:inline-block; cursor:pointer;
+  user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;
+  transition:text-shadow .55s ease; }
+.dawn-kiss.dawn-hold{ text-shadow:0 0 12px 2px rgba(244,183,105,.85),
+                      0 0 26px 8px rgba(244,183,105,.35); }
 .dawn-kiss.dawn-glow{ animation:dawn-glow .9s ease; }
 @keyframes dawn-glow{
   0%{ transform:scale(1); text-shadow:none; }
@@ -75,6 +81,18 @@
                     0 0 26px 8px rgba(244,183,105,.4); }
   100%{ transform:scale(1); text-shadow:none; }
 }
+
+/* ------- the quiet garnishes -------
+   Nothing here moves unless the visitor does: the selection takes the
+   warm cream of the palette instead of browser default blue, the
+   keyboard gets accent focus rings, headings break evenly, and the
+   landing's play arrow leans the way it points. */
+::selection{ background:#f4e3d4; color:#272117; }
+:focus-visible{ outline:2px solid #b3541e; outline-offset:2px; }
+h1, h2, h3{ text-wrap:balance; }
+a.card .go{ display:inline-block; transition:transform .12s ease; }
+a.card:hover .go{ transform:translateX(3px); }
+a.card:active{ transform:translateY(0); }
 
 /* the still composition: motion-reduced visitors meet the morning at
    rest, a quiet fade instead of the choreography */

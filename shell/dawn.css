@@ -44,6 +44,20 @@
 @keyframes dawn-text{ from{ opacity:0; transform:translateY(10px); }
                       to{ opacity:1; transform:none; } }
 
+/* the settle: once the sky is done, dawn.js frees the sun from the
+   overlay and flies it into the logo's mark. The inline left/top pin
+   the disc exactly where the rise left it; the flight itself is a web
+   animation run from dawn.js, shrinking the disc as its glow burns
+   off, so it lands as the dot that ends the word warmup. */
+.dawn-sun.dawn-sun-free{ position:fixed; margin:0; animation:none;
+  z-index:10000; will-change:transform; }
+
+/* the landing: the logo's own mark takes the morning, with a tiny
+   heartbeat once the sun arrives */
+.dawn-landed{ display:inline-block; animation:dawn-landed .55s ease; }
+@keyframes dawn-landed{ 0%{transform:scale(1);} 45%{transform:scale(1.28);}
+                        100%{transform:scale(1);} }
+
 /* the still composition: motion-reduced visitors meet the morning at
    rest, a quiet fade instead of the choreography */
 .dawn-still .dawn-day{ animation:none; opacity:1; }

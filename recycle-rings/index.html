@@ -7,7 +7,8 @@
 <title>Recycle: Rings · the daily ring game</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23f7f1e5'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='43'%20fill='%23fffdf7'%20stroke='%23e5dbc8'%20stroke-width='3'/%3E%3Ctext%20x='50'%20y='71'%20font-size='58'%20font-family='Georgia,serif'%20font-weight='bold'%20text-anchor='middle'%20fill='%23b3541e'%3EW.%3C/text%3E%3C/svg%3E"/>
 <link rel="stylesheet" href="../shell/common.css"/>
-<style>header{display:flex; align-items:flex-end; justify-content:space-between;}
+<style>:root{ --red:#b3402e; --red-soft:#f7e0da; --gold:#b8860b; }
+header{display:flex; align-items:flex-end; justify-content:space-between;}
 h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; line-height:1.05;}
 .lead{color:var(--muted); font-size:14px; margin:16px 0 14px;}
 .targetrow{display:flex; gap:10px; align-items:center; justify-content:center; margin:6px 0 10px; flex-wrap:wrap;}
@@ -19,6 +20,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     font-family:Georgia,serif; font-size:28px; font-weight:700;
   }
 .slot.ok{background:var(--green-soft); border-color:var(--green); color:var(--green); animation:pop .3s ease;}
+.slot.bad{background:var(--red-soft); border-color:var(--red); color:var(--red);}
 .slot.tgt{border-color:var(--accent); color:var(--accent);}
 @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.12);}100%{transform:scale(1);}}
 .wheelbox{display:flex; justify-content:center;}
@@ -43,6 +45,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
 .lt{ font-family:Georgia,serif; font-size:22px; font-weight:700; fill:#272117; text-anchor:middle; dominant-baseline:middle; }
 .lt.ok{ fill:#2e7d4f; font-size:26px; }
+/* the colored answer: a wrong letter sitting in the ray turns red, the
+   word's own letters waiting in the wrong place turn gold - and a drag
+   or a hover keeps its accent orange on top of either */
+.lt.bad{ fill:var(--red); }
+.lt.need{ fill:var(--gold); }
 .lt.drag, .lt.hl{ fill:#b3541e; }
 .rayline{ stroke:#d9cdb2; stroke-width:1; stroke-dasharray:4 7; opacity:0.55; }
 .rayline.top{ stroke:#b3541e; opacity:0.8; }
@@ -70,7 +77,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
   </div>
 
-  <p class="lead">Four rings of letters sit in eight rays, and opposite rays are one straight line: slide it and the letter pushed off one end wraps around to the other. <b>Loop</b> any ring, with its ◀ ▶ buttons or by dragging it around the wheel, or <b>shift</b> a whole line, with the chevron at either end or by dragging along either spoke, until the ray at the top spells the word. There is no clock: play counts <b>resources</b>, one for each seat you take up, however far you run it.</p>
+  <p class="lead">Four rings of letters sit in eight rays, and opposite rays are one straight line: slide it and the letter pushed off one end wraps around to the other. <b>Loop</b> any ring, with its ◀ ▶ buttons or by dragging it around the wheel, or <b>shift</b> a whole line, with the chevron at either end or by dragging along either spoke, until the ray at the top spells the word. A wrong letter in the ray shows <b style="color:var(--red);">red</b> and the word's letters waiting elsewhere show <b style="color:var(--gold);">gold</b>, so the way home reads at a glance. There is no clock: play counts <b>resources</b>, one for each seat you take up, however far you run it.</p>
 
   <div class="targetrow">
     <span class="lbl">Spell</span>
@@ -111,6 +118,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <h2>How to play</h2>
     <p>Four rings of eight letters, sitting in eight rays, and opposite rays are one straight line of eight letters through the center. The marked ray at the top reads one letter from each ring, and together they must spell today's <b>target word</b>. The word sits above the rings, with your current letters at the ray beneath it.</p>
     <p><b>Loop</b> any ring: its ◀ ▶ buttons turn it one seat, or drag any of its letters around the wheel and it follows your finger, snapping to the nearest seat when you let go. <b>Shift a line</b> with the outward chevron at either end, or by dragging any of its letters along its spoke: the whole line of eight letters slides one seat together, and the letter pushed off the end wraps around to the far end.</p>
+    <p><b>The wheel answers in color:</b> a letter sitting in the ray that does not spell its seat turns <b style="color:var(--red);">red</b>, and the word's own letters waiting out in the wrong place turn <b style="color:var(--gold);">gold</b>. A letter home at the ray stays green. So even a board where nothing fits yet tells you the whole story: the red seats are the destinations, the gold letters are the freight, and matching them up is the line.</p>
     <p><b>Resources, not moves:</b> taking up a seat costs one resource, however far you run it. Keep turning the same ring, or keep sliding the same line - either end, back and forth, wraps and all - and it costs nothing more; switch to another seat, or come back to one you left, and it costs again. So think laterally: a long sweep of one line can be cheaper than a ladder of little corrections.</p>
     <p><b>Par is exact:</b> the solver has already walked every reachable position of the four word letters, counting resources the same way, so par is the fewest the day can be solved in. Beat par and you found a line the solver missed (you didn't; it's exact).</p>
     <p><b>The bonus round:</b> win the day and the same board opens again under the step economy, where every seat a move covers costs and par is a count of steps. A different economy, often a different number. It posts to its own little curve, and no streak rides on it.</p>
@@ -369,7 +377,7 @@ function renderTarget(){
 function renderSlots(){
   $('slots').innerHTML = PUZZLE.word.split('').map((ch, p) => {
     const ok = aligned(p);
-    return '<div class="slot' + (ok ? ' ok' : '') + '">' + topLetter(p) + '</div>';
+    return '<div class="slot' + (ok ? ' ok' : ' bad') + '">' + topLetter(p) + '</div>';
   }).join('');
 }
 
@@ -385,7 +393,15 @@ function renderWheel(){
   for (let p = 0; p < 4; p++){
     for (let c = 0; c < 8; c++){
       const ch = g[p * 8 + c];
-      const cls = (c === 0 && ch === PUZZLE.word[p]) ? 'lt ok' : 'lt';
+      /* the wheel answers in color: a wrong letter sitting in the ray
+         turns red - that seat is not spelled - the word's own letters
+         waiting in the wrong place turn gold, and a letter home at the
+         ray stays green. Even a board where nothing fits yet reads at
+         a glance: the red seats are the destinations, the gold letters
+         are the freight. */
+      let cls = 'lt';
+      if (c === 0) cls = (ch === PUZZLE.word[p]) ? 'lt ok' : 'lt bad';
+      else if (PUZZLE.word.indexOf(ch) >= 0) cls = 'lt need';
       svg += '<text class="' + cls + '" data-r="' + p + '" data-c="' + c + '" x="200" y="' + (200 - RADII[p]) + '" transform="rotate(' + (c * 45) + ' 200 200)">' + ch + '</text>';
     }
   }

@@ -33,6 +33,43 @@ async function run(h){
     h.ok(![0,1,2,3].every(p => r.x.topLetter(p) === P.word[p]), 'rings: the day does not start solved');
     h.eq(r.x.S.res, 0, 'rings: the day starts with nothing spent');
 
+    /* the colored answer: a wrong letter sitting in the ray turns red,
+       the word's letters waiting in the wrong place turn gold, and only
+       fillers stay unmarked - so even a board where nothing fits yet
+       reads at a glance */
+    const clsAt = (env, ring, col) => {
+      const m = env.els.wheel.innerHTML.match(
+        new RegExp('class="(lt[^"]*)" data-r="' + ring + '" data-c="' + col + '"'));
+      return m ? m[1] : null;
+    };
+    let okSeats = 0, redSeats = 0, golds = 0, wantRed = 0, wantGold = 0;
+    for (let p = 0; p < 4; p++){
+      const cls = clsAt(r.env, p, 0);
+      if (cls === 'lt ok') okSeats++;
+      if (cls === 'lt bad') redSeats++;
+      if (P.start[p * 8] !== P.word[p]) wantRed++;
+      h.ok(cls === 'lt ok' || cls === 'lt bad',
+        'rings: every ray seat answers in color (' + cls + ' at seat ' + p + ')');
+    }
+    h.eq(redSeats, wantRed, 'rings: red marks exactly the misspelled ray seats');
+    for (let p = 0; p < 4; p++){
+      for (let c = 1; c < 8; c++){
+        const ch = P.start[p * 8 + c];
+        const cls = clsAt(r.env, p, c);
+        if (P.word.indexOf(ch) >= 0){
+          h.eq(cls, 'lt need', 'rings: a word letter in the wrong place turns gold');
+          golds++; wantGold++;
+        } else {
+          h.eq(cls, 'lt', 'rings: a filler stays unmarked');
+        }
+      }
+    }
+    h.eq(golds, wantGold, 'rings: gold counts exactly the word letters outside the ray');
+    h.ok((r.env.els.slots.innerHTML.match(/class="slot ok"/g) || []).length === okSeats,
+      'rings: the readout mirrors the green seats');
+    h.ok((r.env.els.slots.innerHTML.match(/class="slot bad"/g) || []).length === redSeats,
+      'rings: the readout mirrors the red seats');
+
     /* the resource economy and the move semantics, on a fresh day */
     const s2 = {};
     r = h.boot('recycle-rings', EXP, { now: T0, store: s2 });
@@ -44,6 +81,11 @@ async function run(h){
     let slid = true;
     for (let c = 0; c < 8; c++) if (r.x.S.grid[(c + 1) % 8] !== g0[c]) slid = false;
     h.ok(slid, 'rings: the loop slides every seat by one');
+    for (let p = 0; p < 4; p++){
+      const cls = clsAt(r.env, p, 0);
+      h.ok(cls === 'lt ok' || cls === 'lt bad',
+        'rings: a moved board still answers in color at every seat');
+    }
     r.x.loopRing(0, -1);
     h.eq(r.x.S.grid, g0, 'rings: looping back restores the ring');
     h.eq(r.x.S.res, 1, 'rings: reversing on the same seat costs nothing');
@@ -123,6 +165,7 @@ async function run(h){
     /* replay the solver's own par line: it must win in exactly par resources */
     const s3 = {};
     r = h.boot('recycle-rings', EXP, { now: T0, store: s3 });
+    const startWheel = r.env.els.wheel.innerHTML;
     for (const mv of P.sol){
       if (mv.t === 'l') r.x.loopRing(mv.r, mv.d);
       else r.x.shiftLine(mv.c, mv.d);
@@ -135,10 +178,21 @@ async function run(h){
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'rings: the on-par star rides the share');
     h.ok(r.x.shareText().indexOf('resources') >= 0, 'rings: the share speaks in resources');
 
+    /* the won board answers in one color: green at every seat, no red,
+       no gold, and the readout green too */
+    for (let p = 0; p < 4; p++){
+      h.eq(clsAt(r.env, p, 0), 'lt ok', 'rings: a won board reads green at every seat');
+    }
+    h.ok(r.env.els.wheel.innerHTML.indexOf('lt bad') === -1, 'rings: a won board shows no red');
+    h.ok(r.env.els.wheel.innerHTML.indexOf('lt need') === -1, 'rings: a won board shows no gold');
+    h.ok(r.env.els.slots.innerHTML.indexOf('slot bad') === -1, 'rings: a won readout shows no red');
+
     /* the bonus round: unlocked by the win, played under the step economy */
     r.x.openBonus();
     h.ok(!!r.x.S.bonus && r.x.S.bonus.on, 'rings: the win opens the bonus round');
     h.eq(r.x.S.bonus.grid, P.start, 'rings: the bonus replays the day\u2019s own board');
+    h.eq(r.env.els.wheel.innerHTML, startWheel,
+      'rings: the bonus board answers in the same colors as the day start');
     h.ok(r.x.S.bonus.par >= 1 && r.x.S.bonus.par <= 14,
       'rings: the bonus par is a step count (got ' + r.x.S.bonus.par + ')');
     h.ok(r.x.S.bonus.par >= P.par, 'rings: the step line is never shorter than the resource line');

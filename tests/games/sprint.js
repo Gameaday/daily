@@ -25,6 +25,14 @@ async function run(h, ctx){
       h.ok(page.indexOf("const DICT5_SRC = '" + WORDS_JSON.words5 + "'") >= 0,
            'sprint: the 5-letter CSV is byte-identical to the server word list');
     }
+    /* the gate: the first anagram waits behind Start, and the clock, the
+       letters and the server stamp all begin together */
+    h.eq(r.env.els.wordbox.style.display, 'none', 'sprint: the gate hides the letters at boot');
+    h.ok(!r.x.S.startAt, 'sprint: the clock holds before Start');
+    r.env.els.btnStart.click();
+    h.ok(r.x.S.startAt, 'sprint: Start begins the clock');
+    h.eq(r.env.els.startgate.style.display, 'none', 'sprint: Start puts the gate away');
+    h.ok(r.env.els.scramble.textContent.length >= 4, 'sprint: Start reveals the first anagram');
     const typed = [];
     for (let k = 0; k < 5; k++){
       const key = r.x.targets[k];
@@ -45,21 +53,24 @@ async function run(h, ctx){
     h.eq(r.x.S.stars, 3, 'sprint: a full-speed sweep earns all three clock stars');
     h.ok(r.x.shareText().indexOf('3\u2605') >= 0, 'sprint: the share text carries the stars');
     r = h.boot('sprint', EXP, { now: T1, store });
+    h.ok(!r.x.S.startAt, 'sprint: a new day waits behind the gate again');
+    r.env.els.btnStart.click();
     h.eq(r.x.S.day, 1, 'sprint: day rolled');
     h.eq(r.x.targets.join(','), 'AEKL,BEGIN,AEHRT,AELRT,ADELT',
          'sprint: day 1 letter sets are the pinned day');
     h.eq(r.x.S.stats.streak, 1, 'sprint: streak preserved');
     const s3 = {};
     r = h.boot('sprint', EXP, { now: T0, store: s3 });
+    r.env.els.btnStart.click();
     h.eq(r.env.els.btnShuffle.style.display, 'none', 'sprint: shuffle hidden before twenty seconds');
     const before = r.env.els.scramble.textContent;
     r.env.els.btnShuffle.click();
     h.ok(r.env.els.scramble.textContent !== before, 'sprint: shuffle re-scrambles the word');
     h.eq([...r.env.els.scramble.textContent].sort().join(''), [...before].sort().join(''), 'sprint: shuffle keeps the same letters');
 
-    /* --- the online live day is dealt: the first keystroke deals a
-       session, /reveal stamps the server clock once, and the finish
-       names the session so the window is the server's --- */
+    /* --- the online live day is dealt: Start deals a session, /reveal
+       stamps the server clock once, and the finish names the session so
+       the window is the server's --- */
     {
       let deals = 0, reveals = 0;
       const serveDealt = (url) => {
@@ -68,13 +79,11 @@ async function run(h, ctx){
         return { status: 200, body: { ok: true, elapsed: 0, window: 90 } };
       };
       const r = h.boot('sprint', EXP, { now: T0, store: {}, serveDealt });
-      const w0 = [...(r.x.targets[0].length === 4 ? r.x.ANA4 : r.x.ANA5).get(r.x.targets[0])][0];
-      r.env.els.guess.value = w0;
-      r.env.els.guess.dispatch('keydown', { key: 'Enter' });
+      r.env.els.btnStart.click();
       await h.flush();
-      h.eq(r.x.S.nonce, 'sp1', 'dealt: the first keystroke deals the session');
-      h.eq(r.x.S.gun, 1, 'dealt: the server stamps the starting gun');
-      for (let k = 1; k < 5; k++){
+      h.eq(r.x.S.nonce, 'sp1', 'dealt: Start deals the session');
+      h.eq(r.x.S.stamped, 1, 'dealt: the server stamps the starting gun');
+      for (let k = 0; k < 5; k++){
         const key = r.x.targets[k];
         const word = [...(key.length === 4 ? r.x.ANA4 : r.x.ANA5).get(key)][0];
         r.env.els.guess.value = word;
@@ -93,6 +102,7 @@ async function run(h, ctx){
     /* --- a replayed day never touches the wire --- */
     {
       const r = h.boot('sprint', EXP, { now: T1, store: {}, search: '?d=0' });
+      r.env.els.btnStart.click();
       const key = r.x.targets[0];
       const word = [...(key.length === 4 ? r.x.ANA4 : r.x.ANA5).get(key)][0];
       r.env.els.guess.value = word;

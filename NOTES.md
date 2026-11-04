@@ -57,7 +57,7 @@ we missed.
   (roughly 62k board sims, under a second on desktop and CI). If any real
   phone struggles, the precalc moves server-side, calculated once at
   midnight and served with the puzzle, without touching the game logic.
-- Rings' bonus round replays the day's board under the old step economy on
+- Rings' bonus round replays the day's board under the step economy on
   its own curve; practice rerolls and a hard mode (larger wheels or two
   targets) could still follow once the grid modes have soaked.
 

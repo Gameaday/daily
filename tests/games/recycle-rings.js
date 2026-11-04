@@ -6,7 +6,7 @@
 const { T0, T1 } = require('./_lib');
 
 async function run(h){
-    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftRay', 'commitDrag', 'topLetter', 'shareText', 'openBonus'];
+    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftLine', 'commitDrag', 'topLetter', 'shareText', 'openBonus'];
     const store = {};
     let r = h.boot('recycle-rings', EXP, { now: T0, store });
     const P = r.x.PUZZLE;
@@ -60,23 +60,26 @@ async function run(h){
     r.x.loopRing(0, 1);
     h.eq(r.x.S.res, 3, 'rings: coming back to a seat costs again');
     const g1 = r.x.S.grid;
-    r.x.shiftRay(3, 1);
-    h.eq(r.x.S.res, 4, 'rings: taking up a ray costs a resource');
-    let rayOnly = true, rayMoved = true;
+    r.x.shiftLine(3, 1);
+    h.eq(r.x.S.res, 4, 'rings: taking up a line costs a resource');
+    let lineOnly = true, lineMoved = true, farMoved = true;
     for (let rr = 0; rr < 4; rr++){
       for (let c = 0; c < 8; c++){
-        if (c === 3) continue;
-        if (r.x.S.grid[rr * 8 + c] !== g1[rr * 8 + c]) rayOnly = false;
+        if (c !== 3 && c !== 7 && r.x.S.grid[rr * 8 + c] !== g1[rr * 8 + c]) lineOnly = false;
       }
-      if (r.x.S.grid[((rr + 1) % 4) * 8 + 3] !== g1[rr * 8 + 3]) rayMoved = false;
+      if (rr < 3 && r.x.S.grid[rr * 8 + 3] !== g1[(rr + 1) * 8 + 3]) lineMoved = false;
+      if (rr > 0 && r.x.S.grid[rr * 8 + 7] !== g1[(rr - 1) * 8 + 7]) farMoved = false;
     }
-    h.ok(rayOnly, 'rings: a shift moves only its own ray');
-    h.ok(rayMoved, 'rings: the shift slides the ray one ring, wrapping');
-    r.x.shiftRay(3, -1);
-    h.eq(r.x.S.grid, g1, 'rings: shifting back restores the ray');
-    h.eq(r.x.S.res, 4, 'rings: keeping the same ray costs nothing more');
-    for (let i = 0; i < 4; i++) r.x.shiftRay(3, 1);
-    h.eq(r.x.S.grid, g1, 'rings: four inward shifts wrap the ray home');
+    h.ok(lineOnly, 'rings: a slide moves only its own line');
+    h.ok(lineMoved, 'rings: the pushed ray slides outward one ring');
+    h.ok(farMoved, 'rings: the opposite ray slides inward to meet it');
+    h.eq(r.x.S.grid[3 * 8 + 3], g1[3 * 8 + 7], 'rings: the far ray hands its inner letter through the center');
+    h.eq(r.x.S.grid[7], g1[3], 'rings: the pushed-off letter wraps to the opposite end');
+    r.x.shiftLine(3, -1);
+    h.eq(r.x.S.grid, g1, 'rings: pushing the same line from the other end restores it');
+    h.eq(r.x.S.res, 4, 'rings: the other end of the line is the same seat');
+    for (let i = 0; i < 8; i++) r.x.shiftLine(3, 1);
+    h.eq(r.x.S.grid, g1, 'rings: eight pushes wrap the line home');
     h.eq(r.x.S.res, 4, 'rings: the whole wrap rides the one seat, no charge');
     h.ok(!r.x.S.won, 'rings: aimless engagements do not win');
 
@@ -96,20 +99,22 @@ async function run(h){
     r.x.commitDrag('ring', 1, 3);
     h.eq(r.x.S.res, 5, 'rings: a long drag on the seat just held is free');
     const g3 = r.x.S.grid;
-    r.x.commitDrag('ray', 5, 3);
-    h.eq(r.x.S.res, 6, 'rings: a ray drag costs its one resource');
-    let rayOnly2 = true, rayMoved2 = true;
+    r.x.commitDrag('line', 1, 3);
+    h.eq(r.x.S.res, 6, 'rings: a line drag costs its one resource');
+    let lineOnly2 = true;
     for (let rr = 0; rr < 4; rr++){
       for (let c = 0; c < 8; c++){
-        if (c !== 5 && r.x.S.grid[rr * 8 + c] !== g3[rr * 8 + c]) rayOnly2 = false;
+        if (c !== 1 && c !== 5 && r.x.S.grid[rr * 8 + c] !== g3[rr * 8 + c]) lineOnly2 = false;
       }
-      if (r.x.S.grid[((rr + 3) % 4) * 8 + 5] !== g3[rr * 8 + 5]) rayMoved2 = false;
     }
-    h.ok(rayOnly2, 'rings: a drag shifts only its own ray');
-    h.ok(rayMoved2, 'rings: the drag slides the ray three seats, wrapping');
+    h.ok(lineOnly2, 'rings: a drag slides only its own line');
+    h.eq(r.x.S.grid[0 * 8 + 1], g3[3 * 8 + 1], 'rings: the grabbed ray hands its letters outward');
+    h.eq(r.x.S.grid[3 * 8 + 1], g3[1 * 8 + 5], 'rings: and takes a far-ray letter through the center');
+    h.eq(r.x.S.grid[3 * 8 + 5], g3[0 * 8 + 5], 'rings: the far ray slides inward to meet it');
+    h.eq(r.x.S.grid[0 * 8 + 5], g3[2 * 8 + 1], 'rings: the pushed-off letter wraps to the far end');
     const g4 = r.x.S.grid;
-    r.x.commitDrag('ray', 5, -4);
-    h.eq(r.x.S.grid, g4, 'rings: a full wrap of the ray lands on the same seats');
+    r.x.commitDrag('line', 1, -8);
+    h.eq(r.x.S.grid, g4, 'rings: a full wrap of the line lands on the same seats');
     h.eq(r.x.S.res, 6, 'rings: a full wrap on the seat just held is free');
     r.x.commitDrag('ring', 0, 0);
     h.eq(r.x.S.res, 6, 'rings: a drag that covers no seat costs nothing');
@@ -120,7 +125,7 @@ async function run(h){
     r = h.boot('recycle-rings', EXP, { now: T0, store: s3 });
     for (const mv of P.sol){
       if (mv.t === 'l') r.x.loopRing(mv.r, mv.d);
-      else r.x.shiftRay(mv.c, mv.d);
+      else r.x.shiftLine(mv.c, mv.d);
     }
     h.ok(r.x.S.won, 'rings: won by replaying the par line');
     h.eq(r.x.S.res, P.par, 'rings: replay costs exactly par resources');
@@ -150,7 +155,7 @@ async function run(h){
     h.eq(r.x.S.bonus.steps, 4, 'rings: walking back costs its steps as well');
     for (const mv of P.sol){
       if (mv.t === 'l') r.x.loopRing(mv.r, mv.d);
-      else r.x.shiftRay(mv.c, mv.d);
+      else r.x.shiftLine(mv.c, mv.d);
     }
     h.ok(r.x.S.bonus.won, 'rings: the bonus is won by replaying the line');
     const bsteps = P.sol.reduce((n, mv) => n + Math.abs(mv.d), 0) + 4;

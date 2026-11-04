@@ -18,13 +18,16 @@
    or a browser without the web animations api reveals the mark plainly
    instead, so no page is ever left without its dot.
 
-   The period keeps the sun two more ways:
-   - a later click on the dot glints the morning back, a warm gold
-     pulse to remind where the period came from (every day, not just
-     dawn days), with a faint hover glow as the hint
-   - the favicon badge carries the motif too: its glyph is a little
-     dawn sun, and on a dawn day the tab itself gets a miniature
-     sunrise, the sun rising inside the badge while the show plays
+   The dot keeps a little sun in it afterwards: a click on the mark
+   brings the dawn glow back for a moment.
+
+   The favicon carries the motif too. The site tile already ends in a
+   period, so at load the module restyles it: the period becomes a
+   small gold sun on the letter tile. During the show the tab performs
+   the sunrise in miniature (night, sliver, rise, morning) and hands
+   the tab back to the sun tile the moment the disc lands in the logo.
+   The page's own icon in the html stays untouched, so a no-script
+   visit keeps the tile it has always had.
 
    Contract with the shell (common.js passes these in):
      key      the ET date key for today, as YYYY-MM-DD
@@ -80,6 +83,100 @@
       if ((spans[i].className + '').indexOf('dot') !== -1 || /^[.!?]$/.test(t)) return spans[i];
     }
     return null;
+  }
+
+  /* ---------------- the favicon: the period as a small sun ----------------
+     The site tile already ends in a period; the module restyles it at
+     load, and the show runs a miniature sunrise in the tab. All of it
+     is wrapped soft: a browser that minds none of this keeps its own
+     icon, no harm done. */
+  var FAV = { link: null, timers: [] };
+
+  function sunTile(){
+    return "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
+      "<defs><radialGradient id='d' cx='.4' cy='.35' r='.8'>" +
+      "<stop offset='0' stop-color='#fff6e3'/>" +
+      "<stop offset='.55' stop-color='#f5c46b'/>" +
+      "<stop offset='1' stop-color='#e8974c'/></radialGradient></defs>" +
+      "<rect width='100' height='100' rx='22' fill='#f7f1e5'/>" +
+      "<circle cx='50' cy='50' r='43' fill='#fffdf7' stroke='#e5dbc8' stroke-width='3'/>" +
+      "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
+      " text-anchor='middle' fill='#b3541e'>W</text>" +
+      "<circle cx='79' cy='65' r='11' fill='#f4b769' opacity='.3'/>" +
+      "<circle cx='79' cy='65' r='7' fill='url(#d)'/>" +
+      "</svg>";
+  }
+
+  function dawnFrame(top, bot, cy, glow){
+    return "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
+      "<defs><linearGradient id='s' x1='0' y1='0' x2='0' y2='1'>" +
+      "<stop offset='0' stop-color='" + top + "'/>" +
+      "<stop offset='1' stop-color='" + bot + "'/></linearGradient></defs>" +
+      "<rect width='100' height='100' rx='22' fill='url(#s)'/>" +
+      (glow ? "<circle cx='50' cy='" + (cy + 4) + "' r='26' fill='#f4b769' opacity='" + glow + "'/>" : "") +
+      (cy < 100 ?
+        "<circle cx='50' cy='" + cy + "' r='15' fill='#e8974c'/>" +
+        "<circle cx='50' cy='" + (cy - 2) + "' r='12' fill='#f5c46b'/>" +
+        "<circle cx='50' cy='" + (cy - 4) + "' r='7' fill='#fff6e3'/>" : "") +
+      "</svg>";
+  }
+
+  function setFav(svg){
+    try {
+      if (FAV.link) FAV.link.setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
+    } catch (e){}
+  }
+  function restFav(){ setFav(sunTile()); }
+  function clearFavTimers(){
+    for (var i = 0; i < FAV.timers.length; i++) window.clearTimeout(FAV.timers[i]);
+    FAV.timers = [];
+  }
+
+  function findFavLink(){
+    try {
+      var l = document.querySelector('link[rel="icon"]') || document.querySelector('link[rel~="icon"]');
+      if (!l){
+        l = document.createElement('link');
+        l.setAttribute('rel', 'icon');
+        (document.head || document.documentElement).appendChild(l);
+      }
+      FAV.link = l;
+    } catch (e){ FAV.link = null; }
+  }
+
+  /* the tab's miniature sunrise, in step with the sky on the page */
+  function playFav(){
+    clearFavTimers();
+    var frames = [
+      { t: 0,    top: '#17162e', bot: '#2e2242', cy: 100, glow: '.2' },
+      { t: 1500, top: '#2e2242', bot: '#4a2c48', cy: 95,  glow: '.3' },
+      { t: 3000, top: '#4a2c48', bot: '#9c5a50', cy: 68,  glow: '.35' },
+      { t: 4200, top: '#f2b98c', bot: '#f7f1e5', cy: 36,  glow: '.4' }
+    ];
+    for (var i = 0; i < frames.length; i++){
+      (function(f){
+        FAV.timers.push(window.setTimeout(function(){
+          setFav(dawnFrame(f.top, f.bot, f.cy, f.glow));
+        }, f.t));
+      })(frames[i]);
+    }
+  }
+
+  /* ---------------- the kiss: the dot keeps a little sun ----------------
+     Armed on every page load, show or no show: a click on the logo's
+     mark brings the dawn glow back for a moment. */
+  function armKiss(){
+    try {
+      var m = logoMark();
+      if (!m) return;
+      m.classList.add('dawn-kiss');
+      m.setAttribute('title', 'first light');
+      m.addEventListener('click', function(){
+        m.classList.remove('dawn-glow');
+        void m.offsetWidth;
+        m.classList.add('dawn-glow');
+      });
+    } catch (e){}
   }
 
   function build(cfg){
@@ -140,100 +237,12 @@
     }
   }
 
-  /* ---------------- the favicon: the motif in the tab ---------------- */
-
-  /* the badge glyph is a small dawn sun: a warm disc with a soft halo,
-     resting at the badge's heart. On a dawn day the same drawing rises,
-     the badge crossfading from night indigo to its cream. */
-  function iconSVG(badgeFill, cy){
-    var svg =
-      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
-      "<defs><radialGradient id='s' gradientUnits='userSpaceOnUse' cx='50' cy='" + cy + "' r='17'>" +
-      "<stop offset='0' stop-color='#fff6e3'/><stop offset='.5' stop-color='#f5c46b'/>" +
-      "<stop offset='1' stop-color='#e8974c'/></radialGradient></defs>" +
-      "<rect width='100' height='100' rx='22' fill='#f7f1e5'/>" +
-      "<circle cx='50' cy='50' r='43' fill='" + badgeFill + "' stroke='#e5dbc8' stroke-width='3'/>" +
-      "<circle cx='50' cy='" + cy + "' r='26' fill='#f4b769' fill-opacity='.3'/>" +
-      "<circle cx='50' cy='" + cy + "' r='14' fill='url(#s)'/></svg>";
-    return 'data:image/svg+xml,' + encodeURIComponent(svg);
-  }
-  function mix(hex1, hex2, t){
-    var p = function(h){
-      return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
-    };
-    var a = p(hex1), b = p(hex2);
-    var c = function(i){ return Math.round(a[i] + (b[i] - a[i]) * t); };
-    return 'rgb(' + c(0) + ',' + c(1) + ',' + c(2) + ')';
-  }
-  var REST_ICON = iconSVG('#fffdf7', 50);
-  var favRising = false;
-  function setIcon(href){
-    try {
-      var links = document.querySelectorAll('link[rel~="icon"]');
-      var link = links.length ? links[links.length - 1] : null;
-      if (!link){
-        link = document.createElement('link');
-        link.rel = 'icon';
-        (document.head || document.documentElement).appendChild(link);
-      }
-      link.setAttribute('href', href);
-    } catch (e){}
-  }
-  /* the miniature sunrise: seven frames, night to cream, the disc
-     rising to the badge's heart as the tab keeps time with the sky */
-  function faviconRise(){
-    if (favRising) return;
-    favRising = true;
-    var steps = 7, i = 0;
-    var tick = function(){
-      var t = i / (steps - 1);
-      setIcon(iconSVG(mix('#2e2242', '#fffdf7', t), 82 - 32 * t));
-      i++;
-      if (i < steps) window.setTimeout(tick, 800);
-      else favRising = false;
-    };
-    tick();
-  }
-
-  /* ---------------- the glint: the dot remembers the sun ---------------- */
-
-  /* wired on every page, dawn day or not: a click on the logo's mark
-     brings the warm glow back for a moment. The hover glow in
-     dawn.css is the hint, this pulse is the reminder. */
-  function wireGlint(){
-    var m = logoMark();
-    if (!m || m._dawnGlint) return;
-    m._dawnGlint = true;
-    m.classList.add('dawn-dot');
-    m.addEventListener('click', function(){
-      if (m.classList.contains('dawn-awaiting')) return;
-      try {
-        m.classList.remove('dawn-glint');
-        void m.offsetWidth;
-        m.classList.add('dawn-glint');
-      } catch (e){}
-    });
-  }
-  function whenReady(fn){
-    if (document.readyState !== 'loading') fn();
-    else document.addEventListener('DOMContentLoaded', fn);
-  }
-  whenReady(function(){
-    wireGlint();
-    if (!favRising) setIcon(REST_ICON);
-  });
-
   function play(cfg){
     cfg = cfg || {};
     if (document.getElementById('dawn-overlay')) return false;
     var ov = build(cfg);
     var sun = ov.querySelector('.dawn-sun');
     var gone = false, freeSun = null, flight = null;
-
-    /* the tab keeps time: a miniature sunrise while the show plays,
-     the resting sun otherwise */
-    if (reducedMotion()) setIcon(REST_ICON);
-    else faviconRise();
 
     /* the deposit plan: if this show can end in a settle, hold the
        logo's mark back from the first paint, so the sun has an empty
@@ -277,6 +286,8 @@
       gone = true;
       unlisten();
       if (flight){ try { flight.cancel(); } catch (e){} }
+      clearFavTimers();
+      restFav();
       revealMark();
       ov.classList.add('dawn-out');
       window.setTimeout(function(){ removeOverlay(); removeSun(); }, 800);
@@ -292,6 +303,7 @@
           flight.onfinish = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}
             depositMark();
+            restFav();
           };
           flight.oncancel = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}
@@ -302,12 +314,14 @@
         }
       }
       revealMark();
+      restFav();
       ov.classList.add('dawn-out');
       window.setTimeout(function(){ removeOverlay(); removeSun(); }, 800);
     };
     window.addEventListener('keydown', dismiss, true);
     window.addEventListener('pointerdown', dismiss, true);
     window.setTimeout(end, HOLD);
+    if (!reducedMotion()) playFav();
     (document.body || document.documentElement).appendChild(ov);
     return true;
   }
@@ -333,4 +347,11 @@
     play: function(cfg){ cfg = cfg || {}; return play({ dayIndex: cfg.dayIndex || 0, num: cfg.num || 0, dateText: cfg.dateText || '' }); },
     reset: function(){ try { localStorage.removeItem(MARK); } catch (e){} }
   };
+
+  /* module boot: restyle the favicon's period as a small sun, and arm
+     the kiss on the logo's mark. Both are garnishes: each is wrapped
+     soft and the page is unaffected if either comes to nothing. */
+  findFavLink();
+  restFav();
+  armKiss();
 })();

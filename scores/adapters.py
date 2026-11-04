@@ -22,7 +22,12 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # Self-reported "value" posts are generator-only: the gated games refuse
 # them outright. The generator games (rings, trace, grid) have no answer
 # key by design - their puzzles are derived at play time, not curated -
-# and sprint, the fourth generator, now rides a dealt clock instead.
+# and sprint, the fourth generator, now rides a dealt clock and grades
+# its solved words against the day's letter sets server-side
+# (sprintwords.py), so its count is derived, never claimed. An
+# evidence post also names its dealt session now: the nonce must
+# resolve to the finished session, or the answer alone buys nothing -
+# a mined key is not evidence without its round.
 # ---------------------------------------------------------------------------
 
 # the gated-games list and the per-game meta caps live in the dealt
@@ -58,9 +63,11 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # check and meter the checks themselves; timeline's budget is its
 # day's own size (the miss that spends it ends the day) while thread's
 # checks stay generous. The
-# residual honesty note that stays open: a rounds loss reveal hands over
-# the key a second session could mine, and sprint's solved count is
-# still the client's word inside the server-stamped window.
+# residual honesty notes that stay open: the answers a spent session
+# hands back could still be relayed to a friend mid-window (the session
+# gates the tally, not the talk), and sprint's letter sets are public
+# by design, so a determined script can still spell its way to a
+# count - timing binds only while its stamp is live.
 # ---------------------------------------------------------------------------
 
 DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",

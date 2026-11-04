@@ -3,12 +3,28 @@
    alone: dropping the game later means deleting this file with them. */
 'use strict';
 const { T0, T1, T10 } = require('./_lib');
+/* the server's word list, pinned byte-identical to the page's CSVs
+   below - the count the server derives is only honest if its dictionary
+   accepts exactly what the player's page accepts */
+const WORDS_JSON = require('../../scores/sprint_words.json');
 
-async function run(h){
+async function run(h, ctx){
     const EXP = ['S', 'targets', 'ANA4', 'ANA5', 'shareText'];
     const store = {};
     let r = h.boot('sprint', EXP, { now: T0, store });
     h.eq(r.x.targets.length, 5, 'sprint: 5 targets');
+    h.eq(r.x.targets.join(','), 'MNOR,ACENO,AGNOR,ABDIR,ABEKR',
+         'sprint: day 0 letter sets are the pinned day (server ports the same pick)');
+    /* the dictionaries ship as data: the page's CSVs and the server's
+       word list must stay byte-identical, or the server's count drifts
+       from the page's accept bar */
+    {
+      const page = ctx.readGame('sprint');
+      h.ok(page.indexOf("const DICT_SRC = '" + WORDS_JSON.words4 + "'") >= 0,
+           'sprint: the 4-letter CSV is byte-identical to the server word list');
+      h.ok(page.indexOf("const DICT5_SRC = '" + WORDS_JSON.words5 + "'") >= 0,
+           'sprint: the 5-letter CSV is byte-identical to the server word list');
+    }
     const typed = [];
     for (let k = 0; k < 5; k++){
       const key = r.x.targets[k];
@@ -20,13 +36,18 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'sprint: won all five');
     h.eq(r.x.S.solvedCount, 5, 'sprint: solvedCount 5');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 5, 'sprint: curve value 5');
+    const post0 = h.lastPost(r.env).body;
+    h.eq(post0.answer.join(','), typed.join(','),
+         'sprint: the finish posts the solved words as evidence');
+    h.ok(!('value' in post0), 'sprint: the client never names a number');
     h.eq((r.x.S.words || []).join(','), typed.join(','), 'sprint: solved-word list matches typed');
     h.ok(r.x.shareText().indexOf('5/5') >= 0, 'sprint: share 5/5');
     h.eq(r.x.S.stars, 3, 'sprint: a full-speed sweep earns all three clock stars');
     h.ok(r.x.shareText().indexOf('3\u2605') >= 0, 'sprint: the share text carries the stars');
     r = h.boot('sprint', EXP, { now: T1, store });
     h.eq(r.x.S.day, 1, 'sprint: day rolled');
+    h.eq(r.x.targets.join(','), 'AEKL,BEGIN,AEHRT,AELRT,ADELT',
+         'sprint: day 1 letter sets are the pinned day');
     h.eq(r.x.S.stats.streak, 1, 'sprint: streak preserved');
     const s3 = {};
     r = h.boot('sprint', EXP, { now: T0, store: s3 });
@@ -64,7 +85,8 @@ async function run(h){
       h.eq(deals, 1, 'dealt: exactly one deal');
       h.eq(reveals, 1, 'dealt: exactly one reveal - the stamp never re-fires');
       const p = h.lastPost(r.env).body;
-      h.eq(p.value, 5, 'dealt: the sweep posts its count');
+      h.eq(p.answer.length, 5, 'dealt: the finish posts its five words');
+      h.ok(!('value' in p), 'dealt: the dealt finish never names a number');
       h.eq(p.nonce, 'sp1', 'dealt: the finish names the session');
     }
 

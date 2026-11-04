@@ -202,9 +202,10 @@ const SHELL = (() => {
          you-dot on later reads: on the evidence path the server never
          reads a number from the client. */
       /* a dealt round names its session: a nonce-bearing evidence post
-         reports the session's facts (the server counted them itself), and
-         a dealt generator post is checked against the server-stamped
-         window. Undealt games keep passing a bare number, as before. */
+         reports the session's facts (the server counted them itself),
+         and sprint's word post is clocked against its server-stamped
+         window. Undealt generator games keep passing a bare number, as
+         before. */
       const isObj = !!(sub && typeof sub === 'object');
       const evidence = isObj && !('value' in sub);
       const value = evidence ? sub.points : (isObj ? sub.value : sub);

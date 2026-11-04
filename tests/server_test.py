@@ -30,6 +30,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PORT = 8971  # scratch port; nothing else listens here in CI or on the Pi
 
+# sprint's word grade is importable straight from the scores package:
+# this suite pins the day's letter sets against the page's own pick
+sys.path.insert(0, str(ROOT / "scores"))
+import sprintwords
+
 # one source of truth: the epoch and timezone come from the manifest the
 # server itself loads, so this test can never disagree with server.py
 MANIFEST = json.loads((ROOT / "scores" / "manifest.json").read_text(encoding="utf-8"))
@@ -328,7 +333,9 @@ def main():
                                      "better": "high", "id": "z" * 3000})
         check(s == 413, "oversized body rejected")
         # out-of-range values clamp into the final bin instead of corrupting bins
-        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 99,
+        # (rings-bonus: sprint's value posts are retired below, so the clamp
+        # rides a curve that still takes numbers)
+        s, b = post("/api/submit", {"game": "rings-bonus", "day": TODAY, "value": 99,
                                     "better": "high", "id": "big"})
         check(s == 200 and b["bins"][-1]["count"] == 1 and b.get("count") == 1,
               "value beyond last edge clamps into the final bin")
@@ -350,136 +357,51 @@ def main():
         s, b = req("GET", "/api/dist?game=rings&day=" + str(TODAY))
         check(s == 200 and b.get("count") == 2, "other games' stale days do not touch rings")
 
-        # --- evidence-based validation: the answer and the play facts come
-        #     in, the points come out - the client never names a number ---
+        # --- evidence-based validation (1.1): the answer and the play
+        #     facts come in, the points come out - the client never names
+        #     a number. But the dealt session the nonce names must now
+        #     resolve and be done: an answer a client could mine (the
+        #     rounds reveal above hands over y=1215) or invent is not a
+        #     scoreboard ticket without the round that graded it ---
         def ev(game, body):
             return post("/api/submit", dict(body, game=game, day=TODAY))
 
-        s, b = ev("rounds", {"id": "ev1", "status": "won", "answer": 1215,
-                             "meta": {"guesses": 2}})
-        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
-              "evidence: rounds won in 2 guesses -> server derives 2")
-        s, _b = ev("rounds", {"id": "ev2", "status": "won", "answer": 1943,
-                              "meta": {"guesses": 1}})
-        check(s == 422, "evidence: the wrong year is rejected")
-        s, _b = ev("rounds", {"id": "ev3", "status": "won", "answer": 1215,
-                              "meta": {"guesses": 0}})
-        check(s == 422, "evidence: meta below the cap is rejected")
-        s, b = ev("rounds", {"id": "ev4", "status": "lost"})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
-              "evidence: a loss is 0 points, enforced server-side (mean 1)")
-        s, b = ev("bogus", {"id": "ev5", "status": "won", "answer": [5]})
-        check(s == 200 and b.get("mean") == 3,
-              "evidence: bogus first-pick find -> 3")
-        s, _b = ev("bogus", {"id": "ev6", "status": "won", "answer": [0]})
-        check(s == 422, "evidence: bogus wrong pick rejected")
-        s, b = ev("well-actually", {"id": "ev7", "status": "won",
-                                    "answer": {"picks": [1], "typed": "Leonardo da Vinci"}})
-        check(s == 200 and b.get("mean") == 4,
-              "evidence: found it and named the correction -> 4")
-        s, b = ev("well-actually", {"id": "ev8", "status": "won",
-                                    "answer": {"picks": [1], "typed": "nope"}})
-        check(s == 200 and b.get("mean") == 3.5,
-              "evidence: a wrong correction earns no bonus (mean 3.5)")
-        s, b = ev("fermi", {"id": "ev9", "status": "won", "answer": 2500000000})
-        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
-              "evidence: fermi spot-on derives 3")
-        s, b = ev("fermi", {"id": "ev10", "status": "won", "answer": 1000000})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
-              "evidence: fermi beyond 100x derives 0 (mean 1.5)")
-        s, b = ev("brunch", {"id": "ev11", "status": "won", "answer": 3})
-        check(s == 200 and b.get("mean") == 1, "evidence: brunch right pick -> 1")
-        s, _b = ev("brunch", {"id": "ev12", "status": "won", "answer": 0})
-        check(s == 422, "evidence: brunch wrong pick rejected")
-        s, b = ev("brunch", {"id": "ev13", "status": "lost", "answer": 0})
-        check(s == 200 and b.get("mean") == 0.5, "evidence: brunch loss -> 0")
+        s, _b = ev("rounds", {"id": "ev1", "status": "won", "answer": 1215,
+                              "meta": {"guesses": 2}})
+        check(s == 422, "evidence: a mined key without its dealt session is refused")
+        s, _b = ev("rounds", {"id": "ev2", "status": "won", "answer": 1215,
+                              "meta": {"guesses": 2}, "nonce": "deadbeef" * 4})
+        check(s == 422, "evidence: an unresolvable nonce is not a session")
+        s, _b = ev("bogus", {"id": "ev5", "status": "won", "answer": [5]})
+        check(s == 422, "evidence: a found lie without its session is refused")
+        s, _b = ev("well-actually", {"id": "ev6", "status": "won",
+                                     "answer": {"picks": [1], "typed": "Leonardo da Vinci"}})
+        check(s == 422, "evidence: a named correction without its session is refused")
+        # the day's keys load here once for the dealt sections (and the
+        # unit graders) below, where every submit names its live session
         sup = json.loads((ROOT / "puzzles" / "superlative" / "puzzles.json")
                          .read_text(encoding="utf-8"))[0]
         perfect = [q["a"] for q in sup["q"]]
-        s, b = ev("superlative", {"id": "ev14", "status": "won", "answer": perfect})
-        check(s == 200 and b.get("mean") == len(perfect),
-              "evidence: superlative clean sweep -> full marks")
         imperfect = list(perfect)
         imperfect[0] = (imperfect[0] + 1) % len(sup["m"])
-        s, b = ev("superlative", {"id": "ev15", "status": "lost", "answer": imperfect})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 4.5,
-              "evidence: superlative partial credit is derived, not claimed")
+        s, _b = ev("superlative", {"id": "ev7", "status": "won", "answer": perfect})
+        check(s == 422, "evidence: a perfect sweep without its session is refused")
         rel = json.loads((ROOT / "puzzles" / "relativity" / "puzzles.json")
                          .read_text(encoding="utf-8"))[0]
         rperfect = [rz["a"] for rz in rel["r"]]
-        s, b = ev("relativity", {"id": "evr1", "status": "won", "answer": rperfect})
-        check(s == 200 and b.get("mean") == 3,
-              "evidence: relativity clean sweep -> full marks")
         rwrong = list(rperfect)
         rwrong[0] = (rwrong[0] + 1) % 2
-        s, b = ev("relativity", {"id": "evr2", "status": "lost", "answer": rwrong})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
-              "evidence: relativity partial credit is derived, not claimed")
-        s, b = ev("museum", {"id": "ev16", "status": "won", "answer": "rosetta stone",
-                             "meta": {"clues": 2}})
-        check(s == 200 and b.get("mean") == 2,
-              "evidence: museum named on clue 2 -> 2")
-        s, _b = ev("museum", {"id": "ev17", "status": "won", "answer": "the mona lisa",
+        s, _b = ev("museum", {"id": "ev8", "status": "won", "answer": "the rosetta stone",
                               "meta": {"clues": 1}})
-        check(s == 422, "evidence: museum wrong artifact rejected")
-        sif = json.loads((ROOT / "puzzles" / "sift" / "puzzles.json")
-                        .read_text(encoding="utf-8"))[0]
-        s, b = ev("sift", {"id": "ev18", "status": "won",
-                           "answer": [c["i"] for c in sif["cats"]],
-                           "meta": {"mistakes": 1}})
-        check(s == 200 and b.get("mean") == 2, "evidence: sift one-mistake win -> 2")
-        bad = [list(c["i"]) for c in sif["cats"]]
-        bad[0][0], bad[1][0] = bad[1][0], bad[0][0]
-        s, _b = ev("sift", {"id": "ev19", "status": "won", "answer": bad,
-                            "meta": {"mistakes": 0}})
-        check(s == 422, "evidence: sift wrong grouping rejected")
-        lb = json.loads((ROOT / "puzzles" / "lightbox" / "puzzles.json")
-                        .read_text(encoding="utf-8"))[0]
-        s, b = ev("lightbox", {"id": "ev20", "status": "won", "answer": lb["g"],
-                               "meta": {"mistakes": 0}})
-        check(s == 200 and b.get("mean") == 3, "evidence: lightbox clean grid -> 3")
-        cip = json.loads((ROOT / "puzzles" / "cipher" / "puzzles.json")
-                         .read_text(encoding="utf-8"))[0]
-        s, b = ev("cipher", {"id": "ev21", "status": "won", "answer": cip["q"].lower(),
-                             "meta": {"hints": 1}})
-        check(s == 200 and b.get("mean") == 2,
-              "evidence: cipher decoded with one hint -> 2")
+        check(s == 422, "evidence: the museum name without its session is refused")
         tl = json.loads((ROOT / "puzzles" / "timeline" / "puzzles.json")
                         .read_text(encoding="utf-8"))
         tyears = sorted(tl["bank"][i]["y"] for i in tl["picks"][0])
-        s, b = ev("timeline", {"id": "ev22", "status": "won", "answer": tyears,
-                               "meta": {"checks": 1}})
-        check(s == 200 and b.get("mean") == 3,
-              "evidence: timeline first-check win -> 3")
-        s, _b = ev("timeline", {"id": "ev23", "status": "won",
-                                "answer": list(reversed(tyears)),
-                                "meta": {"checks": 1}})
-        check(s == 422, "evidence: timeline wrong order rejected")
         th = json.loads((ROOT / "puzzles" / "thread" / "puzzles.json")
                         .read_text(encoding="utf-8"))
         tp = th["picks"][0]
-        s, b = ev("thread", {"id": "ev24", "status": "won",
-                             "answer": [tp["s"]] + list(tp["m"]) + [tp["e"]],
-                             "meta": {"checks": 2}})
-        check(s == 200 and b.get("mean") == 2, "evidence: thread two-check win -> 2")
         s, _b = ev("rings", {"id": "ev25", "status": "won", "answer": "anything"})
         check(s == 400, "evidence: generator games have no evidence path yet")
-        s, b = ev("sift", {"id": "ev26", "status": "lost", "answer": [],
-                           "meta": {"mistakes": 4}})
-        check(s == 200 and b.get("count") == 2,
-              "evidence: a sift loss at the fourth mistake still tallies")
-        s, b = ev("cipher", {"id": "ev27", "status": "won", "answer": cip["q"],
-                             "meta": {"hints": 5}})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
-              "evidence: a cipher win on the fifth hint derives 0, not a rejection")
-        s, b = ev("timeline", {"id": "ev28", "status": "won", "answer": tyears,
-                               "meta": {"checks": 6}})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
-              "evidence: a timeline win on the last budget check derives 0, not a rejection")
-        s, _b = ev("timeline", {"id": "ev29", "status": "won", "answer": tyears,
-                               "meta": {"checks": 7}})
-        check(s == 422,
-              "evidence: a check past the day's own budget is rejected")
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "value": 3, "id": "legacy1"})
         check(s == 400, "cutover: a self-reported value post for a gated game is refused")
@@ -540,7 +462,7 @@ def main():
         s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "dv1",
                                     "status": "won", "answer": 1215,
                                     "meta": {"guesses": 1}, "nonce": rn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 0.67,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 0,
               "dealt submit: the session's verdict and count override the claim")
         s, b = post("/api/deal", {"game": "rounds", "day": TODAY})
         rn2 = b["nonce"]
@@ -554,9 +476,11 @@ def main():
         s, b = post("/api/submit", {"game": "rounds", "day": TODAY, "id": "dv2",
                                     "status": "won", "answer": 1215,
                                     "meta": {"guesses": 1}, "nonce": rn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: the server's guess count overrides the client's word")
-        # --- dealt sprint: the starting gun is a server timestamp ---
+        # --- dealt sprint: the starting gun is a server timestamp, and
+        #     the words are the evidence - the count derives from the
+        #     day's letter sets server-side, never the client's word ---
         s, b = post("/api/deal", {"game": "sprint", "day": TODAY})
         check(s == 200 and isinstance(b.get("nonce"), str),
               "deal: sprint opens a timed session")
@@ -577,21 +501,49 @@ def main():
         check(s == 400, "reveal: a rounds session is not a starting gun")
         s, _b = post("/api/guess", {"nonce": "no-such-session", "move": {"y": 1215}})
         check(s == 404, "guess: an unknown nonce is no session")
-        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
-                                    "better": "high", "id": "dv3", "nonce": sn})
-        check(s == 200 and b.get("count") == 2 and b["bins"][-1]["you"] is True,
-              "dealt submit: a claim inside the server-stamped window tallies")
-        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
-                                    "better": "high", "id": "dv4",
+        # the day's own letter sets, exactly the page's pick, graded word
+        # by word: one real dictionary word of the letters covers one set
+        check(sprintwords.sprint_targets(TODAY) ==
+              ["MNOR", "ACENO", "AGNOR", "ABDIR", "ABEKR"],
+              "sprintwords: the day 0 letter sets are the page's own pick")
+        check(sprintwords.sprint_targets(TODAY + 1) ==
+              ["AEKL", "BEGIN", "AEHRT", "AELRT", "ADELT"],
+              "sprintwords: the day 1 letter sets are the page's own pick")
+        daywords = [sprintwords.sprint_words_for(k)[0]
+                    for k in sprintwords.sprint_targets(TODAY)]
+        check(sprintwords.sprint_count(daywords, TODAY) == 5,
+              "sprintwords: the day's five real words cover all five sets")
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                    "answer": daywords, "id": "dv3", "nonce": sn})
+        check(s == 200 and b.get("count") == 1 and b["bins"][-1]["you"] is True,
+              "dealt submit: real words inside the stamped window tally their count")
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                    "answer": ["QQQZ", "XYYYY"], "id": "dv4"})
+        check(s == 200 and b.get("count") == 2 and b["bins"][0]["you"] is True,
+              "dealt submit: garbage words cover nothing - the count derives, never the claim")
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                    "answer": daywords, "id": "dv4b",
                                     "nonce": "deadbeef" * 4})
-        check(s == 200 and b.get("count") == 3 and b["bins"][0]["you"] is True,
-              "dealt submit: an unknown session derives 0 - the clock cannot be re-entered")
+        check(s == 200 and b.get("count") == 3 and b["bins"][-1]["you"] is True,
+              "dealt submit: a dropped session still counts its words - the words are the evidence")
         s, b = post("/api/deal", {"game": "sprint", "day": TODAY})
         sn3 = b["nonce"]
-        s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
-                                    "better": "high", "id": "dv5", "nonce": sn3})
-        check(s == 200 and b.get("count") == 4 and b["bins"][0]["you"] is True,
-              "dealt submit: claiming a score without ever starting derives 0")
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                    "answer": daywords, "id": "dv5", "nonce": sn3})
+        check(s == 200 and b.get("count") == 4 and b["bins"][-1]["you"] is True,
+              "dealt submit: words posted without ever starting still cover their sets")
+        day1words = [sprintwords.sprint_words_for(k)[0]
+                     for k in sprintwords.sprint_targets(TODAY + 1)]
+        s, b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                    "answer": day1words, "id": "dv5b"})
+        check(s == 200 and b.get("count") == 5 and b["bins"][0]["you"] is True,
+              "dealt submit: another day's words cover nothing here")
+        s, _b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                     "value": 5, "better": "high", "id": "dv5c"})
+        check(s == 400, "dealt submit: a self-reported value post for sprint is retired")
+        s, _b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                     "answer": ["MOR"], "id": "dv5d"})
+        check(s == 400, "dealt submit: a bad word shape is refused, not graded")
         # --- dealt brunch and fermi: one guess ends the round, so the
         #     reveal can only arrive attached to a spent pick ---
         s, b = post("/api/deal", {"game": "brunch", "day": TODAY})
@@ -614,7 +566,7 @@ def main():
         check(s == 400, "reveal: a brunch session is not a starting gun")
         s, b = post("/api/submit", {"game": "brunch", "day": TODAY, "id": "dv6",
                                     "status": "won", "answer": 3, "nonce": bn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 0.33,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 0,
               "dealt submit: the session's lost verdict overrides the claimed win")
         s, b = post("/api/deal", {"game": "brunch", "day": TODAY})
         bn2 = b["nonce"]
@@ -624,7 +576,7 @@ def main():
               "guess: the right seat wins the table")
         s, b = post("/api/submit", {"game": "brunch", "day": TODAY, "id": "dv7",
                                     "status": "lost", "answer": 0, "nonce": bn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 0.5,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 0.5,
               "dealt submit: the session's won verdict overrides the claimed loss")
         s, b = post("/api/deal", {"game": "fermi", "day": TODAY})
         check(s == 200 and isinstance(b.get("nonce"), str)
@@ -642,7 +594,7 @@ def main():
         s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "dv8",
                                     "status": "won", "answer": 1000000,
                                     "nonce": fn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 2.0,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
               "dealt submit: fermi points derive from the session's estimate, not the claim")
         s, b = post("/api/deal", {"game": "fermi", "day": TODAY})
         fn2 = b["nonce"]
@@ -652,7 +604,7 @@ def main():
         s, b = post("/api/submit", {"game": "fermi", "day": TODAY, "id": "dv9",
                                     "status": "won", "answer": 2500000000,
                                     "nonce": fn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.5,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
               "dealt submit: the session's wild estimate overrides the claimed spot-on")
         # --- dealt well-actually: the lie never ships, so every pick and
         #     the one correction attempt travel to the session ---
@@ -689,7 +641,7 @@ def main():
                                     "answer": {"picks": [1],
                                                "typed": "Leonardo da Vinci"},
                                     "nonce": wn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 3.33,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
               "dealt submit: the session's picks and correction override the claim")
         s, b = post("/api/deal", {"game": "well-actually", "day": TODAY})
         wn2 = b["nonce"]
@@ -704,7 +656,7 @@ def main():
                                     "answer": {"picks": [1],
                                                "typed": "Leonardo"},
                                     "nonce": wn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 2.5,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
               "dealt submit: the session's lost verdict overrides the claimed win")
         # --- dealt museum: the name never ships and the session meters
         #     the clues, so the reveal rides the spent guess ---
@@ -737,7 +689,7 @@ def main():
                                     "answer": "rosetta",
                                     "meta": {"clues": 1},
                                     "nonce": mn})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 1,
               "dealt submit: the session's clue meter overrides the claim")
         s, b = post("/api/deal", {"game": "museum", "day": TODAY})
         mn2 = b["nonce"]
@@ -753,7 +705,7 @@ def main():
                                     "answer": "rosetta stone",
                                     "meta": {"clues": 1},
                                     "nonce": mn2})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.0,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 0.5,
               "dealt submit: a lost visit overrides the claimed win")
         # --- dealt bogus: the lie never ships, so every pick travels to
         #     the session and the reveal rides the spent round ---
@@ -783,7 +735,7 @@ def main():
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "id": "dv14", "status": "won",
                                     "answer": [5], "nonce": bgn})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's picks override the claim")
         s, b = post("/api/deal", {"game": "bogus", "day": TODAY})
         bgn2 = b["nonce"]
@@ -795,7 +747,7 @@ def main():
         s, b = post("/api/submit", {"game": "bogus", "day": TODAY,
                                     "id": "dv15", "status": "won",
                                     "answer": [5], "nonce": bgn2})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.67,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: the session's lost verdict overrides the claim")
         # --- dealt superlative: the per-question answers never ship, so
         #     every round travels to the session and the sweep verdict is
@@ -826,7 +778,7 @@ def main():
         s, b = post("/api/submit", {"game": "superlative", "day": TODAY,
                                     "id": "dv16", "status": "won",
                                     "answer": perfect, "nonce": sgn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 4.33,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 4,
               "dealt submit: the session's sweep verdict overrides the claim")
         s, b = post("/api/deal", {"game": "superlative", "day": TODAY})
         sgn2 = b["nonce"]
@@ -837,7 +789,7 @@ def main():
         s, b = post("/api/submit", {"game": "superlative", "day": TODAY,
                                     "id": "dv17", "status": "lost",
                                     "answer": imperfect, "nonce": sgn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 4.5,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 4.5,
               "dealt submit: the session's sweep overrides the claimed loss")
         # --- dealt relativity: the answers and the fine print never ship,
         #     so every round travels to the session and the sweep verdict
@@ -867,7 +819,7 @@ def main():
         s, b = post("/api/submit", {"game": "relativity", "day": TODAY,
                                     "id": "dvr1", "status": "won",
                                     "answer": rperfect, "nonce": rgn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 2.33,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's lost verdict overrides the claim")
         s, b = post("/api/deal", {"game": "relativity", "day": TODAY})
         rgn2 = b["nonce"]
@@ -878,7 +830,7 @@ def main():
         s, b = post("/api/submit", {"game": "relativity", "day": TODAY,
                                     "id": "dvr2", "status": "lost",
                                     "answer": rwrong, "nonce": rgn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 2.5,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
               "dealt submit: the session's sweep overrides the claimed loss")
         # --- dealt sift: the categories never ship, so every trio travels
         #     to the session and the spent test hands over its group ---
@@ -912,7 +864,7 @@ def main():
         s, b = post("/api/submit", {"game": "sift", "day": TODAY, "id": "dv18",
                                     "status": "won", "answer": [],
                                     "meta": {"mistakes": 0}, "nonce": sfn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's grouping and mistake meter override the claim")
         s, b = post("/api/deal", {"game": "sift", "day": TODAY})
         sfn2 = b["nonce"]
@@ -924,7 +876,7 @@ def main():
         s, b = post("/api/submit", {"game": "sift", "day": TODAY, "id": "dv19",
                                     "status": "won", "answer": [],
                                     "meta": {"mistakes": 0}, "nonce": sfn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: a lost sift day overrides the claimed win")
         # --- dealt lightbox: the grid never ships, so every development
         #     travels to the session and it meters the fog itself ---
@@ -951,7 +903,7 @@ def main():
         s, b = post("/api/submit", {"game": "lightbox", "day": TODAY,
                                     "id": "dv20", "status": "won",
                                     "answer": lbgood, "nonce": lbn})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.5,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's fog meter overrides the claim")
         s, b = post("/api/deal", {"game": "lightbox", "day": TODAY})
         lbn2 = b["nonce"]
@@ -963,7 +915,7 @@ def main():
         s, b = post("/api/submit", {"game": "lightbox", "day": TODAY,
                                     "id": "dv21", "status": "won",
                                     "answer": lbgood, "nonce": lbn2})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.67,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: a fogged day overrides the claimed win")
         # --- dealt cipher: the quote never ships, the substitution lives
         #     server-side, and the session grades every check and meters
@@ -998,7 +950,7 @@ def main():
         s, b = post("/api/submit", {"game": "cipher", "day": TODAY,
                                     "id": "dv22", "status": "won",
                                     "answer": "x", "nonce": cpn})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's decode and hint meter override the claim")
         s, b = post("/api/deal", {"game": "cipher", "day": TODAY})
         cpn2 = b["nonce"]
@@ -1009,7 +961,7 @@ def main():
         s, b = post("/api/submit", {"game": "cipher", "day": TODAY,
                                     "id": "dv23", "status": "won",
                                     "answer": cip0["q"], "nonce": cpn2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.0,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: a revealed codebook derives 0, never the claim")
         # --- dealt timeline: the years never ship, so every check travels
         #     to the session and it meters the checks itself ---
@@ -1039,7 +991,7 @@ def main():
         s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
                                     "id": "dv24", "status": "won",
                                     "answer": [], "nonce": tln})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.67,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's order and check meter override the claim")
         s, b = post("/api/deal", {"game": "timeline", "day": TODAY})
         tln2 = b["nonce"]
@@ -1050,7 +1002,7 @@ def main():
         s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
                                     "id": "dv25", "status": "won",
                                     "answer": tyears, "nonce": tln2})
-        check(s == 200 and b.get("count") == 4 and b.get("mean") == 1.25,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: a given-up timeline day overrides the claimed win")
         # --- the timeline budget: the day's own size, one more check
         #     than its events. Five more misses, then the sixth ends
@@ -1071,7 +1023,7 @@ def main():
         s, b = post("/api/submit", {"game": "timeline", "day": TODAY,
                                     "id": "dv26", "status": "won",
                                     "answer": tyears, "nonce": tln3})
-        check(s == 200 and b.get("count") == 5 and b.get("mean") == 1.0,
+        check(s == 200 and b.get("count") == 3 and b.get("mean") == 0.67,
               "dealt submit: a lost timeline day derives 0, never the claim")
         # --- dealt thread: the chain never ships, so every check travels
         #     to the session and it meters the checks itself ---
@@ -1107,7 +1059,7 @@ def main():
         s, b = post("/api/submit", {"game": "thread", "day": TODAY,
                                     "id": "dv26", "status": "won",
                                     "answer": ["x"], "nonce": thn})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 2.0,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2.0,
               "dealt submit: the session's chain and check meter override the claim")
         s, b = post("/api/deal", {"game": "thread", "day": TODAY})
         thn2 = b["nonce"]
@@ -1119,7 +1071,7 @@ def main():
                                     "id": "dv27", "status": "won",
                                     "answer": [tp["s"]] + thm + [tp["e"]],
                                     "nonce": thn2})
-        check(s == 200 and b.get("count") == 3 and b.get("mean") == 1.33,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.0,
               "dealt submit: a given-up thread day derives 0, never the claim")
 
     finally:
@@ -1322,8 +1274,9 @@ def main():
         except subprocess.TimeoutExpired:
             proc5.kill()
 
-    # --- session TTL: an aged dealt session is gone for good, and the 1.1
-    #     evidence checks stay as the fallback for a dropped session ---
+    # --- session TTL: an aged dealt session is gone for good, and an
+    #     evidence post without it is refused - only sprint's words
+    #     stand on their own, because the words are the evidence ---
     PORT6 = PORT + 5
     proc6 = subprocess.Popen(
         [sys.executable, str(ROOT / "scores" / "server.py"),
@@ -1356,17 +1309,17 @@ def main():
                                         "status": "won", "answer": 1215,
                                         "meta": {"guesses": 2}, "nonce": n6},
                         port=PORT6)
-            check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
-                  "ttl: an aged rounds nonce falls back to 1.1 validation")
+            check(s == 422,
+                  "ttl: an aged session no longer grades an answer without its round")
             s, b = post("/api/deal", {"game": "sprint", "day": TODAY}, port=PORT6)
             s6 = b["nonce"]
             s, _b = post("/api/reveal", {"nonce": s6}, port=PORT6)
             time.sleep(1.3)
-            s, b = post("/api/submit", {"game": "sprint", "day": TODAY, "value": 5,
-                                        "better": "high", "id": "tt2", "nonce": s6},
+            s, b = post("/api/submit", {"game": "sprint", "day": TODAY,
+                                        "answer": daywords, "id": "tt2", "nonce": s6},
                         port=PORT6)
-            check(s == 200 and b.get("count") == 1 and b["bins"][0]["you"] is True,
-                  "ttl: an aged sprint session derives 0, never the claim")
+            check(s == 200 and b.get("count") == 1 and b["bins"][-1]["you"] is True,
+                  "ttl: an aged sprint session still counts its words - the clock is not the evidence")
     finally:
         proc6.terminate()
         try:
@@ -1550,6 +1503,93 @@ def main():
               "unit: the retried flush archives and clears the board")
         check(srv.load_archive("rounds", day)["n"] == 5,
               "unit: the retry wrote the day's numbers after all")
+
+        # --- the evidence graders stay pinned here: the wire refuses an
+        #     answer without its dealt session now, but the grading rules
+        #     themselves are unchanged and keep their edge cases ---
+        v, rsn = srv.validate_evidence("rounds", 0, {"status": "won", "answer": 1215,
+                                                    "meta": {"guesses": 2}})
+        check(v == 2, "unit: rounds won in 2 guesses derives 2")
+        v, rsn = srv.validate_evidence("rounds", 0, {"status": "won", "answer": 1943,
+                                                    "meta": {"guesses": 1}})
+        check(v is None, "unit: the wrong year is rejected")
+        v, rsn = srv.validate_evidence("rounds", 0, {"status": "won", "answer": 1215,
+                                                    "meta": {"guesses": 0}})
+        check(v is None, "unit: meta below the cap is rejected")
+        v, rsn = srv.validate_evidence("rounds", 0, {"status": "won", "answer": 1215,
+                                                    "meta": {"guesses": 9}})
+        check(v is None, "unit: meta above the cap is rejected")
+        v, rsn = srv.validate_evidence("rounds", 0, {"status": "lost"})
+        check(v == 0, "unit: a loss is 0 points, enforced server-side")
+        v, rsn = srv.validate_evidence("bogus", 0, {"status": "won", "answer": [5]})
+        check(v == 3, "unit: bogus first-pick find derives 3")
+        v, rsn = srv.validate_evidence("bogus", 0, {"status": "won", "answer": [0]})
+        check(v is None, "unit: bogus wrong pick rejected")
+        v, rsn = srv.validate_evidence("well-actually", 0, {"status": "won",
+                                                           "answer": {"picks": [1],
+                                                                      "typed": "Leonardo da Vinci"}})
+        check(v == 4, "unit: found it and named the correction derives 4")
+        v, rsn = srv.validate_evidence("well-actually", 0, {"status": "won",
+                                                           "answer": {"picks": [1],
+                                                                      "typed": "nope"}})
+        check(v == 3, "unit: a wrong correction earns no bonus")
+        v, rsn = srv.validate_evidence("fermi", 0, {"status": "won", "answer": 2500000000})
+        check(v == 3, "unit: fermi spot-on derives 3")
+        v, rsn = srv.validate_evidence("fermi", 0, {"status": "won", "answer": 1000000})
+        check(v == 0, "unit: fermi beyond 100x derives 0")
+        v, rsn = srv.validate_evidence("brunch", 0, {"status": "won", "answer": 3})
+        check(v == 1, "unit: brunch right pick derives 1")
+        v, rsn = srv.validate_evidence("brunch", 0, {"status": "won", "answer": 0})
+        check(v is None, "unit: brunch wrong pick rejected")
+        v, rsn = srv.validate_evidence("brunch", 0, {"status": "lost", "answer": 0})
+        check(v == 0, "unit: brunch loss derives 0")
+        v, rsn = srv.validate_evidence("museum", 0, {"status": "won",
+                                                    "answer": "rosetta stone",
+                                                    "meta": {"clues": 2}})
+        check(v == 2, "unit: museum named on clue 2 derives 2")
+        v, rsn = srv.validate_evidence("museum", 0, {"status": "won",
+                                                    "answer": "the mona lisa",
+                                                    "meta": {"clues": 1}})
+        check(v is None, "unit: museum wrong artifact rejected")
+        v, rsn = srv.validate_evidence("superlative", 0, {"status": "won", "answer": perfect})
+        check(v == len(perfect), "unit: superlative clean sweep derives full marks")
+        v, rsn = srv.validate_evidence("superlative", 0, {"status": "lost", "answer": imperfect})
+        check(v == len(perfect) - 1,
+              "unit: superlative partial credit is derived, never claimed")
+        v, rsn = srv.validate_evidence("sift", 0, {"status": "won",
+                                                  "answer": [c["i"] for c in sf0["cats"]],
+                                                  "meta": {"mistakes": 1}})
+        check(v == 2, "unit: sift one-mistake win derives 2")
+        v, rsn = srv.validate_evidence("lightbox", 0, {"status": "won", "answer": lb0["g"],
+                                                      "meta": {"mistakes": 0}})
+        check(v == 3, "unit: lightbox clean grid derives 3")
+        v, rsn = srv.validate_evidence("cipher", 0, {"status": "won",
+                                                    "answer": cip0["q"].lower(),
+                                                    "meta": {"hints": 1}})
+        check(v == 2, "unit: cipher decoded with one hint derives 2")
+        v, rsn = srv.validate_evidence("cipher", 0, {"status": "won", "answer": cip0["q"],
+                                                    "meta": {"hints": 5}})
+        check(v == 0, "unit: a cipher win on the fifth hint derives 0, not a rejection")
+        v, rsn = srv.validate_evidence("cipher", 0, {"status": "won", "answer": cip0["q"],
+                                                    "meta": {"hints": 6}})
+        check(v is None, "unit: a hint past the cap is rejected")
+        v, rsn = srv.validate_evidence("timeline", 0, {"status": "won", "answer": tyears,
+                                                      "meta": {"checks": 1}})
+        check(v == 3, "unit: timeline first-check win derives 3")
+        v, rsn = srv.validate_evidence("timeline", 0, {"status": "won",
+                                                      "answer": list(reversed(tyears)),
+                                                      "meta": {"checks": 1}})
+        check(v is None, "unit: timeline wrong order rejected")
+        v, rsn = srv.validate_evidence("timeline", 0, {"status": "won", "answer": tyears,
+                                                      "meta": {"checks": 6}})
+        check(v == 0, "unit: a timeline win on the last budget check derives 0")
+        v, rsn = srv.validate_evidence("timeline", 0, {"status": "won", "answer": tyears,
+                                                      "meta": {"checks": 7}})
+        check(v is None, "unit: a check past the day's own budget is rejected")
+        v, rsn = srv.validate_evidence("thread", 0, {"status": "won",
+                                                   "answer": [tp["s"]] + list(tp["m"]) + [tp["e"]],
+                                                   "meta": {"checks": 2}})
+        check(v == 2, "unit: thread two-check win derives 2")
 
         # --- a manifest change must never crash the service: history
         #     serves under the edges it was recorded under ---

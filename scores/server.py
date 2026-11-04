@@ -40,10 +40,13 @@ Design rules (deliberate):
 
 Endpoints (with or without the /api prefix):
     POST /submit   {"game", "day", "value", "id"}   -> personalized snapshot
-                   {"game", "day", "id", "status", "answer", "meta"} -> evidence in,
-                   points out (gated games: the answer is checked against the day's
-                   key and the score derived server-side; self-reported value posts
-                   are accepted only for the generator games)
+                   {"game", "day", "id", "status", "answer", "meta", "nonce"} ->
+                   evidence in, points out (gated games: the answer is checked against
+                   the day's key and the score derived server-side, and the dealt
+                   session the nonce names must resolve and be done - an answer
+                   without its session is not evidence. Sprint's evidence is its
+                   solved words: the count derives from the day's letter sets
+                   (sprintwords.py), and its value posts are retired with the rest's)
     POST /deal    {"game", "day"}                  -> open a dealt session (live day only; the deal carries the day's
                    puzzle without its key, per the dealt API schema below)
     POST /guess   {"nonce", "move": {...}}       -> the dealt verdict (dealt API schema below; the key never
@@ -96,6 +99,7 @@ name re-exported at the bottom. The layout, one seam per module:
     archive   the snapshot write/load, the flush, the warm start
     adapters  the dealt registry: graders, evidence, strips, transforms
     evidence  the evidence validator that consults the rows
+    sprintwords  sprint's word grade: the day's letter sets, the solved-word count
     app       the HTTP shell and main()
 
 How it runs is unchanged: python3 server.py, the same flags, the
@@ -116,6 +120,7 @@ import evidence
 import helpers
 import puzzles
 import sessions
+import sprintwords
 
 from adapters import (DEALT_ADAPTERS, DEALT_GAMES, EVIDENCE_GAMES,
                       _Reject, dealt_puzzle)
@@ -136,6 +141,8 @@ from helpers import (_ALPHA, _alnum_norm, _build_sub, _cipher_sub,
                      _text_norm, round_feedback)
 from puzzles import PUZZLES, PUZZLES_DIR, _list_entry, _window_entry
 from sessions import SESSIONS, purge_sessions
+from sprintwords import (R4, R5, WORDS4, WORDS5, sprint_count,
+                         sprint_targets, sprint_words_for)
 
 if __name__ == "__main__":
     main()

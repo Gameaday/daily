@@ -369,9 +369,10 @@ function showReveal(){
   $('btnSkip').disabled = true;
   $('btnShuffle').style.display = 'none';
   $('bigclock').textContent = S.status === 'won' ? fmtClock(TOTAL_MS - timeLeft()) : '0:00';
-  /* the finish names the session: the server checks the claim against
-     its own stamp, so a solved count only counts inside the window */
-  syncBoard(S.nonce ? { value: S.solvedCount, nonce: S.nonce } : S.solvedCount);
+  /* the solved words are the evidence: the server re-derives the count
+     from the day's letter sets, so the client never names a number - the
+     finish still names the session, and the stamp clocks the words */
+  syncBoard({ answer: S.words || [], points: S.solvedCount, nonce: S.nonce || undefined });
 }
 SHELL.wireShare(shareText);
 const toastMsg = m => SHELL.toast(m, 1600);

@@ -20,6 +20,7 @@ import curve
 import evidence
 import puzzles
 import sessions
+import sprintwords
 
 
 # the wire contract version: it moves with the /guess envelope, and
@@ -254,46 +255,79 @@ class Handler(BaseHTTPRequestHandler):
         if isinstance(day, bool) or not isinstance(day, int) or not (config.DAY_MIN <= day <= config.DAY_MAX):
             self._json({"error": "bad day"}, 400)
             return
-        if "answer" in data or "status" in data:
+        if game == "sprint" and "answer" in data:
+            # sprint's evidence is the solved words themselves: the count
+            # derives from the day's letter sets server-side, so the client
+            # never names a number. The starting-gun stamp only binds
+            # while it is live - a submit that outruns the window derives
+            # 0, while a dropped or aged session still counts its words,
+            # because the words are the proof
+            words = data["answer"]
+            if (not isinstance(words, list) or not words or len(words) > 50
+                    or not all(isinstance(w, str)
+                               and len(w.strip()) in (4, 5)
+                               and all("A" <= c <= "Z"
+                                       for c in w.strip().upper())
+                               for w in words)):
+                self._json({"error": "bad words"}, 400)
+                return
+            value = sprintwords.sprint_count(words, day)
+            if isinstance(data.get("nonce"), str):
+                with config.LOCK:
+                    sessions.purge_sessions()
+                    sess = sessions.SESSIONS.pop(data["nonce"], None)
+                t0 = (sess.get("t0") if sess and sess["game"] == "sprint"
+                      and sess["day"] == day else None)
+                if (t0 is not None
+                        and time.time() - t0 > config.SPRINT_WINDOW + config.SPRINT_GRACE):
+                    value = 0
+        elif "answer" in data or "status" in data:
             # evidence path: the answer and the raw play facts come in,
             # the points come out - the client never names a number
             if game not in adapters.EVIDENCE_GAMES:
                 self._json({"error": "evidence not accepted for this game"}, 400)
                 return
-            # a dealt session is the stronger claim: the server counted the
-            # guesses and knows the verdict, so a nonce-bearing post reports
-            # the session's facts, never the client's word. An unknown or
-            # aged nonce is simply absent - the checks below stay as the
-            # fallback for a session that dropped mid-game
+            # a dealt session is the stronger claim and the only claim: the
+            # server counted the guesses and knows the verdict, so a
+            # nonce-bearing post reports the session's facts, never the
+            # client's word. A session that cannot be resolved - never
+            # dealt, spent, aged or unknown - leaves nothing to grade, so
+            # the answer alone no longer buys points: a mined key or an
+            # invented answer is not evidence without its dealt round
+            sess = None
             if isinstance(data.get("nonce"), str):
                 with config.LOCK:
                     sessions.purge_sessions()
                     sess = sessions.SESSIONS.pop(data["nonce"], None)
-                if (sess and sess["game"] == game and sess["day"] == day
-                        and sess["done"]):
-                    data = dict(data)
-                    data["status"] = sess["verdict"]
-                    if "ans" in sess:
-                        # brunch, fermi, well-actually and museum: the pick,
-                        # the estimate, the picks-and-correction or the name
-                        # the server graded, so the points derive from the
-                        # session's own answer, never the client's word
-                        data["answer"] = sess["ans"]
-                    # the session meters the play facts itself (clues, hints,
-                    # mistakes, checks), so a nonce-bearing claim cannot
-                    # under-report them; the games without a meter carry no
-                    # meta at all
-                    meta_fn = adapters.DEALT_ADAPTERS.get(game, {}).get("meta")
-                    data["meta"] = meta_fn(sess) if meta_fn else {}
+            if not (sess and sess["game"] == game and sess["day"] == day
+                    and sess["done"]):
+                self._json({"error": "this result needs its dealt session"}, 422)
+                return
+            data = dict(data)
+            data["status"] = sess["verdict"]
+            if "ans" in sess:
+                # brunch, fermi, well-actually and museum: the pick,
+                # the estimate, the picks-and-correction or the name
+                # the server graded, so the points derive from the
+                # session's own answer, never the client's word
+                data["answer"] = sess["ans"]
+            # the session meters the play facts itself (clues, hints,
+            # mistakes, checks), so a nonce-bearing claim cannot
+            # under-report them; the games without a meter carry no
+            # meta at all
+            meta_fn = adapters.DEALT_ADAPTERS.get(game, {}).get("meta")
+            data["meta"] = meta_fn(sess) if meta_fn else {}
             value, reason = evidence.validate_evidence(game, day, data)
             if value is None:
                 self._json({"error": reason}, 422)
                 return
         else:
-            if game in adapters.EVIDENCE_GAMES:
+            if game in adapters.EVIDENCE_GAMES or game == "sprint":
                 # the cutover: a gated game no longer accepts a self-reported
                 # score - the answer and the play facts come in, and the
-                # points are derived here or not counted at all
+                # points are derived here or not counted at all. Sprint
+                # retired its value posts with the word grade: its count
+                # is the words, never a number
                 self._json({"error": "value posts retired for this game - send evidence"}, 400)
                 return
             value = data.get("value")
@@ -301,18 +335,6 @@ class Handler(BaseHTTPRequestHandler):
                     or not math.isfinite(value) or abs(value) > config.MAX_ABS_VALUE:
                 self._json({"error": "bad value"}, 400)
                 return
-            # a dealt sprint session owns the clock: a claimed score only
-            # stands if the server-stamped window says it could have
-            # happened. A session that was never started, or aged past the
-            # window, is over - the claim derives 0 and the nonce can
-            # never re-enter the window
-            if game == "sprint" and isinstance(data.get("nonce"), str):
-                with config.LOCK:
-                    sessions.purge_sessions()
-                    sess = sessions.SESSIONS.get(data["nonce"])
-                    t0 = sess.get("t0") if sess and sess["game"] == "sprint" else None
-                if t0 is None or time.time() - t0 > config.SPRINT_WINDOW + config.SPRINT_GRACE:
-                    value = 0
         pid = data.get("id")
         if not isinstance(pid, str) or not pid or len(pid) > 64:
             self._json({"error": "bad id"}, 400)

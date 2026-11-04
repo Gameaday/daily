@@ -19,6 +19,29 @@ docs/API.md.
 - Word games share `assets/words-en.js` (`WORDS_EN`); Sprint keeps its own
   anagram banks by design.
 
+## The dawn module
+
+`shell/dawn.js` + `shell/dawn.css` are the whole show: the once-a-day
+sunrise, the deposited period, and the day and night themes. Their
+only seam outside the pair is the small loader at the end of
+`shell/common.js`, which injects both files on every page and calls
+`DAWN.init({key, num, dayIndex, dateText})`; the shell is otherwise
+untouched. The sunrise plays at most once per ET day per browser (the
+marker is written at the start, so a greeting cut short by navigation
+never replays), a key or a tap skips it, and the last second flies the
+sun into the page's own heading mark and deposits it there.
+
+Tapping the mark walks the theme day, night, auto. The night palette
+is the sunrise's own sky, declared as `html.night` variable overrides
+in dawn.css: most games retheme through the shared slots by
+themselves, and a game that hardcodes a pale color gets one line in
+dawn.css's stragglers section (the block explains how to extend it).
+QA surface: `DAWN.init(cfg)` auto, `DAWN.play(cfg)` force,
+`DAWN.reset()` clears the marker, `DAWN.mode()` reads the theme.
+`checks/games.js` compiles the pair like any shell file, holds every
+`dawn-` class the js names against the css, and pins the loader seam,
+the storage keys and the night palette, so a silent break cannot land.
+
 ## The knowledge layer
 
 The history content is stored once, in `knowledge/`: entities (people,

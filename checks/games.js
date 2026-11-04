@@ -2,7 +2,8 @@
    - compiles each game's script (catches fatal syntax errors, like the stray
      emoji escape that once took down Sprint for every player)
    - compiles the shared shell, the word bank and the dawn garnish,
-     holding the garnish's js and css classes in agreement
+     holding the garnish's js and css classes in agreement and pinning
+     its keys, seams and palette
    - checks the shell is wired in (script + css tags, SHELL destructure) and
      that the extracted shell pieces did not sneak back into a game
    - checks every element id the script references exists in the HTML
@@ -52,6 +53,24 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
     if (dawnCss.indexOf('.' + c) === -1)
       fail('shell/dawn.js names .' + c + ' but dawn.css never styles it');
   }
+  /* and the dawn's own pins: the loader seam in the shell, the storage
+     keys, the night palette, and the copy convention. A rename on any
+     of them would be a silent break, so none can slip through */
+  if (fs.existsSync('shell/common.js')) {
+    const commonSrc = fs.readFileSync('shell/common.js', 'utf8');
+    for (const seam of ['dawn.css', 'dawn.js'])
+      if (commonSrc.indexOf(seam) === -1)
+        fail('shell/common.js lost its loader seam for ' + seam);
+  }
+  for (const key of ['warmup.dawn', 'warmup.mode'])
+    if (dawnJs.indexOf(key) === -1)
+      fail('shell/dawn.js lost the ' + key + ' storage key');
+  for (const pin of ['@keyframes dawn-rise', '#17162e'])
+    if (dawnCss.indexOf(pin) === -1)
+      fail('shell/dawn.css lost ' + pin);
+  for (const file of [[dawnJs, 'shell/dawn.js'], [dawnCss, 'shell/dawn.css']])
+    if (file[0].indexOf('\u2014') !== -1)
+      fail(file[1] + ': em dash in the garnish copy');
 }
 if (fs.existsSync('assets/words-en.js')) {
   try { new Function(fs.readFileSync('assets/words-en.js', 'utf8')); }

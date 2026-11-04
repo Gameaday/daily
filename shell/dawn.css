@@ -1,11 +1,11 @@
 /* dawn.css - first light: the once-a-day sunrise greeting,
-   plus a few quiet garnishes the whole site shares. The sunrise
-   choreography lives here; dawn.js owns the trigger, the once-per-day
-   guard and the cleanup. Layers, in paint order: the night sky, the
-   brightening day, the rising sun, the horizon haze, the greeting
-   text. The overlay never takes pointer events, so nothing beneath it
-   is ever blocked, and the sky ends on the site's own paper so the
-   dissolve meets the page seamlessly. */
+   the site's night, and a few quiet garnishes the whole site shares.
+   The sunrise choreography lives here; dawn.js owns the trigger, the
+   once-per-day guard and the cleanup. Layers, in paint order: the
+   night sky, the brightening day, the rising sun, the horizon haze,
+   the greeting text. The overlay never takes pointer events, so
+   nothing beneath it is ever blocked, and the sky ends on the site's
+   own paper so the dissolve meets the page seamlessly. */
 
 .dawn-overlay{ position:fixed; inset:0; z-index:9999; overflow:hidden;
   pointer-events:none; transition:opacity .75s ease; }
@@ -65,10 +65,10 @@
 @keyframes dawn-landed{ 0%{transform:scale(1);} 45%{transform:scale(1.28);}
                         100%{transform:scale(1);} }
 
-/* the kiss and the hold: the dot keeps a little sun in it. A click
-   brings the dawn glow back for a moment; press and hold and the glow
-   builds until the whole morning replays. */
-.dawn-kiss{ display:inline-block; cursor:pointer;
+/* the kiss, the hold and the theme: the dot keeps the whole day in it.
+   A tap glows and walks the theme to its next hour; press and hold and
+   the glow builds until the whole morning replays. */
+.dawn-kiss{ display:inline-block; cursor:pointer; position:relative;
   user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;
   transition:text-shadow .55s ease; }
 .dawn-kiss.dawn-hold{ text-shadow:0 0 12px 2px rgba(244,183,105,.85),
@@ -81,6 +81,87 @@
                     0 0 26px 8px rgba(244,183,105,.4); }
   100%{ transform:scale(1); text-shadow:none; }
 }
+
+/* the sun's ring: drawn at the mark's spot, where the period sits.
+   Day shows the deposited sun, solid and warm. Night shows the sun's
+   outline, a thin gold ring: the sun has set, its shape remains. Auto
+   watches the device: a faint ring around the dot, whatever the
+   device says. */
+.dawn-kiss::before{ content:''; position:absolute; left:50%; bottom:.28em;
+  width:.34em; height:.34em; margin-left:-.17em; border-radius:50%;
+  border:1.5px solid transparent; pointer-events:none; }
+.dawn-kiss.dawn-mode-auto::before{ border-color:rgba(179,84,30,.5); }
+html.night .dawn-kiss.dawn-mode-night,
+html.night .dawn-kiss.dawn-mode-auto{ color:transparent; }
+html.night .dawn-kiss.dawn-mode-night::before,
+html.night .dawn-kiss.dawn-mode-auto::before{ border-color:#f5c46b; }
+html.night .dawn-kiss.dawn-mode-auto::after{ content:''; position:absolute;
+  left:50%; bottom:.385em; width:.13em; height:.13em; margin-left:-.065em;
+  background:#f5c46b; border-radius:50%; pointer-events:none; }
+
+/* ---------------- the night: the sunrise's own sky ----------------
+   The palette below is the dawn's, verbatim: the deep indigo of the
+   night sky for paper, plum for cards, the dawn cream for ink, the
+   sun's gold for the accent. Overriding the shared slots here
+   re-themes every page that leans on them, which is all of them.
+   The game accent slots (red, gold) are lifted a step for the dark;
+   the soft tints become washes so nothing glows. */
+html.night{ --paper:#17162e; --card:#251f3d; --ink:#f6dfbe; --muted:#a3947c;
+  --accent:#f5c46b; --accent-soft:rgba(244,183,105,.16);
+  --green:#8fd0a8; --green-soft:rgba(46,125,79,.32); --line:#3b3552;
+  --red:#e0755f; --red-soft:rgba(179,64,46,.30);
+  --gold:#e0b84f; --gold-soft:rgba(201,154,46,.22);
+  color-scheme:dark; }
+
+/* the swap itself: for half a second every color on the page fades
+   together, so the theme turns the way a sky turns */
+.dawn-theming *{ transition: background-color .45s ease, color .45s ease,
+  border-color .45s ease, fill .45s ease, stroke .45s ease,
+  box-shadow .45s ease; }
+
+/* shell surfaces: ink and accent swap roles in the dark, so the
+   things that were dark-on-light go light-on-dark */
+html.night .toast{ color:#17162e; }
+html.night .modal .close{ color:#17162e; }
+html.night .btn{ color:#231a08; }
+html.night .overlay{ background:rgba(5,6,16,.62); }
+html.night ::selection{ background:#4a2c48; color:#f6dfbe; }
+html.night :focus-visible{ outline-color:#f5c46b; }
+html.night input{ background:#221d38; color:var(--ink); }
+
+/* the global curve: its colors ride the palette instead of the
+   constants the shell bakes in, so the bell follows the theme */
+#curve svg [stroke="#b3541e"]{ stroke:var(--accent); }
+#curve svg [fill="#b3541e"]{ fill:var(--accent); }
+#curve svg circle[fill="#b3541e"]{ fill:var(--accent); stroke:var(--card); }
+#curve svg text[fill="#7a6f5d"]{ fill:var(--muted); }
+
+/* the stragglers: the handful of pale constants the games baked in
+   before the palette learned about night. Each rule below is a
+   night-time stand-in for one of them. */
+html.night .pip{ background:#3a3355; border-color:#4a4266; }
+html.night .px{ background:#4a4266; }
+html.night .cell:hover, html.night .tile:hover{ border-color:#4a4266; }
+html.night .wchip{ border-color:rgba(143,208,168,.5); }
+html.night .seg{ border-bottom-color:#4a4266; }
+html.night .statement:not(.done) .seg:hover,
+html.night .passage:not(.done) .seg:hover{ background:#251f3d; }
+html.night .seg.wrong{ color:#f2a48c; }
+html.night .seg.lie{ color:#9fdcb8; }
+html.night .lt{ fill:var(--ink); }
+html.night .lt.ok{ fill:var(--green); }
+html.night .lt.drag, html.night .lt.hl{ fill:var(--accent); }
+html.night .rayline{ stroke:#565078; }
+html.night .rayline.top{ stroke:var(--accent); }
+html.night .chev{ stroke:#8d84a8; }
+html.night .rayg:hover .chev{ stroke:var(--accent); }
+
+/* the show at night: the sun still rises, but the sky settles back
+   to the night's paper, so the dissolve meets the page it lands on */
+html.night .dawn-day{ background:linear-gradient(180deg, #4a2c48 0%,
+  #7c4a54 45%, #17162e 100%); }
+html.night .dawn-text{ color:#f6dfbe; }
+html.night .dawn-sub{ color:#a3947c; }
 
 /* ------- the quiet garnishes -------
    Nothing here moves unless the visitor does: the selection takes the
@@ -105,11 +186,13 @@ a.card:active{ transform:translateY(0); }
   .dawn-sun{ animation:none; top:34vh; opacity:.92; }
   .dawn-haze{ animation:none; opacity:0; }
   .dawn-hello, .dawn-sub{ animation:none; opacity:1; }
-  /* the kiss glows without the pulse for them */
+  /* the kiss glows without the pulse for them, and the theme turns
+     without the crossfade */
   .dawn-kiss.dawn-glow{ animation-name:dawn-glow-still; }
   @keyframes dawn-glow-still{
     0%, 100%{ text-shadow:none; }
     35%{ text-shadow:0 0 12px 2px rgba(244,183,105,.95),
                      0 0 26px 8px rgba(244,183,105,.4); }
   }
+  .dawn-theming *{ transition-duration:.01ms; }
 }

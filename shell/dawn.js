@@ -1,4 +1,5 @@
-/* dawn.js - first light: the once-a-day sunrise greeting.
+/* dawn.js - first light: the once-a-day sunrise greeting, and
+   the day and night of the whole site.
 
    The dawn is a garnish, never a gate. Any page can be the first page
    of the day (the landing, or a bookmark straight into a game), so the
@@ -18,17 +19,24 @@
    or a browser without the web animations api reveals the mark plainly
    instead, so no page is ever left without its dot.
 
-   The dot keeps a little sun in it afterwards. A click on the mark
-   brings the dawn glow back for a moment, and pressing and holding it
-   builds the glow until the whole morning replays, any time, not once
-   a day but whenever the day calls for it.
+   The dot keeps the whole day in it afterwards. A tap of the mark
+   glows and walks the site's theme through its day: day, then night,
+   then auto (the device's own preference), then day again. The choice
+   is remembered across pages and days; a first visit always starts in
+   day, so nothing is ever jarring; and every swap crossfades, so the
+   page feels like the sky turning rather than a light switching. In
+   day the mark is the deposited sun, solid terracotta. In night it is
+   the sun's outline, a thin gold ring where the period sits: the sun
+   has set, its shape remains. In auto a faint ring watches the device.
+   Pressing and holding the mark still replays the whole morning.
 
    The whole tab performs it. The favicon carries the motif at rest
-   (the tile's period restyled as a small gold sun), and during the
-   show the tab title greets while the favicon and the mobile browser
-   chrome ride the sky from night to morning, handing both back the
-   moment the disc lands. The page's own icon and title in the html
-   stay untouched, so a no-script visit keeps what it has always had.
+   (the tile's period restyled as a small gold sun, or its outline at
+   night), and during the show the tab title greets while the favicon
+   and the mobile browser chrome ride the sky from night to morning,
+   handing both back the moment the disc lands. The page's own icon
+   and title in the html stay untouched, so a no-script visit keeps
+   what it has always had.
 
    Contract with the shell (common.js passes these in):
      key      the ET date key for today, as YYYY-MM-DD
@@ -40,10 +48,12 @@
      DAWN.init(cfg)   auto: plays only if this day has not been greeted
      DAWN.play(cfg)   force: plays now regardless of the marker
      DAWN.reset()    clears the marker, so a later init() plays again
+     DAWN.mode()     the stored theme: day, night, or auto
 */
 (function(){
   'use strict';
   var MARK = 'warmup.dawn';
+  var MODE = 'warmup.mode';   /* day | night | auto */
   var HOLD = 4600;   /* the sunrise holds this long; keep in step with
                         the keyframes in dawn.css */
   var FLIGHT = 1100; /* the settle: the sun's trip from the sky into the
@@ -60,6 +70,8 @@
     'The day begins.'
   ];
   var lastCfg = null;
+  var dot = null;      /* the logo's mark, once armed */
+  var darkSys = null;  /* the device's own preference, for auto */
 
   function storageWritable(){
     try { localStorage.setItem(MARK + '.t', '1'); localStorage.removeItem(MARK + '.t'); return true; }
@@ -89,24 +101,87 @@
     return null;
   }
 
-  /* ------- the tab: favicon and chrome tint ride the sky -------
+  /* ---------------- the theme: day, night, auto ----------------
+     The night palette is the sunrise's own sky (deep indigo paper,
+     plum cards, dawn-cream ink, sun-gold accent); dawn.css carries the
+     variable overrides. A first visit is day, always; the choice is
+     remembered; auto follows the device and keeps following it. */
+  function storedMode(){
+    try {
+      var m = localStorage.getItem(MODE);
+      return (m === 'night' || m === 'auto') ? m : 'day';
+    } catch (e){ return 'day'; }
+  }
+  function saveMode(m){
+    try { localStorage.setItem(MODE, m); } catch (e){}
+  }
+  function isNight(){
+    var m = storedMode();
+    if (m === 'night') return true;
+    if (m !== 'auto') return false;
+    try { return !!(darkSys && darkSys.matches); } catch (e){ return false; }
+  }
+
+  function dotLabel(m, night){
+    if (m === 'day') return 'day \u00b7 tap the dot for night';
+    if (m === 'night') return 'night \u00b7 tap the dot for auto';
+    return (night ? 'auto, night like your device' : 'auto, day like your device') + ' \u00b7 tap the dot for day';
+  }
+  function updateDot(){
+    if (!dot) return;
+    try {
+      var m = storedMode();
+      var night = isNight();
+      dot.classList.toggle('dawn-mode-night', m === 'night');
+      dot.classList.toggle('dawn-mode-auto', m === 'auto');
+      var lbl = dotLabel(m, night);
+      dot.setAttribute('title', lbl);
+      dot.setAttribute('aria-label', lbl);
+    } catch (e){}
+  }
+
+  function applyMode(animate){
+    var night = isNight();
+    var root = document.documentElement;
+    try {
+      if (animate) root.classList.add('dawn-theming');
+      root.classList.toggle('night', night);
+      updateDot();
+      restTab();
+      if (animate) window.setTimeout(function(){ root.classList.remove('dawn-theming'); }, 500);
+    } catch (e){}
+  }
+  function cycleMode(){
+    var m = storedMode();
+    m = (m === 'day') ? 'night' : (m === 'night' ? 'auto' : 'day');
+    saveMode(m);
+    applyMode(true);
+  }
+
+  /* ---------------- the tab: favicon and chrome tint ----------------
      All of it is wrapped soft: a browser that minds none of this
      keeps its own icon, tint and title, no harm done. */
   var FAV = { link: null, meta: null, timers: [] };
   var TITLE = { saved: null };
 
-  function sunTile(){
+  function sunTile(night){
     return "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
-      "<defs><radialGradient id='d' cx='.4' cy='.35' r='.8'>" +
-      "<stop offset='0' stop-color='#fff6e3'/>" +
-      "<stop offset='.55' stop-color='#f5c46b'/>" +
-      "<stop offset='1' stop-color='#e8974c'/></radialGradient></defs>" +
-      "<rect width='100' height='100' rx='22' fill='#f7f1e5'/>" +
-      "<circle cx='50' cy='50' r='43' fill='#fffdf7' stroke='#e5dbc8' stroke-width='3'/>" +
-      "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
-      " text-anchor='middle' fill='#b3541e'>W</text>" +
-      "<circle cx='79' cy='65' r='11' fill='#f4b769' opacity='.3'/>" +
-      "<circle cx='79' cy='65' r='7' fill='url(#d)'/>" +
+      (night
+        ? "<rect width='100' height='100' rx='22' fill='#17162e'/>" +
+          "<circle cx='50' cy='50' r='43' fill='#251f3d' stroke='#3b3552' stroke-width='3'/>" +
+          "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
+          " text-anchor='middle' fill='#f6dfbe'>W</text>" +
+          "<circle cx='79' cy='64' r='7' fill='none' stroke='#f5c46b' stroke-width='1.7'/>"
+        : "<defs><radialGradient id='d' cx='.4' cy='.35' r='.8'>" +
+          "<stop offset='0' stop-color='#fff6e3'/>" +
+          "<stop offset='.55' stop-color='#f5c46b'/>" +
+          "<stop offset='1' stop-color='#e8974c'/></radialGradient></defs>" +
+          "<rect width='100' height='100' rx='22' fill='#f7f1e5'/>" +
+          "<circle cx='50' cy='50' r='43' fill='#fffdf7' stroke='#e5dbc8' stroke-width='3'/>" +
+          "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
+          " text-anchor='middle' fill='#b3541e'>W</text>" +
+          "<circle cx='79' cy='65' r='11' fill='#f4b769' opacity='.3'/>" +
+          "<circle cx='79' cy='65' r='7' fill='url(#d)'/>") +
       "</svg>";
   }
 
@@ -191,28 +266,37 @@
     }
   }
 
-  /* everything the tab hands back when the show is over */
+  /* everything the tab hands back when the show is over: the resting
+     tile and tint of whichever theme the site is in */
   function restTab(){
-    setFav(sunTile());
-    setTheme('#f7f1e5');
+    var night = isNight();
+    setFav(sunTile(night));
+    setTheme(night ? '#17162e' : '#f7f1e5');
     restoreTitle();
   }
 
-  /* ------- the dot: the kiss and the hold -------
-     Armed on every page load, show or no show. A click brings the dawn
-     glow back for a moment; pressing and holding builds the glow until
-     the whole morning replays. */
+  /* ---------------- the dot: the kiss, the hold, the theme ----------------
+     Armed on every page load, show or no show. A tap glows and walks
+     the theme to its next hour; pressing and holding builds the glow
+     until the whole morning replays. */
   function armKiss(){
     try {
       var m = logoMark();
       if (!m) return;
+      dot = m;
       m.classList.add('dawn-kiss');
-      m.setAttribute('title', 'first light');
+      m.setAttribute('role', 'button');
+      m.setAttribute('tabindex', '0');
       var holdT = null, held = false;
       var offHold = function(){
         window.clearTimeout(holdT);
         holdT = null;
         try { m.classList.remove('dawn-hold'); } catch (e){}
+      };
+      var glow = function(){
+        m.classList.remove('dawn-glow');
+        void m.offsetWidth;
+        m.classList.add('dawn-glow');
       };
       m.addEventListener('pointerdown', function(e){
         if (e.button !== 0) return;
@@ -229,9 +313,11 @@
       m.addEventListener('pointerleave', offHold);
       m.addEventListener('click', function(){
         if (held){ held = false; return; }
-        m.classList.remove('dawn-glow');
-        void m.offsetWidth;
-        m.classList.add('dawn-glow');
+        cycleMode();
+        glow();
+      });
+      m.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); cycleMode(); glow(); }
       });
     } catch (e){}
   }
@@ -404,14 +490,23 @@
   window.DAWN = {
     init: init,
     play: function(cfg){ cfg = cfg || {}; return play({ dayIndex: cfg.dayIndex || 0, num: cfg.num || 0, dateText: cfg.dateText || '' }); },
-    reset: function(){ try { localStorage.removeItem(MARK); } catch (e){} }
+    reset: function(){ try { localStorage.removeItem(MARK); } catch (e){} },
+    mode: function(){ return storedMode(); }
   };
 
   /* module boot: restyle the favicon's period as a small sun, tint the
-     chrome to the paper, and arm the kiss on the logo's mark. All of
-     it is garnish: each piece is wrapped soft and the page is
-     unaffected if any of it comes to nothing. */
+     chrome to the paper of whichever theme is in play, and arm the kiss
+     on the logo's mark. All of it is garnish: each piece is wrapped
+     soft and the page is unaffected if any of it comes to nothing. */
   findTabBits();
-  restTab();
+  try {
+    darkSys = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (darkSys){
+      var follow = function(){ if (storedMode() === 'auto') applyMode(true); };
+      if (darkSys.addEventListener) darkSys.addEventListener('change', follow);
+      else if (darkSys.addListener) darkSys.addListener(follow);
+    }
+  } catch (e){}
   armKiss();
+  applyMode(false);
 })();

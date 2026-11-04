@@ -224,14 +224,41 @@ function showRoundVerdict(i, r, a, right){
 /* the page owns the game: which move each round builds and what each
    verdict means; the session dance itself (the deal, the busy guard,
    the triage, the nonce) lives in the shell now */
+/* an expired session no longer spends the day's work: the reseat
+   re-deals and replays the graded rounds into the fresh session, so
+   the player keeps every round however many sessions the day takes */
+let reseeding = false, pendingPick = null;
+async function reseat(){
+  if (reseeding || S.status !== 'playing') return;
+  reseeding = true;
+  session.reset();
+  const keep = S.picks.slice();
+  S.picks = []; S.ans = [];
+  saveState();
+  for (let r = 0; r < keep.length; r++){
+    const before = S.picks.length;
+    await session.play({ pick: keep[r] }, body => {
+      if (typeof body.a !== 'number') return;
+      S.picks.push(keep[r]);
+      S.ans = S.ans || [];
+      S.ans[S.picks.length - 1] = body.a;
+    });
+    if (S.picks.length === before || !S.nonce) break;
+  }
+  reseeding = false;
+  saveState();
+  renderRound();
+  if (pendingPick !== null){
+    const again = pendingPick;
+    pendingPick = null;
+    pickDealt(again);
+  }
+}
 async function pickDealt(i){
+  if (reseeding){ pendingPick = i; return; }
   await session.play({ pick: i }, body => {
     if (typeof body.a !== 'number'){
-      session.reset();
-      S.picks = []; S.ans = [];
-      saveState();
-      renderRound();
-      toastMsg('this session expired, the rounds reset for a fresh one');
+      setTimeout(reseat, 0);
       return;
     }
     const r = S.picks.length;
@@ -317,16 +344,16 @@ const session = SHELL.makeDealt({
     if (body.puzzle) EV = Object.assign({}, EV, body.puzzle);
   },
   /* the same option index answers a different question each round, so
-     the key carries the round the pick is answering */
-  dedup: m => 'q' + S.picks.length + ':' + m.pick,
+     the key carries the round the pick is answering (and a reseat's
+     replay stands outside the guard: the day already lived those rounds) */
+  dedup: m => reseeding ? null : 'q' + S.picks.length + ':' + m.pick,
   onExpired: () => {
-    S.picks = []; S.ans = [];
-    renderRound();
+    if (!reseeding) setTimeout(reseat, 0);
   },
   copy: {
     unavailable: 'the record is not answering right now, try again',
     over: 'this session is already over',
-    expired: 'this session expired, the rounds reset for a fresh one'
+    expired: 'this session expired; your rounds are safe while the day reseats'
   }
 });
 
@@ -342,6 +369,11 @@ $('pdate').textContent = SHELL.pdateText();
 $('btnNext').addEventListener('click', nextStep);
 if (S.status !== 'playing' || S.picks.length >= EV.q.length) renderSummary();
 else renderRound();
+/* a reload can inherit graded rounds with a dead session (the reseat
+   never landed before the tab closed): replay them before the next
+   round, so the record and the page stay on the same round */
+if (isDealt() && S.status === 'playing' && S.picks.length > 0 && !S.nonce)
+  setTimeout(reseat, 0);
 SHELL.startCountdown('countdown', 500);
 });
 </script>

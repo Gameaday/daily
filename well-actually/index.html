@@ -292,7 +292,36 @@ function finish(){
    correction travel to the shell's session and the verdict (and any
    reveal) rides the spent move; the session itself is the one dance
    every dealt page dances, from the shell */
+/* an expired session no longer spends the argument: the reseat
+   re-deals and replays the graded picks into the fresh session, so
+   the lie stays found and the correction keeps its one shot */
+let reseeding = false, pendingMove = null;
+async function reseat(){
+  if (reseeding || (S.status !== 'playing' && S.status !== 'found')) return;
+  reseeding = true;
+  session.reset();
+  const keep = S.picked.slice();
+  S.picked = [];
+  saveState();
+  for (const p of keep){
+    const before = S.picked.length;
+    await session.play({ pick: p }, b => { S.picked.push(p); });
+    if (S.picked.length === before || !S.nonce) break;
+  }
+  reseeding = false;
+  saveState();
+  if (S.status === 'playing' || S.status === 'found'){
+    applyMarks(false);
+    renderPicks();
+  }
+  if (pendingMove !== null){
+    const m = pendingMove;
+    pendingMove = null;
+    if (m.kind === 'pick') pickDealt(m.i); else submitBonusDealt(m.val);
+  }
+}
 async function pickDealt(i){
+  if (reseeding){ pendingMove = { kind: 'pick', i: i }; return; }
   await session.play({ pick: i }, b => {
     S.picked.push(i);
     const el = statementEl.querySelector(`[data-i="${i}"]`);
@@ -318,10 +347,10 @@ async function pickDealt(i){
   });
 }
 async function submitBonusDealt(val){
+  if (reseeding){ pendingMove = { kind: 'bonus', val: val }; return; }
   await session.play({ correction: val }, b => {
     if (!b.reveal){
-      session.reset();
-      toast('this round expired, pick again for a fresh one');
+      setTimeout(reseat, 0);
       return;
     }
     S.typed = val;
@@ -428,10 +457,11 @@ const session = SHELL.makeDealt({
   save: saveState,
   toast: toast,
   onDeal: body => { if (body.puzzle) puzzle = Object.assign({}, puzzle, body.puzzle); },
+  onExpired: () => { if (!reseeding) setTimeout(reseat, 0); },
   copy: {
     unavailable: 'the statement is not answering right now, try again',
     over: 'this round is already over',
-    expired: 'this round expired, pick again for a fresh one'
+    expired: 'this session expired; your picks are safe while the day reseats'
   }
 });SHELL.wireShare(shareText);
 
@@ -448,6 +478,13 @@ loadPuzzle().then(() => {
   renderPicks();
   if (S.status === 'found'){ $('bonus').classList.add('show'); $('binput').value = S.typed || ''; }
   if (S.status === 'won' || S.status === 'lost') showReveal();
+  /* a reload can inherit graded picks with a dead session (the reseat
+     never landed before the tab closed): replay them before the next
+     move, so the page and the session stay on the same pick */
+  if (typeof puzzle.l !== 'number' && !isSolo() && !SHELL.isArchive &&
+      !S.nonce && S.picked.length > 0 &&
+      (S.status === 'playing' || S.status === 'found'))
+    setTimeout(reseat, 0);
   SHELL.startCountdown('count', 1000);
 });
 </script>

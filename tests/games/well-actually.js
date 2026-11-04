@@ -93,6 +93,95 @@ async function run(h){
     h.eq(waR.x.S.status, 'won', 'well-actually dealt: a reload keeps the won day');
     h.ok(String(waR.env.els.why.innerHTML).indexOf(waFull.c) >= 0,
       'well-actually dealt: the reload retells the correction it never shipped');
+    /* --- an expired session no longer spends the argument: a picks-phase
+       expiry reseats the graded picks and the hunt continues --- */
+    let waXDeals = 0, waXPicks = [];
+    const waXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        waXDeals++;
+        waXPicks = [];
+        return { status: 200, body: { nonce: 'wx' + waXDeals, today: 0, puzzle: waServed.puzzle } };
+      }
+      if (body.move.pick !== undefined){
+        waXPicks.push(body.move.pick);
+        if (waXDeals === 1 && waXPicks.length >= 2)
+          return { status: 410, body: {} };
+        if (body.move.pick === waFull.l) return { status: 200, body: { verdict: 'found' } };
+        if (waXPicks.length >= 3)
+          return { status: 200, body: { verdict: 'lost',
+            reveal: { l: waFull.l, c: waFull.c, w: waFull.w } } };
+        return { status: 200, body: { verdict: 'miss', left: 3 - waXPicks.length } };
+      }
+      const waXTyped = String(body.move.correction || '').toLowerCase().trim();
+      const waXHit = waFull.a.some(x => x.toLowerCase() === waXTyped);
+      return { status: 200, body: { verdict: 'won', bonus: waXHit ? 'correct' : 'wrong',
+        reveal: { c: waFull.c, w: waFull.w } } };
+    };
+    const waXD = h.boot('well-actually', EXP,
+      { now: T0, store: {}, servePuzzle: waServed, stubBanks: true, serveDealt: waXDealer });
+    await h.flush();
+    waXD.x.pick(0);
+    await h.flush();
+    h.eq(waXD.x.S.picked.length, 1, 'well-actually reseat: one pick graded');
+    waXD.x.pick(1);                     /* the lie, but the session dies on it */
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the graded pick */
+    h.eq(waXD.x.S.picked.join(), '0',
+      'well-actually reseat: the graded pick survives the expiry');
+    h.eq(waXD.x.S.nonce, 'wx2', 'well-actually reseat: the hunt reseats onto a fresh session');
+    h.eq(waXDeals, 2, 'well-actually reseat: exactly one redeal');
+    waXD.x.pick(1);                     /* the lie again, on the fresh session */
+    await h.flush(); await h.flush();
+    h.eq(waXD.x.S.status, 'found', 'well-actually reseat: the lie found on the reseeded session');
+    waXD.env.els.binput.value = 'Leonardo';
+    waXD.x.submitBonus();
+    await h.flush();
+    h.eq(waXD.x.S.status, 'won', 'well-actually reseat: the day wins on the reseeded session');
+    h.eq(h.lastPost(waXD.env).body.nonce, 'wx2',
+      'well-actually reseat: the evidence names the reseeded session');
+
+    /* --- bonus-phase expiry: the found lie and its correction survive a
+       dead session too --- */
+    let waYDeals = 0, waYPicks = [];
+    const waYDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        waYDeals++;
+        waYPicks = [];
+        return { status: 200, body: { nonce: 'wy' + waYDeals, today: 0, puzzle: waServed.puzzle } };
+      }
+      if (body.move.pick !== undefined){
+        waYPicks.push(body.move.pick);
+        if (body.move.pick === waFull.l) return { status: 200, body: { verdict: 'found' } };
+        return { status: 200, body: { verdict: 'miss', left: 3 - waYPicks.length } };
+      }
+      if (waYDeals === 1)
+        return { status: 410, body: {} };  /* the session dies with the bonus open */
+      const waYTyped = String(body.move.correction || '').toLowerCase().trim();
+      const waYHit = waFull.a.some(x => x.toLowerCase() === waYTyped);
+      return { status: 200, body: { verdict: 'won', bonus: waYHit ? 'correct' : 'wrong',
+        reveal: { c: waFull.c, w: waFull.w } } };
+    };
+    const waYB = h.boot('well-actually', EXP,
+      { now: T0, store: {}, servePuzzle: waServed, stubBanks: true, serveDealt: waYDealer });
+    await h.flush();
+    waYB.x.pick(1);
+    await h.flush();
+    h.eq(waYB.x.S.status, 'found', 'well-actually bonus reseat: the lie found');
+    waYB.env.els.binput.value = 'Leonardo';
+    waYB.x.submitBonus();              /* the correction trips the dead session */
+    await h.flush(); await h.flush(); await h.flush();
+                   /* expiry -> the reseat replays the found pick */
+    h.eq(waYB.x.S.status, 'found',
+      'well-actually bonus reseat: the found lie survives the expiry');
+    h.eq(waYB.x.S.nonce, 'wy2',
+      'well-actually bonus reseat: the correction reseats onto a fresh session');
+    h.eq(waYDeals, 2, 'well-actually bonus reseat: exactly one redeal');
+    waYB.x.submitBonus();              /* the correction again, on the fresh session */
+    await h.flush(); await h.flush();
+    h.eq(waYB.x.S.status, 'won', 'well-actually bonus reseat: the day wins on the reseeded session');
+    h.eq(h.lastPost(waYB.env).body.nonce, 'wy2',
+      'well-actually bonus reseat: the evidence names the reseeded session');
+
     /* an archive replay keeps the local path: the bank still carries the lie */
     const waRe = h.boot('well-actually', EXP, { now: T1, store: {}, search: '?d=0' });
     h.eq(waRe.x.puzzle.l, 1, 'well-actually dealt: the replayed day still carries its lie');

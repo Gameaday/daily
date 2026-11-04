@@ -262,6 +262,60 @@ async function run(h){
     h.eq(supR.x.S.status, 'lost', 'superlative dealt: a reload keeps the lost day');
     h.ok(supR.env.els.sreview.textContent.indexOf('longest life: John Adams') >= 0,
       'superlative dealt: the reload retells the review it never shipped');
+    /* --- an expired session no longer spends the day: the reseat
+       re-deals and replays the graded rounds, and the day finishes on
+       the fresh session --- */
+    let supXDeals = 0, supXRound = 0;
+    const supXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        supXDeals++;
+        supXRound = 0;
+        return { status: 200, body: { nonce: 'sx' + supXDeals, today: 0, puzzle: supServed.puzzle } };
+      }
+      if (supXDeals === 1 && supXRound >= 2)
+        return { status: 410, body: {} };
+      const r = supXRound++;
+      return { status: 200, body: { verdict: body.move.pick === supFull.q[r].a ? 'hit' : 'miss',
+        a: supFull.q[r].a, final: r === supFull.q.length - 1 } };
+    };
+    const supXD = h.boot('superlative', EXP,
+      { now: T0, store: {}, servePuzzle: supServed, stubBanks: true, serveDealt: supXDealer });
+    await h.flush();
+    supXD.env.els['opt' + supFull.q[0].a].click();
+    await h.flush();
+    supXD.env.els.btnNext.click();
+    supXD.env.els['opt' + supFull.q[1].a].click();
+    await h.flush();
+    h.eq(supXD.x.S.picks.length, 2, 'superlative reseat: two rounds graded clean');
+    h.eq(supXD.x.S.nonce, 'sx1', 'superlative reseat: the first session is held');
+    /* the third round trips the expiry: the day keeps its rounds and the
+       reseat replays them into a fresh session */
+    supXD.env.els.btnNext.click();
+    supXD.env.els['opt' + supFull.q[2].a].click();
+    await h.flush(); await h.flush(); await h.flush(); await h.flush();
+    h.eq(supXD.x.S.picks.length, 2, 'superlative reseat: the graded rounds survive the expiry');
+    h.eq(supXD.x.S.nonce, 'sx2', 'superlative reseat: the day reseats onto a fresh session');
+    h.eq(supXDeals, 2, 'superlative reseat: exactly one redeal');
+    h.eq(supXD.x.S.picks.join(','), supFull.q[0].a + ',' + supFull.q[1].a,
+      'superlative reseat: the replay carried the graded rounds');
+    h.ok(String(supXD.env.els.qtag.textContent).indexOf('round 3') >= 0,
+      'superlative reseat: the page stands on round 3 again');
+    /* the day finishes on the fresh session */
+    supXD.env.els['opt' + supFull.q[2].a].click();
+    await h.flush();
+    for (let i = 3; i < supFull.q.length; i++){
+      supXD.env.els.btnNext.click();
+      supXD.env.els['opt' + supFull.q[i].a].click();
+      await h.flush();
+    }
+    supXD.env.els.btnNext.click();
+    await h.flush();
+    h.eq(supXD.x.S.status, 'won', 'superlative reseat: the day wins on the reseeded session');
+    const supXPost = h.lastPost(supXD.env);
+    h.eq(supXPost.body.nonce, 'sx2', 'superlative reseat: the evidence names the reseeded session');
+    h.eq(supXPost.body.answer.filter((p, i) => p === supFull.q[i].a).length,
+      supFull.q.length, 'superlative reseat: the evidence carries the whole day');
+
     /* an archive replay keeps the local path: the bank still carries the answers */
     const supRe = h.boot('superlative', EXP, { now: T1, store: {}, search: '?d=0' });
     await h.flush();

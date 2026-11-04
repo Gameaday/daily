@@ -16,6 +16,22 @@
     "day": 28
   },
   {
+    "id": "acre-falls",
+    "n": "The Fall of Acre",
+    "q": "The last crusader port on the mainland falls to the Mamluks.",
+    "y": 1291,
+    "month": 5,
+    "day": 18
+  },
+  {
+    "id": "act-of-supremacy",
+    "n": "The Act of Supremacy",
+    "q": "Parliament names Henry VIII supreme head of the church in England.",
+    "y": 1534,
+    "month": 11,
+    "day": 3
+  },
+  {
     "id": "adrianople",
     "n": "The Battle of Adrianople",
     "q": "Goths destroy a Roman army and the emperor falls at Adrianople.",
@@ -38,6 +54,14 @@
     "y": 1867,
     "month": 3,
     "day": 30
+  },
+  {
+    "id": "anne-boleyn-executed",
+    "n": "The Execution of Anne Boleyn",
+    "q": "A swordsman from Calais ends Anne Boleyn on Tower Green.",
+    "y": 1536,
+    "month": 5,
+    "day": 19
   },
   {
     "id": "antietam",
@@ -190,6 +214,14 @@
     "day": 7
   },
   {
+    "id": "berlin-decree",
+    "n": "The Berlin Decree",
+    "q": "Napoleon seals the continent against British goods.",
+    "y": 1806,
+    "month": 11,
+    "day": 21
+  },
+  {
     "id": "berlin-wall-built",
     "n": "The Berlin Wall",
     "q": "Barbed wire rises across Berlin overnight, sealing the sector border.",
@@ -210,6 +242,14 @@
     "n": "The Bessemer Converter",
     "q": "Bessemer patents a converter that makes cheap steel by the ton.",
     "y": 1856
+  },
+  {
+    "id": "bitcoin-genesis",
+    "n": "The Genesis Block",
+    "q": "The first Bitcoin block is mined with a headline from the morning paper.",
+    "y": 2009,
+    "month": 1,
+    "day": 3
   },
   {
     "id": "black-death-europe",
@@ -243,6 +283,14 @@
     "day": 22
   },
   {
+    "id": "bouvines",
+    "n": "The Battle of Bouvines",
+    "q": "Philip Augustus breaks the coalition at Bouvines and France becomes Europe’s lead power.",
+    "y": 1214,
+    "month": 7,
+    "day": 27
+  },
+  {
     "id": "brazil-independence",
     "n": "The Cry of Ipiranga",
     "q": "Pedro declares the independence of Brazil on the banks of the Ipiranga.",
@@ -263,6 +311,14 @@
     "n": "Brown v. Board of Education",
     "q": "The Supreme Court rules school segregation unconstitutional.",
     "y": 1954
+  },
+  {
+    "id": "bruno-burned",
+    "n": "The Burning of Giordano Bruno",
+    "q": "The Inquisition sends Giordano Bruno to the flames in Campo de’ Fiori.",
+    "y": 1600,
+    "month": 2,
+    "day": 17
   },
   {
     "id": "california-gold-discovery",
@@ -309,6 +365,30 @@
     "y": 800,
     "month": 12,
     "day": 25
+  },
+  {
+    "id": "charlemagne-sole-king",
+    "n": "The Franks Under One King",
+    "q": "Carloman dies and Charles rules the Franks alone.",
+    "y": 771,
+    "month": 12,
+    "day": 4
+  },
+  {
+    "id": "charles-v-abdicates",
+    "n": "The Abdication of Charles V",
+    "q": "Charles V lays down his crowns and retires to a monastery garden.",
+    "y": 1556,
+    "month": 1,
+    "day": 16
+  },
+  {
+    "id": "charles-v-elected",
+    "n": "The Election of Charles V",
+    "q": "The electors choose the Habsburg boy and Charles V inherits half of Europe.",
+    "y": 1519,
+    "month": 6,
+    "day": 28
   },
   {
     "id": "chernobyl-disaster",
@@ -393,6 +473,14 @@
     "day": 25
   },
   {
+    "id": "council-of-trent",
+    "n": "The Council of Trent",
+    "q": "The church opens the Council of Trent and the Counter-Reformation begins.",
+    "y": 1545,
+    "month": 12,
+    "day": 13
+  },
+  {
     "id": "crecy",
     "n": "The Battle of Crécy",
     "q": "English longbowmen cut down French chivalry at Crécy.",
@@ -444,6 +532,14 @@
     "y": 1776,
     "month": 7,
     "day": 4
+  },
+  {
+    "id": "deep-blue-wins",
+    "n": "Deep Blue Wins",
+    "q": "Deep Blue defeats Kasparov in the rematch and a machine takes the chess crown.",
+    "y": 1997,
+    "month": 5,
+    "day": 11
   },
   {
     "id": "defenestration-of-prague",
@@ -500,6 +596,14 @@
     "day": 13
   },
   {
+    "id": "drake-departs",
+    "n": "Drake Sails West",
+    "q": "Drake slips out of Plymouth to raid the Pacific and come home the long way.",
+    "y": 1577,
+    "month": 12,
+    "day": 13
+  },
+  {
     "id": "earth-day-first",
     "n": "The First Earth Day",
     "q": "Millions mark the first Earth Day across the United States.",
@@ -530,6 +634,14 @@
     "y": 1889,
     "month": 3,
     "day": 31
+  },
+  {
+    "id": "elizabeth-ascends",
+    "n": "The Accession of Elizabeth",
+    "q": "Mary Tudor dies and Elizabeth’s long reign begins.",
+    "y": 1558,
+    "month": 11,
+    "day": 17
   },
   {
     "id": "emancipation-proclamation",
@@ -666,6 +778,14 @@
     "day": 6
   },
   {
+    "id": "first-tweet",
+    "n": "The First Tweet",
+    "q": "Jack Dorsey posts the first tweet and the timeline begins.",
+    "y": 2006,
+    "month": 3,
+    "day": 21
+  },
+  {
     "id": "first-vaccination",
     "n": "The First Vaccination",
     "q": "Edward Jenner performs the first vaccination, inoculating a boy against smallpox with cowpox.",
@@ -688,6 +808,14 @@
     "y": 1914,
     "month": 7,
     "day": 28
+  },
+  {
+    "id": "flodden",
+    "n": "The Battle of Flodden",
+    "q": "English bills and arrows kill a king of Scotland on Flodden field.",
+    "y": 1513,
+    "month": 9,
+    "day": 9
   },
   {
     "id": "fort-sumter",
@@ -791,12 +919,28 @@
     "y": 1206
   },
   {
+    "id": "genome-draft",
+    "n": "The Genome Draft",
+    "q": "The genome projects announce a working draft of the human sequence.",
+    "y": 2000,
+    "month": 6,
+    "day": 26
+  },
+  {
     "id": "german-empire-proclaimed",
     "n": "The Proclamation of the German Empire",
     "q": "The German Empire is proclaimed at Versailles, with Prussia’s king as emperor.",
     "y": 1871,
     "month": 1,
     "day": 18
+  },
+  {
+    "id": "german-reunification",
+    "n": "German Reunification",
+    "q": "East Germany joins the Federal Republic and Germany is one country again.",
+    "y": 1990,
+    "month": 10,
+    "day": 3
   },
   {
     "id": "gettysburg",
@@ -815,12 +959,36 @@
     "day": 6
   },
   {
+    "id": "globe-theatre-fire",
+    "n": "The Globe Burns",
+    "q": "A stage cannon sets the thatch alight and the Globe burns in an hour.",
+    "y": 1613,
+    "month": 6,
+    "day": 29
+  },
+  {
     "id": "golden-gate-opened",
     "n": "The Golden Gate Bridge",
     "q": "The Golden Gate Bridge opens to a walking crowd of thousands.",
     "y": 1937,
     "month": 5,
     "day": 27
+  },
+  {
+    "id": "golden-spurs",
+    "n": "The Battle of the Golden Spurs",
+    "q": "Flemish pikes and guildsmen beat French chivalry at Courtrai.",
+    "y": 1302,
+    "month": 7,
+    "day": 11
+  },
+  {
+    "id": "google-founded",
+    "n": "The Founding of Google",
+    "q": "Two Stanford students file a company that will index the world.",
+    "y": 1998,
+    "month": 9,
+    "day": 4
   },
   {
     "id": "gravitational-waves-detected",
@@ -884,6 +1052,22 @@
     "day": 1
   },
   {
+    "id": "gregorian-calendar",
+    "n": "The Gregorian Calendar",
+    "q": "Rome goes to bed on the fourth of October and wakes on the fifteenth.",
+    "y": 1582,
+    "month": 10,
+    "day": 15
+  },
+  {
+    "id": "grunwald",
+    "n": "The Battle of Grunwald",
+    "q": "Polish and Lithuanian lancers break the Teutonic Knights at Grunwald.",
+    "y": 1410,
+    "month": 7,
+    "day": 15
+  },
+  {
     "id": "gunpowder-plot",
     "n": "The Gunpowder Plot",
     "d": "Conspiracy, 1605",
@@ -933,6 +1117,14 @@
     "day": 14
   },
   {
+    "id": "henry-viii-dies",
+    "n": "The Death of Henry VIII",
+    "q": "Henry VIII dies at Whitehall and the crown passes to a boy of nine.",
+    "y": 1547,
+    "month": 1,
+    "day": 28
+  },
+  {
     "id": "higgs-boson-discovered",
     "n": "The Higgs Boson",
     "q": "CERN announces the discovery of the Higgs boson.",
@@ -947,6 +1139,14 @@
     "y": 1937,
     "month": 5,
     "day": 6
+  },
+  {
+    "id": "hong-kong-handover",
+    "n": "The Hong Kong Handover",
+    "q": "The Union Flag comes down at midnight and Hong Kong returns to China.",
+    "y": 1997,
+    "month": 7,
+    "day": 1
   },
   {
     "id": "hubble-launch",
@@ -1025,6 +1225,14 @@
     "day": 14
   },
   {
+    "id": "jan-hus-burned",
+    "n": "The Burning of Jan Hus",
+    "q": "The Council of Constance sends Jan Hus to the stake and Bohemia rises.",
+    "y": 1415,
+    "month": 7,
+    "day": 6
+  },
+  {
     "id": "jena",
     "n": "The Battle of Jena",
     "q": "Napoleon shatters the Prussian army in a single day at Jena.",
@@ -1047,6 +1255,14 @@
     "y": 1431,
     "month": 5,
     "day": 30
+  },
+  {
+    "id": "johnson-dictionary",
+    "n": "Johnson’s Dictionary",
+    "q": "Johnson’s dictionary finally ships and settles the language for a century.",
+    "y": 1755,
+    "month": 4,
+    "day": 15
   },
   {
     "id": "july-crisis",
@@ -1193,6 +1409,14 @@
     "y": 1959,
     "month": 9,
     "day": 13
+  },
+  {
+    "id": "luther-at-worms",
+    "n": "Luther at Worms",
+    "q": "Luther stands before the emperor at Worms and says he can do no other.",
+    "y": 1521,
+    "month": 4,
+    "day": 18
   },
   {
     "id": "macintosh-ships",
@@ -1346,10 +1570,26 @@
     "day": 1
   },
   {
+    "id": "mohacs",
+    "n": "The Battle of Mohács",
+    "q": "Suleiman’s host crushes Hungary in an afternoon at Mohács.",
+    "y": 1526,
+    "month": 8,
+    "day": 29
+  },
+  {
     "id": "mona-lisa-begun",
     "n": "The Mona Lisa",
     "q": "Leonardo da Vinci begins painting the Mona Lisa.",
     "y": 1503
+  },
+  {
+    "id": "morgarten",
+    "n": "The Battle of Morgarten",
+    "q": "Swiss halberdiers ambush Habsburg knights in the pass at Morgarten.",
+    "y": 1315,
+    "month": 11,
+    "day": 15
   },
   {
     "id": "morse-first-message",
@@ -1358,6 +1598,14 @@
     "y": 1844,
     "month": 5,
     "day": 24
+  },
+  {
+    "id": "navas-de-tolosa",
+    "n": "The Battle of Las Navas",
+    "q": "The kings of Castile and Aragon break Almohad power at Las Navas de Tolosa.",
+    "y": 1212,
+    "month": 7,
+    "day": 16
   },
   {
     "id": "nicene-council",
@@ -1405,12 +1653,28 @@
     "month": 11
   },
   {
+    "id": "otto-crowned-emperor",
+    "n": "The Coronation of Otto",
+    "q": "Otto I is crowned emperor in Rome and the Holy Roman Empire is born.",
+    "y": 962,
+    "month": 2,
+    "day": 2
+  },
+  {
     "id": "panama-canal-opened",
     "n": "The Panama Canal",
     "q": "The Panama Canal opens to its first ship.",
     "y": 1914,
     "month": 8,
     "day": 15
+  },
+  {
+    "id": "pathfinder-lands",
+    "n": "The Pathfinder Landing",
+    "q": "Pathfinder bounces onto Mars and Sojourner rolls down the ramp.",
+    "y": 1997,
+    "month": 7,
+    "day": 4
   },
   {
     "id": "pavia",
@@ -1437,6 +1701,14 @@
     "day": 28
   },
   {
+    "id": "philae-lands",
+    "n": "Philae on the Comet",
+    "q": "Rosetta drops Philae onto comet 67P half a billion kilometers out.",
+    "y": 2014,
+    "month": 11,
+    "day": 12
+  },
+  {
     "id": "plague-of-justinian",
     "n": "The Plague of Justinian",
     "q": "The first recorded bubonic pandemic strikes Constantinople.",
@@ -1457,6 +1729,14 @@
     "y": 1757,
     "month": 6,
     "day": 23
+  },
+  {
+    "id": "pluto-flyby",
+    "n": "The Pluto Flyby",
+    "q": "New Horizons flies past Pluto and the last of the classical planets gets its portrait.",
+    "y": 2015,
+    "month": 7,
+    "day": 14
   },
   {
     "id": "poitiers",
@@ -1517,6 +1797,14 @@
     "n": "The Revolutions of 1848",
     "q": "Revolutions sweep Europe from Paris to Vienna in the Year of Spring.",
     "y": 1848
+  },
+  {
+    "id": "rome-divided",
+    "n": "The Division of the Empire",
+    "q": "Theodosius dies and the Roman empire splits east and west for good.",
+    "y": 395,
+    "month": 1,
+    "day": 17
   },
   {
     "id": "rosa-parks-arrest",
@@ -1585,6 +1873,14 @@
     "y": 1527,
     "month": 5,
     "day": 6
+  },
+  {
+    "id": "sack-of-rome-410",
+    "n": "Alaric Sacks Rome",
+    "q": "Alaric’s Visigoths sack Rome and the world hears the fall of the eternal city.",
+    "y": 410,
+    "month": 8,
+    "day": 24
   },
   {
     "id": "salamis",
@@ -1665,10 +1961,26 @@
     "day": 23
   },
   {
+    "id": "shakespeare-dies",
+    "n": "The Death of Shakespeare",
+    "q": "Shakespeare dies at New Place in Stratford, fifty-two years on.",
+    "y": 1616,
+    "month": 4,
+    "day": 23
+  },
+  {
     "id": "shays-rebellion",
     "n": "Shays’ Rebellion",
     "q": "Shays’ indebted farmers close the courts of Massachusetts.",
     "y": 1786
+  },
+  {
+    "id": "sicilian-vespers",
+    "n": "The Sicilian Vespers",
+    "q": "Palermo rises at the vespers bell and French rule in Sicily dies in an evening.",
+    "y": 1282,
+    "month": 3,
+    "day": 30
   },
   {
     "id": "sino-japanese-war",
@@ -1804,6 +2116,14 @@
     "y": 1967
   },
   {
+    "id": "swiss-confederation",
+    "n": "The Oath of the Rütli",
+    "q": "Three forest cantons swear the oath on the Rütli and Switzerland begins.",
+    "y": 1291,
+    "month": 8,
+    "day": 1
+  },
+  {
     "id": "telephone-patent",
     "n": "The Telephone Patent",
     "q": "Alexander Graham Bell is granted the telephone patent.",
@@ -1848,12 +2168,36 @@
     "day": 6
   },
   {
+    "id": "thomas-more-executed",
+    "n": "The Execution of Thomas More",
+    "q": "Thomas More dies the king’s good servant, but God’s first.",
+    "y": 1535,
+    "month": 7,
+    "day": 6
+  },
+  {
+    "id": "tilsit",
+    "n": "The Peace of Tilsit",
+    "q": "Two emperors carve Europe on a raft moored mid-river.",
+    "y": 1807,
+    "month": 7,
+    "day": 7
+  },
+  {
     "id": "titanic-sinks",
     "n": "The Sinking of the Titanic",
     "q": "The RMS Titanic sinks on her maiden voyage.",
     "y": 1912,
     "month": 4,
     "day": 15
+  },
+  {
+    "id": "toledo-taken",
+    "n": "The Taking of Toledo",
+    "q": "Alfonso VI takes Toledo and the Reconquista reaches the Tagus.",
+    "y": 1085,
+    "month": 5,
+    "day": 25
   },
   {
     "id": "towton",
@@ -1960,12 +2304,28 @@
     "day": 4
   },
   {
+    "id": "vienna-siege",
+    "n": "The First Siege of Vienna",
+    "q": "Suleiman’s grand army batters at Vienna’s walls and is turned back.",
+    "y": 1529,
+    "month": 9,
+    "day": 27
+  },
+  {
     "id": "viking-1-lands",
     "n": "The Viking 1 Landing",
     "q": "Viking 1 lands on Mars and sends back the first pictures from the surface.",
     "y": 1976,
     "month": 7,
     "day": 20
+  },
+  {
+    "id": "wagram",
+    "n": "The Battle of Wagram",
+    "q": "Napoleon’s grand battery decides the day at Wagram and Austria quits the war.",
+    "y": 1809,
+    "month": 7,
+    "day": 6
   },
   {
     "id": "wall-street-crash",

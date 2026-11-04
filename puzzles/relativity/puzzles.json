@@ -117,11 +117,11 @@
         "s": "1389-1464",
         "q": "Which happened nearer Cosimo de Medici's death?",
         "o": [
-          "The Battle of Towton",
-          "The Execution of Joan of Arc"
+          "The First Battle of St Albans",
+          "The Burning of Jan Hus"
         ],
         "a": 0,
-        "w": "The Battle of Towton was 1461, 3 years before the death. The Execution of Joan of Arc was 1431, 33 years before the death."
+        "w": "The First Battle of St Albans was 1455, 9 years before the death. The Burning of Jan Hus was 1415, 49 years before the death."
       },
       {
         "p": "Edward Jenner",
@@ -129,10 +129,10 @@
         "q": "Which happened nearer Edward Jenner's birth?",
         "o": [
           "The Hundred Days",
-          "Lexington and Concord"
+          "The Battle of Wagram"
         ],
         "a": 1,
-        "w": "The Hundred Days was 1815, 66 years after the birth. Lexington and Concord was 1775, 26 years after the birth."
+        "w": "The Hundred Days was 1815, 66 years after the birth. The Battle of Wagram was 1809, 60 years after the birth."
       },
       {
         "p": "James Whistler",
@@ -154,11 +154,11 @@
         "s": "1371-1433",
         "q": "Which happened nearer Zheng He's death?",
         "o": [
-          "The Peasants' Revolt",
+          "The Burning of Jan Hus",
           "The First Treasure Voyage"
         ],
-        "a": 1,
-        "w": "The Peasants' Revolt was 1381, 52 years before the death. The First Treasure Voyage was 1405, 28 years before the death."
+        "a": 0,
+        "w": "The Burning of Jan Hus was 1415, 18 years before the death. The First Treasure Voyage was 1405, 28 years before the death."
       },
       {
         "p": "Eleanor Roosevelt",
@@ -214,10 +214,10 @@
         "q": "Which happened nearer Jacques Cousteau's death?",
         "o": [
           "The First Solvay Conference",
-          "The Wall Street Crash"
+          "The Tomb of Tutankhamun"
         ],
         "a": 1,
-        "w": "The First Solvay Conference was 1911, 86 years before the death. The Wall Street Crash was 1929, 68 years before the death."
+        "w": "The First Solvay Conference was 1911, 86 years before the death. The Tomb of Tutankhamun was 1922, 75 years before the death."
       }
     ]
   },
@@ -239,22 +239,22 @@
         "s": "1540-1596",
         "q": "Which happened nearer Francis Drake's birth?",
         "o": [
-          "The Battle of Lepanto",
-          "The Spanish Armada"
+          "The Accession of Elizabeth",
+          "The Gregorian Calendar"
         ],
         "a": 0,
-        "w": "The Battle of Lepanto was 1571, 31 years after the birth. The Spanish Armada was 1588, 48 years after the birth."
+        "w": "The Accession of Elizabeth was 1558, 18 years after the birth. The Gregorian Calendar was 1582, 42 years after the birth."
       },
       {
         "p": "Nicolas Baudin",
         "s": "1754-1803",
         "q": "Which happened nearer Nicolas Baudin's birth?",
         "o": [
-          "The Metric System",
+          "The Battle of Plassey",
           "The Haitian Revolution Begins"
         ],
-        "a": 1,
-        "w": "The Metric System was 1795, 41 years after the birth. The Haitian Revolution Begins was 1791, 37 years after the birth."
+        "a": 0,
+        "w": "The Battle of Plassey was 1757, 3 years after the birth. The Haitian Revolution Begins was 1791, 37 years after the birth."
       }
     ]
   },
@@ -266,21 +266,21 @@
         "q": "Which happened nearer Patrick Henry's death?",
         "o": [
           "The Battle of Plassey",
-          "The Treaty of Paris"
+          "Shays’ Rebellion"
         ],
         "a": 1,
-        "w": "The Battle of Plassey was 1757, 42 years before the death. The Treaty of Paris was 1783, 16 years before the death."
+        "w": "The Battle of Plassey was 1757, 42 years before the death. Shays’ Rebellion was 1786, 13 years before the death."
       },
       {
         "p": "Noah Webster",
         "s": "1758-1843",
         "q": "Which happened nearer Noah Webster's birth?",
         "o": [
-          "The Battle of Friedland",
+          "The Metric System",
           "The Battle of the Nile"
         ],
-        "a": 1,
-        "w": "The Battle of Friedland was 1807, 49 years after the birth. The Battle of the Nile was 1798, 40 years after the birth."
+        "a": 0,
+        "w": "The Metric System was 1795, 37 years after the birth. The Battle of the Nile was 1798, 40 years after the birth."
       },
       {
         "p": "Fyodor Dostoevsky",
@@ -303,10 +303,10 @@
         "q": "Which happened nearer Richard Arkwright's birth?",
         "o": [
           "The Declaration of Independence",
-          "The Seven Years War"
+          "Shays’ Rebellion"
         ],
-        "a": 1,
-        "w": "The Declaration of Independence was 1776, 44 years after the birth. The Seven Years War was 1756, 24 years after the birth."
+        "a": 0,
+        "w": "The Declaration of Independence was 1776, 44 years after the birth. Shays’ Rebellion was 1786, 54 years after the birth."
       },
       {
         "p": "Claude Monet",
@@ -324,11 +324,11 @@
         "s": "1765-1833",
         "q": "Which happened nearer Nicephore Niepce's death?",
         "o": [
-          "The Battle of Borodino",
-          "The Declaration of Independence"
+          "The Berlin Decree",
+          "The Louvre Opens"
         ],
         "a": 0,
-        "w": "The Battle of Borodino was 1812, 21 years before the death. The Declaration of Independence was 1776, 57 years before the death."
+        "w": "The Berlin Decree was 1806, 27 years before the death. The Louvre Opens was 1793, 40 years before the death."
       }
     ]
   },
@@ -339,22 +339,22 @@
         "s": "1469-1521",
         "q": "Which happened nearer Manuel I's birth?",
         "o": [
-          "The Landfall of Columbus",
-          "The David"
+          "The Election of Charles V",
+          "The Battle of Flodden"
         ],
-        "a": 0,
-        "w": "The Landfall of Columbus was 1492, 23 years after the birth. The David was 1504, 35 years after the birth."
+        "a": 1,
+        "w": "The Election of Charles V was 1519, 50 years after the birth. The Battle of Flodden was 1513, 44 years after the birth."
       },
       {
         "p": "Ludwig van Beethoven",
         "s": "1770-1827",
         "q": "Which happened nearer Ludwig van Beethoven's death?",
         "o": [
-          "The Battle of Borodino",
-          "The Hundred Days"
+          "The Berlin Decree",
+          "The Winter at Valley Forge"
         ],
-        "a": 1,
-        "w": "The Battle of Borodino was 1812, 15 years before the death. The Hundred Days was 1815, 12 years before the death."
+        "a": 0,
+        "w": "The Berlin Decree was 1806, 21 years before the death. The Winter at Valley Forge was 1777, 50 years before the death."
       },
       {
         "p": "Jacques Piccard",
@@ -362,10 +362,10 @@
         "q": "Which happened nearer Jacques Piccard's birth?",
         "o": [
           "The First Four Minute Mile",
-          "The Independence of Ghana"
+          "The Launch of the Macintosh"
         ],
         "a": 0,
-        "w": "The First Four Minute Mile was 1954, 32 years after the birth. The Independence of Ghana was 1957, 35 years after the birth."
+        "w": "The First Four Minute Mile was 1954, 32 years after the birth. The Launch of the Macintosh was 1984, 62 years after the birth."
       }
     ]
   },
@@ -376,11 +376,11 @@
         "s": "1430-1516",
         "q": "Which happened nearer Giovanni Bellini's death?",
         "o": [
-          "The Last Supper",
-          "The Mona Lisa"
+          "The Laocoön",
+          "The Sistine Ceiling"
         ],
         "a": 1,
-        "w": "The Last Supper was 1498, 18 years before the death. The Mona Lisa was 1503, 13 years before the death."
+        "w": "The Laocoön was 1506, 10 years before the death. The Sistine Ceiling was 1512, 4 years before the death."
       },
       {
         "p": "Frida Kahlo",
@@ -399,10 +399,10 @@
         "q": "Which happened nearer Richard Arkwright's birth?",
         "o": [
           "The Constitutional Convention",
-          "The Kite Experiment"
+          "The Haitian Revolution Begins"
         ],
-        "a": 1,
-        "w": "The Constitutional Convention was 1787, 55 years after the birth. The Kite Experiment was 1752, 20 years after the birth."
+        "a": 0,
+        "w": "The Constitutional Convention was 1787, 55 years after the birth. The Haitian Revolution Begins was 1791, 59 years after the birth."
       }
     ]
   },
@@ -424,22 +424,22 @@
         "s": "1804-1864",
         "q": "Which happened nearer Nathaniel Hawthorne's death?",
         "o": [
-          "The Bombardment of Fort Sumter",
+          "The Kingdom of Italy",
           "The First Atlantic Cable"
         ],
         "a": 0,
-        "w": "The Bombardment of Fort Sumter was 1861, 3 years before the death. The First Atlantic Cable was 1858, 6 years before the death."
+        "w": "The Kingdom of Italy was 1861, 3 years before the death. The First Atlantic Cable was 1858, 6 years before the death."
       },
       {
         "p": "Alexandre Dumas",
         "s": "1802-1870",
         "q": "Which happened nearer Alexandre Dumas's death?",
         "o": [
-          "The Alaska Purchase",
-          "The Siege of Vicksburg"
+          "The Battle of Antietam",
+          "The Bessemer Converter"
         ],
         "a": 0,
-        "w": "The Alaska Purchase was 1867, 3 years before the death. The Siege of Vicksburg was 1863, 7 years before the death."
+        "w": "The Battle of Antietam was 1862, 8 years before the death. The Bessemer Converter was 1856, 14 years before the death."
       }
     ]
   },
@@ -450,11 +450,11 @@
         "s": "1585-1642",
         "q": "Which happened nearer Cardinal Richelieu's birth?",
         "o": [
-          "The Defenestration of Prague",
-          "Galileo's Moons of Jupiter"
+          "The Burning of Giordano Bruno",
+          "The Assassination of Henry IV"
         ],
-        "a": 1,
-        "w": "The Defenestration of Prague was 1618, 33 years after the birth. Galileo's Moons of Jupiter was 1610, 25 years after the birth."
+        "a": 0,
+        "w": "The Burning of Giordano Bruno was 1600, 15 years after the birth. The Assassination of Henry IV was 1610, 25 years after the birth."
       },
       {
         "p": "Roald Amundsen",
@@ -546,11 +546,11 @@
         "s": "1491-1547",
         "q": "Which happened nearer Henry VIII's death?",
         "o": [
-          "The Last Supper",
-          "The Capture of Atahualpa"
+          "The Capture of Atahualpa",
+          "The Execution of Anne Boleyn"
         ],
         "a": 1,
-        "w": "The Last Supper was 1498, 49 years before the death. The Capture of Atahualpa was 1532, 15 years before the death."
+        "w": "The Capture of Atahualpa was 1532, 15 years before the death. The Execution of Anne Boleyn was 1536, 11 years before the death."
       }
     ]
   },
@@ -573,10 +573,10 @@
         "q": "Which happened nearer Oda Nobunaga's death?",
         "o": [
           "De Revolutionibus",
-          "The Birth of Shakespeare"
+          "The Execution of Thomas More"
         ],
-        "a": 1,
-        "w": "De Revolutionibus was 1543, 39 years before the death. The Birth of Shakespeare was 1564, 18 years before the death."
+        "a": 0,
+        "w": "De Revolutionibus was 1543, 39 years before the death. The Execution of Thomas More was 1535, 47 years before the death."
       },
       {
         "p": "Francesco Borromini",
@@ -584,10 +584,10 @@
         "q": "Which happened nearer Francesco Borromini's birth?",
         "o": [
           "The Trial of Galileo",
-          "Galileo's Moons of Jupiter"
+          "The Globe Burns"
         ],
         "a": 1,
-        "w": "The Trial of Galileo was 1633, 34 years after the birth. Galileo's Moons of Jupiter was 1610, 11 years after the birth."
+        "w": "The Trial of Galileo was 1633, 34 years after the birth. The Globe Burns was 1613, 14 years after the birth."
       }
     ]
   },
@@ -598,22 +598,22 @@
         "s": "1746-1828",
         "q": "Which happened nearer Francisco Goya's death?",
         "o": [
-          "The Rosetta Stone",
-          "The Battle of Jena"
+          "The Treaty of Paris",
+          "Johnson’s Dictionary"
         ],
-        "a": 1,
-        "w": "The Rosetta Stone was 1799, 29 years before the death. The Battle of Jena was 1806, 22 years before the death."
+        "a": 0,
+        "w": "The Treaty of Paris was 1783, 45 years before the death. Johnson’s Dictionary was 1755, 73 years before the death."
       },
       {
         "p": "John Donne",
         "s": "1572-1631",
         "q": "Which happened nearer John Donne's death?",
         "o": [
-          "The Gunpowder Plot",
-          "The Assassination of Henry IV"
+          "The Globe Burns",
+          "The Execution of Mary Stuart"
         ],
-        "a": 1,
-        "w": "The Gunpowder Plot was 1605, 26 years before the death. The Assassination of Henry IV was 1610, 21 years before the death."
+        "a": 0,
+        "w": "The Globe Burns was 1613, 18 years before the death. The Execution of Mary Stuart was 1587, 44 years before the death."
       },
       {
         "p": "Thomas Jefferson",
@@ -621,10 +621,10 @@
         "q": "Which happened nearer Thomas Jefferson's birth?",
         "o": [
           "The Storming of the Bastille",
-          "The First Vaccination"
+          "The Battle of Jena"
         ],
         "a": 0,
-        "w": "The Storming of the Bastille was 1789, 46 years after the birth. The First Vaccination was 1796, 53 years after the birth."
+        "w": "The Storming of the Bastille was 1789, 46 years after the birth. The Battle of Jena was 1806, 63 years after the birth."
       }
     ]
   },
@@ -646,11 +646,11 @@
         "s": "1186-1241",
         "q": "Which happened nearer Ogedei Khan's birth?",
         "o": [
-          "The Sack of Constantinople",
+          "The Battle of Las Navas",
           "The Magna Carta"
         ],
         "a": 0,
-        "w": "The Sack of Constantinople was 1204, 18 years after the birth. The Magna Carta was 1215, 29 years after the birth."
+        "w": "The Battle of Las Navas was 1212, 26 years after the birth. The Magna Carta was 1215, 29 years after the birth."
       },
       {
         "p": "Henrietta Leavitt",
@@ -672,11 +672,11 @@
         "s": "1545-1598",
         "q": "Which happened nearer Yi Sun-sin's death?",
         "o": [
-          "The Birth of Shakespeare",
-          "The Battle of Lepanto"
+          "The Gregorian Calendar",
+          "Drake Sails West"
         ],
-        "a": 1,
-        "w": "The Birth of Shakespeare was 1564, 34 years before the death. The Battle of Lepanto was 1571, 27 years before the death."
+        "a": 0,
+        "w": "The Gregorian Calendar was 1582, 16 years before the death. Drake Sails West was 1577, 21 years before the death."
       },
       {
         "p": "Butch Cassidy",
@@ -710,10 +710,10 @@
         "q": "Which happened nearer Joshua Reynolds's birth?",
         "o": [
           "The Boston Tea Party",
-          "The Kite Experiment"
+          "The French Revolution"
         ],
-        "a": 1,
-        "w": "The Boston Tea Party was 1773, 50 years after the birth. The Kite Experiment was 1752, 29 years after the birth."
+        "a": 0,
+        "w": "The Boston Tea Party was 1773, 50 years after the birth. The French Revolution was 1789, 66 years after the birth."
       },
       {
         "p": "Anthony Ashley Cooper",
@@ -731,11 +731,11 @@
         "s": "1600-1649",
         "q": "Which happened nearer Charles I's birth?",
         "o": [
-          "The Defenestration of Prague",
-          "The Founding of Jamestown"
+          "Don Quixote",
+          "The Globe Burns"
         ],
-        "a": 1,
-        "w": "The Defenestration of Prague was 1618, 18 years after the birth. The Founding of Jamestown was 1607, 7 years after the birth."
+        "a": 0,
+        "w": "Don Quixote was 1605, 5 years after the birth. The Globe Burns was 1613, 13 years after the birth."
       }
     ]
   },
@@ -757,11 +757,11 @@
         "s": "1757-1834",
         "q": "Which happened nearer Marquis de Lafayette's death?",
         "o": [
-          "The Battle of Borodino",
+          "The Dos de Mayo",
           "The Battle of the Nile"
         ],
         "a": 0,
-        "w": "The Battle of Borodino was 1812, 22 years before the death. The Battle of the Nile was 1798, 36 years before the death."
+        "w": "The Dos de Mayo was 1808, 26 years before the death. The Battle of the Nile was 1798, 36 years before the death."
       },
       {
         "p": "Gottlieb Daimler",
@@ -784,21 +784,21 @@
         "q": "Which happened nearer Moctezuma II's birth?",
         "o": [
           "The David",
-          "The Ninety-five Theses"
+          "The Last Supper"
         ],
-        "a": 0,
-        "w": "The David was 1504, 38 years after the birth. The Ninety-five Theses was 1517, 51 years after the birth."
+        "a": 1,
+        "w": "The David was 1504, 38 years after the birth. The Last Supper was 1498, 32 years after the birth."
       },
       {
         "p": "Madame de Pompadour",
         "s": "1721-1764",
         "q": "Which happened nearer Madame de Pompadour's death?",
         "o": [
-          "The Messiah Premiere in Dublin",
+          "The Lisbon Earthquake",
           "The Kite Experiment"
         ],
-        "a": 1,
-        "w": "The Messiah Premiere in Dublin was 1742, 22 years before the death. The Kite Experiment was 1752, 12 years before the death."
+        "a": 0,
+        "w": "The Lisbon Earthquake was 1755, 9 years before the death. The Kite Experiment was 1752, 12 years before the death."
       },
       {
         "p": "Gentile Bellini",
@@ -842,11 +842,11 @@
         "s": "1532-1590",
         "q": "Which happened nearer Francis Walsingham's death?",
         "o": [
-          "The Birth of Shakespeare",
-          "The Battle of Lepanto"
+          "The Gregorian Calendar",
+          "De Revolutionibus"
         ],
-        "a": 1,
-        "w": "The Birth of Shakespeare was 1564, 26 years before the death. The Battle of Lepanto was 1571, 19 years before the death."
+        "a": 0,
+        "w": "The Gregorian Calendar was 1582, 8 years before the death. De Revolutionibus was 1543, 47 years before the death."
       }
     ]
   },
@@ -879,11 +879,11 @@
         "s": "1775-1851",
         "q": "Which happened nearer J.M.W. Turner's death?",
         "o": [
-          "The Rosetta Stone",
+          "Shays’ Rebellion",
           "The Stockton and Darlington Railway"
         ],
         "a": 1,
-        "w": "The Rosetta Stone was 1799, 52 years before the death. The Stockton and Darlington Railway was 1825, 26 years before the death."
+        "w": "Shays’ Rebellion was 1786, 65 years before the death. The Stockton and Darlington Railway was 1825, 26 years before the death."
       }
     ]
   },
@@ -931,11 +931,11 @@
         "s": "1601-1666",
         "q": "Which happened nearer Anne of Austria's death?",
         "o": [
-          "The Founding of Jamestown",
-          "Galileo's Moons of Jupiter"
+          "The Mayflower Landing",
+          "The Globe Burns"
         ],
-        "a": 1,
-        "w": "The Founding of Jamestown was 1607, 59 years before the death. Galileo's Moons of Jupiter was 1610, 56 years before the death."
+        "a": 0,
+        "w": "The Mayflower Landing was 1620, 46 years before the death. The Globe Burns was 1613, 53 years before the death."
       },
       {
         "p": "G. H. Hardy",
@@ -990,11 +990,11 @@
         "s": "1469-1521",
         "q": "Which happened nearer Manuel I's death?",
         "o": [
-          "The Laocoön",
-          "The Ninety-five Theses"
+          "The Battle of Flodden",
+          "Magellan Sets Out"
         ],
         "a": 1,
-        "w": "The Laocoön was 1506, 15 years before the death. The Ninety-five Theses was 1517, 4 years before the death."
+        "w": "The Battle of Flodden was 1513, 8 years before the death. Magellan Sets Out was 1519, 2 years before the death."
       }
     ]
   },
@@ -1005,11 +1005,11 @@
         "s": "1596-1687",
         "q": "Which happened nearer Constantijn Huygens's death?",
         "o": [
-          "The Trial of Galileo",
-          "Don Quixote"
+          "The Gunpowder Plot",
+          "The Defenestration of Prague"
         ],
-        "a": 0,
-        "w": "The Trial of Galileo was 1633, 54 years before the death. Don Quixote was 1605, 82 years before the death."
+        "a": 1,
+        "w": "The Gunpowder Plot was 1605, 82 years before the death. The Defenestration of Prague was 1618, 69 years before the death."
       },
       {
         "p": "William Lloyd Garrison",
@@ -1017,21 +1017,21 @@
         "q": "Which happened nearer William Lloyd Garrison's death?",
         "o": [
           "Japan’s First Railway",
-          "On the Origin of Species"
+          "What Hath God Wrought"
         ],
         "a": 0,
-        "w": "Japan’s First Railway was 1872, 7 years before the death. On the Origin of Species was 1859, 20 years before the death."
+        "w": "Japan’s First Railway was 1872, 7 years before the death. What Hath God Wrought was 1844, 35 years before the death."
       },
       {
         "p": "Edmund Cartwright",
         "s": "1743-1823",
         "q": "Which happened nearer Edmund Cartwright's death?",
         "o": [
-          "The Louvre Opens",
-          "The Battle of Trafalgar"
+          "The Metric System",
+          "The Battle of the Plains of Abraham"
         ],
-        "a": 1,
-        "w": "The Louvre Opens was 1793, 30 years before the death. The Battle of Trafalgar was 1805, 18 years before the death."
+        "a": 0,
+        "w": "The Metric System was 1795, 28 years before the death. The Battle of the Plains of Abraham was 1759, 64 years before the death."
       }
     ]
   },
@@ -1064,11 +1064,11 @@
         "s": "1743-1820",
         "q": "Which happened nearer Joseph Banks's birth?",
         "o": [
-          "The Winter at Valley Forge",
-          "The Battle of the Plains of Abraham"
+          "The Peace of Tilsit",
+          "Pride and Prejudice"
         ],
-        "a": 1,
-        "w": "The Winter at Valley Forge was 1777, 34 years after the birth. The Battle of the Plains of Abraham was 1759, 16 years after the birth."
+        "a": 0,
+        "w": "The Peace of Tilsit was 1807, 64 years after the birth. Pride and Prejudice was 1813, 70 years after the birth."
       }
     ]
   },
@@ -1079,22 +1079,22 @@
         "s": "1913-2005",
         "q": "Which happened nearer Rosa Parks's birth?",
         "o": [
-          "The IBM Personal Computer",
+          "The Prague Spring",
           "Castro Enters Havana"
         ],
         "a": 1,
-        "w": "The IBM Personal Computer was 1981, 68 years after the birth. Castro Enters Havana was 1959, 46 years after the birth."
+        "w": "The Prague Spring was 1968, 55 years after the birth. Castro Enters Havana was 1959, 46 years after the birth."
       },
       {
         "p": "Richard Arkwright",
         "s": "1732-1792",
         "q": "Which happened nearer Richard Arkwright's death?",
         "o": [
-          "Shays’ Rebellion",
-          "The Lisbon Earthquake"
+          "The Separate Condenser",
+          "Lexington and Concord"
         ],
-        "a": 0,
-        "w": "Shays’ Rebellion was 1786, 6 years before the death. The Lisbon Earthquake was 1755, 37 years before the death."
+        "a": 1,
+        "w": "The Separate Condenser was 1769, 23 years before the death. Lexington and Concord was 1775, 17 years before the death."
       },
       {
         "p": "Dwight D. Eisenhower",
@@ -1138,11 +1138,11 @@
         "s": "1564-1593",
         "q": "Which happened nearer Christopher Marlowe's death?",
         "o": [
-          "The Battle of Lepanto",
+          "Drake Sails West",
           "The Execution of Mary Stuart"
         ],
         "a": 1,
-        "w": "The Battle of Lepanto was 1571, 22 years before the death. The Execution of Mary Stuart was 1587, 6 years before the death."
+        "w": "Drake Sails West was 1577, 16 years before the death. The Execution of Mary Stuart was 1587, 6 years before the death."
       }
     ]
   },
@@ -1153,11 +1153,11 @@
         "s": "1788-1860",
         "q": "Which happened nearer Arthur Schopenhauer's death?",
         "o": [
-          "The French Revolution",
+          "The Battle of Friedland",
           "The Congress of Vienna"
         ],
         "a": 1,
-        "w": "The French Revolution was 1789, 71 years before the death. The Congress of Vienna was 1814, 46 years before the death."
+        "w": "The Battle of Friedland was 1807, 53 years before the death. The Congress of Vienna was 1814, 46 years before the death."
       },
       {
         "p": "Ernest Rutherford",
@@ -1190,22 +1190,22 @@
         "s": "1389-1464",
         "q": "Which happened nearer Cosimo de Medici's birth?",
         "o": [
-          "The Battle of Towton",
-          "The Execution of Joan of Arc"
+          "The First Battle of St Albans",
+          "The Burning of Jan Hus"
         ],
         "a": 1,
-        "w": "The Battle of Towton was 1461, 72 years after the birth. The Execution of Joan of Arc was 1431, 42 years after the birth."
+        "w": "The First Battle of St Albans was 1455, 66 years after the birth. The Burning of Jan Hus was 1415, 26 years after the birth."
       },
       {
         "p": "Philip II",
         "s": "1527-1598",
         "q": "Which happened nearer Philip II's birth?",
         "o": [
-          "The Birth of Shakespeare",
-          "The Battle of Lepanto"
+          "The Gregorian Calendar",
+          "Drake Sails West"
         ],
-        "a": 0,
-        "w": "The Birth of Shakespeare was 1564, 37 years after the birth. The Battle of Lepanto was 1571, 44 years after the birth."
+        "a": 1,
+        "w": "The Gregorian Calendar was 1582, 55 years after the birth. Drake Sails West was 1577, 50 years after the birth."
       },
       {
         "p": "Robert Frost",
@@ -1227,11 +1227,11 @@
         "s": "1914-1995",
         "q": "Which happened nearer Jonas Salk's death?",
         "o": [
-          "The First Ascent of Everest",
+          "The Gallipoli Landings",
           "The Empire State Building"
         ],
-        "a": 0,
-        "w": "The First Ascent of Everest was 1953, 42 years before the death. The Empire State Building was 1931, 64 years before the death."
+        "a": 1,
+        "w": "The Gallipoli Landings was 1915, 80 years before the death. The Empire State Building was 1931, 64 years before the death."
       },
       {
         "p": "Botticelli",
@@ -1264,11 +1264,11 @@
         "s": "1215-1294",
         "q": "Which happened nearer Kublai Khan's death?",
         "o": [
-          "The Battle of Legnica",
-          "The Mongol Invasions of Japan"
+          "The Sicilian Vespers",
+          "The Battle of Ain Jalut"
         ],
-        "a": 1,
-        "w": "The Battle of Legnica was 1241, 53 years before the death. The Mongol Invasions of Japan was 1274, 20 years before the death."
+        "a": 0,
+        "w": "The Sicilian Vespers was 1282, 12 years before the death. The Battle of Ain Jalut was 1260, 34 years before the death."
       },
       {
         "p": "William Henry Fox Talbot",
@@ -1276,21 +1276,21 @@
         "q": "Which happened nearer William Henry Fox Talbot's birth?",
         "o": [
           "The Bessemer Converter",
-          "Reconstruction"
+          "The Meiji Restoration"
         ],
         "a": 0,
-        "w": "The Bessemer Converter was 1856, 56 years after the birth. Reconstruction was 1865, 65 years after the birth."
+        "w": "The Bessemer Converter was 1856, 56 years after the birth. The Meiji Restoration was 1868, 68 years after the birth."
       },
       {
         "p": "Yves Saint Laurent",
         "s": "1936-2008",
         "q": "Which happened nearer Yves Saint Laurent's birth?",
         "o": [
-          "The Eradication of Smallpox",
-          "The Partition of India"
+          "The First Website",
+          "Hurricane Katrina"
         ],
-        "a": 1,
-        "w": "The Eradication of Smallpox was 1980, 44 years after the birth. The Partition of India was 1947, 11 years after the birth."
+        "a": 0,
+        "w": "The First Website was 1991, 55 years after the birth. Hurricane Katrina was 2005, 69 years after the birth."
       }
     ]
   },
@@ -1312,11 +1312,11 @@
         "s": "1748-1825",
         "q": "Which happened nearer Jacques-Louis David's death?",
         "o": [
-          "The Hundred Days",
-          "The Winter at Valley Forge"
+          "Napoleon's Invasion of Russia",
+          "The Treaty of Paris"
         ],
         "a": 0,
-        "w": "The Hundred Days was 1815, 10 years before the death. The Winter at Valley Forge was 1777, 48 years before the death."
+        "w": "Napoleon's Invasion of Russia was 1812, 13 years before the death. The Treaty of Paris was 1783, 42 years before the death."
       },
       {
         "p": "Sarojini Naidu",
@@ -1339,10 +1339,10 @@
         "q": "Which happened nearer Edward Jenner's death?",
         "o": [
           "Lexington and Concord",
-          "The Metric System"
+          "The Seven Years War"
         ],
-        "a": 1,
-        "w": "Lexington and Concord was 1775, 48 years before the death. The Metric System was 1795, 28 years before the death."
+        "a": 0,
+        "w": "Lexington and Concord was 1775, 48 years before the death. The Seven Years War was 1756, 67 years before the death."
       },
       {
         "p": "Andrea del Verrocchio",
@@ -1376,10 +1376,10 @@
         "q": "Which happened nearer James I's birth?",
         "o": [
           "Don Quixote",
-          "The Battle of Lepanto"
+          "Galileo's Moons of Jupiter"
         ],
-        "a": 1,
-        "w": "Don Quixote was 1605, 39 years after the birth. The Battle of Lepanto was 1571, 5 years after the birth."
+        "a": 0,
+        "w": "Don Quixote was 1605, 39 years after the birth. Galileo's Moons of Jupiter was 1610, 44 years after the birth."
       },
       {
         "p": "Orson Welles",
@@ -1397,11 +1397,11 @@
         "s": "1732-1809",
         "q": "Which happened nearer Joseph Haydn's birth?",
         "o": [
-          "The Battle of the Plains of Abraham",
-          "The Louvre Opens"
+          "The Winter at Valley Forge",
+          "The Louisiana Purchase"
         ],
         "a": 0,
-        "w": "The Battle of the Plains of Abraham was 1759, 27 years after the birth. The Louvre Opens was 1793, 61 years after the birth."
+        "w": "The Winter at Valley Forge was 1777, 45 years after the birth. The Louisiana Purchase was 1803, 71 years after the birth."
       }
     ]
   },
@@ -1412,11 +1412,11 @@
         "s": "1186-1241",
         "q": "Which happened nearer Ogedei Khan's death?",
         "o": [
-          "The Sack of Constantinople",
+          "The Magna Carta",
           "The Children’s Crusade"
         ],
-        "a": 1,
-        "w": "The Sack of Constantinople was 1204, 37 years before the death. The Children’s Crusade was 1212, 29 years before the death."
+        "a": 0,
+        "w": "The Magna Carta was 1215, 26 years before the death. The Children’s Crusade was 1212, 29 years before the death."
       },
       {
         "p": "William Bligh",
@@ -1424,21 +1424,21 @@
         "q": "Which happened nearer William Bligh's birth?",
         "o": [
           "The Louvre Opens",
-          "Pride and Prejudice"
+          "The Winter at Valley Forge"
         ],
-        "a": 0,
-        "w": "The Louvre Opens was 1793, 39 years after the birth. Pride and Prejudice was 1813, 59 years after the birth."
+        "a": 1,
+        "w": "The Louvre Opens was 1793, 39 years after the birth. The Winter at Valley Forge was 1777, 23 years after the birth."
       },
       {
         "p": "Catherine de Medici",
         "s": "1519-1589",
         "q": "Which happened nearer Catherine de Medici's birth?",
         "o": [
-          "The Execution of Mary Stuart",
-          "The Battle of Lepanto"
+          "The Death of Henry VIII",
+          "The Fall of Tenochtitlan"
         ],
         "a": 1,
-        "w": "The Execution of Mary Stuart was 1587, 68 years after the birth. The Battle of Lepanto was 1571, 52 years after the birth."
+        "w": "The Death of Henry VIII was 1547, 28 years after the birth. The Fall of Tenochtitlan was 1521, 2 years after the birth."
       }
     ]
   },
@@ -1460,22 +1460,22 @@
         "s": "1540-1596",
         "q": "Which happened nearer Francis Drake's death?",
         "o": [
-          "The Battle of Lepanto",
-          "The Birth of Shakespeare"
+          "Drake Sails West",
+          "The Execution of Mary Stuart"
         ],
-        "a": 0,
-        "w": "The Battle of Lepanto was 1571, 25 years before the death. The Birth of Shakespeare was 1564, 32 years before the death."
+        "a": 1,
+        "w": "Drake Sails West was 1577, 19 years before the death. The Execution of Mary Stuart was 1587, 9 years before the death."
       },
       {
         "p": "Gioachino Rossini",
         "s": "1792-1868",
         "q": "Which happened nearer Gioachino Rossini's birth?",
         "o": [
-          "The Dos de Mayo",
+          "Pride and Prejudice",
           "The Battle of Austerlitz"
         ],
         "a": 1,
-        "w": "The Dos de Mayo was 1808, 16 years after the birth. The Battle of Austerlitz was 1805, 13 years after the birth."
+        "w": "Pride and Prejudice was 1813, 21 years after the birth. The Battle of Austerlitz was 1805, 13 years after the birth."
       }
     ]
   },
@@ -1497,22 +1497,22 @@
         "s": "1512-1594",
         "q": "Which happened nearer Gerardus Mercator's death?",
         "o": [
-          "The Battle of Pavia",
-          "The Fall of Tenochtitlan"
+          "Luther at Worms",
+          "The Accession of Elizabeth"
         ],
-        "a": 0,
-        "w": "The Battle of Pavia was 1525, 69 years before the death. The Fall of Tenochtitlan was 1521, 73 years before the death."
+        "a": 1,
+        "w": "Luther at Worms was 1521, 73 years before the death. The Accession of Elizabeth was 1558, 36 years before the death."
       },
       {
         "p": "Lord Melbourne",
         "s": "1779-1848",
         "q": "Which happened nearer Lord Melbourne's death?",
         "o": [
-          "The Cry of Ipiranga",
-          "The Constitutional Convention"
+          "The Battle of Borodino",
+          "The Rosetta Stone"
         ],
         "a": 0,
-        "w": "The Cry of Ipiranga was 1822, 26 years before the death. The Constitutional Convention was 1787, 61 years before the death."
+        "w": "The Battle of Borodino was 1812, 36 years before the death. The Rosetta Stone was 1799, 49 years before the death."
       }
     ]
   },
@@ -1560,11 +1560,11 @@
         "s": "1533-1592",
         "q": "Which happened nearer Michel de Montaigne's birth?",
         "o": [
-          "The Battle of Lepanto",
-          "De Revolutionibus"
+          "The Abdication of Charles V",
+          "The Execution of Anne Boleyn"
         ],
         "a": 1,
-        "w": "The Battle of Lepanto was 1571, 38 years after the birth. De Revolutionibus was 1543, 10 years after the birth."
+        "w": "The Abdication of Charles V was 1556, 23 years after the birth. The Execution of Anne Boleyn was 1536, 3 years after the birth."
       },
       {
         "p": "Winston Churchill",
@@ -1608,11 +1608,11 @@
         "s": "1596-1687",
         "q": "Which happened nearer Constantijn Huygens's death?",
         "o": [
-          "The Mayflower Landing",
+          "The Death of Shakespeare",
           "The Execution of Charles I"
         ],
         "a": 1,
-        "w": "The Mayflower Landing was 1620, 67 years before the death. The Execution of Charles I was 1649, 38 years before the death."
+        "w": "The Death of Shakespeare was 1616, 71 years before the death. The Execution of Charles I was 1649, 38 years before the death."
       },
       {
         "p": "Cosimo de Medici",
@@ -1620,10 +1620,10 @@
         "q": "Which happened nearer Cosimo de Medici's death?",
         "o": [
           "The Battle of Agincourt",
-          "The First Battle of St Albans"
+          "The First Treasure Voyage"
         ],
-        "a": 1,
-        "w": "The Battle of Agincourt was 1415, 49 years before the death. The First Battle of St Albans was 1455, 9 years before the death."
+        "a": 0,
+        "w": "The Battle of Agincourt was 1415, 49 years before the death. The First Treasure Voyage was 1405, 59 years before the death."
       }
     ]
   },
@@ -1646,10 +1646,10 @@
         "q": "Which happened nearer Usman dan Fodio's birth?",
         "o": [
           "The Battle of the Nile",
-          "The Battle of Friedland"
+          "The Louisiana Purchase"
         ],
         "a": 0,
-        "w": "The Battle of the Nile was 1798, 44 years after the birth. The Battle of Friedland was 1807, 53 years after the birth."
+        "w": "The Battle of the Nile was 1798, 44 years after the birth. The Louisiana Purchase was 1803, 49 years after the birth."
       },
       {
         "p": "Ada Lovelace",
@@ -1671,22 +1671,22 @@
         "s": "1756-1836",
         "q": "Which happened nearer William Godwin's death?",
         "o": [
-          "The Louisiana Purchase",
-          "The Ninth Symphony"
+          "The Battle of Borodino",
+          "The Berlin Decree"
         ],
-        "a": 1,
-        "w": "The Louisiana Purchase was 1803, 33 years before the death. The Ninth Symphony was 1824, 12 years before the death."
+        "a": 0,
+        "w": "The Battle of Borodino was 1812, 24 years before the death. The Berlin Decree was 1806, 30 years before the death."
       },
       {
         "p": "Hokusai",
         "s": "1760-1849",
         "q": "Which happened nearer Hokusai's death?",
         "o": [
-          "The French Revolution",
+          "The Constitutional Convention",
           "The Congress of Vienna"
         ],
         "a": 1,
-        "w": "The French Revolution was 1789, 60 years before the death. The Congress of Vienna was 1814, 35 years before the death."
+        "w": "The Constitutional Convention was 1787, 62 years before the death. The Congress of Vienna was 1814, 35 years before the death."
       },
       {
         "p": "Andrea del Verrocchio",
@@ -1709,10 +1709,10 @@
         "q": "Which happened nearer Oliver Cromwell's birth?",
         "o": [
           "The Defenestration of Prague",
-          "The Gunpowder Plot"
+          "Don Quixote"
         ],
         "a": 1,
-        "w": "The Defenestration of Prague was 1618, 19 years after the birth. The Gunpowder Plot was 1605, 6 years after the birth."
+        "w": "The Defenestration of Prague was 1618, 19 years after the birth. Don Quixote was 1605, 6 years after the birth."
       },
       {
         "p": "George Stephenson",
@@ -1720,10 +1720,10 @@
         "q": "Which happened nearer George Stephenson's death?",
         "o": [
           "The Congress of Vienna",
-          "The Louvre Opens"
+          "The Great Famine in Ireland"
         ],
-        "a": 0,
-        "w": "The Congress of Vienna was 1814, 34 years before the death. The Louvre Opens was 1793, 55 years before the death."
+        "a": 1,
+        "w": "The Congress of Vienna was 1814, 34 years before the death. The Great Famine in Ireland was 1845, 3 years before the death."
       },
       {
         "p": "Jean Racine",
@@ -1745,22 +1745,22 @@
         "s": "1599-1660",
         "q": "Which happened nearer Diego Velazquez's death?",
         "o": [
-          "The Assassination of Henry IV",
-          "The Mayflower Landing"
+          "The Founding of Jamestown",
+          "The Death of Shakespeare"
         ],
         "a": 1,
-        "w": "The Assassination of Henry IV was 1610, 50 years before the death. The Mayflower Landing was 1620, 40 years before the death."
+        "w": "The Founding of Jamestown was 1607, 53 years before the death. The Death of Shakespeare was 1616, 44 years before the death."
       },
       {
         "p": "Anne of Austria",
         "s": "1601-1666",
         "q": "Which happened nearer Anne of Austria's death?",
         "o": [
-          "The Gunpowder Plot",
-          "Galileo's Moons of Jupiter"
+          "The Founding of Jamestown",
+          "The Globe Burns"
         ],
         "a": 1,
-        "w": "The Gunpowder Plot was 1605, 61 years before the death. Galileo's Moons of Jupiter was 1610, 56 years before the death."
+        "w": "The Founding of Jamestown was 1607, 59 years before the death. The Globe Burns was 1613, 53 years before the death."
       },
       {
         "p": "Robert Hooke",
@@ -1804,11 +1804,11 @@
         "s": "1805-1879",
         "q": "Which happened nearer William Lloyd Garrison's death?",
         "o": [
-          "The Revolutions of 1848",
+          "The Seneca Falls Convention",
           "The Proclamation of the German Empire"
         ],
         "a": 1,
-        "w": "The Revolutions of 1848 was 1848, 31 years before the death. The Proclamation of the German Empire was 1871, 8 years before the death."
+        "w": "The Seneca Falls Convention was 1848, 31 years before the death. The Proclamation of the German Empire was 1871, 8 years before the death."
       }
     ]
   },
@@ -1819,33 +1819,33 @@
         "s": "1803-1882",
         "q": "Which happened nearer Ralph Waldo Emerson's death?",
         "o": [
-          "The Red Cross",
+          "The Suez Canal Opens",
           "On the Origin of Species"
         ],
         "a": 0,
-        "w": "The Red Cross was 1863, 19 years before the death. On the Origin of Species was 1859, 23 years before the death."
+        "w": "The Suez Canal Opens was 1869, 13 years before the death. On the Origin of Species was 1859, 23 years before the death."
       },
       {
         "p": "Hans Holbein the Younger",
         "s": "1497-1543",
         "q": "Which happened nearer Hans Holbein the Younger's birth?",
         "o": [
-          "The Mona Lisa",
-          "Magellan Sets Out"
+          "The Ninety-five Theses",
+          "Luther at Worms"
         ],
         "a": 0,
-        "w": "The Mona Lisa was 1503, 6 years after the birth. Magellan Sets Out was 1519, 22 years after the birth."
+        "w": "The Ninety-five Theses was 1517, 20 years after the birth. Luther at Worms was 1521, 24 years after the birth."
       },
       {
         "p": "Louis Daguerre",
         "s": "1787-1851",
         "q": "Which happened nearer Louis Daguerre's birth?",
         "o": [
-          "The Hundred Days",
+          "The Battle of Wagram",
           "The Great Famine in Ireland"
         ],
         "a": 0,
-        "w": "The Hundred Days was 1815, 28 years after the birth. The Great Famine in Ireland was 1845, 58 years after the birth."
+        "w": "The Battle of Wagram was 1809, 22 years after the birth. The Great Famine in Ireland was 1845, 58 years after the birth."
       }
     ]
   },
@@ -1856,11 +1856,11 @@
         "s": "1737-1794",
         "q": "Which happened nearer Edward Gibbon's death?",
         "o": [
-          "The Seven Years War",
+          "The Treaty of Paris",
           "The Haitian Revolution Begins"
         ],
         "a": 1,
-        "w": "The Seven Years War was 1756, 38 years before the death. The Haitian Revolution Begins was 1791, 3 years before the death."
+        "w": "The Treaty of Paris was 1783, 11 years before the death. The Haitian Revolution Begins was 1791, 3 years before the death."
       },
       {
         "p": "James I",
@@ -1868,10 +1868,10 @@
         "q": "Which happened nearer James I's birth?",
         "o": [
           "The Spanish Armada",
-          "The Mayflower Landing"
+          "The Death of Shakespeare"
         ],
         "a": 0,
-        "w": "The Spanish Armada was 1588, 22 years after the birth. The Mayflower Landing was 1620, 54 years after the birth."
+        "w": "The Spanish Armada was 1588, 22 years after the birth. The Death of Shakespeare was 1616, 50 years after the birth."
       },
       {
         "p": "Nathan Hale",
@@ -1916,10 +1916,10 @@
         "q": "Which happened nearer William Wordsworth's death?",
         "o": [
           "The Congress of Vienna",
-          "The Battle of Friedland"
+          "The Declaration of Independence"
         ],
         "a": 0,
-        "w": "The Congress of Vienna was 1814, 36 years before the death. The Battle of Friedland was 1807, 43 years before the death."
+        "w": "The Congress of Vienna was 1814, 36 years before the death. The Declaration of Independence was 1776, 74 years before the death."
       }
     ]
   },
@@ -1941,22 +1941,22 @@
         "s": "1207-1273",
         "q": "Which happened nearer Rumi's birth?",
         "o": [
-          "The Children’s Crusade",
+          "The Battle of Bouvines",
           "The Battle of Legnica"
         ],
         "a": 0,
-        "w": "The Children’s Crusade was 1212, 5 years after the birth. The Battle of Legnica was 1241, 34 years after the birth."
+        "w": "The Battle of Bouvines was 1214, 7 years after the birth. The Battle of Legnica was 1241, 34 years after the birth."
       },
       {
         "p": "James I",
         "s": "1566-1625",
         "q": "Which happened nearer James I's death?",
         "o": [
-          "The Battle of Lepanto",
-          "Galileo's Moons of Jupiter"
+          "The Spanish Armada",
+          "The East India Company"
         ],
         "a": 1,
-        "w": "The Battle of Lepanto was 1571, 54 years before the death. Galileo's Moons of Jupiter was 1610, 15 years before the death."
+        "w": "The Spanish Armada was 1588, 37 years before the death. The East India Company was 1600, 25 years before the death."
       }
     ]
   },
@@ -1968,10 +1968,10 @@
         "q": "Which happened nearer Lord Melbourne's birth?",
         "o": [
           "The First Vaccination",
-          "Napoleon's Invasion of Russia"
+          "The Louvre Opens"
         ],
-        "a": 0,
-        "w": "The First Vaccination was 1796, 17 years after the birth. Napoleon's Invasion of Russia was 1812, 33 years after the birth."
+        "a": 1,
+        "w": "The First Vaccination was 1796, 17 years after the birth. The Louvre Opens was 1793, 14 years after the birth."
       },
       {
         "p": "George V",
@@ -2015,22 +2015,22 @@
         "s": "1795-1881",
         "q": "Which happened nearer Thomas Carlyle's birth?",
         "o": [
-          "The Emancipation Proclamation",
+          "The Bombardment of Fort Sumter",
           "The Alaska Purchase"
         ],
         "a": 0,
-        "w": "The Emancipation Proclamation was 1863, 68 years after the birth. The Alaska Purchase was 1867, 72 years after the birth."
+        "w": "The Bombardment of Fort Sumter was 1861, 66 years after the birth. The Alaska Purchase was 1867, 72 years after the birth."
       },
       {
         "p": "Anne Boleyn",
         "s": "1501-1536",
         "q": "Which happened nearer Anne Boleyn's birth?",
         "o": [
-          "The Mona Lisa",
-          "The Battle of Pavia"
+          "The Battle of Mohács",
+          "The Execution of Thomas More"
         ],
         "a": 0,
-        "w": "The Mona Lisa was 1503, 2 years after the birth. The Battle of Pavia was 1525, 24 years after the birth."
+        "w": "The Battle of Mohács was 1526, 25 years after the birth. The Execution of Thomas More was 1535, 34 years after the birth."
       }
     ]
   },
@@ -2052,11 +2052,11 @@
         "s": "1773-1859",
         "q": "Which happened nearer Klemens von Metternich's death?",
         "o": [
-          "The Plan of Iguala",
-          "The Stockton and Darlington Railway"
+          "Pride and Prejudice",
+          "The Revolutions of 1848"
         ],
         "a": 1,
-        "w": "The Plan of Iguala was 1821, 38 years before the death. The Stockton and Darlington Railway was 1825, 34 years before the death."
+        "w": "Pride and Prejudice was 1813, 46 years before the death. The Revolutions of 1848 was 1848, 11 years before the death."
       },
       {
         "p": "Robert Frost",
@@ -2089,11 +2089,11 @@
         "s": "1732-1792",
         "q": "Which happened nearer Richard Arkwright's death?",
         "o": [
-          "The Seven Years War",
+          "The Treaty of Paris",
           "The Constitutional Convention"
         ],
         "a": 1,
-        "w": "The Seven Years War was 1756, 36 years before the death. The Constitutional Convention was 1787, 5 years before the death."
+        "w": "The Treaty of Paris was 1783, 9 years before the death. The Constitutional Convention was 1787, 5 years before the death."
       },
       {
         "p": "Baruch Spinoza",
@@ -2115,22 +2115,22 @@
         "s": "1804-1864",
         "q": "Which happened nearer Nathaniel Hawthorne's birth?",
         "o": [
-          "The Ninth Symphony",
-          "The Battle of Trafalgar"
+          "The Berlin Decree",
+          "The Great Famine in Ireland"
         ],
-        "a": 1,
-        "w": "The Ninth Symphony was 1824, 20 years after the birth. The Battle of Trafalgar was 1805, 1 year after the birth."
+        "a": 0,
+        "w": "The Berlin Decree was 1806, 2 years after the birth. The Great Famine in Ireland was 1845, 41 years after the birth."
       },
       {
         "p": "Omar Khayyam",
         "s": "1048-1131",
         "q": "Which happened nearer Omar Khayyam's death?",
         "o": [
-          "The Battle of Fulford",
-          "The University of Bologna"
+          "The Harrying of the North",
+          "The Taking of Toledo"
         ],
         "a": 1,
-        "w": "The Battle of Fulford was 1066, 65 years before the death. The University of Bologna was 1088, 43 years before the death."
+        "w": "The Harrying of the North was 1069, 62 years before the death. The Taking of Toledo was 1085, 46 years before the death."
       },
       {
         "p": "Frederick Douglass",
@@ -2153,10 +2153,10 @@
         "q": "Which happened nearer Samuel Coleridge's birth?",
         "o": [
           "The Battle of Austerlitz",
-          "The First Vaccination"
+          "Napoleon's Invasion of Russia"
         ],
-        "a": 1,
-        "w": "The Battle of Austerlitz was 1805, 33 years after the birth. The First Vaccination was 1796, 24 years after the birth."
+        "a": 0,
+        "w": "The Battle of Austerlitz was 1805, 33 years after the birth. Napoleon's Invasion of Russia was 1812, 40 years after the birth."
       },
       {
         "p": "William Thackeray",
@@ -2174,11 +2174,11 @@
         "s": "1754-1817",
         "q": "Which happened nearer William Bligh's death?",
         "o": [
-          "The Seven Years War",
-          "The Winter at Valley Forge"
+          "Shays’ Rebellion",
+          "The Separate Condenser"
         ],
-        "a": 1,
-        "w": "The Seven Years War was 1756, 61 years before the death. The Winter at Valley Forge was 1777, 40 years before the death."
+        "a": 0,
+        "w": "Shays’ Rebellion was 1786, 31 years before the death. The Separate Condenser was 1769, 48 years before the death."
       }
     ]
   },
@@ -2200,11 +2200,11 @@
         "s": "1788-1824",
         "q": "Which happened nearer Lord Byron's birth?",
         "o": [
-          "The Metric System",
+          "The Battle of Jena",
           "The Cry of Ipiranga"
         ],
         "a": 0,
-        "w": "The Metric System was 1795, 7 years after the birth. The Cry of Ipiranga was 1822, 34 years after the birth."
+        "w": "The Battle of Jena was 1806, 18 years after the birth. The Cry of Ipiranga was 1822, 34 years after the birth."
       },
       {
         "p": "Charlotte Bronte",
@@ -2226,22 +2226,22 @@
         "s": "1769-1821",
         "q": "Which happened nearer Napoleon Bonaparte's death?",
         "o": [
-          "The Boston Tea Party",
-          "The Battle of Borodino"
+          "The Hundred Days",
+          "The Berlin Decree"
         ],
-        "a": 1,
-        "w": "The Boston Tea Party was 1773, 48 years before the death. The Battle of Borodino was 1812, 9 years before the death."
+        "a": 0,
+        "w": "The Hundred Days was 1815, 6 years before the death. The Berlin Decree was 1806, 15 years before the death."
       },
       {
         "p": "Usman dan Fodio",
         "s": "1754-1817",
         "q": "Which happened nearer Usman dan Fodio's birth?",
         "o": [
-          "The Boston Tea Party",
-          "The French Revolution"
+          "The Battle of Borodino",
+          "Shays’ Rebellion"
         ],
-        "a": 0,
-        "w": "The Boston Tea Party was 1773, 19 years after the birth. The French Revolution was 1789, 35 years after the birth."
+        "a": 1,
+        "w": "The Battle of Borodino was 1812, 58 years after the birth. Shays’ Rebellion was 1786, 32 years after the birth."
       },
       {
         "p": "Botticelli",
@@ -2264,10 +2264,10 @@
         "q": "Which happened nearer Walter Raleigh's death?",
         "o": [
           "The Founding of Jamestown",
-          "The Assassination of Henry IV"
+          "The Globe Burns"
         ],
         "a": 1,
-        "w": "The Founding of Jamestown was 1607, 11 years before the death. The Assassination of Henry IV was 1610, 8 years before the death."
+        "w": "The Founding of Jamestown was 1607, 11 years before the death. The Globe Burns was 1613, 5 years before the death."
       },
       {
         "p": "Gottfried Leibniz",
@@ -2285,11 +2285,11 @@
         "s": "1488-1576",
         "q": "Which happened nearer Titian's birth?",
         "o": [
-          "The Fall of Tenochtitlan",
-          "The Laocoön"
+          "De Revolutionibus",
+          "The Sistine Ceiling"
         ],
         "a": 1,
-        "w": "The Fall of Tenochtitlan was 1521, 33 years after the birth. The Laocoön was 1506, 18 years after the birth."
+        "w": "De Revolutionibus was 1543, 55 years after the birth. The Sistine Ceiling was 1512, 24 years after the birth."
       }
     ]
   },
@@ -2374,11 +2374,11 @@
         "s": "1754-1803",
         "q": "Which happened nearer Nicolas Baudin's death?",
         "o": [
-          "The Separate Condenser",
+          "The Battle of the Plains of Abraham",
           "The Lisbon Earthquake"
         ],
         "a": 0,
-        "w": "The Separate Condenser was 1769, 34 years before the death. The Lisbon Earthquake was 1755, 48 years before the death."
+        "w": "The Battle of the Plains of Abraham was 1759, 44 years before the death. The Lisbon Earthquake was 1755, 48 years before the death."
       },
       {
         "p": "Hokusai",
@@ -2386,10 +2386,10 @@
         "q": "Which happened nearer Hokusai's death?",
         "o": [
           "The Winter at Valley Forge",
-          "The Battle of Trafalgar"
+          "The Treaty of Paris"
         ],
         "a": 1,
-        "w": "The Winter at Valley Forge was 1777, 72 years before the death. The Battle of Trafalgar was 1805, 44 years before the death."
+        "w": "The Winter at Valley Forge was 1777, 72 years before the death. The Treaty of Paris was 1783, 66 years before the death."
       },
       {
         "p": "Qianlong",
@@ -2397,10 +2397,10 @@
         "q": "Which happened nearer Qianlong's birth?",
         "o": [
           "The Metric System",
-          "Shays’ Rebellion"
+          "The Battle of Plassey"
         ],
         "a": 1,
-        "w": "The Metric System was 1795, 84 years after the birth. Shays’ Rebellion was 1786, 75 years after the birth."
+        "w": "The Metric System was 1795, 84 years after the birth. The Battle of Plassey was 1757, 46 years after the birth."
       }
     ]
   },
@@ -2422,11 +2422,11 @@
         "s": "1572-1631",
         "q": "Which happened nearer John Donne's death?",
         "o": [
-          "The Mayflower Landing",
+          "The Assassination of Henry IV",
           "The East India Company"
         ],
         "a": 0,
-        "w": "The Mayflower Landing was 1620, 11 years before the death. The East India Company was 1600, 31 years before the death."
+        "w": "The Assassination of Henry IV was 1610, 21 years before the death. The East India Company was 1600, 31 years before the death."
       },
       {
         "p": "Nikolai Gogol",
@@ -2470,11 +2470,11 @@
         "s": "1740-1826",
         "q": "Which happened nearer David Bushnell's death?",
         "o": [
-          "Shays’ Rebellion",
-          "The Ninth Symphony"
+          "The French Revolution",
+          "The Berlin Decree"
         ],
         "a": 1,
-        "w": "Shays’ Rebellion was 1786, 40 years before the death. The Ninth Symphony was 1824, 2 years before the death."
+        "w": "The French Revolution was 1789, 37 years before the death. The Berlin Decree was 1806, 20 years before the death."
       }
     ]
   },
@@ -2486,10 +2486,10 @@
         "q": "Which happened nearer Galileo Galilei's birth?",
         "o": [
           "The Trial of Galileo",
-          "The Founding of Jamestown"
+          "Galileo's Moons of Jupiter"
         ],
         "a": 1,
-        "w": "The Trial of Galileo was 1633, 69 years after the birth. The Founding of Jamestown was 1607, 43 years after the birth."
+        "w": "The Trial of Galileo was 1633, 69 years after the birth. Galileo's Moons of Jupiter was 1610, 46 years after the birth."
       },
       {
         "p": "Niels Bohr",
@@ -2596,11 +2596,11 @@
         "s": "1540-1596",
         "q": "Which happened nearer Francis Drake's birth?",
         "o": [
-          "The Birth of Shakespeare",
-          "De Revolutionibus"
+          "Drake Sails West",
+          "The Council of Trent"
         ],
         "a": 1,
-        "w": "The Birth of Shakespeare was 1564, 24 years after the birth. De Revolutionibus was 1543, 3 years after the birth."
+        "w": "Drake Sails West was 1577, 37 years after the birth. The Council of Trent was 1545, 5 years after the birth."
       },
       {
         "p": "Elizabeth Cady Stanton",
@@ -2634,10 +2634,10 @@
         "q": "Which happened nearer Marquis de Lafayette's birth?",
         "o": [
           "The Winter at Valley Forge",
-          "Shays’ Rebellion"
+          "The Peace of Tilsit"
         ],
         "a": 0,
-        "w": "The Winter at Valley Forge was 1777, 20 years after the birth. Shays’ Rebellion was 1786, 29 years after the birth."
+        "w": "The Winter at Valley Forge was 1777, 20 years after the birth. The Peace of Tilsit was 1807, 50 years after the birth."
       },
       {
         "p": "John Millais",
@@ -2692,11 +2692,11 @@
         "s": "1806-1859",
         "q": "Which happened nearer Isambard Kingdom Brunel's birth?",
         "o": [
-          "The Stockton and Darlington Railway",
-          "What Hath God Wrought"
+          "The Battle of Wagram",
+          "Pride and Prejudice"
         ],
         "a": 0,
-        "w": "The Stockton and Darlington Railway was 1825, 19 years after the birth. What Hath God Wrought was 1844, 38 years after the birth."
+        "w": "The Battle of Wagram was 1809, 3 years after the birth. Pride and Prejudice was 1813, 7 years after the birth."
       }
     ]
   },
@@ -2708,10 +2708,10 @@
         "q": "Which happened nearer Shen Kuo's death?",
         "o": [
           "The Battle of Fulford",
-          "The Battle of Manzikert"
+          "The Taking of Toledo"
         ],
         "a": 1,
-        "w": "The Battle of Fulford was 1066, 29 years before the death. The Battle of Manzikert was 1071, 24 years before the death."
+        "w": "The Battle of Fulford was 1066, 29 years before the death. The Taking of Toledo was 1085, 10 years before the death."
       },
       {
         "p": "J. J. Thomson",
@@ -2781,33 +2781,33 @@
         "s": "1914-1995",
         "q": "Which happened nearer Jonas Salk's death?",
         "o": [
-          "The Prague Spring",
+          "The Roswell Incident",
           "The Berlin Wall"
         ],
-        "a": 0,
-        "w": "The Prague Spring was 1968, 27 years before the death. The Berlin Wall was 1961, 34 years before the death."
+        "a": 1,
+        "w": "The Roswell Incident was 1947, 48 years before the death. The Berlin Wall was 1961, 34 years before the death."
       },
       {
         "p": "Peter Paul Rubens",
         "s": "1577-1640",
         "q": "Which happened nearer Peter Paul Rubens's birth?",
         "o": [
-          "The Gunpowder Plot",
-          "The Mayflower Landing"
+          "The Gregorian Calendar",
+          "The Death of Shakespeare"
         ],
         "a": 0,
-        "w": "The Gunpowder Plot was 1605, 28 years after the birth. The Mayflower Landing was 1620, 43 years after the birth."
+        "w": "The Gregorian Calendar was 1582, 5 years after the birth. The Death of Shakespeare was 1616, 39 years after the birth."
       },
       {
         "p": "Leonardo da Vinci",
         "s": "1452-1519",
         "q": "Which happened nearer Leonardo da Vinci's birth?",
         "o": [
-          "The Battle of Towton",
-          "The Landfall of Columbus"
+          "The Last Supper",
+          "The David"
         ],
         "a": 0,
-        "w": "The Battle of Towton was 1461, 9 years after the birth. The Landfall of Columbus was 1492, 40 years after the birth."
+        "w": "The Last Supper was 1498, 46 years after the birth. The David was 1504, 52 years after the birth."
       }
     ]
   },
@@ -2818,11 +2818,11 @@
         "s": "1746-1828",
         "q": "Which happened nearer Francisco Goya's death?",
         "o": [
-          "Shays’ Rebellion",
+          "The Lisbon Earthquake",
           "The Boston Tea Party"
         ],
-        "a": 0,
-        "w": "Shays’ Rebellion was 1786, 42 years before the death. The Boston Tea Party was 1773, 55 years before the death."
+        "a": 1,
+        "w": "The Lisbon Earthquake was 1755, 73 years before the death. The Boston Tea Party was 1773, 55 years before the death."
       },
       {
         "p": "Basho",
@@ -2866,11 +2866,11 @@
         "s": "1304-1369",
         "q": "Which happened nearer Ibn Battuta's birth?",
         "o": [
-          "The Hajj of Mansa Musa",
+          "The Battle of Poitiers",
           "The Black Death in Europe"
         ],
-        "a": 0,
-        "w": "The Hajj of Mansa Musa was 1324, 20 years after the birth. The Black Death in Europe was 1347, 43 years after the birth."
+        "a": 1,
+        "w": "The Battle of Poitiers was 1356, 52 years after the birth. The Black Death in Europe was 1347, 43 years after the birth."
       },
       {
         "p": "Leonardo da Vinci",
@@ -2904,10 +2904,10 @@
         "q": "Which happened nearer George Washington's death?",
         "o": [
           "The Battle of the Nile",
-          "The French Revolution"
+          "The Haitian Revolution Begins"
         ],
         "a": 0,
-        "w": "The Battle of the Nile was 1798, 1 year before the death. The French Revolution was 1789, 10 years before the death."
+        "w": "The Battle of the Nile was 1798, 1 year before the death. The Haitian Revolution Begins was 1791, 8 years before the death."
       },
       {
         "p": "Frederick Cook",
@@ -2929,22 +2929,22 @@
         "s": "1694-1778",
         "q": "Which happened nearer Voltaire's death?",
         "o": [
-          "Lexington and Concord",
-          "The Battle of the Plains of Abraham"
+          "Johnson’s Dictionary",
+          "The Separate Condenser"
         ],
-        "a": 0,
-        "w": "Lexington and Concord was 1775, 3 years before the death. The Battle of the Plains of Abraham was 1759, 19 years before the death."
+        "a": 1,
+        "w": "Johnson’s Dictionary was 1755, 23 years before the death. The Separate Condenser was 1769, 9 years before the death."
       },
       {
         "p": "Lord Byron",
         "s": "1788-1824",
         "q": "Which happened nearer Lord Byron's birth?",
         "o": [
-          "The Hundred Days",
+          "The First Vaccination",
           "The Dos de Mayo"
         ],
-        "a": 1,
-        "w": "The Hundred Days was 1815, 27 years after the birth. The Dos de Mayo was 1808, 20 years after the birth."
+        "a": 0,
+        "w": "The First Vaccination was 1796, 8 years after the birth. The Dos de Mayo was 1808, 20 years after the birth."
       },
       {
         "p": "Marian Rejewski",
@@ -2967,10 +2967,10 @@
         "q": "Which happened nearer Guy Fawkes's death?",
         "o": [
           "Don Quixote",
-          "The Spanish Armada"
+          "The East India Company"
         ],
         "a": 0,
-        "w": "Don Quixote was 1605, 1 year before the death. The Spanish Armada was 1588, 18 years before the death."
+        "w": "Don Quixote was 1605, 1 year before the death. The East India Company was 1600, 6 years before the death."
       },
       {
         "p": "Rosa Parks",
@@ -2978,10 +2978,10 @@
         "q": "Which happened nearer Rosa Parks's birth?",
         "o": [
           "Baird Demonstrates Television",
-          "The Independence of Ghana"
+          "The July Crisis"
         ],
-        "a": 0,
-        "w": "Baird Demonstrates Television was 1926, 13 years after the birth. The Independence of Ghana was 1957, 44 years after the birth."
+        "a": 1,
+        "w": "Baird Demonstrates Television was 1926, 13 years after the birth. The July Crisis was 1914, 1 year after the birth."
       },
       {
         "p": "Arcangelo Corelli",
@@ -3026,10 +3026,10 @@
         "q": "Which happened nearer Maurice Hilleman's death?",
         "o": [
           "The Cuban Missile Crisis",
-          "The Empire State Building"
+          "The Partition of India"
         ],
         "a": 0,
-        "w": "The Cuban Missile Crisis was 1962, 43 years before the death. The Empire State Building was 1931, 74 years before the death."
+        "w": "The Cuban Missile Crisis was 1962, 43 years before the death. The Partition of India was 1947, 58 years before the death."
       }
     ]
   },
@@ -3052,21 +3052,21 @@
         "q": "Which happened nearer Ella Fitzgerald's death?",
         "o": [
           "The Golden Gate Bridge",
-          "The Roswell Incident"
+          "The Assassination of John F. Kennedy"
         ],
         "a": 1,
-        "w": "The Golden Gate Bridge was 1937, 59 years before the death. The Roswell Incident was 1947, 49 years before the death."
+        "w": "The Golden Gate Bridge was 1937, 59 years before the death. The Assassination of John F. Kennedy was 1963, 33 years before the death."
       },
       {
         "p": "Francis Walsingham",
         "s": "1532-1590",
         "q": "Which happened nearer Francis Walsingham's birth?",
         "o": [
-          "De Revolutionibus",
-          "The Battle of Lepanto"
+          "The Act of Supremacy",
+          "The Abdication of Charles V"
         ],
         "a": 0,
-        "w": "De Revolutionibus was 1543, 11 years after the birth. The Battle of Lepanto was 1571, 39 years after the birth."
+        "w": "The Act of Supremacy was 1534, 2 years after the birth. The Abdication of Charles V was 1556, 24 years after the birth."
       }
     ]
   },
@@ -3088,22 +3088,22 @@
         "s": "1795-1881",
         "q": "Which happened nearer Thomas Carlyle's birth?",
         "o": [
-          "The Stockton and Darlington Railway",
-          "The Battle of Gettysburg"
+          "The Great Exhibition",
+          "The Great Chicago Fire"
         ],
         "a": 0,
-        "w": "The Stockton and Darlington Railway was 1825, 30 years after the birth. The Battle of Gettysburg was 1863, 68 years after the birth."
+        "w": "The Great Exhibition was 1851, 56 years after the birth. The Great Chicago Fire was 1871, 76 years after the birth."
       },
       {
         "p": "Humphrey Davy",
         "s": "1778-1829",
         "q": "Which happened nearer Humphrey Davy's birth?",
         "o": [
-          "The Treaty of Paris",
-          "The Rosetta Stone"
+          "The Battle of Waterloo",
+          "Shays’ Rebellion"
         ],
-        "a": 0,
-        "w": "The Treaty of Paris was 1783, 5 years after the birth. The Rosetta Stone was 1799, 21 years after the birth."
+        "a": 1,
+        "w": "The Battle of Waterloo was 1815, 37 years after the birth. Shays’ Rebellion was 1786, 8 years after the birth."
       }
     ]
   },
@@ -3114,11 +3114,11 @@
         "s": "1775-1851",
         "q": "Which happened nearer J.M.W. Turner's death?",
         "o": [
-          "The Battle of Friedland",
-          "What Hath God Wrought"
+          "The Great Famine in Ireland",
+          "Napoleon's Invasion of Russia"
         ],
-        "a": 1,
-        "w": "The Battle of Friedland was 1807, 44 years before the death. What Hath God Wrought was 1844, 7 years before the death."
+        "a": 0,
+        "w": "The Great Famine in Ireland was 1845, 6 years before the death. Napoleon's Invasion of Russia was 1812, 39 years before the death."
       },
       {
         "p": "Girolamo Savonarola",
@@ -3137,10 +3137,10 @@
         "q": "Which happened nearer Louis Daguerre's birth?",
         "o": [
           "The Cry of Ipiranga",
-          "The Great Famine in Ireland"
+          "The Dos de Mayo"
         ],
-        "a": 0,
-        "w": "The Cry of Ipiranga was 1822, 35 years after the birth. The Great Famine in Ireland was 1845, 58 years after the birth."
+        "a": 1,
+        "w": "The Cry of Ipiranga was 1822, 35 years after the birth. The Dos de Mayo was 1808, 21 years after the birth."
       }
     ]
   },
@@ -3210,11 +3210,11 @@
         "s": "1533-1592",
         "q": "Which happened nearer Michel de Montaigne's birth?",
         "o": [
-          "The Birth of Shakespeare",
-          "The Execution of Mary Stuart"
+          "The Spanish Armada",
+          "The Gregorian Calendar"
         ],
-        "a": 0,
-        "w": "The Birth of Shakespeare was 1564, 31 years after the birth. The Execution of Mary Stuart was 1587, 54 years after the birth."
+        "a": 1,
+        "w": "The Spanish Armada was 1588, 55 years after the birth. The Gregorian Calendar was 1582, 49 years after the birth."
       }
     ]
   },
@@ -3236,11 +3236,11 @@
         "s": "1721-1764",
         "q": "Which happened nearer Madame de Pompadour's death?",
         "o": [
-          "The Messiah Premiere in Dublin",
+          "The Lisbon Earthquake",
           "The Encyclopédie"
         ],
-        "a": 1,
-        "w": "The Messiah Premiere in Dublin was 1742, 22 years before the death. The Encyclopédie was 1751, 13 years before the death."
+        "a": 0,
+        "w": "The Lisbon Earthquake was 1755, 9 years before the death. The Encyclopédie was 1751, 13 years before the death."
       },
       {
         "p": "Henry VII",
@@ -3262,11 +3262,11 @@
         "s": "1773-1859",
         "q": "Which happened nearer Klemens von Metternich's death?",
         "o": [
-          "The Plan of Iguala",
-          "The Battle of the Nile"
+          "The Bessemer Converter",
+          "The Ninth Symphony"
         ],
         "a": 0,
-        "w": "The Plan of Iguala was 1821, 38 years before the death. The Battle of the Nile was 1798, 61 years before the death."
+        "w": "The Bessemer Converter was 1856, 3 years before the death. The Ninth Symphony was 1824, 35 years before the death."
       },
       {
         "p": "Theodore Roosevelt",
@@ -3322,10 +3322,10 @@
         "q": "Which happened nearer Thomas Paine's birth?",
         "o": [
           "The Battle of Friedland",
-          "The Haitian Revolution Begins"
+          "Lexington and Concord"
         ],
         "a": 1,
-        "w": "The Battle of Friedland was 1807, 70 years after the birth. The Haitian Revolution Begins was 1791, 54 years after the birth."
+        "w": "The Battle of Friedland was 1807, 70 years after the birth. Lexington and Concord was 1775, 38 years after the birth."
       }
     ]
   },
@@ -3421,11 +3421,11 @@
         "s": "1746-1828",
         "q": "Which happened nearer Francisco Goya's birth?",
         "o": [
-          "The Plan of Iguala",
+          "The Metric System",
           "The Dos de Mayo"
         ],
-        "a": 1,
-        "w": "The Plan of Iguala was 1821, 75 years after the birth. The Dos de Mayo was 1808, 62 years after the birth."
+        "a": 0,
+        "w": "The Metric System was 1795, 49 years after the birth. The Dos de Mayo was 1808, 62 years after the birth."
       },
       {
         "p": "Christopher Wren",
@@ -3447,22 +3447,22 @@
         "s": "1740-1795",
         "q": "Which happened nearer James Boswell's birth?",
         "o": [
-          "The Seven Years War",
-          "The Louvre Opens"
+          "The Separate Condenser",
+          "The Lisbon Earthquake"
         ],
-        "a": 0,
-        "w": "The Seven Years War was 1756, 16 years after the birth. The Louvre Opens was 1793, 53 years after the birth."
+        "a": 1,
+        "w": "The Separate Condenser was 1769, 29 years after the birth. The Lisbon Earthquake was 1755, 15 years after the birth."
       },
       {
         "p": "Andreas Vesalius",
         "s": "1514-1564",
         "q": "Which happened nearer Andreas Vesalius's death?",
         "o": [
-          "The First Circumnavigation",
+          "The Abdication of Charles V",
           "Magellan Sets Out"
         ],
         "a": 0,
-        "w": "The First Circumnavigation was 1522, 42 years before the death. Magellan Sets Out was 1519, 45 years before the death."
+        "w": "The Abdication of Charles V was 1556, 8 years before the death. Magellan Sets Out was 1519, 45 years before the death."
       },
       {
         "p": "Genghis Khan",
@@ -3470,10 +3470,10 @@
         "q": "Which happened nearer Genghis Khan's death?",
         "o": [
           "The Children’s Crusade",
-          "The Magna Carta"
+          "The Great Kurultai"
         ],
-        "a": 1,
-        "w": "The Children’s Crusade was 1212, 15 years before the death. The Magna Carta was 1215, 12 years before the death."
+        "a": 0,
+        "w": "The Children’s Crusade was 1212, 15 years before the death. The Great Kurultai was 1206, 21 years before the death."
       }
     ]
   },
@@ -3533,10 +3533,10 @@
         "q": "Which happened nearer Nana Asmau's death?",
         "o": [
           "The Cry of Ipiranga",
-          "The Louisiana Purchase"
+          "The Battle of Jena"
         ],
         "a": 0,
-        "w": "The Cry of Ipiranga was 1822, 42 years before the death. The Louisiana Purchase was 1803, 61 years before the death."
+        "w": "The Cry of Ipiranga was 1822, 42 years before the death. The Battle of Jena was 1806, 58 years before the death."
       },
       {
         "p": "George Henry Lewes",
@@ -3606,11 +3606,11 @@
         "s": "1955-2011",
         "q": "Which happened nearer Steve Jobs's death?",
         "o": [
-          "The Apollo 11 Moon Landing",
-          "The Viking 1 Landing"
+          "The Apollo 13 Emergency",
+          "The Civil Rights Act"
         ],
-        "a": 1,
-        "w": "The Apollo 11 Moon Landing was 1969, 42 years before the death. The Viking 1 Landing was 1976, 35 years before the death."
+        "a": 0,
+        "w": "The Apollo 13 Emergency was 1970, 41 years before the death. The Civil Rights Act was 1964, 47 years before the death."
       },
       {
         "p": "Enrico Fermi",
@@ -3644,21 +3644,21 @@
         "q": "Which happened nearer Gebhard von Blucher's death?",
         "o": [
           "The Battle of Borodino",
-          "The Metric System"
+          "The Constitutional Convention"
         ],
         "a": 0,
-        "w": "The Battle of Borodino was 1812, 7 years before the death. The Metric System was 1795, 24 years before the death."
+        "w": "The Battle of Borodino was 1812, 7 years before the death. The Constitutional Convention was 1787, 32 years before the death."
       },
       {
         "p": "John Quincy Adams",
         "s": "1767-1848",
         "q": "Which happened nearer John Quincy Adams's death?",
         "o": [
-          "The Metric System",
+          "The Dos de Mayo",
           "The Battle of Borodino"
         ],
         "a": 1,
-        "w": "The Metric System was 1795, 53 years before the death. The Battle of Borodino was 1812, 36 years before the death."
+        "w": "The Dos de Mayo was 1808, 40 years before the death. The Battle of Borodino was 1812, 36 years before the death."
       }
     ]
   },
@@ -3680,11 +3680,11 @@
         "s": "1712-1786",
         "q": "Which happened nearer Frederick the Great's death?",
         "o": [
-          "The Separate Condenser",
-          "The Encyclopédie"
+          "Johnson’s Dictionary",
+          "The Kite Experiment"
         ],
         "a": 0,
-        "w": "The Separate Condenser was 1769, 17 years before the death. The Encyclopédie was 1751, 35 years before the death."
+        "w": "Johnson’s Dictionary was 1755, 31 years before the death. The Kite Experiment was 1752, 34 years before the death."
       },
       {
         "p": "Thomas Hobbes",
@@ -3692,10 +3692,10 @@
         "q": "Which happened nearer Thomas Hobbes's birth?",
         "o": [
           "The Trial of Galileo",
-          "The Great Fire of London"
+          "The Assassination of Henry IV"
         ],
-        "a": 0,
-        "w": "The Trial of Galileo was 1633, 45 years after the birth. The Great Fire of London was 1666, 78 years after the birth."
+        "a": 1,
+        "w": "The Trial of Galileo was 1633, 45 years after the birth. The Assassination of Henry IV was 1610, 22 years after the birth."
       }
     ]
   },
@@ -3717,11 +3717,11 @@
         "s": "1564-1593",
         "q": "Which happened nearer Christopher Marlowe's birth?",
         "o": [
-          "The Spanish Armada",
+          "The Execution of Mary Stuart",
           "The Battle of Lepanto"
         ],
         "a": 1,
-        "w": "The Spanish Armada was 1588, 24 years after the birth. The Battle of Lepanto was 1571, 7 years after the birth."
+        "w": "The Execution of Mary Stuart was 1587, 23 years after the birth. The Battle of Lepanto was 1571, 7 years after the birth."
       },
       {
         "p": "Charles Lyell",
@@ -3729,10 +3729,10 @@
         "q": "Which happened nearer Charles Lyell's birth?",
         "o": [
           "The Fall of the Alamo",
-          "The Rosetta Stone"
+          "The Stockton and Darlington Railway"
         ],
         "a": 1,
-        "w": "The Fall of the Alamo was 1836, 39 years after the birth. The Rosetta Stone was 1799, 2 years after the birth."
+        "w": "The Fall of the Alamo was 1836, 39 years after the birth. The Stockton and Darlington Railway was 1825, 28 years after the birth."
       }
     ]
   },
@@ -3744,10 +3744,10 @@
         "q": "Which happened nearer Andreas Vesalius's birth?",
         "o": [
           "The Capture of Atahualpa",
-          "The Sack of Rome"
+          "The Battle of Pavia"
         ],
         "a": 1,
-        "w": "The Capture of Atahualpa was 1532, 18 years after the birth. The Sack of Rome was 1527, 13 years after the birth."
+        "w": "The Capture of Atahualpa was 1532, 18 years after the birth. The Battle of Pavia was 1525, 11 years after the birth."
       },
       {
         "p": "Nicephore Niepce",
@@ -3755,10 +3755,10 @@
         "q": "Which happened nearer Nicephore Niepce's death?",
         "o": [
           "The Ninth Symphony",
-          "The Haitian Revolution Begins"
+          "The Rosetta Stone"
         ],
         "a": 0,
-        "w": "The Ninth Symphony was 1824, 9 years before the death. The Haitian Revolution Begins was 1791, 42 years before the death."
+        "w": "The Ninth Symphony was 1824, 9 years before the death. The Rosetta Stone was 1799, 34 years before the death."
       },
       {
         "p": "Camille Pissarro",
@@ -3818,10 +3818,10 @@
         "q": "Which happened nearer Charles Babbage's death?",
         "o": [
           "The Kingdom of Italy",
-          "The March to the Sea"
+          "The Stockton and Darlington Railway"
         ],
-        "a": 1,
-        "w": "The Kingdom of Italy was 1861, 10 years before the death. The March to the Sea was 1864, 7 years before the death."
+        "a": 0,
+        "w": "The Kingdom of Italy was 1861, 10 years before the death. The Stockton and Darlington Railway was 1825, 46 years before the death."
       },
       {
         "p": "Christopher Columbus",
@@ -3839,11 +3839,11 @@
         "s": "1713-1784",
         "q": "Which happened nearer Denis Diderot's death?",
         "o": [
-          "Lexington and Concord",
-          "The Messiah Premiere in Dublin"
+          "Johnson’s Dictionary",
+          "The Battle of the Plains of Abraham"
         ],
-        "a": 0,
-        "w": "Lexington and Concord was 1775, 9 years before the death. The Messiah Premiere in Dublin was 1742, 42 years before the death."
+        "a": 1,
+        "w": "Johnson’s Dictionary was 1755, 29 years before the death. The Battle of the Plains of Abraham was 1759, 25 years before the death."
       }
     ]
   },
@@ -3891,22 +3891,22 @@
         "s": "1765-1815",
         "q": "Which happened nearer Robert Fulton's birth?",
         "o": [
-          "The Metric System",
+          "Shays’ Rebellion",
           "The Battle of Austerlitz"
         ],
         "a": 0,
-        "w": "The Metric System was 1795, 30 years after the birth. The Battle of Austerlitz was 1805, 40 years after the birth."
+        "w": "Shays’ Rebellion was 1786, 21 years after the birth. The Battle of Austerlitz was 1805, 40 years after the birth."
       },
       {
         "p": "Percy Shelley",
         "s": "1792-1822",
         "q": "Which happened nearer Percy Shelley's death?",
         "o": [
-          "The Battle of Austerlitz",
-          "The Battle of Waterloo"
+          "The Battle of the Nile",
+          "The Congress of Vienna"
         ],
         "a": 1,
-        "w": "The Battle of Austerlitz was 1805, 17 years before the death. The Battle of Waterloo was 1815, 7 years before the death."
+        "w": "The Battle of the Nile was 1798, 24 years before the death. The Congress of Vienna was 1814, 8 years before the death."
       },
       {
         "p": "Dwight D. Eisenhower",
@@ -3928,22 +3928,22 @@
         "s": "1769-1852",
         "q": "Which happened nearer Arthur Wellesley's death?",
         "o": [
-          "The Battle of Borodino",
+          "The Battle of Friedland",
           "The Ninth Symphony"
         ],
         "a": 1,
-        "w": "The Battle of Borodino was 1812, 40 years before the death. The Ninth Symphony was 1824, 28 years before the death."
+        "w": "The Battle of Friedland was 1807, 45 years before the death. The Ninth Symphony was 1824, 28 years before the death."
       },
       {
         "p": "Yves Saint Laurent",
         "s": "1936-2008",
         "q": "Which happened nearer Yves Saint Laurent's birth?",
         "o": [
-          "Live Aid",
-          "The Launch of Wikipedia"
+          "The Battle of Kursk",
+          "The Arrest of Rosa Parks"
         ],
         "a": 0,
-        "w": "Live Aid was 1985, 49 years after the birth. The Launch of Wikipedia was 2001, 65 years after the birth."
+        "w": "The Battle of Kursk was 1943, 7 years after the birth. The Arrest of Rosa Parks was 1955, 19 years after the birth."
       },
       {
         "p": "Marshal Ney",
@@ -3951,10 +3951,10 @@
         "q": "Which happened nearer Marshal Ney's death?",
         "o": [
           "The Declaration of Independence",
-          "The Louisiana Purchase"
+          "Napoleon's Invasion of Russia"
         ],
         "a": 1,
-        "w": "The Declaration of Independence was 1776, 39 years before the death. The Louisiana Purchase was 1803, 12 years before the death."
+        "w": "The Declaration of Independence was 1776, 39 years before the death. Napoleon's Invasion of Russia was 1812, 3 years before the death."
       }
     ]
   },
@@ -3976,11 +3976,11 @@
         "s": "1765-1815",
         "q": "Which happened nearer Robert Fulton's birth?",
         "o": [
-          "The Treaty of Paris",
+          "Pride and Prejudice",
           "The Constitutional Convention"
         ],
-        "a": 0,
-        "w": "The Treaty of Paris was 1783, 18 years after the birth. The Constitutional Convention was 1787, 22 years after the birth."
+        "a": 1,
+        "w": "Pride and Prejudice was 1813, 48 years after the birth. The Constitutional Convention was 1787, 22 years after the birth."
       },
       {
         "p": "Alfred Hitchcock",
@@ -4013,22 +4013,22 @@
         "s": "1731-1802",
         "q": "Which happened nearer Erasmus Darwin's death?",
         "o": [
-          "The Separate Condenser",
-          "The Haitian Revolution Begins"
+          "The Metric System",
+          "Johnson’s Dictionary"
         ],
-        "a": 1,
-        "w": "The Separate Condenser was 1769, 33 years before the death. The Haitian Revolution Begins was 1791, 11 years before the death."
+        "a": 0,
+        "w": "The Metric System was 1795, 7 years before the death. Johnson’s Dictionary was 1755, 47 years before the death."
       },
       {
         "p": "Rene Descartes",
         "s": "1596-1650",
         "q": "Which happened nearer Rene Descartes's death?",
         "o": [
-          "The Founding of Jamestown",
+          "The Trial of Galileo",
           "The Defenestration of Prague"
         ],
-        "a": 1,
-        "w": "The Founding of Jamestown was 1607, 43 years before the death. The Defenestration of Prague was 1618, 32 years before the death."
+        "a": 0,
+        "w": "The Trial of Galileo was 1633, 17 years before the death. The Defenestration of Prague was 1618, 32 years before the death."
       }
     ]
   },
@@ -4039,11 +4039,11 @@
         "s": "1738-1822",
         "q": "Which happened nearer William Herschel's death?",
         "o": [
-          "The Battle of Plassey",
+          "The Winter at Valley Forge",
           "The Kite Experiment"
         ],
         "a": 0,
-        "w": "The Battle of Plassey was 1757, 65 years before the death. The Kite Experiment was 1752, 70 years before the death."
+        "w": "The Winter at Valley Forge was 1777, 45 years before the death. The Kite Experiment was 1752, 70 years before the death."
       },
       {
         "p": "Tagore",
@@ -4076,11 +4076,11 @@
         "s": "1501-1536",
         "q": "Which happened nearer Anne Boleyn's death?",
         "o": [
-          "Magellan Sets Out",
-          "The David"
+          "The Execution of Thomas More",
+          "The First Circumnavigation"
         ],
         "a": 0,
-        "w": "Magellan Sets Out was 1519, 17 years before the death. The David was 1504, 32 years before the death."
+        "w": "The Execution of Thomas More was 1535, 1 year before the death. The First Circumnavigation was 1522, 14 years before the death."
       },
       {
         "p": "James Murray",
@@ -4098,11 +4098,11 @@
         "s": "1693-1776",
         "q": "Which happened nearer John Harrison's birth?",
         "o": [
-          "The Messiah Premiere in Dublin",
-          "Lexington and Concord"
+          "The Battle of the Plains of Abraham",
+          "Johnson’s Dictionary"
         ],
-        "a": 0,
-        "w": "The Messiah Premiere in Dublin was 1742, 49 years after the birth. Lexington and Concord was 1775, 82 years after the birth."
+        "a": 1,
+        "w": "The Battle of the Plains of Abraham was 1759, 66 years after the birth. Johnson’s Dictionary was 1755, 62 years after the birth."
       }
     ]
   },
@@ -4113,11 +4113,11 @@
         "s": "1754-1817",
         "q": "Which happened nearer Usman dan Fodio's birth?",
         "o": [
-          "The Treaty of Paris",
-          "The Louisiana Purchase"
+          "The Battle of the Plains of Abraham",
+          "The Louvre Opens"
         ],
         "a": 0,
-        "w": "The Treaty of Paris was 1783, 29 years after the birth. The Louisiana Purchase was 1803, 49 years after the birth."
+        "w": "The Battle of the Plains of Abraham was 1759, 5 years after the birth. The Louvre Opens was 1793, 39 years after the birth."
       },
       {
         "p": "Sun Yat-sen",
@@ -4188,10 +4188,10 @@
         "q": "Which happened nearer Oda Nobunaga's death?",
         "o": [
           "De Revolutionibus",
-          "The Birth of Shakespeare"
+          "Drake Sails West"
         ],
         "a": 1,
-        "w": "De Revolutionibus was 1543, 39 years before the death. The Birth of Shakespeare was 1564, 18 years before the death."
+        "w": "De Revolutionibus was 1543, 39 years before the death. Drake Sails West was 1577, 5 years before the death."
       },
       {
         "p": "Louis XIV",
@@ -4261,33 +4261,33 @@
         "s": "1922-2008",
         "q": "Which happened nearer Jacques Piccard's birth?",
         "o": [
-          "The Woodstock Festival",
-          "The Arrest of Rosa Parks"
+          "The War of the Worlds Broadcast",
+          "The Prague Spring"
         ],
-        "a": 1,
-        "w": "The Woodstock Festival was 1969, 47 years after the birth. The Arrest of Rosa Parks was 1955, 33 years after the birth."
+        "a": 0,
+        "w": "The War of the Worlds Broadcast was 1938, 16 years after the birth. The Prague Spring was 1968, 46 years after the birth."
       },
       {
         "p": "Catherine de Medici",
         "s": "1519-1589",
         "q": "Which happened nearer Catherine de Medici's death?",
         "o": [
-          "The Capture of Atahualpa",
-          "The Fall of Tenochtitlan"
+          "The Execution of Anne Boleyn",
+          "De Revolutionibus"
         ],
-        "a": 0,
-        "w": "The Capture of Atahualpa was 1532, 57 years before the death. The Fall of Tenochtitlan was 1521, 68 years before the death."
+        "a": 1,
+        "w": "The Execution of Anne Boleyn was 1536, 53 years before the death. De Revolutionibus was 1543, 46 years before the death."
       },
       {
         "p": "Noah Webster",
         "s": "1758-1843",
         "q": "Which happened nearer Noah Webster's death?",
         "o": [
-          "Pride and Prejudice",
+          "The Stockton and Darlington Railway",
           "The First Vaccination"
         ],
         "a": 0,
-        "w": "Pride and Prejudice was 1813, 30 years before the death. The First Vaccination was 1796, 47 years before the death."
+        "w": "The Stockton and Darlington Railway was 1825, 18 years before the death. The First Vaccination was 1796, 47 years before the death."
       }
     ]
   },
@@ -4298,22 +4298,22 @@
         "s": "1599-1667",
         "q": "Which happened nearer Francesco Borromini's death?",
         "o": [
-          "The Execution of Charles I",
-          "The Royal Society"
+          "The Trial of Galileo",
+          "Galileo's Moons of Jupiter"
         ],
-        "a": 1,
-        "w": "The Execution of Charles I was 1649, 18 years before the death. The Royal Society was 1662, 5 years before the death."
+        "a": 0,
+        "w": "The Trial of Galileo was 1633, 34 years before the death. Galileo's Moons of Jupiter was 1610, 57 years before the death."
       },
       {
         "p": "Nezahualcoyotl",
         "s": "1402-1472",
         "q": "Which happened nearer Nezahualcoyotl's birth?",
         "o": [
-          "The Execution of Joan of Arc",
+          "The Battle of Towton",
           "The Fall of Constantinople"
         ],
-        "a": 0,
-        "w": "The Execution of Joan of Arc was 1431, 29 years after the birth. The Fall of Constantinople was 1453, 51 years after the birth."
+        "a": 1,
+        "w": "The Battle of Towton was 1461, 59 years after the birth. The Fall of Constantinople was 1453, 51 years after the birth."
       },
       {
         "p": "Charles II",
@@ -4346,11 +4346,11 @@
         "s": "1741-1801",
         "q": "Which happened nearer Benedict Arnold's birth?",
         "o": [
-          "The Kite Experiment",
+          "Johnson’s Dictionary",
           "The Storming of the Bastille"
         ],
         "a": 0,
-        "w": "The Kite Experiment was 1752, 11 years after the birth. The Storming of the Bastille was 1789, 48 years after the birth."
+        "w": "Johnson’s Dictionary was 1755, 14 years after the birth. The Storming of the Bastille was 1789, 48 years after the birth."
       },
       {
         "p": "Enrico Fermi",
@@ -4383,11 +4383,11 @@
         "s": "1748-1825",
         "q": "Which happened nearer Jacques-Louis David's birth?",
         "o": [
-          "The Plan of Iguala",
-          "Pride and Prejudice"
+          "The Battle of the Plains of Abraham",
+          "The Rosetta Stone"
         ],
-        "a": 1,
-        "w": "The Plan of Iguala was 1821, 73 years after the birth. Pride and Prejudice was 1813, 65 years after the birth."
+        "a": 0,
+        "w": "The Battle of the Plains of Abraham was 1759, 11 years after the birth. The Rosetta Stone was 1799, 51 years after the birth."
       },
       {
         "p": "Gustave Flaubert",
@@ -4410,10 +4410,10 @@
         "q": "Which happened nearer Joshua Reynolds's death?",
         "o": [
           "The Treaty of Paris",
-          "The Separate Condenser"
+          "The Winter at Valley Forge"
         ],
         "a": 0,
-        "w": "The Treaty of Paris was 1783, 9 years before the death. The Separate Condenser was 1769, 23 years before the death."
+        "w": "The Treaty of Paris was 1783, 9 years before the death. The Winter at Valley Forge was 1777, 15 years before the death."
       },
       {
         "p": "Noor Inayat Khan",
@@ -4447,10 +4447,10 @@
         "q": "Which happened nearer James Clark Ross's death?",
         "o": [
           "The Slavery Abolition Act",
-          "Pride and Prejudice"
+          "The Stockton and Darlington Railway"
         ],
         "a": 0,
-        "w": "The Slavery Abolition Act was 1833, 29 years before the death. Pride and Prejudice was 1813, 49 years before the death."
+        "w": "The Slavery Abolition Act was 1833, 29 years before the death. The Stockton and Darlington Railway was 1825, 37 years before the death."
       },
       {
         "p": "Christiaan Huygens",
@@ -4579,11 +4579,11 @@
         "s": "1561-1626",
         "q": "Which happened nearer Francis Bacon's birth?",
         "o": [
-          "The Defenestration of Prague",
-          "The Assassination of Henry IV"
+          "The Burning of Giordano Bruno",
+          "The Execution of Mary Stuart"
         ],
         "a": 1,
-        "w": "The Defenestration of Prague was 1618, 57 years after the birth. The Assassination of Henry IV was 1610, 49 years after the birth."
+        "w": "The Burning of Giordano Bruno was 1600, 39 years after the birth. The Execution of Mary Stuart was 1587, 26 years after the birth."
       }
     ]
   },
@@ -4605,11 +4605,11 @@
         "s": "1919-2005",
         "q": "Which happened nearer Maurice Hilleman's death?",
         "o": [
-          "The Tet Offensive",
-          "The Contraceptive Pill"
+          "The Summer of Love",
+          "The Wall Street Crash"
         ],
         "a": 0,
-        "w": "The Tet Offensive was 1968, 37 years before the death. The Contraceptive Pill was 1960, 45 years before the death."
+        "w": "The Summer of Love was 1967, 38 years before the death. The Wall Street Crash was 1929, 76 years before the death."
       },
       {
         "p": "Girolamo Savonarola",
@@ -4642,11 +4642,11 @@
         "s": "1797-1875",
         "q": "Which happened nearer Charles Lyell's death?",
         "o": [
-          "The New York Draft Riots",
-          "The Communist Manifesto"
+          "The Battle of Wagram",
+          "The Discovery at Sutter’s Mill"
         ],
-        "a": 0,
-        "w": "The New York Draft Riots was 1863, 12 years before the death. The Communist Manifesto was 1848, 27 years before the death."
+        "a": 1,
+        "w": "The Battle of Wagram was 1809, 66 years before the death. The Discovery at Sutter’s Mill was 1848, 27 years before the death."
       },
       {
         "p": "Ferdinand Magellan",
@@ -4717,10 +4717,10 @@
         "q": "Which happened nearer Desiderius Erasmus's death?",
         "o": [
           "The First Circumnavigation",
-          "Magellan Sets Out"
+          "The Landfall of Columbus"
         ],
         "a": 0,
-        "w": "The First Circumnavigation was 1522, 14 years before the death. Magellan Sets Out was 1519, 17 years before the death."
+        "w": "The First Circumnavigation was 1522, 14 years before the death. The Landfall of Columbus was 1492, 44 years before the death."
       },
       {
         "p": "Jesse James",
@@ -4742,11 +4742,11 @@
         "s": "1577-1645",
         "q": "Which happened nearer Nur Jahan's birth?",
         "o": [
-          "The Spanish Armada",
+          "The Death of Shakespeare",
           "The Assassination of Henry IV"
         ],
-        "a": 0,
-        "w": "The Spanish Armada was 1588, 11 years after the birth. The Assassination of Henry IV was 1610, 33 years after the birth."
+        "a": 1,
+        "w": "The Death of Shakespeare was 1616, 39 years after the birth. The Assassination of Henry IV was 1610, 33 years after the birth."
       },
       {
         "p": "Nader Shah",
@@ -4801,11 +4801,11 @@
         "s": "1743-1794",
         "q": "Which happened nearer Antoine Lavoisier's birth?",
         "o": [
-          "The Battle of Plassey",
+          "The Seven Years War",
           "The Constitutional Convention"
         ],
         "a": 0,
-        "w": "The Battle of Plassey was 1757, 14 years after the birth. The Constitutional Convention was 1787, 44 years after the birth."
+        "w": "The Seven Years War was 1756, 13 years after the birth. The Constitutional Convention was 1787, 44 years after the birth."
       }
     ]
   },
@@ -4891,10 +4891,10 @@
         "q": "Which happened nearer George II's birth?",
         "o": [
           "The Messiah Premiere in Dublin",
-          "The Battle of Plassey"
+          "The Battle of the Plains of Abraham"
         ],
         "a": 0,
-        "w": "The Messiah Premiere in Dublin was 1742, 59 years after the birth. The Battle of Plassey was 1757, 74 years after the birth."
+        "w": "The Messiah Premiere in Dublin was 1742, 59 years after the birth. The Battle of the Plains of Abraham was 1759, 76 years after the birth."
       },
       {
         "p": "Tenzing Norgay",
@@ -4950,10 +4950,10 @@
         "q": "Which happened nearer J.M.W. Turner's birth?",
         "o": [
           "The Dos de Mayo",
-          "The Hundred Days"
+          "Napoleon's Invasion of Russia"
         ],
         "a": 0,
-        "w": "The Dos de Mayo was 1808, 33 years after the birth. The Hundred Days was 1815, 40 years after the birth."
+        "w": "The Dos de Mayo was 1808, 33 years after the birth. Napoleon's Invasion of Russia was 1812, 37 years after the birth."
       }
     ]
   },
@@ -4965,10 +4965,10 @@
         "q": "Which happened nearer Raphael's death?",
         "o": [
           "The Battle of Bosworth",
-          "The Ninety-five Theses"
+          "The Sistine Ceiling"
         ],
         "a": 1,
-        "w": "The Battle of Bosworth was 1485, 35 years before the death. The Ninety-five Theses was 1517, 3 years before the death."
+        "w": "The Battle of Bosworth was 1485, 35 years before the death. The Sistine Ceiling was 1512, 8 years before the death."
       },
       {
         "p": "Kangxi",
@@ -5012,11 +5012,11 @@
         "s": "1756-1836",
         "q": "Which happened nearer William Godwin's birth?",
         "o": [
-          "The First Vaccination",
-          "The Cry of Ipiranga"
+          "Shays’ Rebellion",
+          "The Boston Tea Party"
         ],
-        "a": 0,
-        "w": "The First Vaccination was 1796, 40 years after the birth. The Cry of Ipiranga was 1822, 66 years after the birth."
+        "a": 1,
+        "w": "Shays’ Rebellion was 1786, 30 years after the birth. The Boston Tea Party was 1773, 17 years after the birth."
       },
       {
         "p": "Antonin Dvorak",
@@ -5049,11 +5049,11 @@
         "s": "1031-1095",
         "q": "Which happened nearer Shen Kuo's birth?",
         "o": [
-          "The Battle of Stamford Bridge",
+          "The University of Bologna",
           "The Harrying of the North"
         ],
-        "a": 0,
-        "w": "The Battle of Stamford Bridge was 1066, 35 years after the birth. The Harrying of the North was 1069, 38 years after the birth."
+        "a": 1,
+        "w": "The University of Bologna was 1088, 57 years after the birth. The Harrying of the North was 1069, 38 years after the birth."
       },
       {
         "p": "Rudolf Hess",
@@ -5075,11 +5075,11 @@
         "s": "1770-1831",
         "q": "Which happened nearer Georg Hegel's death?",
         "o": [
-          "Shays’ Rebellion",
-          "The Plan of Iguala"
+          "The Battle of Trafalgar",
+          "Pride and Prejudice"
         ],
         "a": 1,
-        "w": "Shays’ Rebellion was 1786, 45 years before the death. The Plan of Iguala was 1821, 10 years before the death."
+        "w": "The Battle of Trafalgar was 1805, 26 years before the death. Pride and Prejudice was 1813, 18 years before the death."
       },
       {
         "p": "Hernan Cortes",
@@ -5087,21 +5087,21 @@
         "q": "Which happened nearer Hernan Cortes's death?",
         "o": [
           "The Last Supper",
-          "The First Circumnavigation"
+          "The Capture of Atahualpa"
         ],
         "a": 1,
-        "w": "The Last Supper was 1498, 49 years before the death. The First Circumnavigation was 1522, 25 years before the death."
+        "w": "The Last Supper was 1498, 49 years before the death. The Capture of Atahualpa was 1532, 15 years before the death."
       },
       {
         "p": "Humphrey Davy",
         "s": "1778-1829",
         "q": "Which happened nearer Humphrey Davy's death?",
         "o": [
-          "The Plan of Iguala",
+          "The French Revolution",
           "The Battle of Borodino"
         ],
-        "a": 0,
-        "w": "The Plan of Iguala was 1821, 8 years before the death. The Battle of Borodino was 1812, 17 years before the death."
+        "a": 1,
+        "w": "The French Revolution was 1789, 40 years before the death. The Battle of Borodino was 1812, 17 years before the death."
       }
     ]
   },
@@ -5123,22 +5123,22 @@
         "s": "1754-1838",
         "q": "Which happened nearer Talleyrand's death?",
         "o": [
-          "The Dos de Mayo",
+          "The French Revolution",
           "The Battle of Austerlitz"
         ],
-        "a": 0,
-        "w": "The Dos de Mayo was 1808, 30 years before the death. The Battle of Austerlitz was 1805, 33 years before the death."
+        "a": 1,
+        "w": "The French Revolution was 1789, 49 years before the death. The Battle of Austerlitz was 1805, 33 years before the death."
       },
       {
         "p": "Nana Asmau",
         "s": "1793-1864",
         "q": "Which happened nearer Nana Asmau's death?",
         "o": [
-          "The Revolutions of 1848",
-          "The Battle of Antietam"
+          "The Cry of Ipiranga",
+          "The First Atlantic Cable"
         ],
         "a": 1,
-        "w": "The Revolutions of 1848 was 1848, 16 years before the death. The Battle of Antietam was 1862, 2 years before the death."
+        "w": "The Cry of Ipiranga was 1822, 42 years before the death. The First Atlantic Cable was 1858, 6 years before the death."
       }
     ]
   },
@@ -5186,11 +5186,11 @@
         "s": "1588-1679",
         "q": "Which happened nearer Thomas Hobbes's birth?",
         "o": [
-          "The Trial of Galileo",
-          "The Execution of Charles I"
+          "The Death of Shakespeare",
+          "The East India Company"
         ],
-        "a": 0,
-        "w": "The Trial of Galileo was 1633, 45 years after the birth. The Execution of Charles I was 1649, 61 years after the birth."
+        "a": 1,
+        "w": "The Death of Shakespeare was 1616, 28 years after the birth. The East India Company was 1600, 12 years after the birth."
       },
       {
         "p": "Clara Schumann",
@@ -5208,11 +5208,11 @@
         "s": "1546-1601",
         "q": "Which happened nearer Tycho Brahe's death?",
         "o": [
-          "The East India Company",
-          "The Birth of Shakespeare"
+          "Drake Sails West",
+          "The East India Company"
         ],
-        "a": 0,
-        "w": "The East India Company was 1600, 1 year before the death. The Birth of Shakespeare was 1564, 37 years before the death."
+        "a": 1,
+        "w": "Drake Sails West was 1577, 24 years before the death. The East India Company was 1600, 1 year before the death."
       }
     ]
   },
@@ -5223,11 +5223,11 @@
         "s": "1733-1804",
         "q": "Which happened nearer Joseph Priestley's birth?",
         "o": [
-          "The Seven Years War",
-          "The Messiah Premiere in Dublin"
+          "The Separate Condenser",
+          "The Louvre Opens"
         ],
-        "a": 1,
-        "w": "The Seven Years War was 1756, 23 years after the birth. The Messiah Premiere in Dublin was 1742, 9 years after the birth."
+        "a": 0,
+        "w": "The Separate Condenser was 1769, 36 years after the birth. The Louvre Opens was 1793, 60 years after the birth."
       },
       {
         "p": "Pierre-Auguste Renoir",
@@ -5245,11 +5245,11 @@
         "s": "1797-1828",
         "q": "Which happened nearer Franz Schubert's birth?",
         "o": [
-          "The Hundred Days",
-          "The Battle of Trafalgar"
+          "Napoleon's Invasion of Russia",
+          "The Stockton and Darlington Railway"
         ],
-        "a": 1,
-        "w": "The Hundred Days was 1815, 18 years after the birth. The Battle of Trafalgar was 1805, 8 years after the birth."
+        "a": 0,
+        "w": "Napoleon's Invasion of Russia was 1812, 15 years after the birth. The Stockton and Darlington Railway was 1825, 28 years after the birth."
       }
     ]
   },
@@ -5272,10 +5272,10 @@
         "q": "Which happened nearer Adam Smith's birth?",
         "o": [
           "The Boston Tea Party",
-          "The Winter at Valley Forge"
+          "The Separate Condenser"
         ],
-        "a": 0,
-        "w": "The Boston Tea Party was 1773, 50 years after the birth. The Winter at Valley Forge was 1777, 54 years after the birth."
+        "a": 1,
+        "w": "The Boston Tea Party was 1773, 50 years after the birth. The Separate Condenser was 1769, 46 years after the birth."
       },
       {
         "p": "Kangxi",
@@ -5297,33 +5297,33 @@
         "s": "1765-1833",
         "q": "Which happened nearer Nicephore Niepce's death?",
         "o": [
-          "Pride and Prejudice",
+          "The Dos de Mayo",
           "The Boston Tea Party"
         ],
         "a": 0,
-        "w": "Pride and Prejudice was 1813, 20 years before the death. The Boston Tea Party was 1773, 60 years before the death."
+        "w": "The Dos de Mayo was 1808, 25 years before the death. The Boston Tea Party was 1773, 60 years before the death."
       },
       {
         "p": "Victor Hugo",
         "s": "1802-1885",
         "q": "Which happened nearer Victor Hugo's death?",
         "o": [
-          "The Pea Lectures",
+          "The Great Exhibition",
           "The Brooklyn Bridge"
         ],
         "a": 1,
-        "w": "The Pea Lectures was 1865, 20 years before the death. The Brooklyn Bridge was 1883, 2 years before the death."
+        "w": "The Great Exhibition was 1851, 34 years before the death. The Brooklyn Bridge was 1883, 2 years before the death."
       },
       {
         "p": "Augustus De Morgan",
         "s": "1806-1871",
         "q": "Which happened nearer Augustus De Morgan's birth?",
         "o": [
-          "The Congress of Vienna",
-          "What Hath God Wrought"
+          "The Dos de Mayo",
+          "The Fall of the Alamo"
         ],
         "a": 0,
-        "w": "The Congress of Vienna was 1814, 8 years after the birth. What Hath God Wrought was 1844, 38 years after the birth."
+        "w": "The Dos de Mayo was 1808, 2 years after the birth. The Fall of the Alamo was 1836, 30 years after the birth."
       }
     ]
   },
@@ -5334,11 +5334,11 @@
         "s": "1020-1101",
         "q": "Which happened nearer Su Song's birth?",
         "o": [
-          "The University of Bologna",
-          "The Harrying of the North"
+          "The Taking of Toledo",
+          "The Battle of Manzikert"
         ],
         "a": 1,
-        "w": "The University of Bologna was 1088, 68 years after the birth. The Harrying of the North was 1069, 49 years after the birth."
+        "w": "The Taking of Toledo was 1085, 65 years after the birth. The Battle of Manzikert was 1071, 51 years after the birth."
       },
       {
         "p": "Langston Hughes",
@@ -5356,11 +5356,11 @@
         "s": "1738-1822",
         "q": "Which happened nearer William Herschel's death?",
         "o": [
-          "Pride and Prejudice",
-          "The Treaty of Paris"
+          "The Rosetta Stone",
+          "The Battle of Waterloo"
         ],
-        "a": 0,
-        "w": "Pride and Prejudice was 1813, 9 years before the death. The Treaty of Paris was 1783, 39 years before the death."
+        "a": 1,
+        "w": "The Rosetta Stone was 1799, 23 years before the death. The Battle of Waterloo was 1815, 7 years before the death."
       }
     ]
   },
@@ -5382,22 +5382,22 @@
         "s": "1360-1424",
         "q": "Which happened nearer Yongle's birth?",
         "o": [
-          "The Peasants' Revolt",
-          "The First Treasure Voyage"
+          "The Burning of Jan Hus",
+          "The Peasants' Revolt"
         ],
-        "a": 0,
-        "w": "The Peasants' Revolt was 1381, 21 years after the birth. The First Treasure Voyage was 1405, 45 years after the birth."
+        "a": 1,
+        "w": "The Burning of Jan Hus was 1415, 55 years after the birth. The Peasants' Revolt was 1381, 21 years after the birth."
       },
       {
         "p": "Edward Gibbon",
         "s": "1737-1794",
         "q": "Which happened nearer Edward Gibbon's birth?",
         "o": [
-          "The Battle of the Plains of Abraham",
-          "Shays’ Rebellion"
+          "The Messiah Premiere in Dublin",
+          "The Separate Condenser"
         ],
         "a": 0,
-        "w": "The Battle of the Plains of Abraham was 1759, 22 years after the birth. Shays’ Rebellion was 1786, 49 years after the birth."
+        "w": "The Messiah Premiere in Dublin was 1742, 5 years after the birth. The Separate Condenser was 1769, 32 years after the birth."
       }
     ]
   },
@@ -5408,11 +5408,11 @@
         "s": "1788-1824",
         "q": "Which happened nearer Lord Byron's birth?",
         "o": [
-          "The Dos de Mayo",
-          "The Congress of Vienna"
+          "The Peace of Tilsit",
+          "The Cry of Ipiranga"
         ],
         "a": 0,
-        "w": "The Dos de Mayo was 1808, 20 years after the birth. The Congress of Vienna was 1814, 26 years after the birth."
+        "w": "The Peace of Tilsit was 1807, 19 years after the birth. The Cry of Ipiranga was 1822, 34 years after the birth."
       },
       {
         "p": "Alfred Russel Wallace",
@@ -5445,22 +5445,22 @@
         "s": "1754-1817",
         "q": "Which happened nearer William Bligh's death?",
         "o": [
-          "The Storming of the Bastille",
-          "The Battle of Waterloo"
+          "The Battle of the Nile",
+          "The Constitutional Convention"
         ],
-        "a": 1,
-        "w": "The Storming of the Bastille was 1789, 28 years before the death. The Battle of Waterloo was 1815, 2 years before the death."
+        "a": 0,
+        "w": "The Battle of the Nile was 1798, 19 years before the death. The Constitutional Convention was 1787, 30 years before the death."
       },
       {
         "p": "Desiderius Erasmus",
         "s": "1466-1536",
         "q": "Which happened nearer Desiderius Erasmus's birth?",
         "o": [
-          "The Sack of Rome",
-          "Magellan Sets Out"
+          "The Mona Lisa",
+          "The Battle of Mohács"
         ],
-        "a": 1,
-        "w": "The Sack of Rome was 1527, 61 years after the birth. Magellan Sets Out was 1519, 53 years after the birth."
+        "a": 0,
+        "w": "The Mona Lisa was 1503, 37 years after the birth. The Battle of Mohács was 1526, 60 years after the birth."
       },
       {
         "p": "Emily Dickinson",
@@ -5482,11 +5482,11 @@
         "s": "1730-1794",
         "q": "Which happened nearer Baron von Steuben's birth?",
         "o": [
-          "The French Revolution",
-          "The Separate Condenser"
+          "The Haitian Revolution Begins",
+          "Lexington and Concord"
         ],
         "a": 1,
-        "w": "The French Revolution was 1789, 59 years after the birth. The Separate Condenser was 1769, 39 years after the birth."
+        "w": "The Haitian Revolution Begins was 1791, 61 years after the birth. Lexington and Concord was 1775, 45 years after the birth."
       },
       {
         "p": "Ralph Waldo Emerson",
@@ -5494,10 +5494,10 @@
         "q": "Which happened nearer Ralph Waldo Emerson's death?",
         "o": [
           "The Satsuma Rebellion",
-          "The Seneca Falls Convention"
+          "The Siege of Vicksburg"
         ],
         "a": 0,
-        "w": "The Satsuma Rebellion was 1877, 5 years before the death. The Seneca Falls Convention was 1848, 34 years before the death."
+        "w": "The Satsuma Rebellion was 1877, 5 years before the death. The Siege of Vicksburg was 1863, 19 years before the death."
       },
       {
         "p": "Jonathan Swift",
@@ -5519,11 +5519,11 @@
         "s": "1389-1464",
         "q": "Which happened nearer Cosimo de Medici's death?",
         "o": [
-          "The Fall of Constantinople",
-          "The Relief of Orléans"
+          "The Battle of Grunwald",
+          "Gutenberg's Movable-Type Press"
         ],
-        "a": 0,
-        "w": "The Fall of Constantinople was 1453, 11 years before the death. The Relief of Orléans was 1429, 35 years before the death."
+        "a": 1,
+        "w": "The Battle of Grunwald was 1410, 54 years before the death. Gutenberg's Movable-Type Press was 1440, 24 years before the death."
       },
       {
         "p": "Noor Inayat Khan",

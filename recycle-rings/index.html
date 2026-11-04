@@ -598,7 +598,7 @@ function applyRingDrag(d, deg){
 function applyRayDrag(d, k, f){
   rayLts(d.c).forEach(el => {
     const rr = +el.dataset.r;
-    el.setAttribute('y', String(200 - (RADII[((rr + k) % 4 + 4) % 4] + f * STEP_PX)));
+    el.setAttribute('y', String(200 - (RADII[((rr + k) % 4 + 4) % 4] - f * STEP_PX)));
   });
 }
 /* a line drag previews on both of its rays: the grabbed ray's letters

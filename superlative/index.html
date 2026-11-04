@@ -213,7 +213,7 @@ function showRoundVerdict(i, r, a, right){
   const w = EV.m[a];
   $('verdict').textContent = right ? 'Right. ' + w.n + '.' : 'No. The record says ' + w.n + '.';
   $('verdict').style.color = right ? '' : 'var(--accent)';
-  let why = w.n + ' \u00b7 ' + w.b + '-' + w.d + ' \u00b7 ' + EV.q[r].v + (w.k ? ' - ' + w.k : '');
+  let why = w.n + ' \u00b7 ' + w.b + '-' + w.d + ' \u00b7 ' + EV.q[r].v + (w.k ? ' \u00b7 ' + w.k : '');
   if (!right)
     why += String.fromCharCode(10) + 'You picked ' + EV.m[i].n + ' \u00b7 ' + EV.m[i].b + '-' + EV.m[i].d + '.';
   $('why').textContent = why;

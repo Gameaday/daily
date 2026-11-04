@@ -20,7 +20,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | /fermi/ | Fermi | One estimation question per day, one guess, scored by closeness |
 | /sift/ | Sift | Twelve tiles, four hidden groups of three, three mistakes allowed |
 | /rounds/ | Rounds | Slide toward the year of a hidden event in six guesses |
-| /trace/ | Trace | A daily word ladder, one letter at a time, par five rungs |
+| /trace/ | Trace | A daily word ladder, one letter at a time; par is the shortest ladder that exists |
 | /lightbox/ | Lightbox | A 7x7 nonogram; four bad developments fog the film |
 | /sprint/ | Sprint | Five anagrams against one 90-second clock that never restarts |
 | /cipher/ | Cipher | A substitution cipher hiding a line of history; hints cost |

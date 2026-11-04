@@ -90,9 +90,14 @@ const SHELL = (() => {
 
   /* ---- midnight rollover: render the countdown, reload at midnight ---- */
   function nextETMidnight(){
-    const tomorrowKey = etKey(Date.now() + 30 * 3600000);
-    let target = Date.parse(tomorrowKey) - 5 * 3600000; // assume EST, then correct for DST
-    while (etKey(target) !== tomorrowKey) target += 3600000;
+    /* tomorrow's key comes from calendar math on today's key, never from
+       a fixed clock offset: now + 30h lands TWO days ahead once the
+       evening passes 6pm ET, and the countdown ran a full day past the
+       real midnight (a "25h 54m" next puzzle was a real report). The key
+       + 48h is always tomorrow's ET date, DST or not. */
+    const nextKey = etKey(Date.parse(etKey(Date.now())) + 48 * 3600000);
+    let target = Date.parse(nextKey) - 5 * 3600000; // assume EST, then correct for DST
+    while (etKey(target) !== nextKey) target += 3600000;
     return target;
   }
   /* Renders "next puzzle in ..." into #countdown (pass 'count' for the games

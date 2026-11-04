@@ -32,6 +32,32 @@ async function run(h, ctx){
     h.ok(S.pdateText().indexOf('Nov 4') >= 0, 'archive: a live boot keeps showing the current date');
   }
 
+  /* ---- the countdown never runs a day ahead: the next puzzle is never
+     more than 24h away, whatever the evening clock says ---- */
+  {
+    /* the old target picked tomorrow's key from now + 30h, which runs two
+       days ahead once the evening passes 6pm ET and put the countdown a
+       full day past the real midnight (a "25h 54m" next puzzle was a
+       real report). Six fixed instants across the ET day pin the fix. */
+    const cases = [
+      [T2, 17 * 3600, 'mid-morning ET counts 17h'],
+      [T2 + 11 * 3600000, 6 * 3600, 'the 6pm ET edge counts 6h, not 30h'],
+      [T2 + 15 * 3600000 + 5 * 60000, 3600 + 55 * 60,
+        'a late evening counts 1h55m, not 25h55m'],
+      [T2 + 16 * 3600000 + 59 * 60000, 60, 'the last minute counts 60s'],
+      [T2 + 17 * 3600000, 24 * 3600, 'the stroke of midnight starts a fresh 24h'],
+      [T2 + 17 * 3600000 + 60000, 24 * 3600 - 60,
+        'the first minute after midnight counts 23h59m']
+    ];
+    for (const c of cases){
+      const b = h.boot('brunch', ['SHELL'], { now: c[0], store: {} });
+      const left = b.x.SHELL.nextETMidnight() - c[0];
+      h.eq(Math.round(left / 1000), c[1], 'archive: the countdown ' + c[2]);
+      h.ok(left > 0 && left <= 24 * 3600000,
+        'archive: the next puzzle is never more than a day away (' + c[2] + ')');
+    }
+  }
+
   /* ---- a full replay of day 1, quarantined from the live day ---- */
   {
     /* first play today live, so the store holds real day-2 state */

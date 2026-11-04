@@ -4,13 +4,16 @@
     "n": "The Slavery Abolition Act",
     "q": "Britain’s Slavery Abolition Act ends slavery in most of the British Empire.",
     "y": 1833,
-    "month": 8
+    "month": 8,
+    "day": 28
   },
   {
     "id": "abolition-of-samurai",
     "n": "The Sword Edict",
     "q": "The Sword Edict strips the samurai class of its blades.",
-    "y": 1876
+    "y": 1876,
+    "month": 3,
+    "day": 28
   },
   {
     "id": "adrianople",
@@ -33,7 +36,8 @@
     "n": "The Alaska Purchase",
     "q": "The United States purchases Alaska from Russia.",
     "y": 1867,
-    "month": 3
+    "month": 3,
+    "day": 30
   },
   {
     "id": "antietam",
@@ -70,7 +74,8 @@
     "n": "The Apollo 13 Emergency",
     "q": "An oxygen tank ruptures and Apollo 13 loops around the Moon instead of landing.",
     "y": 1970,
-    "month": 4
+    "month": 4,
+    "day": 13
   },
   {
     "id": "apollo-8",
@@ -125,7 +130,8 @@
     "n": "Baird Demonstrates Television",
     "q": "John Logie Baird demonstrates the first working television.",
     "y": 1926,
-    "month": 1
+    "month": 1,
+    "day": 26
   },
   {
     "id": "barbarossa",
@@ -156,7 +162,8 @@
     "n": "The Battle of Bannockburn",
     "q": "Robert the Bruce defeats the English at Bannockburn.",
     "y": 1314,
-    "month": 6
+    "month": 6,
+    "day": 24
   },
   {
     "id": "battle-of-hastings",
@@ -186,7 +193,9 @@
     "id": "berlin-wall-built",
     "n": "The Berlin Wall",
     "q": "Barbed wire rises across Berlin overnight, sealing the sector border.",
-    "y": 1961
+    "y": 1961,
+    "month": 8,
+    "day": 13
   },
   {
     "id": "berlin-wall-falls",
@@ -237,13 +246,17 @@
     "id": "brazil-independence",
     "n": "The Cry of Ipiranga",
     "q": "Pedro declares the independence of Brazil on the banks of the Ipiranga.",
-    "y": 1822
+    "y": 1822,
+    "month": 9,
+    "day": 7
   },
   {
     "id": "brooklyn-bridge-opened",
     "n": "The Brooklyn Bridge",
     "q": "The Brooklyn Bridge opens after thirteen years of construction.",
-    "y": 1883
+    "y": 1883,
+    "month": 5,
+    "day": 24
   },
   {
     "id": "brown-v-board",
@@ -255,20 +268,25 @@
     "id": "california-gold-discovery",
     "n": "The Discovery at Sutter’s Mill",
     "q": "Gold is found in a sawmill ditch on the American River.",
-    "y": 1848
+    "y": 1848,
+    "month": 1,
+    "day": 24
   },
   {
     "id": "capture-of-atahualpa",
     "n": "The Capture of Atahualpa",
     "q": "Pizarro seizes the Inca emperor Atahualpa at Cajamarca.",
-    "y": 1532
+    "y": 1532,
+    "month": 11,
+    "day": 16
   },
   {
     "id": "castro-enters-havana",
     "n": "Castro Enters Havana",
     "q": "Fidel Castro’s rebels enter Havana.",
     "y": 1959,
-    "month": 1
+    "month": 1,
+    "day": 8
   },
   {
     "id": "cat-and-mouse-act",
@@ -280,7 +298,9 @@
     "id": "channel-tunnel-opened",
     "n": "The Channel Tunnel",
     "q": "The Channel Tunnel opens between Britain and France.",
-    "y": 1994
+    "y": 1994,
+    "month": 5,
+    "day": 6
   },
   {
     "id": "charlemagne-crowned",
@@ -316,7 +336,9 @@
     "id": "civil-rights-act",
     "n": "The Civil Rights Act",
     "q": "The Civil Rights Act is signed into law after a Senate filibuster.",
-    "y": 1964
+    "y": 1964,
+    "month": 7,
+    "day": 2
   },
   {
     "id": "clermont-council",
@@ -367,7 +389,8 @@
     "n": "The Constitutional Convention",
     "q": "The delegates meet in Philadelphia to write a constitution.",
     "y": 1787,
-    "month": 5
+    "month": 5,
+    "day": 25
   },
   {
     "id": "crecy",
@@ -410,7 +433,9 @@
     "id": "de-revolutionibus",
     "n": "De Revolutionibus",
     "q": "Copernicus publishes De revolutionibus, placing the Sun at the center of the heavens.",
-    "y": 1543
+    "y": 1543,
+    "month": 5,
+    "day": 24
   },
   {
     "id": "declaration-of-independence",
@@ -433,13 +458,16 @@
     "n": "The Discovery of Radium",
     "q": "Pierre and Marie Curie announce the discovery of radium.",
     "y": 1898,
-    "month": 12
+    "month": 12,
+    "day": 26
   },
   {
     "id": "dolly-the-sheep",
     "n": "Dolly the Sheep",
     "q": "A lamb is born cloned from an adult sheep cell at Roslin.",
-    "y": 1996
+    "y": 1996,
+    "month": 7,
+    "day": 5
   },
   {
     "id": "don-quixote-published",
@@ -459,7 +487,9 @@
     "id": "double-helix",
     "n": "The Double Helix",
     "q": "The structure of DNA is published as a double helix in Nature.",
-    "y": 1953
+    "y": 1953,
+    "month": 4,
+    "day": 25
   },
   {
     "id": "draft-riots",
@@ -473,7 +503,9 @@
     "id": "earth-day-first",
     "n": "The First Earth Day",
     "q": "Millions mark the first Earth Day across the United States.",
-    "y": 1970
+    "y": 1970,
+    "month": 4,
+    "day": 22
   },
   {
     "id": "east-india-company",
@@ -487,14 +519,17 @@
     "id": "edison-lamp",
     "n": "The Electric Lamp",
     "q": "Edison demonstrates a practical incandescent lamp in Menlo Park.",
-    "y": 1879
+    "y": 1879,
+    "month": 10,
+    "day": 21
   },
   {
     "id": "eiffel-tower-opens",
     "n": "The Eiffel Tower Opens",
     "q": "The Eiffel Tower opens as the entrance arch to a world’s fair.",
     "y": 1889,
-    "month": 3
+    "month": 3,
+    "day": 31
   },
   {
     "id": "emancipation-proclamation",
@@ -508,7 +543,9 @@
     "id": "empire-state-opened",
     "n": "The Empire State Building",
     "q": "The Empire State Building opens in New York.",
-    "y": 1931
+    "y": 1931,
+    "month": 5,
+    "day": 1
   },
   {
     "id": "encyclopedie-volume-one",
@@ -520,7 +557,9 @@
     "id": "eniac-unveiled",
     "n": "The ENIAC",
     "q": "The ENIAC, the first general-purpose electronic computer, is unveiled in Philadelphia.",
-    "y": 1946
+    "y": 1946,
+    "month": 2,
+    "day": 14
   },
   {
     "id": "euro-launched",
@@ -535,7 +574,8 @@
     "n": "The Execution of Charles I",
     "q": "Charles I is executed after a public trial.",
     "y": 1649,
-    "month": 1
+    "month": 1,
+    "day": 30
   },
   {
     "id": "facebook-launches",
@@ -565,7 +605,9 @@
     "id": "fall-of-tenochtitlan",
     "n": "The Fall of Tenochtitlan",
     "q": "Cortés and his native allies take Tenochtitlan after a siege.",
-    "y": 1521
+    "y": 1521,
+    "month": 8,
+    "day": 13
   },
   {
     "id": "fall-of-the-alamo",
@@ -588,14 +630,16 @@
     "n": "The Fireside Chats",
     "q": "Roosevelt takes the presidency to the family radio with his fireside chats.",
     "y": 1933,
-    "month": 3
+    "month": 3,
+    "day": 12
   },
   {
     "id": "first-crusade-jerusalem",
     "n": "The First Crusade Takes Jerusalem",
     "q": "The First Crusade captures Jerusalem.",
     "y": 1099,
-    "month": 7
+    "month": 7,
+    "day": 15
   },
   {
     "id": "first-everest-ascent",
@@ -609,41 +653,49 @@
     "id": "first-japanese-railway",
     "n": "Japan’s First Railway",
     "q": "The first railway opens between Tokyo and Yokohama.",
-    "y": 1872
+    "y": 1872,
+    "month": 10,
+    "day": 14
   },
   {
     "id": "first-modern-olympics",
     "n": "The First Modern Olympics",
     "q": "The first modern Olympic Games open in Athens.",
     "y": 1896,
-    "month": 4
+    "month": 4,
+    "day": 6
   },
   {
     "id": "first-vaccination",
     "n": "The First Vaccination",
     "q": "Edward Jenner performs the first vaccination, inoculating a boy against smallpox with cowpox.",
     "y": 1796,
-    "month": 5
+    "month": 5,
+    "day": 14
   },
   {
     "id": "first-world-cup",
     "n": "The First World Cup",
     "q": "Uruguay hosts and wins the first football World Cup.",
-    "y": 1930
+    "y": 1930,
+    "month": 7,
+    "day": 30
   },
   {
     "id": "first-world-war-begins",
     "n": "The First World War Begins",
     "q": "The First World War begins.",
     "y": 1914,
-    "month": 7
+    "month": 7,
+    "day": 28
   },
   {
     "id": "fort-sumter",
     "n": "The Bombardment of Fort Sumter",
     "q": "The American Civil War begins at Fort Sumter.",
     "y": 1861,
-    "month": 4
+    "month": 4,
+    "day": 12
   },
   {
     "id": "four-minute-mile",
@@ -696,14 +748,17 @@
     "id": "galileo-condemned",
     "n": "The Trial of Galileo",
     "q": "Galileo is condemned by the Roman Inquisition and made to recant.",
-    "y": 1633
+    "y": 1633,
+    "month": 6,
+    "day": 22
   },
   {
     "id": "galileo-jupiter-moons",
     "n": "Galileo's Moons of Jupiter",
     "q": "Galileo observes the moons of Jupiter through his telescope.",
     "y": 1610,
-    "month": 1
+    "month": 1,
+    "day": 7
   },
   {
     "id": "gallipoli",
@@ -748,25 +803,32 @@
     "n": "The Battle of Gettysburg",
     "q": "The three days at Gettysburg break the Confederate charge and the invasion.",
     "y": 1863,
-    "month": 7
+    "month": 7,
+    "day": 1
   },
   {
     "id": "ghana-independence",
     "n": "The Independence of Ghana",
     "q": "Ghana becomes the first British colony in Africa south of the Sahara to become independent.",
-    "y": 1957
+    "y": 1957,
+    "month": 3,
+    "day": 6
   },
   {
     "id": "golden-gate-opened",
     "n": "The Golden Gate Bridge",
     "q": "The Golden Gate Bridge opens to a walking crowd of thousands.",
-    "y": 1937
+    "y": 1937,
+    "month": 5,
+    "day": 27
   },
   {
     "id": "gravitational-waves-detected",
     "n": "Gravitational Waves",
     "q": "LIGO detects gravitational waves from two merging black holes.",
-    "y": 2015
+    "y": 2015,
+    "month": 9,
+    "day": 14
   },
   {
     "id": "great-blizzard-1888",
@@ -853,7 +915,8 @@
     "n": "The Haitian Revolution Begins",
     "q": "The Haitian Revolution begins with an uprising of the enslaved.",
     "y": 1791,
-    "month": 8
+    "month": 8,
+    "day": 22
   },
   {
     "id": "harrying-of-the-north",
@@ -873,7 +936,9 @@
     "id": "higgs-boson-discovered",
     "n": "The Higgs Boson",
     "q": "CERN announces the discovery of the Higgs boson.",
-    "y": 2012
+    "y": 2012,
+    "month": 7,
+    "day": 4
   },
   {
     "id": "hindenburg-disaster",
@@ -888,14 +953,16 @@
     "n": "The Launch of the Hubble Telescope",
     "q": "The Hubble Space Telescope is launched.",
     "y": 1990,
-    "month": 4
+    "month": 4,
+    "day": 24
   },
   {
     "id": "hundred-days",
     "n": "The Hundred Days",
     "q": "Napoleon returns from Elba for the Hundred Days.",
     "y": 1815,
-    "month": 3
+    "month": 3,
+    "day": 20
   },
   {
     "id": "hurricane-katrina",
@@ -910,14 +977,16 @@
     "n": "The IBM Personal Computer",
     "q": "The IBM Personal Computer goes on sale.",
     "y": 1981,
-    "month": 8
+    "month": 8,
+    "day": 12
   },
   {
     "id": "ibn-battuta-departs",
     "n": "Ibn Battuta Leaves Tangier",
     "q": "Ibn Battuta leaves Tangier on the first leg of a journey that will out-travel Marco Polo.",
     "y": 1325,
-    "month": 6
+    "month": 6,
+    "day": 14
   },
   {
     "id": "india-partition",
@@ -930,7 +999,8 @@
     "n": "Napoleon's Invasion of Russia",
     "q": "Napoleon invades Russia with the Grande Armée.",
     "y": 1812,
-    "month": 6
+    "month": 6,
+    "day": 24
   },
   {
     "id": "invasions-of-japan",
@@ -951,7 +1021,8 @@
     "n": "The Founding of Jamestown",
     "q": "Jamestown, the first permanent English settlement in North America, is founded.",
     "y": 1607,
-    "month": 5
+    "month": 5,
+    "day": 14
   },
   {
     "id": "jena",
@@ -988,7 +1059,9 @@
     "id": "kingdom-of-italy-proclaimed",
     "n": "The Kingdom of Italy",
     "q": "Victor Emmanuel II is proclaimed king of a united Italy.",
-    "y": 1861
+    "y": 1861,
+    "month": 3,
+    "day": 17
   },
   {
     "id": "kursk",
@@ -1001,7 +1074,9 @@
     "id": "laocoon-unearthed",
     "n": "The Laocoön",
     "q": "The Laocoön is dug from a Roman vineyard on the Esquiline.",
-    "y": 1506
+    "y": 1506,
+    "month": 1,
+    "day": 14
   },
   {
     "id": "last-supper-completed",
@@ -1056,14 +1131,16 @@
     "n": "The Assassination of Lincoln",
     "q": "The Civil War ends and Abraham Lincoln is assassinated.",
     "y": 1865,
-    "month": 4
+    "month": 4,
+    "day": 14
   },
   {
     "id": "lindbergh-flight",
     "n": "Lindbergh's Solo Flight",
     "q": "Lindbergh flies solo from New York to Paris.",
     "y": 1927,
-    "month": 5
+    "month": 5,
+    "day": 21
   },
   {
     "id": "lisbon-earthquake",
@@ -1114,7 +1191,8 @@
     "n": "The Luna 2 Moon Impact",
     "q": "The Soviet Luna 2 probe becomes the first craft to reach the Moon.",
     "y": 1959,
-    "month": 9
+    "month": 9,
+    "day": 13
   },
   {
     "id": "macintosh-ships",
@@ -1129,20 +1207,24 @@
     "n": "Magellan Sets Out",
     "q": "Magellan’s expedition sets out to circle the globe.",
     "y": 1519,
-    "month": 9
+    "month": 9,
+    "day": 20
   },
   {
     "id": "magna-carta-sealed",
     "n": "The Magna Carta",
     "q": "King John seals the Magna Carta at Runnymede.",
     "y": 1215,
-    "month": 6
+    "month": 6,
+    "day": 15
   },
   {
     "id": "mandela-elected",
     "n": "The Election of Nelson Mandela",
     "q": "Nelson Mandela is elected President of South Africa.",
-    "y": 1994
+    "y": 1994,
+    "month": 4,
+    "day": 27
   },
   {
     "id": "mansa-musa-pilgrimage",
@@ -1168,14 +1250,17 @@
     "id": "march-to-the-sea",
     "n": "The March to the Sea",
     "q": "Sherman’s columns cut a path from Atlanta to the sea.",
-    "y": 1864
+    "y": 1864,
+    "month": 11,
+    "day": 15
   },
   {
     "id": "market-garden",
     "n": "Operation Market Garden",
     "q": "The airborne attempt to bridge the Rhine falls short at Arnhem.",
     "y": 1944,
-    "month": 9
+    "month": 9,
+    "day": 17
   },
   {
     "id": "mary-stuart-executed",
@@ -1196,32 +1281,41 @@
     "id": "meiji-constitution",
     "n": "The Meiji Constitution",
     "q": "The Meiji constitution creates Japan’s first modern parliament.",
-    "y": 1889
+    "y": 1889,
+    "month": 2,
+    "day": 11
   },
   {
     "id": "meiji-restoration",
     "n": "The Meiji Restoration",
     "q": "The shogunate falls and the young emperor is restored in Japan.",
-    "y": 1868
+    "y": 1868,
+    "month": 1,
+    "day": 3
   },
   {
     "id": "mendel-lectures",
     "n": "The Pea Lectures",
     "q": "Mendel presents his pea experiments to the natural history society of Brno.",
-    "y": 1865
+    "y": 1865,
+    "month": 2,
+    "day": 8
   },
   {
     "id": "messiah-premiere",
     "n": "The Messiah Premiere in Dublin",
     "q": "Handel’s Messiah premieres in Dublin.",
     "y": 1742,
-    "month": 4
+    "month": 4,
+    "day": 13
   },
   {
     "id": "metric-system-law",
     "n": "The Metric System",
     "q": "France’s law of 1795 introduces the metre and the gram.",
-    "y": 1795
+    "y": 1795,
+    "month": 4,
+    "day": 7
   },
   {
     "id": "mexican-independence",
@@ -1234,7 +1328,8 @@
     "n": "The Battle of Midway",
     "q": "American carriers sink four Japanese carriers and turn the Pacific war.",
     "y": 1942,
-    "month": 6
+    "month": 6,
+    "day": 4
   },
   {
     "id": "miracle-year",
@@ -1247,7 +1342,8 @@
     "n": "The Model T",
     "q": "Ford introduces the Model T.",
     "y": 1908,
-    "month": 10
+    "month": 10,
+    "day": 1
   },
   {
     "id": "mona-lisa-begun",
@@ -1259,7 +1355,9 @@
     "id": "morse-first-message",
     "n": "What Hath God Wrought",
     "q": "Morse taps the first telegraph message from Washington to Baltimore.",
-    "y": 1844
+    "y": 1844,
+    "month": 5,
+    "day": 24
   },
   {
     "id": "nicene-council",
@@ -1280,14 +1378,16 @@
     "n": "The Nineteenth Amendment",
     "q": "The 19th Amendment is ratified, giving American women the vote.",
     "y": 1920,
-    "month": 8
+    "month": 8,
+    "day": 18
   },
   {
     "id": "ninety-five-theses",
     "n": "The Ninety-five Theses",
     "q": "Martin Luther posts his Ninety-five Theses.",
     "y": 1517,
-    "month": 10
+    "month": 10,
+    "day": 31
   },
   {
     "id": "nixon-resigns",
@@ -1308,7 +1408,9 @@
     "id": "panama-canal-opened",
     "n": "The Panama Canal",
     "q": "The Panama Canal opens to its first ship.",
-    "y": 1914
+    "y": 1914,
+    "month": 8,
+    "day": 15
   },
   {
     "id": "pavia",
@@ -1323,14 +1425,16 @@
     "n": "The Peasants' Revolt",
     "q": "The Peasants’ Revolt reaches London and burns the Savoy Palace.",
     "y": 1381,
-    "month": 6
+    "month": 6,
+    "day": 13
   },
   {
     "id": "penicillin-discovery",
     "n": "The Discovery of Penicillin",
     "q": "Alexander Fleming discovers penicillin.",
     "y": 1928,
-    "month": 9
+    "month": 9,
+    "day": 28
   },
   {
     "id": "plague-of-justinian",
@@ -1378,13 +1482,17 @@
     "id": "pride-and-prejudice-published",
     "n": "Pride and Prejudice",
     "q": "Pride and Prejudice is published, the second of Austen’s novels in print.",
-    "y": 1813
+    "y": 1813,
+    "month": 1,
+    "day": 28
   },
   {
     "id": "principia-mathematica",
     "n": "The Principia Mathematica",
     "q": "Newton publishes the Principia Mathematica.",
-    "y": 1687
+    "y": 1687,
+    "month": 7,
+    "day": 5
   },
   {
     "id": "reconstruction",
@@ -1450,20 +1558,25 @@
     "id": "russo-japanese-war",
     "n": "The Russo-Japanese War",
     "q": "Japan sinks the Russian fleet and joins the great powers.",
-    "y": 1904
+    "y": 1904,
+    "month": 2,
+    "day": 8
   },
   {
     "id": "sack-of-baghdad",
     "n": "The Sack of Baghdad",
     "q": "The Mongols take Baghdad and end the Abbasid caliphate.",
-    "y": 1258
+    "y": 1258,
+    "month": 2,
+    "day": 10
   },
   {
     "id": "sack-of-constantinople",
     "n": "The Sack of Constantinople",
     "q": "The Fourth Crusade, diverted from Jerusalem, storms and sacks Constantinople.",
     "y": 1204,
-    "month": 4
+    "month": 4,
+    "day": 13
   },
   {
     "id": "sack-of-rome",
@@ -1483,7 +1596,9 @@
     "id": "salt-march",
     "n": "The Salt March",
     "q": "Gandhi begins the march to the sea to break the salt law.",
-    "y": 1930
+    "y": 1930,
+    "month": 3,
+    "day": 12
   },
   {
     "id": "san-francisco-earthquake",
@@ -1505,7 +1620,9 @@
     "id": "satsuma-rebellion",
     "n": "The Satsuma Rebellion",
     "q": "Saigo’s last stand at Shiroyama ends the samurai era.",
-    "y": 1877
+    "y": 1877,
+    "month": 9,
+    "day": 24
   },
   {
     "id": "second-world-war-begins",
@@ -1520,7 +1637,8 @@
     "n": "The Seneca Falls Convention",
     "q": "The Seneca Falls convention declares the rights of women.",
     "y": 1848,
-    "month": 7
+    "month": 7,
+    "day": 19
   },
   {
     "id": "september-11-attacks",
@@ -1543,7 +1661,8 @@
     "n": "The Birth of Shakespeare",
     "q": "William Shakespeare is born in Stratford-upon-Avon.",
     "y": 1564,
-    "month": 4
+    "month": 4,
+    "day": 23
   },
   {
     "id": "shays-rebellion",
@@ -1555,19 +1674,25 @@
     "id": "sino-japanese-war",
     "n": "The First Sino-Japanese War",
     "q": "Japan’s victory over China redraws the map of East Asia.",
-    "y": 1894
+    "y": 1894,
+    "month": 8,
+    "day": 1
   },
   {
     "id": "sistine-ceiling-unveiled",
     "n": "The Sistine Ceiling",
     "q": "Michelangelo’s painted Sistine ceiling is unveiled in Rome.",
-    "y": 1512
+    "y": 1512,
+    "month": 10,
+    "day": 31
   },
   {
     "id": "smallpox-eradicated",
     "n": "The Eradication of Smallpox",
     "q": "The World Health Organization declares smallpox eradicated.",
-    "y": 1980
+    "y": 1980,
+    "month": 5,
+    "day": 8
   },
   {
     "id": "solvay-1911",
@@ -1621,14 +1746,16 @@
     "n": "The Founding of St. Petersburg",
     "q": "Peter the Great founds St. Petersburg.",
     "y": 1703,
-    "month": 5
+    "month": 5,
+    "day": 27
   },
   {
     "id": "stalingrad",
     "n": "The Surrender at Stalingrad",
     "q": "The German army at Stalingrad surrenders after the winter in the ruins.",
     "y": 1943,
-    "month": 2
+    "month": 2,
+    "day": 2
   },
   {
     "id": "stamford-bridge",
@@ -1642,7 +1769,9 @@
     "id": "statue-of-liberty-dedicated",
     "n": "The Statue of Liberty",
     "q": "The Statue of Liberty is dedicated in New York harbor.",
-    "y": 1886
+    "y": 1886,
+    "month": 10,
+    "day": 28
   },
   {
     "id": "stirling-bridge",
@@ -1657,14 +1786,16 @@
     "n": "The Stockton and Darlington Railway",
     "q": "The Stockton & Darlington opens as the first public steam railway.",
     "y": 1825,
-    "month": 9
+    "month": 9,
+    "day": 27
   },
   {
     "id": "suez-canal",
     "n": "The Suez Canal Opens",
     "q": "The Suez Canal opens to shipping.",
     "y": 1869,
-    "month": 11
+    "month": 11,
+    "day": 17
   },
   {
     "id": "summer-of-love",
@@ -1677,20 +1808,24 @@
     "n": "The Telephone Patent",
     "q": "Alexander Graham Bell is granted the telephone patent.",
     "y": 1876,
-    "month": 3
+    "month": 3,
+    "day": 7
   },
   {
     "id": "tet-offensive",
     "n": "The Tet Offensive",
     "q": "The Tet offensive sweeps into the cities of the south.",
     "y": 1968,
-    "month": 1
+    "month": 1,
+    "day": 30
   },
   {
     "id": "the-pill-approved",
     "n": "The Contraceptive Pill",
     "q": "The contraceptive pill is approved in the United States.",
-    "y": 1960
+    "y": 1960,
+    "month": 5,
+    "day": 9
   },
   {
     "id": "thermopylae",
@@ -1861,7 +1996,9 @@
     "id": "watt-condenser-patent",
     "n": "The Separate Condenser",
     "q": "Watt patents the separate condenser, remaking the steam engine.",
-    "y": 1769
+    "y": 1769,
+    "month": 1,
+    "day": 5
   },
   {
     "id": "wikipedia-launched",
@@ -1884,7 +2021,8 @@
     "n": "The Woman Suffrage Procession",
     "q": "The suffrage procession fills Pennsylvania Avenue the day before the inauguration.",
     "y": 1913,
-    "month": 3
+    "month": 3,
+    "day": 3
   },
   {
     "id": "woodstock",
@@ -1922,6 +2060,8 @@
     "id": "zheng-he-first-voyage",
     "n": "The First Treasure Voyage",
     "q": "Zheng He’s treasure fleet sails from the Yangtze for the western oceans.",
-    "y": 1405
+    "y": 1405,
+    "month": 7,
+    "day": 11
   }
 ]

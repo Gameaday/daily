@@ -207,14 +207,47 @@ function showRoundVerdict(i, r, a, right){
 /* the page owns the game: which move each round builds and what each
    verdict means; the session dance itself (the deal, the busy guard,
    the triage, the nonce) lives in the shell now */
+/* an expired session no longer refunds the rounds: the reseat re-deals
+   and replays the graded picks into the fresh session, so no round is
+   ever answered twice and the record keeps its grades */
+let reseeding = false, pendingMove = null;
+async function reseat(){
+  if (reseeding || S.status !== 'playing') return;
+  reseeding = true;
+  session.reset();
+  const keep = S.picks.slice();
+  S.picks = []; S.ans = []; S.rv = [];
+  let done = 0;
+  for (let i = 0; i < keep.length; i++){
+    const before = done;
+    await session.play({ pick: keep[i] }, body => {
+      if (typeof body.a === 'number' && typeof body.w === 'string'){
+        const r = S.picks.length;
+        S.picks.push(keep[i]);
+        S.ans[r] = body.a;
+        S.rv[r] = body.w;
+        done++;
+      }
+    });
+    if (done === before || !S.nonce) break;
+  }
+  reseeding = false;
+  saveState();
+  if (S.picks.length >= EV.r.length){
+    const li = S.picks.length - 1;
+    showRoundVerdict(S.picks[li], li, S.ans[li], S.picks[li] === S.ans[li]);
+  } else renderRound();
+  if (pendingMove !== null){
+    const m = pendingMove;
+    pendingMove = null;
+    pick(m.i);
+  }
+}
 async function pickDealt(i){
+  if (reseeding){ pendingMove = { kind: 'pick', i }; return; }
   await session.play({ pick: i }, body => {
     if (typeof body.a !== 'number' || typeof body.w !== 'string'){
-      session.reset();
-      S.picks = []; S.ans = []; S.rv = [];
-      saveState();
-      renderRound();
-      toastMsg('this session expired, the rounds reset for a fresh one');
+      setTimeout(reseat, 0);
       return;
     }
     const r = S.picks.length;
@@ -302,14 +335,11 @@ const session = SHELL.makeDealt({
   /* the same option index answers a different round each time, so
      the key carries the round the pick is answering */
   dedup: m => 'q' + S.picks.length + ':' + m.pick,
-  onExpired: () => {
-    S.picks = []; S.ans = []; S.rv = [];
-    renderRound();
-  },
+  onExpired: () => { if (!reseeding) setTimeout(reseat, 0); },
   copy: {
     unavailable: 'the record is not answering right now, try again',
     over: 'this session is already over',
-    expired: 'this session expired, the rounds reset for a fresh one'
+    expired: 'this session expired; your rounds are safe while the day reseats'
   }
 });
 
@@ -323,7 +353,12 @@ if (!EV){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 $('btnNext').addEventListener('click', nextStep);
-if (S.status !== 'playing' || S.picks.length >= EV.r.length) renderSummary();
+/* a reload that inherits graded rounds on a dead session replays them
+   before the tally ever posts, so the evidence always names a live one */
+if (isDealt() && S.status === 'playing' && !S.nonce && S.picks.length > 0){
+  setTimeout(reseat, 0);
+  if (S.picks.length < EV.r.length) renderRound();
+} else if (S.status !== 'playing' || S.picks.length >= EV.r.length) renderSummary();
 else renderRound();
 SHELL.startCountdown('countdown', 500);
 });

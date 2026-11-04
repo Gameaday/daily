@@ -157,6 +157,53 @@ async function run(h){
     h.eq(relD2.x.S.status, 'won', 'relativity dealt: the dealt sweep wins');
     h.eq(relD2.env.els.sverdict.textContent, 'A clean sweep, 3 of 3.',
       'relativity dealt: the tally reads the dealt sweep');
+    /* --- an expired session no longer refunds the rounds: a mid-record
+       expiry reseats the graded picks and the sweep still lands --- */
+    let relXDeals = 0, relXN = 0;
+    const relXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        relXDeals++;
+        relXN = 0;
+        return { status: 200, body: { nonce: 'rx' + relXDeals, today: 0, puzzle: relServed.puzzle } };
+      }
+      const i = relXN++;
+      if (relXDeals === 1 && i >= 1)
+        return { status: 410, body: {} };
+      const last = i === relFull.r.length - 1;
+      return { status: 200, body: { verdict: body.move.pick === relFull.r[i].a ? 'hit' : 'miss',
+        a: relFull.r[i].a, w: relFull.r[i].w, final: last } };
+    };
+    const relXDst = {};
+    const relX = h.boot('relativity', EXP,
+      { now: T0, store: relXDst, servePuzzle: relServed, stubBanks: true, serveDealt: relXDealer });
+    await h.flush();
+    relX.env.els['opt' + relFull.r[0].a].click();
+    await h.flush();
+    h.eq(relX.x.S.picks.length, 1, 'relativity reseat: one round graded');
+    h.eq(relX.x.S.nonce, 'rx1', 'relativity reseat: the first session is held');
+    relX.env.els.btnNext.click();
+    relX.env.els['opt' + ((relFull.r[1].a + 1) % 2)].click();
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry, then the reseat replays the graded round */
+    h.eq(relX.x.S.picks.length, 1, 'relativity reseat: the graded round survives the expiry');
+    h.eq(relX.x.S.picks[0], relFull.r[0].a, 'relativity reseat: the pick survives the expiry');
+    h.eq(relX.x.S.nonce, 'rx2', 'relativity reseat: the record reseats onto a fresh session');
+    h.eq(relXDeals, 2, 'relativity reseat: exactly one redeal');
+    h.eq(relXN, 1, 'relativity reseat: the replay re-graded the round');
+    h.ok(String(relX.env.els.qtag.textContent).indexOf('round 2') >= 0,
+      'relativity reseat: the reseat seats the next round');
+    for (let i = 1; i < relFull.r.length; i++){
+        relX.env.els['opt' + relFull.r[i].a].click();
+        await h.flush();
+        if (i < relFull.r.length - 1) relX.env.els.btnNext.click();
+    }
+    relX.env.els.btnNext.click();
+    await h.flush();
+    h.eq(relX.x.S.status, 'won', 'relativity reseat: the sweep lands on the reseeded session');
+    const relXPost = h.lastPost(relX.env);
+    h.eq(relXPost.body.nonce, 'rx2', 'relativity reseat: the evidence names the reseeded session');
+    h.ok(relXPost.body.answer.every((p, i) => p === relFull.r[i].a),
+      'relativity reseat: the evidence carries the whole sweep');
     /* an archive replay keeps the local path: the bank still carries the answers */
     const relRe = h.boot('relativity', EXP, { now: T1, store: {}, search: '?d=0' });
     await h.flush();

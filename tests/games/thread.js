@@ -136,6 +136,51 @@ async function run(h){
     const thq = h.lastPost(r4.env).body;
     h.eq(thq.status, 'gave', 'thread: the give-up posts the gave status');
     h.eq(thq.nonce, 'gth1', 'thread: the give-up names its session');
+    /* --- an expired session no longer refunds the checks: a mid-thread
+       expiry reseats the spent check and the chain still wins --- */
+    let thXDeals = 0, thXChecks = 0;
+    const thXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        thXDeals++;
+        thXChecks = 0;
+        return { status: 200, body: { nonce: 'gthx' + thXDeals, today: 0, puzzle: thServed().puzzle } };
+      }
+      if (body.move.give !== undefined)
+        return { status: 200, body: { verdict: 'gave',
+          reveal: { m: thMids, d: thDids, links: thPz.links } } };
+      if (thXDeals === 1 && thXChecks >= 1)
+        return { status: 410, body: {} };
+      thXChecks++;
+      const lock = body.move.chain.map((v, i) => v === thMids[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks: thXChecks,
+          reveal: { m: thMids, d: thDids, links: thPz.links } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks: thXChecks } };
+    };
+    const thXStore = {};
+    const thX = h.boot('thread', ['S', 'PZ'],
+      { now: T0, store: thXStore, servePuzzle: thServed(), stubBanks: true, serveDealt: thXDealer });
+    await h.flush();
+    thX.x.S.slots = [thDids[0]].concat(thMids.slice(1));
+    thX.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(thX.x.S.checks, 1, 'thread reseat: one check spent');
+    h.eq(thX.x.S.nonce, 'gthx1', 'thread reseat: the first session is held');
+    thX.x.S.slots = thMids.slice();
+    thX.env.els.btnCheck.click();
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry, then the reseat replays the spent check */
+    h.eq(thX.x.S.checks, 1, 'thread reseat: the spent check survives the expiry');
+    h.eq(thX.x.S.nonce, 'gthx2', 'thread reseat: the thread reseats onto a fresh session');
+    h.eq(thXDeals, 2, 'thread reseat: exactly one redeal');
+    h.eq(thXChecks, 1, 'thread reseat: the replay re-metered the check');
+    thX.env.els.btnCheck.click();
+    await h.flush(); await h.flush();
+    h.eq(thX.x.S.status, 'won', 'thread reseat: the chain wins on the reseeded session');
+    const thXp = h.lastPost(thX.env).body;
+    h.eq(thXp.nonce, 'gthx2', 'thread reseat: the evidence names the reseeded session');
+    h.eq(thXp.meta.checks, 2, 'thread reseat: the evidence carries the re-metered checks');
     /* an archive replay carries the full chain again and never touches the
        dealt endpoints */
     const r5 = h.boot('thread', ['S'], { now: T1, store: {},

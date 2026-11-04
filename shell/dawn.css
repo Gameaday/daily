@@ -64,6 +64,21 @@
 @keyframes dawn-landed{ 0%{transform:scale(1);} 45%{transform:scale(1.28);}
                         100%{transform:scale(1);} }
 
+/* the dot remembers the sun: a hover gives the faintest warm hint
+   that the period came from somewhere, and a click glints the
+   morning back for a moment (dawn.js wires the class on every page,
+   dawn day or not) */
+.dawn-dot{ cursor:pointer; }
+.dawn-dot:hover{ text-shadow:0 0 9px rgba(244,183,105,.55); }
+.dawn-glint{ display:inline-block; animation:dawn-glint .9s ease; }
+@keyframes dawn-glint{
+  0%{ text-shadow:0 0 0 rgba(244,183,105,0); transform:scale(1); }
+  35%{ text-shadow:0 0 14px 4px rgba(244,183,105,.9),
+                    0 0 30px 12px rgba(244,183,105,.35);
+       transform:scale(1.35); }
+  100%{ text-shadow:0 0 0 rgba(244,183,105,0); transform:scale(1); }
+}
+
 /* the still composition: motion-reduced visitors meet the morning at
    rest, a quiet fade instead of the choreography */
 .dawn-still .dawn-day{ animation:none; opacity:1; }

@@ -18,6 +18,14 @@
    or a browser without the web animations api reveals the mark plainly
    instead, so no page is ever left without its dot.
 
+   The period keeps the sun two more ways:
+   - a later click on the dot glints the morning back, a warm gold
+     pulse to remind where the period came from (every day, not just
+     dawn days), with a faint hover glow as the hint
+   - the favicon badge carries the motif too: its glyph is a little
+     dawn sun, and on a dawn day the tab itself gets a miniature
+     sunrise, the sun rising inside the badge while the show plays
+
    Contract with the shell (common.js passes these in):
      key      the ET date key for today, as YYYY-MM-DD
      num      the puzzle number of the day
@@ -132,12 +140,100 @@
     }
   }
 
+  /* ---------------- the favicon: the motif in the tab ---------------- */
+
+  /* the badge glyph is a small dawn sun: a warm disc with a soft halo,
+     resting at the badge's heart. On a dawn day the same drawing rises,
+     the badge crossfading from night indigo to its cream. */
+  function iconSVG(badgeFill, cy){
+    var svg =
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
+      "<defs><radialGradient id='s' gradientUnits='userSpaceOnUse' cx='50' cy='" + cy + "' r='17'>" +
+      "<stop offset='0' stop-color='#fff6e3'/><stop offset='.5' stop-color='#f5c46b'/>" +
+      "<stop offset='1' stop-color='#e8974c'/></radialGradient></defs>" +
+      "<rect width='100' height='100' rx='22' fill='#f7f1e5'/>" +
+      "<circle cx='50' cy='50' r='43' fill='" + badgeFill + "' stroke='#e5dbc8' stroke-width='3'/>" +
+      "<circle cx='50' cy='" + cy + "' r='26' fill='#f4b769' fill-opacity='.3'/>" +
+      "<circle cx='50' cy='" + cy + "' r='14' fill='url(#s)'/></svg>";
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+  function mix(hex1, hex2, t){
+    var p = function(h){
+      return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+    };
+    var a = p(hex1), b = p(hex2);
+    var c = function(i){ return Math.round(a[i] + (b[i] - a[i]) * t); };
+    return 'rgb(' + c(0) + ',' + c(1) + ',' + c(2) + ')';
+  }
+  var REST_ICON = iconSVG('#fffdf7', 50);
+  var favRising = false;
+  function setIcon(href){
+    try {
+      var links = document.querySelectorAll('link[rel~="icon"]');
+      var link = links.length ? links[links.length - 1] : null;
+      if (!link){
+        link = document.createElement('link');
+        link.rel = 'icon';
+        (document.head || document.documentElement).appendChild(link);
+      }
+      link.setAttribute('href', href);
+    } catch (e){}
+  }
+  /* the miniature sunrise: seven frames, night to cream, the disc
+     rising to the badge's heart as the tab keeps time with the sky */
+  function faviconRise(){
+    if (favRising) return;
+    favRising = true;
+    var steps = 7, i = 0;
+    var tick = function(){
+      var t = i / (steps - 1);
+      setIcon(iconSVG(mix('#2e2242', '#fffdf7', t), 82 - 32 * t));
+      i++;
+      if (i < steps) window.setTimeout(tick, 800);
+      else favRising = false;
+    };
+    tick();
+  }
+
+  /* ---------------- the glint: the dot remembers the sun ---------------- */
+
+  /* wired on every page, dawn day or not: a click on the logo's mark
+     brings the warm glow back for a moment. The hover glow in
+     dawn.css is the hint, this pulse is the reminder. */
+  function wireGlint(){
+    var m = logoMark();
+    if (!m || m._dawnGlint) return;
+    m._dawnGlint = true;
+    m.classList.add('dawn-dot');
+    m.addEventListener('click', function(){
+      if (m.classList.contains('dawn-awaiting')) return;
+      try {
+        m.classList.remove('dawn-glint');
+        void m.offsetWidth;
+        m.classList.add('dawn-glint');
+      } catch (e){}
+    });
+  }
+  function whenReady(fn){
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+  whenReady(function(){
+    wireGlint();
+    if (!favRising) setIcon(REST_ICON);
+  });
+
   function play(cfg){
     cfg = cfg || {};
     if (document.getElementById('dawn-overlay')) return false;
     var ov = build(cfg);
     var sun = ov.querySelector('.dawn-sun');
     var gone = false, freeSun = null, flight = null;
+
+    /* the tab keeps time: a miniature sunrise while the show plays,
+     the resting sun otherwise */
+    if (reducedMotion()) setIcon(REST_ICON);
+    else faviconRise();
 
     /* the deposit plan: if this show can end in a settle, hold the
        logo's mark back from the first paint, so the sun has an empty

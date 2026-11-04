@@ -195,6 +195,53 @@ async function run(h){
     h.eq(tlp6.status, 'lost', 'timeline: the lost status rides the wire');
     h.eq(tlp6.meta.checks, 6, 'timeline: the session check meter rides the wire');
     h.eq(tlp6.nonce, 'tl2', 'timeline: the lost evidence names its session');
+    /* --- an expired session no longer refunds the checks: a mid-lane
+       expiry reseats the spent check and the order still wins --- */
+    let tlXDeals = 0, tlXChecks = 0;
+    const tlXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        tlXDeals++;
+        tlXChecks = 0;
+        return { status: 200, body: { nonce: 'tlx' + tlXDeals, today: 0, puzzle: tlServed().puzzle } };
+      }
+      if (body.move.give !== undefined)
+        return { status: 200, body: { verdict: 'gave', reveal: { events: tlEvents } } };
+      if (tlXDeals === 1 && tlXChecks >= 1)
+        return { status: 410, body: {} };  /* the session dies on the second check */
+      tlXChecks++;
+      const lock = body.move.order.map((v, i) => v === tlWant[i]);
+      if (lock.every(Boolean))
+        return { status: 200, body: { verdict: 'won', checks: tlXChecks,
+          reveal: { events: tlEvents } } };
+      return { status: 200, body: { verdict: 'miss',
+        right: lock.filter(Boolean).length, lock, checks: tlXChecks } };
+    };
+    const tlXStore = {};
+    const tlX = h.boot('timeline', ['S'],
+      { now: T0, store: tlXStore, servePuzzle: tlServed(), stubBanks: true, serveDealt: tlXDealer });
+    await h.flush();
+    const tlXWrong = tlWant.slice();
+    [tlXWrong[0], tlXWrong[1]] = [tlXWrong[1], tlXWrong[0]];
+    tlX.x.S.order = tlXWrong.slice();
+    tlX.env.els.btnCheck.click();
+    await h.flush();
+    h.eq(tlX.x.S.checks, 1, 'timeline reseat: one check spent');
+    h.eq(tlX.x.S.nonce, 'tlx1', 'timeline reseat: the first session is held');
+    tlX.x.S.order = tlWant.slice();       /* the right order, but the session dies */
+    tlX.env.els.btnCheck.click();
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the spent check */
+    h.eq(tlX.x.S.checks, 1, 'timeline reseat: the spent check survives the expiry');
+    h.eq(tlX.x.S.nonce, 'tlx2', 'timeline reseat: the lane reseats onto a fresh session');
+    h.eq(tlXDeals, 2, 'timeline reseat: exactly one redeal');
+    h.eq(tlXChecks, 1, 'timeline reseat: the replay re-metered the check');
+    tlX.env.els.btnCheck.click();
+    await h.flush(); await h.flush();
+    h.eq(tlX.x.S.status, 'won', 'timeline reseat: the order wins on the reseeded session');
+    const tlXp = h.lastPost(tlX.env).body;
+    h.eq(tlXp.nonce, 'tlx2', 'timeline reseat: the evidence names the reseeded session');
+    h.eq(tlXp.meta.checks, 2, 'timeline reseat: the evidence carries the re-metered checks');
+
     /* an archive replay carries the years again and never touches the
        dealt endpoints */
     const tlArc = { day: 0, today: 1, puzzle: { events: tlEvents } };

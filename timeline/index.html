@@ -392,8 +392,35 @@ function mergeYears(reveal){
 /* the page owns the game: which move a check builds and what each verdict
    means; the session dance itself (the deal, the busy guard, the triage,
    the nonce) lives in the shell now */
+/* an expired session no longer refunds the checks: the reseat re-deals
+   and replays the spent checks into the fresh session, so no check is
+   ever spent twice */
+let reseeding = false, pendingMove = null;
+async function reseat(){
+  if (reseeding || S.status !== 'playing') return;
+  reseeding = true;
+  session.reset();
+  const keep = (S.spent || []).slice();
+  let done = 0;
+  for (let i = 0; i < keep.length; i++){
+    await session.play({ order: keep[i] }, body => {
+      if (body.verdict === 'miss' && typeof body.checks === 'number') done++;
+    });
+    if (done <= i || !S.nonce) break;
+  }
+  reseeding = false;
+  saveState();
+  render();
+  if (pendingMove !== null){
+    const m = pendingMove;
+    pendingMove = null;
+    if (m.kind === 'check') checkDealt(); else giveDealt();
+  }
+}
 async function checkDealt(){
-  await session.play({ order: S.order.slice() }, body => {
+  if (reseeding){ pendingMove = { kind: 'check' }; return; }
+  const order = S.order.slice();
+  await session.play({ order }, body => {
     S.started = true;
     if (body.verdict === 'won'){
       mergeYears(body.reveal);
@@ -411,16 +438,18 @@ async function checkDealt(){
     } else {
       S.locked = (body.lock || []).map(Boolean);
       S.checks = body.checks;
+      S.spent = S.spent || [];
+      S.spent.push(order);
       saveState(); render();
       toastMsg(body.right + (body.right === 1 ? ' card is' : ' cards are') + ' in the right place');
     }
   });
 }
 async function giveDealt(){
+  if (reseeding){ pendingMove = { kind: 'give' }; return; }
   await session.play({ give: 1 }, body => {
     if (body.verdict !== 'gave' || !body.reveal){
-      session.reset();
-      toastMsg('this round expired, check again for a fresh one');
+      setTimeout(reseat, 0);
       return;
     }
     mergeYears(body.reveal);
@@ -490,10 +519,11 @@ const session = SHELL.makeDealt({
   state: () => S,
   save: saveState,
   toast: toastMsg,
+  onExpired: () => { if (!reseeding) setTimeout(reseat, 0); },
   copy: {
     unavailable: 'the lane is not answering right now, try again',
     over: 'this round is already over',
-    expired: 'this round expired, check again for a fresh one'
+    expired: 'this session expired; your lane is safe while the day reseats'
   }
 });
 
@@ -512,6 +542,11 @@ $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();
 if (S.status !== 'playing') showReveal();
+/* a reload can inherit spent checks with a dead session (the reseat
+   never landed before the tab closed): replay them before the next
+   check, so the budget and the session stay on the same lane */
+if (isDealt() && S.status === 'playing' && !S.nonce && S.spent && S.spent.length)
+  setTimeout(reseat, 0);
 SHELL.startCountdown('countdown', 500);
 });
 </script>

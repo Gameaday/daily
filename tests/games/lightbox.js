@@ -126,6 +126,58 @@ async function run(h){
     h.eq(lbLR.x.S.status, 'lost', 'lightbox dealt: a reload keeps the fogged day');
     h.ok((String(lbLR.env.els.solvedpix.innerHTML).match(/px f/g) || []).length > 0,
       'lightbox dealt: the reload replays the picture that never shipped');
+    /* --- an expired session no longer spends the film: a mid-darkroom
+       expiry reseats the spent exposure and the development still
+       wins --- */
+    let lbXDeals = 0, lbXMisses = 0;
+    const lbXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        lbXDeals++;
+        lbXMisses = 0;
+        return { status: 200, body: { nonce: 'lbx' + lbXDeals, today: 0, puzzle: lbServed.puzzle } };
+      }
+      const rows = body.move.grid.map(rw => [...rw].map(ch => ch === '1' ? 1 : 0));
+      if (JSON.stringify(rows) === JSON.stringify(lbSol))
+        return { status: 200, body: { verdict: 'won',
+          reveal: { n: lbFull.n, g: lbFull.g } } };
+      if (lbXDeals === 1 && lbXMisses >= 1)
+        return { status: 410, body: {} };  /* the session dies on the second bad exposure */
+      lbXMisses++;
+      if (lbXMisses >= 4)
+        return { status: 200, body: { verdict: 'lost',
+          reveal: { n: lbFull.n, g: lbFull.g } } };
+      const bad = [], need = [];
+      for (let r2 = 0; r2 < 7; r2++) for (let c2 = 0; c2 < 7; c2++){
+        if (rows[r2][c2] === 1 && !lbSol[r2][c2]) bad.push([r2, c2]);
+        if (rows[r2][c2] !== 1 && lbSol[r2][c2]) need.push([r2, c2]);
+      }
+      return { status: 200, body: { verdict: 'miss', bad, need, mistakes: lbXMisses } };
+    };
+    const lbXDst = {};
+    const lbXD = h.boot('lightbox', ['S'],
+      { now: T0, store: lbXDst, servePuzzle: lbServed, stubBanks: true, serveDealt: lbXDealer });
+    await h.flush();
+    lbXD.x.S.marks[0][0] = lbSol[0][0] ? 0 : 1;  /* one bad exposure */
+    lbXD.env.els.btnDevelop.click();
+    await h.flush();
+    h.eq(lbXD.x.S.mistakes, 1, 'lightbox reseat: one exposure spent');
+    h.eq(lbXD.x.S.nonce, 'lbx1', 'lightbox reseat: the first session is held');
+    lbXD.x.S.marks[0][1] = lbSol[0][1] ? 0 : 1;  /* the session dies on the second */
+    lbXD.env.els.btnDevelop.click();
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the spent exposure */
+    h.eq(lbXD.x.S.mistakes, 1, 'lightbox reseat: the spent exposure survives the expiry');
+    h.eq(lbXD.x.S.nonce, 'lbx2', 'lightbox reseat: the darkroom reseats onto a fresh session');
+    h.eq(lbXDeals, 2, 'lightbox reseat: exactly one redeal');
+    h.eq(lbXMisses, 1, 'lightbox reseat: the replay re-metered the exposure');
+    for (let i = 0; i < 7; i++) for (let j = 0; j < 7; j++) lbXD.x.S.marks[i][j] = lbSol[i][j] ? 1 : 0;
+    lbXD.env.els.btnDevelop.click();
+    await h.flush(); await h.flush();
+    h.eq(lbXD.x.S.status, 'won', 'lightbox reseat: the film develops on the reseeded session');
+    const lbXPost = h.lastPost(lbXD.env);
+    h.eq(lbXPost.body.nonce, 'lbx2', 'lightbox reseat: the evidence names the reseeded session');
+    h.eq(lbXPost.body.meta.mistakes, 1, 'lightbox reseat: the evidence carries the re-metered exposure');
+
     /* an archive replay keeps the local path: the banked day still
        carries its picture and nothing posts */
     const lbRe = h.boot('lightbox', EXP, { now: T1, store: {}, search: '?d=0' });

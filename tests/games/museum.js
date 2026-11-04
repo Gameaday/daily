@@ -100,6 +100,61 @@ async function run(h){
     h.eq(muR.x.S.status, 'won', 'museum dealt: a reload keeps the won day');
     h.eq(muR.env.els.answer.textContent, muFull.a,
       'museum dealt: the reload retells the name it never shipped');
+    /* --- an expired session no longer spends the visit: a mid-hunt
+       expiry reseats the metered clues and the name still wins --- */
+    let muXDeals = 0, muXClues = 0, muXNames = 0;
+    const muXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        muXDeals++;
+        muXClues = 0;
+        return { status: 200, body: { nonce: 'mx' + muXDeals, today: 0, puzzle: muServed.puzzle } };
+      }
+      if (body.move.clue){
+        if (muXClues >= 4) return { status: 400, body: { error: 'no more clues' } };
+        muXClues++;
+        return { status: 200, body: { verdict: 'clue', clueIdx: muXClues } };
+      }
+      muXNames++;
+      if (muXDeals === 1 && muXNames >= 2)
+        return { status: 410, body: {} };  /* the session dies on the second name */
+      const muXNorm = s => String(s || '').toLowerCase().replace(/^the /, '').trim();
+      if ([muFull.a].concat(muFull.al).some(x => muXNorm(body.move.name) === muXNorm(x)))
+        return { status: 200, body: { verdict: 'won',
+          reveal: { a: muFull.a, w: muFull.w } } };
+      if (muXClues < 4){
+        muXClues++;
+        return { status: 200, body: { verdict: 'miss', clueIdx: muXClues } };
+      }
+      return { status: 200, body: { verdict: 'lost',
+        reveal: { a: muFull.a, w: muFull.w } } };
+    };
+    const muXD = h.boot('museum', EXP,
+      { now: T0, store: {}, servePuzzle: muServed, stubBanks: true, serveDealt: muXDealer });
+    await h.flush();
+    muXD.env.els.guess.value = 'notit';
+    muXD.x.submitGuess();               /* a wrong name buys the next clue */
+    await h.flush();
+    h.eq(muXD.x.S.clueIdx, 1, 'museum reseat: one clue metered');
+    h.eq(muXD.x.S.nonce, 'mx1', 'museum reseat: the first session is held');
+    muXD.env.els.btnClue.click();       /* a clue request meters another */
+    await h.flush();
+    h.eq(muXD.x.S.clueIdx, 2, 'museum reseat: two clues metered');
+    muXD.env.els.guess.value = 'stillnotit';
+    muXD.x.submitGuess();               /* the session dies on the second name */
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the metered clues */
+    h.eq(muXD.x.S.clueIdx, 2,
+      'museum reseat: the metered clues survive the expiry');
+    h.eq(muXD.x.S.nonce, 'mx2', 'museum reseat: the visit reseats onto a fresh session');
+    h.eq(muXDeals, 2, 'museum reseat: exactly one redeal');
+    muXD.env.els.guess.value = muFull.al[0];
+    muXD.x.submitGuess();               /* the name, on the fresh session */
+    await h.flush(); await h.flush();
+    h.eq(muXD.x.S.status, 'won', 'museum reseat: the name wins on the reseeded session');
+    const muXPost = h.lastPost(muXD.env);
+    h.eq(muXPost.body.nonce, 'mx2', 'museum reseat: the evidence names the reseeded session');
+    h.eq(muXPost.body.meta.clues, 3, 'museum reseat: the evidence carries the session meter');
+
     /* an archive replay keeps the local path: the bank still carries the name */
     const muRe = h.boot('museum', EXP, { now: T1, store: {}, search: '?d=0' });
     muRe.env.els.guess.value = muRe.x.EXHIBIT.al[0];

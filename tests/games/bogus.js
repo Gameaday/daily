@@ -70,6 +70,46 @@ async function run(h){
     h.eq(bgR.x.S.status, 'won', 'bogus dealt: a reload keeps the won day');
     h.eq(bgR.env.els.why.textContent, bgFull.w,
       'bogus dealt: the reload retells the why it never shipped');
+    /* --- an expired session no longer spends the hunt: a mid-hunt
+       expiry reseats the graded picks and the find still wins --- */
+    let bgXDeals = 0, bgXPicks = [];
+    const bgXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        bgXDeals++;
+        bgXPicks = [];
+        return { status: 200, body: { nonce: 'bx' + bgXDeals, today: 0, puzzle: bgServed.puzzle } };
+      }
+      if (body.move.pick !== undefined){
+        bgXPicks.push(body.move.pick);
+        if (bgXDeals === 1 && bgXPicks.length >= 2)
+          return { status: 410, body: {} };
+        if (body.move.pick === bgFull.l) return { status: 200, body: { verdict: 'won',
+          reveal: { l: bgFull.l, w: bgFull.w } } };
+        return { status: 200, body: { verdict: 'miss', left: 3 - bgXPicks.length } };
+      }
+    };
+    const bgXD = h.boot('bogus', EXP,
+      { now: T0, store: {}, servePuzzle: bgServed, stubBanks: true, serveDealt: bgXDealer });
+    await h.flush();
+    bgXD.x.pick(0);
+    await h.flush();
+    h.eq(bgXD.x.S.picked.join(), '0', 'bogus reseat: one pick graded');
+    h.eq(bgXD.x.S.nonce, 'bx1', 'bogus reseat: the first session is held');
+    bgXD.x.pick(1);                     /* the session dies on the second pick */
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the graded pick */
+    h.eq(bgXD.x.S.picked.join(), '0',
+      'bogus reseat: the graded pick survives the expiry');
+    h.eq(bgXD.x.S.nonce, 'bx2', 'bogus reseat: the hunt reseats onto a fresh session');
+    h.eq(bgXDeals, 2, 'bogus reseat: exactly one redeal');
+    bgXD.x.pick(bgFull.l);              /* the lie, on the fresh session */
+    await h.flush(); await h.flush();
+    h.eq(bgXD.x.S.status, 'won', 'bogus reseat: the find wins on the reseeded session');
+    const bgXPost = h.lastPost(bgXD.env);
+    h.eq(bgXPost.body.nonce, 'bx2', 'bogus reseat: the evidence names the reseeded session');
+    h.eq(bgXPost.body.answer.join(), '0,5',
+      'bogus reseat: the evidence carries the whole hunt');
+
     /* an archive replay keeps the local path: the bank still carries the lie */
     const bgRe = h.boot('bogus', EXP, { now: T1, store: {}, search: '?d=0' });
     bgRe.x.pick(bgRe.x.puzzle.l);

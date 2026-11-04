@@ -165,7 +165,33 @@ function isDealt(){
 /* the page owns the game: which move each button builds and what each
    verdict means; the session dance itself (the deal, the busy guard,
    the triage, the nonce) lives in the shell now */
+/* an expired session no longer spends the visit: the reseat re-deals
+   and replays the metered clues into the fresh session, so no clue is
+   ever spent twice */
+let reseeding = false, pendingMove = null;
+async function reseat(){
+  if (reseeding || S.status !== 'playing') return;
+  reseeding = true;
+  session.reset();
+  const keep = S.clueIdx;
+  let done = 0;
+  for (let i = 0; i < keep; i++){
+    await session.play({ clue: 1 }, body => {
+      if (body.verdict === 'clue' && typeof body.clueIdx === 'number') done++;
+    });
+    if (done <= i || !S.nonce) break;
+  }
+  reseeding = false;
+  saveState();
+  render();
+  if (pendingMove !== null){
+    const m = pendingMove;
+    pendingMove = null;
+    if (m.kind === 'guess') guessDealt(m.inp); else clueDealt();
+  }
+}
 async function guessDealt(inp){
+  if (reseeding){ pendingMove = { kind: 'guess', inp: inp }; return; }
   await session.play({ name: inp.value }, body => {
     if (body.verdict === 'won'){
       S.typed = inp.value;
@@ -189,10 +215,10 @@ async function guessDealt(inp){
   });
 }
 async function clueDealt(){
+  if (reseeding){ pendingMove = { kind: 'clue' }; return; }
   await session.play({ clue: 1 }, body => {
     if (body.verdict !== 'clue' || typeof body.clueIdx !== 'number'){
-      session.reset();
-      toastMsg('this exhibit expired, name it again for a fresh one');
+      setTimeout(reseat, 0);
       return;
     }
     S.clueIdx = body.clueIdx;
@@ -312,10 +338,11 @@ const session = SHELL.makeDealt({
   /* clues are repeatable by design, so only a name move carries a
      key: the name as the session's own grader would read it */
   dedup: m => m.clue !== undefined ? null : ('n:' + norm(m.name)),
+  onExpired: () => { if (!reseeding) setTimeout(reseat, 0); },
   copy: {
     unavailable: 'the exhibit is not answering right now, try again',
     over: 'this visit is already over',
-    expired: 'this exhibit expired, name it again for a fresh one'
+    expired: 'this session expired; your clues are safe while the day reseats'
   }
 });
 
@@ -331,6 +358,11 @@ $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 render();
 if (S.status !== 'playing') showReveal();
+/* a reload can inherit metered clues with a dead session (the reseat
+   never landed before the tab closed): replay them before the next
+   move, so the page and the session stay on the same clue */
+if (isDealt() && S.status === 'playing' && S.started && S.clueIdx > 0 && !S.nonce)
+  setTimeout(reseat, 0);
 SHELL.startCountdown('countdown', 500);
 });
 </script>

@@ -73,12 +73,13 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
                     '#b3541e 0 50%'])
     if (dawnCss.indexOf(pin) === -1)
       fail('shell/dawn.css lost ' + pin);
-  /* the deposit geometry travels as a pair: dawn.js lands the flight
-     on the disc dawn.css draws, at the drawn size */
-  for (const pin of ['0.34', '0.45'])
+  /* the deposit geometry travels as a set: dawn.js lands the flight
+     on the disc dawn.css draws, at the drawn size, in the period's
+     own seat */
+  for (const pin of ['0.34', '0.41', 'DISC_EM / 2 * fs'])
     if (dawnJs.indexOf(pin) === -1)
       fail('shell/dawn.js lost the ' + pin + ' deposit constant');
-  for (const pin of ['.34em', 'bottom:.28em'])
+  for (const pin of ['.34em', 'bottom:.24em', 'left:0;', 'line-height:1'])
     if (dawnCss.indexOf(pin) === -1)
       fail('shell/dawn.css lost the ' + pin + ' disc geometry');
   for (const file of [[dawnJs, 'shell/dawn.js'], [dawnCss, 'shell/dawn.css']])

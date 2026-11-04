@@ -71,7 +71,7 @@
    drop-shadow, so whatever is visible glows: the disc in day, the ring
    at night, a word on the recycle pages, and never the ghost of a
    hidden glyph. */
-.dawn-kiss{ display:inline-block; cursor:pointer; position:relative;
+.dawn-kiss{ display:inline-block; line-height:1; cursor:pointer; position:relative;
   user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;
   transition:filter .55s ease; }
 .dawn-kiss.dawn-hold{ filter:drop-shadow(0 0 6px rgba(244,183,105,.9))
@@ -85,19 +85,25 @@
   100%{ transform:scale(1); filter:none; }
 }
 
-/* the mark itself is drawn, not typed: a .34em disc, its center .45em
-   above the mark box's bottom (bottom .28em plus half the diameter).
-   Those two numbers are the deposit contract: dawn.js lands the
-   sunrise's flight on that exact spot at that exact size, and
-   checks pin the pair. Day fills the disc with the accent, the
+/* the mark itself is drawn, not typed: a .34em disc seated where the
+   period's own ink sits. The kiss is its own one-em box (inline-block,
+   line-height 1), so its bottom edge hangs exactly one descent below
+   the baseline on every page, whatever the heading's leading. The
+   disc's foot rests on the baseline (.24em above the box's bottom),
+   and its left edge starts where the period's own advance starts, so
+   it grows rightward into the heading's trailing space and never
+   leftward into the word. Its center, .41em above the box's bottom,
+   and its .34em size are the deposit contract: dawn.js lands the
+   sunrise's flight on that exact spot at that exact size, and checks
+   pin the contract. Day fills the disc with the accent, the
    deposited sun gone cool. Night hollows it into a thin gold ring:
    the sun has set, its shape remains. Auto carries both hours at
    once: the day fills the left half of the disc, and the night's
    gold rings the whole. Headings that end in a colored word
    (the recycle pair) carry none of this: their word stays visible,
    and only the tap and the glow apply to them. */
-.dawn-kiss.dawn-punct::before{ content:''; position:absolute; left:50%;
-  bottom:.28em; width:.34em; height:.34em; margin-left:-.17em;
+.dawn-kiss.dawn-punct::before{ content:''; position:absolute; left:0;
+  bottom:.24em; width:.34em; height:.34em;
   border-radius:50%; border:1.5px solid transparent; pointer-events:none; }
 .dawn-kiss.dawn-period{ color:transparent; }
 .dawn-kiss.dawn-period::before{ background:var(--accent); }

@@ -71,8 +71,8 @@
   var DISC_EM = 0.34;  /* the drawn mark's diameter, in em of the mark's
                           own font: the width dawn.css gives the disc,
                           kept in step and pinned by checks/games.js */
-  var LIFT_EM = 0.45;  /* the drawn mark's center, this far above the
-                          mark box's bottom: the css bottom (.28em)
+  var LIFT_EM = 0.41;  /* the drawn mark's center, this far above the
+                          mark box's bottom: the css bottom (.24em)
                           plus half the diameter. Same step, same pin */
   var PRESS = 600;   /* the dot: press and hold this long to replay the
                         morning */
@@ -400,11 +400,12 @@
     if (!sr.width || !tr.width || !document.body) return null;
     var fromX = sr.left + sr.width / 2;
     var fromY = sr.top + sr.height / 2;
-    var toX = tr.left + tr.width / 2;
+    var toX = tr.left + DISC_EM / 2 * fs;
     /* the landing is derived, not tuned: the flight ends centered on
-       the disc dawn.css draws (bottom .28em plus half of .34em wide),
-       at exactly its diameter, so the bright disc vanishes onto its
-       own resting shape. Every font lands the same */
+       the disc dawn.css draws (its left edge on the period's own
+       advance, its foot on the baseline, .34em wide), at exactly its
+       diameter, so the bright disc vanishes onto its own resting
+       shape. Every font lands the same */
     var toY = tr.bottom - LIFT_EM * fs;
     var dia = DISC_EM * fs;
     var dx = toX - fromX;

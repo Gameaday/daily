@@ -61,7 +61,8 @@
     "n": "The Apollo 8 Moon Orbit",
     "q": "Apollo 8 becomes the first crewed craft to orbit the Moon.",
     "y": 1968,
-    "month": 12
+    "month": 12,
+    "day": 21
   },
   {
     "id": "apple-founded",
@@ -100,7 +101,8 @@
     "n": "The Battle of Austerlitz",
     "q": "Napoleon’s masterpiece breaks the Austrians and Russians at Austerlitz.",
     "y": 1805,
-    "month": 12
+    "month": 12,
+    "day": 2
   },
   {
     "id": "baird-television",
@@ -114,13 +116,16 @@
     "n": "Operation Barbarossa",
     "q": "Germany invades the Soviet Union with the largest invasion force ever assembled.",
     "y": 1941,
-    "month": 6
+    "month": 6,
+    "day": 22
   },
   {
     "id": "bastille-stormed",
     "n": "The Storming of the Bastille",
     "q": "Paris crowds storm the Bastille in search of powder and prisoners.",
-    "y": 1789
+    "y": 1789,
+    "month": 7,
+    "day": 14
   },
   {
     "id": "battle-of-agincourt",
@@ -157,7 +162,9 @@
     "id": "beethoven-ninth-premiere",
     "n": "The Ninth Symphony",
     "q": "Beethoven’s Ninth premieres in Vienna with the deaf composer on stage.",
-    "y": 1824
+    "y": 1824,
+    "month": 5,
+    "day": 7
   },
   {
     "id": "berlin-wall-built",
@@ -1527,7 +1534,9 @@
     "id": "transistor-demonstrated",
     "n": "The Transistor",
     "q": "The transistor is demonstrated at Bell Labs in New Jersey.",
-    "y": 1947
+    "y": 1947,
+    "month": 12,
+    "day": 23
   },
   {
     "id": "treaty-of-paris-1783",
@@ -1566,7 +1575,8 @@
     "n": "The Tomb of Tutankhamun",
     "q": "Howard Carter opens Tutankhamun’s tomb.",
     "y": 1922,
-    "month": 11
+    "month": 11,
+    "day": 26
   },
   {
     "id": "university-of-bologna-founded",
@@ -1579,7 +1589,8 @@
     "n": "The Winter at Valley Forge",
     "q": "The Continental Army winters starving at Valley Forge.",
     "y": 1777,
-    "month": 12
+    "month": 12,
+    "day": 19
   },
   {
     "id": "verdun",
@@ -1602,7 +1613,8 @@
     "n": "The Wall Street Crash",
     "q": "The Wall Street Crash wipes out the US stock market.",
     "y": 1929,
-    "month": 10
+    "month": 10,
+    "day": 24
   },
   {
     "id": "war-of-the-worlds-broadcast",
@@ -1631,13 +1643,17 @@
     "id": "wikipedia-launched",
     "n": "The Launch of Wikipedia",
     "q": "Wikipedia goes live as a free encyclopedia anyone can edit.",
-    "y": 2001
+    "y": 2001,
+    "month": 1,
+    "day": 15
   },
   {
     "id": "wimbledon-first",
     "n": "The First Wimbledon",
     "q": "The All England Club holds the first lawn tennis championship at Wimbledon.",
-    "y": 1877
+    "y": 1877,
+    "month": 7,
+    "day": 9
   },
   {
     "id": "womens-march-1913",
@@ -1651,7 +1667,8 @@
     "n": "The Woodstock Festival",
     "q": "The Woodstock festival gathers half a million on Max Yasgur’s farm.",
     "y": 1969,
-    "month": 8
+    "month": 8,
+    "day": 15
   },
   {
     "id": "wright-first-flight",
@@ -1665,13 +1682,17 @@
     "id": "www-first-website",
     "n": "The First Website",
     "q": "The first website goes live at CERN.",
-    "y": 1991
+    "y": 1991,
+    "month": 8,
+    "day": 6
   },
   {
     "id": "xray-discovered",
     "n": "The X-ray",
     "q": "Röntgen discovers a ray that photographs the bones inside a hand.",
-    "y": 1895
+    "y": 1895,
+    "month": 11,
+    "day": 8
   },
   {
     "id": "zheng-he-first-voyage",

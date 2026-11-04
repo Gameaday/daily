@@ -207,6 +207,45 @@ a.card .go{ display:inline-block; transition:transform .12s ease; }
 a.card:hover .go{ transform:translateX(3px); }
 a.card:active{ transform:translateY(0); }
 
+/* ------- the paper and the sky -------
+   The page is lit, not flat. A whisper of grain gives the paper its
+   tooth in both themes, the day is lit from above by a warm wash at
+   the top of the viewport, and at night the sky is still there: a
+   few faint stars over the indigo, pinned where the scroll cannot
+   carry them away. The grain rides above everything at a whisper and
+   takes no pointer events; the wash and the stars are body
+   backgrounds and never sit above the words. */
+body::after{ content:''; position:fixed; inset:0; z-index:10001;
+  pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size:140px 140px; }
+html.night body::after{ opacity:.08; }
+body{ background-image:linear-gradient(180deg, rgba(244,183,105,.13),
+  rgba(244,183,105,0) 240px); background-repeat:no-repeat;
+  background-attachment:fixed; }
+html.night body{ background-image:
+    radial-gradient(1px 1px at 8% 12%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.2px 1.2px at 19% 30%, rgba(246,223,190,.4), transparent 100%),
+    radial-gradient(.9px .9px at 31% 9%, rgba(245,196,107,.45), transparent 100%),
+    radial-gradient(1px 1px at 44% 22%, rgba(224,184,79,.5), transparent 100%),
+    radial-gradient(1.3px 1.3px at 58% 13%, rgba(246,223,190,.35), transparent 100%),
+    radial-gradient(.9px .9px at 71% 26%, rgba(224,184,79,.5), transparent 100%),
+    radial-gradient(1.1px 1.1px at 84% 10%, rgba(245,196,107,.4), transparent 100%),
+    radial-gradient(.8px .8px at 93% 31%, rgba(246,223,190,.4), transparent 100%),
+    linear-gradient(180deg, rgba(74,44,72,.4), rgba(74,44,72,0) 260px); }
+
+/* the digits stand still: tabular figures wherever numbers tick or
+   line up, so a countdown or a row of stats never wiggles as it
+   changes. The ids and classes are the games' own; the rule only
+   steadies them */
+#countdown, #count, .bigclock, .pno, .stat, .scoreline, .distrow{
+  font-variant-numeric: tabular-nums; }
+
+/* the day's last minute: dawn.js watches the countdown from the side
+   and warms it when less than a minute remains, the day about to turn */
+.dawn-soon{ color:var(--accent); animation:dawn-soon 1.6s ease-in-out infinite; }
+@keyframes dawn-soon{ 50%{ opacity:.5; } }
+
 /* the still composition: motion-reduced visitors meet the morning at
    rest, a quiet fade instead of the choreography */
 .dawn-still .dawn-day{ animation:none; opacity:1; }
@@ -226,6 +265,8 @@ a.card:active{ transform:translateY(0); }
     35%{ filter:drop-shadow(0 0 6px rgba(244,183,105,.95))
                 drop-shadow(0 0 14px rgba(244,183,105,.5)); }
   }
+  /* the last minute keeps its warmth, without the breath */
+  .dawn-soon{ animation:none; }
   .dawn-theming *, .dawn-theming .dawn-kiss::before,
   .dawn-theming .dawn-kiss::after{ transition-duration:.01ms; }
 }

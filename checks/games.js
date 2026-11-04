@@ -61,11 +61,15 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
     for (const seam of ['dawn.css', 'dawn.js'])
       if (commonSrc.indexOf(seam) === -1)
         fail('shell/common.js lost its loader seam for ' + seam);
+    /* the flash guard: the loader paints night synchronously, and the
+       palette it inlines must stay the night's own paper */
+    if (commonSrc.indexOf('--paper:#17162e') === -1)
+      fail('shell/common.js lost its synchronous night palette (the flash guard)');
   }
-  for (const key of ['warmup.dawn', 'warmup.mode'])
+  for (const key of ['warmup.dawn', 'warmup.mode', 'warmup.first'])
     if (dawnJs.indexOf(key) === -1)
       fail('shell/dawn.js lost the ' + key + ' storage key');
-  for (const pin of ['@keyframes dawn-rise', '#17162e'])
+  for (const pin of ['@keyframes dawn-rise', '#17162e', 'feTurbulence', 'tabular-nums'])
     if (dawnCss.indexOf(pin) === -1)
       fail('shell/dawn.css lost ' + pin);
   /* the deposit geometry travels as a pair: dawn.js lands the flight
@@ -158,6 +162,15 @@ const landing = fs.readFileSync('index.html', 'utf8');
 for (const g of games) {
   if (landing.indexOf(g + '/') === -1) fail('landing: no card for ' + g);
 }
+
+/* the 404 stands alone, but it knows the site's night: it reads the
+   stored mode and carries the night palette itself */
+if (fs.existsSync('404.html')) {
+  const nf = fs.readFileSync('404.html', 'utf8');
+  if (nf.indexOf('warmup.mode') === -1) fail('404.html lost its night awareness (warmup.mode)');
+  if (nf.indexOf('--paper:#17162e') === -1) fail('404.html lost its night palette');
+}
+
 
 /* server-gated delivery: every gated game loads its generated bank file for
    solo/offline play AND defers to the scores service when online */

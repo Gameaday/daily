@@ -61,6 +61,8 @@
   'use strict';
   var MARK = 'warmup.dawn';
   var MODE = 'warmup.mode';   /* day | night | auto */
+  var FIRST = 'warmup.first'; /* the very first visit, greeted once */
+
   var HOLD = 4600;   /* the sunrise holds this long; keep in step with
                         the keyframes in dawn.css */
   var FLIGHT = 1100; /* the settle: the sun's trip from the sky into the
@@ -431,6 +433,14 @@
     if (showing) return false;   /* one show at a time, fade included */
     showing = true;
     var greet = GREETINGS[Math.abs(cfg.dayIndex | 0) % GREETINGS.length];
+    /* the first visit ever gets its own line, whatever the day: the
+       sunrise is a welcome before it is a habit */
+    try {
+      if (!localStorage.getItem(FIRST)){
+        localStorage.setItem(FIRST, '1');
+        greet = 'First light. Welcome.';
+      }
+    } catch (e){}
     var ov = build(cfg, greet);
     var sun = ov.querySelector('.dawn-sun');
     var gone = false, freeSun = null, flight = null;
@@ -564,6 +574,26 @@
     mode: function(){ return storedMode(); }
   };
 
+  /* ---------------- the last minute: the countdown warms ----------------
+     The shell ticks the day away into the countdown element; dawn
+     watches from the side and warms it when less than a minute
+     remains. A garnish, never a gate: no countdown, no observer,
+     no harm done */
+  function watchCountdown(){
+    try {
+      var el = document.getElementById('countdown') ||
+               document.getElementById('count');
+      if (!el || !window.MutationObserver) return;
+      var soon = function(){
+        var m = /(\d+)h\s+(\d+)m\s+(\d+)s/.exec(el.textContent || '');
+        el.classList.toggle('dawn-soon',
+          !!m && parseInt(m[1], 10) === 0 && parseInt(m[2], 10) === 0);
+      };
+      new MutationObserver(soon).observe(el,
+        { childList: true, characterData: true, subtree: true });
+    } catch (e){}
+  }
+
   /* module boot: restyle the favicon's period as a small sun, tint the
      chrome to the paper of whichever theme is in play, and arm the kiss
      on the logo's mark. All of it is garnish: each piece is wrapped
@@ -578,5 +608,6 @@
     }
   } catch (e){}
   armKiss();
+  watchCountdown();
   applyMode(false);
 })();

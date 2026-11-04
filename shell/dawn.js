@@ -77,6 +77,9 @@
   var showing = false; /* the show owns the tab while it plays: a theme
                          swap waits its turn, and no second show starts
                          until the sky has faded out */
+  var themingT = null; /* the one timer behind the crossfade window,
+                         kept by handle so a second swap restarts the
+                         window instead of racing it */
 
   function storageWritable(){
     try { localStorage.setItem(MARK + '.t', '1'); localStorage.removeItem(MARK + '.t'); return true; }
@@ -155,7 +158,14 @@
       /* a swap mid-show must not touch the tab: the sunrise is still
          performing on it and hands it back itself */
       if (!showing) restTab();
-      if (animate) window.setTimeout(function(){ root.classList.remove('dawn-theming'); }, 500);
+      /* the crossfade window is one tracked timer: a rapid second tap
+         restarts it, so a fade in flight is never cut down mid turn */
+      if (themingT) window.clearTimeout(themingT);
+      themingT = null;
+      if (animate) themingT = window.setTimeout(function(){
+        themingT = null;
+        root.classList.remove('dawn-theming');
+      }, 500);
     } catch (e){}
   }
   function cycleMode(){
@@ -178,7 +188,7 @@
           "<circle cx='50' cy='50' r='43' fill='#251f3d' stroke='#3b3552' stroke-width='3'/>" +
           "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
           " text-anchor='middle' fill='#f6dfbe'>W</text>" +
-          "<circle cx='79' cy='64' r='7' fill='none' stroke='#f5c46b' stroke-width='1.7'/>"
+          "<circle cx='79' cy='65' r='7' fill='none' stroke='#f5c46b' stroke-width='1.7'/>"
         : "<defs><radialGradient id='d' cx='.4' cy='.35' r='.8'>" +
           "<stop offset='0' stop-color='#fff6e3'/>" +
           "<stop offset='.55' stop-color='#f5c46b'/>" +
@@ -257,17 +267,23 @@
   function playTab(greet){
     clearFavTimers();
     saveTitle(greet);
+    /* at night the miniature keeps to the sky's dark edge, like the
+       page's own dawn does, so neither favicon nor chrome ever flashes
+       bright over a dark page */
+    var night = isNight();
     var frames = [
       { t: 0,    top: '#17162e', bot: '#2e2242', cy: 100, glow: '.2' },
       { t: 1500, top: '#2e2242', bot: '#4a2c48', cy: 95,  glow: '.3' },
       { t: 3000, top: '#4a2c48', bot: '#9c5a50', cy: 68,  glow: '.35' },
-      { t: 4200, top: '#f2b98c', bot: '#f7f1e5', cy: 36,  glow: '.4' }
+      { t: 4200, top: '#f2b98c', bot: '#f7f1e5', cy: 36,  glow: '.4',
+        ntop: '#4a2c48', nbot: '#17162e' }
     ];
     for (var i = 0; i < frames.length; i++){
       (function(f){
+        var top = night && f.ntop ? f.ntop : f.top;
         FAV.timers.push(window.setTimeout(function(){
-          setFav(dawnFrame(f.top, f.bot, f.cy, f.glow));
-          setTheme(f.top);
+          setFav(dawnFrame(top, night && f.nbot ? f.nbot : f.bot, f.cy, f.glow));
+          setTheme(top);
         }, f.t));
       })(frames[i]);
     }
@@ -324,6 +340,7 @@
         glow();
       });
       m.addEventListener('keydown', function(e){
+        if (e.repeat) return; /* a held key must not machine gun the theme */
         if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); cycleMode(); glow(); }
       });
     } catch (e){}
@@ -363,7 +380,11 @@
     var fromY = sr.top + sr.height / 2;
     var toX = tr.left + tr.width / 2;
     var toY = tr.bottom - 0.27 * fs; /* a period sits just above the
-                                        baseline, at the box's bottom */
+                                        baseline, at the box's bottom.
+                                        0.27 is tuned for Georgia, the
+                                        headings' serif; the sans serif
+                                        game names sit a hair off, which
+                                        is invisible at the dot's size */
     var dia = Math.max(8, Math.min(26, fs * 0.24));
     var dx = toX - fromX;
     var dy = toY - fromY;
@@ -445,7 +466,10 @@
     var removeSun = function(){
       if (freeSun && freeSun.parentNode) freeSun.parentNode.removeChild(freeSun);
     };
-    var dismiss = function(){
+    var dismiss = function(e){
+      /* a right click is a menu call, not a skip: only the primary
+         button ends the show */
+      if (e && e.type === 'pointerdown' && e.button !== 0) return;
       if (gone) return;
       gone = true;
       unlisten();
@@ -509,7 +533,13 @@
 
   window.DAWN = {
     init: init,
-    play: function(cfg){ cfg = cfg || {}; return play({ dayIndex: cfg.dayIndex || 0, num: cfg.num || 0, dateText: cfg.dateText || '' }); },
+    play: function(cfg){
+      /* the day facts ride along on a forced play too, so the replay
+         a hold triggers greets with the right number and date */
+      cfg = cfg || {};
+      lastCfg = { dayIndex: cfg.dayIndex || 0, num: cfg.num || 0, dateText: cfg.dateText || '' };
+      return play(lastCfg);
+    },
     reset: function(){ try { localStorage.removeItem(MARK); } catch (e){} },
     mode: function(){ return storedMode(); }
   };

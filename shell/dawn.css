@@ -126,7 +126,10 @@ html.night .modal .close{ color:#17162e; }
 html.night .btn{ color:#231a08; }
 html.night .overlay{ background:rgba(5,6,16,.62); }
 html.night ::selection{ background:#4a2c48; }
-html.night input{ background:#221d38; color:var(--ink); }
+/* inputs retheme through the palette slots like everything else; the
+   one game input that hardcodes a pale card gets its night stand-in
+   here, scoped so it can never step on a game's own input colors */
+html.night .brow input{ background:#221d38; }
 
 /* the global curve: its colors ride the palette instead of the
    constants the shell bakes in, so the bell follows the theme */
@@ -137,7 +140,9 @@ html.night input{ background:#221d38; color:var(--ink); }
 
 /* the stragglers: the handful of pale constants the games baked in
    before the palette learned about night. Each rule below is a
-   night-time stand-in for one of them. */
+   night-time stand-in for one of them. To give a new game the night,
+   let the shared slots do the work first, then add one line here for
+   whatever stays pale. */
 html.night .pip{ background:#3a3355; border-color:#4a4266; }
 html.night .px{ background:#4a4266; }
 html.night .cell:hover, html.night .tile:hover{ border-color:#4a4266; }

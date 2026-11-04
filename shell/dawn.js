@@ -7,14 +7,16 @@
    came in from. The choreography lives in dawn.css; the trigger, the
    once-per-day guard and the cleanup live here.
 
-   The ending: the sun settles into the logo. Every page's own heading
+   The ending: the sun deposits the period. Every page's own heading
    ends in a colored mark (the period of "Warmup." on the landing, the
-   dot of a game's name on its page), and the sunrise's last second
-   flies the disc out of the sky and into that very mark, shrinking as
-   it travels, then vanishing onto it so the logo's own dot carries
-   the morning. A page with no such mark, a visitor who prefers
-   stillness, or a browser without the web animations api gets the
-   plain dissolve instead.
+   dot of a game's name on its page), and that mark is held back for
+   the whole show, hidden from the first paint behind the sky. The
+   sunrise's last second flies the disc out of the sky and into that
+   empty spot, shrinking as it travels, and the instant it lands the
+   disc vanishes and the mark appears in its place: delivered, fresh
+   each day. A skip, a stillness preference, a page with no such mark,
+   or a browser without the web animations api reveals the mark plainly
+   instead, so no page is ever left without its dot.
 
    Contract with the shell (common.js passes these in):
      key      the ET date key for today, as YYYY-MM-DD
@@ -93,10 +95,10 @@
   }
 
   /* the settle: free the sun from the overlay, pin it exactly where
-     the rise left it, then fly it into the logo's mark. The disc
-     shrinks to the mark's own size as its glow burns off, and the
-     page's dot (already the accent color) receives it. Returns the
-     flight animation, or null if the sun could not be freed. */
+     the rise left it, then fly it into the logo's empty mark spot. The
+     disc shrinks to the mark's own size as its glow burns off, and
+     vanishes onto the spot the moment it lands. Returns the flight
+     animation, or null if the sun could not be freed. */
   function settle(sun, mark){
     var sr = sun.getBoundingClientRect();
     var tr = mark.getBoundingClientRect();
@@ -136,6 +138,34 @@
     var ov = build(cfg);
     var sun = ov.querySelector('.dawn-sun');
     var gone = false, freeSun = null, flight = null;
+
+    /* the deposit plan: if this show can end in a settle, hold the
+       logo's mark back from the first paint, so the sun has an empty
+       spot to fill. Every exit path either deposits the mark (the
+       flight lands) or reveals it plainly (a skip, a fallback), so the
+       page is never left without its dot. */
+    var mark = null;
+    if (sun && sun.animate && !reducedMotion()){
+      try { mark = logoMark(); } catch (e){ mark = null; }
+    }
+    if (mark){
+      try { mark.classList.add('dawn-awaiting'); }
+      catch (e){ mark = null; }
+    }
+    var revealMark = function(){
+      if (!mark) return;
+      try { mark.classList.remove('dawn-awaiting'); } catch (e){}
+    };
+    var depositMark = function(){
+      if (!mark) return;
+      try {
+        mark.classList.remove('dawn-awaiting');
+        mark.classList.remove('dawn-landed');
+        void mark.offsetWidth;
+        mark.classList.add('dawn-landed');
+      } catch (e){}
+    };
+
     var unlisten = function(){
       window.removeEventListener('keydown', dismiss, true);
       window.removeEventListener('pointerdown', dismiss, true);
@@ -146,18 +176,12 @@
     var removeSun = function(){
       if (freeSun && freeSun.parentNode) freeSun.parentNode.removeChild(freeSun);
     };
-    var popMark = function(mark){
-      try {
-        mark.classList.remove('dawn-landed');
-        void mark.offsetWidth;
-        mark.classList.add('dawn-landed');
-      } catch (e){}
-    };
     var dismiss = function(){
       if (gone) return;
       gone = true;
       unlisten();
       if (flight){ try { flight.cancel(); } catch (e){} }
+      revealMark();
       ov.classList.add('dawn-out');
       window.setTimeout(function(){ removeOverlay(); removeSun(); }, 800);
     };
@@ -165,17 +189,13 @@
       if (gone) return;
       gone = true;
       unlisten();
-      var mark = null;
-      if (sun && sun.animate && !reducedMotion()){
-        try { mark = logoMark(); } catch (e){ mark = null; }
-      }
       if (mark && sun){
         flight = settle(sun, mark);
         if (flight){
           freeSun = sun;
           flight.onfinish = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}
-            popMark(mark);
+            depositMark();
           };
           flight.oncancel = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}
@@ -185,6 +205,7 @@
           return;
         }
       }
+      revealMark();
       ov.classList.add('dawn-out');
       window.setTimeout(function(){ removeOverlay(); removeSun(); }, 800);
     };

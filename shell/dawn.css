@@ -44,16 +44,22 @@
 @keyframes dawn-text{ from{ opacity:0; transform:translateY(10px); }
                       to{ opacity:1; transform:none; } }
 
+/* the deposit: while the show is on, the logo's mark is held back so
+   the sun has an empty spot to fill. dawn.js removes this class the
+   moment the disc lands (or plainly, if the show is skipped). */
+.dawn-awaiting{ opacity:0; }
+
 /* the settle: once the sky is done, dawn.js frees the sun from the
-   overlay and flies it into the logo's mark. The inline left/top pin
-   the disc exactly where the rise left it; the flight itself is a web
-   animation run from dawn.js, shrinking the disc as its glow burns
-   off, so it lands as the dot that ends the word warmup. */
+   overlay and flies it into the logo's empty mark spot. The inline
+   left/top pin the disc exactly where the rise left it; the flight
+   itself is a web animation run from dawn.js, shrinking the disc as
+   its glow burns off, so it lands as the dot that ends the word
+   warmup. */
 .dawn-sun.dawn-sun-free{ position:fixed; margin:0; animation:none;
   z-index:10000; will-change:transform; }
 
-/* the landing: the logo's own mark takes the morning, with a tiny
-   heartbeat once the sun arrives */
+/* the landing: the logo's mark appears the instant the disc vanishes
+   onto its spot, with a tiny heartbeat to seat it */
 .dawn-landed{ display:inline-block; animation:dawn-landed .55s ease; }
 @keyframes dawn-landed{ 0%{transform:scale(1);} 45%{transform:scale(1.28);}
                         100%{transform:scale(1);} }

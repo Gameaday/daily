@@ -1,7 +1,8 @@
 /* Validates every game's index.html without a browser:
    - compiles each game's script (catches fatal syntax errors, like the stray
      emoji escape that once took down Sprint for every player)
-   - compiles the shared shell and the word bank
+   - compiles the shared shell, the word bank and the dawn garnish,
+     holding the garnish's js and css classes in agreement
    - checks the shell is wired in (script + css tags, SHELL destructure) and
      that the extracted shell pieces did not sneak back into a game
    - checks every element id the script references exists in the HTML
@@ -27,13 +28,30 @@ let failures = 0;
 const fail = (msg) => { failures += 1; console.error('FAIL ' + msg); };
 
 /* the shared files themselves */
-for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js', 'assets/words-l4.js']) {
+for (const f of ['shell/common.js', 'shell/common.css', 'shell/dawn.js', 'shell/dawn.css', 'assets/words-en.js', 'assets/words-l4.js']) {
   if (!fs.existsSync(f)) { fail('missing shared file ' + f); continue; }
   console.log('ok  ' + f);
 }
 if (fs.existsSync('shell/common.js')) {
   try { new Function(fs.readFileSync('shell/common.js', 'utf8')); }
   catch (e) { fail('shell/common.js does not compile: ' + e.message); }
+}
+/* the dawn garnish is shell surface too: it compiles like any other
+   shell piece, and the js and the css must agree on every class the
+   show's code names, so a rename on one side cannot slip a silent
+   break into the sunrise */
+if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
+  const dawnJs = fs.readFileSync('shell/dawn.js', 'utf8');
+  try { new Function(dawnJs); }
+  catch (e) { fail('shell/dawn.js does not compile: ' + e.message); }
+  /* prose comments may name classes that do not exist; only the
+     code's own class names must be styled */
+  const dawnCode = dawnJs.replace(/\/[\s\S]*?\*\//g, '');
+  const dawnCss = fs.readFileSync('shell/dawn.css', 'utf8');
+  for (const c of new Set(dawnCode.match(/dawn-[\w-]+/g) || [])) {
+    if (dawnCss.indexOf('.' + c) === -1)
+      fail('shell/dawn.js names .' + c + ' but dawn.css never styles it');
+  }
 }
 if (fs.existsSync('assets/words-en.js')) {
   try { new Function(fs.readFileSync('assets/words-en.js', 'utf8')); }

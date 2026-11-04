@@ -34,7 +34,9 @@
    (the tile's period restyled as a small gold sun, or its outline at
    night), and during the show the tab title greets while the favicon
    and the mobile browser chrome ride the sky from night to morning,
-   handing both back the moment the disc lands. The page's own icon
+   handing both back the moment the disc lands; while it plays the
+   tab belongs to the show, so a theme tapped mid-sunrise waits its
+   turn. The page's own icon
    and title in the html stay untouched, so a no-script visit keeps
    what it has always had.
 
@@ -72,6 +74,9 @@
   var lastCfg = null;
   var dot = null;      /* the logo's mark, once armed */
   var darkSys = null;  /* the device's own preference, for auto */
+  var showing = false; /* the show owns the tab while it plays: a theme
+                         swap waits its turn, and no second show starts
+                         until the sky has faded out */
 
   function storageWritable(){
     try { localStorage.setItem(MARK + '.t', '1'); localStorage.removeItem(MARK + '.t'); return true; }
@@ -147,7 +152,9 @@
       if (animate) root.classList.add('dawn-theming');
       root.classList.toggle('night', night);
       updateDot();
-      restTab();
+      /* a swap mid-show must not touch the tab: the sunrise is still
+         performing on it and hands it back itself */
+      if (!showing) restTab();
       if (animate) window.setTimeout(function(){ root.classList.remove('dawn-theming'); }, 500);
     } catch (e){}
   }
@@ -305,7 +312,7 @@
         holdT = window.setTimeout(function(){
           held = true;
           offHold();
-          try { if (!document.getElementById('dawn-overlay')) play(lastCfg || {}); } catch (e2){}
+          try { if (!showing) play(lastCfg || {}); } catch (e2){}
         }, PRESS);
       });
       m.addEventListener('pointerup', offHold);
@@ -382,7 +389,8 @@
 
   function play(cfg){
     cfg = cfg || {};
-    if (document.getElementById('dawn-overlay')) return false;
+    if (showing) return false;   /* one show at a time, fade included */
+    showing = true;
     var greet = GREETINGS[Math.abs(cfg.dayIndex | 0) % GREETINGS.length];
     var ov = build(cfg, greet);
     var sun = ov.querySelector('.dawn-sun');
@@ -398,17 +406,28 @@
       try { mark = logoMark(); } catch (e){ mark = null; }
     }
     if (mark){
-      try { mark.classList.add('dawn-awaiting'); }
+      try {
+        mark.classList.add('dawn-awaiting');
+        /* and out of the way of the keyboard: an invisible button
+           must not catch a tab */
+        mark.setAttribute('aria-hidden', 'true');
+        mark.setAttribute('tabindex', '-1');
+      }
       catch (e){ mark = null; }
     }
-    var revealMark = function(){
-      if (!mark) return;
-      try { mark.classList.remove('dawn-awaiting'); } catch (e){}
-    };
-    var depositMark = function(){
+    var unhideMark = function(){
       if (!mark) return;
       try {
         mark.classList.remove('dawn-awaiting');
+        mark.removeAttribute('aria-hidden');
+        mark.setAttribute('tabindex', '0');
+      } catch (e){}
+    };
+    var revealMark = unhideMark;
+    var depositMark = function(){
+      if (!mark) return;
+      unhideMark();
+      try {
         mark.classList.remove('dawn-landed');
         void mark.offsetWidth;
         mark.classList.add('dawn-landed');
@@ -420,6 +439,7 @@
       window.removeEventListener('pointerdown', dismiss, true);
     };
     var removeOverlay = function(){
+      showing = false;
       if (ov.parentNode) ov.parentNode.removeChild(ov);
     };
     var removeSun = function(){

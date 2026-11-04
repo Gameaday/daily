@@ -219,7 +219,7 @@ Contracts in the middle, adapters at the edges, in CI-green steps:
     picks            the day's indices into a bank or list; picks[day] is the day's puzzle
     gated game       a game with an answer key in the store (the thirteen history games)
     generator game   a game that derives its board at play time from a seeded RNG (sprint, trace, recycle-grid, recycle-rings)
-    ledger           the manifest names the curve counts; recycle-grid tallies as grid and grid-hard
+    ledger           the manifest names the curve counts; recycle-grid tallies as grid and grid-hard, and the rings bonus round as rings-bonus
     dealt play       server-dealt rounds: the answer never ships while the round is open
     repeat guard     the dealt client answers a move whose key already got a verdict, no round trip; the default key is the move's content, pages shape or waive it
     deal / guess / reveal   open a session / play a move / the sprint starting gun

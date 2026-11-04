@@ -15,7 +15,7 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | / | Warmup | Landing page linking all games |
 | /bogus/ | Bogus! | A history passage where one phrase is a lie: spot it in 3 picks |
 | /well-actually/ | Well, Actually... | A statement with one wrong phrase: find it, then type the correction for a bonus point |
-| /recycle-rings/ | Recycle: Rings | Four aligned letter rings, one target word, one exact par; loop a ring, shift a ray |
+| /recycle-rings/ | Recycle: Rings | Four aligned letter rings, one target word, one resource a seat however far it runs; win and the bonus round replays it step by step |
 | /recycle-grid/ | Recycle: Grid | Three modes, three budgets; shift rows or columns in any order, bank the best board |
 | /fermi/ | Fermi | One estimation question per day, one guess, scored by closeness |
 | /sift/ | Sift | Twelve tiles, four hidden groups of three, three mistakes allowed |
@@ -245,12 +245,17 @@ seconds; only the bundle builds stay CI-side.
 ## The recycle rule
 
 Sprint is the only game on the clock: it starts on your first move and
-never restarts. Rings and Grid traded the clock for a budget of moves:
-Rings counts every loop and ray shift against an exact par, Grid banks a board
+never restarts. Rings and Grid traded the clock for scarcity: Rings spends
+one resource each time you take up a seat, ring or ray, however far you
+run it, against an exact par that climbs a weekday ladder from four on
+Mondays to seven on Fridays (the weekend draws its own rung), and a won
+day opens the bonus round: the same board again under the old step
+economy, every seat-step charged, on its own curve, with no streak riding
+on it. Grid banks a board
 after one shared budget of shifts, any row or column, any order (Practice generates fresh boards and records
 nothing; Normal is the daily game; Hard replays the daily board with one
 more shift, online-only, on its own bonus curve). Pressure comes from
-scarcity of moves, not time.
+scarcity, not time.
 
 ## Adding a game
 

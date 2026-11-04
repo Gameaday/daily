@@ -17,7 +17,7 @@ that answers wins.
 - game is a manifest ledger name: one of the thirteen gated page names
   (bogus, well-actually, rounds, fermi, cipher, museum, lightbox,
   sift, timeline, thread, brunch, superlative, relativity) or a generator name
-  (sprint, rings, trace, grid, grid-hard).
+  (sprint, rings, rings-bonus, trace, grid, grid-hard).
 - day is the day index: days since the epoch 2026-11-02 in
   America/New_York, clamped at 0 before launch, bounded -1000..100000.
 - Errors are {"error": message} with a meaningful status. A 422 is an

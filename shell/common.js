@@ -558,6 +558,21 @@ const SHELL = (() => {
     var me = document.currentScript;
     if (!me || !/shell\/common\.js(\?.*)?$/.test(me.src || '')) return;
     var base = me.src.replace(/shell\/common\.js.*$/, 'shell/');
+    /* night paints before the first paint: the stored mode is known the
+       moment the shell runs, so the palette and the class go in here,
+       synchronously, instead of waiting on the dawn files to fetch. The
+       key is dawn.js's own mode key, spelled out because dawn.js is not
+       in yet; a night visit never flashes day */
+    var mode = 'day';
+    try { mode = localStorage.getItem('warmup.mode') || 'day'; } catch (e2){}
+    if (mode === 'night' ||
+        (mode === 'auto' && window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)){
+      document.documentElement.classList.add('night');
+      var nightStyle = document.createElement('style');
+      nightStyle.textContent = 'html.night{--paper:#17162e;--card:#251f3d;--ink:#f6dfbe;--muted:#a3947c;--accent:#f5c46b;--accent-soft:rgba(244,183,105,.16);--green:#8fd0a8;--green-soft:rgba(46,125,79,.32);--line:#3b3552;--red:#e0755f;--red-soft:rgba(179,64,46,.30);--gold:#e0b84f;--gold-soft:rgba(201,154,46,.22);color-scheme:dark}';
+      document.head.appendChild(nightStyle);
+    }
     var css = document.createElement('link');
     css.rel = 'stylesheet';
     css.href = base + 'dawn.css';

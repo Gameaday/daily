@@ -69,7 +69,8 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
   for (const key of ['warmup.dawn', 'warmup.mode', 'warmup.first'])
     if (dawnJs.indexOf(key) === -1)
       fail('shell/dawn.js lost the ' + key + ' storage key');
-  for (const pin of ['@keyframes dawn-rise', '#17162e', 'feTurbulence', 'tabular-nums'])
+  for (const pin of ['@keyframes dawn-rise', '#17162e', 'feTurbulence', 'tabular-nums',
+                    '#b3541e 0 50%'])
     if (dawnCss.indexOf(pin) === -1)
       fail('shell/dawn.css lost ' + pin);
   /* the deposit geometry travels as a pair: dawn.js lands the flight

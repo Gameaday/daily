@@ -91,8 +91,9 @@
    sunrise's flight on that exact spot at that exact size, and
    checks pin the pair. Day fills the disc with the accent, the
    deposited sun gone cool. Night hollows it into a thin gold ring:
-   the sun has set, its shape remains. Auto watches the device, a
-   faint ring with a center dot. Headings that end in a colored word
+   the sun has set, its shape remains. Auto carries both hours at
+   once: the day fills the left half of the disc, and the night's
+   gold rings the whole. Headings that end in a colored word
    (the recycle pair) carry none of this: their word stays visible,
    and only the tap and the glow apply to them. */
 .dawn-kiss.dawn-punct::before{ content:''; position:absolute; left:50%;
@@ -100,20 +101,13 @@
   border-radius:50%; border:1.5px solid transparent; pointer-events:none; }
 .dawn-kiss.dawn-period{ color:transparent; }
 .dawn-kiss.dawn-period::before{ background:var(--accent); }
-.dawn-kiss.dawn-mode-auto::before{ border-color:rgba(179,84,30,.5);
-  background:transparent; }
-.dawn-kiss.dawn-mode-auto.dawn-period::after{ content:''; position:absolute;
-  left:50%; bottom:.385em; width:.13em; height:.13em; margin-left:-.065em;
-  background:var(--accent); opacity:.55; border-radius:50%;
-  pointer-events:none; }
+.dawn-kiss.dawn-mode-auto::before{ border-color:#f5c46b;
+  background:linear-gradient(90deg, #b3541e 0 50%, transparent 50%); }
 html.night .dawn-kiss.dawn-punct.dawn-mode-night,
 html.night .dawn-kiss.dawn-punct.dawn-mode-auto{ color:transparent; }
-html.night .dawn-kiss.dawn-mode-night::before,
-html.night .dawn-kiss.dawn-mode-auto::before{ border-color:#f5c46b;
+html.night .dawn-kiss.dawn-mode-night::before{ border-color:#f5c46b;
   background:transparent; }
-html.night .dawn-kiss.dawn-mode-auto::after{ content:''; position:absolute;
-  left:50%; bottom:.385em; width:.13em; height:.13em; margin-left:-.065em;
-  background:#f5c46b; border-radius:50%; pointer-events:none; }
+
 
 /* ---------------- the night: the sunrise's own sky ----------------
    The palette below is the dawn's, verbatim: the deep indigo of the
@@ -136,7 +130,7 @@ html.night{ --paper:#17162e; --card:#251f3d; --ink:#f6dfbe; --muted:#a3947c;
   box-shadow .45s ease; }
 /* the drawn disc rides the same crossfade: pseudo elements are not
    matched by *, so they get their own seat at the window */
-.dawn-theming .dawn-kiss::before, .dawn-theming .dawn-kiss::after{
+.dawn-theming .dawn-kiss::before{
   transition: background-color .45s ease, border-color .45s ease,
   opacity .45s ease; }
 
@@ -267,6 +261,5 @@ html.night body{ background-image:
   }
   /* the last minute keeps its warmth, without the breath */
   .dawn-soon{ animation:none; }
-  .dawn-theming *, .dawn-theming .dawn-kiss::before,
-  .dawn-theming .dawn-kiss::after{ transition-duration:.01ms; }
+  .dawn-theming *, .dawn-theming .dawn-kiss::before{ transition-duration:.01ms; }
 }

@@ -155,6 +155,59 @@ async function run(h){
     h.eq(cpR.x.S.status, 'won', 'cipher dealt: a reload keeps the won day');
     h.ok(String(cpR.env.els.plainq.innerHTML).indexOf(cpFull.q) >= 0,
       'cipher dealt: the reload retells the quote it never shipped');
+    /* --- an expired session no longer spends the decode: a hint expiry
+       reseats the hint meter and the crack still wins --- */
+    let cpXDeals = 0, cpXHints = 0;
+    const cpXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        cpXDeals++;
+        cpXHints = 0;
+        return { status: 200, body: { nonce: 'cx' + cpXDeals, today: 0, puzzle: cpServed.puzzle } };
+      }
+      if (body.move.give !== undefined)
+        return { status: 200, body: { verdict: 'gave',
+          reveal: { q: cpFull.q, a: cpFull.a, sub: cpSub.dec } } };
+      if (body.move.hint){
+        if (cpXDeals === 1 && cpXHints >= 1)
+          return { status: 410, body: {} };  /* the session dies on the second hint */
+        const cand = cpOrder.find(c => body.move.have[c] !== cpSub.dec[c]);
+        if (!cand) return { status: 400, body: { error: 'nothing left to hint' } };
+        cpXHints++;
+        return { status: 200, body: { verdict: 'hint', cipher: cand,
+          plain: cpSub.dec[cand], hints: cpXHints } };
+      }
+      const right = cpOrder.filter(c => body.move.check[c] === cpSub.dec[c]).length;
+      if (right === cpOrder.length)
+        return { status: 200, body: { verdict: 'won',
+          reveal: { q: cpFull.q, a: cpFull.a, sub: cpSub.dec } } };
+      return { status: 200, body: { verdict: 'miss', right, total: cpOrder.length } };
+    };
+    const cpXDst = {};
+    const cpXD = h.boot('cipher', ['S', 'assign'],
+      { now: T0, store: cpXDst, servePuzzle: cpServed, stubBanks: true, serveDealt: cpXDealer });
+    await h.flush();
+    cpXD.env.els.btnHint.click();
+    await h.flush();
+    h.eq(cpXD.x.S.hints, 1, 'cipher reseat: one hint metered');
+    h.eq(cpXD.x.S.nonce, 'cx1', 'cipher reseat: the first session is held');
+    cpXD.env.els.btnHint.click();          /* the session dies on the second hint */
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the spent hint */
+    h.eq(cpXD.x.S.hints, 1, 'cipher reseat: the spent hint survives the expiry');
+    h.eq(cpXD.x.S.nonce, 'cx2', 'cipher reseat: the decode reseats onto a fresh session');
+    h.eq(cpXDeals, 2, 'cipher reseat: exactly one redeal');
+    h.eq(cpXHints, 1, 'cipher reseat: the replay re-metered the hint');
+    for (const c of Object.keys(cpSub.dec)){
+      cpXD.x.S.sel = c;
+      cpXD.x.assign(cpSub.dec[c]);
+    }
+    cpXD.env.els.btnCheck.click();
+    await h.flush(); await h.flush();
+    h.eq(cpXD.x.S.status, 'won', 'cipher reseat: the crack wins on the reseeded session');
+    const cpXPost = h.lastPost(cpXD.env);
+    h.eq(cpXPost.body.nonce, 'cx2', 'cipher reseat: the evidence names the reseeded session');
+    h.eq(cpXPost.body.meta.hints, 1, 'cipher reseat: the evidence carries the re-metered hint');
+
     /* an archive replay keeps the local path: the banked quote still
        carries its text and nothing posts */
     const cpRe = h.boot('cipher', EXP, { now: T1, store: {}, search: '?d=0' });

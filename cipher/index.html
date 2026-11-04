@@ -190,7 +190,32 @@ function isDealt(){
 /* the page owns the game: which move each button builds and what each
    verdict means; the session dance itself (the deal, the busy guard,
    the triage, the nonce) lives in the shell now */
+/* an expired session no longer spends the decode: the reseat re-deals
+   and replays the spent hints into the fresh session, so no hint is
+   ever given twice */
+let reseeding = false, pendingMove = null;
+async function reseat(){
+  if (reseeding || S.status !== 'playing') return;
+  reseeding = true;
+  session.reset();
+  const keep = S.hints;
+  let done = 0;
+  for (let i = 0; i < keep; i++){
+    await session.play({ hint: 1, have: S.map }, body => {
+      if (body.verdict === 'hint' && typeof body.hints === 'number') done++;
+    });
+    if (done <= i || !S.nonce) break;
+  }
+  reseeding = false;
+  saveState();
+  if (pendingMove !== null){
+    const m = pendingMove;
+    pendingMove = null;
+    if (m.kind === 'check') checkDealt(); else if (m.kind === 'hint') hintDealt(); else giveDealt();
+  }
+}
 async function checkDealt(){
+  if (reseeding){ pendingMove = { kind: 'check' }; return; }
   S.started = true;
   await session.play({ check: S.map }, body => {
     if (body.verdict === 'won'){
@@ -203,10 +228,10 @@ async function checkDealt(){
   });
 }
 async function hintDealt(){
+  if (reseeding){ pendingMove = { kind: 'hint' }; return; }
   await session.play({ hint: 1, have: S.map }, body => {
     if (body.verdict !== 'hint' || typeof body.cipher !== 'string' || typeof body.plain !== 'string'){
-      session.reset();
-      toastMsg('this round expired, try a hint again');
+      setTimeout(reseat, 0);
       return;
     }
     S.started = true;
@@ -219,10 +244,10 @@ async function hintDealt(){
   });
 }
 async function giveDealt(){
+  if (reseeding){ pendingMove = { kind: 'give' }; return; }
   await session.play({ give: 1 }, body => {
     if (body.verdict !== 'gave' || !body.reveal){
-      session.reset();
-      toastMsg('this round expired, try the codebook again');
+      setTimeout(reseat, 0);
       return;
     }
     S.reveal = body.reveal;
@@ -494,10 +519,11 @@ const session = SHELL.makeDealt({
   /* hints are repeatable requests, so only the check and the codebook
      ask carry the content key */
   dedup: m => m.hint !== undefined ? null : JSON.stringify(m),
+  onExpired: () => { if (!reseeding) setTimeout(reseat, 0); },
   copy: {
     unavailable: 'the code is not answering right now, try again',
     over: 'this round is already over',
-    expired: 'this round expired, check again for a fresh one'
+    expired: 'this session expired; your decode is safe while the day reseats'
   }
 });
 
@@ -518,6 +544,11 @@ if (S.status !== 'playing'){
 } else if (solvedP()){
   finish('won');
 }
+/* a reload can inherit spent hints with a dead session (the reseat
+   never landed before the tab closed): replay them before the next
+   move, so the page and the session stay on the same hint */
+if (isDealt() && S.status === 'playing' && S.started && S.hints > 0 && !S.nonce)
+  setTimeout(reseat, 0);
 SHELL.startCountdown('countdown', 500);
 });
 </script>

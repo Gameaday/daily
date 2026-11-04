@@ -152,8 +152,45 @@ function isDealt(){
 /* the page owns the game: which move each button builds and what each
    verdict means; the session dance itself (the deal, the busy guard,
    the triage, the nonce) lives in the shell now */
+/* an expired session no longer spends the sift: the reseat re-deals
+   and replays the found groups and the spent misses into the fresh
+   session, so no trio is ever spent twice */
+let reseeding = false, pendingMove = null;
+async function reseat(){
+  if (reseeding || S.status !== 'playing') return;
+  reseeding = true;
+  session.reset();
+  const keepHits = (S.found || []).slice();
+  const keepMisses = (S.missed || []).slice();
+  let done = 0;
+  for (const g of keepHits){
+    const before = done;
+    await session.play({ pick: g.i }, body => {
+      if (body.verdict === 'hit') done++;
+    });
+    if (done === before || !S.nonce) break;
+  }
+  if (S.nonce){
+    for (const m of keepMisses){
+      const before = done;
+      await session.play({ pick: m }, body => {
+        if (body.verdict === 'miss' || body.verdict === 'lost') done++;
+      });
+      if (done === before || !S.nonce) break;
+    }
+  }
+  reseeding = false;
+  saveState();
+  renderAll();
+  if (pendingMove !== null){
+    pendingMove = null;
+    testDealt();
+  }
+}
 async function testDealt(){
-  await session.play({ pick: [...sel].map(i => TILES[i].text) }, body => {
+  if (reseeding){ pendingMove = { kind: 'test' }; return; }
+  const trio = [...sel].map(i => TILES[i].text);
+  await session.play({ pick: trio }, body => {
     const v = body.verdict;
     if (v === 'hit'){
       S.solvedCats.push(body.cat);
@@ -183,6 +220,8 @@ async function testDealt(){
       saveState(); renderAll(); showReveal();
     } else {
       S.mistakes = body.mistakes;
+      S.missed = S.missed || [];
+      S.missed.push(trio);
       [...sel].forEach(i => {
         const el = document.querySelector(`.tile[data-i="${i}"]`);
         if (el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 420); }
@@ -398,14 +437,11 @@ const session = SHELL.makeDealt({
   onDeal: body => {
     if (body.puzzle && Array.isArray(body.puzzle.tiles)) applyBoard(body.puzzle);
   },
-  onExpired: () => {
-    S.solvedCats = []; S.found = []; S.mistakes = 0; sel.clear();
-    renderAll();
-  },
+  onExpired: () => { if (!reseeding) setTimeout(reseat, 0); },
   copy: {
     unavailable: 'the board is not answering right now, try again',
     over: 'this round is already over',
-    expired: 'this round expired, test again for a fresh one'
+    expired: 'this session expired; your groups are safe while the day reseats'
   }
 });
 
@@ -427,6 +463,13 @@ if (S.status !== 'playing'){
   else if (!BOARD.cats) seatDealtCats();
   showReveal();
 }
+/* a reload can inherit found groups or spent misses with a dead
+   session (the reseat never landed before the tab closed): replay
+   them before the next trio, so the page and the session stay on the
+   same board */
+if (isDealt() && S.status === 'playing' && !S.nonce &&
+    ((S.found && S.found.length) || (S.missed && S.missed.length)))
+  setTimeout(reseat, 0);
 SHELL.startCountdown('countdown', 500);
 });
 </script>

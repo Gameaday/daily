@@ -150,6 +150,66 @@ async function run(h){
     h.eq(sfLR.x.S.status, 'lost', 'sift dealt: a reload keeps the lost day');
     h.ok((sfLR.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 12,
       'sift dealt: the reload replays the reveal dimming');
+    /* --- an expired session no longer spends the sift: a mid-board
+       expiry reseats the found groups and the spent miss, and the
+       sweep still wins --- */
+    let sfXDeals = 0, sfXSolved = [], sfXMisses = 0;
+    const sfXDealer = (url, body) => {
+      if (/\/deal$/.test(url)){
+        sfXDeals++;
+        sfXSolved = []; sfXMisses = 0;
+        return { status: 200, body: { nonce: 'sfx' + sfXDeals, today: 0, puzzle: sfServed.puzzle } };
+      }
+      if (sfXDeals === 1 && sfXSolved.length + sfXMisses >= 2)
+        return { status: 410, body: {} };  /* the session dies on the third move */
+      const ci = sfOwner[body.move.pick[0]];
+      if (body.move.pick.every(tx => sfOwner[tx] === ci) && !sfXSolved.includes(ci)){
+        sfXSolved.push(ci);
+        return { status: 200, body: { verdict: 'hit', cat: ci, n: sfFull.cats[ci].n,
+          i: sfFull.cats[ci].i, final: sfXSolved.length === 4 } };
+      }
+      sfXMisses++;
+      if (sfXMisses >= 4)
+        return { status: 200, body: { verdict: 'lost',
+          reveal: { t: sfFull.t, cats: sfFull.cats } } };
+      return { status: 200, body: { verdict: 'miss', mistakes: sfXMisses } };
+    };
+    const sfXDst = {};
+    const sfXD = h.boot('sift', EXP,
+      { now: T0, store: sfXDst, servePuzzle: sfServed, stubBanks: true, serveDealt: sfXDealer });
+    await h.flush();
+    [sfIdx(1)[0], sfIdx(2)[0], sfIdx(3)[0]].forEach(i => sfXD.x.sel.add(i));
+    sfXD.env.els.btnSubmit.click();
+    await h.flush();
+    h.eq(sfXD.x.S.mistakes, 1, 'sift reseat: one miss spent');
+    sfXD.x.sel.clear();
+    sfIdx(0).forEach(i => sfXD.x.sel.add(i));
+    sfXD.env.els.btnSubmit.click();
+    await h.flush();
+    h.eq(sfXD.x.S.solvedCats.length, 1, 'sift reseat: one group found');
+    h.eq(sfXD.x.S.nonce, 'sfx1', 'sift reseat: the first session is held');
+    sfXD.x.sel.clear();
+    sfIdx(1).forEach(i => sfXD.x.sel.add(i));
+    sfXD.env.els.btnSubmit.click();        /* the session dies mid-board */
+    await h.flush(); await h.flush(); await h.flush();
+                    /* expiry -> the reseat replays the group and the miss */
+    h.eq(sfXD.x.S.solvedCats.length, 1,
+      'sift reseat: the found group survives the expiry');
+    h.eq(sfXD.x.S.mistakes, 1, 'sift reseat: the spent miss survives the expiry');
+    h.eq(sfXD.x.S.nonce, 'sfx2', 'sift reseat: the board reseats onto a fresh session');
+    h.eq(sfXDeals, 2, 'sift reseat: exactly one redeal');
+    h.eq(sfXMisses, 1, 'sift reseat: the replay re-metered the miss');
+    for (const c of [1, 2, 3]){
+      sfXD.x.sel.clear();
+      sfIdx(c).forEach(i => sfXD.x.sel.add(i));
+      sfXD.env.els.btnSubmit.click();
+      await h.flush();
+    }
+    h.eq(sfXD.x.S.status, 'won', 'sift reseat: the sweep wins on the reseeded session');
+    const sfXPost = h.lastPost(sfXD.env);
+    h.eq(sfXPost.body.nonce, 'sfx2', 'sift reseat: the evidence names the reseeded session');
+    h.eq(sfXPost.body.meta.mistakes, 1, 'sift reseat: the evidence carries the re-metered miss');
+
     /* an archive replay keeps the local path: the banked day still
        carries its groups and nothing posts */
     const sfRe = h.boot('sift', EXP, { now: T1, store: {}, search: '?d=0' });

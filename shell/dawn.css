@@ -165,7 +165,11 @@ html.night .brow input{ background:#221d38; }
    let the shared slots do the work first, then add one line here for
    whatever stays pale. */
 html.night .pip{ background:#3a3355; border-color:#4a4266; }
+/* the pips that meter the day (lightbox's developments, sift's
+   mistakes) keep their accent while they still count */
+html.night .mistakes .pip:not(.gone){ background:var(--accent); }
 html.night .px{ background:#4a4266; }
+html.night .px.f{ background:var(--ink); }
 html.night .cell:hover, html.night .tile:hover{ border-color:#4a4266; }
 html.night .wchip{ border-color:rgba(143,208,168,.5); }
 html.night .seg{ border-bottom-color:#4a4266; }
@@ -180,6 +184,9 @@ html.night .rayline{ stroke:#565078; }
 html.night .rayline.top{ stroke:var(--accent); }
 html.night .chev{ stroke:#8d84a8; }
 html.night .rayg:hover .chev{ stroke:var(--accent); }
+html.night .wheel circle[fill="#fffdf7"]{ fill:var(--card); }
+html.night .wheel circle[stroke="#e5dbc8"]{ stroke:var(--line); }
+html.night .wheel circle[stroke="#d9cdb2"]{ stroke:#4a4266; }
 
 /* the show at night: the sun still rises, but the sky settles back
    to the night's paper, so the dissolve meets the page it lands on */

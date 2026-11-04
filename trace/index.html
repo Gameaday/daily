@@ -122,12 +122,17 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 
 <script src="../shell/common.js"></script>
 <script src="../assets/words-en.js"></script>
+<script src="../assets/words-l4.js"></script>
 <script>
 'use strict';
 
-/* ---------------- dictionary (same word list as Recycle: Grid) ---------------- */
+/* ---------------- dictionary ---------------- */
+/* two banks, two jobs: answers and ladders still come from the curated
+   WORDS_EN (the same list as Recycle: Grid), while a typed rung is
+   accepted from the wider WORDS_L4 (assets/words-l4.js), so a real word
+   in common use is never bounced for being unfashionable */
 const DICT_SRC = WORDS_EN;
-const DICT = new Set(DICT_SRC.split(','));
+const DICT = new Set(WORDS_L4.split(','));
 
 /* ---------------- ladder machinery ---------------- */
 const L4 = DICT_SRC.split(',').filter(w => w.length === 4);

@@ -78,6 +78,44 @@ function run(h, ctx){
       }
     }
 
+    /* the wide rung bank: trace accepts typed rungs from WORDS_L4 while its
+       answers and ladders stay curated; the other word games stay off it */
+    {
+      const traceHtml = readGame('trace');
+      h.ok(traceHtml.indexOf('<script src="../assets/words-l4.js"></script>') >= 0,
+        'rungs: trace loads the wide rung bank');
+      h.ok(traceHtml.indexOf('<script src="../assets/words-en.js"></script>') >= 0,
+        'rungs: trace still loads the curated answer bank');
+      const tjs = (traceHtml.match(/<script>([\s\S]*?)<\/script>/) || [])[1] || '';
+      h.ok(tjs.indexOf('WORDS_L4') >= 0, 'rungs: trace references WORDS_L4');
+      h.ok(tjs.indexOf('const DICT_SRC = WORDS_EN') >= 0,
+        'rungs: ladders still generate from WORDS_EN');
+      for (const g of ['recycle-grid', 'recycle-rings']){
+        h.ok(readGame(g).indexOf('words-l4.js') === -1,
+          'rungs: ' + g + ' stays off the wide bank');
+      }
+      const m4 = words.match(/const WORDS_L4 = "([^"]*)"/);
+      h.ok(!!m4, 'rungs: the wide bank parses in the trace prelude');
+      if (m4){
+        const list = m4[1].split(',');
+        const bad = list.filter(w => !/^[A-Z]{4}$/.test(w));
+        h.eq(bad.length, 0, 'rungs: every entry is A-Z, exactly 4 letters' +
+          (bad.length ? ' (e.g. ' + bad[0] + ')' : ''));
+        h.eq(new Set(list).size, list.length, 'rungs: no duplicate entries');
+        h.ok(list.every((w, i) => i === 0 || list[i - 1] < w),
+          'rungs: entries are alphabetical');
+        h.ok(list.length > 2000, 'rungs: the bank is wide (' + list.length + ' words)');
+        /* no-regression: every curated 4-letter word stays typeable */
+        const em = words.match(/const WORDS_EN = "([^"]*)"/);
+        if (em){
+          const wide = new Set(list);
+          const gone = em[1].split(',').filter(w => w.length === 4 && !wide.has(w));
+          h.eq(gone.length, 0, 'rungs: keeps every curated 4-letter word' +
+            (gone.length ? ' (e.g. ' + gone[0] + ')' : ''));
+        }
+      }
+    }
+
     /* sprint's inline anagram banks stay clean: no typos, no wrong-length
        strays - junk entries could accept non-words as valid answers */
     {

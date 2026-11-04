@@ -84,7 +84,7 @@ for (const [g, name] of Object.entries(GATED))
 const problems = [];
 for (const bundle of ['offline', 'online']){
   const rootDir = path.join('dist', bundle);
-  for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js'])
+  for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js', 'assets/words-l4.js'])
     if (!fs.existsSync(path.join(rootDir, f))) problems.push(bundle + ': missing ' + f);
   const stack = [rootDir];
   while (stack.length){

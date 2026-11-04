@@ -17,6 +17,7 @@ const path = require('path');
 const LIST = require('../games.json');
 const games = [...LIST.order].sort();
 const wordBankGames = LIST.wordBank;
+const rungBankGames = LIST.rungBank || {};
 const SHELL = ['SHELL', 'EPOCH_KEY', 'syncBoard'];
 const NOT_IN_GAMES = ['America/New_York', 'function renderBoard', 'function nextETMidnight',
   'const $ = id =>', 'JSON.parse(localStorage.getItem(KEY))',
@@ -26,7 +27,7 @@ let failures = 0;
 const fail = (msg) => { failures += 1; console.error('FAIL ' + msg); };
 
 /* the shared files themselves */
-for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js']) {
+for (const f of ['shell/common.js', 'shell/common.css', 'assets/words-en.js', 'assets/words-l4.js']) {
   if (!fs.existsSync(f)) { fail('missing shared file ' + f); continue; }
   console.log('ok  ' + f);
 }
@@ -43,6 +44,25 @@ if (fs.existsSync('assets/words-en.js')) {
     const list = m[1].split(',');
     if (list.some(w => !/^[A-Z]{3,5}$/.test(w))) fail('words-en.js: entries must be uppercase A-Z, 3-5 letters');
     if (new Set(list).size !== list.length) fail('words-en.js: duplicate entries');
+  }
+}
+if (fs.existsSync('assets/words-l4.js')) {
+  try { new Function(fs.readFileSync('assets/words-l4.js', 'utf8')); }
+  catch (e) { fail('assets/words-l4.js does not compile: ' + e.message); }
+  const lm = fs.readFileSync('assets/words-l4.js', 'utf8').match(/const WORDS_L4 = "([^"]*)"/);
+  if (!lm) fail('assets/words-l4.js: WORDS_L4 string not found');
+  else {
+    const list = lm[1].split(',');
+    if (list.some(w => !/^[A-Z]{4}$/.test(w))) fail('words-l4.js: entries must be uppercase A-Z, exactly 4 letters');
+    if (new Set(list).size !== list.length) fail('words-l4.js: duplicate entries');
+    if (list.some((w, i) => i > 0 && list[i - 1] > w)) fail('words-l4.js: entries must be alphabetical');
+    /* a rung may be an answer: every curated 4-letter word stays typeable */
+    const wm = fs.readFileSync('assets/words-en.js', 'utf8').match(/const WORDS_EN = "([^"]*)"/);
+    if (wm) {
+      const wide = new Set(list);
+      const gone = wm[1].split(',').filter(w => w.length === 4 && !wide.has(w));
+      if (gone.length) fail('words-l4.js: lost curated 4-letter words (e.g. ' + gone[0] + ')');
+    }
   }
 }
 
@@ -71,6 +91,13 @@ for (const g of games) {
     if (html.indexOf('<script src="../assets/words-en.js"></script>') === -1)
       fail(g + ': does not load the shared word bank');
     if (js.indexOf('WORDS_EN') === -1) fail(g + ': does not reference WORDS_EN');
+  }
+  const rungFile = rungBankGames[g];
+  if (rungFile){
+    const rungVar = rungFile.toUpperCase().replace(/-/g, '_');
+    if (html.indexOf('<script src="../assets/' + rungFile + '.js"></script>') === -1)
+      fail(g + ': does not load assets/' + rungFile + '.js');
+    if (js.indexOf(rungVar) === -1) fail(g + ': does not reference ' + rungVar);
   }
 
   const ids = new Set();

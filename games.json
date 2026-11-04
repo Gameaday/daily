@@ -39,6 +39,7 @@
     "relativity": ["relativity"]
   },
   "wordBank": ["recycle-grid", "recycle-rings", "trace"],
+  "rungBank": {"trace": "words-l4"},
   "minBank": 15,
   "minTimelineBank": 40,
   "timelineDays": 1000,

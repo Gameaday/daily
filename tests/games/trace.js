@@ -42,6 +42,20 @@ async function run(h){
     h.eq(r.x.S.status, 'lost', 'trace: give-up loses');
     await h.flush();
     h.eq(h.lastPost(r.env).body.value, 0, 'trace: give-up posts 0 points');
+
+    /* the wide rung bank: a common word outside the curated list is
+       accepted as a rung, and a non-word still bounces (regression:
+       the day-0 ladder starts at MUCH, and OUCH used to be rejected) */
+    const s3 = {};
+    r = h.boot('trace', EXP, { now: T0, store: s3 });
+    h.eq(r.x.LADDER.start, 'MUCH', 'trace: the pinned day-0 start');
+    r.env.els.next.value = 'OUCH';
+    r.x.climb();
+    h.eq(r.x.S.chain.length, 2, 'trace: a wide-bank rung is accepted');
+    h.eq(r.x.S.chain[1], 'OUCH', 'trace: the rung rides the ladder');
+    r.env.els.next.value = 'QXYZ';
+    r.x.climb();
+    h.eq(r.x.S.chain.length, 2, 'trace: a non-word rung still bounces');
 }
 
 module.exports = { name: 'trace', run };

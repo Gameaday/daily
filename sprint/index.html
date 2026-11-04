@@ -68,9 +68,14 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <span class="pno" style="color:var(--muted); font-size:12px;">fresh daily</span>
   </div>
 
-  <p class="lead"><b>Five anagrams, ninety seconds.</b> Any real word from the letters counts. The clock never restarts.</p>
+  <p class="lead"><b>Five anagrams, ninety seconds.</b> Any real word from the letters counts. Press Start to see the first one.</p>
 
   <div class="track" id="track"></div>
+  <div class="wordbox" id="startgate">
+    <p class="scramble" style="font-size:22px; color:var(--muted);">the first anagram waits</p>
+    <div class="wordactions"><button class="btn" id="btnStart">Start ▶</button></div>
+    <p class="acceptnote">the 90-second clock starts with it and never restarts</p>
+  </div>
   <div class="wordbox" id="wordbox">
     <p class="scramble" id="scramble"></p>
     <p class="acceptnote" id="acceptnote"></p>
@@ -82,7 +87,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   </div>
 
   <p class="bigclock" id="bigclock">1:30</p>
-  <p class="clocknote" id="clocknote">the clock starts on your first keystroke — and never restarts</p>
+  <p class="clocknote" id="clocknote">the clock starts with Start and never restarts</p>
 
   <ul class="donelist" id="donelist"></ul>
 
@@ -107,7 +112,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <h2>How to play</h2>
     <p>Each round shows <b>five scrambled words</b> — one 4-letter, then four 5-letter. Type an anagram and hit enter: <b>any dictionary word using exactly those letters scores</b>, so if we scrambled STONE and you spot TONES first, take it.</p>
     <p><b>Skip</b> parks a word and moves on. Circle back? Only if you clear the rest with time to spare. (You won't. You never do.) Staring at the same letters for twenty seconds earns a <b>Shuffle</b>: same word, fresh arrangement, no time cost.</p>
-    <p>The <b>90-second clock starts on your first keystroke</b>. Reload the page, switch tabs, close your laptop — the clock keeps running. That's the sprint.</p>
+    <p>The <b>90-second clock starts when you press Start</b>, revealing the first anagram. Reload the page, switch tabs, close your laptop: the clock keeps running. That's the sprint.</p>
     <p>Beat 3 of 5 to keep your streak.</p>
     <button class="close" data-close>On your marks</button>
   </div>
@@ -398,12 +403,29 @@ function onTick(){  if (S.status === 'playing' && S.startAt){
   }
 }
 
+/* pressing Start reveals the first anagram and fires the gun in one
+   motion: the local clock and the server stamp begin together, so the
+   letters are never readable before the clock is running */
+function startRun(){
+  if (S.startAt || S.status !== 'playing') return;
+  S.startAt = Date.now();
+  S.shownAt = Date.now();
+  saveState();
+  $('startgate').style.display = 'none';
+  $('wordbox').style.display = '';
+  renderWord();
+  updateShuffleBtn();
+  gunFire();
+}
+
 /* ---------------- boot ---------------- */
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 renderTrack();
 renderDoneList();
 if (S.status === 'playing'){
+ if (S.startAt){
+  $('startgate').style.display = 'none';
   if (!S.shownAt){ S.shownAt = Date.now(); saveState(); }
   renderWord();
   updateShuffleBtn();
@@ -411,6 +433,10 @@ if (S.status === 'playing'){
      the server stamps once, so this cannot restart the clock */
   if (S.startAt && !S.gun && timeLeft() > 0) gunFire();
   if (S.startAt && timeLeft() <= 0) finish('lost');
+ } else {
+  $('wordbox').style.display = 'none';
+  $('btnStart').addEventListener('click', startRun);
+ }
 } else {
   showReveal();
 }

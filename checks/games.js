@@ -68,6 +68,14 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
   for (const pin of ['@keyframes dawn-rise', '#17162e'])
     if (dawnCss.indexOf(pin) === -1)
       fail('shell/dawn.css lost ' + pin);
+  /* the deposit geometry travels as a pair: dawn.js lands the flight
+     on the disc dawn.css draws, at the drawn size */
+  for (const pin of ['0.34', '0.45'])
+    if (dawnJs.indexOf(pin) === -1)
+      fail('shell/dawn.js lost the ' + pin + ' deposit constant');
+  for (const pin of ['.34em', 'bottom:.28em'])
+    if (dawnCss.indexOf(pin) === -1)
+      fail('shell/dawn.css lost the ' + pin + ' disc geometry');
   for (const file of [[dawnJs, 'shell/dawn.js'], [dawnCss, 'shell/dawn.css']])
     if (file[0].indexOf('\u2014') !== -1)
       fail(file[1] + ': em dash in the garnish copy');

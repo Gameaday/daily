@@ -8,16 +8,20 @@
    came in from. The choreography lives in dawn.css; the trigger, the
    once-per-day guard and the cleanup live here.
 
-   The ending: the sun deposits the period. Every page's own heading
+   The ending: the sun deposits the mark. Every page's own heading
    ends in a colored mark (the period of "Warmup." on the landing, the
-   dot of a game's name on its page), and that mark is held back for
-   the whole show, hidden from the first paint behind the sky. The
-   sunrise's last second flies the disc out of the sky and into that
-   empty spot, shrinking as it travels, and the instant it lands the
-   disc vanishes and the mark appears in its place: delivered, fresh
-   each day. A skip, a stillness preference, a page with no such mark,
-   or a browser without the web animations api reveals the mark plainly
-   instead, so no page is ever left without its dot.
+   dot of a game's name on its page), and dawn.css draws that mark
+   itself: a disc in the accent, the same shape in every font. For
+   punctuation the mark is held back for the whole show, hidden from
+   the first paint behind the sky; the sunrise's last second flies the
+   disc out of the sky and into that empty spot, landing centered on
+   the drawn one, at its own size, and the instant it lands the bright
+   disc vanishes and the drawn one is what remains: delivered, fresh
+   each day. A heading that ends in a colored word (the recycle pair)
+   keeps its word and sits the show out. A skip, a stillness
+   preference, a page with no such mark, or a browser without the web
+   animations api reveals the mark plainly instead, so no page is ever
+   left without its dot.
 
    The dot keeps the whole day in it afterwards. A tap of the mark
    glows and walks the site's theme through its day: day, then night,
@@ -25,10 +29,11 @@
    is remembered across pages and days; a first visit always starts in
    day, so nothing is ever jarring; and every swap crossfades, so the
    page feels like the sky turning rather than a light switching. In
-   day the mark is the deposited sun, solid terracotta. In night it is
-   the sun's outline, a thin gold ring where the period sits: the sun
-   has set, its shape remains. In auto a faint ring watches the device.
-   Pressing and holding the mark still replays the whole morning.
+   day the mark is the deposited sun itself, a solid terracotta disc.
+   In night the same disc hollows into its own outline, a thin gold
+   ring: the sun has set, its shape remains. In auto it watches the
+   device, a faint ring with a center dot. Pressing and holding the
+   mark still replays the whole morning.
 
    The whole tab performs it. The favicon carries the motif at rest
    (the tile's period restyled as a small gold sun, or its outline at
@@ -60,6 +65,12 @@
                         the keyframes in dawn.css */
   var FLIGHT = 1100; /* the settle: the sun's trip from the sky into the
                         logo's mark */
+  var DISC_EM = 0.34;  /* the drawn mark's diameter, in em of the mark's
+                          own font: the width dawn.css gives the disc,
+                          kept in step and pinned by checks/games.js */
+  var LIFT_EM = 0.45;  /* the drawn mark's center, this far above the
+                          mark box's bottom: the css bottom (.28em)
+                          plus half the diameter. Same step, same pin */
   var PRESS = 600;   /* the dot: press and hold this long to replay the
                         morning */
   var GREETINGS = [
@@ -108,6 +119,11 @@
     }
     return null;
   }
+
+  /* the mark is punctuation on most pages, but the two recycle games
+     color a whole word instead. Only punctuation is a dot: a word
+     keeps its text, takes no deposit, and never hides */
+  function isPunct(m){ return /^[.!?]$/.test((m.textContent || '').trim()); }
 
   /* ---------------- the theme: day, night, auto ----------------
      The night palette is the sunrise's own sky (deep indigo paper,
@@ -308,6 +324,8 @@
       if (!m) return;
       dot = m;
       m.classList.add('dawn-kiss');
+      if (isPunct(m)) m.classList.add('dawn-punct');
+      if ((m.textContent || '').trim() === '.') m.classList.add('dawn-period');
       m.setAttribute('role', 'button');
       m.setAttribute('tabindex', '0');
       var holdT = null, held = false;
@@ -367,10 +385,11 @@
   }
 
   /* the settle: free the sun from the overlay, pin it exactly where
-     the rise left it, then fly it into the logo's empty mark spot. The
-     disc shrinks to the mark's own size as its glow burns off, and
-     vanishes onto the spot the moment it lands. Returns the flight
-     animation, or null if the sun could not be freed. */
+     the rise left it, then fly it into the logo's empty mark spot, on
+     to the disc dawn.css draws there. The disc shrinks to the drawn
+     mark's own size as its glow burns off, and vanishes onto its own
+     resting shape the moment it lands. Returns the flight animation,
+     or null if the sun could not be freed. */
   function settle(sun, mark){
     var sr = sun.getBoundingClientRect();
     var tr = mark.getBoundingClientRect();
@@ -379,13 +398,12 @@
     var fromX = sr.left + sr.width / 2;
     var fromY = sr.top + sr.height / 2;
     var toX = tr.left + tr.width / 2;
-    var toY = tr.bottom - 0.27 * fs; /* a period sits just above the
-                                        baseline, at the box's bottom.
-                                        0.27 is tuned for Georgia, the
-                                        headings' serif; the sans serif
-                                        game names sit a hair off, which
-                                        is invisible at the dot's size */
-    var dia = Math.max(8, Math.min(26, fs * 0.24));
+    /* the landing is derived, not tuned: the flight ends centered on
+       the disc dawn.css draws (bottom .28em plus half of .34em wide),
+       at exactly its diameter, so the bright disc vanishes onto its
+       own resting shape. Every font lands the same */
+    var toY = tr.bottom - LIFT_EM * fs;
+    var dia = DISC_EM * fs;
     var dx = toX - fromX;
     var dy = toY - fromY;
     var scale = dia / sr.width;
@@ -425,6 +443,8 @@
     var mark = null;
     if (sun && sun.animate && !reducedMotion()){
       try { mark = logoMark(); } catch (e){ mark = null; }
+      /* a word is never held back: the deposit is a dot's business */
+      if (mark && !isPunct(mark)) mark = null;
     }
     if (mark){
       try {

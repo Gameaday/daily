@@ -29,7 +29,12 @@ only seam outside the pair is the small loader at the end of
 untouched. The sunrise plays at most once per ET day per browser (the
 marker is written at the start, so a greeting cut short by navigation
 never replays), a key or a tap skips it, and the last second flies the
-sun into the page's own heading mark and deposits it there.
+sun into the page's own heading mark and deposits it there. The mark
+is drawn, not typed: punctuation headings end in a .34em disc (filled
+with the accent in day, a gold ring at night, a watching ring and dot
+in auto) whose geometry dawn.js derives for the flight's landing, while
+headings that end in a colored word (the recycle pair) keep their word
+and sit the show out.
 
 Tapping the mark walks the theme day, night, auto. The night palette
 is the sunrise's own sky, declared as `html.night` variable overrides
@@ -40,7 +45,8 @@ QA surface: `DAWN.init(cfg)` auto, `DAWN.play(cfg)` force,
 `DAWN.reset()` clears the marker, `DAWN.mode()` reads the theme.
 `checks/games.js` compiles the pair like any shell file, holds every
 `dawn-` class the js names against the css, and pins the loader seam,
-the storage keys and the night palette, so a silent break cannot land.
+the storage keys, the night palette and the deposit geometry, so a
+silent break cannot land.
 
 ## The knowledge layer
 

@@ -62,6 +62,7 @@
   var MARK = 'warmup.dawn';
   var MODE = 'warmup.mode';   /* day | night | auto */
   var FIRST = 'warmup.first'; /* the very first visit, greeted once */
+  var SHOOT = 'warmup.shoot'; /* the once-a-day shooting star marker */
 
   var HOLD = 4600;   /* the sunrise holds this long; keep in step with
                         the keyframes in dawn.css */
@@ -87,6 +88,12 @@
     'Hello, early bird.',
     'The day begins.'
   ];
+  /* the paper leans with the calendar: one hair warmer at midsummer,
+     cooler at midwinter, invisible in any single moment and true in
+     screenshots a season apart. Night keeps its own fixed sky */
+  var MONTH_PAPER = [
+    'f4f1e9','f5f1e7','f6f1e5','f7f1e4','f7f2e3','f8f2e1',
+    'f8f1df','f8f2e0','f7f2e2','f6f2e4','f5f2e7','f4f1e9' ];
   var lastCfg = null;
   var dot = null;      /* the logo's mark, once armed */
   var darkSys = null;  /* the device's own preference, for auto */
@@ -174,6 +181,8 @@
     try {
       if (animate) root.classList.add('dawn-theming');
       root.classList.toggle('night', night);
+      applySeason(night);
+      if (night) scheduleShoot(lastCfg && lastCfg.key);
       updateDot();
       /* a swap mid-show must not touch the tab: the sunrise is still
          performing on it and hands it back itself */
@@ -195,16 +204,91 @@
     applyMode(true);
   }
 
+  /* ---------------- the seasons and the moon ----------------
+     The day paper leans with the month, one hair, and the night
+     carries the moon's real phase, computed from the day key
+     against a known new moon: nothing fetched, nothing guessed.
+     A new moon keeps the sky to itself; a full one shows its face */
+  function applySeason(night){
+    try {
+      var mo = -1;
+      var mk = /^(\d{4})-(\d{2})-/.exec((lastCfg && lastCfg.key) || '');
+      if (mk) mo = parseInt(mk[2], 10);
+      else mo = new Date().getMonth() + 1;
+      var root = document.documentElement;
+      if (night || mo < 1 || mo > 12) root.style.removeProperty('--paper');
+      else root.style.setProperty('--paper', '#' + MONTH_PAPER[mo - 1]);
+    } catch (e){}
+  }
+  var SYNODIC = 29.530588853;                /* days in one mean lunation */
+  var NEW_MOON = Date.parse('2000-01-06');  /* a known new moon, near enough */
+  function moonShift(key){
+    var m = /^(\d{4}-\d{2}-\d{2})/.exec(key || '');
+    if (!m) return null;
+    var age = ((Date.parse(m[1]) - NEW_MOON) / 86400000) % SYNODIC;
+    if (age < 0) age += SYNODIC;
+    var phase = age / SYNODIC;   /* 0 new, .5 full */
+    var D = 26;                  /* the disc's own width in px */
+    return phase < 0.5 ? -(phase / 0.5) * D : ((1 - phase) / 0.5) * D;
+  }
+  function paintMoon(key){
+    try {
+      var x = moonShift(key);
+      if (x === null) return;
+      var m = document.getElementById('dawn-moon');
+      if (!m){
+        m = document.createElement('div');
+        m.id = 'dawn-moon';
+        m.className = 'dawn-moon';
+        m.setAttribute('aria-hidden', 'true');
+        (document.body || document.documentElement).appendChild(m);
+      }
+      m.style.setProperty('--moon-x', x + 'px');
+    } catch (e){}
+  }
+  /* the once-a-day streak: exactly one shooting star crosses a
+     night, at an unpredictable moment, and a hidden tab waits for
+     its reader. A stillness preference never sees it, and a
+     browser with no memory never spends it */
+  var shootT = null;
+  function scheduleShoot(key){
+    try {
+      if (shootT) window.clearTimeout(shootT);
+      shootT = null;
+      if (!key || reducedMotion()) return;
+      if (localStorage.getItem(SHOOT) === key) return;
+      shootT = window.setTimeout(function(){ fireShoot(key); },
+        15000 + Math.random() * 105000);
+    } catch (e){ shootT = null; }
+  }
+  function fireShoot(key){
+    shootT = null;
+    try {
+      if (!isNight()) return;
+      if (document.hidden){ scheduleShoot(key); return; }
+      if (localStorage.getItem(SHOOT) === key) return;
+      var s = document.createElement('div');
+      s.className = 'dawn-shoot';
+      s.setAttribute('aria-hidden', 'true');
+      (document.body || document.documentElement).appendChild(s);
+      window.setTimeout(function(){
+        try { s.parentNode && s.parentNode.removeChild(s); } catch (e2){}
+      }, 1400);
+      try { localStorage.setItem(SHOOT, key); } catch (e2){}
+    } catch (e){}
+  }
+
   /* ---------------- the tab: favicon and chrome tint ----------------
      All of it is wrapped soft: a browser that minds none of this
      keeps its own icon, tint and title, no harm done. */
   var FAV = { link: null, meta: null, timers: [] };
   var TITLE = { saved: null };
 
-  function sunTile(night){
+  function sunTile(night, soon){
     return "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
       (night
         ? "<rect width='100' height='100' rx='22' fill='#17162e'/>" +
+          (soon ? "<circle cx='79' cy='65' r='14' fill='#f4b769' opacity='.4'/>" : "") +
           "<circle cx='50' cy='50' r='43' fill='#251f3d' stroke='#3b3552' stroke-width='3'/>" +
           "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
           " text-anchor='middle' fill='#f6dfbe'>W</text>" +
@@ -214,6 +298,7 @@
           "<stop offset='.55' stop-color='#f5c46b'/>" +
           "<stop offset='1' stop-color='#e8974c'/></radialGradient></defs>" +
           "<rect width='100' height='100' rx='22' fill='#f7f1e5'/>" +
+          (soon ? "<circle cx='79' cy='65' r='16' fill='#f4b769' opacity='.45'/>" : "") +
           "<circle cx='50' cy='50' r='43' fill='#fffdf7' stroke='#e5dbc8' stroke-width='3'/>" +
           "<text x='43' y='71' font-size='58' font-family='Georgia,serif' font-weight='bold'" +
           " text-anchor='middle' fill='#b3541e'>W</text>" +
@@ -437,17 +522,57 @@
     }
   }
 
+  /* the calendar's own greetings: windows, not exact instants,
+     covering the true dates' drift across years, close enough for
+     a hello */
+  function calendarGreet(key){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key || '');
+    if (!m) return null;
+    var mo = parseInt(m[2], 10), da = parseInt(m[3], 10);
+    if (mo === 1 && da === 1) return 'First light of the year.';
+    if (mo === 2 && da === 29) return 'The free day.';
+    if ((mo === 3 && (da === 20 || da === 21)) ||
+        (mo === 9 && (da === 22 || da === 23))) return 'Even day, even night.';
+    if (mo === 6 && (da === 20 || da === 21)) return 'The longest day.';
+    if (mo === 12 && (da === 21 || da === 22)) return 'The shortest day.';
+    return null;
+  }
+  /* the browser's anniversary: the first visit's month and day come
+     around once a year, and the sunrise counts the years */
+  function morningsYears(first, key){
+    var a = /^(\d{4})-(\d{2})-(\d{2})$/.exec(first || '');
+    var b = /^(\d{4})-(\d{2})-(\d{2})$/.exec(key || '');
+    if (!a || !b || a[2] !== b[2] || a[3] !== b[3]) return 0;
+    var y = parseInt(b[1], 10) - parseInt(a[1], 10);
+    return y > 0 ? y : 0;
+  }
+
   function play(cfg){
     cfg = cfg || {};
     if (showing) return false;   /* one show at a time, fade included */
     showing = true;
     var greet = GREETINGS[Math.abs(cfg.dayIndex | 0) % GREETINGS.length];
+    /* the calendar gets its own mornings: the year turns on four
+       days, the leap day is a free one, and the sunrise counts the
+       browser's own years */
+    var cal = calendarGreet(cfg.key);
+    if (cal) greet = cal;
     /* the first visit ever gets its own line, whatever the day: the
        sunrise is a welcome before it is a habit */
     try {
-      if (!localStorage.getItem(FIRST)){
-        localStorage.setItem(FIRST, '1');
+      var fv = localStorage.getItem(FIRST);
+      if (!fv){
+        localStorage.setItem(FIRST, cfg.key || '1');
         greet = 'First light. Welcome.';
+      } else {
+        /* the early marker held no date: the day we started counting
+           stands in, so even old browsers get a morning to call
+           their own */
+        if (fv === '1'){ try { localStorage.setItem(FIRST, cfg.key || '1'); } catch (e2){} }
+        if (!cal){
+          var yrs = morningsYears(fv, cfg.key);
+          if (yrs > 0) greet = (yrs === 1 ? 'A year' : yrs + ' years') + ' of mornings.';
+        }
       }
     } catch (e){}
     var ov = build(cfg, greet);
@@ -568,6 +693,10 @@
   function init(cfg){
     if (!cfg || !cfg.key) return false;
     lastCfg = cfg;   /* the hold-to-replay uses the day facts too */
+    /* the calendar garnishes ride every visit, show or no show */
+    paintMoon(cfg.key);
+    applySeason(isNight());
+    if (isNight()) scheduleShoot(cfg.key);
     if (!storageWritable() || seenToday(cfg.key)) return false;
     markToday(cfg.key);   /* marked at the start: a greeting cut short by
                              navigation never replays on the next page */
@@ -600,6 +729,7 @@
      watches from the side and warms it when less than a minute
      remains. A garnish, never a gate: no countdown, no observer,
      no harm done */
+  var favSoon = false;
   function watchCountdown(){
     try {
       var el = document.getElementById('countdown') ||
@@ -607,8 +737,14 @@
       if (!el || !window.MutationObserver) return;
       var soon = function(){
         var m = /(\d+)h\s+(\d+)m\s+(\d+)s/.exec(el.textContent || '');
-        el.classList.toggle('dawn-soon',
-          !!m && parseInt(m[1], 10) === 0 && parseInt(m[2], 10) === 0);
+        var on = !!m && parseInt(m[1], 10) === 0 && parseInt(m[2], 10) === 0;
+        el.classList.toggle('dawn-soon', on);
+        /* the last minute glows in the tab too, so a backgrounded tab
+           tells its reader the day is nearly done */
+        if (on !== favSoon && !showing){
+          favSoon = on;
+          setFav(sunTile(isNight(), on));
+        }
       };
       new MutationObserver(soon).observe(el,
         { childList: true, characterData: true, subtree: true });
@@ -630,5 +766,21 @@
   } catch (e){}
   armKiss();
   watchCountdown();
+  /* the keyboard can call the sun: typing the word for it, anywhere
+     the page is listening and nowhere an input keeps the letters,
+     replays the whole morning */
+  try {
+    var typed = '';
+    window.addEventListener('keydown', function(e){
+      try {
+        if (e.metaKey || e.ctrlKey || e.altKey){ typed = ''; return; }
+        var t = e.target;
+        if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
+                  t.isContentEditable)){ typed = ''; return; }
+        typed = (typed + String(e.key || '').toLowerCase()).slice(-8);
+        if (typed === 'sunrise'){ typed = ''; if (!showing) play(lastCfg || {}); }
+      } catch (e2){}
+    });
+  } catch (e){}
   applyMode(false);
 })();

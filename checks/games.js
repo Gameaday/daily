@@ -72,10 +72,20 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
     for (let n = 1; n <= 4; n++)
       if (dawnCss.indexOf('stars-' + n + '::after') === -1)
         fail('shell/dawn.css lost the stars-' + n + ' night field');
+    /* the night keeps its calendar: the moon's phases and the
+       once-a-day streak are night facts, pinned like the tiers */
+    for (const nightPin of ['.dawn-moon', '.dawn-shoot'])
+      if (dawnCss.indexOf(nightPin) === -1)
+        fail('shell/dawn.css lost the ' + nightPin + ' night garnish');
   }
-  for (const key of ['warmup.dawn', 'warmup.mode', 'warmup.first'])
+  for (const key of ['warmup.dawn', 'warmup.mode', 'warmup.first', 'warmup.shoot'])
     if (dawnJs.indexOf(key) === -1)
       fail('shell/dawn.js lost the ' + key + ' storage key');
+  /* the calendar is garnish too: the seasonal paper, the year's own
+     mornings and the browser's anniversaries cannot silently drift */
+  for (const pin of ['MONTH_PAPER', 'calendarGreet', 'morningsYears'])
+    if (dawnJs.indexOf(pin) === -1)
+      fail('shell/dawn.js lost the ' + pin + ' calendar piece');
   for (const pin of ['@keyframes dawn-rise', '#17162e', 'feTurbulence', 'tabular-nums',
                     '#b3541e 0 50%'])
     if (dawnCss.indexOf(pin) === -1)

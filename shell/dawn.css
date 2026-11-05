@@ -311,6 +311,30 @@ html.night.stars-4::after{ background-image:
     radial-gradient(1.2px 1.2px at 49% 10%, rgba(245,196,107,.4), transparent 100%),
     radial-gradient(1px 1px at 74% 46%, rgba(246,223,190,.45), transparent 100%); }
 
+/* the moon carries the calendar: the real phase, computed in
+   dawn.js from the day against a known new moon. A gold disc with
+   a shadow disc leaning in and out of it; a new moon keeps the
+   sky to itself, a full one shows its face */
+.dawn-moon{ position:fixed; top:16vh; right:9vw; width:26px; height:26px;
+  border-radius:50%; background:#f5c46b; opacity:.8; z-index:-1;
+  pointer-events:none; display:none; }
+html.night .dawn-moon{ display:block; }
+.dawn-moon::after{ content:''; position:absolute; inset:0; border-radius:50%;
+  background:#1d1a35; transform:translateX(var(--moon-x, 26px)); }
+
+/* once an ET night, a streak crosses the sky unannounced, at its
+   own unpredictable moment; dawn.js spends the day, this performs
+   it */
+.dawn-shoot{ position:fixed; top:14vh; left:72vw; width:96px; height:2px;
+  border-radius:2px; z-index:-1; pointer-events:none;
+  background:linear-gradient(90deg, rgba(246,223,190,0), #f6dfbe);
+  animation:dawn-shoot 1.1s ease-out forwards; }
+@keyframes dawn-shoot{
+  0%{ transform:rotate(-14deg); opacity:0; }
+  12%{ opacity:.9; }
+  100%{ transform:rotate(-14deg) translate(-42vw, 11vh); opacity:0; }
+}
+
 /* the digits stand still: tabular figures wherever numbers tick or
    line up, so a countdown or a row of stats never wiggles as it
    changes. The ids and classes are the games' own; the rule only
@@ -349,5 +373,8 @@ html.night.stars-4::after{ background-image:
   /* the night sky meets them at rest too: the breathing stars hold
      still and stay out of the way */
   html.night::before, html.night body::before{ animation:none; opacity:0; }
+  /* and the streak stays sheathed: the stillness preference never
+     sees the shooting star at all */
+  .dawn-shoot{ display:none; }
   .dawn-theming *, .dawn-theming .dawn-kiss::before{ transition-duration:.01ms; }
 }

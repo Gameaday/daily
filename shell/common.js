@@ -554,12 +554,16 @@ const SHELL = (() => {
 /* ---- the archive's own origin ---- */
 /* Every finished day replays forever, and the very first of them is
    where the whole site began. A browser that walks the archive all
-   the way back to day one hears it, once ever, quietly; a browser
-   that cannot remember skips the line rather than repeat it */
+   the way back to day one hears it, quietly. The replay is read-only,
+   so the line is stilled only by a mark a live morning leaves: a
+   browser that was there on day one never hears it again, and a
+   browser that came later can hear it more than once */
 try {
+  if (!SHELL.isArchive && SHELL.dayIndex === 0){
+    try { localStorage.setItem('warmup.dayone', '1'); } catch (e2){}
+  }
   if (SHELL.isArchive && SHELL.dayIndex === 0 &&
       !localStorage.getItem('warmup.dayone')){
-    localStorage.setItem('warmup.dayone', '1');
     var sayDayOne = function(){
       try {
         if (document.getElementById('toast')) SHELL.toast('this is where it started');
@@ -616,19 +620,23 @@ try {
                  haul >= 10 ? 1 : 0;
       document.documentElement.classList.add('stars-' + tier);
       /* a sky that thickened since the last look says so once, quietly;
-         the first look only records where the sky stands */
-      var seenTier = null;
-      try { seenTier = localStorage.getItem('warmup.tier'); } catch (e3){}
-      try { localStorage.setItem('warmup.tier', String(tier)); } catch (e3){}
-      if (seenTier !== null && tier > (parseInt(seenTier, 10) || 0)){
-        var sayThick = function(){
-          try {
-            if (document.getElementById('toast')) SHELL.toast('the sky thickens');
-          } catch (e4){}
-        };
-        if (document.readyState === 'loading')
-          document.addEventListener('DOMContentLoaded', sayThick, { once: true });
-        else sayThick();
+         the first look only records where the sky stands. The replay is
+         read-only, so an archived day never moves the mark and keeps
+         the word for the next live page */
+      if (!SHELL.isArchive){
+        var seenTier = null;
+        try { seenTier = localStorage.getItem('warmup.tier'); } catch (e3){}
+        try { localStorage.setItem('warmup.tier', String(tier)); } catch (e3){}
+        if (seenTier !== null && tier > (parseInt(seenTier, 10) || 0)){
+          var sayThick = function(){
+            try {
+              if (document.getElementById('toast')) SHELL.toast('the sky thickens');
+            } catch (e4){}
+          };
+          if (document.readyState === 'loading')
+            document.addEventListener('DOMContentLoaded', sayThick, { once: true });
+          else sayThick();
+        }
       }
     } catch (e2){}
     var css = document.createElement('link');

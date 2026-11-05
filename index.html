@@ -20,6 +20,9 @@
   h1 span{color:var(--accent);}
   .sub{color:var(--muted); margin:6px 0 8px; font-size:15px;}
   .today{display:inline-block; margin:0 0 28px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:4px 12px;}
+  /* the date rides the badge only where a screen has room for it */
+  .today .tdate{display:none;}
+  @media (min-width:480px){ .today .tdate{display:inline; } }
   .cards{display:flex; gap:16px; flex-wrap:wrap;}
   a.card{display:block; flex:1 1 300px; text-decoration:none; color:var(--ink); background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:22px 24px; box-shadow:0 2px 10px rgba(60,45,20,.06); transition:transform .12s, border-color .12s;}
   a.card:hover{transform:translateY(-2px); border-color:var(--accent);}
@@ -156,9 +159,15 @@
        frozen at no. 1. The landing always means today, so it
        numbers todayIndex, never a stray ?d= view day */
     var el = document.getElementById('today');
-    if (el && typeof SHELL !== 'undefined')
-      el.textContent = "today's warmup \u00b7 no. " + (SHELL.todayIndex + 1) +
-                       ' \u00b7 ' + SHELL.pdateText();
+    if (el && typeof SHELL !== 'undefined'){
+      /* the number is the badge; the date is a span the css hides
+         on narrow screens, so phones keep the clean pill */
+      el.textContent = "today's warmup \u00b7 no. " + (SHELL.todayIndex + 1);
+      var d = document.createElement('span');
+      d.className = 'tdate';
+      d.textContent = ' \u00b7 ' + SHELL.pdateText();
+      el.appendChild(d);
+    }
     /* the badge claims today: an open tab rolls over at midnight
        instead of telling yesterday's number */
     setInterval(function(){

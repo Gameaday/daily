@@ -291,12 +291,21 @@ function renderMistakes(){
 }
 
 function renderFound(){
-  $('found').innerHTML = S.solvedCats.map((ci, k) => {
+  let html = S.solvedCats.map((ci, k) => {
     const c = BOARD.cats ? BOARD.cats[ci] : ((S.found || [])[k] || { n: '', i: [] });
     return `<div class="grp" style="background:${COLORS[ci]}">
       <div class="gname">${c.n}</div>
       <div class="gitems">${c.i.join(' \u00b7 ')}</div></div>`;
   }).join('');
+  /* a lost day tells the whole answer: the groups the trio never
+     found sit dimmed below the ones it did, names and members both */
+  if (S.status === 'lost' && BOARD.cats){
+    html += [0, 1, 2, 3].filter(ci => !S.solvedCats.includes(ci)).map(ci =>
+      `<div class="grp dim" style="background:${COLORS[ci]}">
+        <div class="gname">${BOARD.cats[ci].n}</div>
+        <div class="gitems">${BOARD.cats[ci].i.join(' \u00b7 ')}</div></div>`).join('');
+  }
+  $('found').innerHTML = html;
 }
 
 function renderAll(){ renderTiles(); renderMistakes(); renderFound(); updateSubmit(); }
@@ -405,7 +414,7 @@ function showReveal(){
     $('verdict').textContent = (S.mistakes === 0 ? 'Flawless sift — not one wasted test.' : 'Sifted clean. The day is in order.') + ' Today’s theme: ' + BOARD.t + '.';
     $('verdict').style.color = 'var(--green)';
   } else {
-    $('verdict').textContent = 'Sifted out — the groups you missed are below, dimmed.';
+    $('verdict').textContent = 'Sifted out: every group is named below, dimmed to the ones that got away.';
     $('verdict').style.color = 'var(--accent)';
   }
   $('sharetext').textContent =
@@ -417,7 +426,7 @@ function showReveal(){
               answer: BOARD.cats ? S.solvedCats.map(ci => BOARD.cats[ci].i)
                                  : (S.found || []).map(g => g.i),
               meta: { mistakes: S.mistakes }, points: S.pts, nonce: S.nonce });
-  renderTiles(); // to apply reveal dimming
+  renderTiles(); renderFound(); // the reveal dims the tiles and names the missed groups
 }
 /* ---------------- global curve (optional; talks to the tiny scores service) ---------------- */
 const SYNC_GAME = 'sift';

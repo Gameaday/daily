@@ -149,6 +149,8 @@ html.night{ --paper:#17162e; --card:#251f3d; --ink:#f6dfbe; --muted:#a3947c;
 html.night .toast{ color:#17162e; }
 html.night .modal .close{ color:#17162e; }
 html.night .btn{ color:#231a08; }
+/* the ghost variant keeps the card at night, so its text keeps the ink */
+html.night .btn.ghost{ color:var(--ink); }
 html.night .overlay{ background:rgba(5,6,16,.62); }
 html.night ::selection{ background:#4a2c48; }
 /* inputs retheme through the palette slots like everything else; the
@@ -215,10 +217,11 @@ a.card:active{ transform:translateY(0); }
    The page is lit, not flat. A whisper of grain gives the paper its
    tooth in both themes, the day is lit from above by a warm wash at
    the top of the viewport, and at night the sky is still there: a
-   few faint stars over the indigo, pinned where the scroll cannot
-   carry them away. The grain rides above everything at a whisper and
-   takes no pointer events; the wash and the stars are body
-   backgrounds and never sit above the words. */
+   few faint stars over the indigo, some of them slowly arriving
+   and leaving again, pinned where the scroll cannot carry them
+   away. The grain rides above everything at a whisper and takes no
+   pointer events; the wash rides the body, the stars ride the sky
+   behind it, and none of them ever sits above the words. */
 body::after{ content:''; position:fixed; inset:0; z-index:10001;
   pointer-events:none; opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
@@ -227,7 +230,11 @@ html.night body::after{ opacity:.08; }
 body{ background-image:linear-gradient(180deg, rgba(244,183,105,.13),
   rgba(244,183,105,0) 240px); background-repeat:no-repeat;
   background-attachment:fixed; }
-html.night body{ background-image:
+html.night body{ background-color:transparent;
+  background-image:linear-gradient(180deg, rgba(74,44,72,.4),
+    rgba(74,44,72,0) 260px); }
+html.night{ background-color:#17162e; background-attachment:fixed;
+  background-image:
     radial-gradient(1px 1px at 8% 12%, rgba(245,196,107,.5), transparent 100%),
     radial-gradient(1.2px 1.2px at 19% 30%, rgba(246,223,190,.4), transparent 100%),
     radial-gradient(.9px .9px at 31% 9%, rgba(245,196,107,.45), transparent 100%),
@@ -235,8 +242,27 @@ html.night body{ background-image:
     radial-gradient(1.3px 1.3px at 58% 13%, rgba(246,223,190,.35), transparent 100%),
     radial-gradient(.9px .9px at 71% 26%, rgba(224,184,79,.5), transparent 100%),
     radial-gradient(1.1px 1.1px at 84% 10%, rgba(245,196,107,.4), transparent 100%),
-    radial-gradient(.8px .8px at 93% 31%, rgba(246,223,190,.4), transparent 100%),
-    linear-gradient(180deg, rgba(74,44,72,.4), rgba(74,44,72,0) 260px); }
+    radial-gradient(.8px .8px at 93% 31%, rgba(246,223,190,.4), transparent 100%); }
+/* the twinkle: two more star fields sit behind the page and above
+   the sky, each breathing on its own long clock, out of phase and
+   at different spots, so the night's stars come into and out of
+   existence a few at a time */
+html.night::before, html.night body::before{ content:''; position:fixed;
+  inset:0; z-index:-1; pointer-events:none; }
+html.night::before{ background-image:
+    radial-gradient(1.1px 1.1px at 13% 21%, rgba(246,223,190,.55), transparent 100%),
+    radial-gradient(.9px .9px at 38% 33%, rgba(245,196,107,.6), transparent 100%),
+    radial-gradient(1.2px 1.2px at 64% 7%, rgba(246,223,190,.5), transparent 100%),
+    radial-gradient(.8px .8px at 88% 19%, rgba(224,184,79,.6), transparent 100%);
+  animation:dawn-twinkle-a 13s ease-in-out infinite; }
+html.night body::before{ background-image:
+    radial-gradient(1px 1px at 26% 15%, rgba(245,196,107,.6), transparent 100%),
+    radial-gradient(1.2px 1.2px at 51% 28%, rgba(224,184,79,.55), transparent 100%),
+    radial-gradient(.9px .9px at 77% 34%, rgba(246,223,190,.55), transparent 100%),
+    radial-gradient(1px 1px at 96% 8%, rgba(245,196,107,.5), transparent 100%);
+  animation:dawn-twinkle-b 19s ease-in-out infinite; }
+@keyframes dawn-twinkle-a{ 0%, 100%{ opacity:0; } 50%{ opacity:1; } }
+@keyframes dawn-twinkle-b{ 0%, 100%{ opacity:.9; } 50%{ opacity:0; } }
 
 /* the digits stand still: tabular figures wherever numbers tick or
    line up, so a countdown or a row of stats never wiggles as it
@@ -273,5 +299,8 @@ html.night body{ background-image:
      handoff shows the mark plainly */
   .dawn-soon{ animation:none; }
   .dawn-settle{ animation:none; }
+  /* the night sky meets them at rest too: the breathing stars hold
+     still and stay out of the way */
+  html.night::before, html.night body::before{ animation:none; opacity:0; }
   .dawn-theming *, .dawn-theming .dawn-kiss::before{ transition-duration:.01ms; }
 }

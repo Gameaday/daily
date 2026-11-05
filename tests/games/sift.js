@@ -143,6 +143,8 @@ async function run(h){
       'sift dealt: the reveal dims the whole board');
     h.ok(String(sfL.env.els.verdict.textContent).indexOf('Sifted out') >= 0,
       'sift dealt: the loss tells its verdict');
+    h.ok(String(sfL.env.els.found.innerHTML).indexOf(sfFull.cats[2].n) >= 0,
+      'sift dealt: the loss names the groups the day never shipped');
     /* a reload of the lost day replays the reveal it never shipped */
     const sfLR = h.boot('sift', EXP,
       { now: T0, store: sfLst, servePuzzle: sfServed, stubBanks: true });
@@ -150,6 +152,8 @@ async function run(h){
     h.eq(sfLR.x.S.status, 'lost', 'sift dealt: a reload keeps the lost day');
     h.ok((sfLR.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 12,
       'sift dealt: the reload replays the reveal dimming');
+    h.ok(String(sfLR.env.els.found.innerHTML).indexOf(sfFull.cats[3].n) >= 0,
+      'sift dealt: the reload names the missed groups again');
     /* --- an expired session no longer spends the sift: a mid-board
        expiry reseats the found groups and the spent miss, and the
        sweep still wins --- */

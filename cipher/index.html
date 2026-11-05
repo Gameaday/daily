@@ -46,6 +46,13 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .verdict.lost{color:var(--accent);}
 .plainq{margin:8px 0 4px; text-align:center; font-size:15px; color:var(--muted); font-style:italic;}
 .plainq b{color:var(--ink); font-style:normal;}
+/* the plaintext sets itself: one span wipes across in terracotta, letter
+   by letter as the wash passes, then settles into the page's own ink */
+.plainq .pq{display:inline-block; animation:csettle 1.1s ease both;}
+@keyframes csettle{0%{color:var(--accent); clip-path:inset(0 100% 0 0);}
+  55%{color:var(--accent); clip-path:inset(0 0 0 0);}
+  100%{color:inherit; clip-path:inset(0 0 0 0);}}
+@media (prefers-reduced-motion: reduce){.plainq .pq{animation:none;}}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
 .codebook{margin-top:10px; background:var(--card); border:1.5px solid var(--line); border-radius:10px;
@@ -462,7 +469,7 @@ function showReveal(){
   for (const c in book){ S.map[c] = book[c]; }
   render();
   $('plainq').innerHTML = '<b>' + Q.a + '</b> \u2014 ' +
-    (isDealt() ? ((S.reveal && S.reveal.q) || '') : Q.q);
+    '<span class="pq">' + (isDealt() ? ((S.reveal && S.reveal.q) || '') : Q.q) + '</span>';
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 decoded ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
   /* the day is decoded - the play UI goes quiet */

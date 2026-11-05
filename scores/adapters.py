@@ -679,23 +679,18 @@ def _evidence_bogus(day, ans, meta):
 
 
 def _evidence_well_actually(day, ans, meta):
-    """canard: the picks must name the lie, and the typed correction can earn the bonus point."""
+    """canard: the picks must name the lie; the correction earns the star, and the curve never sees it."""
     e = _list_entry("canard", day)
     if e is None:
         return None, "no answer key"
     picks = ans.get("picks") if isinstance(ans, dict) else None
-    typed = ans.get("typed") if isinstance(ans, dict) else None
     if not isinstance(picks, list) or not picks or len(picks) > 3 \
             or not all(isinstance(p, int) and not isinstance(p, bool)
                       and 0 <= p < len(e["s"]) for p in picks):
         return None, "bad answer"
     if e["l"] not in picks:
         return None, "wrong answer"
-    pts = max(0, 3 - sum(1 for p in picks if p != e["l"]))
-    if isinstance(typed, str) and len(typed) <= 200 \
-            and _text_norm(typed) in (_text_norm(x) for x in e["a"]):
-        pts += 1
-    return pts, None
+    return max(0, 3 - sum(1 for p in picks if p != e["l"])), None
 
 
 def _evidence_fermi(day, ans, meta):

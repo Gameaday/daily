@@ -641,7 +641,7 @@ def main():
                                     "answer": {"picks": [1],
                                                "typed": "Leonardo da Vinci"},
                                     "nonce": wn})
-        check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
+        check(s == 200 and b.get("count") == 1 and b.get("mean") == 2,
               "dealt submit: the session's picks and correction override the claim")
         s, b = post("/api/deal", {"game": "canard", "day": TODAY})
         wn2 = b["nonce"]
@@ -656,7 +656,7 @@ def main():
                                     "answer": {"picks": [1],
                                                "typed": "Leonardo"},
                                     "nonce": wn2})
-        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
+        check(s == 200 and b.get("count") == 2 and b.get("mean") == 1,
               "dealt submit: the session's lost verdict overrides the claimed win")
         # --- dealt museum: the name never ships and the session meters
         #     the clues, so the reveal rides the spent guess ---
@@ -1528,11 +1528,11 @@ def main():
         v, rsn = srv.validate_evidence("canard", 0, {"status": "won",
                                                            "answer": {"picks": [1],
                                                                       "typed": "Leonardo da Vinci"}})
-        check(v == 4, "unit: found it and named the correction derives 4")
+        check(v == 3, "unit: the find derives 3, the correction earns the star")
         v, rsn = srv.validate_evidence("canard", 0, {"status": "won",
                                                            "answer": {"picks": [1],
                                                                       "typed": "nope"}})
-        check(v == 3, "unit: a wrong correction earns no bonus")
+        check(v == 3, "unit: the curve never sees the correction")
         v, rsn = srv.validate_evidence("fermi", 0, {"status": "won", "answer": 2500000000})
         check(v == 3, "unit: fermi spot-on derives 3")
         v, rsn = srv.validate_evidence("fermi", 0, {"status": "won", "answer": 1000000})

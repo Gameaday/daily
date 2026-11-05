@@ -121,6 +121,11 @@
   }
   function markToday(key){
     try {
+      var prev = null;
+      try { prev = localStorage.getItem(MARK); } catch (e2){}
+      /* a replay after a reset greets again, but the morning is
+         only kept once */
+      if (prev === key) return;
       localStorage.setItem(MARK, key);
       /* a morning met is a morning kept: the count starts when the
          counting began, so no browser claims mornings it never met */
@@ -493,7 +498,7 @@
          unordered, the way a sky actually empties */
       var late = i >= count - 3;
       st.style.animationDelay = (late ? (2500 + (i - count + 3) * 200)
-        : (150 + (i * 137 + i * i * 29) % 2200)) + 'ms';
+        : (150 + ((i * 137 + i * i * 29) % 2200))) + 'ms';
       st.style.left = STAR_SPOTS[i][0] + '%';
       st.style.top = STAR_SPOTS[i][1] + '%';
       st.style.width = st.style.height = (1.6 + (i * 7) % 4 * .45) + 'px';
@@ -522,17 +527,12 @@
          work stains the page, the way a month of anything does */
       if (n >= 10) root.classList.add('dawn-m1');
       if (n >= 30) root.classList.add('dawn-m2');
-      /* the pencil: an asterisk beside the mark, a note was made */
-      var m = logoMark();
-      if (m){
-        var a = document.createElement('span');
-        a.className = 'dawn-ast';
-        a.setAttribute('aria-hidden', 'true');
-        a.textContent = '\u002a';
-        m.appendChild(a);
-      }
-      /* the pencil: an underline beneath the number line, under
-         the whole line the shell wraps around the date span */
+      /* the pencil: an asterisk beside the mark, a note was made.
+         The css draws it on the mark's own margin, so the mark's
+         text stays the mark and the deposit still knows its dot */
+      /* the pencil: an underline beneath the number line, ending
+         just past the date, never under the arrows that walk the
+         archive */
       var pd = document.getElementById('pdate');
       if (pd && pd.parentNode){
         var host = pd.parentNode;
@@ -542,6 +542,10 @@
         u.className = 'dawn-line';
         u.setAttribute('aria-hidden', 'true');
         host.appendChild(u);
+        try {
+          var over = host.offsetWidth - pd.offsetLeft - pd.offsetWidth;
+          if (over > 0) u.style.right = Math.max(4, over) + 'px';
+        } catch (e2){}
       }
       /* the wear: a thumb smudge on the corner and, after a month
          of mornings, the ring; both fixed to the paper */
@@ -573,6 +577,7 @@
     /* the bridge: only a day show, and only for readers who take
        the morning in motion; the night keeps its stars, and a
        stillness preference keeps its rest */
+    ov.appendChild(sky);
     if (!isNight() && !reducedMotion()) ov.appendChild(nightStars());
     ov.appendChild(day); ov.appendChild(sun);
     ov.appendChild(haze); ov.appendChild(text);

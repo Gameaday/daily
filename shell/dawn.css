@@ -332,12 +332,18 @@ html.night.stars-4::after{ background-image:
    the marks on every page; the css shows each only to the tier or
    the count that earned it, and night keeps its own fixed sky, so
    the pencil and the stains rest there */
-.dawn-ast{ position:absolute; left:calc(100% + 5px); bottom:64%;
-  font-family:Georgia,serif; font-size:.45em; line-height:1;
+/* the asterisk rides the mark's own margin, drawn in the css: a
+   pseudo element is not the mark's text, so the deposit still knows
+   its dot. It clears the disc (which grows past the period's own
+   advance), sits above it like a margin note, and rests at night */
+.dawn-punct::after{ content:'*'; position:absolute;
+  left:calc(100% + .45em); bottom:64%;
+  font-family:Georgia,serif; font-size:.45em; font-weight:400; line-height:1;
   color:#8a7c63; opacity:.55; transform:rotate(18deg);
   pointer-events:none; display:none; }
-html.stars-1 .dawn-ast, html.stars-2 .dawn-ast,
-html.stars-3 .dawn-ast, html.stars-4 .dawn-ast{ display:inline-block; }
+html.stars-1 .dawn-punct::after, html.stars-2 .dawn-punct::after,
+html.stars-3 .dawn-punct::after, html.stars-4 .dawn-punct::after{
+  display:inline-block; }
 .dawn-line{ position:absolute; left:1px; right:9%; bottom:-4px; height:5px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 6' preserveAspectRatio='none'%3E%3Cpath d='M2 4 C30 2.6 58 4.8 92 3.2 S150 4.9 178 2.5 L198 3.5' fill='none' stroke='%238a7c63' stroke-width='1.7' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E");
   background-size:100% 100%; pointer-events:none; display:none; }
@@ -357,7 +363,7 @@ html.dawn-m1 .dawn-smudge, html.dawn-m2 .dawn-smudge{ display:block; }
   background-size:100% 100%; }
 html.dawn-m2 .dawn-ring{ display:block; }
 /* the night keeps its fixed sky: the pencil and the stains rest */
-html.night .dawn-ast, html.night .dawn-line,
+html.night .dawn-punct::after, html.night .dawn-line,
 html.night .dawn-marks{ display:none; }
 
 /* the moon carries the calendar: the real phase, computed in

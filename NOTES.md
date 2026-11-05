@@ -94,3 +94,6 @@ with rules of their own, and must not be spent on a reskin:
 - a sift board auto-generator (the boards are authored for now)
 - lifting Superlative past its people-derived bank: the people layer
   grows deliberately, and the bank follows it
+- star tiers: the more stars a browser has collected, the more the
+  night background shows, tiered rather than one-to-one, a quiet nod
+  to the haul

@@ -102,16 +102,16 @@ h1{
   </div>
 
   <span class="tag" id="tag"></span>
-  <p class="lead">One word or phrase below is <b>wrong</b>. Click it, <b>3 picks</b>, then name the correction for a <b>bonus point</b>.</p>
+  <p class="lead">One word or phrase below is <b>wrong</b>. Click it, <b>3 picks</b>, then name the correction for a <b>star</b>.</p>
 
   <div class="statement" id="statement"></div>
   <div class="picks" id="picks"></div>
 
   <div class="bonus" id="bonus">
-    <p class="bq">You found it — the lie is green. Now: <b>what should it say instead?</b> One attempt, one bonus point.</p>
+    <p class="bq">You found it — the lie is green. Now: <b>what should it say instead?</b> One attempt, one star.</p>
     <div class="brow">
       <input id="binput" placeholder="type the correction…" autocomplete="off" spellcheck="false" />
-      <button class="btn" id="bgo">Claim the point</button>
+      <button class="btn" id="bgo">Claim the star</button>
     </div>
   </div>
 
@@ -137,7 +137,7 @@ h1{
     <h2>How to play</h2>
     <p>One statement from history. <b>One word or phrase is wrong</b> — the rest is true.</p>
     <p><b>Click the phrase you think is the error.</b> A wrong pick turns red and costs one of your three picks.</p>
-    <p>Find the error and it turns green — then you get <b>one attempt to type what it should say instead</b>. Score is 3 minus your wrong picks, plus 1 for a correct correction — a first-pick find with the bonus nailed is a perfect 4-point morning.</p>
+    <p>Find the error and it turns green — then you get <b>one attempt to type what it should say instead</b>. Score is 3 minus your wrong picks; a correct correction earns the star, and a first-pick find with the star is a perfect morning.</p>
     <p>Everyone in the world gets the same puzzle, so compare scores at standup — argue before you click.</p>
     <button class="close" data-close>Got it</button>
   </div>
@@ -190,9 +190,15 @@ const store = SHELL.makeStore(KEY);
 function loadState(){ return store.load(); }
 function saveState(){ store.save(S); }
 let S = loadState();
+/* the correction is a star now, not a point: the old perfect mornings
+   fold back into the 3 they always were */
+if (S && typeof S.stats === 'object' && Array.isArray(S.stats.dist) && S.stats.dist.length > 4){
+  S.stats.dist[3] += S.stats.dist[4] || 0;
+  S.stats.dist.length = 4;
+}
 if (!S || typeof S.stats !== 'object') {
   S = { day: dayIndex, picked: [], status: 'playing', bonus: null, typed: '',
-        stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0,0,0]} };
+        stats: {played:0, wins:0, streak:0, max:0, dist:[0,0,0,0]} };
 } else if (S.day !== dayIndex) {
   if (S.status !== 'won') S.stats.streak = 0; // missed (or lost) the previous day
   S.day = dayIndex; S.picked = []; S.status = 'playing'; S.bonus = null;
@@ -239,14 +245,14 @@ function wrongPicks(){ return S.picked.filter(i => i !== lieKey()).length; }
 function baseScore(){ return Math.max(0, 3 - wrongPicks()); }
 function score(){
   if (S.status !== 'won') return 0;
-  return baseScore() + (S.bonus === 'correct' ? 1 : 0);
+  return baseScore();
 }
 function shareText(){
   if (S.status !== 'won'){
     return `Canard No. ${num} \u00b7 0/3 \uD83D\uDFE5\nOne word in this statement is wrong \u2014 can you fix it?`;
   }
-  const bonus = S.bonus === 'correct' ? '+\u2B50' : '+\uD83D\uDFE5';
-  return `Canard No. ${num} \u00b7 ${baseScore()}/3 ${bonus} = ${score()} pts\nOne word in this statement is wrong \u2014 can you fix it?`;
+  const star = S.bonus === 'correct' ? ' \u2B50' : '';
+  return `Canard No. ${num} \u00b7 ${baseScore()}/3${star}\nOne word in this statement is wrong \u2014 can you fix it?`;
 }
 
 function showReveal(){
@@ -279,6 +285,8 @@ function finish(){
     st.wins++; st.streak++;
     st.max = Math.max(st.max, st.streak);
     st.dist[score()]++;
+    /* the correction is the star: a flourish the curve never sees */
+    if (S.bonus === 'correct') SHELL.recordStars(SYNC_GAME, 1);
   } else {
     st.streak = 0;
     st.dist[0]++;
@@ -438,8 +446,8 @@ function renderStats(){
     `<div class="stat"><span class="v">${st.streak}</span><span class="k">streak</span></div>` +
     `<div class="stat"><span class="v">${st.max}</span><span class="k">max streak</span></div>`;
   const maxd = Math.max(1, ...st.dist);
-  const labels = ['0 pts','1 pt','2 pts','3 pts','4 pts \u2B50'];
-  $('dist').innerHTML = [0,1,2,3,4].map(i =>
+  const labels = ['0 pts','1 pt','2 pts','3 pts'];
+  $('dist').innerHTML = [0,1,2,3].map(i =>
     `<div class="distrow"><span class="n">${labels[i]}</span><span class="bar" style="width:${Math.max(Math.round(100*st.dist[i]/maxd),4)}%"></span><span>${st.dist[i]}</span></div>`
   ).join('');
 }

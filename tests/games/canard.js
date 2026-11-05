@@ -14,7 +14,9 @@ async function run(h){
     r.env.els.binput.value = 'Leonardo';
     r.x.submitBonus();
     h.eq(r.x.S.status, 'won', 'canard: won');
-    h.eq(r.x.score(), 4, 'canard: 4 pts (3 + bonus)');
+    h.eq(r.x.score(), 3, 'canard: 3 pts for the find, the correction is the star');
+    h.ok(String(r.x.shareText()).indexOf('\u2B50') >= 0,
+      'canard: the share carries the star');
     await h.flush();
     h.eq(h.lastPost(r.env).body.status, 'won', 'canard: the win posts the won status');
     h.eq(h.lastPost(r.env).body.answer.picks.join(), '1', 'canard: the evidence carries the picks');

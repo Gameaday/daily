@@ -65,6 +65,13 @@ if (fs.existsSync('shell/dawn.js') && fs.existsSync('shell/dawn.css')) {
        palette it inlines must stay the night's own paper */
     if (commonSrc.indexOf('--paper:#17162e') === -1)
       fail('shell/common.js lost its synchronous night palette (the flash guard)');
+    /* the star haul: the shell stamps stars-N on the html before paint;
+       every tier the stamp can emit must own its night field */
+    if (commonSrc.indexOf("'stars-'") === -1)
+      fail('shell/common.js lost its star tier stamp');
+    for (let n = 1; n <= 4; n++)
+      if (dawnCss.indexOf('stars-' + n + '::after') === -1)
+        fail('shell/dawn.css lost the stars-' + n + ' night field');
   }
   for (const key of ['warmup.dawn', 'warmup.mode', 'warmup.first'])
     if (dawnJs.indexOf(key) === -1)

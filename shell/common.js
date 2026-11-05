@@ -573,6 +573,24 @@ const SHELL = (() => {
       nightStyle.textContent = 'html.night{--paper:#17162e;--card:#251f3d;--ink:#f6dfbe;--muted:#a3947c;--accent:#f5c46b;--accent-soft:rgba(244,183,105,.16);--green:#8fd0a8;--green-soft:rgba(46,125,79,.32);--line:#3b3552;--red:#e0755f;--red-soft:rgba(179,64,46,.30);--gold:#e0b84f;--gold-soft:rgba(201,154,46,.22);color-scheme:dark}';
       document.head.appendChild(nightStyle);
     }
+    /* the star haul paints with the night: the browser's collected
+       stars become the sky's density tier, stamped here with the
+       mode so the sky is never thin for a blink. The class is a fact
+       about the browser, not the theme, so a tap into night later in
+       the day finds the right sky waiting */
+    try {
+      var haul = 0;
+      for (var sk = 0; sk < localStorage.length; sk++){
+        var skey = localStorage.key(sk);
+        if (/^warmup\.stars\./.test(skey || '')){
+          var so = null;
+          try { so = JSON.parse(localStorage.getItem(skey)); } catch (e3){}
+          if (so && typeof so.total === 'number') haul += so.total;
+        }
+      }
+      document.documentElement.classList.add('stars-' +
+        (haul >= 100 ? 4 : haul >= 50 ? 3 : haul >= 25 ? 2 : haul >= 10 ? 1 : 0));
+    } catch (e2){}
     var css = document.createElement('link');
     css.rel = 'stylesheet';
     css.href = base + 'dawn.css';

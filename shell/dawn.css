@@ -264,6 +264,53 @@ html.night body::before{ background-image:
 @keyframes dawn-twinkle-a{ 0%, 100%{ opacity:0; } 50%{ opacity:1; } }
 @keyframes dawn-twinkle-b{ 0%, 100%{ opacity:.9; } 50%{ opacity:0; } }
 
+/* ------- the star haul -------
+   The collected stars thicken the sky. The shell sums the browser's
+   stars before the first paint and stamps the html with the tier
+   (stars-0 to stars-4), so the sky is never thin for a blink and a
+   tap into night later in the day finds the right sky waiting. Each
+   tier carries the last, so the sky only thickens; its stars sit with
+   the night's own, still and out of the way, and the tiers are
+   bounded, so the haul costs the same to draw however long it grows.
+   dawn.js has no say in any of it: the haul is a fact about the
+   browser, never about the theme */
+html.night::after{ content:''; position:fixed; inset:0; z-index:-1;
+  pointer-events:none; }
+html.night.stars-1::after{ background-image:
+    radial-gradient(1px 1px at 7% 38%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.2px 1.2px at 29% 19%, rgba(246,223,190,.4), transparent 100%),
+    radial-gradient(.9px .9px at 56% 42%, rgba(224,184,79,.45), transparent 100%); }
+html.night.stars-2::after{ background-image:
+    radial-gradient(1px 1px at 7% 38%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.2px 1.2px at 29% 19%, rgba(246,223,190,.4), transparent 100%),
+    radial-gradient(.9px .9px at 56% 42%, rgba(224,184,79,.45), transparent 100%),
+    radial-gradient(1px 1px at 12% 6%, rgba(224,184,79,.5), transparent 100%),
+    radial-gradient(1.1px 1.1px at 41% 44%, rgba(245,196,107,.45), transparent 100%),
+    radial-gradient(.8px .8px at 82% 36%, rgba(246,223,190,.5), transparent 100%); }
+html.night.stars-3::after{ background-image:
+    radial-gradient(1px 1px at 7% 38%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.2px 1.2px at 29% 19%, rgba(246,223,190,.4), transparent 100%),
+    radial-gradient(.9px .9px at 56% 42%, rgba(224,184,79,.45), transparent 100%),
+    radial-gradient(1px 1px at 12% 6%, rgba(224,184,79,.5), transparent 100%),
+    radial-gradient(1.1px 1.1px at 41% 44%, rgba(245,196,107,.45), transparent 100%),
+    radial-gradient(.8px .8px at 82% 36%, rgba(246,223,190,.5), transparent 100%),
+    radial-gradient(1px 1px at 23% 47%, rgba(246,223,190,.45), transparent 100%),
+    radial-gradient(.9px .9px at 61% 16%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.1px 1.1px at 91% 23%, rgba(246,223,190,.4), transparent 100%); }
+html.night.stars-4::after{ background-image:
+    radial-gradient(1px 1px at 7% 38%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.2px 1.2px at 29% 19%, rgba(246,223,190,.4), transparent 100%),
+    radial-gradient(.9px .9px at 56% 42%, rgba(224,184,79,.45), transparent 100%),
+    radial-gradient(1px 1px at 12% 6%, rgba(224,184,79,.5), transparent 100%),
+    radial-gradient(1.1px 1.1px at 41% 44%, rgba(245,196,107,.45), transparent 100%),
+    radial-gradient(.8px .8px at 82% 36%, rgba(246,223,190,.5), transparent 100%),
+    radial-gradient(1px 1px at 23% 47%, rgba(246,223,190,.45), transparent 100%),
+    radial-gradient(.9px .9px at 61% 16%, rgba(245,196,107,.5), transparent 100%),
+    radial-gradient(1.1px 1.1px at 91% 23%, rgba(246,223,190,.4), transparent 100%),
+    radial-gradient(.9px .9px at 2% 28%, rgba(224,184,79,.45), transparent 100%),
+    radial-gradient(1.2px 1.2px at 49% 10%, rgba(245,196,107,.4), transparent 100%),
+    radial-gradient(1px 1px at 74% 46%, rgba(246,223,190,.45), transparent 100%); }
+
 /* the digits stand still: tabular figures wherever numbers tick or
    line up, so a countdown or a row of stats never wiggles as it
    changes. The ids and classes are the games' own; the rule only

@@ -70,6 +70,7 @@
   var MODE = 'warmup.mode';   /* day | night | auto */
   var FIRST = 'warmup.first'; /* the very first visit, greeted once */
   var SHOOT = 'warmup.shoot'; /* the once-a-day shooting star marker */
+  var MORNINGS = 'warmup.mornings'; /* the count of sunrises met */
 
   var HOLD = 4600;   /* the sunrise holds this long; keep in step with
                         the keyframes in dawn.css */
@@ -119,7 +120,13 @@
     try { return localStorage.getItem(MARK) === key; } catch (e){ return true; }
   }
   function markToday(key){
-    try { localStorage.setItem(MARK, key); } catch (e){}
+    try {
+      localStorage.setItem(MARK, key);
+      /* a morning met is a morning kept: the count starts when the
+         counting began, so no browser claims mornings it never met */
+      var n = parseInt(localStorage.getItem(MORNINGS), 10) || 0;
+      localStorage.setItem(MORNINGS, String(n + 1));
+    } catch (e){}
   }
   function reducedMotion(){
     try { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
@@ -497,6 +504,57 @@
     return box;
   }
 
+  /* ---------------- the worked page ----------------
+     Day keeps the evidence of the work, in the margin the way a
+     reader leaves it: the haul's pencil rides the heading and the
+     number line, and the mornings met leave their wear on the
+     paper. All of it is garnish keyed off facts about the browser:
+     the shell stamps the haul's tier on the html, dawn.js counts
+     the mornings, and the css shows each mark only to the tier or
+     the count that earned it. Night keeps its own fixed sky, so
+     the marks rest there */
+  function armMarks(){
+    try {
+      var root = document.documentElement;
+      var n = 0;
+      try { n = parseInt(localStorage.getItem(MORNINGS), 10) || 0; } catch (e2){}
+      /* ten mornings leave a smudge, thirty the ring: a month of
+         work stains the page, the way a month of anything does */
+      if (n >= 10) root.classList.add('dawn-m1');
+      if (n >= 30) root.classList.add('dawn-m2');
+      /* the pencil: an asterisk beside the mark, a note was made */
+      var m = logoMark();
+      if (m){
+        var a = document.createElement('span');
+        a.className = 'dawn-ast';
+        a.setAttribute('aria-hidden', 'true');
+        a.textContent = '\u002a';
+        m.appendChild(a);
+      }
+      /* the pencil: an underline beneath the number line, under
+         the whole line the shell wraps around the date span */
+      var pd = document.getElementById('pdate');
+      if (pd && pd.parentNode){
+        var host = pd.parentNode;
+        if (getComputedStyle(host).position === 'static')
+          host.style.position = 'relative';
+        var u = document.createElement('span');
+        u.className = 'dawn-line';
+        u.setAttribute('aria-hidden', 'true');
+        host.appendChild(u);
+      }
+      /* the wear: a thumb smudge on the corner and, after a month
+         of mornings, the ring; both fixed to the paper */
+      var w = document.createElement('div');
+      w.className = 'dawn-marks';
+      w.setAttribute('aria-hidden', 'true');
+      var s = document.createElement('div'); s.className = 'dawn-smudge';
+      var r = document.createElement('div'); r.className = 'dawn-ring';
+      w.appendChild(s); w.appendChild(r);
+      (document.body || root).appendChild(w);
+    } catch (e){}
+  }
+
   function build(cfg, greet){
     var ov = document.createElement('div');
     ov.id = 'dawn-overlay';
@@ -813,6 +871,7 @@
     }
   } catch (e){}
   armKiss();
+  armMarks();
   watchCountdown();
   /* the keyboard can call the sun: typing the word for it, anywhere
      the page is listening and nowhere an input keeps the letters,

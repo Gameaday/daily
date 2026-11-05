@@ -306,7 +306,7 @@ class Handler(BaseHTTPRequestHandler):
             data = dict(data)
             data["status"] = sess["verdict"]
             if "ans" in sess:
-                # brunch, fermi, well-actually and museum: the pick,
+                # brunch, fermi, canard and museum: the pick,
                 # the estimate, the picks-and-correction or the name
                 # the server graded, so the points derive from the
                 # session's own answer, never the client's word
@@ -361,7 +361,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def _dealt(self, path, data):
         """The dealt-play endpoints: /deal opens a session, /guess plays a
-        dealt round (rounds heat, the one-shot verdicts, well-actually's
+        dealt round (rounds heat, the one-shot verdicts, canard's
         picks and correction, museum's names and clues, bogus's picks,
         superlative's rounds, relativity's rounds, sift's trios,
         lightbox's developments,

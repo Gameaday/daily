@@ -58,6 +58,14 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .cellhit{ fill:rgba(0,0,0,0); cursor:grab; }
 .wheel.dragging, .wheel.dragging .cellhit{ cursor:grabbing; }
 .rayg:hover .chev{ stroke:#b3541e; }
+/* a won wheel gives its rings one beat of pride: each outline warms in
+   turn, innermost out, then the board settles back to rest */
+.wheel.won circle:nth-of-type(2){animation:ringpulse .5s ease;}
+.wheel.won circle:nth-of-type(3){animation:ringpulse .5s ease .12s;}
+.wheel.won circle:nth-of-type(4){animation:ringpulse .5s ease .24s;}
+.wheel.won circle:nth-of-type(5){animation:ringpulse .5s ease .36s;}
+@keyframes ringpulse{0%,100%{stroke:#d9cdb2;stroke-width:1.5;}50%{stroke:#b3541e;stroke-width:4;}}
+@media (prefers-reduced-motion: reduce){.wheel.won circle{animation:none;}}
 @media (max-width:480px){ h1{font-size:28px;} .slot{width:38px; height:44px; font-size:22px;} .ringbtn button{width:30px;height:30px;} }</style>
 </head>
 <body>
@@ -732,7 +740,9 @@ function showReveal(){
   $('sharetext').textContent =
     shareText() + '\nstreak ' + st.streak + ' \u00b7 best ' + (st.best == null ? '–' : st.best + ' resources');
   $('reveal').classList.add('show');
-  /* the word is aligned - the controls go quiet, the bonus opens */
+  /* the word is aligned - the controls go quiet, the bonus opens, and
+     the rings themselves take one beat of pride */
+  $('wheel').classList.add('won');
   $('ringctl').style.display = 'none';
   $('btnBonus').style.display = '';
   syncBoard(S.pts);
@@ -745,6 +755,8 @@ function showBonusReveal(){
     : (over <= 4 ? 'Aligned. The short ladder.' : 'Aligned. The long ladder.');
   $('sharetext').textContent = shareText() + '\nthe bonus keeps no streak \u00b7 just the line';
   $('reveal').classList.add('show');
+  /* the bonus line lands its own beat of pride */
+  $('wheel').classList.add('won');
   $('ringctl').style.display = 'none';
   $('btnBonus').style.display = 'none';
   syncBonusBoard(Math.max(0, 3 - over));

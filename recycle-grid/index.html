@@ -736,9 +736,9 @@ $('btnBank').addEventListener('click', () => {
 let lastWords = 0, lastPerfect = false;
 function shareText(){
   if (S.mode === 'practice'){
-    return 'Recycle: Grid practice \u00b7 ' + lastWords + ' words \u00b7 ' + MODES.practice + ' shifts \u267B';
+    return 'Grid practice \u00b7 ' + lastWords + ' words \u00b7 ' + MODES.practice + ' shifts \u267B';
   }
-  return 'Recycle: Grid No. ' + num + ' \u00b7 ' + lastWords + ' words \u00b7 ' + S.mode +
+  return 'Grid No. ' + num + ' \u00b7 ' + lastWords + ' words \u00b7 ' + S.mode +
     (lastPerfect ? ' \u00b7 perfect' : '') + ' \u267B';
 }
 function showReveal(words, perfect){

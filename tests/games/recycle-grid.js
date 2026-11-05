@@ -138,6 +138,7 @@ async function run(h){
     h.ok(r3.x.S.counted, 'grid: day stats counted once');
     h.eq(r3.x.S.stats.perfect, 1, 'grid: perfect bank counted');
     h.ok(r3.x.shareText().indexOf('perfect') >= 0, 'grid: share shows the perfect badge');
+    h.ok(r3.x.shareText().indexOf('Grid No. ') === 0, 'grid: the share introduces the game by its own name');
     h.eq(h.lastPost(r3.env).body.game, 'grid', 'grid: normal posts to the grid curve');
     h.eq(h.lastPost(r3.env).body.value, EX.best, 'grid: curve value = the exact ceiling');
 

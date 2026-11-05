@@ -713,11 +713,11 @@ function shareText(){
   if (inBonus()){
     const over = S.bonus.steps - S.bonus.par;
     const note = over <= 0 ? 'on par' : '+' + over + ' over par';
-    return 'Recycle: Rings No. ' + num + ' \u00b7 bonus \u00b7 ' + S.bonus.steps + ' steps (' + note + ') \uD83C\uDF00';
+    return 'Rings No. ' + num + ' \u00b7 bonus \u00b7 ' + S.bonus.steps + ' steps (' + note + ') \uD83C\uDF00';
   }
   const over = S.res - PUZZLE.par;
   const note = over <= 0 ? 'on par' : '+' + over + ' over par';
-  return 'Recycle: Rings No. ' + num + ' \u00b7 ' + S.res + ' resources (' + note + ')' + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDF00';
+  return 'Rings No. ' + num + ' \u00b7 ' + S.res + ' resources (' + note + ')' + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDF00';
 }
 function showReveal(){
   /* points read like points: par is full marks, every resource over par costs one */

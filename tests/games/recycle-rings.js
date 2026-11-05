@@ -177,6 +177,7 @@ async function run(h){
     h.eq(h.lastPost(r.env).body.game, 'rings', 'rings: the day posts to the rings curve');
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'rings: the on-par star rides the share');
     h.ok(r.x.shareText().indexOf('resources') >= 0, 'rings: the share speaks in resources');
+    h.ok(r.x.shareText().indexOf('Rings No. ') === 0, 'rings: the share introduces the game by its own name');
 
     /* the won board answers in one color: green at every seat, no red,
        no gold, and the readout green too */

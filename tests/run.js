@@ -18,7 +18,7 @@
 const { GAMES } = require('./games/_lib');
 
 const MODULES = [
-  'bogus', 'well-actually', 'recycle-rings', 'recycle-grid', 'fermi',
+  'bogus', 'canard', 'recycle-rings', 'recycle-grid', 'fermi',
   'sift', 'rounds', 'trace', 'lightbox', 'sprint', 'cipher', 'timeline',
   'museum', 'thread', 'brunch', 'superlative', 'relativity', 'archive', 'server-gated'
 ].map(file => require('./games/' + file + '.js'));

@@ -26,6 +26,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .dropbar{height:3px; background:var(--accent); border-radius:3px; margin:5px 0;}
 .ecard.sel{border-color:var(--accent); background:var(--accent-soft);}
 .ecard.locked{border-color:var(--green); background:var(--green-soft); cursor:default;}
+/* a card dropped into a new slot settles with a small overshoot, like a
+   card set down on the table */
+.ecard.land{animation:tsettle .38s cubic-bezier(.34,1.4,.64,1);}
+@keyframes tsettle{0%{transform:translateY(-6px);}100%{transform:none;}}
+@media (prefers-reduced-motion: reduce){.ecard.land{animation:none;}}
 .ecard .top{display:flex; justify-content:space-between; align-items:center; gap:8px;}
 .ecard .tag{font-size:10px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
     color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:2px 9px;}
@@ -273,6 +278,9 @@ function moveCard(from, to){
   S.started = true;
   S.sel = null;
   saveState(); render();
+  /* the moved card lands where it was dropped */
+  const landed = $('lane').children[to] && $('lane').children[to].querySelector('.ecard');
+  if (landed) landed.classList.add('land');
   return true;
 }
 function slotFromY(rows, cy){

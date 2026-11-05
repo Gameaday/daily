@@ -101,7 +101,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <div class="modal">
     <h2>How to play</h2>
     <p>Tap tiles to select up to <b>three</b>, then hit <b>Test selection</b>. A correct trio locks in, reveals its category name, and gets out of your way.</p>
-    <p>A wrong trio costs a mistake. You can afford <b>three</b>; a fourth sifts you out. If you run out, the remaining groups are revealed and the day is over.</p>
+    <p>A wrong trio costs a mistake. You can afford <b>three</b>; a fourth sifts you out. If you run out, the remaining groups are revealed and the day is over. The sets you find are your score, and the tries you never spent become stars.</p>
     <p>The categories are easier than they look — but at least one tile in every puzzle is a <b>triple threat</b>: it plausibly belongs in two or three groups. Trust the grouping that's exactly three tiles, not the one that's "mostly right."</p>
     <p>Everyone plays the same board, same order, every day. Compare miss counts at standup.</p>
     <button class="close" data-close>Got it</button>
@@ -210,6 +210,7 @@ async function testDealt(){
       }
     } else if (v === 'lost'){
       S.status = 'lost';
+      S.mistakes = Math.max(S.mistakes, 4); // the lost verdict is the fourth try, the miss toast never counts it
       const st = S.stats;
       st.played++;
       st.dist[4]++;
@@ -400,13 +401,14 @@ function shareText(){
   const marks = BOARD.cats
     ? BOARD.cats.map((c, ci) => S.solvedCats.includes(ci) ? '\uD83D\uDFE9' : '\uD83D\uDFE5').join('')
     : '\uD83D\uDFE9'.repeat((S.found || []).length || 4);
-  if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}${S.stars ? ' \u00b7 1\u2605' : ''}`;
+  if (S.status === 'won') return `Sift No. ${num} \u00b7 solved with ${S.mistakes} miss${S.mistakes === 1 ? '' : 'es'} ${marks}${S.stars ? ' \u00b7 ' + S.stars + '\u2605' : ''}`;
   return `Sift No. ${num} \u00b7 sifted, ${S.mistakes} misses deep \u2014 ${marks}`;
 }
 function showReveal(){
-  /* points read like points: each mistake spent costs one, a loss clears the marks */
-  S.pts = S.status === 'won' ? 3 - S.mistakes : 0;
-  S.stars = (S.status === 'won' && S.mistakes === 0) ? 1 : 0;
+  /* the sweep is the score: points are the sets the day gave up, and
+     the stars are the tries still standing when it settled */
+  S.pts = S.solvedCats.length;
+  S.stars = S.status === 'won' ? Math.max(0, 3 - S.mistakes) : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 
   const st = S.stats;

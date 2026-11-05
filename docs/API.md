@@ -99,7 +99,7 @@ Evidence post (the thirteen gated games):
 status is won, lost or gave. The answer and meta are graded against
 the day's key (the meta caps below); the points are derived
 server-side. A loss or a give-up is 0 no matter the meta (fermi,
-superlative and relativity keep their partial scores). A nonce is the stronger claim:
+superlative, relativity and sift keep their partial scores). A nonce is the stronger claim:
 the session's own verdict, answer and counters override the client's,
 and the session is spent. An aged or unknown nonce simply falls back to
 grading what was posted, so a mid-game session loss costs the session's
@@ -247,8 +247,8 @@ reaped 150 seconds after the gun.
 - Move: {"pick": [3 distinct texts]}; a real group gives hit with cat,
   n, i and final on the last group (a re-found group 400s); a miss
   counts; the fourth miss loses with reveal {t, cats}.
-- Evidence: answer the groups; meta mistakes 0..4; points 3 minus
-  mistakes.
+- Evidence: answer the groups found; meta mistakes 0..4; points are the
+  groups found, won or lost (a lost day keeps the sets it found).
 
 ### lightbox (develop the picture)
 

@@ -19,8 +19,8 @@ def validate_evidence(game, day, body):
         return None, "bad status"
     if status != "won" and not adapter.get("grades_loss"):
         # a loss or a give-up is 0 points no matter what the meta says,
-        # and it never needs meta at all - a real loss (sift's fourth
-        # mistake) must never trip a cap and go uncounted
+        # and it never needs meta at all - a real loss (lightbox's
+        # fogged grid) must never trip a cap and go uncounted
         return 0, None
     meta = body.get("meta")
     if not isinstance(meta, dict):

@@ -18,7 +18,8 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # from - so a gated game's submission can carry the proposed answer and
 # the raw play facts instead of a self-reported score. The server checks
 # the answer, enforces the per-game meta caps, derives the points itself,
-# and holds the loss rule (a loss or a give-up is 0 no matter the meta).
+# and holds the loss rule (a loss or a give-up is 0 no matter the meta,
+# unless the row says the game grades its losses).
 # Self-reported "value" posts are generator-only: the gated games refuse
 # them outright. The generator games (rings, trace, grid) have no answer
 # key by design - their puzzles are derived at play time, not curated -
@@ -400,10 +401,12 @@ def _guess_sift(sess, move, now):
         if sess["mistakes"] >= 4:
             sess["done"] = True
             sess["verdict"] = "lost"
-            sess["ans"] = [list(c["i"]) for c in e["cats"]]
+            # the fourth miss spends the day: the sets the round
+            # found ride the spent day as its answer, the whole
+            # board rides the reveal
+            sess["ans"] = [list(e["cats"][ci]["i"])
+                           for ci in sess["solved"]]
             sess["done_at"] = now
-            # the fourth miss spends the day: the whole
-            # board rides the spent round
             return {"verdict": "lost",
                        "reveal": {"t": e.get("t"),
                                   "cats": e["cats"]}}
@@ -767,19 +770,21 @@ def _evidence_museum(day, ans, meta):
 
 
 def _evidence_sift(day, ans, meta):
-    """sift: the groups must all be found; the mistakes meter the points."""
+    """sift: every found group is a point - the sets the day gave up,
+    won or lost."""
     e = _list_entry("sift", day)
     if e is None:
         return None, "no answer key"
-    if not isinstance(ans, list) or len(ans) != len(e["cats"]) \
+    if not isinstance(ans, list) or len(ans) > len(e["cats"]) \
             or not all(isinstance(g, list) and g
-                       and all(isinstance(x, str) for x in g) for g in ans):
+                       and all(isinstance(x, str) and x for x in g)
+                       for g in ans):
         return None, "bad answer"
-    want = [frozenset(c["i"]) for c in e["cats"]]
+    want = {frozenset(c["i"]) for c in e["cats"]}
     got = [frozenset(g) for g in ans]
-    if frozenset(want) != frozenset(got):
-        return None, "wrong answer"
-    return max(0, 3 - meta["mistakes"]), None
+    if len(set(got)) != len(got):
+        return None, "bad answer"
+    return sum(1 for g in got if g in want), None
 
 
 def _evidence_lightbox(day, ans, meta):
@@ -933,8 +938,8 @@ def _transform_thread(pz, day):
 # nonce-bearing submit reports ("meta") and the caps those facts must
 # obey ("caps"); timeline declares no caps because its checks bound is
 # its day's own size (n+1 for n events), so the bound lives in its
-# evidence validator and widens with the day; fermi and superlative
-# grade even a loss, so they say so
+# evidence validator and widens with the day; fermi, superlative,
+# relativity and sift grade even a loss, so they say so
 # ("grades_loss"). The strip side rides along: the keys a live dealt day
 # must never ship ("strip", and the nested ones under "deep"), the
 # transform that ships a derived puzzle instead of the stored one
@@ -967,7 +972,7 @@ DEALT_ADAPTERS = {
                       "grades_loss": True, "strip": (),
                       "deep": {"r": ("a", "w")}},
     "sift":          {"guess": _guess_sift, "evidence": _evidence_sift,
-                      "meta": _meta_mistakes,
+                      "meta": _meta_mistakes, "grades_loss": True,
                       "caps": (("mistakes", 0, 4),),
                       "strip": ("cats",), "transform": _transform_sift},
     "lightbox":      {"guess": _guess_lightbox,

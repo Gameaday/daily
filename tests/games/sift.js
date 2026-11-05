@@ -33,7 +33,7 @@ async function run(h){
       && h.lastPost(r.env).body.answer.every(g => g.length === 3),
       'sift: the evidence carries the four solved groups');
     h.ok(!('value' in h.lastPost(r.env).body), 'sift: the client never names its own score');
-    h.ok(r.x.shareText().indexOf('\u2605') === -1, 'sift: a miss costs the star');
+    h.ok(r.x.shareText().indexOf('2\u2605') >= 0, 'sift: one miss leaves two stars');
     h.ok(r.x.shareText().indexOf('1 miss') >= 0, 'sift: share "1 miss"');
     /* Regression: the rollover guard used to check S.solvedAll, which is
        never set anywhere - so a winning streak reset every day. */
@@ -108,6 +108,7 @@ async function run(h){
     h.ok(String(sfD.env.els.verdict.textContent).indexOf(sfFull.t) >= 0,
       'sift dealt: the verdict tells the theme it never shipped');
     h.ok(sfD.x.shareText().indexOf('1 miss') >= 0, 'sift dealt: share counts the miss');
+    h.ok(sfD.x.shareText().indexOf('2\u2605') >= 0, 'sift dealt: the win keeps the stars for its two tries left');
     /* a reload keeps the won day and retells the groups that never shipped */
     const sfR = h.boot('sift', EXP,
       { now: T0, store: sfDst, servePuzzle: sfServed, stubBanks: true });
@@ -116,11 +117,19 @@ async function run(h){
     h.ok(String(sfR.env.els.found.innerHTML).indexOf(sfFull.cats[3].n) >= 0,
       'sift dealt: the reload retells the groups that never shipped');
     /* the fourth miss spends the day: the reveal seats the cats the
-       served day never carried */
+       served day never carried, and the sets found before the fall
+       ride the spent day as its answer */
     let sfMisses2 = 0;
+    const sfSolved2 = [];
     const sfDealer2 = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'sf2', today: 0, puzzle: sfServed.puzzle } };
+      const ci = sfOwner[body.move.pick[0]];
+      if (body.move.pick.every(tx => sfOwner[tx] === ci) && !sfSolved2.includes(ci)){
+        sfSolved2.push(ci);
+        return { status: 200, body: { verdict: 'hit', cat: ci, n: sfFull.cats[ci].n,
+          i: sfFull.cats[ci].i, final: false } };
+      }
       sfMisses2++;
       if (sfMisses2 >= 4)
         return { status: 200, body: { verdict: 'lost',
@@ -131,26 +140,39 @@ async function run(h){
     const sfL = h.boot('sift', EXP,
       { now: T0, store: sfLst, servePuzzle: sfServed, stubBanks: true, serveDealt: sfDealer2 });
     await h.flush();
+    sfL.x.sel.clear();
+    sfIdx(0).forEach(i => sfL.x.sel.add(i));
+    sfL.env.els.btnSubmit.click();
+    await h.flush();
+    h.eq(sfL.x.S.solvedCats.length, 1, 'sift dealt: one group found before the fall');
     const sfWrong = [[0,0,0],[1,0,0],[0,1,0],[0,0,1]];
     for (let k = 0; k < 4; k++){
       sfL.x.sel.clear();
-      sfWrong[k].forEach((t, ci) => sfL.x.sel.add(sfIdx(ci)[t])); /* a fresh trio each miss: the repeat guard wants four different picks */
+      sfWrong[k].forEach((t, ci) => sfL.x.sel.add(sfIdx(ci + 1)[t])); /* a fresh trio each miss off the found group: the repeat guard wants four different picks */
       sfL.env.els.btnSubmit.click();
       await h.flush();
     }
     h.eq(sfL.x.S.status, 'lost', 'sift dealt: the fourth miss spent the day');
-    h.ok((sfL.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 12,
-      'sift dealt: the reveal dims the whole board');
+    h.ok((sfL.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 9,
+      'sift dealt: the reveal dims the tiles it never found');
     h.ok(String(sfL.env.els.verdict.textContent).indexOf('Sifted out') >= 0,
       'sift dealt: the loss tells its verdict');
     h.ok(String(sfL.env.els.found.innerHTML).indexOf(sfFull.cats[2].n) >= 0,
       'sift dealt: the loss names the groups the day never shipped');
+    const sfLossPost = h.lastPost(sfL.env);
+    h.eq(sfLossPost.body.status, 'lost', 'sift dealt: the loss posts the lost status');
+    h.ok(sfLossPost.body.answer.length === 1
+      && sfLossPost.body.answer[0].length === 3,
+      'sift dealt: the loss posts only the set it found');
+    h.ok(sfLossPost.body.meta.mistakes === 4,
+      'sift dealt: the loss carries the fourth miss');
+    h.ok(sfL.x.shareText().indexOf('\u2605') === -1, 'sift dealt: a loss keeps no stars');
     /* a reload of the lost day replays the reveal it never shipped */
     const sfLR = h.boot('sift', EXP,
       { now: T0, store: sfLst, servePuzzle: sfServed, stubBanks: true });
     await h.flush();
     h.eq(sfLR.x.S.status, 'lost', 'sift dealt: a reload keeps the lost day');
-    h.ok((sfLR.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 12,
+    h.ok((sfLR.env.els.tiles.innerHTML.match(/tile dim/g) || []).length === 9,
       'sift dealt: the reload replays the reveal dimming');
     h.ok(String(sfLR.env.els.found.innerHTML).indexOf(sfFull.cats[3].n) >= 0,
       'sift dealt: the reload names the missed groups again');
@@ -226,6 +248,7 @@ async function run(h){
     h.eq(sfRe.x.S.status, 'won', 'sift dealt: the replay wins locally on the banked day');
     await h.flush();
     h.eq(sfRe.env.fetchLog.length, 0, 'sift dealt: a replay posts nothing');
+    h.ok(sfRe.x.shareText().indexOf('3\u2605') >= 0, 'sift: a flawless sweep keeps all three stars');
 }
 
 module.exports = { name: 'sift', run };

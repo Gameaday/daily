@@ -45,6 +45,17 @@
 @keyframes dawn-text{ from{ opacity:0; transform:translateY(10px); }
                       to{ opacity:1; transform:none; } }
 
+/* the bridge: the night hands its stars to the morning. The show
+   opens on the sky the browser earned, the same stars in the same
+   places as the night sky behind the page, and they go out one by
+   one as the day arrives: most early, a stubborn few holding until
+   the crest. dawn.js sets each star's place, size and hour; here
+   they only leave */
+.dawn-stars{ position:absolute; inset:0; pointer-events:none; }
+.dawn-stars i{ position:absolute; border-radius:50%;
+  animation:dawn-leave .7s ease-in forwards; }
+@keyframes dawn-leave{ to{ opacity:0; } }
+
 /* the deposit: while the show is on, the logo's mark is held back so
    the sun has an empty spot to fill. dawn.js fades it in as the disc
    lands (or reveals it plainly, if the show is skipped). */

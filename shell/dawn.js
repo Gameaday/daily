@@ -8,6 +8,13 @@
    came in from. The choreography lives in dawn.css; the trigger, the
    once-per-day guard and the cleanup live here.
 
+   The opening: the night hands its stars over. The show begins on
+   the sky the browser earned, the same stars the night sky shows in
+   the same places, and they go out one by one as the day arrives, so
+   each morning opens by leaving the night behind. The night theme
+   keeps its own sky instead, and a stillness preference skips the
+   whole exchange.
+
    The ending: the sun deposits the mark. Every page's own heading
    ends in a colored mark (the period of "Warmup." on the landing, the
    dot of a game's name on its page), and dawn.css draws that mark
@@ -453,6 +460,43 @@
     } catch (e){}
   }
 
+  /* the night's own coordinates, kept here in step with the star
+     fields in dawn.css: the eight the night sky always shows, then
+     the haul's three a tier. The bridge paints the same stars the
+     night does, so the morning carries the sky forward honestly */
+  var STAR_SPOTS = [
+    [8,12],[19,30],[31,9],[44,22],[58,13],[71,26],[84,10],[93,31],
+    [7,38],[29,19],[56,42],
+    [12,6],[41,44],[82,36],
+    [23,47],[61,16],[91,23],
+    [2,28],[49,10],[74,46]
+  ];
+  function nightStars(){
+    var box = document.createElement('div');
+    box.className = 'dawn-stars';
+    /* the haul is a fact about the browser, stamped on the html by
+       the shell before the first paint; the bridge only reads it */
+    var m = /(?:^|\s)stars-(\d)/.exec(document.documentElement.className || '');
+    var tier = m ? Math.min(4, Math.max(0, parseInt(m[1], 10) || 0)) : 0;
+    var count = 8 + 3 * tier;
+    for (var i = 0; i < count && i < STAR_SPOTS.length; i++){
+      var st = document.createElement('i');
+      /* most go out early, a stubborn few hold until the day
+         arrives: the hour steps unevenly so the leaving reads
+         unordered, the way a sky actually empties */
+      var late = i >= count - 3;
+      st.style.animationDelay = (late ? (2500 + (i - count + 3) * 200)
+        : (150 + (i * 137 + i * i * 29) % 2200)) + 'ms';
+      st.style.left = STAR_SPOTS[i][0] + '%';
+      st.style.top = STAR_SPOTS[i][1] + '%';
+      st.style.width = st.style.height = (1.6 + (i * 7) % 4 * .45) + 'px';
+      st.style.opacity = String(.65 + (i * 11) % 4 * .09);
+      st.style.background = (i % 3 === 1) ? '#f6dfbe' : '#f5c46b';
+      box.appendChild(st);
+    }
+    return box;
+  }
+
   function build(cfg, greet){
     var ov = document.createElement('div');
     ov.id = 'dawn-overlay';
@@ -468,7 +512,11 @@
     hello.textContent = greet;
     sub.textContent = cfg.num ? ('warmup no. ' + cfg.num + (cfg.dateText ? ' \u00b7 ' + cfg.dateText : '')) : '';
     text.appendChild(hello); text.appendChild(sub);
-    ov.appendChild(sky); ov.appendChild(day); ov.appendChild(sun);
+    /* the bridge: only a day show, and only for readers who take
+       the morning in motion; the night keeps its stars, and a
+       stillness preference keeps its rest */
+    if (!isNight() && !reducedMotion()) ov.appendChild(nightStars());
+    ov.appendChild(day); ov.appendChild(sun);
     ov.appendChild(haze); ov.appendChild(text);
     return ov;
   }

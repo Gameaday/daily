@@ -278,8 +278,10 @@ function moveCard(from, to){
   S.started = true;
   S.sel = null;
   saveState(); render();
-  /* the moved card lands where it was dropped */
-  const landed = $('lane').children[to] && $('lane').children[to].querySelector('.ecard');
+  /* the moved card lands where it was dropped (the headless lane has no
+     children, so the settle is a no-op there) */
+  const slot = $('lane').children ? $('lane').children[to] : null;
+  const landed = slot && slot.querySelector ? slot.querySelector('.ecard') : null;
   if (landed) landed.classList.add('land');
   return true;
 }

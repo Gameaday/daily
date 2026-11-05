@@ -1,3 +1,7 @@
+/*   \ | /
+  -- ( ) --   the sun, for anyone reading the source: it rises
+   / | \       on every page, every morning
+*/
 /* common.js — the shared shell for every warmup game, loaded once per page
    via <script src="../shell/common.js"></script> and destructured at the top
    of each game's script:
@@ -547,6 +551,26 @@ const SHELL = (() => {
            wireHelp, wireShare, syncBoardFor, renderBoard, probeCurve, pdateText, isSolo, fetchPuzzle, dealt, showUnavailable, recordStars, starTotal, makeDealt };
 })();
 
+/* ---- the archive's own origin ---- */
+/* Every finished day replays forever, and the very first of them is
+   where the whole site began. A browser that walks the archive all
+   the way back to day one hears it, once ever, quietly; a browser
+   that cannot remember skips the line rather than repeat it */
+try {
+  if (SHELL.isArchive && SHELL.dayIndex === 0 &&
+      !localStorage.getItem('warmup.dayone')){
+    localStorage.setItem('warmup.dayone', '1');
+    var sayDayOne = function(){
+      try {
+        if (document.getElementById('toast')) SHELL.toast('this is where it started');
+      } catch (e2){}
+    };
+    if (document.readyState === 'loading')
+      document.addEventListener('DOMContentLoaded', sayDayOne, { once: true });
+    else sayDayOne();
+  }
+} catch (e){}
+
 /* ---- first light: the once-a-day sunrise (shell/dawn.js + dawn.css) ---- */
 /* Any page can be the first page of the day, so the shell loads the
    dawn module everywhere and hands it the day facts. The module keeps
@@ -588,8 +612,24 @@ const SHELL = (() => {
           if (so && typeof so.total === 'number') haul += so.total;
         }
       }
-      document.documentElement.classList.add('stars-' +
-        (haul >= 100 ? 4 : haul >= 50 ? 3 : haul >= 25 ? 2 : haul >= 10 ? 1 : 0));
+      var tier = haul >= 100 ? 4 : haul >= 50 ? 3 : haul >= 25 ? 2 :
+                 haul >= 10 ? 1 : 0;
+      document.documentElement.classList.add('stars-' + tier);
+      /* a sky that thickened since the last look says so once, quietly;
+         the first look only records where the sky stands */
+      var seenTier = null;
+      try { seenTier = localStorage.getItem('warmup.tier'); } catch (e3){}
+      try { localStorage.setItem('warmup.tier', String(tier)); } catch (e3){}
+      if (seenTier !== null && tier > (parseInt(seenTier, 10) || 0)){
+        var sayThick = function(){
+          try {
+            if (document.getElementById('toast')) SHELL.toast('the sky thickens');
+          } catch (e4){}
+        };
+        if (document.readyState === 'loading')
+          document.addEventListener('DOMContentLoaded', sayThick, { once: true });
+        else sayThick();
+      }
     } catch (e2){}
     var css = document.createElement('link');
     css.rel = 'stylesheet';

@@ -15,8 +15,8 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | / | Warmup | Landing page linking all games |
 | /bogus/ | Bogus. | A history passage where one phrase is a lie: spot it in 3 picks |
 | /canard/ | Canard. | A statement with one wrong phrase: find it, then type the correction for a bonus point |
-| /recycle-rings/ | Recycle: Rings | Four letter rings, opposite rays one straight line, one target word, one resource a seat however far it runs; wrong letters in the ray turn red and the word's letters waiting elsewhere turn gold, so the way home reads at a glance; win and the bonus round replays it step by step |
-| /recycle-grid/ | Recycle: Grid | Three modes, three budgets; shift rows or columns in any order, bank the best board |
+| /recycle-rings/ | Rings. | Four letter rings, opposite rays one straight line, one target word, one resource a seat however far it runs; wrong letters in the ray turn red and the word's letters waiting elsewhere turn gold, so the way home reads at a glance; win and the bonus round replays it step by step |
+| /recycle-grid/ | Grid. | Three modes, three budgets; shift rows or columns in any order, bank the best board |
 | /fermi/ | Fermi | One estimation question per day, one guess, scored by closeness |
 | /sift/ | Sift | Twelve tiles, four hidden groups of three, three mistakes allowed |
 | /rounds/ | Rounds | Slide toward the year of a hidden event in six guesses |
@@ -242,7 +242,7 @@ all dependency-free (Node 20+ and Python 3):
 Local pre-push: `npm test` (or `make test`) runs the test layers CI runs, in
 seconds; only the bundle builds stay CI-side.
 
-## The recycle rule
+## The scarcity rule
 
 Sprint is the only game on the clock: it starts on your first move and
 never restarts. Rings and Grid traded the clock for scarcity: Rings spends

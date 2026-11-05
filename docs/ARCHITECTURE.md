@@ -160,8 +160,8 @@ Points are the server's word. Each gated game declares an evidence
 validator (an answer shape plus per-game meta caps) and a derivation
 from the ledger: rounds 4 minus guesses, museum 4 minus clues, cipher 3
 minus hints, sift and lightbox 3 minus mistakes, timeline and thread 4
-minus checks, brunch 1 for the right pick, bogus 3 minus wrong picks,
-canard the same plus a correction bonus, fermi by ratio bucket,
+minus checks, brunch 1 for the right pick, bogus and canard 3 minus
+wrong picks, fermi by ratio bucket,
 superlative and relativity by correct rounds. A loss or a give-up is 0 no matter the
 meta (fermi, superlative and relativity keep their partial scores). docs/API.md
 carries the full per-game tables.

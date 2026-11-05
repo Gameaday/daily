@@ -202,8 +202,8 @@ reaped 150 seconds after the gun.
   reveal yet), three wrong picks lose with reveal {l, c, w}, otherwise
   miss with left. After found: {"correction": text} settles won with
   bonus correct or wrong, and reveal {c, w}.
-- Evidence: answer {picks, typed}; points 3 minus wrong picks, plus 1
-  for a correction that matches the accepted list.
+- Evidence: answer {picks, typed}; points 3 minus wrong picks. The
+  typed correction earns the star, kept client-side.
 
 ### museum (name the exhibit)
 

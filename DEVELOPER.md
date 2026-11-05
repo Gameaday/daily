@@ -45,9 +45,10 @@ in dawn.css: most games retheme through the shared slots by
 themselves, and a game that hardcodes a pale color gets one line in
 dawn.css's stragglers section (the block explains how to extend it).
 Around the show sit the quiet garnishes: a whisper of paper grain and
-a warm wash at the top of the day, faint stars over the night sky,
-tabular numerals wherever digits tick, a countdown that warms in the
-day's last minute, and a first-ever visit greeted as first light.
+a warm wash at the top of the day, faint stars over the night sky
+that thicken with the browser's collected stars, tabular numerals
+wherever digits tick, a countdown that warms in the day's last minute,
+and a first-ever visit greeted as first light.
 QA surface: `DAWN.init(cfg)` auto, `DAWN.play(cfg)` force,
 `DAWN.reset()` clears the marker, `DAWN.mode()` reads the theme.
 `checks/games.js` compiles the pair like any shell file, holds every

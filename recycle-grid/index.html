@@ -58,6 +58,15 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .reveal .verdict{font-family:Georgia,serif; font-size:22px; margin:0 0 8px; color:var(--green);}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
+/* a perfect bank knocks a few tiles loose: clones of the board's own
+   cells tip past the grid, staggered, and are gone before they matter */
+.tilefall{position:fixed; z-index:5; pointer-events:none; width:56px; height:56px;
+    display:flex; align-items:center; justify-content:center; background:var(--card);
+    border:1.5px solid var(--line); border-radius:10px; color:var(--ink);
+    font-family:Georgia,serif; font-size:26px; font-weight:700;
+    animation:tfall 1.2s ease-in both;}
+@keyframes tfall{0%{transform:none; opacity:1;}100%{transform:translateY(72vh) rotate(26deg); opacity:0;}}
+@media (prefers-reduced-motion: reduce){.tilefall{display:none;}}
 @media (max-width:480px){
     h1{font-size:28px;}
     .ggrid{grid-template-columns: 28px repeat(5, minmax(44px, 1fr)) 28px; grid-auto-rows: 48px;}
@@ -741,6 +750,33 @@ function shareText(){
   return 'Grid No. ' + num + ' \u00b7 ' + lastWords + ' words \u00b7 ' + S.mode +
     (lastPerfect ? ' \u00b7 perfect' : '') + ' \u267B';
 }
+/* a perfect bank knocks a few tiles loose: clones of the board's own
+   cells tip past the grid and are gone before they can matter. The
+   drop asks the browser first: a headless visit, or one that prefers
+   its motion reduced, banks in stillness */
+function dropTiles(){
+  try {
+    if (typeof window === 'undefined' || !window.matchMedia ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const cells = $('grid').querySelectorAll('.cell');
+    if (!cells || !cells.length) return;
+    for (let k = 0; k < 5; k++){
+      const src = cells[(Math.random() * cells.length) | 0];
+      const b = src.getBoundingClientRect();
+      const d = document.createElement('div');
+      d.className = 'tilefall';
+      d.textContent = src.textContent;
+      d.style.left = (b.left + b.width / 2 - 28) + 'px';
+      d.style.top = b.top + 'px';
+      d.style.animationDelay = (k * 70) + 'ms';
+      document.body.appendChild(d);
+    }
+    setTimeout(function(){
+      const gone = document.querySelectorAll('.tilefall');
+      for (const g of gone) g.remove();
+    }, 1600);
+  } catch (e){ /* a garnish never breaks the bank */ }
+}
 function showReveal(words, perfect){
   lastWords = words;
   lastPerfect = !!perfect;
@@ -761,6 +797,7 @@ function showReveal(words, perfect){
     shareText() + (S.mode === 'practice' ? '' :
       '\nstreak ' + st.streak + ' \u00b7 best ' + st.bestWords + ' \u00b7 avg ' + avg + ' words \u00b7 ' + st.perfect + ' perfect');
   $('reveal').classList.add('show');
+  if (lastPerfect && S.mode !== 'practice') dropTiles();
   if (S.mode === 'practice'){
     $('curve').innerHTML = '<div class="curve-note">practice — nothing is recorded</div>';
   } else {

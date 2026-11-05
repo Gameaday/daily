@@ -98,8 +98,8 @@
    pin the contract. Day fills the disc with the accent, the
    deposited sun gone cool. Night hollows it into a thin gold ring:
    the sun has set, its shape remains. Auto carries both hours at
-   once: the day fills the left half of the disc, and the night's
-   gold rings the whole. Headings that end in a colored word
+   once: the day fills the disc's lower left, climbing toward the
+   night's gold ring. Headings that end in a colored word
    (the recycle pair) carry none of this: their word stays visible,
    and only the tap and the glow apply to them. */
 .dawn-kiss.dawn-punct::before{ content:''; position:absolute; left:0;
@@ -108,7 +108,7 @@
 .dawn-kiss.dawn-period{ color:transparent; }
 .dawn-kiss.dawn-period::before{ background:var(--accent); }
 .dawn-kiss.dawn-mode-auto::before{ border-color:#f5c46b;
-  background:linear-gradient(90deg, #b3541e 0 50%, transparent 50%); }
+  background:linear-gradient(45deg, #b3541e 0 50%, transparent 50%); }
 html.night .dawn-kiss.dawn-punct.dawn-mode-night,
 html.night .dawn-kiss.dawn-punct.dawn-mode-auto{ color:transparent; }
 html.night .dawn-kiss.dawn-mode-night::before{ border-color:#f5c46b;

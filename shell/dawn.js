@@ -32,8 +32,8 @@
    day the mark is the deposited sun itself, a solid terracotta disc.
    In night the same disc hollows into its own outline, a thin gold
    ring: the sun has set, its shape remains. In auto it carries
-   both hours: the day fills the left half of the disc, and the
-   night's gold rings the whole. Pressing and holding the
+   both hours: the day fills the disc's lower left, climbing toward
+   the night's gold ring. Pressing and holding the
    mark still replays the whole morning.
 
    The whole tab performs it. The favicon carries the motif at rest

@@ -35,7 +35,8 @@ never replays), a key or a tap skips it, and the last second flies the
 sun into the page's own heading mark and deposits it there. The mark
 is drawn, not typed: punctuation headings end in a .34em disc (filled
 with the accent in day, a gold ring at night, and in auto both at
-once: the day fills the disc's left half, the night's gold rings it) whose geometry dawn.js derives for the flight's landing, while
+once: the day fills the disc's lower left, climbing toward the
+night's gold ring) whose geometry dawn.js derives for the flight's landing, while
 headings that end in a colored word (the recycle pair) keep their word
 and sit the show out.
 

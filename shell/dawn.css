@@ -76,8 +76,7 @@
    A tap glows and walks the theme to its next hour; press and hold and
    the glow builds until the whole morning replays. The glow is a
    drop-shadow, so whatever is visible glows: the disc in day, the ring
-   at night, a word on the recycle pages, and never the ghost of a
-   hidden glyph. */
+   at night, and never the ghost of a hidden glyph. */
 .dawn-kiss{ display:inline-block; line-height:1; cursor:pointer; position:relative;
   user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;
   transition:filter .55s ease; }
@@ -106,9 +105,7 @@
    deposited sun gone cool. Night hollows it into a thin gold ring:
    the sun has set, its shape remains. Auto carries both hours at
    once: the day fills the disc's lower left, climbing toward the
-   night's gold ring. Headings that end in a colored word
-   (the recycle pair) carry none of this: their word stays visible,
-   and only the tap and the glow apply to them. */
+   night's gold ring. */
 .dawn-kiss.dawn-punct::before{ content:''; position:absolute; left:0;
   bottom:.24em; width:.34em; height:.34em;
   border-radius:50%; border:1.5px solid transparent; pointer-events:none; }

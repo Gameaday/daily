@@ -17,8 +17,7 @@
    disc out of the sky and into that empty spot, landing centered on
    the drawn one, at its own size, and over the flight's last stretch
    the bright disc crossfades into the shape beneath it, so day and
-   night settle the same: delivered, fresh each day. A heading that ends in a colored word (the recycle pair)
-   keeps its word and sits the show out. A skip, a stillness
+   night settle the same: delivered, fresh each day. A skip, a stillness
    preference, a page with no such mark, or a browser without the web
    animations api reveals the mark plainly instead, so no page is ever
    left without its dot.
@@ -126,9 +125,8 @@
     return null;
   }
 
-  /* the mark is punctuation on most pages, but the two recycle games
-     color a whole word instead. Only punctuation is a dot: a word
-     keeps its text, takes no deposit, and never hides */
+  /* only punctuation is a dot: a colored word would keep its text, take
+     no deposit, and never hide */
   function isPunct(m){ return /^[.!?]$/.test((m.textContent || '').trim()); }
 
   /* ---------------- the theme: day, night, auto ----------------

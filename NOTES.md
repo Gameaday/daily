@@ -78,6 +78,16 @@ Recipes the knowledge layer can grow toward; none of these build yet.
 - Topical: this day in history. A pure recipe: events with month and day
   against the day of the year, plus same-day impostors from the same era.
 
+## Reserved names
+
+Two names from the same family as Canard (the planted falsehood
+that reveals whoever repeats it) are held for games of their own,
+with rules of their own, and must not be spent on a reskin:
+
+- Zeno: the fabricated Zeno map that fooled cartographers for
+  centuries, and the paradoxes of plausible-sounding argument
+- Trapstreet: the mapmaker's invented street that catches the copyist
+
 ## Deferred on purpose
 
 - wiki/sameAs alias matching for entities

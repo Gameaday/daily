@@ -45,6 +45,10 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .why{background:var(--card); border:1.5px solid var(--line); border-left:4px solid var(--accent);
     border-radius:10px; padding:12px 14px; font-size:14px; margin-bottom:14px; line-height:2;}
 .why .path{font-family:ui-monospace,Menlo,Consolas,monospace;}
+/* the patient get more: dwell on the path and the letters that changed
+   at each rung warm into view */
+.path .chg{transition:color .4s ease .6s;}
+.path:hover .chg{color:var(--accent);}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
 .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
@@ -249,7 +253,15 @@ function showReveal(){
     $('verdict').style.color = 'var(--accent)';
   }
   $('timenote').textContent = S.timeMs ? 'your time: ' + fmtTime(S.timeMs) : '';
-  $('why').innerHTML = `A shortest path: <span class="path">${LADDER.path.join(' \u2192 ')}</span>`;
+  /* the patient get more: dwell on the path and each rung's changed
+     letter warms into view */
+  const spans = LADDER.path.map((w, i) => {
+    if (!i) return w;
+    const prev = LADDER.path[i - 1];
+    const at = [...w].findIndex((ch, j) => prev[j] !== ch);
+    return [...w].map((ch, j) => j === at ? '<b class="chg">' + ch + '</b>' : ch).join('');
+  });
+  $('why').innerHTML = 'A shortest path: <span class="path">' + spans.join(' \\u2192 ') + '</span>';
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 best ${st.best != null ? st.best + ' rungs' : '\u2014'}`;
   $('reveal').classList.add('show');
   $('inrow').style.display = 'none';

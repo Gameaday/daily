@@ -34,6 +34,11 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .verdict.lost{color:var(--accent);}
 .answer{font-family:Georgia,serif; font-size:18px; text-align:center; margin:4px 0 6px;}
 .story{margin:6px 0 12px; text-align:center; font-size:14px; color:var(--muted); font-style:italic;}
+/* the patient get more: lingering over the reveal brings up the
+   exhibit's other names */
+.more{margin:-6px 0 12px; text-align:center; font-size:12px; color:var(--muted);
+    opacity:0; transition:opacity 1.2s ease 2.2s;}
+.reveal:hover .more{opacity:1;}
 .sharebox{background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
     font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; white-space:pre-wrap; margin:0 0 12px;}
 .actionsrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center;}
@@ -74,6 +79,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p class="verdict" id="verdict"></p>
     <p class="answer" id="answer"></p>
     <p class="story" id="story"></p>
+    <p class="more" id="more"></p>
     <div class="sharebox" id="sharetext"></div>
     <div id="curve"></div>
     <div class="actionsrow">
@@ -305,6 +311,11 @@ function showReveal(){
   const rv = S.reveal || { a: EXHIBIT.a, w: EXHIBIT.w };
   $('answer').textContent = rv.a;
   $('story').textContent = rv.w;
+  /* the plaque's second line: the names it also answers to, for
+     whoever lingers over the reveal */
+  const al = (Array.isArray(rv.al) && rv.al.length ? rv.al : null) ||
+    (Array.isArray(EXHIBIT.al) ? EXHIBIT.al : null);
+  $('more').textContent = al ? 'also answering to ' + al.join(' \u00b7 ') : '';
   $('sharetext').textContent = shareText() + '\nstreak ' + st.streak + ' \u00b7 named ' + st.solved + '/' + st.played;
   $('reveal').classList.add('show');
   $('btnClue').disabled = true;

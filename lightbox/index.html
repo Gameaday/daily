@@ -34,6 +34,10 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .pixgrid{display:grid; grid-template-columns:repeat(7, 18px); grid-auto-rows:18px; gap:2px;}
 .px{background:#efe7d3; border-radius:2px;}
 .px.f{background:var(--ink);}
+/* the patient get more: lingering over the developed picture names it */
+.more{margin:6px 0 0; text-align:center; font-size:12px; color:var(--muted);
+    opacity:0; transition:opacity 1.2s ease 2.2s;}
+.reveal:hover .more{opacity:1;}
 .mistakes{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:14px; font-size:13px; color:var(--muted);}
 .pip{width:10px; height:10px; border-radius:50%; background:var(--accent); display:inline-block;}
 .pip.gone{background:#ddd2ba;}
@@ -84,6 +88,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p class="verdict" id="verdict"></p>
     <p class="clock" id="timenote"></p>
     <div class="solvedpix" id="solvedpix"></div>
+    <p class="more" id="more"></p>
     <div class="sharebox" id="sharetext" style="margin-top:12px;"></div>
     <div id="curve"></div>
     <div class="actionsrow">
@@ -359,6 +364,7 @@ function showReveal(){
     $('verdict').style.color = 'var(--accent)';
   }
   $('solvedpix').innerHTML = `<div class="pixgrid">${pix}</div>`;
+  $('more').textContent = 'the picture: ' + DESIGN.n;
   $('sharetext').textContent = shareText() + `\nstreak ${st.streak} \u00b7 developed ${st.solved}/${st.played}`;
   $('reveal').classList.add('show');
   $('timenote').textContent = S.timeMs ? 'your time: ' + fmtTime(S.timeMs) : '';

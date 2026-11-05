@@ -37,9 +37,7 @@ landing a crossfade so the day and the night settle the same. The mark
 is drawn, not typed: punctuation headings end in a .34em disc (filled
 with the accent in day, a gold ring at night, and in auto both at
 once: the day fills the disc's lower left, climbing toward the
-night's gold ring) whose geometry dawn.js derives for the flight's landing, while
-headings that end in a colored word (the recycle pair) keep their word
-and sit the show out.
+night's gold ring) whose geometry dawn.js derives for the flight's landing.
 
 Tapping the mark walks the theme day, night, auto. The night palette
 is the sunrise's own sky, declared as `html.night` variable overrides
@@ -62,7 +60,7 @@ geometry, so a silent break cannot land.
 The history content is stored once, in `knowledge/`: entities (people,
 events, places, artifacts, the wider world, animals) and quotes in one
 id namespace, typed relations between them, the twist tellings for
-bogus and well-actually, the shared stories, and each game's recipe.
+bogus and canard, the shared stories, and each game's recipe.
 `tools/build-knowledge.mjs` compiles the layer into the committed
 per-game stores (`puzzles/<game>/puzzles.json`); CI runs it in verify
 mode, so a hand-edited store or a layer change that shifts a store both
@@ -73,7 +71,7 @@ hand-banked by design.
 
 ## Puzzle delivery
 
-Bank games (bogus, well-actually, rounds, fermi, cipher, museum, lightbox,
+Bank games (bogus, canard, rounds, fermi, cipher, museum, lightbox,
 sift, timeline, thread, brunch, superlative, relativity) ship their bank inline (solo/offline play works with
 zero infrastructure) and, when online, ask the scores service for the day's
 puzzle:
@@ -178,5 +176,5 @@ validate run is green (pushing a tag is the release act; see README).
 New copy avoids em dashes (they keep surviving careless re-encoding as
 mojibake; use commas, periods, semicolons, or parentheses). Bank literals in
 client pages stay ASCII-safe via \uXXXX escapes; committed stores are plain
-UTF-8. Well, Actually statements need at least four clickable phrases so
+UTF-8. Canard statements need at least four clickable phrases so
 three picks can never brute-force the find.

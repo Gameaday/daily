@@ -36,7 +36,7 @@ reaches back up to rewrite the one above it.
 History content is authored once, here: entities in one id namespace
 (people, events, places, artifacts, the wider world, animals), typed
 relations between them, quotes with sources, cited facts, the twist
-tellings for bogus and well-actually, the shared stories, and each
+tellings for bogus and canard, the shared stories, and each
 game's recipe. knowledge/SCHEMA.md is the format reference. Authoring
 happens here and nowhere else.
 
@@ -161,7 +161,7 @@ validator (an answer shape plus per-game meta caps) and a derivation
 from the ledger: rounds 4 minus guesses, museum 4 minus clues, cipher 3
 minus hints, sift and lightbox 3 minus mistakes, timeline and thread 4
 minus checks, brunch 1 for the right pick, bogus 3 minus wrong picks,
-well-actually the same plus a correction bonus, fermi by ratio bucket,
+canard the same plus a correction bonus, fermi by ratio bucket,
 superlative and relativity by correct rounds. A loss or a give-up is 0 no matter the
 meta (fermi, superlative and relativity keep their partial scores). docs/API.md
 carries the full per-game tables.

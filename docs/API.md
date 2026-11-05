@@ -15,14 +15,14 @@ that answers wins.
 - Request bodies are JSON, capped at 2048 bytes (413 above). Responses
   are JSON.
 - game is a manifest ledger name: one of the thirteen gated page names
-  (bogus, well-actually, rounds, fermi, cipher, museum, lightbox,
+  (bogus, canard, rounds, fermi, cipher, museum, lightbox,
   sift, timeline, thread, brunch, superlative, relativity) or a generator name
   (sprint, rings, rings-bonus, trace, grid, grid-hard).
 - day is the day index: days since the epoch 2026-11-02 in
   America/New_York, clamped at 0 before launch, bounded -1000..100000.
 - Errors are {"error": message} with a meaningful status. A 422 is an
   answer, not an outage: the evidence did not check out.
-- Nothing a client types is stored. Museum names and well-actually
+- Nothing a client types is stored. Museum names and canard
   corrections cross the wire, are graded, and are discarded.
 
     status  meaning
@@ -147,7 +147,7 @@ fields, per game:
     rounds         {"y": 1865}
     brunch         {"pick": 1}
     fermi          {"v": 240000}
-    well-actually  {"pick": 2} or {"correction": "typed text"}
+    canard  {"pick": 2} or {"correction": "typed text"}
     museum         {"name": "the rosetta stone"} or {"clue": 1}
     bogus          {"pick": 0}
     superlative    {"pick": 2}
@@ -194,7 +194,7 @@ reaped 150 seconds after the gun.
 - Score: 3 within 3x, 2 within 10x, 1 within 100x, else 0.
 - Evidence: answer the estimate; the same ratio buckets.
 
-### well-actually (find the lie, name the fix)
+### canard (find the lie, name the fix)
 
 - Strip: the statement minus the lie, the corrections, the canonical
   and the why.

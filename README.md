@@ -13,8 +13,8 @@ Design notes live in NOTES.md; the contributor orientation is in DEVELOPER.md.
 | Path | Game | Idea |
 |---|---|---|
 | / | Warmup | Landing page linking all games |
-| /bogus/ | Bogus! | A history passage where one phrase is a lie: spot it in 3 picks |
-| /well-actually/ | Well, Actually... | A statement with one wrong phrase: find it, then type the correction for a bonus point |
+| /bogus/ | Bogus. | A history passage where one phrase is a lie: spot it in 3 picks |
+| /canard/ | Canard. | A statement with one wrong phrase: find it, then type the correction for a bonus point |
 | /recycle-rings/ | Recycle: Rings | Four letter rings, opposite rays one straight line, one target word, one resource a seat however far it runs; wrong letters in the ray turn red and the word's letters waiting elsewhere turn gold, so the way home reads at a glance; win and the bonus round replays it step by step |
 | /recycle-grid/ | Recycle: Grid | Three modes, three budgets; shift rows or columns in any order, bank the best board |
 | /fermi/ | Fermi | One estimation question per day, one guess, scored by closeness |
@@ -45,7 +45,7 @@ The puzzle is derived from the date, not stored per player:
 
 ## Puzzle delivery (server-side banks)
 
-The bank games (bogus, well-actually, rounds, fermi, cipher, museum,
+The bank games (bogus, canard, rounds, fermi, cipher, museum,
 lightbox, sift, timeline, thread, brunch, superlative, relativity) keep their bank inline in the
 page, so solo and offline play work with zero infrastructure. When online, each page
 also asks the scores service for the day's puzzle:
@@ -77,7 +77,7 @@ container, read from the committed per-game stores
 
 The history the games share is stored once, in `knowledge/`: people,
 events, places, artifacts, the wider world, animals and quotes, their
-typed relations, the twist tellings behind bogus and well-actually, the commonly
+typed relations, the twist tellings behind bogus and canard, the commonly
 cited figures behind fermi, the stories the year games tell, and each game's recipe of what it draws.
 `tools/build-knowledge.mjs` compiles the layer into the per-game stores
 and `tools/export-puzzles.mjs` emits the client banks from them: truth
@@ -283,9 +283,9 @@ relative reference resolves inside the bundle.
 
 ## Content rules (worth keeping)
 
-- Exactly one wrong element per Bogus! / Well, Actually puzzle, and
+- Exactly one wrong element per Bogus / Canard puzzle, and
   everything else must stay true after the correction is applied.
-- Well, Actually statements get at least four clickable phrases: three
+- Canard statements get at least four clickable phrases: three
   picks must never be able to brute-force the find.
 - Vary the lie position across puzzles; do not park it in the last phrase.
 - Fermi: use commonly cited figures and present them as commonly cited;

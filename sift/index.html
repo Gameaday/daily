@@ -414,7 +414,7 @@ function showReveal(){
     $('verdict').textContent = (S.mistakes === 0 ? 'Flawless sift — not one wasted test.' : 'Sifted clean. The day is in order.') + ' Today’s theme: ' + BOARD.t + '.';
     $('verdict').style.color = 'var(--green)';
   } else {
-    $('verdict').textContent = 'Sifted out: every group is named below, dimmed to the ones that got away.';
+    $('verdict').textContent = 'Sifted out — the groups you missed are below, dimmed.';
     $('verdict').style.color = 'var(--accent)';
   }
   $('sharetext').textContent =

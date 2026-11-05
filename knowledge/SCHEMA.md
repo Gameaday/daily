@@ -84,12 +84,12 @@ schedule that the first post-flip bank change reshuffles.
   segment, w is the reveal, and about keys the telling to the
   entity it is about when the layer knows it. bogus compiles the
   whole file, in file order.
-- well-actually.json - the correction tellings: a sentence
+- canard.json - the correction tellings: a sentence
   whose wrong word the player replaces. Each entry is { id,
   about, t, l, c, a, s, w }: c is the answer, a its accepted
   spellings, l marks the lying segment, and about keys the
   telling to the entity it names when the layer knows it.
-  well-actually compiles the whole file, in file order.
+  canard compiles the whole file, in file order.
 - facts.json - the commonly cited figures the estimation game
   asks about. Each entry is { id, about, t, q, a, w }: q is the
   question, a the commonly cited figure, w the defense of the
@@ -148,7 +148,7 @@ Every entity may also carry (nothing requires them yet):
 - cipher: no recipe file; the whole quotes file is the bank, in
   file order, and the answers are the speakers the quotes name.
   Output: puzzles/cipher/puzzles.json and its bank file.
-- bogus and well-actually: no recipe file; the whole twist file
+- bogus and canard: no recipe file; the whole twist file
   is the bank, in file order, and the file order is the day
   rotation, so no id sort ever moves a lie. Only the twist
   fields compile; the ids and the about keys stay in the layer.

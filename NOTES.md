@@ -94,3 +94,6 @@ with rules of their own, and must not be spent on a reskin:
 - a sift board auto-generator (the boards are authored for now)
 - lifting Superlative past its people-derived bank: the people layer
   grows deliberately, and the bank follows it
+- the sunrise on storage-blocked browsers: the once-per-day guard
+  fails closed by design (no memory, no greeting, never one on every
+  page), and a once-per-tab in-memory guard is the tradeoff deferred

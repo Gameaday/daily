@@ -29,7 +29,7 @@
      defensible. Both files compile to their stores in file order,
      the file order being the day rotation, and this tool fails
      loudly if a needed file is missing
-   - bogus and well-actually are whole-file twist recipes: each
+   - bogus and canard are whole-file twist recipes: each
      telling keys itself to the entity it is about when the layer
      knows it, and marks its lie by segment position; the lies
      stay authored, and both files compile to their stores in
@@ -105,7 +105,7 @@
      of the speaker
    - twist tellings carry an id outside the entity and quote
      namespaces, a lie position that points at a real segment, and
-     a reveal; bogus tellings are titled uniquely, well-actually
+     a reveal; bogus tellings are titled uniquely, canard
      tellings name their answer among its accepted spellings, and
      neither file may cluster its lies into fewer than three
      positions
@@ -143,7 +143,7 @@ const stories = readLayer('stories');
 const artifacts = readLayer('artifacts');
 const quotes = readLayer('quotes');
 const bogus = readLayer('bogus');
-const wellActually = readLayer('well-actually');
+const canard = readLayer('canard');
 const world = readLayer('world');
 const animals = readLayer('animals');
 const sift = readLayer('sift');
@@ -151,7 +151,7 @@ const facts = readLayer('facts');
 
 for (const entry of [['people', people], ['events', events], ['places', places],
                        ['relations', relations], ['presence', presence],
-                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['well-actually', wellActually],
+                       ['stories', stories], ['artifacts', artifacts], ['quotes', quotes], ['bogus', bogus], ['canard', canard],
                        ['world', world], ['animals', animals], ['sift', sift], ['facts', facts]]){
   if (!Array.isArray(entry[1]))
     fail('knowledge/' + entry[0] + '.json: missing or not an array');
@@ -256,7 +256,7 @@ for (const x of entities) byId[x.id] = x;
   const taken = new Set();
   for (const [file, arr, isBogus] of [
       ['bogus', Array.isArray(bogus) ? bogus : [], true],
-      ['well-actually', Array.isArray(wellActually) ? wellActually : [], false]]){
+      ['canard', Array.isArray(canard) ? canard : [], false]]){
     const titles = new Set();
     const pairs = new Set();
     const lies = new Set();
@@ -287,18 +287,18 @@ for (const x of entities) byId[x.id] = x;
         titles.add(x.t);
       } else {
         if (x.s && x.s.length < 4)
-          fail('knowledge: well-actually telling ' + x.id + ' needs at least four segments');
+          fail('knowledge: canard telling ' + x.id + ' needs at least four segments');
         if (typeof x.c !== 'string' || !x.c)
-          fail('knowledge: well-actually telling ' + x.id + ' needs the answer (c)');
+          fail('knowledge: canard telling ' + x.id + ' needs the answer (c)');
         if (!Array.isArray(x.a) || !x.a.length || x.a.some(v => typeof v !== 'string' || !v))
-          fail('knowledge: well-actually telling ' + x.id + ' needs accepted answers (a)');
+          fail('knowledge: canard telling ' + x.id + ' needs accepted answers (a)');
         else if (typeof x.c === 'string' && !x.a.includes(x.c))
-          fail('knowledge: well-actually telling ' + x.id + ' omits its own answer');
+          fail('knowledge: canard telling ' + x.id + ' omits its own answer');
         else if (new Set(x.a).size !== x.a.length)
-          fail('knowledge: well-actually telling ' + x.id + ' repeats an answer');
+          fail('knowledge: canard telling ' + x.id + ' repeats an answer');
         if (typeof x.t === 'string' && typeof x.c === 'string'){
           const pair = x.t + ':' + x.c;
-          if (pairs.has(pair)) fail('knowledge: well-actually answers ' + x.c + ' under ' + x.t + ' twice');
+          if (pairs.has(pair)) fail('knowledge: canard answers ' + x.c + ' under ' + x.t + ' twice');
           pairs.add(pair);
         }
       }
@@ -570,7 +570,7 @@ function compileCipher(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
-/* ---------------- whole-file recipes: bogus and well-actually ---------------- */
+/* ---------------- whole-file recipes: bogus and canard ---------------- */
 function compileBogus(){
   if (!Array.isArray(bogus)) return null;
   const bank = [];
@@ -583,15 +583,15 @@ function compileBogus(){
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
-function compileWellActually(){
-  if (!Array.isArray(wellActually)) return null;
+function compileCanard(){
+  if (!Array.isArray(canard)) return null;
   const bank = [];
-  for (const x of wellActually){
+  for (const x of canard){
     if (!x || typeof x.t !== 'string') continue;
     bank.push({ t: x.t, l: x.l, c: x.c, a: x.a, s: x.s, w: x.w });
   }
   if (bank.length < LIST.minBank)
-    fail('knowledge: well-actually bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
+    fail('knowledge: canard bank below the minimum (' + bank.length + ' < ' + LIST.minBank + ')');
   return JSON.stringify(bank, null, 2) + '\n';
 }
 
@@ -1066,7 +1066,7 @@ if (LIST.gated.brunch) checkStore('brunch', compileBrunch());
 if (LIST.gated.museum) checkStore('museum', compileMuseum());
 if (LIST.gated.cipher) checkStore('cipher', compileCipher());
 if (LIST.gated.bogus) checkStore('bogus', compileBogus());
-if (LIST.gated['well-actually']) checkStore('well-actually', compileWellActually());
+if (LIST.gated['canard']) checkStore('canard', compileCanard());
 if (LIST.gated.sift) checkStore('sift', compileSift());
 if (LIST.gated.fermi) checkStore('fermi', compileFermi());
 if (LIST.gated.superlative) checkStore('superlative', compileSuperlative());

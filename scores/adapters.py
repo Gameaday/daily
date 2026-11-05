@@ -43,7 +43,7 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # ends. Dealt traffic is per-action (a session can need a dozen calls), so it
 # rides its own tighter per-IP daily cap, separate from /submit's.
 # brunch and fermi deal per solve: their one guess ends the round, so the
-# reveal can only ever arrive attached to a spent guess. well-actually
+# reveal can only ever arrive attached to a spent guess. canard
 # deals the same way per pick: the lie never ships, so every pick and the
 # one correction attempt travel to the session. museum deals per guess
 # and meters the clues itself, so the name never ships either. bogus
@@ -70,7 +70,7 @@ from puzzles import PUZZLES, _list_entry, _window_entry
 # count - timing binds only while its stamp is live.
 # ---------------------------------------------------------------------------
 
-DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "well-actually", "museum",
+DEALT_GAMES = ("rounds", "sprint", "brunch", "fermi", "canard", "museum",
                "bogus", "superlative", "relativity", "sift", "lightbox", "cipher",
                "timeline", "thread")
 # the per-game strip declarations live in the dealt adapter registry
@@ -168,8 +168,8 @@ def _guess_fermi(sess, move, now):
                "reveal": {"a": e["a"], "w": e.get("w")}}
 
 def _guess_well_actually(sess, move, now):
-    """well-actually: the picks hunt the lie and the one correction ends the round."""
-    e = _list_entry("well-actually", sess["day"])
+    """canard: the picks hunt the lie and the one correction ends the round."""
+    e = _list_entry("canard", sess["day"])
     if e is None:
         raise _Reject(404, "no answer key")
     if sess["found"]:
@@ -679,8 +679,8 @@ def _evidence_bogus(day, ans, meta):
 
 
 def _evidence_well_actually(day, ans, meta):
-    """well-actually: the picks must name the lie, and the typed correction can earn the bonus point."""
-    e = _list_entry("well-actually", day)
+    """canard: the picks must name the lie, and the typed correction can earn the bonus point."""
+    e = _list_entry("canard", day)
     if e is None:
         return None, "no answer key"
     picks = ans.get("picks") if isinstance(ans, dict) else None
@@ -955,7 +955,7 @@ DEALT_ADAPTERS = {
                       "strip": ("a", "w")},
     "fermi":         {"guess": _guess_fermi, "evidence": _evidence_fermi,
                       "grades_loss": True, "strip": ("a", "w")},
-    "well-actually": {"guess": _guess_well_actually,
+    "canard": {"guess": _guess_well_actually,
                       "evidence": _evidence_well_actually,
                       "strip": ("l", "a", "c", "w")},
     "museum":        {"guess": _guess_museum, "evidence": _evidence_museum,

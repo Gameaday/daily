@@ -158,12 +158,12 @@ async function run(h, ctx){
     h.ok(String(r.env.els.answer.textContent).indexOf(full.a) >= 0,
       'gated: the answer arrived only with the reveal');
   }
-  /* well-actually: the served statement is dealt - the lie never ships
+  /* canard: the served statement is dealt - the lie never ships
      and the session grades every pick and the one correction */
   {
-    const live = h.boot('well-actually', ['puzzle'], { now: T0, store: {} });
+    const live = h.boot('canard', ['puzzle'], { now: T0, store: {} });
     const full = live.x.puzzle;
-    const served = serve('well-actually', { t: full.t, s: full.s });
+    const served = serve('canard', { t: full.t, s: full.s });
     const serveDealt = (url, body) => {
       if (/\/deal$/.test(url))
         return { status: 200, body: { nonce: 'gwa1', today: 0, puzzle: served.puzzle } };
@@ -174,20 +174,20 @@ async function run(h, ctx){
       return { status: 200, body: { verdict: 'won', bonus: 'correct',
         reveal: { c: full.c, w: full.w } } };
     };
-    const r = h.boot('well-actually', ['S', 'pick', 'submitBonus'],
+    const r = h.boot('canard', ['S', 'pick', 'submitBonus'],
       { now: T0, store: {}, servePuzzle: served, stubBanks: true, serveDealt });
     await h.flush();
     h.ok(String(r.env.els.statement.innerHTML).indexOf(full.s[1]) >= 0,
-      'gated: well-actually served statement rendered');
-    h.ok(!('l' in served.puzzle), 'gated: the well-actually day never ships its lie');
+      'gated: canard served statement rendered');
+    h.ok(!('l' in served.puzzle), 'gated: the canard day never ships its lie');
     r.x.pick(full.l);
     await h.flush();
-    h.eq(r.x.S.status, 'found', 'gated: well-actually found on the dealt session');
+    h.eq(r.x.S.status, 'found', 'gated: canard found on the dealt session');
     r.env.els.binput.value = full.a[0];
     r.x.submitBonus();
     await h.flush();
-    h.eq(r.x.S.status, 'won', 'gated: well-actually won on the dealt statement');
-    h.eq(r.x.S.nonce, 'gwa1', 'gated: the well-actually session is held');
+    h.eq(r.x.S.status, 'won', 'gated: canard won on the dealt statement');
+    h.eq(r.x.S.nonce, 'gwa1', 'gated: the canard session is held');
   }
   /* bogus: the served passage is dealt - the lie never ships and the
      session grades every pick */

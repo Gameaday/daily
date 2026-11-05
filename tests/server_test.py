@@ -6,7 +6,7 @@ health (bare and /api-prefixed), submit + dedupe (first submission of the day
 stands), the /dist snapshot (with and without a personalizing value), strict
 input validation, dealt play (session nonces, server-side heat, the
 sprint starting gun, per-solve verdicts, session TTL), the dealt cutover
-(the live rounds, brunch, fermi, well-actually, museum, bogus, superlative,
+(the live rounds, brunch, fermi, canard, museum, bogus, superlative,
 relativity, sift, lightbox, cipher, timeline and thread days ship without their keys),
 fresh-day counting (stale submits answered from the
 archive, future days rejected), and the archive handoff itself, including
@@ -182,13 +182,13 @@ def main():
                   and "w" not in b.get("puzzle", {})
                   and b.get("puzzle", {}).get("q"),
                   "GET /puzzle fermi day 0 (live) -> the question, never the cited value")
-            s, b = req("GET", "/api/puzzle?game=well-actually&day=0")
+            s, b = req("GET", "/api/puzzle?game=canard&day=0")
             check(s == 200 and "l" not in b.get("puzzle", {})
                   and "a" not in b.get("puzzle", {})
                   and "c" not in b.get("puzzle", {})
                   and "w" not in b.get("puzzle", {})
                   and len(b.get("puzzle", {}).get("s", [])) >= 4,
-                  "GET /puzzle well-actually day 0 (live) -> the statement, never the lie")
+                  "GET /puzzle canard day 0 (live) -> the statement, never the lie")
             s, b = req("GET", "/api/puzzle?game=museum&day=0")
             check(s == 200 and "a" not in b.get("puzzle", {})
                   and "al" not in b.get("puzzle", {})
@@ -374,7 +374,7 @@ def main():
         check(s == 422, "evidence: an unresolvable nonce is not a session")
         s, _b = ev("bogus", {"id": "ev5", "status": "won", "answer": [5]})
         check(s == 422, "evidence: a found lie without its session is refused")
-        s, _b = ev("well-actually", {"id": "ev6", "status": "won",
+        s, _b = ev("canard", {"id": "ev6", "status": "won",
                                      "answer": {"picks": [1], "typed": "Leonardo da Vinci"}})
         check(s == 422, "evidence: a named correction without its session is refused")
         # the day's keys load here once for the dealt sections (and the
@@ -606,9 +606,9 @@ def main():
                                     "nonce": fn2})
         check(s == 200 and b.get("count") == 2 and b.get("mean") == 1.5,
               "dealt submit: the session's wild estimate overrides the claimed spot-on")
-        # --- dealt well-actually: the lie never ships, so every pick and
+        # --- dealt canard: the lie never ships, so every pick and
         #     the one correction attempt travel to the session ---
-        s, b = post("/api/deal", {"game": "well-actually", "day": TODAY})
+        s, b = post("/api/deal", {"game": "canard", "day": TODAY})
         check(s == 200 and isinstance(b.get("nonce"), str)
               and "l" not in b.get("puzzle", {})
               and "a" not in b.get("puzzle", {})
@@ -618,7 +618,7 @@ def main():
               "deal: the statement arrives without its lie")
         wn = b["nonce"]
         s, _b = post("/api/guess", {"nonce": wn, "move": {"pick": "x"}})
-        check(s == 400, "guess: well-actually refuses a non-integer pick")
+        check(s == 400, "guess: canard refuses a non-integer pick")
         s, _b = post("/api/guess", {"nonce": wn, "move": {"correction": "Leonardo"}})
         check(s == 400, "guess: the correction cannot precede the find")
         s, b = post("/api/guess", {"nonce": wn, "move": {"pick": 0}})
@@ -635,15 +635,15 @@ def main():
               and b.get("reveal", {}).get("c") == "Leonardo da Vinci",
               "guess: the correction rides the spent attempt")
         s, _b = post("/api/guess", {"nonce": wn, "move": {"pick": 2}})
-        check(s == 409, "guess: a finished well-actually session takes no more picks")
-        s, b = post("/api/submit", {"game": "well-actually", "day": TODAY,
+        check(s == 409, "guess: a finished canard session takes no more picks")
+        s, b = post("/api/submit", {"game": "canard", "day": TODAY,
                                     "id": "dv10", "status": "won",
                                     "answer": {"picks": [1],
                                                "typed": "Leonardo da Vinci"},
                                     "nonce": wn})
         check(s == 200 and b.get("count") == 1 and b.get("mean") == 3,
               "dealt submit: the session's picks and correction override the claim")
-        s, b = post("/api/deal", {"game": "well-actually", "day": TODAY})
+        s, b = post("/api/deal", {"game": "canard", "day": TODAY})
         wn2 = b["nonce"]
         s, b = post("/api/guess", {"nonce": wn2, "move": {"pick": 0}})
         s, b = post("/api/guess", {"nonce": wn2, "move": {"pick": 2}})
@@ -651,7 +651,7 @@ def main():
         check(s == 200 and b.get("verdict") == "lost"
               and b.get("reveal", {}).get("l") == 1,
               "guess: three strikes lose, the lie rides the spent round")
-        s, b = post("/api/submit", {"game": "well-actually", "day": TODAY,
+        s, b = post("/api/submit", {"game": "canard", "day": TODAY,
                                     "id": "dv11", "status": "won",
                                     "answer": {"picks": [1],
                                                "typed": "Leonardo"},
@@ -1390,14 +1390,14 @@ def main():
             check(s == 200 and "a" not in b.get("puzzle", {})
                   and "w" not in b.get("puzzle", {}),
                   "cutover: the live fermi day ships without its cited value")
-            s, b = req("GET", "/api/puzzle?game=well-actually&day=0", port=PORT7)
+            s, b = req("GET", "/api/puzzle?game=canard&day=0", port=PORT7)
             check(s == 200 and b.get("puzzle", {}).get("l") == 1,
-                  "cutover: a replayed well-actually day still carries its lie")
-            s, b = req("GET", "/api/puzzle?game=well-actually&day=1", port=PORT7)
+                  "cutover: a replayed canard day still carries its lie")
+            s, b = req("GET", "/api/puzzle?game=canard&day=1", port=PORT7)
             check(s == 200 and "l" not in b.get("puzzle", {})
                   and "a" not in b.get("puzzle", {})
                   and "c" not in b.get("puzzle", {}),
-                  "cutover: the live well-actually day ships without its lie")
+                  "cutover: the live canard day ships without its lie")
             s, b = req("GET", "/api/puzzle?game=museum&day=0", port=PORT7)
             check(s == 200 and b.get("puzzle", {}).get("a") == "The Rosetta Stone",
                   "cutover: a replayed museum day still carries its name")
@@ -1525,11 +1525,11 @@ def main():
         check(v == 3, "unit: bogus first-pick find derives 3")
         v, rsn = srv.validate_evidence("bogus", 0, {"status": "won", "answer": [0]})
         check(v is None, "unit: bogus wrong pick rejected")
-        v, rsn = srv.validate_evidence("well-actually", 0, {"status": "won",
+        v, rsn = srv.validate_evidence("canard", 0, {"status": "won",
                                                            "answer": {"picks": [1],
                                                                       "typed": "Leonardo da Vinci"}})
         check(v == 4, "unit: found it and named the correction derives 4")
-        v, rsn = srv.validate_evidence("well-actually", 0, {"status": "won",
+        v, rsn = srv.validate_evidence("canard", 0, {"status": "won",
                                                            "answer": {"picks": [1],
                                                                       "typed": "nope"}})
         check(v == 3, "unit: a wrong correction earns no bonus")

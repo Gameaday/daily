@@ -16,6 +16,9 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .qtag{display:inline-block; background:var(--accent-soft); color:var(--accent);
     font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
     border-radius:999px; padding:3px 12px; margin-bottom:10px;}
+.tbl{display:inline-block; vertical-align:middle; margin-left:8px; margin-bottom:10px;
+    font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.06em; border:1.5px solid var(--line); border-radius:999px; padding:3px 12px;}
 .qtext{font-family:Georgia,serif; font-size:22px; margin:0 0 18px; line-height:1.35;}
 .opts{display:flex; flex-direction:column; gap:8px;}
 .opt{display:block; width:100%; text-align:left; background:var(--paper); border:1.5px solid var(--line);
@@ -61,7 +64,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   <p class="lead">One city, one year, <b>four names</b>. Three were really there. Pick the one who wasn't. <b>One guess.</b></p>
 
   <div class="qcard">
-    <span class="qtag" id="qtag"></span>
+    <span class="qtag" id="qtag"></span> <span class="tbl" id="tbl"></span>
     <p class="qtext" id="qtext"></p>
     <div class="opts" id="opts"></div>
   </div>
@@ -259,6 +262,9 @@ if (!EV){ SHELL.showUnavailable(); return; }
 $('pno').textContent = num;
 $('pdate').textContent = SHELL.pdateText();
 $('qtag').textContent = EV.t;
+/* the day seats you at its own table: nine tables walk the calendar,
+   and a regular starts noticing the same table twice in a fortnight */
+$('tbl').textContent = 'table ' + ((dayIndex % 9) + 1);
 $('qtext').textContent = EV.q;
 renderOpts();
 if (S.status !== 'playing') showReveal();

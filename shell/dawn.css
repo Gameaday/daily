@@ -46,16 +46,23 @@
                       to{ opacity:1; transform:none; } }
 
 /* the deposit: while the show is on, the logo's mark is held back so
-   the sun has an empty spot to fill. dawn.js removes this class the
-   moment the disc lands (or plainly, if the show is skipped). */
+   the sun has an empty spot to fill. dawn.js fades it in as the disc
+   lands (or reveals it plainly, if the show is skipped). */
 .dawn-awaiting{ opacity:0; }
+
+/* the honest handoff: over the flight's last stretch the bright disc
+   fades out over its own resting shape while the shape fades in
+   beneath it, one crossfade instead of a swap, so the landing
+   settles the same in day and night */
+.dawn-settle{ animation:dawn-settle .3s ease-out forwards; }
+@keyframes dawn-settle{ from{ opacity:0; } to{ opacity:1; } }
 
 /* the settle: once the sky is done, dawn.js frees the sun from the
    overlay and flies it into the logo's empty mark spot. The inline
    left/top pin the disc exactly where the rise left it; the flight
    itself is a web animation run from dawn.js, shrinking the disc as
-   its glow burns off, so it lands as the dot that ends the word
-   warmup. */
+   its glow burns off, dissolving it over its own resting shape, so it
+   lands as the dot that ends the word warmup. */
 .dawn-sun.dawn-sun-free{ position:fixed; margin:0; animation:none;
   z-index:10000; will-change:transform; }
 
@@ -265,7 +272,9 @@ html.night body{ background-image:
     35%{ filter:drop-shadow(0 0 6px rgba(244,183,105,.95))
                 drop-shadow(0 0 14px rgba(244,183,105,.5)); }
   }
-  /* the last minute keeps its warmth, without the breath */
+  /* the last minute keeps its warmth, without the breath, and the
+     handoff shows the mark plainly */
   .dawn-soon{ animation:none; }
+  .dawn-settle{ animation:none; }
   .dawn-theming *, .dawn-theming .dawn-kiss::before{ transition-duration:.01ms; }
 }

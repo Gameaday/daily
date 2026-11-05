@@ -32,7 +32,8 @@ palette, so a night visit never flashes day while the dawn files
 fetch. The standalone 404 page carries its own copy of the guard. The sunrise plays at most once per ET day per browser (the
 marker is written at the start, so a greeting cut short by navigation
 never replays), a key or a tap skips it, and the last second flies the
-sun into the page's own heading mark and deposits it there. The mark
+sun into the page's own heading mark and deposits it there, the
+landing a crossfade so the day and the night settle the same. The mark
 is drawn, not typed: punctuation headings end in a .34em disc (filled
 with the accent in day, a gold ring at night, and in auto both at
 once: the day fills the disc's lower left, climbing toward the

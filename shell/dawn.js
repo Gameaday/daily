@@ -15,9 +15,9 @@
    punctuation the mark is held back for the whole show, hidden from
    the first paint behind the sky; the sunrise's last second flies the
    disc out of the sky and into that empty spot, landing centered on
-   the drawn one, at its own size, and the instant it lands the bright
-   disc vanishes and the drawn one is what remains: delivered, fresh
-   each day. A heading that ends in a colored word (the recycle pair)
+   the drawn one, at its own size, and over the flight's last stretch
+   the bright disc crossfades into the shape beneath it, so day and
+   night settle the same: delivered, fresh each day. A heading that ends in a colored word (the recycle pair)
    keeps its word and sits the show out. A skip, a stillness
    preference, a page with no such mark, or a browser without the web
    animations api reveals the mark plainly instead, so no page is ever
@@ -68,6 +68,9 @@
                         the keyframes in dawn.css */
   var FLIGHT = 1100; /* the settle: the sun's trip from the sky into the
                         logo's mark */
+  var XFADE = 300;   /* the honest handoff: over the flight's last
+                        stretch the bright disc and the resting mark
+                        crossfade, so no shape pops at the landing */
   var DISC_EM = 0.34;  /* the drawn mark's diameter, in em of the mark's
                           own font: the width dawn.css gives the disc,
                           kept in step and pinned by checks/games.js */
@@ -418,6 +421,12 @@
       sun.style.height = sr.height + 'px';
       sun.classList.add('dawn-sun-free');
       document.body.appendChild(sun);
+      /* the honest handoff: the bright disc fades out over the
+         flight's last stretch, while the mark fades in beneath it */
+      try {
+        sun.animate([{ opacity: 1 }, { opacity: 0 }],
+          { duration: XFADE, delay: FLIGHT - XFADE, fill: 'forwards' });
+      } catch (e2){}
       return sun.animate([
         { transform: 'translate(0,0) scale(1)',
           boxShadow: '0 0 60px 22px rgba(244,183,105,.55), 0 0 150px 70px rgba(244,183,105,.25)' },
@@ -519,6 +528,18 @@
       if (mark && sun){
         flight = settle(sun, mark);
         if (flight){
+          /* the honest handoff: the resting mark fades in beneath the
+             bright disc over the same window the disc fades out, the
+             crossfade ending exactly at the landing */
+          window.setTimeout(function(){
+            if (gone) return;
+            try {
+              mark.classList.remove('dawn-awaiting');
+              mark.classList.add('dawn-settle');
+              mark.removeAttribute('aria-hidden');
+              mark.setAttribute('tabindex', '0');
+            } catch (e){}
+          }, FLIGHT - XFADE);
           freeSun = sun;
           flight.onfinish = function(){
             try { sun.parentNode && sun.parentNode.removeChild(sun); } catch (e){}

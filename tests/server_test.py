@@ -1521,6 +1521,9 @@ def main():
         check(v is None, "unit: meta above the cap is rejected")
         v, rsn = srv.validate_evidence("rounds", 0, {"status": "lost"})
         check(v == 0, "unit: a loss is 0 points, enforced server-side")
+        v, rsn = srv.validate_evidence("rounds", 0, {"status": "won", "answer": 1215,
+                                                    "meta": {"guesses": 6}})
+        check(v == 1, "unit: a rounds win on the last guess keeps the one-point floor")
         v, rsn = srv.validate_evidence("bogus", 0, {"status": "won", "answer": [5]})
         check(v == 3, "unit: bogus first-pick find derives 3")
         v, rsn = srv.validate_evidence("bogus", 0, {"status": "won", "answer": [0]})
@@ -1548,6 +1551,10 @@ def main():
                                                     "meta": {"clues": 2}})
         check(v == 2, "unit: museum named on clue 2 derives 2")
         v, rsn = srv.validate_evidence("museum", 0, {"status": "won",
+                                                    "answer": "rosetta stone",
+                                                    "meta": {"clues": 5}})
+        check(v == 1, "unit: a museum win on the last clue keeps the one-point floor")
+        v, rsn = srv.validate_evidence("museum", 0, {"status": "won",
                                                     "answer": "the mona lisa",
                                                     "meta": {"clues": 1}})
         check(v is None, "unit: museum wrong artifact rejected")
@@ -1571,13 +1578,16 @@ def main():
         v, rsn = srv.validate_evidence("lightbox", 0, {"status": "won", "answer": lb0["g"],
                                                       "meta": {"mistakes": 0}})
         check(v == 3, "unit: lightbox clean grid derives 3")
+        v, rsn = srv.validate_evidence("lightbox", 0, {"status": "won", "answer": lb0["g"],
+                                                      "meta": {"mistakes": 3}})
+        check(v == 1, "unit: a lightbox win on the last exposure keeps the one-point floor")
         v, rsn = srv.validate_evidence("cipher", 0, {"status": "won",
                                                     "answer": cip0["q"].lower(),
                                                     "meta": {"hints": 1}})
         check(v == 2, "unit: cipher decoded with one hint derives 2")
         v, rsn = srv.validate_evidence("cipher", 0, {"status": "won", "answer": cip0["q"],
                                                     "meta": {"hints": 5}})
-        check(v == 0, "unit: a cipher win on the fifth hint derives 0, not a rejection")
+        check(v == 1, "unit: a cipher win on the fifth hint keeps the one-point floor")
         v, rsn = srv.validate_evidence("cipher", 0, {"status": "won", "answer": cip0["q"],
                                                     "meta": {"hints": 6}})
         check(v is None, "unit: a hint past the cap is rejected")
@@ -1590,7 +1600,7 @@ def main():
         check(v is None, "unit: timeline wrong order rejected")
         v, rsn = srv.validate_evidence("timeline", 0, {"status": "won", "answer": tyears,
                                                       "meta": {"checks": 6}})
-        check(v == 0, "unit: a timeline win on the last budget check derives 0")
+        check(v == 1, "unit: a timeline win on the last budget check keeps the one-point floor")
         v, rsn = srv.validate_evidence("timeline", 0, {"status": "won", "answer": tyears,
                                                       "meta": {"checks": 7}})
         check(v is None, "unit: a check past the day's own budget is rejected")
@@ -1598,6 +1608,10 @@ def main():
                                                    "answer": [tp["s"]] + list(tp["m"]) + [tp["e"]],
                                                    "meta": {"checks": 2}})
         check(v == 2, "unit: thread two-check win derives 2")
+        v, rsn = srv.validate_evidence("thread", 0, {"status": "won",
+                                                   "answer": [tp["s"]] + list(tp["m"]) + [tp["e"]],
+                                                   "meta": {"checks": 4}})
+        check(v == 1, "unit: a thread win on the last check keeps the one-point floor")
 
         # --- a manifest change must never crash the service: history
         #     serves under the edges it was recorded under ---

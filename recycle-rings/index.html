@@ -729,7 +729,7 @@ function shareText(){
 }
 function showReveal(){
   /* points read like points: par is full marks, every resource over par costs one */
-  S.pts = Math.max(0, 3 - (S.res - PUZZLE.par));
+  S.pts = Math.max(1, 3 - (S.res - PUZZLE.par));
   S.stars = (S.res === PUZZLE.par) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 
@@ -759,7 +759,7 @@ function showBonusReveal(){
   $('wheel').classList.add('won');
   $('ringctl').style.display = 'none';
   $('btnBonus').style.display = 'none';
-  syncBonusBoard(Math.max(0, 3 - over));
+  syncBonusBoard(Math.max(1, 3 - over));
   renderMeta();
 }
 

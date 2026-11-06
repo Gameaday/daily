@@ -177,7 +177,7 @@ reaped 150 seconds after the gun.
   later, wrong century or right decade); the exact year wins; the
   sixth miss loses. Won and lost carry reveal {y, w}.
 - Evidence: answer the year; meta guesses 1..6; points 4 minus
-  guesses, floored at 0.
+  guesses, floored at 1.
 
 ### brunch (odd one out)
 
@@ -212,7 +212,7 @@ reaped 150 seconds after the gun.
   the clues, 4 max); {"name": up to 40 chars} wins with reveal {a, w},
   misses with clueIdx, or loses after the meter is spent.
 - Evidence: answer the name (graded against the accepted list); meta
-  clues 1..5; points 4 minus clues, floored at 0.
+  clues 1..5; points 4 minus clues, floored at 1.
 
 ### bogus (spot the lie)
 
@@ -259,7 +259,7 @@ reaped 150 seconds after the gun.
   filled) and need (wrongly empty) plus the mistake count; the fourth
   miss loses with the reveal.
 - Evidence: answer the grid rows; meta mistakes 0..4; points 3 minus
-  mistakes.
+  mistakes, floored at 1.
 
 ### cipher (decode the quote)
 
@@ -270,7 +270,7 @@ reaped 150 seconds after the gun.
   letters); {"hint": 1, "have": {...}} returns hint with cipher, plain
   and hints, 5 max; {"give": 1} gives with the full reveal.
 - Evidence: answer the quote text (compared alphanumeric-normalized);
-  meta hints 0..5; points 3 minus hints.
+  meta hints 0..5; points 3 minus hints, floored at 1.
 
 ### timeline (order the events)
 
@@ -282,7 +282,7 @@ reaped 150 seconds after the gun.
   same reveal; {"give": 1} gives with it.
 - Evidence: answer the years in chronological order; meta checks
   1..n+1, one more than the day's event count (the budget a real
-  player could ever need); points 4 minus checks, floored at 0.
+  player could ever need); points 4 minus checks, floored at 1.
 
 ### thread (connect start to end)
 
@@ -293,7 +293,7 @@ reaped 150 seconds after the gun.
   right, lock and checks; the exact chain wins with reveal {m, d,
   links}; {"give": 1} gives with the same reveal.
 - Evidence: answer the full chain (start, middles, end); meta checks
-  1..999; points 4 minus checks, floored at 0.
+  1..999; points 4 minus checks, floored at 1.
 
 ### sprint (the dealt generator)
 

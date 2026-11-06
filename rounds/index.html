@@ -193,7 +193,7 @@ function shareText(){
 function showReveal(){
   /* points read like points: the first guess is full marks, each extra round costs one */
   const w = S.status === 'won';
-  S.pts = w ? Math.max(0, 4 - S.guesses.length) : 0;
+  S.pts = w ? Math.max(1, 4 - S.guesses.length) : 0;
   S.stars = (w && S.guesses.length === 1) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 

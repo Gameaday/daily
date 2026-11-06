@@ -351,7 +351,7 @@ function shareText(){
 }
 function showReveal(){
   /* points read like points: each bad exposure costs one, a loss clears the marks */
-  S.pts = S.status === 'won' ? 3 - S.mistakes : 0;
+  S.pts = S.status === 'won' ? Math.max(1, 3 - S.mistakes) : 0;
   S.stars = (S.status === 'won' && S.mistakes === 0) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 

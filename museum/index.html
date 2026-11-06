@@ -295,7 +295,7 @@ function showReveal(){
   /* points read like points: naming it cold is full marks, each extra clue costs one */
   const w = S.status === 'won';
   const cn = S.resultClues != null ? S.resultClues : S.clueIdx + 1;
-  S.pts = w ? Math.max(0, 4 - cn) : 0;
+  S.pts = w ? Math.max(1, 4 - cn) : 0;
   S.stars = (w && cn === 1) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 

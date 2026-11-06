@@ -215,7 +215,7 @@ async function run(h){
     h.ok(r.x.S.bonus.won, 'rings: the bonus is won by replaying the line');
     const bsteps = P.sol.reduce((n, mv) => n + Math.abs(mv.d), 0) + 4;
     h.eq(r.x.S.bonus.steps, bsteps, 'rings: every step of the line was charged');
-    const bpts = Math.max(0, 3 - (r.x.S.bonus.steps - r.x.S.bonus.par));
+    const bpts = Math.max(1, 3 - (r.x.S.bonus.steps - r.x.S.bonus.par));
     await h.flush();
     h.eq(h.lastPost(r.env).body.game, 'rings-bonus', 'rings: the bonus posts to its own curve');
     h.eq(h.lastPost(r.env).body.value, bpts, 'rings: the bonus posts its own points');

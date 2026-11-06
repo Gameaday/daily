@@ -455,7 +455,7 @@ function shareText(){
 function showReveal(){
   /* points read like points: each hint costs one, a loss clears the marks */
   const cw = S.status === 'won';
-  S.pts = cw ? Math.max(0, 3 - S.hints) : 0;
+  S.pts = cw ? Math.max(1, 3 - S.hints) : 0;
   S.stars = (cw && S.hints === 0) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 

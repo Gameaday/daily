@@ -747,17 +747,19 @@ def _evidence_relativity(day, ans, meta):
 
 
 def _evidence_rounds(day, ans, meta):
-    """rounds: the year must be exact; the guesses meter the points."""
+    """rounds: the year must be exact; the guesses meter the points,
+    floored at one so a won day never earns less than a lost one."""
     e = _list_entry("rounds", day)
     if e is None:
         return None, "no answer key"
     if isinstance(ans, bool) or not isinstance(ans, int) or ans != e["y"]:
         return None, "wrong answer"
-    return max(0, 4 - meta["guesses"]), None
+    return max(1, 4 - meta["guesses"]), None
 
 
 def _evidence_museum(day, ans, meta):
-    """museum: the name must match the answer or an alias; the clues meter the points."""
+    """museum: the name must match the answer or an alias; the clues meter
+    the points, floored at one so a won day never earns less than a lost one."""
     e = _list_entry("museum", day)
     if e is None:
         return None, "no answer key"
@@ -766,7 +768,7 @@ def _evidence_museum(day, ans, meta):
     names = [_name_norm(x) for x in [e["a"]] + list(e.get("al") or ())]
     if _name_norm(ans) not in names:
         return None, "wrong answer"
-    return max(0, 4 - meta["clues"]), None
+    return max(1, 4 - meta["clues"]), None
 
 
 def _evidence_sift(day, ans, meta):
@@ -788,7 +790,8 @@ def _evidence_sift(day, ans, meta):
 
 
 def _evidence_lightbox(day, ans, meta):
-    """lightbox: the grid must match; the mistakes meter the points."""
+    """lightbox: the grid must match; the mistakes meter the points,
+    floored at one so a won day never earns less than a lost one."""
     e = _list_entry("lightbox", day)
     if e is None:
         return None, "no answer key"
@@ -799,11 +802,12 @@ def _evidence_lightbox(day, ans, meta):
                          for row in rows]
     if norm(ans) != norm(e["g"]):
         return None, "wrong answer"
-    return max(0, 3 - meta["mistakes"]), None
+    return max(1, 3 - meta["mistakes"]), None
 
 
 def _evidence_cipher(day, ans, meta):
-    """cipher: the decode must match the quote; the hints meter the points."""
+    """cipher: the decode must match the quote; the hints meter the points,
+    floored at one so a won day never earns less than a lost one."""
     e = _list_entry("cipher", day)
     if e is None:
         return None, "no answer key"
@@ -811,7 +815,7 @@ def _evidence_cipher(day, ans, meta):
         return None, "bad answer"
     if _alnum_norm(ans) != _alnum_norm(e["q"]):
         return None, "wrong answer"
-    return max(0, 3 - meta["hints"]), None
+    return max(1, 3 - meta["hints"]), None
 
 
 def _evidence_timeline(day, ans, meta):
@@ -832,11 +836,12 @@ def _evidence_timeline(day, ans, meta):
     checks = _meta_int(meta, "checks", 1, len(years) + 1)
     if checks is None:
         return None, "bad meta"
-    return max(0, 4 - checks), None
+    return max(1, 4 - checks), None
 
 
 def _evidence_thread(day, ans, meta):
-    """thread: the chain must be the pick's own middles; the checks meter the points."""
+    """thread: the chain must be the pick's own middles; the checks meter
+    the points, floored at one so a won day never earns less than a lost one."""
     store = PUZZLES.get("thread")
     picks = store.get("picks") if isinstance(store, dict) else None
     if not isinstance(picks, list) or not (0 <= day < len(picks)):
@@ -845,7 +850,7 @@ def _evidence_thread(day, ans, meta):
     chain = [pk["s"]] + list(pk["m"]) + [pk["e"]]
     if ans != chain:
         return None, "wrong answer"
-    return max(0, 4 - meta["checks"]), None
+    return max(1, 4 - meta["checks"]), None
 
 
 def _meta_rounds(sess):

@@ -629,17 +629,37 @@ function applyRingDrag(d, deg){
     el.setAttribute('transform', 'rotate(' + ((+el.dataset.c) * 45 + deg) + ' 200 200)');
   });
 }
-function applyRayDrag(d, k, f){
-  rayLts(d.c).forEach(el => {
-    const rr = +el.dataset.r;
-    el.setAttribute('y', String(200 - (RADII[((rr + k) % 4 + 4) % 4] - f * STEP_PX)));
-  });
+/* where a line seat sits, fractional seats and all: between the rings
+   the seats are one STEP_PX apart, but across the center the two inner
+   seats are two inner radii apart, so a letter dragged past its arc's
+   inner end crosses the middle onto the opposite ray; past an outer
+   end it rides the rim around to the other outer end */
+function lineSeatPos(q){
+  if (q >= 7) return { rim: (q - 7) * 180 };
+  const d = (q < 3) ? RADII[0] - STEP_PX * q
+    : (q < 4) ? RADII[3] - RADII[3] * 2 * (q - 3)
+    : -(RADII[3] + STEP_PX * (q - 4));
+  return { d: d };
 }
-/* a line drag previews on both of its rays: the grabbed ray's letters
-   follow the finger, the opposite ray's slide the other way */
+/* a line drag previews in line seats, because that is the only thing a
+   commit ever moves: the two rays are one loop of eight, so the
+   letters cross the center and wrap the rim exactly where the release
+   will land them - the preview never loops an arc inside itself */
 function applyLineDrag(d, k, f){
-  applyRayDrag(d, k, f);
-  applyRayDrag({ c: (d.c + 4) % 8 }, -k, -f);
+  const L = d.c % 4, far = L + 4;
+  const delta = (d.c < 4 ? 1 : -1) * (k + f);
+  rayLts(L).concat(rayLts(far)).forEach(el => {
+    const j = (+el.dataset.c === L) ? +el.dataset.r : 7 - +el.dataset.r;
+    const q = ((j + delta) % 8 + 8) % 8;
+    const pos = lineSeatPos(q);
+    if (pos.rim !== undefined){
+      el.setAttribute('transform', 'rotate(' + (far * 45 + pos.rim) + ' 200 200)');
+      el.setAttribute('y', String(200 - RADII[0]));
+    } else {
+      el.setAttribute('transform', 'rotate(' + ((pos.d >= 0 ? L : far) * 45) + ' 200 200)');
+      el.setAttribute('y', String(200 - Math.abs(pos.d)));
+    }
+  });
 }
 /* a short glide from wherever the pointer let go to the seat it snaps to */
 function glide(from, to, apply, done){

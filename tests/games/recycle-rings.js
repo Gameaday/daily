@@ -6,7 +6,7 @@
 const { T0, T1 } = require('./_lib');
 
 async function run(h){
-    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftLine', 'commitDrag', 'topLetter', 'shareText', 'openBonus', 'restart'];
+    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftLine', 'commitDrag', 'lineSeatPos', 'topLetter', 'shareText', 'openBonus', 'restart'];
     const store = {};
     let r = h.boot('recycle-rings', EXP, { now: T0, store });
     const P = r.x.PUZZLE;
@@ -161,6 +161,19 @@ async function run(h){
     r.x.commitDrag('ring', 0, 0);
     h.eq(r.x.S.res, 6, 'rings: a drag that covers no seat costs nothing');
     h.ok(!r.x.S.won, 'rings: drag commits do not win on their own');
+
+    /* the line preview tells the whole eight, because that is the only
+       thing a commit ever moves: a letter dragged past its arc's inner
+       end crosses the center onto the opposite ray, and one pushed past
+       an outer end rides the rim around to the other outer end. The
+       preview used to loop each four-letter arc inside itself and snap
+       on release; it lands what the commit lands now */
+    h.eq(r.x.lineSeatPos(0).d, 156, 'rings: seat 0 sits at the near outer ring');
+    h.eq(r.x.lineSeatPos(3).d, 54, 'rings: seat 3 sits at the near inner ring');
+    h.eq(r.x.lineSeatPos(3.5).d, 0, 'rings: mid-gap the letter crosses the center');
+    h.eq(r.x.lineSeatPos(4).d, -54, 'rings: seat 4 is the opposite arc\'s inner ring');
+    h.eq(r.x.lineSeatPos(6).d, -122, 'rings: the far arc slides outward from the center');
+    h.eq(r.x.lineSeatPos(7.5).rim, 90, 'rings: the outer wrap rides around the rim');
 
     /* restart: the free do-over, grid's way - the wheel returns to the
        day's start and the meter starts over */

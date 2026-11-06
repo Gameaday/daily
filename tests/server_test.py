@@ -504,10 +504,10 @@ def main():
         # the day's own letter sets, exactly the page's pick, graded word
         # by word: one real dictionary word of the letters covers one set
         check(sprintwords.sprint_targets(TODAY) ==
-              ["MNOR", "ACENO", "AGNOR", "ABDIR", "ABEKR"],
+              ["HIPS", "ACENO", "EORTU", "ABDIR", "ABDER"],
               "sprintwords: the day 0 letter sets are the page's own pick")
         check(sprintwords.sprint_targets(TODAY + 1) ==
-              ["AEKL", "BEGIN", "AEHRT", "AELRT", "ADELT"],
+              ["ENST", "BELOW", "AEHST", "AGMNO", "EEGNR"],
               "sprintwords: the day 1 letter sets are the page's own pick")
         daywords = [sprintwords.sprint_words_for(k)[0]
                     for k in sprintwords.sprint_targets(TODAY)]

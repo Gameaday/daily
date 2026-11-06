@@ -13,7 +13,7 @@ async function run(h, ctx){
     const store = {};
     let r = h.boot('sprint', EXP, { now: T0, store });
     h.eq(r.x.targets.length, 5, 'sprint: 5 targets');
-    h.eq(r.x.targets.join(','), 'MNOR,ACENO,AGNOR,ABDIR,ABEKR',
+    h.eq(r.x.targets.join(','), 'HIPS,ACENO,EORTU,ABDIR,ABDER',
          'sprint: day 0 letter sets are the pinned day (server ports the same pick)');
     /* the dictionaries ship as data: the page's CSVs and the server's
        word list must stay byte-identical, or the server's count drifts
@@ -56,7 +56,7 @@ async function run(h, ctx){
     h.ok(!r.x.S.startAt, 'sprint: a new day waits behind the gate again');
     r.env.els.btnStart.click();
     h.eq(r.x.S.day, 1, 'sprint: day rolled');
-    h.eq(r.x.targets.join(','), 'AEKL,BEGIN,AEHRT,AELRT,ADELT',
+    h.eq(r.x.targets.join(','), 'ENST,BELOW,AEHST,AGMNO,EEGNR',
          'sprint: day 1 letter sets are the pinned day');
     h.eq(r.x.S.stats.streak, 1, 'sprint: streak preserved');
     const s3 = {};

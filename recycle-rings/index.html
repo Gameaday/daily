@@ -60,7 +60,9 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
 .wheel.dragging, .wheel.dragging .cellhit{ cursor:grabbing; }
 .rayg:hover .chev{ stroke:#b3541e; }
 /* a won wheel gives its rings one beat of pride: each outline warms in
-   turn, innermost out, then the board settles back to rest */
+   turn, innermost out, then the board settles back to rest. The class
+   is a finish's, not the board's - it retires when the bonus opens, so
+   touching the rings mid-bonus replays nothing */
 .wheel.won circle:nth-of-type(2){animation:ringpulse .5s ease;}
 .wheel.won circle:nth-of-type(3){animation:ringpulse .5s ease .12s;}
 .wheel.won circle:nth-of-type(4){animation:ringpulse .5s ease .24s;}
@@ -797,6 +799,10 @@ function openBonus(){
   const r = solveSteps(pos[0], pos[1], pos[2], pos[3]);
   S.bonus = { on: true, grid: PUZZLE.start, steps: 0, par: r.par, won: false };
   $('reveal').classList.remove('show');
+  /* the pulse belongs to a finish, not the wheel: retire the main
+     round's beat before the bonus plays, so a touch on the rings
+     mid-bonus replays nothing */
+  $('wheel').classList.remove('won');
   $('ringctl').style.display = '';
   saveState();
   renderAll();

@@ -205,6 +205,8 @@ async function run(h){
     /* the bonus round: unlocked by the win, played under the step economy */
     r.x.openBonus();
     h.ok(!!r.x.S.bonus && r.x.S.bonus.on, 'rings: the win opens the bonus round');
+    h.ok(!r.env.els.wheel.classList.contains('won'),
+      'rings: opening the bonus retires the finish pulse');
     h.eq(r.x.S.bonus.grid, P.start, 'rings: the bonus replays the day\u2019s own board');
     h.eq(r.env.els.wheel.innerHTML, startWheel,
       'rings: the bonus board answers in the same colors as the day start');
@@ -217,6 +219,8 @@ async function run(h){
     r.x.loopRing(0, 1);
     h.eq(r.x.S.bonus.steps, 2, 'rings: the bonus charges every seat-step');
     h.ok(!r.x.S.bonus.won, 'rings: two steps do not win the bonus on their own');
+    h.ok(!r.env.els.wheel.classList.contains('won'),
+      'rings: touching the rings mid-bonus replays no pulse');
     /* walk the ring back home - the detour costs its steps too - then
        the restart starts the meter over, and replaying the par line as
        engagements wins the bonus, at step cost */
@@ -232,6 +236,8 @@ async function run(h){
       else r.x.shiftLine(mv.c, mv.d);
     }
     h.ok(r.x.S.bonus.won, 'rings: the bonus is won by replaying the line');
+    h.ok(r.env.els.wheel.classList.contains('won'),
+      'rings: finishing the bonus plays the beat once');
     const bsteps = P.sol.reduce((n, mv) => n + Math.abs(mv.d), 0);
     h.eq(r.x.S.bonus.steps, bsteps, 'rings: every step of the line was charged');
     const bpts = Math.max(0, 3 - (r.x.S.bonus.steps - r.x.S.bonus.par));

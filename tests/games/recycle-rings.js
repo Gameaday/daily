@@ -6,7 +6,7 @@
 const { T0, T1 } = require('./_lib');
 
 async function run(h){
-    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftLine', 'commitDrag', 'topLetter', 'shareText', 'openBonus'];
+    const EXP = ['S', 'PUZZLE', 'loopRing', 'shiftLine', 'commitDrag', 'topLetter', 'shareText', 'openBonus', 'restart'];
     const store = {};
     let r = h.boot('recycle-rings', EXP, { now: T0, store });
     const P = r.x.PUZZLE;
@@ -162,6 +162,14 @@ async function run(h){
     h.eq(r.x.S.res, 6, 'rings: a drag that covers no seat costs nothing');
     h.ok(!r.x.S.won, 'rings: drag commits do not win on their own');
 
+    /* restart: the free do-over, grid's way - the wheel returns to the
+       day's start and the meter starts over */
+    r.x.restart();
+    h.eq(r.x.S.grid, P.start, 'rings: restart returns the wheel to the day start');
+    h.eq(r.x.S.res, 0, 'rings: restart starts the meter over');
+    r.x.loopRing(0, 1);
+    h.eq(r.x.S.res, 1, 'rings: the fresh run charges from zero');
+
     /* replay the solver's own par line: it must win in exactly par resources */
     const s3 = {};
     r = h.boot('recycle-rings', EXP, { now: T0, store: s3 });
@@ -188,6 +196,12 @@ async function run(h){
     h.ok(r.env.els.wheel.innerHTML.indexOf('lt need') === -1, 'rings: a won board shows no gold');
     h.ok(r.env.els.slots.innerHTML.indexOf('slot bad') === -1, 'rings: a won readout shows no red');
 
+    /* a won board is done: restart changes nothing */
+    const wonGrid = r.x.S.grid;
+    r.x.restart();
+    h.eq(r.x.S.grid, wonGrid, 'rings: a won board does not restart');
+    h.eq(r.x.S.res, P.par, 'rings: a won board keeps its meter');
+
     /* the bonus round: unlocked by the win, played under the step economy */
     r.x.openBonus();
     h.ok(!!r.x.S.bonus && r.x.S.bonus.on, 'rings: the win opens the bonus round');
@@ -204,18 +218,23 @@ async function run(h){
     h.eq(r.x.S.bonus.steps, 2, 'rings: the bonus charges every seat-step');
     h.ok(!r.x.S.bonus.won, 'rings: two steps do not win the bonus on their own');
     /* walk the ring back home - the detour costs its steps too - then
-       replaying the par line as engagements wins the bonus, at step cost */
+       the restart starts the meter over, and replaying the par line as
+       engagements wins the bonus, at step cost */
     r.x.loopRing(0, -2);
     h.eq(r.x.S.bonus.grid, P.start, 'rings: the bonus board walks back to its start');
     h.eq(r.x.S.bonus.steps, 4, 'rings: walking back costs its steps as well');
+    /* the bonus restarts too: the step meter starts over */
+    r.x.restart();
+    h.eq(r.x.S.bonus.grid, P.start, 'rings: the bonus restart returns to the start');
+    h.eq(r.x.S.bonus.steps, 0, 'rings: the bonus restart starts the meter over');
     for (const mv of P.sol){
       if (mv.t === 'l') r.x.loopRing(mv.r, mv.d);
       else r.x.shiftLine(mv.c, mv.d);
     }
     h.ok(r.x.S.bonus.won, 'rings: the bonus is won by replaying the line');
-    const bsteps = P.sol.reduce((n, mv) => n + Math.abs(mv.d), 0) + 4;
+    const bsteps = P.sol.reduce((n, mv) => n + Math.abs(mv.d), 0);
     h.eq(r.x.S.bonus.steps, bsteps, 'rings: every step of the line was charged');
-    const bpts = Math.max(1, 3 - (r.x.S.bonus.steps - r.x.S.bonus.par));
+    const bpts = Math.max(0, 3 - (r.x.S.bonus.steps - r.x.S.bonus.par));
     await h.flush();
     h.eq(h.lastPost(r.env).body.game, 'rings-bonus', 'rings: the bonus posts to its own curve');
     h.eq(h.lastPost(r.env).body.value, bpts, 'rings: the bonus posts its own points');

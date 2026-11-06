@@ -35,6 +35,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
   }
 .ringbtn button:hover{border-color:var(--accent); color:var(--accent);}
 .ringbtn.active, .ringbtn:hover{border-color:var(--accent);}
+.btn.ghost{background:var(--card); color:var(--ink); border:1.5px solid var(--line); font-size:13px;}
 .metarow{display:flex; gap:16px; justify-content:center; margin-top:14px; font-size:13px; color:var(--muted); flex-wrap:wrap;}
 .bignum{font-family:Georgia,serif; font-size:34px; color:var(--ink);}
 .bignum .u{font-size:13px; color:var(--muted); font-family:inherit;}
@@ -129,6 +130,7 @@ h1{font-family:Georgia,serif; font-size:34px; margin:0; letter-spacing:-.5px; li
     <p><b>The wheel answers in color:</b> a letter sitting in the ray that does not spell its seat turns <b style="color:var(--red);">red</b>, and the word's own letters waiting out in the wrong place turn <b style="color:var(--gold);">gold</b>. A letter home at the ray stays green. So even a board where nothing fits yet tells you the whole story: the red seats are the destinations, the gold letters are the freight, and matching them up is the line.</p>
     <p><b>Resources, not moves:</b> taking up a seat costs one resource, however far you run it. Keep turning the same ring, or keep sliding the same line - either end, back and forth, wraps and all - and it costs nothing more; switch to another seat, or come back to one you left, and it costs again. So think laterally: a long sweep of one line can be cheaper than a ladder of little corrections.</p>
     <p><b>Par is exact:</b> the solver has already walked every reachable position of the four word letters, counting resources the same way, so par is the fewest the day can be solved in. Beat par and you found a line the solver missed (you didn't; it's exact).</p>
+    <p><b>Restart is free:</b> the wheel returns to its start and the meter starts over, so a misclick never costs a point. Chase your best line as long as you like.</p>
     <p><b>The bonus round:</b> win the day and the same board opens again under the step economy, where every seat a move covers costs and par is a count of steps. A different economy, often a different number. It posts to its own little curve, and no streak rides on it.</p>
     <p>Same rings for everyone, so compare resources at standup.</p>
     <button class="close" data-close>Got it</button>
@@ -458,6 +460,8 @@ function renderCtl(){
       '<button data-p="' + p + '" data-d="-1" aria-label="loop ' + NAMES[p] + ' left">\u25C0</button>' +
       '<button data-p="' + p + '" data-d="1" aria-label="loop ' + NAMES[p] + ' right">\u25B6</button></div>';
   }
+  /* the free do-over rides beside the ring pills, grid's way */
+  html += '<button class="btn ghost" id="btnRestart">\u21BB Restart</button>';
   $('ringctl').innerHTML = html;
 }
 
@@ -551,9 +555,29 @@ function commitDrag(kind, idx, seats){
   commit(kind === 'ring' ? 'l' : 'x', idx, g.join(''), Math.abs(seats));
 }
 
+/* a free do-over, grid's way: the active board returns to the day's
+   start and its meter starts over, so a misclick never costs a point.
+   A won board is done and ignores it; the day counts the run that
+   lands, and par is a fact either way */
+function restart(){
+  if (boardWon() || !PUZZLE) return;
+  if (inBonus()){
+    S.bonus.grid = PUZZLE.start;
+    S.bonus.steps = 0;
+  } else {
+    S.grid = PUZZLE.start;
+    S.res = 0;
+    S.seat = null;
+  }
+  saveState();
+  renderAll();
+  SHELL.toast('board reset \u00b7 the meter starts over');
+}
+
 $('ringctl').addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
+  if (b.id === 'btnRestart'){ restart(); return; }
   loopRing(+b.dataset.p, +b.dataset.d);
 });
 /* a click that follows a drag (or a plain tap on a letter) must not also
@@ -729,7 +753,7 @@ function shareText(){
 }
 function showReveal(){
   /* points read like points: par is full marks, every resource over par costs one */
-  S.pts = Math.max(1, 3 - (S.res - PUZZLE.par));
+  S.pts = Math.max(0, 3 - (S.res - PUZZLE.par));
   S.stars = (S.res === PUZZLE.par) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 
@@ -759,7 +783,7 @@ function showBonusReveal(){
   $('wheel').classList.add('won');
   $('ringctl').style.display = 'none';
   $('btnBonus').style.display = 'none';
-  syncBonusBoard(Math.max(1, 3 - over));
+  syncBonusBoard(Math.max(0, 3 - over));
   renderMeta();
 }
 

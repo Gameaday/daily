@@ -238,8 +238,8 @@ function shareText(){
 }
 
 function showReveal(){
-  /* points read like points: par is full marks, every rung over par costs one */
-  S.pts = S.status === 'won' ? Math.max(0, 3 - (steps() - LADDER.par)) : 0;
+  /* the points match par, every rung over par walks one down */
+  S.pts = S.status === 'won' ? Math.max(0, LADDER.par - (steps() - LADDER.par)) : 0;
   S.stars = (S.status === 'won' && steps() === LADDER.par) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 

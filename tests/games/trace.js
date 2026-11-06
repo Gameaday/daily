@@ -17,7 +17,7 @@ async function run(h){
     h.eq(r.x.S.status, 'won', 'trace: won walking the optimal path');
     h.eq(r.x.steps(), r.x.LADDER.par, 'trace: steps = par');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'trace: on par posts full points');
+    h.eq(h.lastPost(r.env).body.value, r.x.LADDER.par, 'trace: on par posts full points');
     h.ok(r.env.els.timenote.textContent.indexOf('your time') === 0, 'trace: the result carries the time');
     /* Regression: over <= 0 made "on par" unreachable; at exactly par the
        share text bragged "under par!". */

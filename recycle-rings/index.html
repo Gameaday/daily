@@ -754,8 +754,8 @@ function shareText(){
   return 'Rings No. ' + num + ' \u00b7 ' + S.res + ' resources (' + note + ')' + (S.stars ? ' \u00b7 1\u2605' : '') + ' \uD83C\uDF00';
 }
 function showReveal(){
-  /* points read like points: par is full marks, every resource over par costs one */
-  S.pts = Math.max(0, 3 - (S.res - PUZZLE.par));
+  /* the points match par, every resource over par walks one down */
+  S.pts = Math.max(0, PUZZLE.par - (S.res - PUZZLE.par));
   S.stars = (S.res === PUZZLE.par) ? 1 : 0;
   if (S.stars) SHELL.recordStars(SYNC_GAME, S.stars);
 
@@ -785,7 +785,8 @@ function showBonusReveal(){
   $('wheel').classList.add('won');
   $('ringctl').style.display = 'none';
   $('btnBonus').style.display = 'none';
-  syncBonusBoard(Math.max(0, 3 - over));
+  /* the bonus pays its own par at the top, then walks one down per step over */
+  syncBonusBoard(Math.max(0, S.bonus.par - over));
   renderMeta();
 }
 

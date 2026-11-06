@@ -181,7 +181,7 @@ async function run(h){
     h.ok(r.x.S.won, 'rings: won by replaying the par line');
     h.eq(r.x.S.res, P.par, 'rings: replay costs exactly par resources');
     await h.flush();
-    h.eq(h.lastPost(r.env).body.value, 3, 'rings: on par posts full points');
+    h.eq(h.lastPost(r.env).body.value, P.par, 'rings: on par posts full points');
     h.eq(h.lastPost(r.env).body.game, 'rings', 'rings: the day posts to the rings curve');
     h.ok(r.x.shareText().indexOf('1\u2605') >= 0, 'rings: the on-par star rides the share');
     h.ok(r.x.shareText().indexOf('resources') >= 0, 'rings: the share speaks in resources');
@@ -240,7 +240,7 @@ async function run(h){
       'rings: finishing the bonus plays the beat once');
     const bsteps = P.sol.reduce((n, mv) => n + Math.abs(mv.d), 0);
     h.eq(r.x.S.bonus.steps, bsteps, 'rings: every step of the line was charged');
-    const bpts = Math.max(0, 3 - (r.x.S.bonus.steps - r.x.S.bonus.par));
+    const bpts = Math.max(0, r.x.S.bonus.par - (r.x.S.bonus.steps - r.x.S.bonus.par));
     await h.flush();
     h.eq(h.lastPost(r.env).body.game, 'rings-bonus', 'rings: the bonus posts to its own curve');
     h.eq(h.lastPost(r.env).body.value, bpts, 'rings: the bonus posts its own points');

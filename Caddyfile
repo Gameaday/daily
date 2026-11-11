@@ -4,6 +4,7 @@
 # no puzzle banks - puzzles come from the scores container over the
 # compose network.
 {
+	admin off
 	auto_https off
 }
 :80 {

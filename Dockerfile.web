@@ -16,3 +16,6 @@ COPY --chmod=0755 docker/web-start.sh /usr/local/bin/web-start
 # the base image would
 ENTRYPOINT ["/usr/local/bin/web-start"]
 EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget -q --spider http://localhost/ || exit 1

@@ -11,4 +11,8 @@ RUN node tools/export-puzzles.mjs && node tools/build-bundles.mjs
 FROM caddy:2.8-alpine
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /repo/dist/online /srv/daily
+COPY --chmod=0755 docker/web-start.sh /usr/local/bin/web-start
+# the start script prewarms the page cache, then execs caddy exactly as
+# the base image would
+ENTRYPOINT ["/usr/local/bin/web-start"]
 EXPOSE 80

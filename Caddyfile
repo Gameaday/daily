@@ -15,12 +15,15 @@
 		reverse_proxy {$SCORES_UPSTREAM}
 	}
 
-	# cache policy: game HTML always revalidates (a new image is what ships
-	# new content, and the URLs are unversioned), shared assets get a
-	# modest public cache. The API sets its own Cache-Control per route.
+	# cache policy: game HTML always revalidates (a new image is what
+	# ships new content, and the URLs are unversioned), shared assets ride
+	# a long edge cache for a cdn in front (s-maxage, cloudflare honors
+	# it) with a short browser max-age, so a release purges the edge once
+	# and every browser revalidates within the hour. The API sets its own
+	# Cache-Control per route.
 	@assets path *.css *.js *.svg *.png *.ico *.woff2
 	handle @assets {
-		header Cache-Control "public, max-age=3600"
+		header Cache-Control "public, max-age=3600, s-maxage=2592000, stale-while-revalidate=86400"
 		header X-Content-Type-Options nosniff
 		header Referrer-Policy no-referrer
 		header Permissions-Policy "camera=(), microphone=(), geolocation=()"

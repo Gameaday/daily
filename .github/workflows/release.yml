@@ -77,7 +77,7 @@ jobs:
             echo "SB"
           } >> "$GITHUB_OUTPUT"
       - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
       - name: log in to GHCR
         run: echo "${GH_TOKEN}" | docker login ghcr.io -u "${GITHUB_ACTOR}" --password-stdin
         env:

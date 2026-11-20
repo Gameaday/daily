@@ -31,12 +31,12 @@ jobs:
       - name: Build online + offline bundles
         run: node tools/build-bundles.mjs
       - name: Upload offline bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: offline-bundle
           path: dist/offline
       - name: Upload online bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: online-bundle
           path: dist/online

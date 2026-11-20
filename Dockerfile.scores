@@ -5,7 +5,7 @@
 # consolidated numbers collapse into a static snapshot there (written once).
 # Binds 0.0.0.0 *inside* the container so Caddy can reach it over the
 # compose network; the port is never published to the host (see compose).
-FROM python:3.12-slim
+FROM python:3.15.2-slim
 WORKDIR /app
 COPY scores/ ./
 # the puzzle stores ride along at ./puzzles (server.py looks there first)

@@ -1,0 +1,41 @@
+version: 2
+updates:
+  # Docker base images (Dockerfile.scores, Dockerfile.web) - catches new
+  # python / node / caddy patch releases and security updates automatically.
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    labels:
+      - "dependencies"
+      - "security"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # GitHub Actions used in CI (actions/checkout, setup-node, upload-artifact).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    labels:
+      - "dependencies"
+      - "security"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # npm manifest (package.json) - kept for completeness; the app ships zero
+  # npm dependencies by design, so this is a no-op unless a dep is added.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

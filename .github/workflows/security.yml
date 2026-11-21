@@ -1,0 +1,50 @@
+name: security
+
+# Container vulnerability scan - the layer Dependabot cannot see.
+# Dependabot updates the base-image *tag* (python / node / caddy), but it
+# does not inspect the OS packages baked inside those images (libcrypto3,
+# libssl3, libc, musl/busybox, ...). This workflow builds both images we
+# ship and scans them with Trivy for OS + language CVEs, so a newly
+# disclosed vulnerability shows up as a failing check on the PR (and weekly
+# on main) and prompts a base-image bump.
+#
+# Fails only on FIXABLE HIGH/CRITICAL findings (ignore-unfixed: true): a CVE
+# with no upstream patch yet is reported but does not block, while one that a
+# base-image bump would resolve does block - which is the action we want.
+
+on:
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'   # every Monday, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: build the scores image
+        run: docker build -f Dockerfile.scores -t daily-scores:scan .
+      - name: build the web image
+        run: docker build -f Dockerfile.web -t daily-web:scan .
+      - name: scan the scores image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: daily-scores:scan
+          vuln-type: os,library
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+          format: table
+      - name: scan the web image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: daily-web:scan
+          vuln-type: os,library
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+          format: table

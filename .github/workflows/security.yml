@@ -25,7 +25,7 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: build the scores image
         run: docker build -f Dockerfile.scores -t daily-scores:scan .
       - name: build the web image
